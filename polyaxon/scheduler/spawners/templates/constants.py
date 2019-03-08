@@ -1,4 +1,5 @@
 DEFAULT_PORT = 2222
+DEFAULT_SSH_PORT = 12345
 ENV_VAR_TEMPLATE = '{name: "{var_name}", value: "{var_value}"}'
 VOLUME_CLAIM_NAME = 'plx-pvc-{vol_name}'
 CONFIG_MAP_NAME = 'plx-config-{uuid}'

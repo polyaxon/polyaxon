@@ -1,5 +1,7 @@
 from constants.experiment_jobs import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
+from scheduler.spawners.templates import constants
+from scheduler.spawners.templates.pod_cmd import get_horovod_pod_command_args
 from schemas.environments import HorovodClusterConfig
 from schemas.specifications import HorovodSpecification
 from schemas.tasks import TaskType
@@ -103,6 +105,39 @@ class HorovodSpawnerMixin(object):
 class HorovodSpawner(HorovodSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
+
+    def get_ports(self, ports):
+        return ports or [constants.DEFAULT_SSH_PORT]
+
+    def get_hosts(self, n_processes):
+        worker_hosts = [
+            '{}:{}'.format(
+                self.resource_manager.get_resource_name(task_type=TaskType.WORKER, task_idx=i),
+                n_processes)
+            for i in range(self.get_n_pods(TaskType.WORKER))]
+        return ','.join(['localhost:{}'.format(n_processes)] + worker_hosts)
+
+    def get_master_command_args(self, task_type, task_idx):
+        resources = self.get_resources(task_type=task_type, task_idx=task_idx)
+        gpus = resources.gpu.requests
+        n_processes = gpus or 1
+        n_workers = self.get_n_pods(TaskType.WORKER) + 1
+        hosts = self.get_hosts(n_processes=n_processes)
+        return get_horovod_pod_command_args(n_workers=n_workers,
+                                            gpus=gpus,
+                                            n_processes=n_processes,
+                                            hosts=hosts,
+                                            port=self.ports[0],
+                                            run_config=self.spec.run)
+
+    def get_worker_command_args(self):
+        args = ["/usr/sbin/sshd -p {}".format(self.ports[0])]
+        return ["/bin/bash", "-c"], args
+
+    def get_pod_command_args(self, task_type, task_idx):
+        if task_type == TaskType.MASTER:
+            return self.get_master_command_args(task_type=task_type, task_idx=task_idx)
+        return self.get_worker_command_args()
 
     def start_experiment(self):
         experiment = super().start_experiment()
