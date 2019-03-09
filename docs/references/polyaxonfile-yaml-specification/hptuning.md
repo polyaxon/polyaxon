@@ -14,6 +14,8 @@ sidebar: "polyaxon-yaml-specification"
 
 ## Overview
 
+The hptuning can be used with polyaxon files of `kind: group`, and creates a queue of experements, based on the hyperparameter tuning options defined.
+
 The hptuning defines `seed`, `concurrency`, `search algorithm`, `early_stopping`, `matrix`.
 
 In general the hptuning defines some values that must be unique for
