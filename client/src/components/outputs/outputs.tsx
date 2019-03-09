@@ -66,12 +66,15 @@ export default class Outputs extends React.Component<Props, State> {
       this.props.fetchOutputsTree(node.id);
     }
     const child = OutputsNode.findChild(this.state.outputsTree.root, node.id);
-    if (_.isNil(this.state.outputsFiles[node.id]) && !child.isDir) {
-      const extension = this.getExtension(node.id);
-      if (this.isImage(extension)) {
-        this.props.fetchOutputsFiles(node.id, 'img');
-      } else if (this.isCode(extension) || this.isText(extension)) {
-        this.props.fetchOutputsFiles(node.id, 'txt');
+    if (_.isNil(this.state.outputsFiles[node.id]) && child) {
+      const _child = child as OutputsNode;
+      if (!_child.isDir) {
+        const extension = this.getExtension(node.id);
+        if (this.isImage(extension)) {
+          this.props.fetchOutputsFiles(node.id, 'img');
+        } else if (this.isCode(extension) || this.isText(extension)) {
+          this.props.fetchOutputsFiles(node.id, 'txt');
+        }
       }
     }
     this.setState((prevState, prevProps) => ({
@@ -191,13 +194,17 @@ export default class Outputs extends React.Component<Props, State> {
         return (null);
       }
       const node = OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId);
+      if (!node) {
+        return (null);
+      }
+      const _node = node as OutputsNode;
       return (
         <div className="row">
           <div className="col-md-12">
             <div className="file-header">
-              <p>Type: {node.isDir ? 'directory' : 'file'}</p>
+              <p>Type: {_node.isDir ? 'directory' : 'file'}</p>
               <p>Path: {this.state.activeNodeId}</p>
-              {!node.isDir && <p>Size: {node.size}</p>}
+              {!_node.isDir && <p>Size: _node.size}</p>}
             </div>
           </div>
         </div>
@@ -205,31 +212,37 @@ export default class Outputs extends React.Component<Props, State> {
     };
 
     const getFile = () => {
-      if (this.state.activeNodeId &&
-        !OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId).isDir) {
-        if (this.state.outputsFiles[this.state.activeNodeId]) {
-          const extension = this.getExtension(this.state.activeNodeId);
-          if (this.isCode(extension) || this.isText(extension)) {
+      let node: OutputsNode | null = null;
+      if (this.state.activeNodeId) {
+        node = OutputsNode.findChild(this.state.outputsTree.root, this.state.activeNodeId);
+      }
+      if (this.state.activeNodeId && node) {
+        const _node = node as OutputsNode;
+        if (!_node.isDir) {
+          if (this.state.outputsFiles[this.state.activeNodeId]) {
+            const extension = this.getExtension(this.state.activeNodeId);
+            if (this.isCode(extension) || this.isText(extension)) {
+              return (
+                <OutputsTxt
+                  key={this.state.activeNodeId}
+                  outputsFile={this.state.outputsFiles[this.state.activeNodeId]}
+                />
+              );
+            } else if (this.isImage(extension)) {
+              return (<OutputsImg outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
+            }
+          } else {
             return (
-              <OutputsTxt
-                key={this.state.activeNodeId}
-                outputsFile={this.state.outputsFiles[this.state.activeNodeId]}
-              />
-            );
-          } else if (this.isImage(extension)) {
-            return (<OutputsImg outputsFile={this.state.outputsFiles[this.state.activeNodeId]}/>);
-          }
-        } else {
-          return (
-            <div className="row">
-              <div className="col-md-offset-2 col-md-8">
-                <div className="jumbotron jumbotron-action text-center empty-jumbotron">
-                  <h3>This extension is not supported.</h3>
-                  <div>Only text files and images can be previewed.</div>
+              <div className="row">
+                <div className="col-md-offset-2 col-md-8">
+                  <div className="jumbotron jumbotron-action text-center empty-jumbotron">
+                    <h3>This extension is not supported.</h3>
+                    <div>Only text files and images can be previewed.</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
+            );
+          }
         }
       }
       return (null);

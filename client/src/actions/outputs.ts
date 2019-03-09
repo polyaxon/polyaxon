@@ -11,7 +11,7 @@ export enum actionTypes {
 
 export interface RequestOutputsTreeAction extends Action {
   type: actionTypes.REQUEST_OUTPUTS_TREE;
-  outputsTree: { [key: string]: any };
+  path: string;
 }
 
 export interface ReceiveOutputsTreeAction extends Action {
@@ -31,10 +31,10 @@ export interface ReceiveOutputsFileAction extends Action {
   outputsFile: string;
 }
 
-export function requestOutputsTreeActionCreator(): RequestOutputsTreeAction {
+export function requestOutputsTreeActionCreator(path: string): RequestOutputsTreeAction {
   return {
     type: actionTypes.REQUEST_OUTPUTS_TREE,
-    outputsTree: {}
+    path
   };
 }
 
@@ -74,7 +74,7 @@ export function fetchOutputsTree(projectUniqueName: string,
                                  id: number,
                                  path: string): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestOutputsTreeActionCreator());
+    dispatch(requestOutputsTreeActionCreator(path));
 
     let logsUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/outputs/tree`;
@@ -101,8 +101,6 @@ export function fetchOutputsFile(projectUniqueName: string,
                                  path: string,
                                  filetype: string): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestOutputsTreeActionCreator());
-
     const logsUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/outputs/files?path=${path}`;
 

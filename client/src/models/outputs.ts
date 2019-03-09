@@ -18,14 +18,16 @@ export class OutputsNode {
   public static findChild(node: OutputsNode, path: string) {
     const parts = path.split('/');
     let currentNode = node;
+    let resultNode: OutputsNode | null = null;
     parts.forEach((part) => {
       if (currentNode.children && currentNode.children[part] !== undefined) {
+        resultNode = currentNode.children[part];
         currentNode = currentNode.children[part];
       } else {
-        throw new Error('Can\'t find child.');
+        resultNode = null;
       }
     });
-    return currentNode;
+    return resultNode;
   }
 
   public static isEmpty(node: OutputsNode) {

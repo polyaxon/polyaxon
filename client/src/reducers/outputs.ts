@@ -7,6 +7,21 @@ export const outputsReducer: Reducer<OutputsModel> =
   (state: OutputsModel = OutputsEmptyState, action: OutputsAction) => {
     switch (action.type) {
 
+      case actionTypes.REQUEST_OUTPUTS_TREE:
+        let reqOutputsNode: OutputsNode;
+        let reqOutputsFiles: { [key: string]: string };
+        if (!action.path) {
+          reqOutputsNode = new OutputsNode(true, '', true, '', {});
+          reqOutputsFiles = {};
+          reqOutputsNode.setChildren(action.path, [], []);
+          return {
+            ...state,
+            outputsTree: {root: reqOutputsNode},
+            reqOutputsFiles
+          };
+        } else {
+          return state;
+        }
       case actionTypes.RECEIVE_OUTPUTS_FILE:
         const newFiles: { [key: string]: string } = {};
         newFiles[action.path] = action.outputsFile;
@@ -27,12 +42,15 @@ export const outputsReducer: Reducer<OutputsModel> =
         }
         if (action.path) {
           const node = OutputsNode.findChild(outputsNode, action.path);
-          node.setChildren(action.path, action.outputsTree.files, action.outputsTree.dirs);
+          if (node) {
+            const _node = node as OutputsNode;
+            _node.setChildren(action.path, action.outputsTree.files, action.outputsTree.dirs);
+          }
         }
 
         return {
           ...state,
-          outputsTree: {root : outputsNode},
+          outputsTree: {root: outputsNode},
           outputsFiles
         };
       default:

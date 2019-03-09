@@ -11,7 +11,6 @@ import {
   getUserUrl,
   splitUniqueName,
 } from '../../constants/utils';
-import CodeReference from '../../containers/codeReference';
 import EntityBuild from '../../containers/entityBuild';
 import ExperimentJobs from '../../containers/experimentJobs';
 import Logs from '../../containers/logs';
