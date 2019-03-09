@@ -120,7 +120,7 @@ class HorovodSpawner(HorovodSpawnerMixin, ExperimentSpawner):
     def get_master_command_args(self, task_type, task_idx):
         resources = self.get_resources(task_type=task_type, task_idx=task_idx)
         gpus = resources.gpu.requests
-        n_processes = gpus or 1
+        n_processes = int(gpus) or 1
         n_workers = self.get_n_pods(TaskType.WORKER) + 1
         hosts = self.get_hosts(n_processes=n_processes)
         return get_horovod_pod_command_args(n_workers=n_workers,
@@ -131,7 +131,7 @@ class HorovodSpawner(HorovodSpawnerMixin, ExperimentSpawner):
                                             run_config=self.spec.run)
 
     def get_worker_command_args(self):
-        args = ["/usr/sbin/sshd -p {}".format(self.ports[0])]
+        args = ["/usr/sbin/sshd -p {};sleep infinity".format(self.ports[0])]
         return ["/bin/bash", "-c"], args
 
     def get_pod_command_args(self, task_type, task_idx):
