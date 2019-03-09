@@ -9,7 +9,7 @@ import { BuildModel } from '../../models/build';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
-import BuildBackendMetaInfo from '../metaInfo/BuildBackendMetaInfo';
+import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
@@ -61,7 +61,7 @@ function Build({
         }
         <Description description={build.description}/>
         <div className="meta">
-          <BuildBackendMetaInfo value={build.backend} inline={true}/>
+          <BackendMetaInfo value={build.backend} inline={true}/>
         </div>
         <div className="meta">
           <PodIdMetaInfo value={build.pod_id} inline={true}/>

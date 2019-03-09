@@ -12,6 +12,8 @@ import { getBookmark } from '../../utils/bookmarks';
 import { getExperimentCloning } from '../../utils/cloning';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
+import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
+import FrameworkMetaInfo from '../metaInfo/FrameworkMetaInfo';
 import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
 import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
@@ -105,6 +107,14 @@ function Experiment({
         <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
         }
         {!reducedForm && <Description description={experiment.description}/>}
+        {!reducedForm &&
+          <div className="meta">
+            <BackendMetaInfo value={experiment.backend} inline={true}/>
+            {experiment.framework &&
+              <FrameworkMetaInfo value={experiment.framework} inline={true}/>
+            }
+          </div>
+        }
         {!reducedForm &&
         <div className="meta">
           <IdMetaInfo value={experiment.id} inline={true}/>

@@ -10,6 +10,8 @@ import { ExperimentModel } from '../../models/experiment';
 import { getExperimentCloning } from '../../utils/cloning';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
+import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
+import FrameworkMetaInfo from '../metaInfo/FrameworkMetaInfo';
 import MDEditor from '../mdEditor/mdEditor';
 import CloningLinkMetaInfo from '../metaInfo/cloningLinkMetaInfo';
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
@@ -103,6 +105,12 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                 cloning={getExperimentCloning(experiment.original, experiment.cloning_strategy)}
                 inline={true}
               />
+              }
+            </div>
+            <div className="meta">
+              <BackendMetaInfo value={experiment.backend} inline={true}/>
+              {experiment.framework &&
+                <FrameworkMetaInfo value={experiment.framework} inline={true}/>
               }
             </div>
             <div className="meta">

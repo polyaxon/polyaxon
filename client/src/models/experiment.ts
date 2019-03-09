@@ -8,6 +8,8 @@ export class ExperimentModel {
   public original: string;
   public cloning_strategy: string;
   public description: string;
+  public backend: string;
+  public framework: string;
   public user: string;
   public config: { [key: string]: any };
   public num_jobs: number;
