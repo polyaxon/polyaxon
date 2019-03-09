@@ -106,9 +106,6 @@ class HorovodSpawner(HorovodSpawnerMixin, ExperimentSpawner):
     MASTER_SERVICE = True
     WORKER_SERVICE = True
 
-    def get_ports(self, ports):
-        return ports or [constants.DEFAULT_SSH_PORT]
-
     def get_hosts(self, n_processes):
         worker_hosts = [
             '{}:{}'.format(
@@ -131,7 +128,7 @@ class HorovodSpawner(HorovodSpawnerMixin, ExperimentSpawner):
                                             run_config=self.spec.run)
 
     def get_worker_command_args(self):
-        args = ["/usr/sbin/sshd -p {};sleep infinity".format(self.ports[0])]
+        args = ["/usr/sbin/sshd -p {}; sleep infinity".format(self.ports[0])]
         return ["/bin/bash", "-c"], args
 
     def get_pod_command_args(self, task_type, task_idx):
