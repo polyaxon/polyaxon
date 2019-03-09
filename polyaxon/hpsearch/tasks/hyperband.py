@@ -133,7 +133,12 @@ def hp_hyperband_iterate(self, experiment_group_id, auto_retry=False):
 
     if search_manager.should_reduce_configs(iteration=iteration_config.iteration,
                                             bracket_iteration=iteration_config.bracket_iteration):
-        iteration_manager.reduce_configs()
+        try:
+            iteration_manager.reduce_configs()
+        except ExperimentGroupException:
+            experiment_group.set_status(ExperimentGroupLifeCycle.FAILED,
+                                        message='Experiment group could not create new iteration.')
+            return
         celery_app.send_task(
             HPCeleryTasks.HP_HYPERBAND_START,
             kwargs={'experiment_group_id': experiment_group_id})

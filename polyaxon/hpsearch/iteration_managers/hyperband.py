@@ -1,3 +1,4 @@
+from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.iteration_managers.base import BaseIterationManager
 from hpsearch.iteration_managers.logger import logger
 from hpsearch.schemas import HyperbandIterationConfig
@@ -64,6 +65,8 @@ class HyperbandIterationManager(BaseIterationManager):
 
         # Get the last group's experiments metrics
         experiments_metrics = self.experiment_group.iteration_config.experiments_metrics
+        if not experiments_metrics:
+            raise ExperimentGroupException()
 
         # Order the experiments
         reverse = Optimization.maximize(
