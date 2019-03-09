@@ -867,7 +867,8 @@ class ExperimentDownloadOutputsView(ExperimentEndpoint, ProtectedView):
             cloning_strategy=self.experiment.cloning_strategy)
         archived_path, archive_name = archive_outputs(
             outputs_path=experiment_outputs_path,
-            name=self.experiment.unique_name)
+            namepath=self.experiment.unique_name,
+            persistence_outputs=self.experiment.persistence_outputs)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 

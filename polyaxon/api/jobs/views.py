@@ -324,7 +324,8 @@ class JobDownloadOutputsView(JobEndpoint, ProtectedView):
             job_name=self.job.unique_name)
         archived_path, archive_name = archive_outputs(
             outputs_path=job_outputs_path,
-            name=self.job.unique_name)
+            namepath=self.job.unique_name,
+            persistence_outputs=self.job.persistence_outputs)
         return self.redirect(path='{}/{}'.format(archived_path, archive_name))
 
 

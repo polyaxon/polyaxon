@@ -38,11 +38,26 @@ def archive_repo(repo_git: Any, repo_name: str, commit: str = None) -> Tuple[str
     return archive_root, archive_name
 
 
-def archive_outputs(outputs_path: str, name: str) -> Tuple[str, str]:
+def archive_outputs(outputs_path: str, namepath: str, persistence_outputs: str) -> Tuple[str, str]:
     archive_root = conf.get('OUTPUTS_ARCHIVE_ROOT')
     check_or_create_path(archive_root)
-    outputs_files = get_files_in_path(outputs_path)
-    tar_name = "{}.tar.gz".format(name.replace('.', '_'))
+
+    check_or_create_path(conf.get('OUTPUTS_DOWNLOAD_ROOT'))
+    download_path = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'), namepath.replace('.', '/'))
+    download_dir = '/'.join(download_path.split('/'))
+    check_or_create_path(download_dir)
+
+    try:
+        store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
+        store_manager.download_dir(outputs_path, download_path)
+    except (PolyaxonStoresException, VolumeNotFoundError) as e:
+        raise ValidationError(e)
+
+    if store_manager.store.is_local_store:
+        outputs_files = get_files_in_path(outputs_path)
+    else:
+        outputs_files = get_files_in_path(download_path)
+    tar_name = "{}.tar.gz".format(namepath.replace('.', '_'))
     create_tarfile(files=outputs_files, tar_path=os.path.join(archive_root, tar_name))
     return archive_root, tar_name
 
@@ -52,8 +67,9 @@ def archive_outputs_file(outputs_path: str,
                          filepath: str,
                          persistence_outputs: str) -> str:
     check_or_create_path(conf.get('OUTPUTS_DOWNLOAD_ROOT'))
-    namepath = namepath.replace('.', '/')
-    download_filepath = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'), namepath, filepath)
+    download_filepath = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'),
+                                     namepath.replace('.', '/'),
+                                     filepath)
     download_dir = '/'.join(download_filepath.split('/')[:-1])
     check_or_create_path(download_dir)
     try:
