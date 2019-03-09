@@ -22,7 +22,7 @@ class StoreSchema(BaseSchema):
     @validates_schema
     def validate_store(self, data):
         if data.get('store'):
-            validate_store(data['pvalues'])
+            validate_store(data['store'])
 
 
 class StoreConfig(BaseConfig):
