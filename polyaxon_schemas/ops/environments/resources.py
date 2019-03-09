@@ -156,7 +156,7 @@ class PodResourcesConfig(BaseConfig):
         if self.tpu:
             if other.tpu:
                 self.tpu += other.tpu
-        elif other.gpu:
+        elif other.tpu:
             self.tpu = K8SResourcesConfig()
             self.tpu += other.tpu
         return self
