@@ -18,6 +18,7 @@ export interface Props {
   outputsFiles: { [key: string]: string };
   downloadOutputsUrl: string;
   downloadOutputsName: string;
+  getOutputsFileDownloadUrl: (path: string) => string;
   fetchOutputsTree: (path: string) => actions.OutputsAction;
   fetchOutputsFiles: (path: string, filetype: string) => actions.OutputsAction;
 }
@@ -202,9 +203,17 @@ export default class Outputs extends React.Component<Props, State> {
         <div className="row">
           <div className="col-md-12">
             <div className="file-header">
+              {!_node.isDir &&
+              <Download
+                name={this.state.activeNodeId}
+                url={this.props.getOutputsFileDownloadUrl(this.state.activeNodeId)}
+                pullRight={true}
+                hideText={true}
+              />
+              }
               <p>Type: {_node.isDir ? 'directory' : 'file'}</p>
               <p>Path: {this.state.activeNodeId}</p>
-              {!_node.isDir && <p>Size: _node.size}</p>}
+              {!_node.isDir && <p>Size: {_node.size}</p>}
             </div>
           </div>
         </div>

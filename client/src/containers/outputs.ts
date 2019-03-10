@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import * as actions from '../actions/outputs';
 import Outputs from '../components/outputs/outputs';
 import { AppState } from '../constants/types';
-import { downloadName, outputsDownloadUrl } from '../utils/downloads';
+import { downloadName, getOutputsFileDownloadUrl, outputsDownloadUrl } from '../utils/downloads';
 
 export function mapStateToProps(state: AppState, params: any) {
   return {
@@ -12,6 +12,8 @@ export function mapStateToProps(state: AppState, params: any) {
     outputsFiles: state.outputs.outputsFiles,
     downloadOutputsUrl: outputsDownloadUrl(params.project, params.resource, params.id),
     downloadOutputsName: downloadName(params.project, params.resource, params.id),
+    getOutputsFileDownloadUrl: (path: string) => getOutputsFileDownloadUrl(
+      params.project, params.resource, path, params.id),
   };
 }
 

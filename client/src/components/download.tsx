@@ -4,9 +4,10 @@ export interface Props {
   pullRight: boolean;
   url: string;
   name: string;
+  hideText?: boolean;
 }
 
-function Download({url, name, pullRight}: Props) {
+function Download({url, name, pullRight, hideText}: Props) {
   const download = (
     <span>
       <a
@@ -14,7 +15,7 @@ function Download({url, name, pullRight}: Props) {
         href={url}
         download={name}
       >
-        <i className="fa fa-cloud-download icon" aria-hidden="true"/> Download
+        <i className="fa fa-cloud-download icon" aria-hidden="true"/> {!hideText && 'Download'}
       </a>
     </span>
   );
