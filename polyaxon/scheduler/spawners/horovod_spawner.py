@@ -1,6 +1,5 @@
 from constants.experiment_jobs import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
-from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.pod_cmd import get_horovod_pod_command_args
 from schemas.environments import HorovodClusterConfig
 from schemas.specifications import HorovodSpecification
