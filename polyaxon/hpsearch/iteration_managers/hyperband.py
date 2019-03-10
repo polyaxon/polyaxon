@@ -65,7 +65,7 @@ class HyperbandIterationManager(BaseIterationManager):
 
         # Get the last group's experiments metrics
         experiments_metrics = self.experiment_group.iteration_config.experiments_metrics
-        if not experiments_metrics:
+        if experiments_metrics is None:
             raise ExperimentGroupException()
 
         # Order the experiments
