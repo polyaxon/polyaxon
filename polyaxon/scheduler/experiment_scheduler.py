@@ -12,6 +12,7 @@ from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
+from scheduler.spawners.mpi_job_spawner import MPIJobSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
 from scheduler.spawners.pytorch_job_spawner import PytorchJobSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
@@ -122,6 +123,8 @@ def get_kf_spawner_backend(framework):
 def get_spawner_class(backend, framework):
     if backend == ExperimentBackend.KUBEFLOW:
         return get_kf_spawner_backend(framework=framework)
+    if backend == ExperimentBackend.MPI:
+        return MPIJobSpawner
 
     return get_native_spawner_backend(framework=framework)
 
@@ -279,6 +282,50 @@ def handle_horovod_experiment(response):
         job_uuid = worker['pod']['metadata']['labels']['job_uuid']
         job_uuid = uuid.UUID(job_uuid)
         set_job_definition(job_uuid=job_uuid, definition=get_job_definition(worker))
+
+
+def create_mpi_experiment_jobs(experiment, spawner):
+    cluster, is_distributed = spawner.spec.cluster_def
+    environment = spawner.spec.config.horovod
+    worker_resources = HorovodSpecification.get_worker_resources(
+        environment=environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
+        environment=environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_affinities = HorovodSpecification.get_worker_affinities(
+        environment=environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+    worker_tolerations = HorovodSpecification.get_worker_tolerations(
+        environment=environment,
+        cluster=cluster,
+        is_distributed=is_distributed
+    )
+
+    for i, worker_job_uuid in enumerate(spawner.job_uuids[TaskType.WORKER]):
+        if i == 0:
+            create_job(job_uuid=worker_job_uuid,
+                       experiment=experiment,
+                       role=TaskType.MASTER,
+                       k8s_replica=TaskType.WORKER,
+                       resources=spawner.spec.master_resources,
+                       node_selector=spawner.spec.master_node_selector,
+                       affinity=spawner.spec.master_affinity,
+                       tolerations=spawner.spec.master_tolerations)
+        create_job(job_uuid=worker_job_uuid,
+                   experiment=experiment,
+                   role=TaskType.WORKER,
+                   sequence=i,
+                   resources=worker_resources.get(i),
+                   node_selector=worker_node_selectors.get(i),
+                   affinity=worker_affinities.get(i),
+                   tolerations=worker_tolerations.get(i))
 
 
 def create_pytorch_experiment_jobs(experiment, spawner):
@@ -454,7 +501,7 @@ def handle_base_experiment(response):
 
 def handle_experiment(experiment, response):
     # TODO: May be save the template generate to create each one of the replicas?
-    if experiment.backend == ExperimentBackend.KUBEFLOW:
+    if experiment.backend in {ExperimentBackend.KUBEFLOW, ExperimentBackend.MPI}:
         return
 
     framework = experiment.framework
@@ -475,7 +522,17 @@ def handle_experiment(experiment, response):
 
 
 def create_experiment_jobs(experiment, spawner):
+    cluster, is_distributed = spawner.spec.cluster_def
     framework = experiment.specification.framework
+    backend = experiment.specification.backend
+
+    if not is_distributed:
+        create_base_experiment_job(experiment=experiment, spawner=spawner)
+        return
+
+    if backend == ExperimentBackend.MPI:
+        create_mpi_experiment_jobs(experiment=experiment, spawner=spawner)
+        return
     if framework == ExperimentFramework.TENSORFLOW:
         create_tensorflow_experiment_jobs(experiment=experiment, spawner=spawner)
         return

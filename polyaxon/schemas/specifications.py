@@ -8,6 +8,7 @@ from polyaxon_schemas.specs import (  # noqa
 )
 from polyaxon_schemas.specs.frameworks import (  # noqa
     HorovodSpecification,
+    MPISpecification,
     MXNetSpecification,
     PytorchSpecification,
     TensorflowSpecification
