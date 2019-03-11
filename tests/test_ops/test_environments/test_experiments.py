@@ -9,6 +9,7 @@ from tests.utils import assert_equal_dict
 from polyaxon_schemas.ops.environments.experiments import (
     HorovodClusterConfig,
     HorovodConfig,
+    MPIClusterConfig,
     MXNetClusterConfig,
     MXNetConfig,
     PytorchClusterConfig,
@@ -46,6 +47,17 @@ class TestExperimentEnvironmentsConfigs(TestCase):
             ]
         }
         config = HorovodClusterConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+    def test_mpi_cluster_config(self):
+        config_dict = {
+            "worker": [
+                "worker0.example.com:2222",
+                "worker1.example.com:2222",
+                "worker2.example.com:2222"
+            ]
+        }
+        config = MPIClusterConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
     def test_pytorch_cluster_config(self):

@@ -86,6 +86,28 @@ class PytorchClusterConfig(BaseConfig):
         self.worker = worker
 
 
+class MPIClusterSchema(BaseSchema):
+    worker = fields.List(fields.Str(), allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return MPIClusterConfig
+
+
+class MPIClusterConfig(BaseConfig):
+    """
+    MPI cluster config.
+
+    Args:
+        worker: list(str). The list of worker host in a Horovod cluster.
+    """
+    IDENTIFIER = 'mpi_cluster'
+    SCHEMA = MPIClusterSchema
+
+    def __init__(self, worker=None):
+        self.worker = worker
+
+
 class MXNetClusterSchema(BaseSchema):
     master = fields.List(fields.Str(), allow_none=True)
     worker = fields.List(fields.Str(), allow_none=True)
