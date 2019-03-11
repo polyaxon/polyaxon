@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import copy
-
 import six
 
 from collections import Mapping

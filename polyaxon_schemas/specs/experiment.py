@@ -13,10 +13,11 @@ from polyaxon_schemas.ops.run_exec import RunConfig
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
+    MPISpecification,
     MXNetSpecification,
     PytorchSpecification,
-    TensorflowSpecification,
-    MPISpecification)
+    TensorflowSpecification
+)
 from polyaxon_schemas.utils import TaskType
 
 

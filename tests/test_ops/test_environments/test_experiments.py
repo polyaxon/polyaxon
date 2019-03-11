@@ -7,7 +7,6 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.ops.environments.experiments import (
-    ExperimentEnvironmentConfig,
     HorovodClusterConfig,
     HorovodConfig,
     MXNetClusterConfig,
@@ -17,7 +16,7 @@ from polyaxon_schemas.ops.environments.experiments import (
     TensorflowClusterConfig,
     TensorflowConfig
 )
-from polyaxon_schemas.ops.environments.legacy import GPUOptionsConfig, SessionConfig, TFRunConfig
+from polyaxon_schemas.ops.environments.legacy import TFRunConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 
 

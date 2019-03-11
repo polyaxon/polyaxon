@@ -22,12 +22,17 @@ from polyaxon_schemas.ops.run_exec import RunConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
+    MPISpecification,
     MXNetSpecification,
     PytorchSpecification,
-    TensorflowSpecification,
-    MPISpecification)
-from polyaxon_schemas.utils import ExperimentFramework, SearchAlgorithms, TaskType, \
-    ExperimentBackend
+    TensorflowSpecification
+)
+from polyaxon_schemas.utils import (
+    ExperimentBackend,
+    ExperimentFramework,
+    SearchAlgorithms,
+    TaskType
+)
 
 
 class TestPolyaxonfile(TestCase):
