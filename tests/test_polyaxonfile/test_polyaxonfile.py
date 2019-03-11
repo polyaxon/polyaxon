@@ -24,9 +24,10 @@ from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
-    TensorflowSpecification
-)
-from polyaxon_schemas.utils import ExperimentFramework, SearchAlgorithms, TaskType
+    TensorflowSpecification,
+    MPISpecification)
+from polyaxon_schemas.utils import ExperimentFramework, SearchAlgorithms, TaskType, \
+    ExperimentBackend
 
 
 class TestPolyaxonfile(TestCase):
@@ -1112,6 +1113,148 @@ class TestPolyaxonfile(TestCase):
         assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
             tuple(spec.config.pytorch.default_worker.node_selector.items()),
             tuple(spec.config.pytorch.worker_node_selectors[2].items())}
+
+    def test_distributed_mpi_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/distributed_mpi_file.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.is_experiment
+        assert isinstance(spec.logging, LoggingConfig)
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.framework == ExperimentFramework.TENSORFLOW
+        assert spec.backend == ExperimentBackend.MPI
+        assert spec.config.mpi.n_workers == 8
+
+        assert spec.environment.node_selector is None
+        assert spec.environment.tolerations is None
+        assert spec.environment.affinity is None
+        assert spec.environment.resources is None
+
+        assert spec.config.mpi.default_worker_node_selector is None
+        assert spec.config.mpi.default_worker_affinity is None
+        assert isinstance(spec.config.mpi.default_worker_tolerations, list)
+        assert isinstance(spec.config.mpi.default_worker_tolerations[0], dict)
+        assert isinstance(spec.config.mpi.default_worker_resources,
+                          PodResourcesConfig)
+        assert isinstance(spec.config.mpi.default_worker_resources.cpu,
+                          K8SResourcesConfig)
+        assert spec.config.mpi.default_worker_resources.cpu.requests == 3
+        assert spec.config.mpi.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.mpi.default_worker_resources.memory,
+                          K8SResourcesConfig)
+        assert spec.config.mpi.default_worker_resources.memory.requests == 256
+        assert spec.config.mpi.default_worker_resources.memory.limits == 256
+        assert isinstance(spec.config.mpi.default_worker_resources.gpu,
+                          K8SResourcesConfig)
+        assert spec.config.mpi.default_worker_resources.gpu.requests == 4
+        assert spec.config.mpi.default_worker_resources.gpu.limits == 4
+
+        assert spec.config.mpi.worker_tolerations == {}
+        assert spec.config.mpi.worker_resources == {}
+
+        # check that properties for return list of configs and resources is working
+        cluster, is_distributed = spec.cluster_def
+        worker_resources = PytorchSpecification.get_worker_resources(
+            environment=spec.config.mpi,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        worker_tolerations = PytorchSpecification.get_worker_tolerations(
+            environment=spec.config.mpi,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        worker_node_selectors = PytorchSpecification.get_worker_node_selectors(
+            environment=spec.config.mpi,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        worker_affinities = PytorchSpecification.get_worker_affinities(
+            environment=spec.config.mpi,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert worker_node_selectors == {}
+        assert worker_affinities == {}
+        assert len(worker_tolerations) == spec.config.mpi.n_workers
+        assert len(worker_resources) == spec.config.mpi.n_workers
+        assert set(worker_resources.values()) == {spec.config.mpi.default_worker_resources}
+
+        # Check total resources
+        assert spec.total_resources == {
+            'cpu': {'requests': 3 * 8, 'limits': 3 * 8},
+            'memory': {'requests': 256 * 8, 'limits': 256 * 8},
+            'gpu': {'requests': 4 * 8, 'limits': 4 * 8},
+            'tpu': None
+        }
+
+        assert spec.cluster_def == ({TaskType.WORKER: 8}, True)
+
+    def test_distributed_mpi_with_node_selectors_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/distributed_mpi_with_node_selectors_file.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.is_experiment
+        assert spec.framework == ExperimentFramework.PYTORCH
+        assert spec.backend == ExperimentBackend.MPI
+        assert isinstance(spec.logging, LoggingConfig)
+        assert isinstance(spec.environment, EnvironmentConfig)
+        assert spec.environment.node_selector is None
+        assert spec.master_node_selector is None
+        assert spec.config.mpi.n_workers == 4
+
+        assert spec.environment.resources is None
+
+        assert isinstance(spec.config.mpi.default_worker_resources,
+                          PodResourcesConfig)
+        assert isinstance(spec.config.mpi.default_worker_resources.cpu,
+                          K8SResourcesConfig)
+        assert spec.config.mpi.default_worker_resources.cpu.requests == 3
+        assert spec.config.mpi.default_worker_resources.cpu.limits == 3
+        assert isinstance(spec.config.mpi.default_worker_resources.memory,
+                          K8SResourcesConfig)
+        assert spec.config.mpi.default_worker_resources.memory.requests == 256
+        assert spec.config.mpi.default_worker_resources.memory.limits == 256
+        assert isinstance(spec.config.mpi.default_worker_resources.gpu,
+                          K8SResourcesConfig)
+        assert spec.config.mpi.default_worker_resources.gpu.requests == 2
+        assert spec.config.mpi.default_worker_resources.gpu.limits == 2
+
+        assert spec.config.mpi.worker_resources == {}
+
+        # check that properties for return list of configs and resources is working
+        cluster, is_distributed = spec.cluster_def
+        worker_resources = PytorchSpecification.get_worker_resources(
+            environment=spec.config.mpi,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(worker_resources) == spec.config.mpi.n_workers
+        assert set(worker_resources.values()) == {spec.config.mpi.default_worker_resources}
+
+        # Check total resources
+        assert spec.total_resources == {
+            'cpu': {'requests': 3 * 4, 'limits': 3 * 4},
+            'memory': {'requests': 256 * 4, 'limits': 256 * 4},
+            'gpu': {'requests': 4 * 2, 'limits': 4 * 2},
+            'tpu': None
+        }
+
+        assert spec.cluster_def == ({TaskType.WORKER: 4}, True)
+
+        assert (spec.config.mpi.default_worker.node_selector ==
+                {'polyaxon.com': 'node_for_worker_tasks'})
+
+        worker_node_selectors = MPISpecification.get_worker_node_selectors(
+            environment=spec.config.mpi,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        assert len(worker_node_selectors) == spec.config.mpi.n_workers
+        assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
+            tuple(spec.config.mpi.default_worker.node_selector.items())}
 
     def test_distributed_mxnet_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(

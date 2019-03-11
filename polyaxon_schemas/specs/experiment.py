@@ -15,8 +15,8 @@ from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MXNetSpecification,
     PytorchSpecification,
-    TensorflowSpecification
-)
+    TensorflowSpecification,
+    MPISpecification)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -117,6 +117,10 @@ class ExperimentSpecification(BaseRunSpecification):
             return PytorchSpecification.get_cluster_def(
                 cluster=cluster,
                 framework_config=self.config.pytorch)
+        if self.config.mpi:
+            return MPISpecification.get_cluster_def(
+                cluster={},
+                framework_config=self.config.mpi)
 
         # No specified framework, It should return default standalone mode cluster definition
         return cluster, is_distributed
@@ -159,6 +163,14 @@ class ExperimentSpecification(BaseRunSpecification):
             return PytorchSpecification.get_total_resources(
                 master_resources=self.master_resources,
                 environment=self.config.pytorch,
+                cluster=cluster,
+                is_distributed=is_distributed
+            )
+
+        if self.config.mpi:
+            return MPISpecification.get_total_resources(
+                master_resources=self.master_resources,
+                environment=self.config.mpi,
                 cluster=cluster,
                 is_distributed=is_distributed
             )

@@ -348,3 +348,48 @@ class MXNetSpecification(DistributedSpecificationInterface):
             total_resources += p_resources
 
         return total_resources.to_dict()
+
+
+class MPISpecification(DistributedSpecificationInterface):
+    @staticmethod
+    def has_framework_environment(environment):
+        return environment is not None and environment.mpi is not None
+
+    @classmethod
+    def get_framework_environment(cls, environment):
+        if not cls.has_framework_environment(environment=environment):
+            return None
+        return environment.mpi
+
+    @staticmethod
+    def get_cluster_def(cluster, framework_config):
+        is_distributed = False
+        if not framework_config:
+            return cluster, is_distributed
+
+        cluster[TaskType.WORKER] = framework_config.n_workers
+        if framework_config.n_workers != 0:
+            is_distributed = True
+
+        return cluster, is_distributed
+
+    @classmethod
+    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+        worker_resources = cls.get_worker_resources(
+            environment=environment,
+            cluster=cluster,
+            is_distributed=is_distributed,
+        )
+
+        if not any([master_resources, worker_resources]):
+            return None
+
+        total_resources = PodResourcesConfig()
+
+        if master_resources:
+            total_resources += master_resources
+
+        for w_resources in six.itervalues(worker_resources or {}):
+            total_resources += w_resources
+
+        return total_resources.to_dict()

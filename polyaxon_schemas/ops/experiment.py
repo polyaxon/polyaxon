@@ -10,6 +10,7 @@ from polyaxon_schemas.ml.train import TrainSchema
 from polyaxon_schemas.ops.environments.experiments import (
     ExperimentEnvironmentSchema,
     HorovodConfig,
+    MPIConfig,
     MXNetConfig,
     PytorchConfig,
     TensorflowConfig
@@ -39,6 +40,8 @@ def validate_replicas(framework, replicas):
         TensorflowConfig.from_dict(config)
     if framework == 'horovod':
         HorovodConfig.from_dict(config)
+    if framework == 'mpi':
+        MPIConfig.from_dict(config)
     if framework == 'mxnet':
         MXNetConfig.from_dict(config)
     if framework == 'pytorch':
@@ -116,19 +119,31 @@ class ExperimentConfig(BaseRunConfig):
         self.horovod = self.get_horovod()
         self.mxnet = self.get_mxnet()
         self.pytorch = self.get_pytorch()
+        self.mpi = self.get_mpi()
+
+    def has_framework(self, framework):
+        return (
+            self.framework == framework and
+            self.replicas and
+            self.backend != ExperimentBackend.MPI
+        )
 
     def get_tensorflow(self):
-        if self.framework == ExperimentFramework.TENSORFLOW and self.replicas:
+        if self.has_framework(framework=ExperimentFramework.TENSORFLOW):
             return TensorflowConfig.from_dict(self.replicas.to_light_dict())
 
     def get_horovod(self):
-        if self.framework == ExperimentFramework.HOROVOD and self.replicas:
+        if self.has_framework(framework=ExperimentFramework.HOROVOD):
             return HorovodConfig.from_dict(self.replicas.to_light_dict())
 
     def get_mxnet(self):
-        if self.framework == ExperimentFramework.MXNET and self.replicas:
+        if self.has_framework(framework=ExperimentFramework.MXNET):
             return MXNetConfig.from_dict(self.replicas.to_light_dict())
 
     def get_pytorch(self):
-        if self.framework == ExperimentFramework.PYTORCH and self.replicas:
+        if self.has_framework(framework=ExperimentFramework.PYTORCH):
             return PytorchConfig.from_dict(self.replicas.to_light_dict())
+
+    def get_mpi(self):
+        if self.backend == ExperimentBackend.MPI and self.replicas:
+            return MPIConfig.from_dict(self.replicas.to_light_dict())

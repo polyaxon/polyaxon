@@ -565,8 +565,9 @@ class BuildBackend(object):
 class ExperimentBackend(object):
     NATIVE = 'native'
     KUBEFLOW = 'kubeflow'
+    MPI = 'mpi'
 
-    VALUES = [NATIVE, KUBEFLOW]
+    VALUES = [NATIVE, KUBEFLOW, MPI]
 
 
 class NotebookBackend(object):

@@ -286,6 +286,35 @@ class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
         self.worker = worker
 
 
+class MPISchema(BaseSchema):
+    n_workers = fields.Int(allow_none=True)
+    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return MPIConfig
+
+
+class MPIConfig(BaseConfig, FrameworkEnvironmentMixin):
+    """
+    MPI job environment config.
+
+    Args:
+        n_workers: `int`. The number of workers requested for training the model.
+        default_worker: `PodEnvironment`. The default pod environment to use for all workers.
+    """
+    IDENTIFIER = 'mpi'
+    SCHEMA = MPISchema
+
+    def __init__(self,
+                 n_workers=0,
+                 default_worker=None,
+                 ):
+        self.n_workers = n_workers
+        self.default_worker = default_worker
+        self.worker = None
+
+
 class PytorchSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
