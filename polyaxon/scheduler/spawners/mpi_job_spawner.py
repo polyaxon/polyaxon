@@ -103,7 +103,7 @@ class MPIJobSpawner(MPIJobSpawnerMixin, KFExperimentSpawner):
 
     def start_experiment(self):
         labels = self.resource_manager.experiment_labels
-        template_spec = self.create_multi_jobs(task_type=TaskType.WORKER),
+        template_spec = self.create_multi_jobs(task_type=TaskType.WORKER)
         resource_name = EXPERIMENT_KF_JOB_NAME_FORMAT.format(
             experiment_uuid=self.resource_manager.experiment_uuid)
         custom_object = self.resource_manager.get_custom_object(resource_name=resource_name,

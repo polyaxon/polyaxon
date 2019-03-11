@@ -522,7 +522,7 @@ def handle_experiment(experiment, response):
 
 
 def create_experiment_jobs(experiment, spawner):
-    cluster, is_distributed = spawner.spec.cluster_def
+    _, is_distributed = spawner.spec.cluster_def
     framework = experiment.specification.framework
     backend = experiment.specification.backend
 
