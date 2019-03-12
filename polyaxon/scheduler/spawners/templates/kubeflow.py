@@ -9,3 +9,7 @@ PYTORCH_JOB_KIND = "PyTorchJob"
 PYTORCH_JOB_PLURAL = "pytorchjobs"
 PYTORCH_JOB_VERSION = "v1beta1"
 PYTORCH_SPEC = 'pytorchReplicaSpecs'
+
+MPI_JOB_KIND = "MPIJob"
+MPI_JOB_PLURAL = "mpijobs"
+MPI_JOB_VERSION = "v1alpha1"

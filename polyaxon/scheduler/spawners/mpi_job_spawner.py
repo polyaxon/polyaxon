@@ -97,9 +97,9 @@ class MPIJobSpawnerMixin(object):
 
 
 class MPIJobSpawner(MPIJobSpawnerMixin, KFExperimentSpawner):
-    KIND = kubeflow.PYTORCH_JOB_KIND
-    VERSION = kubeflow.PYTORCH_JOB_VERSION
-    PLURAL = kubeflow.PYTORCH_JOB_PLURAL
+    KIND = kubeflow.MPI_JOB_KIND
+    VERSION = kubeflow.MPI_JOB_PLURAL
+    PLURAL = kubeflow.MPI_JOB_VERSION
 
     def start_experiment(self):
         labels = self.resource_manager.experiment_labels
