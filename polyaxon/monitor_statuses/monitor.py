@@ -144,7 +144,7 @@ def run(k8s_manager: 'K8SManager') -> None:
                     kwargs={'payload': pod_state})
 
             elif mpi_job_condition:
-                job_name = pod_state['details']['name']
+                job_name = pod_state['details']['pod_name']
                 parts = job_name.split('-')
                 if len(parts) != 4:
                     continue
