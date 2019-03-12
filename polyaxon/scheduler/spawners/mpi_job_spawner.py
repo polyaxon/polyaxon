@@ -1,4 +1,3 @@
-
 from constants.experiment_jobs import get_experiment_job_uuid
 from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
 from scheduler.spawners.kf_experiment_spawner import KFExperimentSpawner
@@ -98,8 +97,8 @@ class MPIJobSpawnerMixin(object):
 
 class MPIJobSpawner(MPIJobSpawnerMixin, KFExperimentSpawner):
     KIND = kubeflow.MPI_JOB_KIND
-    VERSION = kubeflow.MPI_JOB_PLURAL
-    PLURAL = kubeflow.MPI_JOB_VERSION
+    VERSION = kubeflow.MPI_JOB_VERSION
+    PLURAL = kubeflow.MPI_JOB_PLURAL
 
     def start_experiment(self):
         labels = self.resource_manager.experiment_labels
