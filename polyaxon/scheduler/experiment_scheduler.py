@@ -287,7 +287,7 @@ def handle_horovod_experiment(response):
 
 def create_mpi_experiment_jobs(experiment, spawner):
     cluster, is_distributed = spawner.spec.cluster_def
-    environment = spawner.spec.config.horovod
+    environment = spawner.spec.config.mpi
     worker_resources = MPISpecification.get_worker_resources(
         environment=environment,
         cluster=cluster,
@@ -319,14 +319,15 @@ def create_mpi_experiment_jobs(experiment, spawner):
                        node_selector=spawner.spec.master_node_selector,
                        affinity=spawner.spec.master_affinity,
                        tolerations=spawner.spec.master_tolerations)
-        create_job(job_uuid=worker_job_uuid,
-                   experiment=experiment,
-                   role=TaskType.WORKER,
-                   sequence=i,
-                   resources=worker_resources.get(i),
-                   node_selector=worker_node_selectors.get(i),
-                   affinity=worker_affinities.get(i),
-                   tolerations=worker_tolerations.get(i))
+        else:
+            create_job(job_uuid=worker_job_uuid,
+                       experiment=experiment,
+                       role=TaskType.WORKER,
+                       sequence=i,
+                       resources=worker_resources.get(i),
+                       node_selector=worker_node_selectors.get(i),
+                       affinity=worker_affinities.get(i),
+                       tolerations=worker_tolerations.get(i))
 
 
 def create_pytorch_experiment_jobs(experiment, spawner):

@@ -22,7 +22,7 @@ class MPIJobSpawnerMixin(object):
     def resources(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_resources = MPISpecification.get_worker_resources(
-            environment=self.spec.config.horovod,
+            environment=self.spec.config.mpi,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -34,7 +34,7 @@ class MPIJobSpawnerMixin(object):
     def node_selectors(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_node_selectors = MPISpecification.get_worker_node_selectors(
-            environment=self.spec.config.horovod,
+            environment=self.spec.config.mpi,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -46,7 +46,7 @@ class MPIJobSpawnerMixin(object):
     def affinities(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_affinities = MPISpecification.get_worker_affinities(
-            environment=self.spec.config.horovod,
+            environment=self.spec.config.mpi,
             cluster=cluster,
             is_distributed=is_distributed
         )
@@ -58,7 +58,7 @@ class MPIJobSpawnerMixin(object):
     def tolerations(self):
         cluster, is_distributed, = self.spec.cluster_def
         worker_tolerations = MPISpecification.get_worker_tolerations(
-            environment=self.spec.config.horovod,
+            environment=self.spec.config.mpi,
             cluster=cluster,
             is_distributed=is_distributed
         )
