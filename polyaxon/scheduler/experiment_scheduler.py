@@ -22,6 +22,7 @@ from scheduler.spawners.utils import get_job_definition
 from schemas.experiments import ExperimentBackend, ExperimentFramework
 from schemas.specifications import (
     HorovodSpecification,
+    MPISpecification,
     MXNetSpecification,
     PytorchSpecification,
     TensorflowSpecification
@@ -287,22 +288,22 @@ def handle_horovod_experiment(response):
 def create_mpi_experiment_jobs(experiment, spawner):
     cluster, is_distributed = spawner.spec.cluster_def
     environment = spawner.spec.config.horovod
-    worker_resources = HorovodSpecification.get_worker_resources(
+    worker_resources = MPISpecification.get_worker_resources(
         environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
-    worker_node_selectors = HorovodSpecification.get_worker_node_selectors(
+    worker_node_selectors = MPISpecification.get_worker_node_selectors(
         environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
-    worker_affinities = HorovodSpecification.get_worker_affinities(
+    worker_affinities = MPISpecification.get_worker_affinities(
         environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
     )
-    worker_tolerations = HorovodSpecification.get_worker_tolerations(
+    worker_tolerations = MPISpecification.get_worker_tolerations(
         environment=environment,
         cluster=cluster,
         is_distributed=is_distributed
