@@ -91,6 +91,8 @@ def run(k8s_manager: 'K8SManager') -> None:
             or 'tf-replica-index' in labels
         )
 
+        mpi_job_condition = 'mpi_job_name' in labels
+
         pytorch_job_condition = (
             conf.get('CONTAINER_NAME_PYTORCH_JOB') in pod_state['details']['container_statuses']
             or 'pytroch-replica-index' in labels
@@ -141,7 +143,20 @@ def run(k8s_manager: 'K8SManager') -> None:
                     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
                     kwargs={'payload': pod_state})
 
-            if experiment_job_condition:
+            elif mpi_job_condition:
+                job_name = pod_state['details']['name']
+                parts = job_name.split('-')
+                if len(parts) != 4:
+                    continue
+
+                # We augment the payload with standard Polyaxon requirement
+                pod_state['details']['labels']['job_uuid'] = get_experiment_job_uuid(
+                    experiment_uuid=labels['experiment_uuid'],
+                    task_type=labels['task_type'],
+                    task_index=parts[-1]
+                )
+
+            elif experiment_job_condition:
                 update_job_containers(event_object, status,
                                       conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
                 logger.debug("Sending state to handler %s, %s", status, labels)
