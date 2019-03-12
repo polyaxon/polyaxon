@@ -643,7 +643,7 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         if self.experiment.is_distributed:
-            job = self.experiment.jobs.order_by('create_at').first()
+            job = self.experiment.jobs.order_by('created_at').first()
             logs_path = get_experiment_job_logs_path(experiment=self.experiment, job=job)
         else:
             logs_path = get_experiment_logs_path(experiment=self.experiment)

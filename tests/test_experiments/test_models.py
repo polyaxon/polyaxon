@@ -428,10 +428,10 @@ class TestExperimentModel(BaseTest):
         experiment = ExperimentFactory(config=config.parsed_data)
         assert experiment.metrics.count() == 0
 
-        create_at = timezone.now()
+        created_at = timezone.now()
         experiments_set_metrics(experiment_id=experiment.id,
                                 data={
-                                    'created_at': create_at,
+                                    'created_at': created_at,
                                     'values': {'accuracy': 0.9, 'precision': 0.9}
                                 })
 
@@ -439,10 +439,10 @@ class TestExperimentModel(BaseTest):
 
         experiments_set_metrics(experiment_id=experiment.id,
                                 data=[{
-                                    'created_at': create_at,
+                                    'created_at': created_at,
                                     'values': {'accuracy': 0.9, 'precision': 0.9}
                                 }, {
-                                    'created_at': create_at,
+                                    'created_at': created_at,
                                     'values': {'accuracy': 0.9, 'precision': 0.9}
                                 }])
 
