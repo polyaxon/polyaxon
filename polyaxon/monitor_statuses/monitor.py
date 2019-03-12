@@ -56,6 +56,15 @@ def get_label_selector() -> str:
         conf.get('TYPE_LABELS_RUNNER'))
 
 
+def handle_experiment_job_condition(event_object, pod_state, status, labels, container_name):
+    update_job_containers(event_object, status, container_name)
+    logger.debug("Sending state to handler %s, %s", status, labels)
+    # Handle experiment job statuses
+    celery_app.send_task(
+        K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+        kwargs={'payload': pod_state})
+
+
 def run(k8s_manager: 'K8SManager') -> None:
     for (event_object, pod_state) in ocular.monitor(k8s_manager.k8s_api,
                                                     namespace=conf.get('K8S_NAMESPACE'),
@@ -122,12 +131,12 @@ def run(k8s_manager: 'K8SManager') -> None:
                     task_type=labels['task_type'],
                     task_index=labels['tf-replica-index']
                 )
-                update_job_containers(event_object, status, conf.get('CONTAINER_NAME_TF_JOB'))
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle experiment job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    kwargs={'payload': pod_state})
+                handle_experiment_job_condition(
+                    event_object=event_object,
+                    pod_state=pod_state,
+                    status=status,
+                    labels=labels,
+                    container_name=conf.get('CONTAINER_NAME_TF_JOB'))
 
             elif pytorch_job_condition:
                 # We augment the payload with standard Polyaxon requirement
@@ -136,12 +145,12 @@ def run(k8s_manager: 'K8SManager') -> None:
                     task_type=labels['task_type'],
                     task_index=labels['pytorch-replica-index']
                 )
-                update_job_containers(event_object, status, conf.get('CONTAINER_NAME_PYTORCH_JOB'))
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle experiment job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    kwargs={'payload': pod_state})
+                handle_experiment_job_condition(
+                    event_object=event_object,
+                    pod_state=pod_state,
+                    status=status,
+                    labels=labels,
+                    container_name=conf.get('CONTAINER_NAME_PYTORCH_JOB'))
 
             elif mpi_job_condition:
                 job_name = pod_state['details']['pod_name']
@@ -156,14 +165,20 @@ def run(k8s_manager: 'K8SManager') -> None:
                     task_index=parts[-1]
                 )
 
+                handle_experiment_job_condition(
+                    event_object=event_object,
+                    pod_state=pod_state,
+                    status=status,
+                    labels=labels,
+                    container_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
+
             elif experiment_job_condition:
-                update_job_containers(event_object, status,
-                                      conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
-                logger.debug("Sending state to handler %s, %s", status, labels)
-                # Handle experiment job statuses
-                celery_app.send_task(
-                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    kwargs={'payload': pod_state})
+                handle_experiment_job_condition(
+                    event_object=event_object,
+                    pod_state=pod_state,
+                    status=status,
+                    labels=labels,
+                    container_name=conf.get('CONTAINER_NAME_EXPERIMENT_JOB'))
 
         elif job_condition:
             update_job_containers(event_object, status, conf.get('CONTAINER_NAME_JOB'))
