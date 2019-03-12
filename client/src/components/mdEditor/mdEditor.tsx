@@ -43,7 +43,7 @@ export default class MDEditor extends React.Component<Props, State> {
   public render() {
     return (
       <div className="row">
-        <div className="col-md-12">
+        <div className="col-md-12 mde">
           {this.state.isEditMode
             ? <MDEdit content={this.props.content} onView={this.onView} onSave={this.props.onSave}/>
             : <MDView content={this.props.content} onEdit={this.onEdit}/>

@@ -47,36 +47,34 @@ export default class MDEdit extends React.Component<Props, State> {
 
   public render() {
     return (
-      <div className="row">
-        <div className="col-md-12">
-          <div className="row">
-            <div className="col-md-12">
-              <ReactMde
-                onChange={this.handleValueChange}
-                onTabChange={this.handleTabChange}
-                value={this.state.content}
-                generateMarkdownPreview={(markdown: any) =>
-                  Promise.resolve(sanitizeHtml(this.converter.makeHtml(markdown)))
-                }
-                selectedTab={this.state.tab}
-                minEditorHeight={200}
-                maxEditorHeight={500}
-                minPreviewHeight={200}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12 md-buttons">
-              <button className="btn btn-sm btn-default" onClick={() => this.onSave()}>
-                Save
-              </button>
-              <button className="btn btn-sm btn-default" onClick={() => this.props.onView()}>
-                Cancel
-              </button>
-            </div>
+      <>
+        <div className="row">
+          <div className="col-md-12">
+            <ReactMde
+              onChange={this.handleValueChange}
+              onTabChange={this.handleTabChange}
+              value={this.state.content}
+              generateMarkdownPreview={(markdown: any) =>
+                Promise.resolve(sanitizeHtml(this.converter.makeHtml(markdown)))
+              }
+              selectedTab={this.state.tab}
+              minEditorHeight={200}
+              maxEditorHeight={500}
+              minPreviewHeight={200}
+            />
           </div>
         </div>
-      </div>
+        <div className="row">
+          <div className="col-md-12 md-buttons">
+            <button className="btn btn-sm btn-default" onClick={() => this.onSave()}>
+              Save
+            </button>
+            <button className="btn btn-sm btn-default" onClick={() => this.props.onView()}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </>
     );
   }
 }
