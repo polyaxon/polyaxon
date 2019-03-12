@@ -172,6 +172,12 @@ class Experiment(DiffModel,
             return self.specification.cluster_def[1]
         return False
 
+    @property
+    def default_job_role(self) -> str:
+        if self.is_distributed:
+            return self.jobs.order_by('created_at').only('role').first().role
+        return TaskType.MASTER
+
     @cached_property
     def secret_refs(self) -> Optional[List[str]]:
         return self.specification.secret_refs
@@ -202,7 +208,7 @@ class Experiment(DiffModel,
 
     @property
     def calculated_status(self) -> str:
-        master_status = self.jobs.filter(role=TaskType.MASTER)[0].last_status
+        master_status = self.jobs.order_by('created_at').first().last_status
         calculated_status = master_status if JobLifeCycle.is_done(master_status) else None
         if calculated_status is None:
             calculated_status = ExperimentLifeCycle.jobs_status(self.last_job_statuses)

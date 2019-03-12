@@ -559,6 +559,15 @@ class TestExperimentModel(BaseTest):
         assert Experiment.objects.count() == 1
         assert Experiment.all.count() == 1
 
+    def test_default_job_role(self):
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
+            experiment = ExperimentFactory(
+                config=exec_experiment_resources_parsed_content.parsed_data)
+            ExperimentJobFactory(experiment=experiment, role=TaskType.PS)
+            ExperimentJobFactory(experiment=experiment, role=TaskType.MASTER)
+            ExperimentJobFactory(experiment=experiment, role=TaskType.WORKER)
+        assert experiment.default_job_role == TaskType.PS
+
 
 @pytest.mark.experiments_mark
 class TestExperimentCommit(BaseViewTest):

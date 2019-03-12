@@ -36,7 +36,6 @@ _logger = logging.getLogger('polyaxon.scheduler.experiment')
 def create_job(job_uuid,
                experiment,
                role=None,
-               k8s_replica=None,
                sequence=None,
                resources=None,
                node_selector=None,
@@ -44,11 +43,8 @@ def create_job(job_uuid,
                tolerations=None):
     job = ExperimentJob(uuid=uuid.UUID(job_uuid), experiment=experiment, definition={})
 
-    k8s_replica = k8s_replica or role
     if role:
         job.role = role
-    if k8s_replica:
-        job.k8s_replica = k8s_replica
 
     if sequence:
         job.sequence = sequence
@@ -132,12 +128,12 @@ def get_spawner_class(backend, framework):
 
 def create_tensorflow_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
-    k8s_replica = None
+    role = TaskType.MASTER
     if experiment.backend == ExperimentBackend.KUBEFLOW:
-        k8s_replica = TaskType.CHIEF
+        role = TaskType.CHIEF
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
-               k8s_replica=k8s_replica,
+               role=role,
                resources=spawner.spec.master_resources,
                node_selector=spawner.spec.master_node_selector,
                affinity=spawner.spec.master_affinity,
@@ -229,10 +225,8 @@ def handle_tensorflow_experiment(response):
 
 def create_horovod_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
-    k8s_replica = None
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
-               k8s_replica=k8s_replica,
                resources=spawner.spec.master_resources,
                node_selector=spawner.spec.master_node_selector,
                affinity=spawner.spec.master_affinity,
@@ -313,8 +307,7 @@ def create_mpi_experiment_jobs(experiment, spawner):
         if i == 0:
             create_job(job_uuid=worker_job_uuid,
                        experiment=experiment,
-                       role=TaskType.MASTER,
-                       k8s_replica=TaskType.WORKER,
+                       role=TaskType.WORKER,
                        resources=spawner.spec.master_resources,
                        node_selector=spawner.spec.master_node_selector,
                        affinity=spawner.spec.master_affinity,
@@ -332,10 +325,8 @@ def create_mpi_experiment_jobs(experiment, spawner):
 
 def create_pytorch_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
-    k8s_replica = None
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
-               k8s_replica=k8s_replica,
                resources=spawner.spec.master_resources,
                node_selector=spawner.spec.master_node_selector,
                affinity=spawner.spec.master_affinity,
@@ -391,10 +382,8 @@ def handle_pytorch_experiment(response):
 
 def create_mxnet_experiment_jobs(experiment, spawner):
     master_job_uuid = spawner.job_uuids[TaskType.MASTER][0]
-    k8s_replica = None
     create_job(job_uuid=master_job_uuid,
                experiment=experiment,
-               k8s_replica=k8s_replica,
                resources=spawner.spec.master_resources,
                node_selector=spawner.spec.master_node_selector,
                affinity=spawner.spec.master_affinity,

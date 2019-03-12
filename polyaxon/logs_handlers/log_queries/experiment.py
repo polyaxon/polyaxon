@@ -13,7 +13,7 @@ from schemas.tasks import TaskType
 
 def stream_logs(experiment: 'Experiment') -> Iterable[str]:
     pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(
-        task_type=TaskType.MASTER,  # We default to master
+        task_type=experiment.default_job_role,
         task_idx=0,
         experiment_uuid=experiment.uuid.hex)
     k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
@@ -26,7 +26,7 @@ def stream_logs(experiment: 'Experiment') -> Iterable[str]:
 
 def process_logs(experiment: 'Experiment', temp: bool = True) -> None:
     pod_id = EXPERIMENT_JOB_NAME_FORMAT.format(
-        task_type=TaskType.MASTER,  # We default to master
+        task_type=experiment.default_job_role,
         task_idx=0,
         experiment_uuid=experiment.uuid.hex)
     k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)

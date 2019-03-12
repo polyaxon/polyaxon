@@ -66,11 +66,6 @@ class Migration(migrations.Migration):
             field=models.CharField(blank=True, default='native', max_length=16, null=True),
         ),
         migrations.AddField(
-            model_name='experimentjob',
-            name='k8s_replica',
-            field=models.CharField(default='master', max_length=64),
-        ),
-        migrations.AddField(
             model_name='notebookjob',
             name='backend',
             field=models.CharField(blank=True, default='notebook', max_length=16, null=True),
