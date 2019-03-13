@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: keras
+
+tags: [examples]
+
 declarations:
   conv1_size: 32
   conv2_size: 64
