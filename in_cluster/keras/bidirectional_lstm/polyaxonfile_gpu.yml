@@ -30,12 +30,12 @@ build:
     - pip install --no-cache-dir -r requirements.txt
 
 run:
-  cmd: python model.py --max_features={{ max_features }} \
-                       --skip_top={{ skip_top }} \
-                       --maxlen={{ maxlen }} \
-                       --batch_size={{ batch_size }} \
-                       --num_nodes={{ num_nodes }} \
-                       --optimizer={{ optimizer }} \
-                       --log_learning_rate={{ log_learning_rate }} \
-                       --dropout={{ dropout }} \
-                       --epochs={{ epochs }}
+  cmd: python -u model.py --max_features={{ max_features }} \
+                          --skip_top={{ skip_top }} \
+                          --maxlen={{ maxlen }} \
+                          --batch_size={{ batch_size }} \
+                          --num_nodes={{ num_nodes }} \
+                          --optimizer={{ optimizer }} \
+                          --log_learning_rate={{ log_learning_rate }} \
+                          --dropout={{ dropout }} \
+                          --epochs={{ epochs }}

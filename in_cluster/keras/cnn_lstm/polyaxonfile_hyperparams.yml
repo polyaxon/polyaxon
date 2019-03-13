@@ -39,15 +39,15 @@ build:
     - pip install --no-cache-dir -r requirements.txt
 
 run:
-  cmd: python model.py --max_features={{ max_features }} \
-                       --skip_top={{ skip_top }} \
-                       --maxlen={{ maxlen }} \
-                       --embedding_size={{ embedding_size }} \
-                       --pool_size={{ pool_size }} \
-                       --kernel_size={{ kernel_size }} \
-                       --filters={{ filters }} \
-                       --lstm_output_size={{ lstm_output_size }} \
-                       --batch_size={{ batch_size }} \
-                       --optimizer={{ optimizer }} \
-                       --log_learning_rate={{ log_learning_rate }} \
-                       --epochs={{ epochs }}
+  cmd: python -u model.py --max_features={{ max_features }} \
+                          --skip_top={{ skip_top }} \
+                          --maxlen={{ maxlen }} \
+                          --embedding_size={{ embedding_size }} \
+                          --pool_size={{ pool_size }} \
+                          --kernel_size={{ kernel_size }} \
+                          --filters={{ filters }} \
+                          --lstm_output_size={{ lstm_output_size }} \
+                          --batch_size={{ batch_size }} \
+                          --optimizer={{ optimizer }} \
+                          --log_learning_rate={{ log_learning_rate }} \
+                          --epochs={{ epochs }}
