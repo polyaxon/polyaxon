@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: scikit-learn
+
+tags: [examples]
+
 declarations:
   C: 1.0
   max_features: 20000

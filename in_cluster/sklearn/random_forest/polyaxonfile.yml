@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: scikit-learn
+
+tags: [examples]
+
 declarations:
   n_estimators: 3
   max_features: 3
@@ -14,6 +18,6 @@ build:
     - pip install --no-cache-dir -r requirements.txt
 
 run:
-  cmd: python model.py --n_estimators={{ n_estimators }} \
-                       --max_features={{ max_features }} \
-                       --min_samples_leaf={{ min_samples_leaf }}
+  cmd: python -u model.py --n_estimators={{ n_estimators }} \
+                          --max_features={{ max_features }} \
+                          --min_samples_leaf={{ min_samples_leaf }}

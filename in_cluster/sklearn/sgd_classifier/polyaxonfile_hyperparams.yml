@@ -3,6 +3,10 @@ version: 1
 
 kind: group
 
+framework: scikit-learn
+
+tags: [examples]
+
 hptuning:
   concurrency: 5
   random_search:
@@ -24,8 +28,8 @@ build:
     - pip install --no-cache-dir -r requirements.txt
 
 run:
-  cmd: python model.py --loss={{ loss }} \
-                       --penalty={{ penalty }} \
-                       --l1_ratio={{ l1_ratio }} \
-                       --max_iter={{ max_iter }} \
-                       --tol={{ tol }}
+  cmd: python -u model.py --loss={{ loss }} \
+                          --penalty={{ penalty }} \
+                          --l1_ratio={{ l1_ratio }} \
+                          --max_iter={{ max_iter }} \
+                          --tol={{ tol }}

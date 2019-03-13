@@ -3,6 +3,10 @@ version: 1
 
 kind: group
 
+framework: scikit-learn
+
+tags: [examples]
+
 hptuning:
   concurrency: 5
   random_search:
