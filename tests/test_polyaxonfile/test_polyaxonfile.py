@@ -72,6 +72,19 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
         assert spec.eval is None
 
+    def test_simple_file_framework_passes(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file_framework.yml'))
+        spec = plxfile.specification
+        assert spec.version == 1
+        assert spec.logging is None
+        assert spec.tags is None
+        assert spec.build.dockerfile == 'Dockerfile'
+        assert spec.run.cmd == 'video_prediction_train --model=DNA --num_masks=1'
+        assert spec.environment is not None
+        assert spec.environment.resources.gpu.to_dict() == {'requests': 1, 'limits': 1}
+        assert spec.framework is not None
+        assert spec.is_experiment
+
     def test_simple_generator_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
         spec = plxfile.specification

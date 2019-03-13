@@ -72,7 +72,7 @@ class ExperimentSchema(BaseRunSchema):
     def validate_replicas(self, data):
         """Validate distributed experiment"""
         environment = data.get('environment')
-        if environment:
+        if environment and environment.replicas:
             validate_replicas(data.get('framework'), environment.replicas)
 
 
