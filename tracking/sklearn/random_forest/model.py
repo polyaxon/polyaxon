@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     # Polyaxon
     experiment = Experiment(project='random-forest')
-    experiment.create()
+    experiment.create(framework='scikit-learn', tags=['examples'])
     experiment.log_params(n_estimators=args.n_estimators,
                           max_features=args.max_features,
                           min_samples_leaf=args.min_samples_leaf)

@@ -219,7 +219,7 @@ if __name__ == '__main__':
 
     # Polyaxon
     experiment = Experiment('mnist')
-    experiment.create(tags=['tensorflow'])
+    experiment.create(framework='tensorflow', tags=['examples'])
     experiment.log_params(
         conv1_size=args.conv1_size,
         conv1_out=args.conv1_out,

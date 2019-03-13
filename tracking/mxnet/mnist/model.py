@@ -60,7 +60,6 @@ def model(context,
     return net.score(val_iter, mx.metric.Accuracy())[0][1]
 
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -124,7 +123,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     experiment = Experiment('mnist')
-    experiment.create(tags=['mxnet'])
+    experiment.create(framework='mxnet', tags=['examples'])
     experiment.log_params(conv1_kernel=args.conv1_kernel,
                           conv1_filters=args.conv1_filters,
                           conv1_activation=args.conv1_activation,

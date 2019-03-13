@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     # Polyaxon
     experiment = Experiment('iris')
-    experiment.create(tags=['xgboost'])
+    experiment.create(framework='xgboost', tags=['examples'])
     experiment.log_params(log_learning_rate=args.log_learning_rate,
                           max_depth=args.max_depth,
                           num_rounds=args.num_rounds,

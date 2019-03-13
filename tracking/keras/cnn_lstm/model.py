@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
     # Polyaxon
     experiment = Experiment('cnn-lstm')
-    experiment.create(tags=['keras'])
+    experiment.create(framework='keras', tags=['examples'])
     experiment.log_params(max_features=args.max_features,
                           skip_top=args.skip_top,
                           maxlen=args.maxlen,

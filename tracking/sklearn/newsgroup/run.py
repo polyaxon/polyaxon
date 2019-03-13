@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     # Polyaxon
     experiment = Experiment(project='newsgroup')
-    experiment.create()
+    experiment.create(framework='scikit-learn', tags=['examples'])
     experiment.log_params(ngram_range=(args.ngram, args.ngram),
                           max_features=args.max_features,
                           max_df=args.max_df,

@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     # Polyaxon
     experiment = Experiment(project='sgd-classifier')
-    experiment.create()
+    experiment.create(framework='scikit-learn', tags=['examples'])
     experiment.log_params(loss=args.loss,
                           penalty=args.penalty,
                           l1_ratio=args.l1_ratio,
