@@ -1,4 +1,4 @@
-coverage==4.5.1
+coverage==4.5.3
 flaky==3.4.0
 isort==4.3.4
 mock==2.0.0
