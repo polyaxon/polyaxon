@@ -80,12 +80,24 @@ class Experiment(BaseTracker):
             experiment_id=self.experiment_id)
 
     @check_no_op
-    def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
+    def create(self,
+               name=None,
+               framework=None,
+               backend=None,
+               tags=None,
+               description=None,
+               config=None,
+               base_outputs_path=None):
         experiment_config = {'run_env': get_run_env()} if self.track_env else {}
         if name:
             experiment_config['name'] = name
         if tags:
             experiment_config['tags'] = tags
+        if framework:
+            experiment_config['framework'] = framework
+        experiment_config['backend'] = 'external'
+        if backend:
+            experiment_config['backend'] = backend
         if description:
             experiment_config['description'] = description
         if config:
@@ -190,6 +202,24 @@ class Experiment(BaseTracker):
         patch_dict = {'tags': validate_tags(tags)}
         if reset is False:
             patch_dict['merge'] = True
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict=patch_dict,
+                                                 background=True)
+
+    @check_no_op
+    def log_framework(self, framework):
+        patch_dict = {'framework': framework}
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict=patch_dict,
+                                                 background=True)
+
+    @check_no_op
+    def log_backend(self, backend):
+        patch_dict = {'backend': backend}
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
                                                  experiment_id=self.experiment_id,
