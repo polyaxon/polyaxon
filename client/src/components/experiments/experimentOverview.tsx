@@ -87,7 +87,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                 <Name
                   name="Experiment Name"
                   value={experiment.name || experiment.unique_name}
-                  icon="fa-cube"
+                  icon="fas fa-cube"
                   onSave={(name: string) =>  { this.props.onUpdate({name}); }}
                 />
               </div>
@@ -121,7 +121,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
             {experiment.has_tensorboard &&
             <div className="meta">
               <span className="meta-info meta-dashboard">
-                <i className="fa fa-link icon" aria-hidden="true"/>
+                <i className="fas fa-link icon" aria-hidden="true"/>
                 <a
                   href={getExperimentTensorboardUrl(experiment.project, experiment.id)}
                   className="title-link"
@@ -141,7 +141,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                     className="meta-info"
                     onClick={() => this.setState({ openDeclarations: !this.state.openDeclarations })}
                   >
-                    <i className="fa fa-gear icon" aria-hidden="true"/>
+                    <i className="fas fa-cog icon" aria-hidden="true"/>
                     <span className="title">Declarations:</span>
                   </span>
                 </div>
@@ -162,7 +162,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                     className="meta-info"
                     onClick={() => this.setState({ openMetrics: !this.state.openMetrics })}
                   >
-                    <i className="fa fa-area-chart icon" aria-hidden="true"/>
+                    <i className="fas fa-chart-area icon" aria-hidden="true"/>
                     <span className="title">Metrics:</span>
                   </span>
                 </div>
@@ -183,7 +183,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                     className="meta-info"
                     onClick={() => this.setState({ openDataRefs: !this.state.openDataRefs })}
                   >
-                    <i className="fa fa-database icon" aria-hidden="true"/>
+                    <i className="fas fa-database icon" aria-hidden="true"/>
                     <span className="title">Data refs:</span>
                   </span>
                 </div>
@@ -204,7 +204,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                     className="meta-info"
                     onClick={() => this.setState({ openRunEnv: !this.state.openRunEnv })}
                   >
-                    <i className="fa fa-code icon" aria-hidden="true"/>
+                    <i className="fas fa-code icon" aria-hidden="true"/>
                     <span className="title">Run environment:</span>
                   </span>
                 </div>
@@ -225,7 +225,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                     className="meta-info"
                     onClick={() => this.setState({ openCodeRef: !this.state.openCodeRef })}
                   >
-                    <i className="fa fa-code-fork icon" aria-hidden="true"/>
+                    <i className="fas fa-code-branch icon" aria-hidden="true"/>
                     <span className="title">Code reference:</span>
                   </span>
                 </div>
@@ -246,7 +246,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                     className="meta-info"
                     onClick={() => this.setState({ openPackages: !this.state.openPackages })}
                   >
-                    <i className="fa fa-file-archive-o icon" aria-hidden="true"/>
+                    <i className="far fa-file-archive icon" aria-hidden="true"/>
                     <span className="title">Packages:</span>
                   </span>
                 </div>

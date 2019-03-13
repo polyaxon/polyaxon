@@ -47,13 +47,13 @@ export default class Groups extends React.Component<Props, {}> {
         filter: 'search_algorithm',
         type: 'value',
         desc: 'search_algorithm: bo or search_algorithm: random|hyperband',
-        icon: 'asterisk'
+        icon: 'fas fa-asterisk'
       },
       {
         filter: 'concurrency',
         type: 'scalar',
         desc: FILTER_EXAMPLES.int('concurrency'),
-        icon: 'share-alt'
+        icon: 'fas fa-grip-lines-vertical'
       }
     ] as FilterOption[];
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;

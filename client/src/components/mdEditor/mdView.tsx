@@ -26,11 +26,11 @@ export default class MDView extends React.Component<Props, {}> {
         <div className="md-header">
           <div className="row">
             <div className="col-md-11 block">
-              <i className="fa fa-book icon" aria-hidden="true"/> Readme
+              <i className="fas fa-book icon" aria-hidden="true"/> Readme
             </div>
             <div className="col-md-1 block">
                 <span className="md-edit" onClick={() => this.props.onEdit()}>
-                  <i className="fa fa-pencil icon pull-right" aria-hidden="true"/>
+                  <i className="fas fa-pencil-alt icon pull-right" aria-hidden="true"/>
                 </span>
             </div>
           </div>

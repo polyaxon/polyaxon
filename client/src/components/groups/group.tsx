@@ -52,7 +52,7 @@ function Group({
       <td className="block">
         <LinkContainer to={getGroupUrl(values[0], values[1], group.id)}>
           <a className="title">
-            <i className="fa fa-cubes icon" aria-hidden="true"/>
+            <i className="fas fa-cubes icon" aria-hidden="true"/>
             {group.name || group.unique_name}
           </a>
         </LinkContainer>

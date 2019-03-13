@@ -10,7 +10,7 @@ export interface Props {
 function BuildCountMetaInfo({count, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-gavel"
+      icon="fas fa-gavel"
       name="Builds"
       value={count}
       inline={inline}

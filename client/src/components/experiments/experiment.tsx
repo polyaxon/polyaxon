@@ -80,7 +80,7 @@ function Experiment({
     experimentActions.push(
       {
         name: 'Remove from selection',
-        icon: 'minus',
+        icon: 'fas fa-minus',
         callback: removeFromSelection
       }
     );
@@ -99,7 +99,7 @@ function Experiment({
       <td className="block">
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.id)}>
           <a className="title">
-            <i className="fa fa-cube icon" aria-hidden="true"/>
+            <i className="fas fa-cube icon" aria-hidden="true"/>
             {experiment.name || experiment.unique_name}
           </a>
         </LinkContainer>

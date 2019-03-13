@@ -11,7 +11,7 @@ export interface Props {
 function GroupLinkMetaInfo({value, link, inline = false}: Props) {
   return (
     <LinkMetaInfo
-      icon="fa-cubes"
+      icon="fas fa-cubes"
       name="Group"
       value={value}
       link={link}

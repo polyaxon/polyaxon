@@ -57,7 +57,7 @@ export default class GroupOverview extends React.Component<Props, {}> {
                 <Name
                   name="Group Name"
                   value={group.name || group.unique_name}
-                  icon="fa-cubes"
+                  icon="fas fa-cubes"
                   onSave={(name: string) =>  { this.props.onUpdate({name}); }}
                 />
               </div>
@@ -87,7 +87,7 @@ export default class GroupOverview extends React.Component<Props, {}> {
                 />
                 {group.current_iteration > 0 &&
                 <MetaInfo
-                  icon="fa-refresh"
+                  icon="fas fa-sync-alt"
                   name="Iteration"
                   value={group.current_iteration}
                   inline={true}
@@ -103,37 +103,37 @@ export default class GroupOverview extends React.Component<Props, {}> {
                 inline={true}
               />
               <MetaInfo
-                icon="fa-hourglass-1"
+                icon="fas fa-hourglass-start"
                 name="Scheduled"
                 value={group.num_scheduled_experiments}
                 inline={true}
               />
               <MetaInfo
-                icon="fa-hourglass-end"
+                icon="fas fa-hourglass-end"
                 name="Pending"
                 value={group.num_pending_experiments}
                 inline={true}
               />
               <MetaInfo
-                icon="fa-bolt"
+                icon="fas fa-bolt"
                 name="Running"
                 value={group.num_running_experiments}
                 inline={true}
               />
               <MetaInfo
-                icon="fa-check"
+                icon="fas fa-check"
                 name="Succeeded"
                 value={group.num_succeeded_experiments}
                 inline={true}
               />
               <MetaInfo
-                icon="fa-close"
+                icon="fas fa-times"
                 name="Failed"
                 value={group.num_failed_experiments}
                 inline={true}
               />
               <MetaInfo
-                icon="fa-stop"
+                icon="fas fa-stop"
                 name="Stopped"
                 value={group.num_stopped_experiments}
                 inline={true}
@@ -142,7 +142,7 @@ export default class GroupOverview extends React.Component<Props, {}> {
             {group.has_tensorboard &&
             <div className="meta">
               <span className="meta-info meta-dashboard">
-                <i className="fa fa-link icon" aria-hidden="true"/>
+                <i className="fas fa-link icon" aria-hidden="true"/>
                 <a
                   href={getGroupTensorboardUrl(group.project, group.id)}
                   className="title-link"

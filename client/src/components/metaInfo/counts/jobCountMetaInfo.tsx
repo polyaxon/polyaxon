@@ -10,7 +10,7 @@ export interface Props {
 function JobCountMetaInfo({count, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-tasks"
+      icon="fas fa-tasks"
       name="Jobs"
       value={count}
       inline={inline}

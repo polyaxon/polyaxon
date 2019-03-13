@@ -22,7 +22,7 @@ export default class Bookmarks extends React.Component<Props, {}> {
       <div className="row">
         <div className="col-md-12">
           <Breadcrumb
-            icon="fa-star"
+            icon="fas fa-star"
             links={[
               {name: this.props.user, value: getUserUrl(this.props.user)},
               {name: 'bookmarks'}]}

@@ -5,7 +5,7 @@ export interface Props {
 }
 
 function ResourcesMetaInfo({resources}: Props) {
-  let component = resources ? (
+  const component = resources ? (
     <div className="meta meta-resources">
       {Object.keys(resources)
         .filter(
@@ -15,7 +15,7 @@ function ResourcesMetaInfo({resources}: Props) {
         .map(
           (res, idx) =>
             <span className="meta-info" key={idx}>
-                <i className="fa fa-microchip icon" aria-hidden="true"/>
+                <i className="fas fa-microchip icon" aria-hidden="true"/>
                 <span className="title">{res}:</span>
               {resources[res].requests || ''} - {resources[res].limits || ''}
               </span>

@@ -11,7 +11,7 @@ export interface Props {
 function BuildLinkMetaInfo({value, link, inline = false}: Props) {
   return (
     <LinkMetaInfo
-      icon="fa-gavel"
+      icon="fas fa-gavel"
       name="Build"
       value={value}
       link={link}

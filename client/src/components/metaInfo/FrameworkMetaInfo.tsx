@@ -10,7 +10,7 @@ export interface Props {
 function FrameworkMetaInfo({value, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-superpowers"
+      icon="fas fa-project-diagram"
       name="Framework"
       value={value}
       inline={inline}

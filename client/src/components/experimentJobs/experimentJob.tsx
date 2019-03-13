@@ -25,7 +25,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
       <div className="col-md-7 block">
         <LinkContainer to={getExperimentJobUrl(values[0], values[1], experimentJob.experiment, experimentJob.id)}>
           <a className="title">
-            <i className="fa fa-tasks icon" aria-hidden="true"/>
+            <i className="fas fa-tasks icon" aria-hidden="true"/>
             {experimentJob.name || experimentJob.unique_name}
           </a>
         </LinkContainer>
@@ -34,7 +34,7 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
         </div>
         <div className="meta">
           <span className="meta-info">
-            <i className="fa fa-certificate icon" aria-hidden="true"/>
+            <i className="fas fa-certificate icon" aria-hidden="true"/>
             <span className="title">Role:</span>
             {experimentJob.role}
           </span>

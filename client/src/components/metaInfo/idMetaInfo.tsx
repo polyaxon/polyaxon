@@ -10,7 +10,7 @@ export interface Props {
 function IdMetaInfo({value, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-circle"
+      icon="fas fa-circle"
       name="id"
       value={value}
       inline={inline}

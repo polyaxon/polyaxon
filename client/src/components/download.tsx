@@ -15,7 +15,7 @@ function Download({url, name, pullRight, hideText}: Props) {
         href={url}
         download={name}
       >
-        <i className="fa fa-cloud-download icon" aria-hidden="true"/> {!hideText && 'Download'}
+        <i className="fas fa-cloud-download-alt icon" aria-hidden="true"/> {!hideText && 'Download'}
       </a>
     </span>
   );

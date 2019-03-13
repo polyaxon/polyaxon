@@ -162,21 +162,20 @@ export default class Outputs extends React.Component<Props, State> {
       } else {
         const extension = this.getExtension(props.node.name);
         if (this.isImage(extension)) {
-          iconType = 'file-image-o';
+          iconType = 'far fa-file-image';
         } else if (this.isCode(extension)) {
-          iconType = 'file-code-o';
+          iconType = 'far fa-file-code';
         } else if (this.isText(extension)) {
-          iconType = 'file-text-o';
+          iconType = 'far fa-file-text';
         } else {
-          iconType = 'file';
+          iconType = 'fas fa-file';
         }
       }
-      const iconClass = `fa fa-${iconType}`;
 
       return (
         <div style={props.style.base}>
           <div style={props.style.title}>
-            <i className={iconClass}/> {props.node.name}
+            <i className={iconType}/> {props.node.name}
           </div>
         </div>
       );
@@ -185,7 +184,7 @@ export default class Outputs extends React.Component<Props, State> {
     const nodeLoading = (props: any) => {
       return (
         <div style={props.style}>
-          <i className="fa fa-refresh"/> loading...
+          <i className="fas fa-sync-alt"/> loading...
         </div>
       );
     };

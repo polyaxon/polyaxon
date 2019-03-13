@@ -58,7 +58,7 @@ export default class BuildOverview extends React.Component<Props, {}> {
                 <Name
                   name="Build Name"
                   value={build.name || build.unique_name}
-                  icon="fa-gavel"
+                  icon="fas fa-gavel"
                   onSave={(name: string) =>  { this.props.onUpdate({name}); }}
                 />
               </div>

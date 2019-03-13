@@ -56,7 +56,7 @@ export default class BuildDetail extends React.Component<Props, {}> {
         <div className="col-md-12">
           <div className="entity-details">
             <Breadcrumb
-              icon="fa-gavel"
+              icon="fas fa-gavel"
               links={breadcrumbLinks}
               bookmark={bookmark}
               actions={

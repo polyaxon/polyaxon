@@ -14,7 +14,7 @@ function BookmarkStar({active, callback}: Props) {
   return (
     <span className={`icon-bookmark ${className}`}>
       <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltipId">{tooltip}</Tooltip>}>
-        <a onClick={callback}><i className="fa fa-star" aria-hidden="true"/> </a>
+        <a onClick={callback}><i className="fas fa-star" aria-hidden="true"/> </a>
       </OverlayTrigger>
     </span>
   );

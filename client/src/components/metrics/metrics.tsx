@@ -412,7 +412,7 @@ export default class Metrics extends React.Component<Props, State> {
           bsStyle="default"
           bsSize="small"
         >
-          <i className="fa fa-clone icon" aria-hidden="true"/> Views
+          <i className="fas fa-clone icon" aria-hidden="true"/> Views
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-large">
           {this.props.views.map(
@@ -613,13 +613,13 @@ export default class Metrics extends React.Component<Props, State> {
             <div className="btn-group pull-left">
               {viewsList}
               <button className="btn btn-sm btn-default" onClick={() => this.handleShow('showViewModal')}>
-                <i className="fa fa-download icon" aria-hidden="true"/> Save view
+                <i className="fas fa-download icon" aria-hidden="true"/> Save view
               </button>
             </div>
             <div className="input-group pull-right chart-view-tools">
               <span>
                 <button className="btn btn-sm btn-default" onClick={() => this.handleShow('showChartModal')}>
-                  <i className="fa fa-plus icon" aria-hidden="true"/> Add chart
+                  <i className="fas fa-plus icon" aria-hidden="true"/> Add chart
                 </button>
               </span>
               <span>
@@ -649,8 +649,8 @@ export default class Metrics extends React.Component<Props, State> {
               <span>
                 <button className="btn btn-sm btn-default chart-display" onClick={this.setLayout}>
                   {this.state.isGrid
-                    ? <span><i className="fa fa-bars icon" aria-hidden="true"/> List</span>
-                    : <span><i className="fa fa-th-large icon" aria-hidden="true"/> Grid</span>
+                    ? <span><i className="fas fa-bars icon" aria-hidden="true"/> List</span>
+                    : <span><i className="fas fa-th-large icon" aria-hidden="true"/> Grid</span>
                   }
                 </button>
               </span>

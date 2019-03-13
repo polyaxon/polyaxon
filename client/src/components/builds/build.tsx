@@ -52,7 +52,7 @@ function Build({
       <td className="block">
         <LinkContainer to={getBuildUrl(values[0], values[1], build.id)}>
           <a className="title">
-            <i className="fa fa-gavel icon" aria-hidden="true"/>
+            <i className="fas fa-gavel icon" aria-hidden="true"/>
             {build.name || build.unique_name}
           </a>
         </LinkContainer>

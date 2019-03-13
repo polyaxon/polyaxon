@@ -11,7 +11,7 @@ export interface Props {
 function CloningLinkMetaInfo({cloning, inline = false}: Props) {
   return (
     <LinkMetaInfo
-      icon="fa-clone"
+      icon="fas fa-clone"
       name={cloning.strategy}
       value={cloning.original}
       link={cloning.link}

@@ -61,7 +61,7 @@ function Job({
       <td className="block">
         <LinkContainer to={getJobUrl(values[0], values[1], job.id)}>
           <a className="title">
-            <i className="fa fa-tasks icon" aria-hidden="true"/>
+            <i className="fas fa-tasks icon" aria-hidden="true"/>
             {job.name || job.unique_name}
           </a>
         </LinkContainer>

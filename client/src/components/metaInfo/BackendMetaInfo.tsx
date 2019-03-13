@@ -10,7 +10,7 @@ export interface Props {
 function BackendMetaInfo({value, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-bars"
+      icon="fas fa-bars"
       name="Backend"
       value={value || 'native'}
       inline={inline}

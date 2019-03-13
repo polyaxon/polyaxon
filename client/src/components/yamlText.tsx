@@ -107,7 +107,7 @@ function YamlText({config, configText, title}: Props) {
             <div className="text-content">
               <CopyToClipboard text={processedText}>
                 <span className="pull-right btn btn-sm btn-default">
-                  <i className={`fa fa-clipboard icon`} aria-hidden="true"/> Copy
+                  <i className={`fas fa-copy icon`} aria-hidden="true"/> Copy
                 </span>
               </CopyToClipboard>
               <p>{processedText}</p>

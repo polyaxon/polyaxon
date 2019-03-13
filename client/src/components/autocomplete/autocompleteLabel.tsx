@@ -17,7 +17,7 @@ export default function AutocompleteLabel({value, onClick, type}: AutocompleteLa
       <span className="label autocomplete-label autocomplete-label-value">
         <span>{value}</span>
         <span className="remove" onClick={() => onClick(value, type)}>
-          <i className="fa fa-close icon" aria-hidden="true"/>
+          <i className="fas fa-times icon" aria-hidden="true"/>
         </span>
       </span>
     </span>

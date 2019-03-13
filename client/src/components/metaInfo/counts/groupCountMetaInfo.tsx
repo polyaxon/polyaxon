@@ -10,7 +10,7 @@ export interface Props {
 function GroupCountMetaInfo({count, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-cubes"
+      icon="fas fa-cubes"
       name="Experiment Groups"
       value={count}
       inline={inline}

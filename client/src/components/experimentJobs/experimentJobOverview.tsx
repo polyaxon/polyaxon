@@ -45,13 +45,13 @@ export default class ExperimentJobOverview extends React.Component<Props, {}> {
                 <Name
                   name="Job Name"
                   value={job.name || job.unique_name}
-                  icon="fa-tasks"
+                  icon="fas fa-tasks"
                 />
               </div>
             </div>
             <div className="meta">
                <span className="meta-info">
-                 <i className="fa fa-certificate icon" aria-hidden="true"/>
+                 <i className="fas fa-certificate icon" aria-hidden="true"/>
                  <span className="title">Role:</span>
                  {job.role}
                </span>

@@ -10,7 +10,7 @@ export interface Props {
 function ConcurrencyMetaInfo({concurrency, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-gears"
+      icon="fas fa-grip-lines-vertical"
       name="Concurrency"
       value={concurrency}
       inline={inline}

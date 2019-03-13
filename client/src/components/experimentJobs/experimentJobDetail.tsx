@@ -50,7 +50,7 @@ export default class JobDetail extends React.Component<Props, {}> {
         <div className="col-md-12">
           <div className="entity-details">
             <Breadcrumb
-              icon="fa-tasks"
+              icon="fas fa-tasks"
               links={breadcrumbLinks}
             />
             <LinkedTab

@@ -27,7 +27,7 @@ function StatusItem({status, onClick}: Props) {
       <div className="col-md-7 block">
         {status.traceback &&
         <button className="btn btn-xs btn-default pull-left btn-traceback" onClick={onClick}>
-          <i className="fa fa-question icon" aria-hidden="true"/>
+          <i className="fas fa-question icon" aria-hidden="true"/>
         </button>
         }<Description description={status.message}/>
       </div>

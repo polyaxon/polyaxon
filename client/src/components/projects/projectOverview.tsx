@@ -38,7 +38,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             />
             <div className="meta">
               <MetaInfo
-                icon="fa-lock"
+                icon="fas fa-unlock-alt"
                 name="Visibility"
                 value={visibility}
                 inline={true}
@@ -70,7 +70,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             {project.has_tensorboard &&
             <div className="meta">
             <span className="meta-info meta-dashboard">
-              <i className="fa fa-link icon" aria-hidden="true"/>
+              <i className="fas fa-link icon" aria-hidden="true"/>
               <a href={getProjectTensorboardUrl(project.unique_name)} className="title-link">Tensorboard</a>
             </span>
             </div>
@@ -78,7 +78,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             {project.has_notebook &&
             <div className="meta">
             <span className="meta-info meta-dashboard">
-              <i className="fa fa-link icon" aria-hidden="true"/>
+              <i className="fas fa-link icon" aria-hidden="true"/>
               <a href={getNotebookUrl(project.unique_name)} className="title-link">Notebook</a>
             </span>
             </div>

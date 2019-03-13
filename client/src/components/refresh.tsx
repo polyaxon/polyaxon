@@ -12,7 +12,7 @@ function Refresh({callback, pullRight}: Props) {
         className="btn btn-sm btn-default"
         onClick={callback}
       >
-        <i className="fa fa-refresh icon" aria-hidden="true"/> Refresh
+        <i className="fas fa-sync-alt icon" aria-hidden="true"/> Refresh
       </button>
     </span>
   );

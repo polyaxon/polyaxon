@@ -16,7 +16,7 @@ export interface Props {
 function Breadcrumb({icon, links, bookmark, actions}: Props) {
   return (
     <ol className="breadcrumb">
-      {icon && <i className={`fa ${icon} icon`} aria-hidden="true"/>}
+      {icon && <i className={`${icon} icon`} aria-hidden="true"/>}
       {links.map(
         (link, idx) => {
           if (link.value) {

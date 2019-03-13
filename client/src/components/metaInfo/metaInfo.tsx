@@ -22,7 +22,7 @@ function MetaInfo({icon, name, value, tooltip, inline = false, extraClass = ''}:
   function getInfo() {
     const info = (
       <span className={`meta-info ${extraClass}`}>
-        <i className={`fa ${icon} icon`} aria-hidden="true"/>
+        <i className={`${icon} icon`} aria-hidden="true"/>
         <span className="title">{name}:</span>
         {value}
       </span>

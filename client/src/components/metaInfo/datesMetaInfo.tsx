@@ -16,7 +16,7 @@ function DatesMetaInfo({createdAt, updatedAt, inline = false}: Props) {
     <span>
         {createdAtM &&
         <MetaInfo
-          icon="fa-clock-o"
+          icon="far fa-clock"
           name="Created"
           tooltip={createdAtM.format('YYYY-MM-DD HH:mm:ss')}
           value={createdAtM.fromNow()}
@@ -25,7 +25,7 @@ function DatesMetaInfo({createdAt, updatedAt, inline = false}: Props) {
         }
       {updatedAtM &&
       <MetaInfo
-        icon="fa-clock-o"
+        icon="far fa-clock"
         name="Last updated"
         tooltip={updatedAtM.format('YYYY-MM-DD HH:mm:ss')}
         value={updatedAtM.fromNow()}

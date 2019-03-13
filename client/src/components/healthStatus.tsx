@@ -62,7 +62,7 @@ export default class HealthStatus extends React.Component<Props, {}> {
       <div className="jumbotron jumbotron-action health-status">
         {services.map((service) => (
           <div className={getClassName(status[service])}>
-            <i className="fa fa-circle icon" aria-hidden="true"/> {service}
+            <i className="fas fa-circle icon" aria-hidden="true"/> {service}
           </div>
         ))}
       </div>

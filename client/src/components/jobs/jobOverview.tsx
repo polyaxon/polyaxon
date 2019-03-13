@@ -57,7 +57,7 @@ export default class JobOverview extends React.Component<Props, {}> {
                 <Name
                   name="Group Name"
                   value={job.name || job.unique_name}
-                  icon="fa-tasks"
+                  icon="fas fa-tasks"
                   onSave={(name: string) =>  { this.props.onUpdate({name}); }}
                 />
               </div>

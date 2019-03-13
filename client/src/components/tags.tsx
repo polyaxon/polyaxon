@@ -110,7 +110,7 @@ export default class Tags extends React.Component<Props, State> {
             {tags && !this.state.isEditMode && tags.map(
               (tag, idx) =>
                 <span key={idx} className="label label-tags">
-              <i className="fa fa-tags icon" aria-hidden="true"/> {tag}
+              <i className="fas fa-tags icon" aria-hidden="true"/> {tag}
             </span>
             )}
             {this.state.isEditMode &&

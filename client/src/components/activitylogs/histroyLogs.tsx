@@ -8,7 +8,7 @@ function HistoryLogs() {
     <div className="row">
       <div className="col-md-12">
         <Breadcrumb
-          icon="fa-history"
+          icon="fas fa-history"
           links={[
             {name: 'Recently viewed'}]}
         />

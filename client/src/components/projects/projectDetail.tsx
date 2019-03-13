@@ -52,7 +52,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
       <div className="row">
         <div className="col-md-12">
           <Breadcrumb
-            icon="fa-server"
+            icon="fas fa-server"
             links={[
               {name: project.user, value: getUserUrl(project.user)},
               {name: project.name}]}

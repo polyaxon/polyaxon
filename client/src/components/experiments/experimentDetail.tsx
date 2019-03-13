@@ -82,7 +82,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
         <div className="col-md-12">
           <div className="entity-details">
             <Breadcrumb
-              icon="fa-cube"
+              icon="fas fa-cube"
               links={breadcrumbLinks}
               bookmark={bookmark}
               actions={

@@ -23,16 +23,16 @@ function Actions({onDelete, onStop, isRunning = false, pullRight = false}: Props
           bsSize="small"
           noCaret={true}
         >
-            <i className="fa fa-ellipsis-h icon" aria-hidden="true"/>
+            <i className="fas fa-ellipsis-h icon" aria-hidden="true"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
         {onStop && isRunning &&
         <MenuItem eventKey="1" onClick={onStop}>
-          <i className="fa fa-stop icon" aria-hidden="true"/> Stop
+          <i className="fas fa-stop icon" aria-hidden="true"/> Stop
         </MenuItem>
         }
           <MenuItem eventKey="2" onClick={onDelete}>
-          <i className="fa fa-trash icon" aria-hidden="true"/> Delete
+          <i className="fas fa-trash icon" aria-hidden="true"/> Delete
         </MenuItem>
         </Dropdown.Menu>
       </Dropdown>

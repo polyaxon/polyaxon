@@ -10,7 +10,7 @@ export interface Props {
 function GroupType({groupTyp, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-navicon"
+      icon="fas fa-layer-group"
       name="Type"
       value={groupTyp}
       inline={inline}

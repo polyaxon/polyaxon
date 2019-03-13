@@ -18,7 +18,7 @@ function TaskRunMetaInfo({startedAt, finishedAt, inline = false}: Props) {
     <span>
         {startedAtM &&
         <MetaInfo
-          icon="fa-clock-o"
+          icon="far fa-clock"
           name="Started"
           tooltip={startedAtM.format('YYYY-MM-DD HH:mm:ss')}
           value={startedAtM.fromNow()}
@@ -27,7 +27,7 @@ function TaskRunMetaInfo({startedAt, finishedAt, inline = false}: Props) {
         }
       {finishedAtM &&
       <MetaInfo
-        icon="fa-clock-o"
+        icon="far fa-clock"
         name="Finished"
         tooltip={finishedAtM.format('YYYY-MM-DD HH:mm:ss')}
         value={finishedAtM.fromNow()}
@@ -36,7 +36,7 @@ function TaskRunMetaInfo({startedAt, finishedAt, inline = false}: Props) {
       }
       {totalRun &&
       <MetaInfo
-        icon="fa-hourglass"
+        icon="fas fa-hourglass"
         name="Total run"
         value={totalRun}
         inline={inline}

@@ -18,7 +18,7 @@ function AutocompleteDropdown({title, onClick, possibleValues, selectedValues}: 
         bsSize="small"
         noCaret={true}
       >
-        <i className="fa fa-plus icon" aria-hidden="true"/> {title}
+        <i className="fas fa-plus icon" aria-hidden="true"/> {title}
       </Dropdown.Toggle>
       <Dropdown.Menu className="dropdown-limit-height">
         {possibleValues

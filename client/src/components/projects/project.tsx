@@ -40,7 +40,7 @@ function Project({
       <td className="block">
         <LinkContainer to={getProjectUrl(project.user, project.name)}>
           <a className="title">
-            <i className="fa fa-server icon" aria-hidden="true"/>
+            <i className="fas fa-server icon" aria-hidden="true"/>
             {project.name}
           </a>
         </LinkContainer>
@@ -53,7 +53,7 @@ function Project({
 
       <td className="block">
         <MetaInfo
-          icon="fa-lock"
+          icon="fas fa-unlock-alt"
           name="Visibility"
           value={visibility}
         />

@@ -10,7 +10,7 @@ export interface Props {
 function PodIdMetaInfo({value, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-circle-o"
+      icon="far fa-circle"
       name="Pod"
       value={value}
       inline={inline}

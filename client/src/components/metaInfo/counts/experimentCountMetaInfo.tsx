@@ -10,7 +10,7 @@ export interface Props {
 function ExperimentCountMetaInfo({count, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-cube"
+      icon="fas fa-cube"
       name="Experiments"
       value={count}
       inline={inline}

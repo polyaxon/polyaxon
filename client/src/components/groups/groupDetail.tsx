@@ -53,7 +53,7 @@ export default class GroupDetail extends React.Component<Props, {}> {
         <div className="col-md-12">
           <div className="entity-details">
             <Breadcrumb
-              icon="fa-cubes"
+              icon="fas fa-cubes"
               links={[
                 {name: values[0], value: getUserUrl(values[0])},
                 {name: values[1], value: projectUrl},

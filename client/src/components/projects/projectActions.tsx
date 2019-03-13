@@ -87,13 +87,13 @@ export default class ProjectActions extends React.Component<Props, State> {
           bsSize="small"
           noCaret={true}
         >
-            <i className="fa fa-ellipsis-h icon" aria-hidden="true"/>
+            <i className="fas fa-ellipsis-h icon" aria-hidden="true"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {this.props.notebookActionCallback && this.props.hasNotebook &&
           <MenuItem eventKey="2" onClick={() => this.handleShow('stopNotebook')}>
             <i
-              className="fa fa-stop icon"
+              className="fas fa-stop icon"
               aria-hidden="true"
             /> Stop Notebook
           </MenuItem>
@@ -101,23 +101,23 @@ export default class ProjectActions extends React.Component<Props, State> {
           {this.props.tensorboardActionCallback && this.props.hasTensorboard &&
           <MenuItem eventKey="2" onClick={() => this.handleShow('stopTensorboard')}>
             <i
-              className="fa fa-stop icon"
+              className="fas fa-stop icon"
               aria-hidden="true"
             /> Stop Tensorboard
           </MenuItem>
           }
           {this.props.onRestore &&
           <MenuItem eventKey="1" onClick={this.props.onRestore}>
-            <i className="fa fa-recycle icon" aria-hidden="true"/> Restore
+            <i className="fas fa-recycle icon" aria-hidden="true"/> Restore
           </MenuItem>
           }
           {this.props.onArchive &&
           <MenuItem eventKey="1" onClick={() => this.handleShow('archive')}>
-            <i className="fa fa-archive icon" aria-hidden="true"/> Archive
+            <i className="fas fa-archive icon" aria-hidden="true"/> Archive
           </MenuItem>
           }
           <MenuItem eventKey="2" onClick={() => this.handleShow('delete')}>
-            <i className="fa fa-trash icon" aria-hidden="true"/> Delete
+            <i className="fas fa-trash icon" aria-hidden="true"/> Delete
           </MenuItem>
         </Dropdown.Menu>
       </Dropdown>

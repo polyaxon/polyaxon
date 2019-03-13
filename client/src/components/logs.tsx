@@ -68,8 +68,8 @@ export default class Logs extends React.Component<Props, State> {
                 className="btn btn-sm btn-default"
               >
                 {this.state.logsOnly
-                  ? <><i className="fa fa-plus-square icon" aria-hidden="true"/> Add info</>
-                  : <><i className="fa fa-minus-square icon" aria-hidden="true"/> Logs Only</>
+                  ? <><i className="fas fa-plus-square icon" aria-hidden="true"/> Add info</>
+                  : <><i className="fas fa-minus-square icon" aria-hidden="true"/> Logs Only</>
                 }
               </button>
             </span>

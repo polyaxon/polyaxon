@@ -166,7 +166,7 @@ export default class FilterList extends React.Component<Props, State> {
                       bsStyle="default"
                       bsSize="small"
                     >
-                      <i className="fa fa-history icon" aria-hidden="true"/> Searches
+                      <i className="fas fa-history icon" aria-hidden="true"/> Searches
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-large">
                       {this.props.searches.map(
@@ -204,7 +204,7 @@ export default class FilterList extends React.Component<Props, State> {
                       }
                       <MenuItem className="searches-save" onClick={() => this.handleShow()}>
                         <i
-                          className={'fa fa-search-plus icon'}
+                          className={'fas fa-search-plus icon'}
                           aria-hidden="true"
                         /> Save current search
                       </MenuItem>
@@ -231,7 +231,7 @@ export default class FilterList extends React.Component<Props, State> {
                       bsSize="small"
                       noCaret={true}
                     >
-                      <i className="fa fa-chevron-down icon" aria-hidden="true"/>
+                      <i className="fas fa-chevron-down icon" aria-hidden="true"/>
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-large">
                       {this.props.filterOptions.map(
@@ -243,7 +243,7 @@ export default class FilterList extends React.Component<Props, State> {
                           >
                             <span>
                               <i
-                                className={'fa fa-' + filterOption.icon + ' icon'}
+                                className={filterOption.icon + ' icon'}
                                 aria-hidden="true"
                               /> {filterOption.filter}
                             </span>
@@ -251,7 +251,7 @@ export default class FilterList extends React.Component<Props, State> {
                           </MenuItem>
                       )}
                       <MenuItem href="https://docs.polyaxon.com/query_syntax/introduction" target="_blank">
-                        <i className="fa fa-external-link icon" aria-hidden="true"/> View advanced search syntax
+                        <i className="fas fa-external-link-alt icon" aria-hidden="true"/> View advanced search syntax
                       </MenuItem>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -261,7 +261,7 @@ export default class FilterList extends React.Component<Props, State> {
                     aria-label="Help"
                     onClick={this.handleFilter}
                   >
-                    <i className="fa fa-search icon" aria-hidden="true"/>
+                    <i className="fas fa-search icon" aria-hidden="true"/>
                   </button>
                 </span>
                 </div>
@@ -276,7 +276,7 @@ export default class FilterList extends React.Component<Props, State> {
                   bsSize="small"
                   noCaret={true}
                 >
-                  <i className="fa fa-sort icon" aria-hidden="true"/> {`Sort by: ${this.state.sort}`}
+                  <i className="fas fa-sort icon" aria-hidden="true"/> {`Sort by: ${this.state.sort}`}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu-large">
                   {this.props.sortOptions.map((sortOption: string) =>
@@ -285,9 +285,9 @@ export default class FilterList extends React.Component<Props, State> {
                       onClick={() => this.onSortInput(this.state.sort === sortOption ? `-${sortOption}` : sortOption)}
                     >
                       {this.state.sort === sortOption &&
-                      <i className="fa fa-long-arrow-up icon" aria-hidden="true"/>
+                      <i className="fas fa-sort-amount-up icon" aria-hidden="true"/>
                       }{this.state.sort === `-${sortOption}` &&
-                    <i className="fa fa-long-arrow-down icon" aria-hidden="true"/>} {sortOption}
+                    <i className="fas fa-sort-amount-down icon" aria-hidden="true"/>} {sortOption}
                     </MenuItem>
                   )}
                 </Dropdown.Menu>

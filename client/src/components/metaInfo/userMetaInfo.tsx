@@ -10,7 +10,7 @@ export interface Props {
 function UserMetaInfo({user, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-user-o"
+      icon="far fa-user"
       name="User"
       value={user}
       inline={inline}

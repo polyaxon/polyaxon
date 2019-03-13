@@ -10,7 +10,7 @@ export interface Props {
 function SearchAlgorithmMetaInfo({searchAlgorithm, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-asterisk"
+      icon="fas fa-asterisk"
       name="Algorithm"
       value={searchAlgorithm}
       inline={inline}

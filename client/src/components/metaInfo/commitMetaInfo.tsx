@@ -10,7 +10,7 @@ export interface Props {
 function CommitMetaInfo({commit, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-hashtag"
+      icon="fas fa-hashtag"
       name="Commit"
       value={commit}
       inline={inline}

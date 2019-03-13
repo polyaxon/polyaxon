@@ -244,11 +244,11 @@ a.brand {
 }
 
 .header-item-link {
-  padding: 5px 10px 2px !important;
+  padding: 3px 10px 2px !important;
   background-color: transparent !important;
   border-radius: 5px !important;
   color: #ebf5ff !important;
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   align-items: center;
   line-height: 0;
 }

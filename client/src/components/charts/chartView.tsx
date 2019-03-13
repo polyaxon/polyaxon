@@ -445,14 +445,14 @@ export default class ChartView extends React.Component<Props, {}> {
                     bsSize="small"
                     noCaret={true}
                   >
-                      <i className="fa fa-ellipsis-h icon" aria-hidden="true"/>
+                      <i className="fas fa-ellipsis-h icon" aria-hidden="true"/>
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                   <MenuItem eventKey="1" onClick={() => this.props.onRemoveChart(idx)}>
-                    <i className="fa fa-times icon" aria-hidden="true"/> Remove
+                    <i className="fas fa-times icon" aria-hidden="true"/> Remove
                   </MenuItem>
                     <MenuItem eventKey="2" onClick={() => this.props.onUpdateChart(idx)}>
-                    <i className="fa fa-edit icon" aria-hidden="true"/> Update
+                    <i className="far fa-edit icon" aria-hidden="true"/> Update
                   </MenuItem>
                   </Dropdown.Menu>
                 </Dropdown>

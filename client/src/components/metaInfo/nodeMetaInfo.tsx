@@ -10,7 +10,7 @@ export interface Props {
 function NodeMetaInfo({node, inline = false}: Props) {
   return (
     <MetaInfo
-      icon="fa-th-large"
+      icon="fas fa-th"
       name="Node"
       tooltip="Node where this job was scheduled"
       value={node}

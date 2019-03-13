@@ -272,32 +272,32 @@ export default class Experiments extends React.Component<Props, State> {
   public render() {
     let additionalFilters: FilterOption[] = this.props.groupId ?
       [] :
-      [{filter: 'independent', type: 'scalar', desc: 'independent: true, default is false', icon: 'minus'}];
+      [{filter: 'independent', type: 'scalar', desc: 'independent: true, default is false', icon: 'fas fa-minus'}];
     additionalFilters = [
       ...additionalFilters,
       ...[{
         filter: 'declarations.*',
         type: 'value',
         desc: 'declarations.activation: sigmoid or declarations.activation: sigmoid|relu',
-        icon: 'gear'
+        icon: 'fas fa-cog'
       },
         {
           filter: 'metric.*',
           type: 'scalar',
           desc: FILTER_EXAMPLES.scalar('metric.loss'),
-          icon: 'area-chart',
+          icon: 'fas fa-chart-area',
         },
         {
           filter: 'group.id',
           type: 'value',
           desc: FILTER_EXAMPLES.id('group.id'),
-          icon: 'cubes',
+          icon: 'fas fa-cubes',
         },
         {
           filter: 'group.name',
           type: 'value',
           desc: FILTER_EXAMPLES.name('group.name'),
-          icon: 'cubes',
+          icon: 'fas fa-cubes',
         },
       ]] as FilterOption[];
     const filterOptions = [
@@ -311,19 +311,19 @@ export default class Experiments extends React.Component<Props, State> {
     const experimentActions = [
       {
         name: 'Create selection',
-        icon: 'download',
+        icon: 'fas fa-download',
         callback: () => this.handleShow('showCreateSelectionModal')
       },
       {
         name: 'Add to selection',
-        icon: 'plus',
+        icon: 'fas fa-plus',
         callback: () => this.handleShow('showAddSelectionModal')
       },
     ];
     if (this.props.groupId && this.props.isSelection) {
       experimentActions.push({
         name: 'Remove from selection',
-        icon: 'minus',
+        icon: 'fas fa-minus',
         callback: () => this.removeFromSelection(this.state.items)
       });
     }
