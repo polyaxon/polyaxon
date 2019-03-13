@@ -3,10 +3,14 @@ version: 1
 
 kind: experiment
 
+framework: mxnet
+
+tags: [examples]
+
 build:
   image: polyaxon/mxnetkv
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-helper
+    - pip install --no-cache-dir -U polyaxon-client==0.4.2
 
 run:
   cmd:  python run.py --network resnet --num-layers 110 --batch-size 128

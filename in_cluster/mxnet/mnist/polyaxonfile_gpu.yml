@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: mxnet
+
+tags: [examples]
+
 environment:
   resources:
     gpu:

@@ -3,6 +3,10 @@ version: 1
 
 kind: group
 
+framework: mxnet
+
+tags: [examples]
+
 hptuning:
   concurrency: 5
   random_search:

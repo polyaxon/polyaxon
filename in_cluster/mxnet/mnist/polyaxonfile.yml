@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: mxnet
+
+tags: [examples]
+
 declarations:
   conv1_kernel: 5
   conv1_filters: 20

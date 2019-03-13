@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: mxnet
+
+tags: [examples]
+
 environment:
   mxnet:
     n_workers: 2
@@ -11,7 +15,7 @@ environment:
 build:
   image: polyaxon/mxnetkv
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-helper
+    - pip install --no-cache-dir polyaxon-client==0.4.2
   env_vars:
     - ['PS_VERBOSE', 2]
 
