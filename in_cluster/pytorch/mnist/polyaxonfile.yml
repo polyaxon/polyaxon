@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: pytorch
+
+tags: [examples]
+
 declarations:
   batch_size_train: 128
   batch_size_test: 1000
@@ -12,14 +16,14 @@ declarations:
   momentum: 0.5
 
 build:
- image: pytorch/pytorch:latest
+ image: python:3
  build_steps:
-   - pip install --no-cache-dir -U polyaxon-helper
+   - pip install -r requirements.txt
 
 run:
-  cmd: python run.py  --batch-size={{ batch_size_train }} \
-                       --test-batch-size={{ batch_size_test }} \
-                       --epochs={{ epochs }} \
-                       --lr={{ lr }} \
-                       --momentum={{ momentum }} \
-                       --epochs={{ epochs }}
+  cmd: python -u run.py  --batch-size={{ batch_size_train }} \
+                         --test-batch-size={{ batch_size_test }} \
+                         --epochs={{ epochs }} \
+                         --lr={{ lr }} \
+                         --momentum={{ momentum }} \
+                         --epochs={{ epochs }}

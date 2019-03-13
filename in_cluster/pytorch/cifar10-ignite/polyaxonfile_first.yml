@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: pytorch-ignite
+
+tags: [examples]
+
 environment:
   node_selector:
     polyaxon: exp-small-gpu

@@ -52,7 +52,7 @@ def train(model, train_loader, epoch, cuda, optimizer, log_interval):
                     batch_idx * len(data),
                     len(train_loader.dataset),
                     100. * batch_idx / len(train_loader),
-                    loss.data[0])
+                    loss.item())
             )
 
 
@@ -65,7 +65,7 @@ def test(experiment, model, test_loader, cuda):
             data, target = data.cuda(), target.cuda()
         data, target = Variable(data, volatile=True), Variable(target)
         output = model(data)
-        test_loss += F.nll_loss(output, target, size_average=False).data[0]  # sum up batch loss
+        test_loss += F.nll_loss(output, target, size_average=False).item()  # sum up batch loss
         pred = output.data.max(1, keepdim=True)[1]  # get the index of the max log-probability
         correct += pred.eq(target.data.view_as(pred)).cpu().sum()
 
@@ -79,4 +79,4 @@ def test(experiment, model, test_loader, cuda):
             100. * accuracy)
     )
     # Polyaxon
-    experiment.log_metrics(loss=test_loss.item(), accuracy=accuracy.item())
+    experiment.log_metrics(loss=test_loss, accuracy=accuracy.item())

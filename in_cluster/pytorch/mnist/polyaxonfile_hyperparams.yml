@@ -3,6 +3,10 @@ version: 1
 
 kind: group
 
+framework: pytorch
+
+tags: [examples]
+
 hptuning:
   concurrency: 5
   random_search:
@@ -21,14 +25,14 @@ declarations:
   train_steps: 400
 
 build:
- image: pytorch/pytorch:latest
- build_steps:
-   - pip install --no-cache-dir -U polyaxon-helper
+  image: python:3
+  build_steps:
+    - pip install -r requirements.txt
 
 run:
-  cmd: python run.py  --batch-size={{ batch_size_train }} \
-                       --test-batch-size={{ batch_size_test }} \
-                       --epochs={{ epochs }} \
-                       --lr={{ lr }} \
-                       --momentum={{ momentum }} \
-                       --epochs={{ epochs }}
+  cmd: python -u run.py  --batch-size={{ batch_size_train }} \
+                         --test-batch-size={{ batch_size_test }} \
+                         --epochs={{ epochs }} \
+                         --lr={{ lr }} \
+                         --momentum={{ momentum }} \
+                         --epochs={{ epochs }}

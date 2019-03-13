@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: pytorch-ignite
+
+tags: [examples]
+
 # Necessary configs to run on a GPU nodes
 environment:
   node_selector:
