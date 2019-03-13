@@ -1,2 +1,2 @@
 tensorflow==1.9.0
-polyaxon-client==0.4.1
+polyaxon-client==0.4.2rc0
