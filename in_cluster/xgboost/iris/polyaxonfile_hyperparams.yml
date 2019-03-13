@@ -3,6 +3,10 @@ version: 1
 
 kind: group
 
+framework: xgboost
+
+tags: [examples]
+
 hptuning:
   concurrency: 5
   random_search:
@@ -24,7 +28,7 @@ build:
     - pip install --no-cache-dir -r requirements.txt
 
 run:
-  cmd: python model.py --log_learning_rate={{ log_learning_rate }} \
-                       --max_depth={{ max_depth }} \
-                       --num_rounds={{ num_rounds }} \
-                       --min_child_weight={{ min_child_weight }}
+  cmd: python -u model.py --log_learning_rate={{ log_learning_rate }} \
+                          --max_depth={{ max_depth }} \
+                          --num_rounds={{ num_rounds }} \
+                          --min_child_weight={{ min_child_weight }}
