@@ -3,6 +3,10 @@ version: 1
 
 kind: experiment
 
+framework: keras
+
+tags: [examples]
+
 declarations:
   max_features: 20000
   skip_top: 30
