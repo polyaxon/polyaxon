@@ -83,6 +83,8 @@ class ExperimentSchema(BaseSchema):
     description = fields.Str(allow_none=True)
     last_status = fields.Str(allow_none=True)
     last_metric = fields.Dict(allow_none=True)
+    backend = fields.Str(allow_none=True)
+    framework = fields.Str(allow_none=True)
     created_at = fields.LocalDateTime(allow_none=True)
     updated_at = fields.LocalDateTime(allow_none=True)
     started_at = fields.LocalDateTime(allow_none=True)
@@ -141,6 +143,8 @@ class ExperimentConfig(BaseConfig):
                  run_env=None,
                  jobs=None,
                  ttl=None,
+                 backend=None,
+                 framework=None,
                  total_run=None):
         self.id = id
         self.user = user
@@ -168,6 +172,8 @@ class ExperimentConfig(BaseConfig):
         self.run_env = run_env
         self.jobs = jobs
         self.ttl = ttl
+        self.backend = backend
+        self.framework = framework
         self.total_run = None
         if all([self.started_at, self.finished_at]):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)

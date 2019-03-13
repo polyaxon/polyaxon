@@ -32,6 +32,8 @@ class TestExperimentConfigs(TestCase):
             'in_cluster': False,
             'tags': ['tag1'],
             'num_jobs': 1,
+            'backend': 'foo',
+            'framework': 'bar',
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
             'has_tensorboard': True,
@@ -62,6 +64,8 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('tags')
         config_dict.pop('num_jobs')
         config_dict.pop('in_cluster')
+        config_dict.pop('framework')
+        config_dict.pop('backend')
         config_to_dict.pop('finished_at')
         config_to_dict.pop('id')
         config_to_dict.pop('started_at')
@@ -83,6 +87,8 @@ class TestExperimentConfigs(TestCase):
                        'experiment_group': 'user.name.1',
                        'last_status': 'Running',
                        'num_jobs': 1,
+                       'backend': 'foo',
+                       'framework': 'bar',
                        'created_at': local_now().isoformat(),
                        'updated_at': local_now().isoformat(),
                        'started_at': local_now().isoformat(),
