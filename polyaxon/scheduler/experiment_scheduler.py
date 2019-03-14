@@ -498,11 +498,17 @@ def handle_base_experiment(response):
 
 
 def handle_experiment(experiment, response):
+    _, is_distributed = experiment.specification.cluster_def
+    framework = experiment.framework
+    backend = experiment.backend
+
+    if not is_distributed and backend != ExperimentBackend.MPI:
+        return handle_base_experiment(response=response)
+
     # TODO: May be save the template generate to create each one of the replicas?
-    if experiment.backend in {ExperimentBackend.KUBEFLOW, ExperimentBackend.MPI}:
+    if backend in {ExperimentBackend.KUBEFLOW, ExperimentBackend.MPI}:
         return
 
-    framework = experiment.framework
     if framework == ExperimentFramework.TENSORFLOW:
         handle_tensorflow_experiment(response=response)
         return
