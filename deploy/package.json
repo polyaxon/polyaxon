@@ -1,6 +1,6 @@
 {
   "name": "polyaxon-deploy",
-  "version": "0.4.2rc1",
+  "version": "0.4.2",
   "description": "Polyaxon deploy",
   "private": true,
   "scripts": {
