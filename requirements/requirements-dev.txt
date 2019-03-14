@@ -1,1 +1,1 @@
--e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas==0.4.2rc0
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas==0.4.2rc1
