@@ -1,0 +1,33 @@
+---
+version: 1
+
+kind: experiment
+
+framework: tensorflow
+
+backend: kubeflow
+
+
+environment:
+  resources:
+    gpu:
+      requests: 1
+      limits: 1
+
+  replicas:
+    n_workers: 2
+
+    default_worker:
+      resources:
+        gpu:
+          requests: 1
+          limits: 1
+
+
+build:
+  image: tensorflow/tensorflow:1.10.0-gpu
+  build_steps:
+    - pip install polyaxon-client==0.4.2rc0
+
+run:
+  cmd: python -u run.py
