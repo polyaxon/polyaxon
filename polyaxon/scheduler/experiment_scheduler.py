@@ -117,7 +117,14 @@ def get_kf_spawner_backend(framework):
     return ExperimentSpawner
 
 
-def get_spawner_class(backend, framework):
+def get_spawner_class(specification):
+    _, is_distributed = specification.cluster_def
+    framework = specification.framework
+    backend = specification.backend
+
+    if not is_distributed:
+        return get_native_spawner_backend(framework=framework)
+
     if backend == ExperimentBackend.KUBEFLOW:
         return get_kf_spawner_backend(framework=framework)
     if backend == ExperimentBackend.MPI:
@@ -561,8 +568,7 @@ def start_experiment(experiment):
     else:
         _logger.info('Start experiment with default image.')
 
-    spawner_class = get_spawner_class(backend=experiment.backend,
-                                      framework=experiment.specification.framework)
+    spawner_class = get_spawner_class(specification=experiment.specification)
     # token_scope = RedisEphemeralTokens.get_scope(experiment.user.id,
     #                                              'experiment',
     #                                              experiment.id)
