@@ -1,6 +1,6 @@
 ---
-title: "Horovod"
-meta_title: "Horovod"
+title: "MPI"
+meta_title: "mpi"
 meta_description: "Polyaxon allows to schedule distributed MPI experiments, and supports tracking metrics, outputs, and models natively."
 custom_excerpt: "The MPI Operator makes it easy to run allreduce-style distributed training."
 image: "../../content/images/integrations/mpi.png"
