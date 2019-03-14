@@ -151,7 +151,17 @@ environment:
 
 A list of secret references to mount during the scheduling of a job/build/experiment
 
-## tensorflow
+## backend
+
+Defined the backend to be used when running distributed experiments, possible values: `native` (default), `kubeflow`, `mpi`, and `external` when the experiment is tracked outside of Polyaxon.
+
+## framework
+
+Is field to annotate your experiment with the backend used, e.g. `scikit-learn` or `xgboost`.
+
+The framework is required when using a distributed experiment, Polyaxon detects this value and create required replicas and infrastructure to run the distributed experiment for the defined framework.
+
+## framework: tensorflow
 
 ### n_workers
 
@@ -218,7 +228,9 @@ environment:
 Example:
 
 ```yaml
-
+...
+framework: tensorflow
+...
 environment:
 
   node_selector:
@@ -250,7 +262,7 @@ environment:
       requests: 512
       limits: 2048
 
-  tensorflow:
+  replicas:
       n_workers: 4
       n_ps: 1
 
@@ -294,7 +306,7 @@ environment:
             limits: 1024
 ```
 
-## mxnet
+## framework: mxnet
 
 ### n_workers
 
@@ -361,9 +373,9 @@ environment:
 Example:
 
 ```yaml
-
+framework: mxnet 
 environment:
-  mxnet:
+  replicas:
     n_workers: 4
     n_ps: 1
 
@@ -372,7 +384,7 @@ environment:
         polyaxon: nodes_for_param_servers
 ```
 
-## pytorch
+## framework: pytorch
 
 ### n_workers
 
@@ -408,13 +420,13 @@ environment:
 Example:
 
 ```yaml
-
+framework: pytorch
 environment:
-  pytorch:
+  replicas:
     n_workers: 4
 ```
 
-## horovod
+## framework: horovod
 
 ### n_workers
 
@@ -451,8 +463,8 @@ environment:
 Example:
 
 ```yaml
-
+framework: horovod
 environment:
-  horovod:
+  replicas:
     n_workers: 4
 ```

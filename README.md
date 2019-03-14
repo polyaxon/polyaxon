@@ -123,11 +123,14 @@ Polyaxon supports and simplifies distributed training.
 Depending on the framework you are using, you need to adapt your code to enable the distributed training,
 and update your polyaxonfile with an environment section.
 
-By default polyaxon creates a master job, so you only need to provide the workers  and/or parameter servers.
+Here are some examples of using distributed training: 
 
  * [Tensorflow distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/tensorflow/cifar10/polyaxonfile_distributed.yml)
  * [MXNet distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/mxnet/cifar10/polyaxonfile_distributed.yml)
  * [Pytorch distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/pytorch/mnist/polyaxonfile_distributed.yml)
+ * [Horovod distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/horovod/tensorflow/polyaxonfile.yml)
+ * [MPI distributed example](https://github.com/polyaxon/polyaxon-examples/blob/master/in_cluster/mpijob/polyaxonfile.yaml)
+
 # Hyperparameters tuning
 
 Polyaxon has a concept for suggesting hyperparameters and managing their results very similar to Google Vizier called experiment groups.

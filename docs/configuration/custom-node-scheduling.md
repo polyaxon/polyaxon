@@ -124,8 +124,10 @@ version: 1
 
 kind: experiment
 
+framework: tensorflow
+
 environment:
-  tensorflow:
+  replicas:
     n_workers: 2
     n_ps: 1
 

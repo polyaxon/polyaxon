@@ -95,3 +95,16 @@ build:
   dockefile: path/to/Dockerfile
   context: different/path/to/context
 ```
+
+## Example using an environment with resources
+
+```yaml
+build:
+  environment:
+    resources:
+      cpu:
+        requests: 1
+        limits: 2
+  dockefile: path/to/Dockerfile
+  context: different/path/to/context
+```

@@ -21,15 +21,18 @@ status: published
 
 ## Overview
 
-By default polyaxon creates a master job, so you only need to provide the workers and/or parameter servers.
+By default polyaxon creates a master job, so you only need to add replicas for the workers.
 
-To enable distributed runs, you need to update the environment section.
+To enable distributed runs, you need to set the `framework` field to `pytroch` and update the `environment` section.
 
-The environment section allows to customize the resources of the master job, as well as defining the topology of the experiment with a specific definition for each framework.
+The environment section allows to customize the resources of the master job, as well as defining the topology/replicas of the experiment with a specific definition for each framework.
 
 To customize the master resources, you just need to define the resources in the environment section, e.g.
 
 ```yaml
+...
+framework: pytorch
+...
 environment:
   resources:
     cpu:
@@ -45,19 +48,20 @@ environment:
 
 ## Define the distributed topology
 
-[Distributed Pytorch](http://pytorch.org/tutorials/intermediate/dist_tuto.html) is also similar but only defines a master task (worker with rank 0) and a set of worker tasks.
+[Distributed Pytorch](http://pytorch.org/tutorials/intermediate/dist_tuto.html) defines a master task (worker with rank 0) and a set of worker tasks.
 
 To define a Pytorch cluster in Polyaxon with a master, 3 workers,
-add a pytorch subsection to the environment section of your polyaxonfile:
+add a replicas subsection to the environment section of your polyaxonfile:
 
 
 ```yaml
 ...
-
+framework: pytorch
+...
 environment:
   ...
 
-  pytorch:
+  replicas:
     n_workers: 3
 ```
 
@@ -68,6 +72,9 @@ Here's an example where we define resources for the master, workers and paramete
 
 
 ```yaml
+...
+framework: pytorch
+...
 environment:
   resources:
     cpu:
@@ -80,7 +87,7 @@ environment:
       request: 1
       limits: 1
 
-  pytorch:
+  replicas:
     n_workers: 7
 
     default_worker:
@@ -149,4 +156,20 @@ default_worker:
     gpu:
       request: 1
       limits: 1
+```
+
+## Distributed experiment backend
+
+By default Polyaxon uses a native behaviour for starting distributed experiments.
+ 
+Polyaxon also supports running distributed experiment on [Kubeflow](/integrations/kubeflow/).
+
+In order to use `kubeflow` as a backend instead of the `native` behaviour, you only need to update your polyaxonfile with `backend` field:
+
+```yaml
+version: 1
+kind: experiment
+backend: kubeflow
+framework: pytorch
+...
 ```

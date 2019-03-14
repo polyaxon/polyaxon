@@ -21,15 +21,18 @@ status: published
 
 ## Overview
 
-By default polyaxon creates a master job, so you only need to provide the workers and/or parameter servers.
+By default polyaxon creates a master job, so you only need to add replicas for the workers and/or parameter servers.
 
-To enable distributed runs, you need to update the environment section.
+To enable distributed runs, you need to set the `framework` field to `mxnet` and update the `environment` section.
 
 The environment section allows to customize the resources of the master job, as well as defining the topology of the experiment with a specific definition for each framework.
 
 To customize the master resources, you just need to define the resources in the environment section, e.g.
 
 ```yaml
+...
+framework: mxnet
+...
 environment:
   resources:
     cpu:
@@ -48,15 +51,16 @@ environment:
 [MXNet](https://mxnet.incubator.apache.org/faq/multi_devices.html#distributed-training-with-multiple-machines) defines 3 types of tasks: scheduler, workers, and parameter servers.
 
 To define an MXNet cluster in Polyaxon with a scheduler, 3 workers, and 1 parameter server,
-add an mxnet subsection to the environment section of your polyaxonfile:
+add an replicas subsection to the environment section of your polyaxonfile:
 
 ```yaml
 ...
-
+framework: mxnet
+...
 environment:
   ...
 
-  mxnet:
+  replicas:
     n_workers: 3
     n_ps: 1
 ```
@@ -68,6 +72,9 @@ Here's an example where we define resources for the master, workers and paramete
 
 
 ```yaml
+...
+framework: mxnet
+...
 environment:
   resources:
     cpu:
@@ -80,7 +87,7 @@ environment:
       request: 1
       limits: 1
 
-  mxnet:
+  replicas:
     n_workers: 7
     n_ps: 3
 

@@ -21,15 +21,20 @@ status: published
 
 ## Overview
 
-By default polyaxon creates a master job, so you only need to provide the workers and/or parameter servers.
+By default polyaxon creates a master job, so you only need to add replicas for the workers and/or parameter servers.
 
-To enable distributed runs, you need to update the environment section.
+> N.B. this behaviour will change to allow users to start experiments with workers and ps without the requirement of starting a chief/master.
 
-The environment section allows to customize the resources of the master job, as well as defining the topology of the experiment with a specific definition for each framework.
+To enable distributed runs, you need to set the `framework` field to `tensorflow` and update the `environment` section.
+
+The environment section allows to customize the resources of the master job, as well as defining the topology/replicas of the experiment with a specific definition for each framework.
 
 To customize the master resources, you just need to define the resources in the environment section, e.g.
 
 ```yaml
+...
+framework: tensorflow
+...
 environment:
   resources:
     cpu:
@@ -51,15 +56,16 @@ the user needs to define a cluster, which is a set of tasks that participate in 
 Tensorflow defines 3 different types of tasks: master, worker, and parameter server.
 
 To define a cluster in Polyaxon with a master, 3 workers, and 1 parameter server,
-add a tensorflow subsection to the environment section of your polyaxonfile:
+add a replicas subsection to the environment section of your polyaxonfile:
 
 ```yaml
 ...
-
+framework: tensorflow
+...
 environment:
   ...
 
-  tensorflow:
+  replicas:
     n_workers: 3
     n_ps: 1
 ```
@@ -71,6 +77,9 @@ Here's an example where we define resources for the master, workers and paramete
 
 
 ```yaml
+...
+framework: tensorflow
+...
 environment:
   resources:
     cpu:
@@ -83,7 +92,7 @@ environment:
       request: 1
       limits: 1
 
-  tensorflow:
+  replicas:
     n_workers: 7
     n_ps: 3
 
@@ -175,3 +184,20 @@ default_worker:
 ```
 
 Same logic applies to the parameter servers with the `default_ps.resources` and `ps_resources`.
+
+
+## Distributed experiment backend
+
+By default Polyaxon uses a native behaviour for starting distributed experiments.
+ 
+Polyaxon also supports running distributed experiment on [Kubeflow](/integrations/kubeflow/).
+
+In order to use `kubeflow` as a backend instead of the `native` behaviour, you only need to update your polyaxonfile with `backend` field:
+
+```yaml
+version: 1
+kind: experiment
+backend: kubeflow
+framework: tensorflow
+...
+```

@@ -245,6 +245,8 @@ Let's create a new `polyaxonfile_resources.yml` override file that will allow us
 ```yaml
 version: 1
 
+framework: tensorflow
+
 environment:
 
   resources:
@@ -255,7 +257,7 @@ environment:
       requests: 512
       limits: 2048
 
-  tensorflow:
+  replicas:
     n_workers: 4
     n_ps: 1
 
