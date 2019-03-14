@@ -641,8 +641,7 @@ def stop_experiment(project_name,
                     specification,
                     experiment_group_name=None,
                     experiment_group_uuid=None):
-    spawner_class = get_spawner_class(backend=specification.backend,
-                                      framework=specification.framework)
+    spawner_class = get_spawner_class(specification=specification)
 
     spawner = spawner_class(project_name=project_name,
                             project_uuid=project_uuid,

@@ -7,9 +7,12 @@ from factories.factory_experiments import ExperimentFactory
 from scheduler.experiment_scheduler import create_job, get_spawner_class, set_job_definition
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
+from scheduler.spawners.mpi_job_spawner import MPIJobSpawner
 from scheduler.spawners.mxnet_spawner import MXNetSpawner
+from scheduler.spawners.pytorch_job_spawner import PytorchJobSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
+from scheduler.spawners.tf_job_spawner import TFJobSpawner
 from schemas.experiments import ExperimentBackend, ExperimentFramework
 from schemas.tasks import TaskType
 from tests.utils import BaseTest
@@ -74,12 +77,55 @@ class TestExperimentScheduler(BaseTest):
         assert job.definition == definition
 
     def test_get_spawner_class(self):
-        assert get_spawner_class(framework=ExperimentFramework.TENSORFLOW,
-                                 backend=ExperimentBackend.NATIVE) == TensorflowSpawner
-        assert get_spawner_class(framework=ExperimentFramework.HOROVOD,
-                                 backend=ExperimentBackend.NATIVE) == HorovodSpawner
-        assert get_spawner_class(framework=ExperimentFramework.MXNET,
-                                 backend=ExperimentBackend.NATIVE) == MXNetSpawner
-        assert get_spawner_class(framework=ExperimentFramework.PYTORCH,
-                                 backend=ExperimentBackend.NATIVE) == PytorchSpawner
-        assert get_spawner_class(None, None) == ExperimentSpawner
+        class DummySpec(object):
+            def __init__(self, framework=None, backend=None, is_distributed=False):
+                self.framework = framework
+                self.backend = backend
+                self.is_distributed = is_distributed
+
+            @property
+            def cluster_def(self):
+                return None, self.is_distributed
+
+        tf_spec = DummySpec(framework=ExperimentFramework.TENSORFLOW,
+                            backend=ExperimentBackend.NATIVE)
+        assert get_spawner_class(specification=tf_spec) == ExperimentSpawner
+        tf_spec.is_distributed = True
+        assert get_spawner_class(specification=tf_spec) == TensorflowSpawner
+        tf_spec.backend = ExperimentBackend.KUBEFLOW
+        assert get_spawner_class(specification=tf_spec) == TFJobSpawner
+        tf_spec.backend = ExperimentBackend.MPI
+        assert get_spawner_class(specification=tf_spec) == MPIJobSpawner
+
+        pytorch_spec = DummySpec(framework=ExperimentFramework.PYTORCH,
+                                 backend=ExperimentBackend.NATIVE)
+        assert get_spawner_class(specification=pytorch_spec) == ExperimentSpawner
+        pytorch_spec.is_distributed = True
+        assert get_spawner_class(specification=pytorch_spec) == PytorchSpawner
+        pytorch_spec.backend = ExperimentBackend.KUBEFLOW
+        assert get_spawner_class(specification=pytorch_spec) == PytorchJobSpawner
+        pytorch_spec.backend = ExperimentBackend.MPI
+        assert get_spawner_class(specification=pytorch_spec) == MPIJobSpawner
+
+        horovod_spec = DummySpec(framework=ExperimentFramework.HOROVOD,
+                                 backend=ExperimentBackend.NATIVE)
+        assert get_spawner_class(specification=horovod_spec) == ExperimentSpawner
+        horovod_spec.is_distributed = True
+        assert get_spawner_class(specification=horovod_spec) == HorovodSpawner
+        horovod_spec.backend = ExperimentBackend.KUBEFLOW
+        assert get_spawner_class(specification=horovod_spec) == HorovodSpawner
+        pytorch_spec.backend = ExperimentBackend.MPI
+        assert get_spawner_class(specification=pytorch_spec) == MPIJobSpawner
+
+        mxnet_spec = DummySpec(framework=ExperimentFramework.MXNET,
+                               backend=ExperimentBackend.NATIVE)
+        assert get_spawner_class(specification=mxnet_spec) == ExperimentSpawner
+        mxnet_spec.is_distributed = True
+        assert get_spawner_class(specification=mxnet_spec) == MXNetSpawner
+        mxnet_spec.backend = ExperimentBackend.KUBEFLOW
+        assert get_spawner_class(specification=mxnet_spec) == MXNetSpawner
+        pytorch_spec.backend = ExperimentBackend.MPI
+        assert get_spawner_class(specification=pytorch_spec) == MPIJobSpawner
+
+        spec = DummySpec()
+        assert get_spawner_class(specification=spec) == ExperimentSpawner
