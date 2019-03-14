@@ -123,7 +123,7 @@ def get_spawner_class(specification):
     backend = specification.backend
 
     if not is_distributed:
-        return get_native_spawner_backend(framework=framework)
+        return ExperimentSpawner
 
     if backend == ExperimentBackend.KUBEFLOW:
         return get_kf_spawner_backend(framework=framework)
