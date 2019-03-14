@@ -8,6 +8,35 @@ tags:
     - reference
 ---
 
+## 0.4.2
+
+ * Add support of native Horovod.
+ * Add new fields for experiments: backend and framework.
+   * Framework can be used for any experiment as a special field.
+   * When using distributed experiments, some frameworks are recognized and will trigger a particular behaviour.
+   * Default backend is `native`, i.e. Polyaxon's native behaviour for spawning experiments, 
+   additionally users can start distributed experiments on Kubeflow, by changing the backend field to `kubeflow`.
+ * Add helm charts to easily of deploying TFJob, PytorchJob, and MPIJob.
+ * Add spawners for distributed experiments on Kubeflow's operators: TFJob, PytorchJob, MPIJob.
+ * Update distributed experiments logs handling
+   * Streaming experiment's logs show all logs.
+   * User can stream specific job's logs.
+   * Experiment UI shows default job's logs + user can check specific logs of each job.
+ * Update schema validation: now extra values, wrong values even in nested sub-schemas will raise a validation error.
+ * Update icons version.
+ * Polyaxon deploy is now in public beta and will be the recommended way to deploy/upgrade the platform.
+ * Extended the build subsection behaviour to accepts an environment as well, now users can set the build resources and selectors for the build inside jobs and experiments.
+ * Add possibility to download individual outputs files.
+ * Fix a regression when downloading outputs from GCS.
+ * Fix some issues with outputs tree view.
+ * Fix some log formatting issues.
+ * Fix readme style issues.
+ * Fix some UI issues.
+ * Fix some edge cases discovered when using Hyperband.
+ * Fix an issue related to pending and initializing statuses not recognised correctly.
+ * Several misc regressions and internal enhancements.  
+ 
+
 ## 0.4.1
 
  * Add UI for experiment jobs (overview, logs, statuses).

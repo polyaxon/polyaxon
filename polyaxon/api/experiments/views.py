@@ -99,7 +99,6 @@ from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
-from schemas.tasks import TaskType
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
