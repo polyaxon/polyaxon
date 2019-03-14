@@ -3,14 +3,14 @@ version: 1
 
 kind: experiment
 
-framework: tensorflow
+#framework: tensorflow
 
 tags: [examples]
 
 build:
   image: tensorflow/tensorflow:1.4.1
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-client==0.4.2rc0
+    - pip install --no-cache-dir -U polyaxon-client==0.4.2
 
 run:
-  cmd:  python -u run.py --train-steps=400
+  cmd: python -u run.py --train-steps=400
