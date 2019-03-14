@@ -21,7 +21,7 @@ status: beta
 
 ## Overview
 
-In order to use the `mpi` backend, users need to install the [MPIJob](/integrations/kubeflow/#deploying-deleting-mpijob/).
+In order to use the `mpi` backend, users need to install the [MPIJob](/integrations/kubeflow/#deployingdeleting-mpijob).
 
 To enable distributed runs, you need to set the `backend` field to `mpi` and update the `environment` section.
 

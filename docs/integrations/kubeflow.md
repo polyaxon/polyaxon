@@ -112,7 +112,7 @@ helm install del plxtf --purge
   
 ## Deploying/Deleting PytorchJob
 
-In order to use Kubeflow as backend for running [distributed Pytorch experiments](/integrations/tensorflow/), 
+In order to use Kubeflow as backend for running [distributed Pytorch experiments](/integrations/pytorch/), 
 you need to deploy PytorchJob on the same namespace where Polyaxon was deployed
 
 ```bash
