@@ -27,7 +27,7 @@ To enable distributed runs, you need to set the `backend` field to `mpi` and upd
 
 You can annotate your experiments with any framework you are using, it's optional.
 
-The environment section allows to customize the resources of the master job, as well as defining the topology/replicas of the experiment with a specific definition for each framework.
+The environment section allows to customize the resources as well as defining the topology/replicas of the experiment.
 
 ## Define the distributed topology
 
@@ -49,4 +49,4 @@ environment:
           limits: 1
 ```
 
-Since the MPIOperator does not allow to expose resources for the replicas, you can only use the default worker subsection.
+Since the MPIOperator does not allow to expose specific resources for the different workers, you can only use the default worker subsection to define the default resources for all workers.
