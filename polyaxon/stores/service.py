@@ -3,7 +3,7 @@ import shutil
 
 from hestia.paths import check_or_create_path, create_path, delete_path
 from hestia.service_interface import InvalidService, Service
-from marshmallow import ValidationError
+from marshmallow import ValidationError, EXCLUDE
 from polystores import StoreManager
 from polystores.exceptions import PolyaxonStoresException
 from rhea import RheaError
@@ -369,10 +369,10 @@ class StoresService(Service):
     @staticmethod
     def _validate_persistence(persistence, persistence_name, persistence_type):
         try:
-            VolumeConfig.from_dict(persistence)
+            VolumeConfig.from_dict(persistence, unknown=EXCLUDE)
         except ValidationError:
             try:
-                StoreConfig.from_dict(persistence)
+                StoreConfig.from_dict(persistence, unknown=EXCLUDE)
             except (ValidationError, TypeError):
                 raise InvalidService('Persistence `{}`, of type `{}`, is not valid.'.format(
                     persistence_name, persistence_type
