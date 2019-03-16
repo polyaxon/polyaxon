@@ -7,6 +7,7 @@ from db.getters.tensorboards import get_valid_tensorboard
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import tensorboard_scheduler
+from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger(__name__)
 
@@ -22,7 +23,12 @@ def tensorboards_start(tensorboard_job_id):
         _logger.info('Tensorboard `%s` cannot transition from `%s` to `%s`.',
                      tensorboard.unique_name, tensorboard.last_status, JobLifeCycle.SCHEDULED)
 
-    tensorboard_scheduler.start_tensorboard(tensorboard)
+    try:
+        tensorboard_scheduler.start_tensorboard(tensorboard)
+    except VolumeNotFoundError:
+        tensorboard.set_status(status=JobLifeCycle.FAILED,
+                               message='Tensorboard failed to start, '
+                                       'the outputs volume/storage was not found.')
 
 
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION, ignore_result=True)
