@@ -8,7 +8,7 @@ from rest_framework import status
 
 from django.test import override_settings
 
-from api.plugins.serializers import ProjectTensorboardJobSerializer
+from api.plugins.serializers import ProjectTensorboardJobSerializer, ProjectNotebookJobSerializer
 from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.k8s_jobs import NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
@@ -47,6 +47,170 @@ class TestProjectTensorboardListViewV1(BaseViewTest):
         self.other_url = '/{}/{}/{}/tensorboards/'.format(API_V1,
                                                           self.other_project.user.username,
                                                           self.other_project.name)
+        self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
+        # one object that does not belong to the filter
+        self.factory_class(project=self.other_project)
+        self.queryset = self.model_class.objects.filter(project=self.project)
+        self.queryset = self.queryset.order_by('-updated_at')
+        self.other_object = self.factory_class(project=self.other_project)
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+        # Test other
+        resp = self.auth_client.get(self.other_url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        jobs_count = self.queryset.all().count()
+        assert jobs_count == self.num_objects
+
+        # Getting all jobs
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['count'] == jobs_count
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_get_order(self):
+        resp = self.auth_client.get(self.url + '?sort=created_at,updated_at')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data != self.serializer_class(self.queryset, many=True).data
+        assert data == self.serializer_class(self.queryset.order_by('created_at', 'updated_at'),
+                                             many=True).data
+
+    def test_get_order_pagination(self):
+        queryset = self.queryset.order_by('created_at', 'updated_at')
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}&{}".format(self.url,
+                                                            limit,
+                                                            'sort=created_at,updated_at'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(queryset[limit:], many=True).data
+
+    @pytest.mark.filterwarnings('ignore::RuntimeWarning')
+    def test_get_filter(self):
+        # Wrong filter format raises
+        resp = self.auth_client.get(self.url + '?query=created_at<2010-01-01')
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        resp = self.auth_client.get(self.url + '?query=created_at:<2010-01-01')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        resp = self.auth_client.get(self.url +
+                                    '?query=created_at:>=2010-01-01,status:Finished')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 0
+
+        resp = self.auth_client.get(self.url +
+                                    '?query=created_at:>=2010-01-01,status:created|running')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_get_filter_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}&{}".format(
+            self.url,
+            limit,
+            '?query=created_at:>=2010-01-01,status:created|running'))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+
+@pytest.mark.plugins_mark
+class TestProjectNotebookListViewV1(BaseViewTest):
+    serializer_class = ProjectNotebookJobSerializer
+    model_class = NotebookJob
+    factory_class = NotebookJobFactory
+    num_objects = 3
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.other_project = ProjectFactory()
+        self.url = '/{}/{}/{}/notebooks/'.format(API_V1,
+                                                 self.project.user.username,
+                                                 self.project.name)
+        self.other_url = '/{}/{}/{}/notebooks/'.format(API_V1,
+                                                       self.other_project.user.username,
+                                                       self.other_project.name)
         self.objects = [self.factory_class(project=self.project) for _ in range(self.num_objects)]
         # one object that does not belong to the filter
         self.factory_class(project=self.other_project)

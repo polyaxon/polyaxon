@@ -7,7 +7,7 @@ from api.build_jobs import views as builds_views
 from api.experiment_groups import views as groups_views
 from api.experiments import views as experiments_views
 from api.jobs import views as jobs_views
-from api.plugins import views as tensorboards_views
+from api.plugins import views as plugins_views
 from api.projects import views
 from constants.urls import OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN
 
@@ -31,7 +31,9 @@ projects_urlpatterns = [
     re_path(r'^{}/{}/builds/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             builds_views.ProjectBuildListView.as_view()),
     re_path(r'^{}/{}/tensorboards/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
-            tensorboards_views.ProjectTensorboardListView.as_view()),
+            plugins_views.ProjectTensorboardListView.as_view()),
+    re_path(r'^{}/{}/notebooks/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            plugins_views.ProjectNotebookListView.as_view()),
     re_path(r'^{}/{}/bookmark/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             bookmark_views.ProjectBookmarkCreateView.as_view()),
     re_path(r'^{}/{}/unbookmark/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),

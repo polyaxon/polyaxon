@@ -15,13 +15,14 @@ from api.filters import OrderingFilter, QueryFilter
 from api.plugins.serializers import (
     NotebookJobSerializer,
     ProjectTensorboardJobSerializer,
-    TensorboardJobSerializer
-)
+    TensorboardJobSerializer,
+    ProjectNotebookJobSerializer)
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
+from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from db.models.tokens import Token
 from event_manager.events.notebook import (
@@ -29,7 +30,7 @@ from event_manager.events.notebook import (
     NOTEBOOK_STOPPED_TRIGGERED,
     NOTEBOOK_VIEWED
 )
-from event_manager.events.project import PROJECT_TENSORBOARDS_VIEWED
+from event_manager.events.project import PROJECT_TENSORBOARDS_VIEWED, PROJECT_NOTEBOOKS_VIEWED
 from event_manager.events.tensorboard import (
     TENSORBOARD_STARTED_TRIGGERED,
     TENSORBOARD_STOPPED_TRIGGERED,
@@ -360,6 +361,25 @@ class ProjectTensorboardListView(ProjectResourceListEndpoint,
 
     def filter_queryset(self, queryset):
         auditor.record(event_type=PROJECT_TENSORBOARDS_VIEWED,
+                       instance=self.project,
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
+        return super().filter_queryset(queryset=queryset)
+
+
+class ProjectNotebookListView(ProjectResourceListEndpoint,
+                              ListEndpoint,
+                              CreateEndpoint):
+    """List an notebooks under a project."""
+    queryset = NotebookJob.objects
+    serializer_class = ProjectNotebookJobSerializer
+    filter_backends = (QueryFilter, OrderingFilter,)
+    query_manager = 'notebook'
+    ordering = ('-updated_at',)
+    ordering_fields = ('created_at', 'updated_at', 'started_at', 'finished_at')
+
+    def filter_queryset(self, queryset):
+        auditor.record(event_type=PROJECT_NOTEBOOKS_VIEWED,
                        instance=self.project,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)

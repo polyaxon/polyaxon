@@ -239,6 +239,7 @@ class TestEvents(BaseTest):
         assert project.ProjectJobsViewedEvent.get_event_subject() == 'project'
         assert project.ProjectBuildsViewedEvent.get_event_subject() == 'project'
         assert project.ProjectTensorboardsViewedEvent.get_event_subject() == 'project'
+        assert project.ProjectNotebooksViewedEvent.get_event_subject() == 'project'
 
         # Repo
         assert repo.RepoCreatedEvent.get_event_subject() == 'repo'
@@ -461,6 +462,7 @@ class TestEvents(BaseTest):
         assert project.ProjectJobsViewedEvent.get_event_action() == 'jobs_viewed'
         assert project.ProjectBuildsViewedEvent.get_event_action() == 'builds_viewed'
         assert project.ProjectTensorboardsViewedEvent.get_event_action() == 'tensorboards_viewed'
+        assert project.ProjectNotebooksViewedEvent.get_event_action() == 'notebooks_viewed'
 
         # Repo
         assert repo.RepoCreatedEvent.get_event_action() == 'created'

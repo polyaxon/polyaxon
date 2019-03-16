@@ -82,3 +82,35 @@ class ProjectTensorboardJobSerializer(serializers.ModelSerializer):
 
     def get_project(self, obj):
         return obj.project.unique_name
+
+
+class ProjectNotebookJobSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+    user = fields.SerializerMethodField()
+    project = fields.SerializerMethodField()
+
+    class Meta:
+        model = NotebookJob
+        fields = (
+            'id',
+            'uuid',
+            'name',
+            'unique_name',
+            'pod_id',
+            'user',
+            'description',
+            'created_at',
+            'updated_at',
+            'started_at',
+            'finished_at',
+            'last_status',
+            'backend',
+            'tags',
+            'project',
+        )
+
+    def get_user(self, obj):
+        return obj.user.username
+
+    def get_project(self, obj):
+        return obj.project.unique_name

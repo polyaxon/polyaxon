@@ -318,3 +318,22 @@ class AuditorProjectTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_project_tensorboards_viewed(self,
+                                         activitylogs_record,
+                                         tracker_record,
+                                         notifier_record,
+                                         executor_record):
+        auditor.record(event_type=project_events.PROJECT_NOTEBOOKS_VIEWED,
+                       instance=self.project,
+                       actor_id=1,
+                       actor_name='foo')
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
