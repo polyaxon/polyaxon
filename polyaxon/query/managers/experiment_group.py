@@ -60,7 +60,7 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         # Project
         'project': parse_value_operation,
         # Type
-        'group_type': parse_value_operation,
+        'type': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
         # hptuning
@@ -84,7 +84,7 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         # Project
         'project': ValueCondition,
         # Type
-        'group_type': ValueCondition,
+        'type': ValueCondition,
         # Tags
         'tags': ArrayCondition,
         # hptuning
