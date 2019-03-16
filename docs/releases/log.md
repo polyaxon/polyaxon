@@ -646,7 +646,7 @@ This is a patch release on top of 0.2.0 containing only bug fixes and no breakin
 ## 0.0.4
 
  * Add Jupyter notebooks
- * Update Tensorboad deployments
+ * Update Tensorboard deployments
  * Apply project permission to project plugin jobs, i.e. tensorboard and notebooks will only be accessible to users with enough project permissions
  * Update dashboard and ui
  * Fix some issues with kubernetes resources tracking

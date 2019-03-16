@@ -107,7 +107,6 @@ export let getSelectionUrl = (username: string,
   return `${projectUrl}/selections/${groupId}`;
 };
 
-
 export let getGroupUniqueName = (username: string,
                                  projectName: string,
                                  groupId: number | string) => {
@@ -143,6 +142,16 @@ export let getProjectUrlFromName = (uniqueName: string, app: boolean = true): st
 export let getBuildUrlFromName = (uniqueName: string, app: boolean = true): string => {
   const values = uniqueName.split('.');
   return getBuildUrl(values[0], values[1], values[values.length - 1], app);
+};
+
+export let getTensorboardApiUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getTensorboardApiUrl(values[0], values[1], values[values.length - 1], app);
+};
+
+export let getNotebookApiUrlFromName = (uniqueName: string, app: boolean = true): string => {
+  const values = uniqueName.split('.');
+  return getNotebookApiUrl(values[0], values[1], values[values.length - 1], app);
 };
 
 export let getGroupUrlFromName = (uniqueName: string, app: boolean = true): string => {
@@ -183,6 +192,24 @@ export let getBuildUrl = (username: string,
   return `${projectUrl}/builds/${buildId}`;
 };
 
+export let getTensorboardApiUrl = (username: string,
+                                   projectName: string,
+                                   tensorboardId: number | string,
+                                   app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
+
+  return `${projectUrl}/tensorboards/${tensorboardId}`;
+};
+
+export let getNotebookApiUrl = (username: string,
+                                projectName: string,
+                                tensorboardId: number | string,
+                                app: boolean = true) => {
+  const projectUrl = getProjectUrl(username, projectName, app);
+
+  return `${projectUrl}/notebooks/${tensorboardId}`;
+};
+
 export let getExperimentJobUrl = (username: string,
                                   projectName: string,
                                   experimentId: number,
@@ -213,6 +240,20 @@ export let getBuildUniqueName = (username: string,
                                  buildId: number | string) => {
   const projectUrl = getProjectUniqueName(username, projectName);
   return `${projectUrl}.builds.${buildId}`;
+};
+
+export let getTensorboardUniqueName = (username: string,
+                                       projectName: string,
+                                       buildId: number | string) => {
+  const projectUrl = getProjectUniqueName(username, projectName);
+  return `${projectUrl}.tensorboards.${buildId}`;
+};
+
+export let getNotebookUniqueName = (username: string,
+                                    projectName: string,
+                                    buildId: number | string) => {
+  const projectUrl = getProjectUniqueName(username, projectName);
+  return `${projectUrl}.notebooks.${buildId}`;
 };
 
 export function getGroupName(projectName: string, groupId: number | string) {

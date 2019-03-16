@@ -20,9 +20,11 @@ import { healthStatusReducer } from './healthStatus';
 import { logsReducer } from './logs';
 import { MetricsReducer } from './metrics';
 import { modalReducer } from './modal';
+import { notebooksReducer } from './notebooks';
 import { outputsReducer } from './outputs';
 import { searchesReducer } from './searches';
 import { StatusesReducer } from './statuses';
+import { tensorboardsReducer } from './tensorboards';
 import { tokenReducer } from './token';
 import { userReducer } from './user';
 
@@ -33,6 +35,8 @@ const combinedReducer = combineReducers<AppState>({
   groups: groupsReducer,
   jobs: jobsReducer,
   builds: buildsReducer,
+  tensorboards: tensorboardsReducer,
+  notebooks: notebooksReducer,
   experimentJobs: ExperimentJobsReducer,
   modal: modalReducer,
   auth: tokenReducer,
@@ -65,6 +69,8 @@ function SliceReducer(state: AppState, action: Action) {
     experimentsParams: state.experimentsParams,
     jobs: state.jobs,
     builds: state.builds,
+    tensorboards: state.tensorboards,
+    notebooks: state.notebooks,
     experimentJobs: state.experimentJobs,
     modal: state.modal,
     auth: state.auth,

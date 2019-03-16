@@ -14,6 +14,20 @@ export const BuildSchema = new schema.Entity(
     idAttribute: 'unique_name'
   });
 
+export const NotebookSchema = new schema.Entity(
+  'notebooks',
+  {},
+  {
+    idAttribute: 'unique_name'
+  });
+
+export const TensorboardSchema = new schema.Entity(
+  'tensorboards',
+  {},
+  {
+    idAttribute: 'unique_name'
+  });
+
 export const StatusSchema = new schema.Entity(
   'statuses',
   {},

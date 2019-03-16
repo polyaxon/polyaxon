@@ -14,10 +14,12 @@ import { HealthStatusEmptyState, HealthStatusStateSchema } from '../models/healt
 import { JobsEmptyState, JobStateSchema } from '../models/job';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
+import { NotebooksEmptyState, NotebookStateSchema } from '../models/notebook';
 import { OutputsModel } from '../models/outputs';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { SearchesEmptyState, SearchesStateSchema, } from '../models/search';
 import { StatusEmptyState, StatusStateSchema } from '../models/status';
+import { TensorboardsEmptyState, TensorboardStateSchema } from '../models/tensorboard';
 import { TokenEmptyState, TokenStateSchema } from '../models/token';
 import { UserEmptyState, UserStateSchema } from '../models/user';
 
@@ -28,6 +30,8 @@ export interface AppState {
   groups: GroupStateSchema;
   jobs: JobStateSchema;
   builds: BuildStateSchema;
+  tensorboards: TensorboardStateSchema;
+  notebooks: NotebookStateSchema;
   experimentJobs: ExperimentJobStateSchema;
   modal: ModalStateSchema;
   auth: TokenStateSchema;
@@ -51,6 +55,8 @@ export const AppEmptyState = {
   groups: GroupsEmptyState,
   jobs: JobsEmptyState,
   builds: BuildsEmptyState,
+  tensorboards: TensorboardsEmptyState,
+  notebooks: NotebooksEmptyState,
   experimentJobs: ExperimentJobsEmptyState,
   auth: TokenEmptyState,
   healthStatus: HealthStatusEmptyState,

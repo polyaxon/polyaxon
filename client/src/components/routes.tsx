@@ -9,7 +9,9 @@ import ExperimentJobDetail from '../containers/experimentJobDetail';
 import GroupDetail from '../containers/groupDetail';
 import HealthStatus from '../containers/healthStatus';
 import JobDetail from '../containers/jobDetail';
+import NotebookDetail from '../containers/notebookDetail';
 import ProjectDetail from '../containers/projectDetail';
+import TensorboardDetail from '../containers/tensorboardDetail';
 import Token from '../containers/token';
 import User from '../containers/user';
 import ClusterActivityLogs from './activitylogs/clusterActivityLogs';
@@ -27,6 +29,8 @@ function Routes() {
   const archivesRoute = '/app/archives/:user/';
   const projectDetailRoute = '/app/:user/:projectName/';
   const buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
+  const notebookDetailRoute = '/app/:user/:projectName/notebooks/:notebookId/';
+  const tensorboardDetailRoute = '/app/:user/:projectName/tensorboards/:tensorboardId/';
   const jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';
   const experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentId/';
   const groupDetailRoute = '/app/:user/:projectName/groups/:groupId/';
@@ -54,6 +58,8 @@ function Routes() {
       <Route path={clusterActivityLogsRoute} component={ClusterActivityLogs}/>
       <Route path={experimentJobDetailRoute} component={ExperimentJobDetail}/>
       <Route path={buildDetailRoute} component={BuildDetail}/>
+      <Route path={notebookDetailRoute } component={NotebookDetail}/>
+      <Route path={tensorboardDetailRoute} component={TensorboardDetail}/>
       <Route path={jobDetailRoute} component={JobDetail}/>
       <Route path={groupDetailRoute} component={GroupDetail}/>
       <Route path={experimentDetailRoute} component={ExperimentDetail}/>

@@ -8,6 +8,8 @@ import Builds from '../../containers/builds';
 import Experiments from '../../containers/experiments';
 import Groups from '../../containers/groups';
 import Jobs from '../../containers/jobs';
+import Notebooks from '../../containers/notebooks';
+import Tensorboards from '../../containers/tensorboards';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ProjectModel } from '../../models/project';
 import { getBookmark } from '../../utils/bookmarks';
@@ -119,6 +121,24 @@ export default class ProjectDetail extends React.Component<Props, {}> {
                   useFilters={true}
                 />,
                 relUrl: 'builds'
+              }, {
+                title: 'Tensorboards',
+                component: <Tensorboards
+                  user={project.user}
+                  projectName={project.unique_name}
+                  showBookmarks={true}
+                  useFilters={true}
+                />,
+                relUrl: 'tensorboards'
+              },{
+                title: 'Notebooks',
+                component: <Notebooks
+                  user={project.user}
+                  projectName={project.unique_name}
+                  showBookmarks={true}
+                  useFilters={true}
+                />,
+                relUrl: 'notebooks'
               }, {
                 title: 'Activity logs',
                 component: <ActivityLogs user={project.user} projectName={project.name}/>,
