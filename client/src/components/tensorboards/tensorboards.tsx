@@ -79,7 +79,7 @@ export default class Tensorboards extends React.Component<Props, {}> {
        empty = EmptyArchives(
         this.props.isCurrentUser,
         'tensorboard',
-        'tensorboard');
+        'dashboard');
     } else {
       empty = EmptyList(
         this.props.isCurrentUser,
