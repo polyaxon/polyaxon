@@ -23,7 +23,6 @@
     "@types/node": "8.10.20",
     "@types/plotly.js": "^1.38.8",
     "@types/query-string": "6.1.0",
-    "@types/raven": "2.5.1",
     "@types/react": "16.8.5",
     "@types/react-bootstrap": "0.32.17",
     "@types/react-dom": "16.8.2",
@@ -56,6 +55,7 @@
     "webpack-dev-server": "^3.0.0"
   },
   "dependencies": {
+    "@sentry/browser": "^4.6.4",
     "copy-to-clipboard": "^3.0.8",
     "history": "4.7.2",
     "js-cookie": "2.2.0",
@@ -65,7 +65,6 @@
     "normalizr": "3.2.4",
     "plotly.js": "1.45.0",
     "query-string": "6.2.0",
-    "raven-js": "3.26.3",
     "react": "16.8.3",
     "react-bootstrap": "0.32.4",
     "react-dom": "16.8.3",
