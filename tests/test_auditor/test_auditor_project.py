@@ -323,11 +323,11 @@ class AuditorProjectTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_project_tensorboards_viewed(self,
-                                         activitylogs_record,
-                                         tracker_record,
-                                         notifier_record,
-                                         executor_record):
+    def test_project_notebooks_viewed(self,
+                                      activitylogs_record,
+                                      tracker_record,
+                                      notifier_record,
+                                      executor_record):
         auditor.record(event_type=project_events.PROJECT_NOTEBOOKS_VIEWED,
                        instance=self.project,
                        actor_id=1,
