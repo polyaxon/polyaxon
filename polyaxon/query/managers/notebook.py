@@ -3,11 +3,10 @@ from query.managers.base import BaseQueryManager
 from query.parser import parse_datetime_operation, parse_value_operation
 
 
-class BuildQueryManager(BaseQueryManager):
-    NAME = 'build'
+class NotebookQueryManager(BaseQueryManager):
+    NAME = 'notebook'
     FIELDS_PROXY = {
         'status': 'status__status',
-        'commit': 'code_reference__commit',
     }
     PARSERS_BY_FIELD = {
         # Id
@@ -27,8 +26,6 @@ class BuildQueryManager(BaseQueryManager):
         'project': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
-        # Commit
-        'commit': parse_value_operation,
         # Backend
         'backend': parse_value_operation,
     }
@@ -46,12 +43,10 @@ class BuildQueryManager(BaseQueryManager):
         'user': ValueCondition,
         # Status
         'status': ValueCondition,
-        # Project
-        'project': ValueCondition,
         # Tags
         'tags': ArrayCondition,
-        # Commit
-        'commit': ValueCondition,
+        # Project
+        'project': ValueCondition,
         # Backend
         'backend': ValueCondition,
     }

@@ -50,6 +50,10 @@ class ExperimentQueryManager(BaseQueryManager):
         'group': parse_value_operation,
         # Builds
         'build': parse_value_operation,
+        # Backend
+        'backend': parse_value_operation,
+        # Framework
+        'framework': parse_value_operation,
         # Commit
         'commit': parse_value_operation,
         # Declarations
@@ -81,6 +85,10 @@ class ExperimentQueryManager(BaseQueryManager):
         'group': ValueCondition,
         # Builds
         'build': ValueCondition,
+        # Backend
+        'backend': ValueCondition,
+        # Framework
+        'framework': ValueCondition,
         # Commit
         'commit': ValueCondition,
         # Declarations

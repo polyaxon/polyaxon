@@ -40,7 +40,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
     NAME = 'experiment_group'
     FIELDS_PROXY = {
         'status': 'status__status',
-        'concurrency': 'hptuning__concurrency'
+        'concurrency': 'hptuning__concurrency',
+        'type': 'group_type',
     }
     PARSERS_BY_FIELD = {
         # Id
@@ -58,6 +59,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         'status': parse_value_operation,
         # Project
         'project': parse_value_operation,
+        # Type
+        'group_type': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
         # hptuning
@@ -80,6 +83,8 @@ class ExperimentGroupQueryManager(BaseQueryManager):
         'status': ValueCondition,
         # Project
         'project': ValueCondition,
+        # Type
+        'group_type': ValueCondition,
         # Tags
         'tags': ArrayCondition,
         # hptuning
