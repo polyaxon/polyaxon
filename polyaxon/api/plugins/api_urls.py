@@ -27,10 +27,20 @@ projects_urlpatterns = [
     re_path(r'^{}/{}/groups/{}/tensorboard/stop/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
         views.StopTensorboardView.as_view()),
+    re_path(r'^{}/{}/tensorboard/statuses/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.TensorboardStatusListView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/tensorboard/statuses/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.TensorboardStatusListView.as_view()),
+    re_path(r'^{}/{}/groups/{}/tensorboard/statuses/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, GROUP_ID_PATTERN),
+        views.TensorboardStatusListView.as_view()),
     re_path(r'^{}/{}/notebook/start/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.StartNotebookView.as_view()),
     re_path(r'^{}/{}/notebook/stop/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.StopNotebookView.as_view()),
+    re_path(r'^{}/{}/notebook/statuses/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.NotebookStatusListView.as_view()),
     re_path(r'^{}/{}/notebook/imporsonatetoken/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.NotebookImpersonateTokenView.as_view()),
 ]

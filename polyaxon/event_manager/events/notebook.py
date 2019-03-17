@@ -16,6 +16,8 @@ NOTEBOOK_VIEWED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.VIEWED)
 NOTEBOOK_NEW_STATUS = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.NEW_STATUS)
 NOTEBOOK_FAILED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.FAILED)
 NOTEBOOK_SUCCEEDED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.SUCCEEDED)
+NOTEBOOK_STATUSES_VIEWED = '{}.{}'.format(event_subjects.NOTEBOOK,
+                                          event_actions.STATUSES_VIEWED)
 
 
 class NotebookStartedEvent(Event):
@@ -118,5 +120,18 @@ class NotebookFailedEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class NotebookStatusesViewedEvent(Event):
+    event_type = NOTEBOOK_STATUSES_VIEWED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
     )

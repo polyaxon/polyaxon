@@ -1,7 +1,7 @@
 from polyaxon_schemas.ops.environments.experiments import (  # noqa
     HorovodClusterConfig,
-    MXNetClusterConfig,
     MPIClusterConfig,
+    MXNetClusterConfig,
     PytorchClusterConfig,
     TensorflowClusterConfig
 )

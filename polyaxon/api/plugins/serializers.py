@@ -1,7 +1,7 @@
 from rest_framework import fields, serializers
 
-from db.models.notebooks import NotebookJob
-from db.models.tensorboards import TensorboardJob
+from db.models.notebooks import NotebookJob, NotebookJobStatus
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from libs.spec_validation import validate_notebook_spec_config, validate_tensorboard_spec_config
 
 
@@ -114,3 +114,21 @@ class ProjectNotebookJobSerializer(serializers.ModelSerializer):
 
     def get_project(self, obj):
         return obj.project.unique_name
+
+
+class TensorboardJobStatusSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = TensorboardJobStatus
+        extra_kwargs = {'job': {'read_only': True}}
+        exclude = []
+
+
+class NotebookJobStatusSerializer(serializers.ModelSerializer):
+    uuid = fields.UUIDField(format='hex', read_only=True)
+
+    class Meta:
+        model = NotebookJobStatus
+        extra_kwargs = {'job': {'read_only': True}}
+        exclude = []

@@ -4,11 +4,17 @@ from unittest.mock import patch
 import mock
 import pytest
 
+from hestia.internal_services import InternalServices
 from rest_framework import status
 
 from django.test import override_settings
 
-from api.plugins.serializers import ProjectTensorboardJobSerializer, ProjectNotebookJobSerializer
+from api.plugins.serializers import (
+    NotebookJobStatusSerializer,
+    ProjectNotebookJobSerializer,
+    ProjectTensorboardJobSerializer,
+    TensorboardJobStatusSerializer
+)
 from api.utils.views.protected import ProtectedView
 from constants.jobs import JobLifeCycle
 from constants.k8s_jobs import NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
@@ -20,13 +26,262 @@ from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
-from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
+from factories.factory_plugins import (
+    NotebookJobFactory,
+    NotebookJobStatusFactory,
+    TensorboardJobFactory,
+    TensorboardJobStatusFactory
+)
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from scheduler import notebook_scheduler
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from tests.utils import BaseViewTest
+
+
+@pytest.mark.plugins_mark
+class TestProjectTensorboardStatusListViewV1(BaseViewTest):
+    serializer_class = TensorboardJobStatusSerializer
+    model_class = TensorboardJobStatus
+    factory_class = TensorboardJobStatusFactory
+    num_objects = 3
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
+
+    def setUp(self):
+        super().setUp()
+        self.set_objects()
+
+    def set_objects(self):
+        with patch.object(TensorboardJob, 'set_status') as _:
+            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
+                project = ProjectFactory(user=self.auth_client.user)
+                self.job = TensorboardJobFactory(project=project)
+        self.url = '/{}/{}/{}/tensorboard/statuses/'.format(API_V1,
+                                                            project.user.username,
+                                                            project.name)
+        self.objects = [self.factory_class(job=self.job,
+                                           status=JobLifeCycle.CHOICES[i][0])
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        resp = self.internal_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.status == JobLifeCycle.CREATED
+
+        data = {'status': JobLifeCycle.RUNNING}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 2
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+
+        # Create with message and traceback
+        data = {'status': JobLifeCycle.FAILED,
+                'message': 'message1',
+                'traceback': 'traceback1'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 3
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+        assert last_object.message == data['message']
+        assert last_object.traceback == data['traceback']
+
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 4
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+        assert last_object.message == data['message']
+        assert last_object.traceback == data['traceback']
+
+
+@pytest.mark.plugins_mark
+class TestExperimentTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
+    def set_objects(self):
+        with patch.object(TensorboardJob, 'set_status') as _:
+            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
+                project = ProjectFactory(user=self.auth_client.user)
+                experiment = ExperimentFactory(project=project)
+                self.job = TensorboardJobFactory(project=project, experiment=experiment)
+        self.url = '/{}/{}/{}/experiments/{}/tensorboard/statuses/'.format(API_V1,
+                                                                           project.user.username,
+                                                                           project.name,
+                                                                           experiment.id)
+        self.objects = [self.factory_class(job=self.job,
+                                           status=JobLifeCycle.CHOICES[i][0])
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
+
+
+@pytest.mark.plugins_mark
+class TestGroupTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
+    def set_objects(self):
+        with patch.object(TensorboardJob, 'set_status') as _:
+            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
+                project = ProjectFactory(user=self.auth_client.user)
+                group = ExperimentGroupFactory(project=project)
+                self.job = TensorboardJobFactory(project=project, experiment_group=group)
+        self.url = '/{}/{}/{}/groups/{}/tensorboard/statuses/'.format(API_V1,
+                                                                      project.user.username,
+                                                                      project.name,
+                                                                      group.id)
+        self.objects = [self.factory_class(job=self.job,
+                                           status=JobLifeCycle.CHOICES[i][0])
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
+
+
+@pytest.mark.plugins_mark
+class TestNotebookStatusListViewV1(BaseViewTest):
+    serializer_class = NotebookJobStatusSerializer
+    model_class = NotebookJobStatus
+    factory_class = NotebookJobStatusFactory
+    num_objects = 3
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
+
+    def setUp(self):
+        super().setUp()
+        self.set_objects()
+
+    def set_objects(self):
+        with patch.object(NotebookJob, 'set_status') as _:
+            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
+                project = ProjectFactory(user=self.auth_client.user)
+                self.job = NotebookJobFactory(project=project)
+        self.url = '/{}/{}/{}/notebook/statuses/'.format(API_V1,
+                                                         project.user.username,
+                                                         project.name)
+        self.objects = [self.factory_class(job=self.job,
+                                           status=JobLifeCycle.CHOICES[i][0])
+                        for i in range(self.num_objects)]
+        self.queryset = self.model_class.objects.all()
+        self.queryset = self.queryset.order_by('created_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        resp = self.internal_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
+
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+    def test_create(self):
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.status == JobLifeCycle.CREATED
+
+        data = {'status': JobLifeCycle.RUNNING}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 2
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+
+        # Create with message and traceback
+        data = {'status': JobLifeCycle.FAILED,
+                'message': 'message1',
+                'traceback': 'traceback1'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 3
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+        assert last_object.message == data['message']
+        assert last_object.traceback == data['traceback']
+
+        resp = self.internal_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 4
+        last_object = self.model_class.objects.last()
+        assert last_object.job == self.job
+        assert last_object.status == data['status']
+        assert last_object.message == data['message']
+        assert last_object.traceback == data['traceback']
 
 
 @pytest.mark.plugins_mark

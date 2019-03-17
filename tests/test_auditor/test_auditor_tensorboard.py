@@ -231,3 +231,23 @@ class AuditorTensorboardTest(BaseTest):
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 1
         assert executor_record.call_count == 1
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_statuses_viewed_triggered(self,
+                                                   activitylogs_record,
+                                                   tracker_record,
+                                                   notifier_record,
+                                                   executor_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_STATUSES_VIEWED,
+                       instance=self.tensorboard,
+                       target='project',
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0

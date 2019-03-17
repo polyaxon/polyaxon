@@ -1,7 +1,6 @@
 from constants.k8s_jobs import EXPERIMENT_KF_TASK_NAME_FORMAT
-from scheduler.spawners.templates.experiment_jobs.manager import (
+from scheduler.spawners.templates.experiment_jobs.manager import \
     ResourceManager as ExperimentResourceManager
-)
 
 
 class ResourceManager(ExperimentResourceManager):

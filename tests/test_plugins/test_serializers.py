@@ -1,17 +1,58 @@
+from unittest.mock import patch
+
 import pytest
 
 from api.plugins.serializers import (
     NotebookJobSerializer,
+    NotebookJobStatusSerializer,
+    ProjectNotebookJobSerializer,
     ProjectTensorboardJobSerializer,
     TensorboardJobSerializer,
-    ProjectNotebookJobSerializer)
+    TensorboardJobStatusSerializer
+)
 from constants.jobs import JobLifeCycle
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
-from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
+from factories.factory_plugins import (
+    NotebookJobFactory,
+    NotebookJobStatusFactory,
+    TensorboardJobFactory,
+    TensorboardJobStatusFactory
+)
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from tests.utils import BaseTest
+
+
+@pytest.mark.plugins_mark
+class TestTensorboardJobStatusSerializer(BaseTest):
+    serializer_class = TensorboardJobStatusSerializer
+    model_class = TensorboardJobStatus
+    factory_class = TensorboardJobStatusFactory
+    expected_keys = {'id', 'uuid', 'job', 'created_at', 'status', 'traceback', 'message', 'details'}
+
+    def setUp(self):
+        super().setUp()
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
+            self.obj1 = self.factory_class()
+            self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('job') == self.obj1.job.id
+        data.pop('created_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
 
 
 @pytest.mark.plugins_mark
@@ -81,6 +122,37 @@ class TestProjectTensorboardJobSerializer(BaseTest):
         assert set(data.keys()) == self.expected_keys
         assert data['started_at'] is not None
         assert data['finished_at'] is not None
+
+    def test_serialize_many(self):
+        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.plugins_mark
+class TestNotebookJobStatusSerializer(BaseTest):
+    serializer_class = NotebookJobStatusSerializer
+    model_class = NotebookJobStatus
+    factory_class = NotebookJobStatusFactory
+    expected_keys = {'id', 'uuid', 'job', 'created_at', 'status', 'traceback', 'message', 'details'}
+
+    def setUp(self):
+        super().setUp()
+        with patch.object(NotebookJob, 'set_status') as _:  # noqa
+            self.obj1 = self.factory_class()
+            self.obj2 = self.factory_class()
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1).data
+
+        assert set(data.keys()) == self.expected_keys
+        assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('job') == self.obj1.job.id
+        data.pop('created_at')
+
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
         data = self.serializer_class(self.model_class.objects.all(), many=True).data

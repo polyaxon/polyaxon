@@ -7,8 +7,8 @@ import conf
 
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
-    get_internal_env_vars,
-    get_from_field_ref
+    get_from_field_ref,
+    get_internal_env_vars
 )
 
 

@@ -18,6 +18,8 @@ TENSORBOARD_UNBOOKMARKED = '{}.{}'.format(event_subjects.TENSORBOARD, event_acti
 TENSORBOARD_NEW_STATUS = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.NEW_STATUS)
 TENSORBOARD_FAILED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.FAILED)
 TENSORBOARD_SUCCEEDED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.SUCCEEDED)
+TENSORBOARD_STATUSES_VIEWED = '{}.{}'.format(event_subjects.TENSORBOARD,
+                                             event_actions.STATUSES_VIEWED)
 
 
 class TensorboardStartedEvent(Event):
@@ -146,5 +148,18 @@ class TensorboardFailedEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class TensorboardStatusesViewedEvent(Event):
+    event_type = TENSORBOARD_STATUSES_VIEWED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
     )

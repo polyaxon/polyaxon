@@ -3,7 +3,7 @@ import shutil
 
 from hestia.paths import check_or_create_path, create_path, delete_path
 from hestia.service_interface import InvalidService, Service
-from marshmallow import ValidationError, EXCLUDE
+from marshmallow import EXCLUDE, ValidationError
 from polystores import StoreManager
 from polystores.exceptions import PolyaxonStoresException
 from rhea import RheaError

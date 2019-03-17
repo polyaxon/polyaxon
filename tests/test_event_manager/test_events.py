@@ -261,6 +261,7 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardNewStatusEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardFailedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardSucceededEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardStatusesViewedEvent.get_event_subject() == 'tensorboard'
 
         # User
         assert user.UserRegisteredEvent.get_event_subject() == 'user'
@@ -484,6 +485,7 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardNewStatusEvent.get_event_action() is None
         assert tensorboard.TensorboardFailedEvent.get_event_action() is None
         assert tensorboard.TensorboardSucceededEvent.get_event_action() is None
+        assert tensorboard.TensorboardStatusesViewedEvent.get_event_action() == 'statuses_viewed'
 
         # User
         assert user.UserRegisteredEvent.get_event_action() == 'registered'

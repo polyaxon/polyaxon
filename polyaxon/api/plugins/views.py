@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.settings import api_settings
 
 from django.http import Http404
 
@@ -10,29 +11,36 @@ import auditor
 import conf
 
 from api.endpoint.base import CreateEndpoint, ListEndpoint, PostEndpoint
+from api.endpoint.notebook import NotebookResourceListEndpoint
 from api.endpoint.project import ProjectEndpoint, ProjectResourceListEndpoint
+from api.endpoint.tensorboard import TensorboardResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.plugins.serializers import (
     NotebookJobSerializer,
+    NotebookJobStatusSerializer,
+    ProjectNotebookJobSerializer,
     ProjectTensorboardJobSerializer,
     TensorboardJobSerializer,
-    ProjectNotebookJobSerializer)
+    TensorboardJobStatusSerializer
+)
 from api.utils.views.protected import ProtectedView
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
-from db.models.notebooks import NotebookJob
-from db.models.tensorboards import TensorboardJob
+from db.models.notebooks import NotebookJob, NotebookJobStatus
+from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from db.models.tokens import Token
 from event_manager.events.notebook import (
     NOTEBOOK_STARTED_TRIGGERED,
+    NOTEBOOK_STATUSES_VIEWED,
     NOTEBOOK_STOPPED_TRIGGERED,
     NOTEBOOK_VIEWED
 )
-from event_manager.events.project import PROJECT_TENSORBOARDS_VIEWED, PROJECT_NOTEBOOKS_VIEWED
+from event_manager.events.project import PROJECT_NOTEBOOKS_VIEWED, PROJECT_TENSORBOARDS_VIEWED
 from event_manager.events.tensorboard import (
     TENSORBOARD_STARTED_TRIGGERED,
+    TENSORBOARD_STATUSES_VIEWED,
     TENSORBOARD_STOPPED_TRIGGERED,
     TENSORBOARD_VIEWED
 )
@@ -43,6 +51,15 @@ from schemas.notebook_backend import NotebookBackend
 from schemas.specifications import NotebookSpecification, TensorboardSpecification
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsInitializer
+
+
+def get_target(experiment, group):
+    if experiment:
+        return 'experiment'
+    elif group:
+        return 'experiment_group'
+    else:
+        return 'project'
 
 
 class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
@@ -65,7 +82,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
                                    experiment=experiment)
         auditor.record(event_type=TENSORBOARD_STARTED_TRIGGERED,
                        instance=instance,
-                       target='project',
+                       target=get_target(experiment=experiment, group=experiment_group),
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
 
@@ -115,25 +132,15 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopTensorboardView(ProjectEndpoint, PostEndpoint):
+class StopTensorboardView(TensorboardResourceListEndpoint, PostEndpoint):
     """Stop a tensorboard."""
 
     def post(self, request, *args, **kwargs):
         project = self.project
+        tensorboard = self.tensorboard
+        has_tensorboard = self.has_tensorboard
         experiment_id = self.kwargs.get('experiment_id')
         group_id = self.kwargs.get('group_id')
-
-        if experiment_id:
-            experiment = get_object_or_404(Experiment, project=project, id=experiment_id)
-            has_tensorboard = experiment.has_tensorboard
-            tensorboard = experiment.tensorboard
-        elif group_id:
-            group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
-            has_tensorboard = group.has_tensorboard
-            tensorboard = group.tensorboard
-        else:
-            has_tensorboard = project.has_tensorboard
-            tensorboard = project.tensorboard
 
         if has_tensorboard:
             celery_app.send_task(
@@ -148,10 +155,38 @@ class StopTensorboardView(ProjectEndpoint, PostEndpoint):
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=tensorboard,
-                           target='project',
+                           target=get_target(experiment=experiment_id, group=group_id),
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
         return Response(status=status.HTTP_200_OK)
+
+
+class TensorboardStatusListView(TensorboardResourceListEndpoint, ListEndpoint, CreateEndpoint):
+    """
+    get:
+        List all statuses of a job.
+    post:
+        Create a job status.
+    """
+    queryset = TensorboardJobStatus.objects.order_by('created_at')
+    serializer_class = TensorboardJobStatusSerializer
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
+
+    def perform_create(self, serializer):
+        serializer.save(job=self.tensorboard)
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        experiment_id = self.kwargs.get('experiment_id')
+        group_id = self.kwargs.get('group_id')
+        auditor.record(event_type=TENSORBOARD_STATUSES_VIEWED,
+                       instance=self.tensorboard,
+                       target=get_target(experiment=experiment_id, group=group_id),
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        return response
 
 
 class StartNotebookView(ProjectEndpoint, PostEndpoint):
@@ -191,7 +226,7 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopNotebookView(ProjectEndpoint, PostEndpoint):
+class StopNotebookView(NotebookResourceListEndpoint, PostEndpoint):
     """Stop a tensorboard."""
 
     def handle_code(self, request):
@@ -228,10 +263,36 @@ class StopNotebookView(ProjectEndpoint, PostEndpoint):
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username,
                            countdown=1)
-        elif self.project.notebook and self.project.notebook.is_stoppable:
-            self.project.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
-                                             message='Notebook was stopped')
+        elif self.notebook and self.notebook.is_stoppable:
+            self.notebook.set_status(status=ExperimentLifeCycle.STOPPED,
+                                     message='Notebook was stopped')
         return Response(status=status.HTTP_200_OK)
+
+
+class NotebookStatusListView(NotebookResourceListEndpoint, ListEndpoint, CreateEndpoint):
+    """
+    get:
+        List all statuses of a job.
+    post:
+        Create a job status.
+    """
+    queryset = NotebookJobStatus.objects.order_by('created_at')
+    serializer_class = NotebookJobStatusSerializer
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
+
+    def perform_create(self, serializer):
+        serializer.save(job=self.notebook)
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        auditor.record(event_type=NOTEBOOK_STATUSES_VIEWED,
+                       instance=self.notebook,
+                       target='project',
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        return response
 
 
 class PluginJobView(ProjectEndpoint, ProtectedView):
@@ -335,15 +396,9 @@ class TensorboardView(PluginJobView):
     def audit(self, instance):
         experiment_id = self.kwargs.get('experiment_id')
         group_id = self.kwargs.get('group_id')
-        if experiment_id:
-            target = 'experiment'
-        elif group_id:
-            target = 'experiment_group'
-        else:
-            target = 'project'
         auditor.record(event_type=TENSORBOARD_VIEWED,
                        instance=instance.tensorboard,
-                       target=target,
+                       target=get_target(experiment=experiment_id, group=group_id),
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
 
