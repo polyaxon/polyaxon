@@ -22,6 +22,13 @@ It performs random sampling and attempts to gain an edge by using time spent opt
 
 The algorithm tries a large number of random configurations/experiments, then decides which configurations to keep based on their progress.
 
+The Hyperband is implemented, is that it creates several buckets, each bucket has a number of randomly generated hyperparameter configurations, 
+each configuration uses a resource (e.g. number of steps, number of epochs, batch size, ...). To adapt the algorithms maximum resource allocation, users can use `num_iter`.
+
+After trying a number of configurations, it chooses top `number of observation/eta` configurations and runs them using increased `resource*eta` resource. 
+At last, it chooses the best configuration it has found so far.
+
+
 ## Configuration
 
 In order to configure this search algorithm correctly, you need to have as one of the hyperparameters,
@@ -87,6 +94,20 @@ hptuning:
     activation:
       pvalues: [[relu, 0.1], [sigmoid, 0.8]]
 ```
+
+In this example we allocate a maximum resources of `81`, our resource in this case is the `num_steps` which is of type `int` that we pass to our model.
+
+This is how the algorithm works with this config:
+
+
+|              | bucket=4                    | bucket=3                     | bucket=2                     | bucket=1                     | bucket=0                    |
+|--------------|-----------------------------|------------------------------|------------------------------|------------------------------|-----------------------------|
+|iteration     |num configs  |resource alloc |num configs  |resource alloc  |num configs  |resource alloc  |num configs  |resource alloc  |num configs  |resource alloc |
+|0             |81           | 1             |27           |              3 |9            | 9              |6            | 27             |5            |             81|
+|1             |27           | 3             |9            |             9  |3            | 27             |2            | 81             |             |               |
+|2             |9            |9              |3            |             27 |1            | 81             |             |                |             |               |
+|3             |3            |27             |1            |             81 |             |                |             |                |             |               |
+|4             |1            |81             |             |                |             |                |             |                |             |               |
 
 ## Concurrency
 
