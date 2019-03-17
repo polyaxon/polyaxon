@@ -102,12 +102,12 @@ This is how the algorithm works with this config:
 
 |              | bucket=4                    | bucket=3                     | bucket=2                     | bucket=1                     | bucket=0                    |
 |--------------|-----------------------------|------------------------------|------------------------------|------------------------------|-----------------------------|
-|iteration     |num configs  |resource alloc |num configs  |resource alloc  |num configs  |resource alloc  |num configs  |resource alloc  |num configs  |resource alloc |
-|0             |81           | 1             |27           |              3 |9            | 9              |6            | 27             |5            |             81|
-|1             |27           | 3             |9            |             9  |3            | 27             |2            | 81             |             |               |
-|2             |9            |9              |3            |             27 |1            | 81             |             |                |             |               |
-|3             |3            |27             |1            |             81 |             |                |             |                |             |               |
-|4             |1            |81             |             |                |             |                |             |                |             |               |
+|iteration     |num configs   resource alloc |num configs   resource alloc  |num configs   resource alloc  |num configs   resource alloc  |num configs   resource alloc |
+|0             |81             1             |27                          3 |9              9              |6              27             |5                          81|
+|1             |27             3             |9                          9  |3              27             |2              81             |                             |
+|2             |9             9              |3                          27 |1              81             |                              |                             |
+|3             |3             27             |1                          81 |                              |                              |                             |
+|4             |1             81             |                              |                              |                              |                             |
 
 ## Concurrency
 
@@ -152,5 +152,5 @@ hptuning:
       optimization: minimize
 ```
 
-With this updated example, if one of the experiments reaches an accuracy of 0.9 or higher, or a loss of 0.05 or lower, the search algorithm will stop other running experiments, 
+With this updated example, if one of the experiments reaches an accuracy of 0.9 or higher, or a loss of 0.05 or lower, the search algorithm will stop other ru ng experiments, 
 and any other experiments that is scheduled to be running.
