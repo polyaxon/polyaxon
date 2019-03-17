@@ -31,7 +31,6 @@ Starting notebook is similar to running any other Polyaxon job, i.e. you need to
 
  * [version](/references/polyaxonfile-yaml-specification/version/)
  * [kind](/references/polyaxonfile-yaml-specification/kind/): in this case this value should be `plugin`.
- * [project](/references/polyaxonfile-yaml-specification/project/)
  * [run](/references/polyaxonfile-yaml-specification/version/)
 
 Let's create a simple polyaxonfile_notebook.yml

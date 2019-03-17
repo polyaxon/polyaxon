@@ -103,6 +103,6 @@ polyaxon project -p quick-start git --url="https://github.com/org/repo" --privat
 The `--private` is only necessary if the project is a private repo on the external platform, 
 this tells flag Polyaxon to use the [access token or user/password to clone the project](/integrations/scm/).
 
-You are ready now to run experiments, please go to [experiment groups](/concepts/experiment-groups/)
+You are ready now to run experiments, please go to [experiment groups](/concepts/experiment-groups-hyperparameters-optimization/)
 if you want to run multiple experiments concurrently and perform hyperparameters search.
 Otherwise go to [experiments](/concepts/experiments/) if you want to run a single experiment.

@@ -64,7 +64,7 @@ This configuration specifies:
    * The `kind` of this operation, in this case experiment.
    * The `build` section to build a docker image,
      in this case we want to run our code with the specified tensorflow docker image.
-     We are also installing the polyaxon-client for [tracking](/polyaxon_tracking/introduction) and to send metrics at the end of the experiment.
+     We are also installing the polyaxon-client for [tracking](/references/polyaxon-tracking-api/) and to send metrics at the end of the experiment.
    * The `run` section to execute our code.
 
 

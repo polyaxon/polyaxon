@@ -46,8 +46,6 @@ Some of these approaches are also iterative and improve based on previous experi
  * Define a search algorithm
  * Define a model to optimize
  * Optionally define the concurrency and early stopping.
- 
- ![polyaxon's optimization engine](../../content/images/references/optimization-engine/polyaxon-optimization-engine.svg)
 
 ## Algorithms 
 

@@ -25,7 +25,6 @@ This module includes several Resources.
  * [Project](/references/polyaxon-api/project/): Projects resources.
  * [Experiment Group](/references/polyaxon-api/experiment-group/): Experiment groups resources.
  * [Experiment](/references/polyaxon-api/experiment/): Experiments resources.
- * [Experiment Job](/references/polyaxon-api/experiment-job/): Experiment jobs resources.
  * [Job](/references/polyaxon-api/job/): Jobs resources.
  * [Build Job](/references/polyaxon-api/build-job/): Build jobs resources
  * [Bookmark](/references/polyaxon-api/bookmark/): Bookmarking resources

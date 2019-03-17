@@ -192,7 +192,7 @@ Experiment was created.
 You can repeat this process as much as you wish until you are satisfied with the performance of your model.
 Polyaxon will create a new experiment for you each time. However, if the space of values you want to try is large,
 modifying the values manually and executing `polyaxon run` is not optimal,
-what you can do instead is create an [experiment group](/concepts/experiment-groups/).
+what you can do instead is create an [experiment group](/concepts/experiment-groups-hyperparameters-optimization/).
 
 ## Stopping an experiment
 
@@ -343,7 +343,7 @@ Experiment was created.
 ```
 
 Polyaxon currently supports distributed runs for Tensorflow, MXNet, Pytorch, and Horovod.
-Please go to the [distributed experiments](/concepts/distributed-experiments/)'s section to learn more how
+Please go to the [distributed experiments](/integrations/distributed-training/)'s section to learn more how
 to configure your experiment for the different frameworks.
 
 ## Tracking experiment logs

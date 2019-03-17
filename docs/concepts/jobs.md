@@ -34,7 +34,7 @@ run:
   cmd: python3 prepare_data.py
 ```
 
-> For more details about the `run section` check the [run section reference](/polyaxonfile_specification/sections#run)
+> For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/run/)
 
 
 ## Running a job

@@ -260,7 +260,7 @@ client = experiment.client
 
 This client is authenticated with the current user, and gives scoped access to all accessible objects of the user.
 
-Please look at [Polyaxon client](/polyaxon_client/introduction) for more information.
+Please look at [Polyaxon client](/references/polyaxon-cli/) for more information.
 
 ## Tracking experiments running outside Polyaxon
 

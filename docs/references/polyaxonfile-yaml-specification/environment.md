@@ -86,7 +86,7 @@ environment:
 ## node selectors
 
 The labels to use as node selectors for scheduling the job on a specific node.
-You can also set default [node selectors](/reference_polyaxon_helm/#node-and-deployment-manipulation)
+You can also set default [node selectors](/references/polyaxon-helm-reference/#node-and-deployment-manipulation)
 during the deployment and use this subsection to override the default values.
 
 ```yaml
@@ -98,7 +98,7 @@ environment:
 ## tolerations
 
 The tolerations to use for the scheduling the job.
-You can also set default [tolerations](/reference_polyaxon_helm/#node-and-deployment-manipulation)
+You can also set default [tolerations](/references/polyaxon-helm-reference/#node-and-deployment-manipulation)
 during the deployment and use this subsection to override the default values.
 
 ```yaml
@@ -112,7 +112,7 @@ environment:
 ## affinity
 
 The affinity to use for the scheduling the job.
-You can also set default [affinity](/reference_polyaxon_helm/#node-and-deployment-manipulation)
+You can also set default [affinity](/references/polyaxon-helm-reference/#node-and-deployment-manipulation)
 during the deployment and use this subsection to override the default values.
 
 ```yaml

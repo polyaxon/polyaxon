@@ -1,6 +1,6 @@
 ---
 title: "Polyaxon Builds Query Syntax"
-sub_link: "polyaxon-query-syntax/build"
+sub_link: "polyaxon-query-syntax/builds"
 meta_title: "Polyaxon Builds Query Syntax Specification - Polyaxon References"
 meta_description: "Polyaxon Builds Query Syntax Specification."
 visibility: public

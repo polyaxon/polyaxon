@@ -52,7 +52,7 @@ experiment = group.create_experiment(tags=tags, description='Some description')
 
 This will create an experiment under this group, and provide all context (client api, and storage), to each experiment.
 
-You can then refer to [experiment tracking](/polyaxon_tracking/experiments)
+You can then refer to [experiment tracking](references/polyaxon-tracking-api/experiments/)
 
 
 ### Log statuses
