@@ -90,7 +90,7 @@ These Helm charts will be maintained and supported by Polyaxon to allow users to
  
 These operators require Helm to be installed, you can have a look at this guide to [setup Helm](/guides/setup-helm/)
 
-We are also distributing these charts directly on our official charts repo [polyaxon https://charts.polyaxon.com](polyaxon https://charts.polyaxon.com)
+We are also distributing these charts directly on our official charts repo [polyaxon https://charts.polyaxon.com](https://charts.polyaxon.com)
 
 ```bash
 $ helm repo add polyaxon https://charts.polyaxon.com
