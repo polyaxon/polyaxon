@@ -1,5 +1,6 @@
 from rest_framework import fields, serializers
 
+from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.tags import TagsSerializerMixin
@@ -8,8 +9,9 @@ from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from libs.spec_validation import validate_notebook_spec_config, validate_tensorboard_spec_config
 
 
-class PluginJobBaseSerializer(serializers.ModelSerializer):
+class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin):
     user = fields.SerializerMethodField()
+    build_job = fields.SerializerMethodField()
 
     class Meta:
         fields = (
@@ -18,6 +20,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer):
             'name',
             'config',
             'pod_id',
+            'build_job',
             'tags',  # Need to implement TagsSerializerMixin
         )
 
@@ -54,10 +57,11 @@ class NotebookJobSerializer(PluginJobBaseSerializer):
         fields = PluginJobBaseSerializer.Meta.fields + ('data_refs',)
 
 
-class ProjectTensorboardJobSerializer(serializers.ModelSerializer):
+class ProjectTensorboardJobSerializer(serializers.ModelSerializer, BuildMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
+    build_job = fields.SerializerMethodField()
 
     class Meta:
         model = TensorboardJob
@@ -67,6 +71,7 @@ class ProjectTensorboardJobSerializer(serializers.ModelSerializer):
             'name',
             'unique_name',
             'pod_id',
+            'build_job',
             'node_scheduled',
             'user',
             'description',
@@ -112,10 +117,11 @@ class TensorboardJobDetailSerializer(ProjectTensorboardJobSerializer,
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class ProjectNotebookJobSerializer(serializers.ModelSerializer):
+class ProjectNotebookJobSerializer(serializers.ModelSerializer, BuildMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
+    build_job = fields.SerializerMethodField()
 
     class Meta:
         model = NotebookJob
@@ -125,6 +131,7 @@ class ProjectNotebookJobSerializer(serializers.ModelSerializer):
             'name',
             'unique_name',
             'pod_id',
+            'build_job',
             'node_scheduled',
             'user',
             'description',

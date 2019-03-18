@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
@@ -114,13 +115,13 @@ class ExperimentDeclarationsSerializer(serializers.ModelSerializer):
         )
 
 
-class ExperimentSerializer(serializers.ModelSerializer):
+class ExperimentSerializer(serializers.ModelSerializer, BuildMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     original = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
     experiment_group = fields.SerializerMethodField()
-    build_job = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
+    build_job = fields.SerializerMethodField()
     started_at = fields.DateTimeField(read_only=True)
     finished_at = fields.DateTimeField(read_only=True)
 
@@ -161,9 +162,6 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     def get_project(self, obj):
         return obj.project.unique_name
-
-    def get_build_job(self, obj):
-        return obj.build_job.unique_name if obj.build_job else None
 
 
 class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerMixin):

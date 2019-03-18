@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.names import NamesMixin
@@ -19,12 +20,12 @@ class JobStatusSerializer(serializers.ModelSerializer):
         exclude = []
 
 
-class JobSerializer(serializers.ModelSerializer):
+class JobSerializer(serializers.ModelSerializer, BuildMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
-    build_job = fields.SerializerMethodField()
     original = fields.SerializerMethodField()
+    build_job = fields.SerializerMethodField()
 
     class Meta:
         model = Job
@@ -53,9 +54,6 @@ class JobSerializer(serializers.ModelSerializer):
 
     def get_project(self, obj):
         return obj.project.unique_name
-
-    def get_build_job(self, obj):
-        return obj.build_job.unique_name if obj.build_job else None
 
     def get_original(self, obj):
         return obj.original_job.unique_name if obj.original_job else None

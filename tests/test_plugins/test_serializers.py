@@ -68,6 +68,7 @@ class TestProjectTensorboardJobSerializer(BaseTest):
         'name',
         'unique_name',
         'pod_id',
+        'build_job',
         'node_scheduled',
         'user',
         'description',
@@ -144,6 +145,7 @@ class TestTensorboardJobDetailSerializer(BaseTest):
         'name',
         'unique_name',
         'pod_id',
+        'build_job',
         'node_scheduled',
         'user',
         'description',
@@ -254,6 +256,7 @@ class TestProjectNotebookJobSerializer(BaseTest):
         'name',
         'unique_name',
         'pod_id',
+        'build_job',
         'node_scheduled',
         'user',
         'description',
@@ -281,6 +284,8 @@ class TestProjectNotebookJobSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.unique_name
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('build_job') == (
+            self.obj1.build_job.unique_name if self.obj1.build_job else None)
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)
@@ -329,6 +334,7 @@ class TestNotebookJobDetailSerializer(BaseTest):
         'name',
         'unique_name',
         'pod_id',
+        'build_job',
         'node_scheduled',
         'user',
         'description',
@@ -360,6 +366,8 @@ class TestNotebookJobDetailSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('project') == self.obj1.project.unique_name
         assert data.pop('last_status') == self.obj1.last_status
+        assert data.pop('build_job') == (
+            self.obj1.build_job.unique_name if self.obj1.build_job else None)
         data.pop('created_at')
         data.pop('updated_at')
         data.pop('started_at', None)
