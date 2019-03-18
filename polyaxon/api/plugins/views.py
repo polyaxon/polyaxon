@@ -10,16 +10,29 @@ from django.http import Http404
 import auditor
 import conf
 
-from api.endpoint.base import CreateEndpoint, ListEndpoint, PostEndpoint
-from api.endpoint.notebook import NotebookResourceListEndpoint
+from api.endpoint.base import (
+    CreateEndpoint,
+    DestroyEndpoint,
+    ListEndpoint,
+    PostEndpoint,
+    RetrieveEndpoint,
+    UpdateEndpoint
+)
+from api.endpoint.notebook import NotebookEndpoint, NotebookResourceListEndpoint
 from api.endpoint.project import ProjectEndpoint, ProjectResourceListEndpoint
-from api.endpoint.tensorboard import TensorboardResourceListEndpoint
+from api.endpoint.tensorboard import (
+    TensorboardEndpoint,
+    TensorboardResourceListEndpoint,
+    get_target
+)
 from api.filters import OrderingFilter, QueryFilter
 from api.plugins.serializers import (
+    NotebookJobDetailSerializer,
     NotebookJobSerializer,
     NotebookJobStatusSerializer,
     ProjectNotebookJobSerializer,
     ProjectTensorboardJobSerializer,
+    TensorboardJobDetailSerializer,
     TensorboardJobSerializer,
     TensorboardJobStatusSerializer
 )
@@ -32,16 +45,24 @@ from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from db.models.tokens import Token
 from event_manager.events.notebook import (
+    NOTEBOOK_ARCHIVED,
+    NOTEBOOK_DELETED_TRIGGERED,
+    NOTEBOOK_RESTORED,
     NOTEBOOK_STARTED_TRIGGERED,
     NOTEBOOK_STATUSES_VIEWED,
     NOTEBOOK_STOPPED_TRIGGERED,
+    NOTEBOOK_UPDATED,
     NOTEBOOK_VIEWED
 )
 from event_manager.events.project import PROJECT_NOTEBOOKS_VIEWED, PROJECT_TENSORBOARDS_VIEWED
 from event_manager.events.tensorboard import (
+    TENSORBOARD_ARCHIVED,
+    TENSORBOARD_DELETED_TRIGGERED,
+    TENSORBOARD_RESTORED,
     TENSORBOARD_STARTED_TRIGGERED,
     TENSORBOARD_STATUSES_VIEWED,
     TENSORBOARD_STOPPED_TRIGGERED,
+    TENSORBOARD_UPDATED,
     TENSORBOARD_VIEWED
 )
 from libs.repos import git
@@ -51,15 +72,6 @@ from schemas.notebook_backend import NotebookBackend
 from schemas.specifications import NotebookSpecification, TensorboardSpecification
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsInitializer
-
-
-def get_target(experiment, group):
-    if experiment:
-        return 'experiment'
-    elif group:
-        return 'experiment_group'
-    else:
-        return 'project'
 
 
 class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
@@ -439,6 +451,126 @@ class ProjectNotebookListView(ProjectResourceListEndpoint,
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
         return super().filter_queryset(queryset=queryset)
+
+
+class TensorboardDetailView(TensorboardEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
+    """
+    get:
+        Get a Tensorboard details.
+    patch:
+        Update a job details.
+    delete:
+        Delete a job.
+    """
+    serializer_class = TensorboardJobDetailSerializer
+    instance = None
+    TENSORBOARD_AUDITOR_EVENT_TYPES = {
+        'GET': TENSORBOARD_VIEWED,
+        'DELETE': TENSORBOARD_DELETED_TRIGGERED,
+    }
+
+    AUDITOR_EVENT_TYPES = {
+        'UPDATE': TENSORBOARD_UPDATED,
+    }
+
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
+            kwargs={'tensorboard_job_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+
+
+class TensorboardArchiveView(TensorboardEndpoint, CreateEndpoint):
+    """Restore an Tensorboard."""
+    serializer_class = TensorboardJobSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=TENSORBOARD_ARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        celery_app.send_task(
+            SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
+            kwargs={'tensorboard_job_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+        return Response(status=status.HTTP_200_OK)
+
+
+class TensorboardRestoreView(TensorboardEndpoint, CreateEndpoint):
+    """Restore an Tensorboard."""
+    serializer_class = TensorboardJobSerializer
+    tensorboard_queryset = TensorboardJob.all
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=TENSORBOARD_RESTORED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        obj.restore()
+        return Response(status=status.HTTP_200_OK)
+
+
+class NotebookDetailView(NotebookEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
+    """
+    get:
+        Get a Notebook job details.
+    patch:
+        Update a job details.
+    delete:
+        Delete a job.
+    """
+    serializer_class = NotebookJobDetailSerializer
+    instance = None
+    NOTEBOOK_AUDITOR_EVENT_TYPES = {
+        'GET': NOTEBOOK_VIEWED,
+        'DELETE': NOTEBOOK_DELETED_TRIGGERED,
+    }
+
+    AUDITOR_EVENT_TYPES = {
+        'UPDATE': NOTEBOOK_UPDATED,
+    }
+
+    def perform_destroy(self, instance):
+        instance.archive()
+        celery_app.send_task(
+            SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
+            kwargs={'notebook_job_id': instance.id, 'immediate': True},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+
+
+class NotebookArchiveView(NotebookEndpoint, CreateEndpoint):
+    """Restore an Notebook."""
+    serializer_class = NotebookJobSerializer
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=NOTEBOOK_ARCHIVED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        celery_app.send_task(
+            SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
+            kwargs={'notebook_job_id': obj.id, 'immediate': False},
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+        return Response(status=status.HTTP_200_OK)
+
+
+class NotebookRestoreView(NotebookEndpoint, CreateEndpoint):
+    """Restore an Notebook."""
+    serializer_class = NotebookJobSerializer
+    notebook_queryset = NotebookJob.all
+
+    def post(self, request, *args, **kwargs):
+        obj = self.get_object()
+        auditor.record(event_type=NOTEBOOK_RESTORED,
+                       instance=obj,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        obj.restore()
+        return Response(status=status.HTTP_200_OK)
 
 
 class NotebookImpersonateTokenView(ProjectEndpoint, PostEndpoint):

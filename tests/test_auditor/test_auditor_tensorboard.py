@@ -236,14 +236,108 @@ class AuditorTensorboardTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_tensorboard_statuses_viewed_triggered(self,
-                                                   activitylogs_record,
-                                                   tracker_record,
-                                                   notifier_record,
-                                                   executor_record):
+    def test_tensorboard_statuses_viewed(self,
+                                         activitylogs_record,
+                                         tracker_record,
+                                         notifier_record,
+                                         executor_record):
         auditor.record(event_type=tensorboard_events.TENSORBOARD_STATUSES_VIEWED,
                        instance=self.tensorboard,
                        target='project',
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_updated(self,
+                                 activitylogs_record,
+                                 tracker_record,
+                                 notifier_record,
+                                 executor_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_UPDATED,
+                       instance=self.tensorboard,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_deleted(self,
+                                 activitylogs_record,
+                                 tracker_record,
+                                 notifier_record,
+                                 executor_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_DELETED,
+                       instance=self.tensorboard)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_triggered_deleted(self,
+                                           activitylogs_record,
+                                           tracker_record,
+                                           notifier_record,
+                                           executor_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_DELETED_TRIGGERED,
+                       instance=self.tensorboard,
+                       actor_name='foo',
+                       target='project',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_job_archived(self,
+                                      activitylogs_record,
+                                      tracker_record,
+                                      notifier_record,
+                                      executor_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_ARCHIVED,
+                       instance=self.tensorboard,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_tensorboard_job_restored(self,
+                                      activitylogs_record,
+                                      tracker_record,
+                                      notifier_record,
+                                      executor_record):
+        auditor.record(event_type=tensorboard_events.TENSORBOARD_RESTORED,
+                       instance=self.tensorboard,
                        actor_name='foo',
                        actor_id=1)
 

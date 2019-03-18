@@ -139,6 +139,11 @@ class TestEvents(BaseTest):
         assert notebook.NotebookNewStatusEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookFailedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSucceededEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookUpdatedEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookDeletedEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookDeletedTriggeredEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookArchivedEvent.get_event_subject() == 'notebook'
+        assert notebook.NotebookRestoredEvent.get_event_subject() == 'notebook'
 
         # Job
         assert job.JobCreatedEvent.get_event_subject() == 'job'
@@ -262,6 +267,11 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardFailedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardSucceededEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardStatusesViewedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardUpdatedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardDeletedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardDeletedTriggeredEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardArchivedEvent.get_event_subject() == 'tensorboard'
+        assert tensorboard.TensorboardRestoredEvent.get_event_subject() == 'tensorboard'
 
         # User
         assert user.UserRegisteredEvent.get_event_subject() == 'user'
@@ -363,6 +373,12 @@ class TestEvents(BaseTest):
         assert notebook.NotebookNewStatusEvent.get_event_action() is None
         assert notebook.NotebookFailedEvent.get_event_action() is None
         assert notebook.NotebookSucceededEvent.get_event_action() is None
+        assert notebook.NotebookStatusesViewedEvent.get_event_action() == 'statuses_viewed'
+        assert notebook.NotebookUpdatedEvent.get_event_action() == 'updated'
+        assert notebook.NotebookDeletedEvent.get_event_action() is None
+        assert notebook.NotebookDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert notebook.NotebookArchivedEvent.get_event_action() == 'archived'
+        assert notebook.NotebookRestoredEvent.get_event_action() == 'restored'
 
         # Job
         assert job.JobCreatedEvent.get_event_action() == 'created'
@@ -486,6 +502,11 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardFailedEvent.get_event_action() is None
         assert tensorboard.TensorboardSucceededEvent.get_event_action() is None
         assert tensorboard.TensorboardStatusesViewedEvent.get_event_action() == 'statuses_viewed'
+        assert tensorboard.TensorboardUpdatedEvent.get_event_action() == 'updated'
+        assert tensorboard.TensorboardDeletedEvent.get_event_action() is None
+        assert tensorboard.TensorboardDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert tensorboard.TensorboardArchivedEvent.get_event_action() == 'archived'
+        assert tensorboard.TensorboardRestoredEvent.get_event_action() == 'restored'
 
         # User
         assert user.UserRegisteredEvent.get_event_action() == 'registered'

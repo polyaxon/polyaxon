@@ -32,7 +32,7 @@ def tensorboards_start(tensorboard_job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION, ignore_result=True)
-def tensorboards_schedule_deletion(tensorboard_job_id):
+def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
     tensorboard = get_valid_tensorboard(tensorboard_job_id=tensorboard_job_id,
                                         include_deleted=True)
     if not tensorboard:
@@ -52,6 +52,14 @@ def tensorboards_schedule_deletion(tensorboard_job_id):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Tensorboard is scheduled for deletion.'
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB,
+            kwargs={
+                'job_id': tensorboard_job_id,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 

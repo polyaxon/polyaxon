@@ -10,9 +10,11 @@ from rest_framework import status
 from django.test import override_settings
 
 from api.plugins.serializers import (
+    NotebookJobDetailSerializer,
     NotebookJobStatusSerializer,
     ProjectNotebookJobSerializer,
     ProjectTensorboardJobSerializer,
+    TensorboardJobDetailSerializer,
     TensorboardJobStatusSerializer
 )
 from api.utils.views.protected import ProtectedView
@@ -56,9 +58,8 @@ class TestProjectTensorboardStatusListViewV1(BaseViewTest):
 
     def set_objects(self):
         with patch.object(TensorboardJob, 'set_status') as _:
-            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
-                project = ProjectFactory(user=self.auth_client.user)
-                self.job = TensorboardJobFactory(project=project)
+            project = ProjectFactory(user=self.auth_client.user)
+            self.job = TensorboardJobFactory(project=project)
         self.url = '/{}/{}/{}/tensorboard/statuses/'.format(API_V1,
                                                             project.user.username,
                                                             project.name)
@@ -147,10 +148,9 @@ class TestProjectTensorboardStatusListViewV1(BaseViewTest):
 class TestExperimentTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
     def set_objects(self):
         with patch.object(TensorboardJob, 'set_status') as _:
-            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
-                project = ProjectFactory(user=self.auth_client.user)
-                experiment = ExperimentFactory(project=project)
-                self.job = TensorboardJobFactory(project=project, experiment=experiment)
+            project = ProjectFactory(user=self.auth_client.user)
+            experiment = ExperimentFactory(project=project)
+            self.job = TensorboardJobFactory(project=project, experiment=experiment)
         self.url = '/{}/{}/{}/experiments/{}/tensorboard/statuses/'.format(API_V1,
                                                                            project.user.username,
                                                                            project.name,
@@ -166,10 +166,9 @@ class TestExperimentTensorboardStatusListViewV1(TestProjectTensorboardStatusList
 class TestGroupTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
     def set_objects(self):
         with patch.object(TensorboardJob, 'set_status') as _:
-            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
-                project = ProjectFactory(user=self.auth_client.user)
-                group = ExperimentGroupFactory(project=project)
-                self.job = TensorboardJobFactory(project=project, experiment_group=group)
+            project = ProjectFactory(user=self.auth_client.user)
+            group = ExperimentGroupFactory(project=project)
+            self.job = TensorboardJobFactory(project=project, experiment_group=group)
         self.url = '/{}/{}/{}/groups/{}/tensorboard/statuses/'.format(API_V1,
                                                                       project.user.username,
                                                                       project.name,
@@ -179,6 +178,137 @@ class TestGroupTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV
                         for i in range(self.num_objects)]
         self.queryset = self.model_class.objects.all()
         self.queryset = self.queryset.order_by('created_at')
+
+
+@pytest.mark.plugins_mark
+class TestProjectTensorboardDetailViewV1(BaseViewTest):
+    serializer_class = TensorboardJobDetailSerializer
+    model_class = TensorboardJob
+    factory_class = TensorboardJobFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.set_objects()
+
+    def set_objects(self):
+        with patch.object(TensorboardJob, 'set_status') as _:
+            project = ProjectFactory(user=self.auth_client.user)
+            self.object = TensorboardJobFactory(project=project)
+        self.object.set_status(JobLifeCycle.CREATED)
+        self.object.set_status(JobLifeCycle.SCHEDULED)
+        self.url = '/{}/{}/{}/tensorboard/'.format(API_V1,
+                                                   project.user.username,
+                                                   project.name)
+        self.queryset = self.model_class.objects.all()
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.object.refresh_from_db()
+        assert resp.data == self.serializer_class(self.object).data
+
+    def test_patch(self):
+        new_description = 'updated_name'
+        data = {'description': new_description}
+        assert self.object.description != data['description']
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.user == self.object.user
+        assert new_object.description != self.object.description
+        assert new_object.description == new_description
+
+        # Update name
+        data = {'name': 'new_name'}
+        assert new_object.name is None
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data['name']
+
+    def test_delete_archives_deletes_immediately_and_schedules_stop(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.tensorboards.'
+                   'tensorboards_stop.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.called
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Deleted
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 0
+
+    def test_delete_archives_and_schedules_deletion(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.tensorboards.'
+                   'tensorboards_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Patched
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+
+    def test_archive_schedule_deletion(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.tensorboards.'
+                   'tensorboards_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
+
+    def test_archive_schedule_archives_and_schedules_stop(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.tensorboards.'
+                   'tensorboards_stop.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+
+    def test_restore(self):
+        self.object.archive()
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        resp = self.auth_client.post(self.url + 'restore/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
+
+
+@pytest.mark.plugins_mark
+class TestExperimentTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
+    def set_objects(self):
+        with patch.object(TensorboardJob, 'set_status') as _:
+            project = ProjectFactory(user=self.auth_client.user)
+            experiment = ExperimentFactory(project=project)
+            self.object = TensorboardJobFactory(project=project, experiment=experiment)
+        self.object.set_status(JobLifeCycle.CREATED)
+        self.object.set_status(JobLifeCycle.SCHEDULED)
+        self.url = '/{}/{}/{}/experiments/{}/tensorboard/'.format(API_V1,
+                                                                  project.user.username,
+                                                                  project.name,
+                                                                  experiment.id)
+        self.queryset = self.model_class.objects.all()
+
+
+@pytest.mark.plugins_mark
+class TestGroupTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
+    def set_objects(self):
+        with patch.object(TensorboardJob, 'set_status') as _:
+            project = ProjectFactory(user=self.auth_client.user)
+            group = ExperimentGroupFactory(project=project)
+            self.object = TensorboardJobFactory(project=project, experiment_group=group)
+        self.object.set_status(JobLifeCycle.CREATED)
+        self.object.set_status(JobLifeCycle.SCHEDULED)
+        self.url = '/{}/{}/{}/groups/{}/tensorboard/'.format(API_V1,
+                                                             project.user.username,
+                                                             project.name,
+                                                             group.id)
+        self.queryset = self.model_class.objects.all()
 
 
 @pytest.mark.plugins_mark
@@ -197,9 +327,8 @@ class TestNotebookStatusListViewV1(BaseViewTest):
 
     def set_objects(self):
         with patch.object(NotebookJob, 'set_status') as _:
-            with patch('scheduler.tasks.jobs.jobs_build.apply_async') as _:  # noqa
-                project = ProjectFactory(user=self.auth_client.user)
-                self.job = NotebookJobFactory(project=project)
+            project = ProjectFactory(user=self.auth_client.user)
+            self.job = NotebookJobFactory(project=project)
         self.url = '/{}/{}/{}/notebook/statuses/'.format(API_V1,
                                                          project.user.username,
                                                          project.name)
@@ -282,6 +411,105 @@ class TestNotebookStatusListViewV1(BaseViewTest):
         assert last_object.status == data['status']
         assert last_object.message == data['message']
         assert last_object.traceback == data['traceback']
+
+
+@pytest.mark.plugins_mark
+class TestProjectNotebookDetailViewV1(BaseViewTest):
+    serializer_class = NotebookJobDetailSerializer
+    model_class = NotebookJob
+    factory_class = NotebookJobFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.set_objects()
+
+    def set_objects(self):
+        with patch.object(NotebookJob, 'set_status') as _:
+            project = ProjectFactory(user=self.auth_client.user)
+            self.object = NotebookJobFactory(project=project)
+        self.object.set_status(JobLifeCycle.CREATED)
+        self.object.set_status(JobLifeCycle.SCHEDULED)
+        self.url = '/{}/{}/{}/notebook/'.format(API_V1,
+                                                project.user.username,
+                                                project.name)
+        self.queryset = self.model_class.objects.all()
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        self.object.refresh_from_db()
+        assert resp.data == self.serializer_class(self.object).data
+
+    def test_patch(self):
+        new_description = 'updated_name'
+        data = {'description': new_description}
+        assert self.object.description != data['description']
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.user == self.object.user
+        assert new_object.description != self.object.description
+        assert new_object.description == new_description
+
+        # Update name
+        data = {'name': 'new_name'}
+        assert new_object.name is None
+        resp = self.auth_client.patch(self.url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=self.object.id)
+        assert new_object.name == data['name']
+
+    def test_delete_archives_deletes_immediately_and_schedules_stop(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.notebooks.'
+                   'projects_notebook_stop.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.called
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Deleted
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 0
+
+    def test_delete_archives_and_schedules_deletion(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.notebooks.'
+                   'projects_notebook_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.delete(self.url)
+        assert spawner_mock_stop.call_count == 1
+        assert resp.status_code == status.HTTP_204_NO_CONTENT
+        # Patched
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+
+    def test_archive_schedule_deletion(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.notebooks.'
+                   'projects_notebook_schedule_deletion.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
+
+    def test_archive_schedule_archives_and_schedules_stop(self):
+        assert self.model_class.objects.count() == 1
+        with patch('scheduler.tasks.notebooks.'
+                   'projects_notebook_stop.apply_async') as spawner_mock_stop:
+            resp = self.auth_client.post(self.url + 'archive/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert spawner_mock_stop.call_count == 1
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+
+    def test_restore(self):
+        self.object.archive()
+        assert self.model_class.objects.count() == 0
+        assert self.model_class.all.count() == 1
+        resp = self.auth_client.post(self.url + 'restore/')
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.model_class.objects.count() == 1
+        assert self.model_class.all.count() == 1
 
 
 @pytest.mark.plugins_mark

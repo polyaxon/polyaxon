@@ -13,6 +13,13 @@ TENSORBOARD_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
                                                   event_actions.CLEANED,
                                                   event_subjects.TRIGGER)
 TENSORBOARD_VIEWED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.VIEWED)
+TENSORBOARD_UPDATED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.UPDATED)
+TENSORBOARD_DELETED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.DELETED)
+TENSORBOARD_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.TENSORBOARD,
+                                                  event_actions.DELETED,
+                                                  event_subjects.TRIGGER)
+TENSORBOARD_ARCHIVED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.ARCHIVED)
+TENSORBOARD_RESTORED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.RESTORED)
 TENSORBOARD_BOOKMARKED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.BOOKMARKED)
 TENSORBOARD_UNBOOKMARKED = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.UNBOOKMARKED)
 TENSORBOARD_NEW_STATUS = '{}.{}'.format(event_subjects.TENSORBOARD, event_actions.NEW_STATUS)
@@ -86,8 +93,40 @@ class TensorboardViewedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
+        Attribute('last_status'),
+    )
+
+
+class TensorboardUpdatedEvent(Event):
+    event_type = TENSORBOARD_UPDATED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class TensorboardDeletedTriggeredEvent(Event):
+    event_type = TENSORBOARD_DELETED_TRIGGERED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('target'),  # project, experiment_group, experiment
+        Attribute('last_status'),
+    )
+
+
+class TensorboardDeletedEvent(Event):
+    event_type = TENSORBOARD_DELETED
+    attributes = (
+        Attribute('id'),
     )
 
 
@@ -162,4 +201,28 @@ class TensorboardStatusesViewedEvent(Event):
         Attribute('user.id'),
         Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class TensorboardArchivedEvent(Event):
+    event_type = TENSORBOARD_ARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class TensorboardRestoredEvent(Event):
+    event_type = TENSORBOARD_RESTORED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
     )

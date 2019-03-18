@@ -18,8 +18,8 @@ from event_manager.events.build_job import BUILD_JOB_CLEANED_TRIGGERED, BUILD_JO
 from event_manager.events.experiment import EXPERIMENT_CLEANED_TRIGGERED, EXPERIMENT_DELETED
 from event_manager.events.experiment_group import EXPERIMENT_GROUP_DELETED
 from event_manager.events.job import JOB_CLEANED_TRIGGERED, JOB_DELETED
-from event_manager.events.notebook import NOTEBOOK_CLEANED_TRIGGERED
-from event_manager.events.tensorboard import TENSORBOARD_CLEANED_TRIGGERED
+from event_manager.events.notebook import NOTEBOOK_CLEANED_TRIGGERED, NOTEBOOK_DELETED
+from event_manager.events.tensorboard import TENSORBOARD_CLEANED_TRIGGERED, TENSORBOARD_DELETED
 from libs.paths.projects import delete_project_repos
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
@@ -162,11 +162,27 @@ def notebook_job_pre_delete(sender, **kwargs):
     auditor.record(event_type=NOTEBOOK_CLEANED_TRIGGERED, instance=job)
 
 
+@receiver(post_delete, sender=Job, dispatch_uid="notebook_job_post_delete")
+@ignore_raw
+def notebook_job_post_delete(sender, **kwargs):
+    instance = kwargs['instance']
+    auditor.record(event_type=NOTEBOOK_DELETED, instance=instance)
+    remove_bookmarks(object_id=instance.id, content_type='notebookjob')
+
+
 @receiver(pre_delete, sender=TensorboardJob, dispatch_uid="tensorboard_job_pre_delete")
 @ignore_raw
 def tensorboard_job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
     auditor.record(event_type=TENSORBOARD_CLEANED_TRIGGERED, instance=job)
+
+
+@receiver(post_delete, sender=Job, dispatch_uid="tensorboard_job_post_delete")
+@ignore_raw
+def tensorboard_job_post_delete(sender, **kwargs):
+    instance = kwargs['instance']
+    auditor.record(event_type=TENSORBOARD_DELETED, instance=instance)
+    remove_bookmarks(object_id=instance.id, content_type='tensorboardjob')
 
 
 @receiver(pre_delete, sender=Project, dispatch_uid="project_pre_delete")

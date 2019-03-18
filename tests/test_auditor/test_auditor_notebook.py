@@ -196,14 +196,107 @@ class AuditorNotebookTest(BaseTest):
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
-    def test_notebook_statuses_viewed_triggered(self,
-                                                activitylogs_record,
-                                                tracker_record,
-                                                notifier_record,
-                                                executor_record):
+    def test_notebook_statuses_viewed(self,
+                                      activitylogs_record,
+                                      tracker_record,
+                                      notifier_record,
+                                      executor_record):
         auditor.record(event_type=notebook_events.NOTEBOOK_STATUSES_VIEWED,
                        instance=self.notebook,
                        target='project',
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_notebook_updated(self,
+                              activitylogs_record,
+                              tracker_record,
+                              notifier_record,
+                              executor_record):
+        auditor.record(event_type=notebook_events.NOTEBOOK_UPDATED,
+                       instance=self.notebook,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_notebook_deleted(self,
+                              activitylogs_record,
+                              tracker_record,
+                              notifier_record,
+                              executor_record):
+        auditor.record(event_type=notebook_events.NOTEBOOK_DELETED,
+                       instance=self.notebook)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_notebook_triggered_deleted(self,
+                                        activitylogs_record,
+                                        tracker_record,
+                                        notifier_record,
+                                        executor_record):
+        auditor.record(event_type=notebook_events.NOTEBOOK_DELETED_TRIGGERED,
+                       instance=self.notebook,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_notebook_job_archived(self,
+                                   activitylogs_record,
+                                   tracker_record,
+                                   notifier_record,
+                                   executor_record):
+        auditor.record(event_type=notebook_events.NOTEBOOK_ARCHIVED,
+                       instance=self.notebook,
+                       actor_name='foo',
+                       actor_id=1)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 1
+        assert notifier_record.call_count == 0
+        assert executor_record.call_count == 0
+
+    @patch('executor.service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_notebook_job_restored(self,
+                                   activitylogs_record,
+                                   tracker_record,
+                                   notifier_record,
+                                   executor_record):
+        auditor.record(event_type=notebook_events.NOTEBOOK_RESTORED,
+                       instance=self.notebook,
                        actor_name='foo',
                        actor_id=1)
 

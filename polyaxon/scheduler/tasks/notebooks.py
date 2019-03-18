@@ -64,7 +64,7 @@ def projects_notebook_start(notebook_job_id):
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION, ignore_result=True)
-def projects_notebook_schedule_deletion(notebook_job_id):
+def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id, include_deleted=True)
     if not notebook_job:
         return None
@@ -83,6 +83,14 @@ def projects_notebook_schedule_deletion(notebook_job_id):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Notebook is scheduled for deletion.'
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+
+    if immediate:
+        celery_app.send_task(
+            SchedulerCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB,
+            kwargs={
+                'job_id': notebook_job_id,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 

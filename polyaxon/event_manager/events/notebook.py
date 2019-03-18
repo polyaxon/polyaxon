@@ -13,6 +13,15 @@ NOTEBOOK_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.NOTEBOOK,
                                                event_actions.CLEANED,
                                                event_subjects.TRIGGER)
 NOTEBOOK_VIEWED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.VIEWED)
+NOTEBOOK_UPDATED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.UPDATED)
+NOTEBOOK_DELETED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.DELETED)
+NOTEBOOK_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.NOTEBOOK,
+                                               event_actions.DELETED,
+                                               event_subjects.TRIGGER)
+NOTEBOOK_ARCHIVED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.ARCHIVED)
+NOTEBOOK_RESTORED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.RESTORED)
+NOTEBOOK_BOOKMARKED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.BOOKMARKED)
+NOTEBOOK_UNBOOKMARKED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.UNBOOKMARKED)
 NOTEBOOK_NEW_STATUS = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.NEW_STATUS)
 NOTEBOOK_FAILED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.FAILED)
 NOTEBOOK_SUCCEEDED = '{}.{}'.format(event_subjects.NOTEBOOK, event_actions.SUCCEEDED)
@@ -134,4 +143,85 @@ class NotebookStatusesViewedEvent(Event):
         Attribute('user.id'),
         Attribute('last_status'),
         Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class NotebookUpdatedEvent(Event):
+    event_type = NOTEBOOK_UPDATED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class NotebookDeletedTriggeredEvent(Event):
+    event_type = NOTEBOOK_DELETED_TRIGGERED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class NotebookDeletedEvent(Event):
+    event_type = NOTEBOOK_DELETED
+    attributes = (
+        Attribute('id'),
+    )
+
+
+class NotebookBookmarkedEvent(Event):
+    event_type = NOTEBOOK_BOOKMARKED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+        Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class NotebookUnBookmarkedEvent(Event):
+    event_type = NOTEBOOK_UNBOOKMARKED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+        Attribute('target'),  # project, experiment_group, experiment
+    )
+
+
+class NotebookArchivedEvent(Event):
+    event_type = NOTEBOOK_ARCHIVED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
+    )
+
+
+class NotebookRestoredEvent(Event):
+    event_type = NOTEBOOK_RESTORED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('last_status'),
     )
