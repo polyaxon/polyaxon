@@ -12,6 +12,8 @@ import Description from '../description';
 import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
+import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import NotebookTargetMetaInfo from '../metaInfo/notebookTargetMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
@@ -61,10 +63,10 @@ function Tensorboard({
         }
         <Description description={notebook.description}/>
         <div className="meta">
-          <BackendMetaInfo value={notebook.backend} inline={true}/>
+          <PodIdMetaInfo value={notebook.pod_id} inline={true}/>
         </div>
         <div className="meta">
-          <PodIdMetaInfo value={notebook.pod_id} inline={true}/>
+          <NodeMetaInfo node={notebook.node_scheduled} inline={true}/>
         </div>
         <div className="meta">
           <IdMetaInfo value={notebook.id} inline={true}/>
@@ -76,6 +78,14 @@ function Tensorboard({
           />
         </div>
         <Tags tags={notebook.tags}/>
+      </td>
+      <td className="block">
+        <div className="meta">
+          <BackendMetaInfo value={notebook.backend} inline={true}/>
+        </div>
+        <div className="meta">
+          <NotebookTargetMetaInfo project={notebook.project} inline={true}/>
+        </div>
       </td>
       <td className="block">
         <TaskRunMetaInfo startedAt={notebook.started_at} finishedAt={notebook.finished_at}/>

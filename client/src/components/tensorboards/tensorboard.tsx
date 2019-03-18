@@ -14,6 +14,7 @@ import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
+import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import TensorboardInfoMetaInfo from '../metaInfo/tensorboardInfoMetaInfo';
@@ -65,6 +66,9 @@ function Tensorboard({
         <Description description={tensorboard.description}/>
         <div className="meta">
           <PodIdMetaInfo value={tensorboard.pod_id} inline={true}/>
+        </div>
+        <div className="meta">
+          <NodeMetaInfo node={tensorboard.node_scheduled} inline={true}/>
         </div>
         <div className="meta">
           <IdMetaInfo value={tensorboard.id} inline={true}/>

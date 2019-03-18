@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import { getExperimentJobUrl, splitUniqueName } from '../../constants/utils';
 import { ExperimentJobModel } from '../../models/experimentJob';
+import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
@@ -33,17 +34,30 @@ function ExperimentJob({experimentJob, onDelete}: Props) {
           <PodIdMetaInfo value={experimentJob.pod_id} inline={true}/>
         </div>
         <div className="meta">
+          <NodeMetaInfo node={experimentJob.node_scheduled} inline={true}/>
+        </div>
+        <div className="meta">
+          <DatesMetaInfo
+            createdAt={experimentJob.created_at}
+            updatedAt={experimentJob.updated_at}
+            inline={true}
+          />
+        </div>
+        <div className="meta">
+          <ResourcesMetaInfo resources={experimentJob.resources}/>
+        </div>
+      </div>
+      <div className="col-md-2 block">
+        <div className="meta">
           <span className="meta-info">
             <i className="fas fa-certificate icon" aria-hidden="true"/>
             <span className="title">Role:</span>
             {experimentJob.role}
           </span>
+        </div>
+        <div className="meta">
           <IdMetaInfo value={experimentJob.id} inline={true}/>
         </div>
-        <ResourcesMetaInfo resources={experimentJob.resources}/>
-      </div>
-      <div className="col-md-2 block">
-        <NodeMetaInfo node={experimentJob.node_scheduled}/>
       </div>
       <div className="col-md-2 block">
         <TaskRunMetaInfo
