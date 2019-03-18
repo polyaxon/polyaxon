@@ -38,8 +38,7 @@ version: 1
 
 kind: notebook
 
-environment:
-  backend: lab
+backend: lab
 
 build:
   image: python:3
