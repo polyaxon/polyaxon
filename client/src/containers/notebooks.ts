@@ -73,23 +73,23 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.NotebookAction>, o
     onUpdate: (notebook: NotebookModel) => dispatch(actions.updateNotebookActionCreator(notebook)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchBuildSearches(ownProps.projectName));
+        return dispatch(search_actions.fetchNotebookSearches(ownProps.projectName));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Notebooks container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.createBuildSearch(ownProps.projectName, data));
+        return dispatch(search_actions.createNotebookSearch(ownProps.projectName, data));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Notebooks container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.deleteBuildSearch(ownProps.projectName, searchId));
+        return dispatch(search_actions.deleteNotebookSearch(ownProps.projectName, searchId));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Notebooks container does not have project.');
       }
     },
     fetchData: (offset?: number, query?: string, sort?: string) => {

@@ -207,3 +207,45 @@ export function deleteBuildSearch(projectName: string, searchId: number): any {
     return _deleteSearches(searchesUrl, searchId, dispatch, getState);
   };
 }
+
+export function fetchNotebookSearches(projectName: string): any {
+  return (dispatch: any, getState: any) => {
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks`;
+    return _fetchSearches(searchesUrl, dispatch, getState);
+  };
+}
+
+export function createNotebookSearch(projectName: string, data: SearchModel): any {
+  return (dispatch: any, getState: any) => {
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks`;
+    return _createSearch(searchesUrl, data, dispatch, getState);
+  };
+}
+
+export function deleteNotebookSearch(projectName: string, searchId: number): any {
+  return (dispatch: any, getState: any) => {
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks/${searchId}`;
+    return _deleteSearches(searchesUrl, searchId, dispatch, getState);
+  };
+}
+
+export function fetchTensorboardSearches(projectName: string): any {
+  return (dispatch: any, getState: any) => {
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks`;
+    return _fetchSearches(searchesUrl, dispatch, getState);
+  };
+}
+
+export function createTensorboardSearch(projectName: string, data: SearchModel): any {
+  return (dispatch: any, getState: any) => {
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks`;
+    return _createSearch(searchesUrl, data, dispatch, getState);
+  };
+}
+
+export function deleteTensorboardSearch(projectName: string, searchId: number): any {
+  return (dispatch: any, getState: any) => {
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks/${searchId}`;
+    return _deleteSearches(searchesUrl, searchId, dispatch, getState);
+  };
+}

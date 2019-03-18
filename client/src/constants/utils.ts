@@ -203,11 +203,11 @@ export let getTensorboardApiUrl = (username: string,
 
 export let getNotebookApiUrl = (username: string,
                                 projectName: string,
-                                tensorboardId: number | string,
+                                notebookId: number | string,
                                 app: boolean = true) => {
   const projectUrl = getProjectUrl(username, projectName, app);
 
-  return `${projectUrl}/notebooks/${tensorboardId}`;
+  return `${projectUrl}/notebooks/${notebookId}`;
 };
 
 export let getExperimentJobUrl = (username: string,

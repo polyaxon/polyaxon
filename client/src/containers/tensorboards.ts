@@ -28,8 +28,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     const count = state.tensorboards.lastFetched.count;
     const tensorboards: TensorboardModel[] = [];
     tensorboardNames.forEach(
-      (build: string, idx: number) => {
-        tensorboards.push(state.tensorboards.byUniqueNames[build]);
+      (tensorboard: string, idx: number) => {
+        tensorboards.push(state.tensorboards.byUniqueNames[tensorboard]);
       });
     return {tensorboards, count};
   };
@@ -73,21 +73,21 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>
     onUpdate: (tensorboard: TensorboardModel) => dispatch(actions.updateTensorboardActionCreator(tensorboard)),
     fetchSearches: () => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.fetchBuildSearches(ownProps.projectName));
+        return dispatch(search_actions.fetchTensorboardSearches(ownProps.projectName));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.createBuildSearch(ownProps.projectName, data));
+        return dispatch(search_actions.createTensorboardSearch(ownProps.projectName, data));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
       if (ownProps.projectName) {
-        return dispatch(search_actions.deleteBuildSearch(ownProps.projectName, searchId));
+        return dispatch(search_actions.deleteTensorboardSearch(ownProps.projectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }

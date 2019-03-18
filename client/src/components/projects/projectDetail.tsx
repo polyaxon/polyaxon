@@ -130,7 +130,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
                   useFilters={true}
                 />,
                 relUrl: 'tensorboards'
-              },{
+              }, {
                 title: 'Notebooks',
                 component: <Notebooks
                   user={project.user}
