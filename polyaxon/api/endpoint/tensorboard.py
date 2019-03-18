@@ -14,8 +14,7 @@ def get_target(experiment, group):
         return 'experiment'
     elif group:
         return 'experiment_group'
-    else:
-        return 'project'
+    return 'project'
 
 
 class TensorboardEndpoint(ProjectEndpoint):

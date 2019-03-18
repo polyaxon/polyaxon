@@ -57,7 +57,7 @@ class TestProjectTensorboardStatusListViewV1(BaseViewTest):
         self.set_objects()
 
     def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             self.job = TensorboardJobFactory(project=project)
         self.url = '/{}/{}/{}/tensorboard/statuses/'.format(API_V1,
@@ -147,7 +147,7 @@ class TestProjectTensorboardStatusListViewV1(BaseViewTest):
 @pytest.mark.plugins_mark
 class TestExperimentTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
     def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             experiment = ExperimentFactory(project=project)
             self.job = TensorboardJobFactory(project=project, experiment=experiment)
@@ -165,7 +165,7 @@ class TestExperimentTensorboardStatusListViewV1(TestProjectTensorboardStatusList
 @pytest.mark.plugins_mark
 class TestGroupTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
     def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             group = ExperimentGroupFactory(project=project)
             self.job = TensorboardJobFactory(project=project, experiment_group=group)
@@ -192,7 +192,7 @@ class TestProjectTensorboardDetailViewV1(BaseViewTest):
         self.set_objects()
 
     def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             self.object = TensorboardJobFactory(project=project)
         self.object.set_status(JobLifeCycle.CREATED)
@@ -282,7 +282,7 @@ class TestProjectTensorboardDetailViewV1(BaseViewTest):
 @pytest.mark.plugins_mark
 class TestExperimentTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
     def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             experiment = ExperimentFactory(project=project)
             self.object = TensorboardJobFactory(project=project, experiment=experiment)
@@ -298,7 +298,7 @@ class TestExperimentTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
 @pytest.mark.plugins_mark
 class TestGroupTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
     def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:
+        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             group = ExperimentGroupFactory(project=project)
             self.object = TensorboardJobFactory(project=project, experiment_group=group)
@@ -326,7 +326,7 @@ class TestNotebookStatusListViewV1(BaseViewTest):
         self.set_objects()
 
     def set_objects(self):
-        with patch.object(NotebookJob, 'set_status') as _:
+        with patch.object(NotebookJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             self.job = NotebookJobFactory(project=project)
         self.url = '/{}/{}/{}/notebook/statuses/'.format(API_V1,
@@ -425,7 +425,7 @@ class TestProjectNotebookDetailViewV1(BaseViewTest):
         self.set_objects()
 
     def set_objects(self):
-        with patch.object(NotebookJob, 'set_status') as _:
+        with patch.object(NotebookJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             self.object = NotebookJobFactory(project=project)
         self.object.set_status(JobLifeCycle.CREATED)
