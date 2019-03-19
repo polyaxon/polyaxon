@@ -17,6 +17,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon is open source, has an Json API, and webhooks, and can be integrated with just about any other app or service.
+
 ## Scheduling
 
 Polyaxon is in the process to abstract it's scheduling behaviour to allow different ways of scheduling workload, 

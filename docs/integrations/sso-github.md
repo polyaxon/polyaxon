@@ -17,8 +17,6 @@ visibility: public
 status: published
 ---
 
-## Overview
-
 You can GitHub to manage your organization’s entire membership.
 
 ## Register a GitHub application

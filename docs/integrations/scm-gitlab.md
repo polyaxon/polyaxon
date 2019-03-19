@@ -18,6 +18,8 @@ visibility: public
 status: published
 ---
 
+You can use code from your GitLab repositories directly in Polyaxon projects without having to check them out on your local machine first.
+
 ## Overview
 
 Polyaxon supports repos hosted on GitLab (cloud and on-premise). 

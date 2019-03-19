@@ -18,6 +18,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows users to connect to one or multiple blobs on Azure Storage to store job outputs and experiment artifacts.
+
 ## Create an Azure Storage account
 
 You should create a storage account (e.g. plx-storage) and a blob (e.g. outputs). 

@@ -1,7 +1,7 @@
 ---
 title: "Data on GCS"
 meta_title: "Google GCS"
-meta_description: "Using data on Google Cloud Storage GCS in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage GCS to access data directly on you machine learning experiments."
+meta_description: "Using data on Google Cloud Storage GCS in your Polyaxon experiments and jobs. Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage GCS to access data directly on you machine learning experiments and jobs."
 custom_excerpt: "Google Cloud Storage is a RESTful online file storage web service for storing and accessing data on Google Cloud Platform infrastructure. The service combines the performance and scalability of Google's cloud with advanced security and sharing capabilities."
 image: "../../content/images/integrations/gcs.png"
 author:
@@ -17,6 +17,8 @@ featured: true
 visibility: public
 status: published
 ---
+
+Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage (GCS) to access data directly on you machine learning experiments and jobs.
 
 ## Create an Google cloud storage bucket
 

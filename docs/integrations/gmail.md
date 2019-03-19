@@ -1,7 +1,7 @@
 ---
 title: "Gmail"
 meta_title: "Gmail"
-meta_description: "How to receive notifications from Polyaxon directly to your email using gmail. Get email notifications when an experiment, job, build is finished using gmail so everyone that your team stays in sync."
+meta_description: "How to receive notifications from Polyaxon directly to your email using gmail. Get email notifications when an experiment, job, build is finished using gmail so everyone in your team stays in sync."
 custom_excerpt: "Gmail is email that's intuitive, efficient, and useful. 15 GB of storage, less spam, and mobile access."
 image: "../../content/images/integrations/gmail.png"
 author:
@@ -17,6 +17,8 @@ featured: false
 visibility: public
 status: published
 ---
+
+Get email notifications when an experiment, a job, or a build is finished using gmail so that your team stays in sync.
 
 > For production deployments with recommend using other outgoing email services
 

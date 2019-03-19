@@ -19,6 +19,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows to schedule MXNEt experiments and MXNet distributed experiments, and supports tracking metrics, outputs, and models.
+
 ## Overview
 
 By default polyaxon creates a master job, so you only need to add replicas for the workers and/or parameter servers.

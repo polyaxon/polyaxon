@@ -19,6 +19,9 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows to schedule Tensorflow experiments and Tensorflow distributed experiments, and supports tracking metrics, outputs, and models.
+The platform also offers two backends for running distributed Tensorflow experiments: native and Kubeflow.
+
 ## Overview
 
 By default polyaxon creates a master job, so you only need to add replicas for the workers and/or parameter servers.

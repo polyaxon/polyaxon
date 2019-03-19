@@ -1,7 +1,7 @@
 ---
 title: "Slack"
 meta_title: "Slack"
-meta_description: "How to create custom API and webhook based integrations for the Polyaxon. Notify Slack when an experiment, job, build is finished so everyone that your team stays in sync."
+meta_description: "How to create custom API and webhook based integrations for the Polyaxon. Notify Slack when an experiment, job, build is finished so that your team stays in sync."
 custom_excerpt: "Slack is a collaboration hub for work, no matter what work you do. It's a place where conversations happen, decisions are made, and information is always at your fingertips. With Slack, your team is better connected."
 image: "../../content/images/integrations/slack.png"
 author:
@@ -16,6 +16,8 @@ featured: true
 visibility: public
 status: published
 ---
+
+Notify Slack when an experiment, a job, or a build is finished so that your team stays in sync.
 
 ## Create a new incoming webhook in Slack
 

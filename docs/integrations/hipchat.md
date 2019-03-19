@@ -1,7 +1,7 @@
 ---
 title: "Hipchat"
 meta_title: "Hipchat"
-meta_description: "How to get direct notification from the Polyaxon to your Hipchat channels. Notify Hipchat when an experiment, job, build is finished so everyone that your team stays in sync."
+meta_description: "How to get direct notification from the Polyaxon to your Hipchat channels. Notify Hipchat when an experiment, job, build is finished so that your team stays in sync."
 custom_excerpt: "HipChat is a web service for internal private online chat and instant messaging."
 image: "../../content/images/integrations/hipchat.png"
 author:
@@ -16,6 +16,8 @@ featured: false
 visibility: public
 status: published
 ---
+
+Notify Hipchat when an experiment, a job, or a build is finished so that your team stays in sync.
 
 ## Visit Hipchat to create webhook integration
 

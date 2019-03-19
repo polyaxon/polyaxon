@@ -18,6 +18,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows users to connect to one or multiple buckets on S3 to store job outputs and experiment artifacts.
+
 ## Create an S3 bucket
 
 You should create an S3 bucket (e.g. plx-storage). 

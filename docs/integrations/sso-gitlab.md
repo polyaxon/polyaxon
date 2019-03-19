@@ -17,9 +17,7 @@ visibility: public
 status: published
 ---
 
-## Overview
-
-You can GitLab to manage your organization’s entire membership.
+You can use GitLab to manage your organization’s entire membership.
 
 ## Register a GitLab application
 

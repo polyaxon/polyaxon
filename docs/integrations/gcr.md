@@ -17,6 +17,8 @@ visibility: public
 status: published
 ---
 
+Integrate your Google GCR (Google container registry) with Polyaxon to start your machine learning and deep learning experiments on Kubernetes.
+
 ## Overview
 
 You can easily add many private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.

@@ -18,6 +18,8 @@ visibility: public
 status: beta
 ---
 
+Polyaxon allows users to build container images using the Kaniko project.
+
 ### Overview
 
 Polyaxon supports multiple backend options to build container images used for running jobs or training experiments.

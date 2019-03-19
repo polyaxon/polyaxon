@@ -19,6 +19,8 @@ visibility: public
 status: beta
 ---
 
+Polyaxon allows to schedule distributed MPI experiments, and supports tracking metrics, outputs, and models.
+
 ## Overview
 
 In order to use the `mpi` backend, users need to install the [MPIJob](/integrations/kubeflow/#deployingdeleting-mpijob).

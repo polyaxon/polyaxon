@@ -17,6 +17,8 @@ visibility: public
 status: beta
 ---
 
+Polyaxon can schedule and manage KubeFlow operator to run distributed experiments.
+
 ## Overview
 
 Polyaxon supports and simplifies distributed training. By default, when a user creates a distributed experiment, Polyaxon uses a native behaviour for creating, tracking, and monitoring these experiments.

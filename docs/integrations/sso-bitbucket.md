@@ -1,7 +1,7 @@
 ---
 title: "SSO with Bitbucket"
 meta_title: "Bitbucket"
-meta_description: "How to use github to manage users authentication on Polyaxon. You can easily integrate github to manage users authentication on Polyaxon."
+meta_description: "How to use Bitbucket to manage users authentication on Polyaxon. You can easily integrate Bitbucket to manage users authentication on Polyaxon."
 custom_excerpt: "Bitbucket is Git repository management solution designed for professional teams. It gives you a central place to manage git repositories, collaborate on your source code and guide you through the development flow."
 image: "../../content/images/integrations/bitbucket.png"
 author:
@@ -17,9 +17,7 @@ visibility: public
 status: published
 ---
 
-## Overview
-
-You can GitLab to manage your organization’s entire membership.
+You can use Bitbucket to manage your organization’s entire membership.
 
 ## Register a Bitbucket application
 

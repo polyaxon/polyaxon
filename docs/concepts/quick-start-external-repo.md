@@ -447,7 +447,7 @@ Your tensorboard will be available on:
 
 Congratulations! You've trained your first experiments with Polyaxon. Behind the scene a couple of things have happened:
 
- * You synced your github project and used last commit (can be changed to any git commit/branch)
+ * You synced your GitHub project and used last commit (can be changed to any git commit/branch)
  * You built a docker image with the latest version of your code
  * You ran the image with the specified command in the polyaxonfile
  * You persisted your logs and outputs to your volume claims

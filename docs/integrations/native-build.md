@@ -18,6 +18,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows users to build container images in-cluster before stating experiment and jobs.
+
 ### Overview
 
 Polyaxon supports multiple backend options to build container images used for running jobs or training experiments.

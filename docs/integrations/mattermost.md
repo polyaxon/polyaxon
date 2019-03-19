@@ -1,7 +1,7 @@
 ---
 title: "Mattermost"
 meta_title: "Mattermost"
-meta_description: "How to get direct notification from the Polyaxon to your Mattermost channels. Notify Mattermost when an experiment, job, build is finished so everyone that your team stays in sync."
+meta_description: "How to get direct notification from the Polyaxon to your Mattermost channels. Notify Mattermost when an experiment, job, build is finished so that your team stays in sync."
 custom_excerpt: "Mattermost is a open-source, self-hostable chat service. It is designed as an internal chat for organisations and companies, and mostly markets itself as an alternative to Slack."
 image: "../../content/images/integrations/mattermost.png"
 author:
@@ -16,6 +16,8 @@ featured: false
 visibility: public
 status: published
 ---
+
+Notify Mattermost when an experiment, a job, or a build is finished so that your team stays in sync.
 
 ## Visit Mattermost to create webhook integration
 

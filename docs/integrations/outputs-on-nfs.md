@@ -18,6 +18,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows users to connect to one or multiple NFS servers to store job outputs and experiment artifacts.
+
 ## Overview
 
 This guide shows how to use an NFS server to mount a volume to collect outputs and artifacts of your jobs and experiments.

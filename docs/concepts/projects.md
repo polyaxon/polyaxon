@@ -2,7 +2,7 @@
 title: "Projects"
 sub_link: "projects"
 meta_title: "Projects in Polyaxon - Core Concepts"
-meta_description: "A Project in Polyaxon is very similar to a project in github, it aims at organizing your efforts to solve a specific problem."
+meta_description: "A Project in Polyaxon is very similar to a project in GitHub, it aims at organizing your efforts to solve a specific problem."
 tags:
     - concepts
     - polyaxon
@@ -12,7 +12,7 @@ tags:
 sidebar: "concepts"
 ---
 
-A `Project` in Polyaxon is very similar to a project in github,
+A `Project` in Polyaxon is very similar to a project in GitHub,
 it aims at organizing your efforts to solve a specific problem.
 
 ## Create a project

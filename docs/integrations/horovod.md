@@ -19,6 +19,8 @@ visibility: public
 status: beta
 ---
 
+Polyaxon allows to schedule distributed Horovod experiments, and supports tracking metrics, outputs, and models.
+
 ## Overview
 
 By default polyaxon creates a master job, so you only need to provide the workers.

@@ -117,7 +117,7 @@ resources than the quota specification allows.
 
 ### Project
 
-A `Project` in Polyaxon is very similar to a project in github,
+A `Project` in Polyaxon is very similar to a project in GitHub,
 it aims at organizing your efforts to solve a specific problem.
 A project consist of a name and a description, the code to execute, the data, and a polyaxonfile.yml.
 

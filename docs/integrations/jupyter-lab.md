@@ -18,10 +18,11 @@ visibility: public
 status: beta
 ---
 
+Polyaxon makes it easy to start JupyterLab on your projects for you and your team members.
+
 ## Overview
  
-Polyaxon makes it easy to start Jupyter Lab on your projects for you and your team members. users acn run Jupyter Lab jobs on projects level, 
-these jobs are subject to the same permissions of the project they belong to.
+Users cnn run Jupyter Lab jobs on projects level, these jobs are subject to the same permissions of the project they belong to.
 
 Jupyter Lab is an alternative backend when creating notebooks on Polyaxon.
 

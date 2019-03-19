@@ -18,6 +18,8 @@ visibility: public
 status: published
 ---
 
+Polyaxon allows users to connect to one or multiple buckets on Google Cloud Storage (GCS) to store job outputs and experiment artifacts.
+
 ## Create an Google cloud storage bucket
 
 You should create a google cloud storage bucket (e.g. plx-outputs), and you have to assign permission to the bucket.
