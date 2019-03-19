@@ -11,9 +11,9 @@ author:
   twitter: "polyaxonAI"
   github: "polyaxon"
 tags: 
+  - distributed-training
   - tracking
   - scheduling
-  - distributed-training
 featured: false
 visibility: public
 status: published
