@@ -100,9 +100,8 @@ if not (config.is_testing_env or config.is_local_env) and config.platform_dsn:
                                                 is_optional=True,
                                                 default='0.0.0')
     RAVEN_CONFIG['ignore_exceptions'] = config.ignore_exceptions + [
-        'django.db.ProgrammingError',
-        'django.db.OperationalError',
-        'django.db.InterfaceError',
-        'psycopg2.OperationalError'
+        'ProgrammingError',
+        'OperationalError',
+        'InterfaceError',
     ]
     RAVEN_CONFIG['environment'] = config.env
