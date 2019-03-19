@@ -75,21 +75,21 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>
       if (ownProps.projectName) {
         return dispatch(search_actions.fetchTensorboardSearches(ownProps.projectName));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Tensorboards container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
       if (ownProps.projectName) {
         return dispatch(search_actions.createTensorboardSearch(ownProps.projectName, data));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Tensorboards container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
       if (ownProps.projectName) {
         return dispatch(search_actions.deleteTensorboardSearch(ownProps.projectName, searchId));
       } else {
-        throw new Error('Builds container does not have project.');
+        throw new Error('Tensorboards container does not have project.');
       }
     },
     fetchData: (offset?: number, query?: string, sort?: string) => {

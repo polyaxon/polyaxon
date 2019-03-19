@@ -9,7 +9,7 @@ import { BuildModel } from '../../models/build';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
-import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
+import BackendMetaInfo from '../metaInfo/backendMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';

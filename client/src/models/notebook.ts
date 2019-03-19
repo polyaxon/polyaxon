@@ -12,6 +12,7 @@ export class NotebookModel {
   public backend: string;
   public deleted?: boolean;
   public project: string;
+  public build_job: string;
   public tags: string[] = [];
   public last_status: string;
   public created_at: string;

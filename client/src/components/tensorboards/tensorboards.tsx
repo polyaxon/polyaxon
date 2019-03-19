@@ -74,7 +74,7 @@ export default class Tensorboards extends React.Component<Props, {}> {
       empty = EmptyBookmarks(
         this.props.isCurrentUser,
         'tensorboard',
-        'tensorboard');
+        'dashboard');
     } else if (this.props.endpointList === ARCHIVES) {
        empty = EmptyArchives(
         this.props.isCurrentUser,
@@ -84,7 +84,7 @@ export default class Tensorboards extends React.Component<Props, {}> {
       empty = EmptyList(
         this.props.isCurrentUser,
         'tensorboard',
-        'tensorboard',
+        'dashboard',
         'polyaxon run --help');
     }
 

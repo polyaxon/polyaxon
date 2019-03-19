@@ -82,6 +82,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
                 component: <ProjectOverview
                   project={project}
                   onUpdate={this.props.onUpdate}
+                  onFetch={this.props.fetchData}
                 />,
                 relUrl: ''
               }, {

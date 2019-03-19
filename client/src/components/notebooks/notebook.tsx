@@ -1,15 +1,17 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import * as actions from '../../actions/notebook';
 import { isDone } from '../../constants/statuses';
-import { getNotebookApiUrl, splitUniqueName } from '../../constants/utils';
+import { getBuildUrl, getNotebookApiUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { NotebookModel } from '../../models/notebook';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
-import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
+import BackendMetaInfo from '../metaInfo/backendMetaInfo';
+import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
@@ -43,6 +45,12 @@ function Tensorboard({
                  showBookmarks
                }: Props) {
   const values = splitUniqueName(notebook.project);
+  let buildUrl = '';
+  let buildValues: string[] = [];
+  if (!_.isNil(notebook.build_job)) {
+    buildValues = splitUniqueName(notebook.build_job);
+    buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[3]);
+  }
   const bookmarkStar: BookmarkInterface = getBookmark(
     notebook.bookmarked, bookmark, unbookmark);
 
@@ -80,12 +88,12 @@ function Tensorboard({
         <Tags tags={notebook.tags}/>
       </td>
       <td className="block">
-        <div className="meta">
-          <BackendMetaInfo value={notebook.backend} inline={true}/>
-        </div>
-        <div className="meta">
-          <NotebookTargetMetaInfo project={notebook.project} inline={true}/>
-        </div>
+        <BackendMetaInfo value={notebook.backend}/>
+        <BuildLinkMetaInfo
+          value={buildValues[3]}
+          link={buildUrl}
+        />
+        <NotebookTargetMetaInfo project={notebook.project}/>
       </td>
       <td className="block">
         <TaskRunMetaInfo startedAt={notebook.started_at} finishedAt={notebook.finished_at}/>

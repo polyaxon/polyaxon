@@ -1,9 +1,11 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import * as actions from '../../actions/tensorboard';
 import { isDone } from '../../constants/statuses';
 import {
+  getBuildUrl,
   getTensorboardApiUrl,
   splitUniqueName
 } from '../../constants/utils';
@@ -12,6 +14,7 @@ import { TensorboardModel } from '../../models/tensorboard';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
+import BuildLinkMetaInfo from '../metaInfo/buildLinkMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
@@ -45,6 +48,12 @@ function Tensorboard({
                       showBookmarks
                     }: Props) {
   const values = splitUniqueName(tensorboard.project);
+  let buildUrl = '';
+  let buildValues: string[] = [];
+  if (!_.isNil(tensorboard.build_job)) {
+    buildValues = splitUniqueName(tensorboard.build_job);
+    buildUrl = getBuildUrl(buildValues[0], buildValues[1], buildValues[3]);
+  }
   const bookmarkStar: BookmarkInterface = getBookmark(
     tensorboard.bookmarked, bookmark, unbookmark);
 
@@ -82,6 +91,10 @@ function Tensorboard({
         <Tags tags={tensorboard.tags}/>
       </td>
       <td className="block">
+        <BuildLinkMetaInfo
+          value={buildValues[3]}
+          link={buildUrl}
+        />
         <TensorboardInfoMetaInfo
           username={values[0]}
           projectName={values[1]}

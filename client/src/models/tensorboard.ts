@@ -12,6 +12,7 @@ export class TensorboardModel {
   public backend: string;
   public deleted?: boolean;
   public project: string;
+  public build_job: string;
   public group: string;
   public experiment: string;
   public tags: string[] = [];

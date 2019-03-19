@@ -13,16 +13,23 @@ import GroupCountMetaInfo from '../metaInfo/counts/groupCountMetaInfo';
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import MetaInfo from '../metaInfo/metaInfo';
+import Refresh from '../refresh';
 import Tags from '../tags';
 
 export interface Props {
   project: ProjectModel;
+  onFetch: () => actions.ProjectAction;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
 }
 
 export default class ProjectOverview extends React.Component<Props, {}> {
+  public refresh = () => {
+    this.props.onFetch();
+  };
+
   public render() {
     const project = this.props.project;
+
     if (_.isNil(project)) {
       return EmptyList(false, 'project', 'project');
     }
@@ -31,11 +38,20 @@ export default class ProjectOverview extends React.Component<Props, {}> {
       <div className="entity-details">
         <div className="row">
           <div className="col-md-12">
-            <Description
-              description={project.description}
-              showEmpty={true}
-              onSave={(description: string) =>  { this.props.onUpdate({description}); }}
-            />
+            <div className="row">
+              <div className="col-md-11">
+                <Description
+                  description={project.description}
+                  showEmpty={true}
+                  onSave={(description: string) => {
+                    this.props.onUpdate({description});
+                  }}
+                />
+              </div>
+              <div className="col-md-1">
+                <Refresh callback={this.refresh} pullRight={false}/>
+              </div>
+            </div>
             <div className="meta">
               <MetaInfo
                 icon="fas fa-unlock-alt"
@@ -85,11 +101,15 @@ export default class ProjectOverview extends React.Component<Props, {}> {
             }
             <Tags
               tags={project.tags}
-              onSave={(tags: string[]) =>  { this.props.onUpdate({tags}); }}
+              onSave={(tags: string[]) => {
+                this.props.onUpdate({tags});
+              }}
             />
             <MDEditor
               content={project.readme}
-              onSave={(readme: string) => { this.props.onUpdate({readme}); }}
+              onSave={(readme: string) => {
+                this.props.onUpdate({readme});
+              }}
             />
           </div>
         </div>

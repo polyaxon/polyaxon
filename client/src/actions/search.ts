@@ -231,21 +231,22 @@ export function deleteNotebookSearch(projectName: string, searchId: number): any
 
 export function fetchTensorboardSearches(projectName: string): any {
   return (dispatch: any, getState: any) => {
-    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks`;
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/tensorboards`;
     return _fetchSearches(searchesUrl, dispatch, getState);
   };
 }
 
 export function createTensorboardSearch(projectName: string, data: SearchModel): any {
   return (dispatch: any, getState: any) => {
-    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks`;
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/tensorboards`;
     return _createSearch(searchesUrl, data, dispatch, getState);
   };
 }
 
 export function deleteTensorboardSearch(projectName: string, searchId: number): any {
   return (dispatch: any, getState: any) => {
-    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(projectName, false)}/notebooks/${searchId}`;
+    const searchesUrl = `${BASE_API_URL}/searches/${getProjectUrlFromName(
+      projectName, false)}/tensorboards/${searchId}`;
     return _deleteSearches(searchesUrl, searchId, dispatch, getState);
   };
 }

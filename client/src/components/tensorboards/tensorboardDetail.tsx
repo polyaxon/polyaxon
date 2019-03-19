@@ -4,7 +4,6 @@ import * as React from 'react';
 import * as actions from '../../actions/tensorboard';
 import { isDone } from '../../constants/statuses';
 import { getProjectUrl, getTensorboardApiUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
-import Logs from '../../containers/logs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { TensorboardModel } from '../../models/tensorboard';
@@ -80,16 +79,6 @@ export default class TensorboardDetail extends React.Component<Props, {}> {
                     onFetch={this.props.fetchData}
                   />,
                   relUrl: ''
-                }, {
-                  title: 'Logs',
-                  component: <Logs
-                    fetchData={() => null}
-                    logs={''}
-                    project={tensorboard.project}
-                    resource="tensorboards"
-                    id={tensorboard.id}
-                  />,
-                  relUrl: 'logs'
                 }, {
                   title: 'Statuses',
                   component: <Statuses

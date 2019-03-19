@@ -5,7 +5,7 @@ import * as actions from '../../actions/build';
 import { BuildModel } from '../../models/build';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
-import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
+import BackendMetaInfo from '../metaInfo/backendMetaInfo';
 import CommitMetaInfo from '../metaInfo/commitMetaInfo';
 import ExperimentCountMetaInfo from '../metaInfo/counts/experimentCountMetaInfo';
 import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';

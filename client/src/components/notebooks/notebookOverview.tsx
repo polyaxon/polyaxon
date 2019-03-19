@@ -5,9 +5,10 @@ import * as actions from '../../actions/notebook';
 import { NotebookModel } from '../../models/notebook';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
-import BackendMetaInfo from '../metaInfo/BackendMetaInfo';
+import BackendMetaInfo from '../metaInfo/backendMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
+import NotebookTargetMetaInfo from '../metaInfo/notebookTargetMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
@@ -70,6 +71,7 @@ export default class NotebookOverview extends React.Component<Props, {}> {
             </div>
             <div className="meta">
               <BackendMetaInfo value={notebook.backend} inline={true}/>
+              <NotebookTargetMetaInfo project={notebook.project} inline={true}/>
             </div>
             <div className="meta">
               <PodIdMetaInfo value={notebook.pod_id} inline={true}/>

@@ -4,7 +4,6 @@ import * as React from 'react';
 import * as actions from '../../actions/notebook';
 import { isDone } from '../../constants/statuses';
 import { getNotebookApiUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
-import Logs from '../../containers/logs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { NotebookModel } from '../../models/notebook';
@@ -80,16 +79,6 @@ export default class NotebookDetail extends React.Component<Props, {}> {
                     onFetch={this.props.fetchData}
                   />,
                   relUrl: ''
-                }, {
-                  title: 'Logs',
-                  component: <Logs
-                    fetchData={() => null}
-                    logs={''}
-                    project={notebook.project}
-                    resource="notebooks"
-                    id={notebook.id}
-                  />,
-                  relUrl: 'logs'
                 }, {
                   title: 'Statuses',
                   component: <Statuses
