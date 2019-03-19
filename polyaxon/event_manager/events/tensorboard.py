@@ -93,7 +93,6 @@ class TensorboardViewedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
     )
 
@@ -118,7 +117,6 @@ class TensorboardDeletedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
-        Attribute('target'),  # project, experiment_group, experiment
         Attribute('last_status'),
     )
 
