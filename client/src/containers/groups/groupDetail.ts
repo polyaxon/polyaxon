@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../actions/group';
-import GroupDetail from '../components/groups/groupDetail';
-import { AppState } from '../constants/types';
-import { getGroupUniqueName } from '../constants/utils';
+import * as actions from '../../actions/group';
+import GroupDetail from '../../components/groups/groupDetail';
+import { AppState } from '../../constants/types';
+import { getGroupUniqueName } from '../../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const groupUniqueName = getGroupUniqueName(

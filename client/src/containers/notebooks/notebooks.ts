@@ -2,15 +2,15 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Notebooks from '../components/notebooks/notebooks';
-import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
-import { NotebookModel } from '../models/notebook';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import Notebooks from '../../components/notebooks/notebooks';
+import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
+import { NotebookModel } from '../../models/notebook';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
-import * as actions from '../actions/notebook';
-import * as search_actions from '../actions/search';
-import { SearchModel } from '../models/search';
+import * as actions from '../../actions/notebook';
+import * as search_actions from '../../actions/search';
+import { SearchModel } from '../../models/search';
 
 interface OwnProps {
   user: string;

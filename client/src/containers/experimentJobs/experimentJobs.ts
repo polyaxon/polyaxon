@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import ExperimentJobs from '../components/experimentJobs/experimentJobs';
-import { AppState } from '../constants/types';
-import { getExperimentIndexName } from '../constants/utils';
-import { ExperimentJobModel } from '../models/experimentJob';
+import ExperimentJobs from '../../components/experimentJobs/experimentJobs';
+import { AppState } from '../../constants/types';
+import { getExperimentIndexName } from '../../constants/utils';
+import { ExperimentJobModel } from '../../models/experimentJob';
 
-import * as actions from '../actions/experimentJob';
+import * as actions from '../../actions/experimentJob';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useFilter = () => {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import * as actions from '../actions/project';
-import Projects from '../containers/projects';
+import Projects from '../containers/projects/projects';
 import { ProjectModel } from '../models/project';
 import Breadcrumb from './breadcrumb';
 

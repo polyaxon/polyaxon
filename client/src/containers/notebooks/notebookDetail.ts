@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
+import { AppState } from '../../constants/types';
 
-import * as actions from '../actions/notebook';
-import notebookDetail from '../components/notebooks/notebookDetail';
-import { getNotebookUniqueName } from '../constants/utils';
+import * as actions from '../../actions/notebook';
+import NotebookDetail from '../../components/notebooks/notebookDetail';
+import { getNotebookUniqueName } from '../../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const notebookUniqueName = getNotebookUniqueName(
@@ -76,4 +76,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.NotebookAction>, p
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(notebookDetail));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NotebookDetail));

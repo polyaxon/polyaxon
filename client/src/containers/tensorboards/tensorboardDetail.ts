@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
+import { AppState } from '../../constants/types';
 
-import * as actions from '../actions/tensorboard';
-import tensorboardDetail from '../components/tensorboards/tensorboardDetail';
-import { getTensorboardUniqueName } from '../constants/utils';
+import * as actions from '../../actions/tensorboard';
+import TensorboardDetail from '../../components/tensorboards/tensorboardDetail';
+import { getTensorboardUniqueName } from '../../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const tensorboardUniqueName = getTensorboardUniqueName(
@@ -76,4 +76,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(tensorboardDetail));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TensorboardDetail));

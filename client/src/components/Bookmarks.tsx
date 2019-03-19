@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 import { getBookmarksUrl, getUserUrl } from '../constants/utils';
-import Builds from '../containers/builds';
-import Experiments from '../containers/experiments';
-import Groups from '../containers/groups';
-import Jobs from '../containers/jobs';
-import Projects from '../containers/projects';
+import Builds from '../containers/builds/builds';
+import Experiments from '../containers/experiments/experiments';
+import Groups from '../containers/groups/groups';
+import Jobs from '../containers/jobs/jobs';
+import Projects from '../containers/projects/projects';
 import { BOOKMARKS } from '../utils/endpointList';
 import Breadcrumb from './breadcrumb';
 import LinkedTab from './linkedTab';

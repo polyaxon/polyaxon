@@ -9,7 +9,7 @@ import {
   getUserUrl,
   splitUniqueName,
 } from '../../constants/utils';
-import EntityBuild from '../../containers/entityBuild';
+import EntityBuild from '../../containers/builds/entityBuild';
 import Logs from '../../containers/logs';
 import Outputs from '../../containers/outputs';
 import Statuses from '../../containers/statuses';

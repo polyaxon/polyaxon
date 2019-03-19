@@ -2,15 +2,15 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Tensorboards from '../components/tensorboards/tensorboards';
-import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
-import { TensorboardModel } from '../models/tensorboard';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import Tensorboards from '../../components/tensorboards/tensorboards';
+import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
+import { TensorboardModel } from '../../models/tensorboard';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
-import * as search_actions from '../actions/search';
-import * as actions from '../actions/tensorboard';
-import { SearchModel } from '../models/search';
+import * as search_actions from '../../actions/search';
+import * as actions from '../../actions/tensorboard';
+import { SearchModel } from '../../models/search';
 
 interface OwnProps {
   user: string;

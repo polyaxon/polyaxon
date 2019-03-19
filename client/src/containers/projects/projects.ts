@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as modalActions from '../actions/modal';
-import * as actions from '../actions/project';
-import Projects from '../components/projects/projects';
-import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
-import { ProjectModel } from '../models/project';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import * as modalActions from '../../actions/modal';
+import * as actions from '../../actions/project';
+import Projects from '../../components/projects/projects';
+import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
+import { ProjectModel } from '../../models/project';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 interface OwnProps {
   user: string;

@@ -2,16 +2,16 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as actions from '../actions/experiment';
-import * as groupActions from '../actions/group';
-import * as searchActions from '../actions/search';
-import Experiments from '../components/experiments/experiments';
-import { AppState } from '../constants/types';
-import { getExperimentIndexName, isTrue } from '../constants/utils';
-import { ExperimentModel } from '../models/experiment';
-import { GroupModel } from '../models/group';
-import { SearchModel } from '../models/search';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import * as actions from '../../actions/experiment';
+import * as groupActions from '../../actions/group';
+import * as searchActions from '../../actions/search';
+import Experiments from '../../components/experiments/experiments';
+import { AppState } from '../../constants/types';
+import { getExperimentIndexName, isTrue } from '../../constants/utils';
+import { ExperimentModel } from '../../models/experiment';
+import { GroupModel } from '../../models/group';
+import { SearchModel } from '../../models/search';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 interface OwnProps {
   user: string;

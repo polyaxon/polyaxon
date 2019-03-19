@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as actions from '../../actions/group';
 import { isDone } from '../../constants/statuses';
 import { getGroupUrl, getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
-import Experiments from '../../containers/experiments';
+import Experiments from '../../containers/experiments/experiments';
 import Metrics from '../../containers/metrics';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';

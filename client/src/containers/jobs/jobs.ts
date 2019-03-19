@@ -2,15 +2,15 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Jobs from '../components/jobs/jobs';
-import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
-import { JobModel } from '../models/job';
+import Jobs from '../../components/jobs/jobs';
+import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
+import { JobModel } from '../../models/job';
 
-import * as actions from '../actions/job';
-import * as search_actions from '../actions/search';
-import { SearchModel } from '../models/search';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import * as actions from '../../actions/job';
+import * as search_actions from '../../actions/search';
+import { SearchModel } from '../../models/search';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 interface OwnProps {
   user: string;

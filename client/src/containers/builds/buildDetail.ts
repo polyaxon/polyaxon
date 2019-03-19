@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
+import { AppState } from '../../constants/types';
 
-import * as actions from '../actions/build';
-import buildDetail from '../components/builds/buildDetail';
-import { getBuildUniqueName } from '../constants/utils';
+import * as actions from '../../actions/build';
+import BuildDetail from '../../components/builds/buildDetail';
+import { getBuildUniqueName } from '../../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const buildUniqueName = getBuildUniqueName(
@@ -76,4 +76,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(buildDetail));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BuildDetail));

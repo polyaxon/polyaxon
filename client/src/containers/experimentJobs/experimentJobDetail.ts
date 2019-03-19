@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
+import { AppState } from '../../constants/types';
 
-import * as actions from '../actions/experimentJob';
-import ExperimentJobDetail from '../components/experimentJobs/experimentJobDetail';
-import { getExperimentJobUniqueName } from '../constants/utils';
+import * as actions from '../../actions/experimentJob';
+import ExperimentJobDetail from '../../components/experimentJobs/experimentJobDetail';
+import { getExperimentJobUniqueName } from '../../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const jobUniqueName = getExperimentJobUniqueName(

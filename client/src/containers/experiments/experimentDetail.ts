@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as codeRefActions from '../actions/codeReference';
-import * as actions from '../actions/experiment';
-import ExperimentDetail from '../components/experiments/experimentDetail';
-import { AppState } from '../constants/types';
-import { getExperimentUniqueName } from '../constants/utils';
+import * as codeRefActions from '../../actions/codeReference';
+import * as actions from '../../actions/experiment';
+import ExperimentDetail from '../../components/experiments/experimentDetail';
+import { AppState } from '../../constants/types';
+import { getExperimentUniqueName } from '../../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const experimentUniqueName = getExperimentUniqueName(

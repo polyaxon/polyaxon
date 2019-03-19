@@ -2,15 +2,15 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Groups from '../components/groups/groups';
-import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
-import { GroupModel } from '../models/group';
+import Groups from '../../components/groups/groups';
+import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
+import { GroupModel } from '../../models/group';
 
-import * as actions from '../actions/group';
-import * as search_actions from '../actions/search';
-import { SearchModel } from '../models/search';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import * as actions from '../../actions/group';
+import * as search_actions from '../../actions/search';
+import { SearchModel } from '../../models/search';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 interface OwnProps {
   user: string;

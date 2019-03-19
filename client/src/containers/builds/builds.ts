@@ -2,15 +2,15 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Builds from '../components/builds/builds';
-import { AppState } from '../constants/types';
-import { isTrue } from '../constants/utils';
-import { BuildModel } from '../models/build';
-import { ARCHIVES, BOOKMARKS } from '../utils/endpointList';
+import Builds from '../../components/builds/builds';
+import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
+import { BuildModel } from '../../models/build';
+import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
-import * as actions from '../actions/build';
-import * as search_actions from '../actions/search';
-import { SearchModel } from '../models/search';
+import * as actions from '../../actions/build';
+import * as search_actions from '../../actions/search';
+import { SearchModel } from '../../models/search';
 
 interface OwnProps {
   user: string;

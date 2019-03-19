@@ -11,8 +11,8 @@ import {
   getUserUrl,
   splitUniqueName,
 } from '../../constants/utils';
-import EntityBuild from '../../containers/entityBuild';
-import ExperimentJobs from '../../containers/experimentJobs';
+import EntityBuild from '../../containers/builds/entityBuild';
+import ExperimentJobs from '../../containers/experimentJobs/experimentJobs';
 import Logs from '../../containers/logs';
 import Metrics from '../../containers/metrics';
 import Outputs from '../../containers/outputs';
