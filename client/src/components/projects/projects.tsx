@@ -37,8 +37,8 @@ export default class Projects extends React.Component<Props, {}> {
           {ProjectHeader()}
           {projects
             .filter(
-              (projet: ProjectModel) =>
-                (!this.props.showDeleted && isLive(projet)) || (this.props.showDeleted && !isLive(projet)))
+              (project: ProjectModel) =>
+                (!this.props.showDeleted && isLive(project)) || (this.props.showDeleted && !isLive(project)))
             .map(
               (project: ProjectModel) =>
                 <Project

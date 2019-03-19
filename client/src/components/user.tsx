@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-import RootModal from '../containers/modal';
+import * as actions from '../actions/project';
 import Projects from '../containers/projects';
+import { ProjectModel } from '../models/project';
 import Breadcrumb from './breadcrumb';
 
 export interface Props {
   user: string;
-  showModal: () => any;
-  hideModal: () => any;
+  createProject: (project: ProjectModel) => actions.ProjectAction;
 }
 
 export default class User extends React.Component<Props, {}> {
@@ -18,7 +18,6 @@ export default class User extends React.Component<Props, {}> {
           <div className="entity-details">
             <Breadcrumb links={[{name: this.props.user}, {name: 'projects'}]}/>
           </div>
-          <RootModal hideModal={this.props.hideModal}/>
           <Projects user={this.props.user}/>
         </div>
       </div>
