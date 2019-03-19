@@ -60,9 +60,10 @@ class TestProjectTensorboardStatusListViewV1(BaseViewTest):
         with patch.object(TensorboardJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             self.job = TensorboardJobFactory(project=project)
-        self.url = '/{}/{}/{}/tensorboard/statuses/'.format(API_V1,
-                                                            project.user.username,
-                                                            project.name)
+        self.url = '/{}/{}/{}/tensorboards/{}/statuses/'.format(API_V1,
+                                                                project.user.username,
+                                                                project.name,
+                                                                self.job.id)
         self.objects = [self.factory_class(job=self.job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -145,42 +146,6 @@ class TestProjectTensorboardStatusListViewV1(BaseViewTest):
 
 
 @pytest.mark.plugins_mark
-class TestExperimentTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
-    def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
-            project = ProjectFactory(user=self.auth_client.user)
-            experiment = ExperimentFactory(project=project)
-            self.job = TensorboardJobFactory(project=project, experiment=experiment)
-        self.url = '/{}/{}/{}/experiments/{}/tensorboard/statuses/'.format(API_V1,
-                                                                           project.user.username,
-                                                                           project.name,
-                                                                           experiment.id)
-        self.objects = [self.factory_class(job=self.job,
-                                           status=JobLifeCycle.CHOICES[i][0])
-                        for i in range(self.num_objects)]
-        self.queryset = self.model_class.objects.all()
-        self.queryset = self.queryset.order_by('created_at')
-
-
-@pytest.mark.plugins_mark
-class TestGroupTensorboardStatusListViewV1(TestProjectTensorboardStatusListViewV1):
-    def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
-            project = ProjectFactory(user=self.auth_client.user)
-            group = ExperimentGroupFactory(project=project)
-            self.job = TensorboardJobFactory(project=project, experiment_group=group)
-        self.url = '/{}/{}/{}/groups/{}/tensorboard/statuses/'.format(API_V1,
-                                                                      project.user.username,
-                                                                      project.name,
-                                                                      group.id)
-        self.objects = [self.factory_class(job=self.job,
-                                           status=JobLifeCycle.CHOICES[i][0])
-                        for i in range(self.num_objects)]
-        self.queryset = self.model_class.objects.all()
-        self.queryset = self.queryset.order_by('created_at')
-
-
-@pytest.mark.plugins_mark
 class TestProjectTensorboardDetailViewV1(BaseViewTest):
     serializer_class = TensorboardJobDetailSerializer
     model_class = TensorboardJob
@@ -197,9 +162,10 @@ class TestProjectTensorboardDetailViewV1(BaseViewTest):
             self.object = TensorboardJobFactory(project=project)
         self.object.set_status(JobLifeCycle.CREATED)
         self.object.set_status(JobLifeCycle.SCHEDULED)
-        self.url = '/{}/{}/{}/tensorboard/'.format(API_V1,
-                                                   project.user.username,
-                                                   project.name)
+        self.url = '/{}/{}/{}/tensorboards/{}/'.format(API_V1,
+                                                       project.user.username,
+                                                       project.name,
+                                                       self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -278,37 +244,13 @@ class TestProjectTensorboardDetailViewV1(BaseViewTest):
         assert self.model_class.objects.count() == 1
         assert self.model_class.all.count() == 1
 
-
-@pytest.mark.plugins_mark
-class TestExperimentTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
-    def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
-            project = ProjectFactory(user=self.auth_client.user)
-            experiment = ExperimentFactory(project=project)
-            self.object = TensorboardJobFactory(project=project, experiment=experiment)
-        self.object.set_status(JobLifeCycle.CREATED)
-        self.object.set_status(JobLifeCycle.SCHEDULED)
-        self.url = '/{}/{}/{}/experiments/{}/tensorboard/'.format(API_V1,
-                                                                  project.user.username,
-                                                                  project.name,
-                                                                  experiment.id)
-        self.queryset = self.model_class.objects.all()
-
-
-@pytest.mark.plugins_mark
-class TestGroupTensorboardDetailViewV1(TestProjectTensorboardDetailViewV1):
-    def set_objects(self):
-        with patch.object(TensorboardJob, 'set_status') as _:  # noqa
-            project = ProjectFactory(user=self.auth_client.user)
-            group = ExperimentGroupFactory(project=project)
-            self.object = TensorboardJobFactory(project=project, experiment_group=group)
-        self.object.set_status(JobLifeCycle.CREATED)
-        self.object.set_status(JobLifeCycle.SCHEDULED)
-        self.url = '/{}/{}/{}/groups/{}/tensorboard/'.format(API_V1,
-                                                             project.user.username,
-                                                             project.name,
-                                                             group.id)
-        self.queryset = self.model_class.objects.all()
+    def test_spawner_stop(self):
+        assert self.queryset.count() == 1
+        with patch('scheduler.tensorboard_scheduler.stop_tensorboard') as mock_fct:
+            resp = self.auth_client.post(self.url + 'stop/')
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
 
 
 @pytest.mark.plugins_mark
@@ -329,9 +271,10 @@ class TestNotebookStatusListViewV1(BaseViewTest):
         with patch.object(NotebookJob, 'set_status') as _:  # noqa
             project = ProjectFactory(user=self.auth_client.user)
             self.job = NotebookJobFactory(project=project)
-        self.url = '/{}/{}/{}/notebook/statuses/'.format(API_V1,
-                                                         project.user.username,
-                                                         project.name)
+        self.url = '/{}/{}/{}/notebooks/{}/statuses/'.format(API_V1,
+                                                             project.user.username,
+                                                             project.name,
+                                                             self.job.id)
         self.objects = [self.factory_class(job=self.job,
                                            status=JobLifeCycle.CHOICES[i][0])
                         for i in range(self.num_objects)]
@@ -430,9 +373,10 @@ class TestProjectNotebookDetailViewV1(BaseViewTest):
             self.object = NotebookJobFactory(project=project)
         self.object.set_status(JobLifeCycle.CREATED)
         self.object.set_status(JobLifeCycle.SCHEDULED)
-        self.url = '/{}/{}/{}/notebook/'.format(API_V1,
-                                                project.user.username,
-                                                project.name)
+        self.url = '/{}/{}/{}/notebooks/{}/'.format(API_V1,
+                                                    project.user.username,
+                                                    project.name,
+                                                    self.object.id)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):
@@ -510,6 +454,14 @@ class TestProjectNotebookDetailViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 1
         assert self.model_class.all.count() == 1
+
+    def test_spawner_stop(self):
+        assert self.queryset.count() == 1
+        with patch('scheduler.notebook_scheduler.stop_notebook') as mock_fct:
+            resp = self.auth_client.post(self.url + 'stop/')
+        assert mock_fct.call_count == 1
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.count() == 1
 
 
 @pytest.mark.plugins_mark

@@ -18,9 +18,14 @@ from api.endpoint.base import (
     RetrieveEndpoint,
     UpdateEndpoint
 )
-from api.endpoint.notebook import NotebookEndpoint, NotebookResourceListEndpoint
+from api.endpoint.notebook import (
+    NotebookEndpoint,
+    NotebookResourceListEndpoint,
+    ProjectNotebookEndpoint
+)
 from api.endpoint.project import ProjectEndpoint, ProjectResourceListEndpoint
 from api.endpoint.tensorboard import (
+    ProjectTensorboardEndpoint,
     TensorboardEndpoint,
     TensorboardResourceListEndpoint,
     get_target
@@ -144,7 +149,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopTensorboardView(TensorboardResourceListEndpoint, PostEndpoint):
+class StopTensorboardView(ProjectTensorboardEndpoint, PostEndpoint):
     """Stop a tensorboard."""
 
     def post(self, request, *args, **kwargs):
@@ -170,6 +175,33 @@ class StopTensorboardView(TensorboardResourceListEndpoint, PostEndpoint):
                            target=get_target(experiment=experiment_id, group=group_id),
                            actor_id=self.request.user.id,
                            actor_name=self.request.user.username)
+        return Response(status=status.HTTP_200_OK)
+
+
+class StopTensorboardJobView(TensorboardEndpoint, PostEndpoint):
+    """Stop a tensorboard."""
+
+    def post(self, request, *args, **kwargs):
+        project = self.project
+        tensorboard = self.tensorboard
+        experiment_id = self.tensorboard.experiment_id
+        group_id = self.tensorboard.experiment_group_id
+
+        celery_app.send_task(
+            SchedulerCeleryTasks.TENSORBOARDS_STOP,
+            kwargs={
+                'project_name': project.unique_name,
+                'project_uuid': project.uuid.hex,
+                'tensorboard_job_name': tensorboard.unique_name,
+                'tensorboard_job_uuid': tensorboard.uuid.hex,
+                'update_status': True
+            },
+            countdown=conf.get('GLOBAL_COUNTDOWN'))
+        auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
+                       instance=tensorboard,
+                       target=get_target(experiment=experiment_id, group=group_id),
+                       actor_id=self.request.user.id,
+                       actor_name=self.request.user.username)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -238,7 +270,7 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
         return Response(status=status.HTTP_201_CREATED)
 
 
-class StopNotebookView(NotebookResourceListEndpoint, PostEndpoint):
+class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
     """Stop a tensorboard."""
 
     def handle_code(self, request):
@@ -464,12 +496,10 @@ class TensorboardDetailView(TensorboardEndpoint, RetrieveEndpoint, UpdateEndpoin
     """
     serializer_class = TensorboardJobDetailSerializer
     instance = None
-    TENSORBOARD_AUDITOR_EVENT_TYPES = {
-        'GET': TENSORBOARD_VIEWED,
-        'DELETE': TENSORBOARD_DELETED_TRIGGERED,
-    }
 
     AUDITOR_EVENT_TYPES = {
+        'GET': TENSORBOARD_VIEWED,
+        'DELETE': TENSORBOARD_DELETED_TRIGGERED,
         'UPDATE': TENSORBOARD_UPDATED,
     }
 
@@ -500,8 +530,8 @@ class TensorboardArchiveView(TensorboardEndpoint, CreateEndpoint):
 
 class TensorboardRestoreView(TensorboardEndpoint, CreateEndpoint):
     """Restore an Tensorboard."""
+    queryset = TensorboardJob.all
     serializer_class = TensorboardJobSerializer
-    tensorboard_queryset = TensorboardJob.all
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -524,13 +554,11 @@ class NotebookDetailView(NotebookEndpoint, RetrieveEndpoint, UpdateEndpoint, Des
     """
     serializer_class = NotebookJobDetailSerializer
     instance = None
-    NOTEBOOK_AUDITOR_EVENT_TYPES = {
-        'GET': NOTEBOOK_VIEWED,
-        'DELETE': NOTEBOOK_DELETED_TRIGGERED,
-    }
 
     AUDITOR_EVENT_TYPES = {
         'UPDATE': NOTEBOOK_UPDATED,
+        'GET': NOTEBOOK_VIEWED,
+        'DELETE': NOTEBOOK_DELETED_TRIGGERED,
     }
 
     def perform_destroy(self, instance):
@@ -560,8 +588,8 @@ class NotebookArchiveView(NotebookEndpoint, CreateEndpoint):
 
 class NotebookRestoreView(NotebookEndpoint, CreateEndpoint):
     """Restore an Notebook."""
+    queryset = NotebookJob.all
     serializer_class = NotebookJobSerializer
-    notebook_queryset = NotebookJob.all
 
     def post(self, request, *args, **kwargs):
         obj = self.get_object()

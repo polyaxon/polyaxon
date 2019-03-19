@@ -94,7 +94,6 @@ class NotebookViewedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
-        Attribute('target'),  # project, experiment_group, experiment
     )
 
 
