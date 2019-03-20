@@ -199,11 +199,11 @@ export function stopProjectTensorboardActionCreator(projectName: string): Projec
   };
 }
 
-export function createProject(user: string, project: ProjectModel): any {
+export function createProject(project: ProjectModel, redirect: boolean = false): any {
   return (dispatch: any, getState: any) => {
     // FIX ME: We need to add a first dispatch here so we show it to the user before
     // sending it to the backend: dispatch(createProjectActionCreator(project))
-    return fetch(`${BASE_API_URL}/${user}`, {
+    return fetch(`${BASE_API_URL}/projects`, {
       method: 'POST',
       body: JSON.stringify(project),
       headers: {
@@ -215,7 +215,14 @@ export function createProject(user: string, project: ProjectModel): any {
     })
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
-      .then((json) => dispatch(receiveProjectActionCreator(json)));
+      .then((json) => {
+        const dispatched = dispatch(receiveProjectActionCreator(json));
+        if (redirect) {
+          const values = json.unique_name.split('.');
+          history.push(getProjectUrl(values[0], values[1], true));
+        }
+        return dispatched;
+      });
   };
 }
 

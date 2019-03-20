@@ -7,18 +7,9 @@ import ProjectCreate from '../../components/projects/projectCreate';
 import { AppState } from '../../constants/types';
 import { ProjectModel } from '../../models/project';
 
-interface OwnProps {
-  user: string;
-  endpointList?: string;
-  showBookmarks?: boolean;
-  showDeleted?: boolean;
-  fetchData?: () => actions.ProjectAction;
-}
-
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, ownProps: {}) {
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
-    user: ownProps.user,
+    user: state.auth.user,
   };
 }
 
@@ -27,9 +18,9 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, ownProps: OwnProps): DispatchProps {
+  dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, ownProps: {}): DispatchProps {
   return {
-    onCreate: (project: ProjectModel) => dispatch(actions.createProject(ownProps.user, project)),
+    onCreate: (project: ProjectModel) => dispatch(actions.createProject(project, true)),
   };
 }
 

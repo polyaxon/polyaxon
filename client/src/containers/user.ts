@@ -17,7 +17,7 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
-    createProject: (project: ProjectModel) => dispatch(actions.createProject(params.match.params.user, project))
+    createProject: (project: ProjectModel) => dispatch(actions.createProject(project))
   };
 }
 
