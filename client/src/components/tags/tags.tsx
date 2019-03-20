@@ -1,9 +1,8 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import CreatableSelect from 'react-select/lib/Creatable';
-
 import { isTrue } from '../../constants/utils';
+import TagsEdit from './tagsEdit';
 
 import './tags.less';
 
@@ -63,63 +62,15 @@ export default class Tags extends React.Component<Props, State> {
     this.onView();
   };
 
-  public handleChange = (value: any, actionMeta: any) => {
+  public handleChange = (value: Array<{ label: string, value: string }>) => {
     this.setState((prevState, prevProps) => ({
       ...prevState,
       value,
     }));
   };
 
-  public handleInputChange = (inputValue: string, actionMeta: any) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      inputValue,
-    }));
-  };
-
-  public handleKeyDown = (event: any) => {
-    const {inputValue, value} = this.state;
-    if (!inputValue) {
-      return;
-    }
-    switch (event.key) {
-      case 'Enter':
-      case 'Tab':
-        const state = {inputValue: '', value};
-        if (value.filter((v) => v.label === inputValue).length === 0) {
-          state.value = [...value, {
-            label: inputValue,
-            value: inputValue,
-          }];
-        }
-        this.setState((prevState, prevProps) => ({
-          ...prevState,
-          ...state,
-        }));
-        event.preventDefault();
-        break;
-      default:
-        break;
-    }
-  };
-
   public render() {
     const tags = this.props.tags;
-
-    const customStyles = {
-      control: (base: any, state: any) => ({
-        ...base,
-        'boxShadow': state.isFocused ? 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6)' : 0,
-        'borderColor': state.isFocused
-          ? '#66afe9'
-          : base.borderColor,
-        '&:hover': {
-          borderColor: state.isFocused
-            ? '#66afe9'
-            : base.borderColor,
-        }
-      })
-    };
 
     const getTags = () => {
       if (tags || this.props.onSave) {
@@ -134,29 +85,7 @@ export default class Tags extends React.Component<Props, State> {
             {this.state.isEditMode &&
             <div className="row">
               <div className="col-md-10">
-                <CreatableSelect
-                  components={{
-                    DropdownIndicator: null
-                  }}
-                  className="input-multi-select"
-                  inputValue={this.state.inputValue}
-                  isClearable={true}
-                  isMulti={true}
-                  menuIsOpen={false}
-                  onChange={this.handleChange}
-                  onInputChange={this.handleInputChange}
-                  onKeyDown={this.handleKeyDown}
-                  value={this.state.value}
-                  styles={customStyles}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary: '#66afe9',
-                    },
-                  })}
-                  placeholder=""
-                />
+                <TagsEdit tags={tags} handleChange={this.handleChange}/>
               </div>
               <div className="col-md-2 tags-buttons">
                 <button className="btn btn-sm btn-default" onClick={() => this.onSave()}>
