@@ -7,39 +7,53 @@
     </div>
     <ul class="nav navbar-nav navbar-right navbar-menu" style="margin-left: auto;">
         <li class="header-item">
+            <a class="header-item-link header-item-dropdown-toggle header-dropdown-toggle dropdown-toggle"
+               data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="true"
+               href="{% url 'react-index' %}/activitylogs">
+                <i class="fas fa-plus-square" aria-hidden="true"></i>
+                <i class="fas fa-chevron-down fa-sm chevron" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url 'react-index' %}/projects/new">New project</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{% url 'index' %}">New Experiment</a></li>
+                <li><a href="{% url 'index' %}">New Job</a></li>
+                <li><a href="{% url 'index' %}">Start Notebook</a></li>
+                <li><a href="{% url 'index' %}">Start Tensorboard</a></li>
+            </ul>
+        </li>
+        <li class="header-item">
             <a class="header-item-link header-tooltip"
-               href="{% url 'react-index' %}/activitylogs"
-               title="Activity logs">
+               href="{% url 'react-index' %}/activitylogs">
                 <i class="fas fa-align-justify fa-sm" aria-hidden="true"></i>
                 <span class="tooltip-text">Activity logs</span>
             </a>
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
-               href="{% url 'react-index' %}/historylogs"
-               title="Recently viewed">
+               href="{% url 'react-index' %}/historylogs">
                 <i class="fas fa-history fa-sm" aria-hidden="true"></i>
                 <span class="tooltip-text">History</span>
             </a>
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
-               href="{% url 'react-index' %}/archives/{{ user.username }}"
-               title="Archives">
+               href="{% url 'react-index' %}/archives/{{ user.username }}">
                 <i class="fas fa-archive fa-sm" aria-hidden="true"></i>
                 <span class="tooltip-text">Archives</span>
             </a>
         </li>
         <li class="header-item">
             <a class="header-item-link header-tooltip"
-               href="{% url 'react-index' %}/bookmarks/{{ user.username }}"
-               title="Bookmarks">
+               href="{% url 'react-index' %}/bookmarks/{{ user.username }}">
                 <i class="fas fa-star fa-sm" aria-hidden="true"></i>
                 <span class="tooltip-text">Bookmarks</span>
             </a>
         </li>
         <li class="header-user dropdown">
-            <a class="header-user-dropdown-toggle dropdown-toggle"
+            <a class="header-user-dropdown-toggle header-dropdown-toggle dropdown-toggle"
                data-toggle="dropdown"
                aria-haspopup="true"
                aria-expanded="true">

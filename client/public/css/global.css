@@ -246,11 +246,16 @@ a.brand {
 .header-item-link {
   padding: 3px 10px 2px !important;
   background-color: transparent !important;
-  border-radius: 5px !important;
+  border-radius: 3px !important;
   color: #ebf5ff !important;
-  margin: 6px 0 0;
+  margin-top: 5px;
   align-items: center;
   line-height: 0;
+}
+
+.header-item-dropdown-toggle {
+  margin-bottom: 5px;
+  padding: 3px 7px 2px !important;
 }
 
 .header-item-link:hover {
@@ -268,13 +273,15 @@ a.brand {
   min-width: 200px;
 }
 
-.header-user .chevron {
-  height: 24px;
+.header-user .chevron, .header-item .chevron {
   margin-left: 3px;
   color: white;
   font-size: 10px;
   vertical-align: middle;
   display: inline-block;
+}
+.header-user .chevron {
+  height: 25px
 }
 
 .header-user .dropdown-menu li.current-user {
@@ -282,18 +289,17 @@ a.brand {
 }
 
 .header-user-dropdown-toggle {
-  padding: 5px 8px !important;
-  height: 37px !important;
+  padding: 4px 8px !important;
+  height: 35px !important;
   margin: 0 !important;
   background-color: transparent !important;
-  border-radius: 5px !important;
 }
 
-.header-user-dropdown-toggle:hover {
+.header-dropdown-toggle:hover {
   background-color: #dde1ea21 !important;
 }
 
-.open .header-user-dropdown-toggle {
+.open .header-dropdown-toggle {
   background-color: #fdfdfd21 !important;
 }
 
