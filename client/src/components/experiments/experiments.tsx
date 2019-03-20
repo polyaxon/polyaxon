@@ -6,6 +6,7 @@ import * as actions from '../../actions/experiment';
 import * as groupActions from '../../actions/group';
 import * as searchActions from '../../actions/search';
 import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
+import { NameSlug } from '../../constants/helpTexts';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { isDone } from '../../constants/statuses';
 import { FilterOption } from '../../interfaces/filterOptions';
@@ -521,7 +522,7 @@ export default class Experiments extends React.Component<Props, State> {
                   className="form-control"
                   onChange={(event) => this.updateSelectionForm('name', event.target.value)}
                 />
-                <span id="helpBlock" className="help-block">The name must be a slug.</span>
+                <span id="helpBlock" className="help-block">{NameSlug}</span>
               </div>
             </div>
             <div className="form-group">

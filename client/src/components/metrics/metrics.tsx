@@ -4,6 +4,7 @@ import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as experimentActions from '../../actions/experiment';
 import * as actions from '../../actions/metrics';
+import { NameSlug } from '../../constants/helpTexts';
 import { ChartModel, ChartTypes } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
@@ -593,7 +594,7 @@ export default class Metrics extends React.Component<Props, State> {
                   className="form-control"
                   onChange={(event) => this.updateViewForm('name', event.target.value)}
                 />
-                <span id="helpBlock" className="help-block">The name must be a slug.</span>
+                <span id="helpBlock" className="help-block">{NameSlug}</span>
               </div>
             </div>
             <div className="form-group">

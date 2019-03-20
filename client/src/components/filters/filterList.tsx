@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as actions from '../../actions/search';
+import { NameSlug } from '../../constants/helpTexts';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 
@@ -310,7 +311,7 @@ export default class FilterList extends React.Component<Props, State> {
                       value={this.state.saveQueryForm.name}
                       onChange={(event) => this.updateQueryForm('name', event.target.value)}
                     />
-                    <span id="helpBlock" className="help-block">The name must be a slug.</span>
+                    <span id="helpBlock" className="help-block">{NameSlug}</span>
                   </div>
                 </div>
                 <div className="form-group">

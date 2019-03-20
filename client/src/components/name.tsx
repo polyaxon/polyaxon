@@ -1,5 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
+
+import { NameSlug } from '../constants/helpTexts';
 import EntityMetaInfo from './metaInfo/entityMetaInfo';
 
 import './name.less';
@@ -93,7 +95,9 @@ export default class Description extends React.Component<Props, State> {
               value={this.state.name}
               onChange={(event) => this.handleInputChange(event.target.value)}
             />
-            <span id="helpBlock" className="help-block">The name must be a slug and unique in this project.</span>
+            <span id="helpBlock" className="help-block">
+              {`${NameSlug}` + ' It also must be unique within this project'}
+            </span>
           </div>
           <div className="col-md-2 name-buttons">
             <button type="submit" className="btn btn-sm btn-default" onClick={() => this.onSave()}>
