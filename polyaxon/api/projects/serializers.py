@@ -82,3 +82,8 @@ class ProjectDetailSerializer(BookmarkedProjectSerializer, TagsSerializerMixin):
                                              tags=instance.tags)
 
         return super().update(instance=instance, validated_data=validated_data)
+
+
+class ProjectCreateSerializer(ProjectSerializer):
+    class Meta(ProjectSerializer.Meta):
+        fields = ProjectSerializer.Meta.fields + ('readme', )

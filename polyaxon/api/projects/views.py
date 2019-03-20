@@ -19,8 +19,9 @@ from api.endpoint.project import ProjectEndpoint
 from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,
+    ProjectCreateSerializer,
     ProjectDetailSerializer,
-    ProjectSerializer
+    ProjectSerializer,
 )
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from db.models.projects import Project
@@ -39,7 +40,7 @@ from polyaxon.settings import SchedulerCeleryTasks
 class ProjectCreateView(CreateAPIView):
     """Create a project."""
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
+    serializer_class = ProjectCreateSerializer
     permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
