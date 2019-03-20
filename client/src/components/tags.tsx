@@ -3,11 +3,14 @@ import * as React from 'react';
 
 import CreatableSelect from 'react-select/lib/Creatable';
 
+import { isTrue } from '../constants/utils';
+
 import './tags.less';
 
 export interface Props {
   tags: string[];
   onSave?: (tags: string[]) => void;
+  isEditMode?: boolean;
 }
 
 export interface State {
@@ -20,7 +23,7 @@ export default class Tags extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isEditMode: false,
+      isEditMode: isTrue(props.isEditMode),
       inputValue: '',
       value: this.props.tags ? this.props.tags.map((tag) => ({label: tag, value: tag})) : [],
     };

@@ -67,5 +67,5 @@ class TensorboardResourceListEndpoint(ProjectResourceEndpoint):
         #  pylint:disable=attribute-defined-outside-init
         super()._initialize_context()
         self.tensorboard = get_object_or_404(TensorboardJob,
-                                          id=self.job_id,
-                                          project=self.project)
+                                             id=self.job_id,
+                                             project=self.project)

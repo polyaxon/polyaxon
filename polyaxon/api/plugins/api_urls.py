@@ -61,8 +61,9 @@ projects_urlpatterns = [
     re_path(r'^{}/{}/notebooks/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.NotebookStatusListView.as_view()),
-    re_path(r'^{}/{}/notebooks/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
-            views.NotebookDetailView.as_view()),
+    re_path(r'^{}/{}/notebooks/{}/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
+        views.NotebookDetailView.as_view()),
 ]
 
 # Order is important, because the patterns could swallow other urls

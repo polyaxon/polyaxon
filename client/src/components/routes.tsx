@@ -10,6 +10,7 @@ import GroupDetail from '../containers/groups/groupDetail';
 import HealthStatus from '../containers/healthStatus';
 import JobDetail from '../containers/jobs/jobDetail';
 import NotebookDetail from '../containers/notebooks/notebookDetail';
+import ProjectCreate from '../containers/projects/projectCreate';
 import ProjectDetail from '../containers/projects/projectDetail';
 import TensorboardDetail from '../containers/tensorboards/tensorboardDetail';
 import Token from '../containers/token';
@@ -24,6 +25,7 @@ function Routes() {
   const statusRoute = '/app/status';
   const clusterActivityLogsRoute = '/app/activitylogs';
   const historyLogsRoute = '/app/historylogs';
+  const newProjectRoute = '/app/projects/new';
   const userRoute = '/app/:user/';
   const bookmarksRoute = '/app/bookmarks/:user/';
   const archivesRoute = '/app/archives/:user/';
@@ -56,9 +58,10 @@ function Routes() {
       <Route path={statusRoute} component={HealthStatus}/>
       <Route path={historyLogsRoute} component={HistoryLogs}/>
       <Route path={clusterActivityLogsRoute} component={ClusterActivityLogs}/>
+      <Route path={newProjectRoute} component={ProjectCreate}/>
       <Route path={experimentJobDetailRoute} component={ExperimentJobDetail}/>
       <Route path={buildDetailRoute} component={BuildDetail}/>
-      <Route path={notebookDetailRoute } component={NotebookDetail}/>
+      <Route path={notebookDetailRoute} component={NotebookDetail}/>
       <Route path={tensorboardDetailRoute} component={TensorboardDetail}/>
       <Route path={jobDetailRoute} component={JobDetail}/>
       <Route path={groupDetailRoute} component={GroupDetail}/>
