@@ -106,6 +106,21 @@ export default class Tags extends React.Component<Props, State> {
   public render() {
     const tags = this.props.tags;
 
+    const customStyles = {
+      control: (base: any, state: any) => ({
+        ...base,
+        'boxShadow': state.isFocused ? 'inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6)' : 0,
+        'borderColor': state.isFocused
+          ? '#66afe9'
+          : base.borderColor,
+        '&:hover': {
+          borderColor: state.isFocused
+            ? '#66afe9'
+            : base.borderColor,
+        }
+      })
+    };
+
     const getTags = () => {
       if (tags || this.props.onSave) {
         return (
@@ -132,6 +147,14 @@ export default class Tags extends React.Component<Props, State> {
                   onInputChange={this.handleInputChange}
                   onKeyDown={this.handleKeyDown}
                   value={this.state.value}
+                  styles={customStyles}
+                  theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                      ...theme.colors,
+                      primary: '#66afe9',
+                    },
+                  })}
                   placeholder=""
                 />
               </div>
