@@ -18,8 +18,13 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
   * batch size `batch_size`
 
 If you created a large number of experiments in project, and you only wanted to compare a subset of these experiments, 
-Polyaxon provides a way to create a selection, a selection, basically, allows you to group these experiments so that you can create visualizations, 
-and crete a tensorboard showing only these experiments.
+Polyaxon provides a way to create a selection. 
+
+A selection, basically, allows you to group these experiments to:
+ * Compare parameters and metrics of the experiments in the selection
+ * Create visualizations of the experiments in the selection
+ * Create a tensorboard showing only experiments in the selection
+ * Have a quick access to the experiment the selection
 
 ## Select the experiments
 
