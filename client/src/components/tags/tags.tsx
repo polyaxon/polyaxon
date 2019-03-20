@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import CreatableSelect from 'react-select/lib/Creatable';
 
-import { isTrue } from '../constants/utils';
+import { isTrue } from '../../constants/utils';
 
 import './tags.less';
 

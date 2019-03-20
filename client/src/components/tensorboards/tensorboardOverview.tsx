@@ -15,8 +15,8 @@ import TensorboardInfoMetaInfo from '../metaInfo/tensorboardInfoMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Name from '../name';
 import Refresh from '../refresh';
-import Status from '../status';
-import Tags from '../tags';
+import Status from '../statuses/status';
+import Tags from '../tags/tags';
 
 export interface Props {
   tensorboard: TensorboardModel;

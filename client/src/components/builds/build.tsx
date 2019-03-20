@@ -15,8 +15,8 @@ import IdMetaInfo from '../metaInfo/idMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
-import Status from '../status';
-import Tags from '../tags';
+import Status from '../statuses/status';
+import Tags from '../tags/tags';
 import BuildActions from './buildActions';
 
 export interface Props {

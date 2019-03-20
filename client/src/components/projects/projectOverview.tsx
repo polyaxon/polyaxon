@@ -14,7 +14,7 @@ import JobCountMetaInfo from '../metaInfo/counts/jobCountMetaInfo';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import MetaInfo from '../metaInfo/metaInfo';
 import Refresh from '../refresh';
-import Tags from '../tags';
+import Tags from '../tags/tags';
 
 export interface Props {
   project: ProjectModel;

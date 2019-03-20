@@ -5,7 +5,7 @@ import { AppState } from '../constants/types';
 import { StatusModel } from '../models/status';
 
 import * as actions from '../actions/statuses';
-import Statuses from '../components/statuses';
+import Statuses from '../components/statuses/statuses';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useLastFetched = () => {

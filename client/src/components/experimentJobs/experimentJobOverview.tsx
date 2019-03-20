@@ -13,7 +13,7 @@ import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
 import Name from '../name';
 import Refresh from '../refresh';
-import Status from '../status';
+import Status from '../statuses/status';
 
 export interface Props {
   job: ExperimentJobModel;

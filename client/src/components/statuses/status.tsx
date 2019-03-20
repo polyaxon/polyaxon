@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { CREATED, DONE, FAILED, STOPPED, SUCCEEDED, WARNING } from '../constants/statuses';
+
+import { CREATED, DONE, FAILED, STOPPED, SUCCEEDED, WARNING } from '../../constants/statuses';
 
 import './status.less';
 

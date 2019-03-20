@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as actions from '../../actions/project';
 import { ProjectModel } from '../../models/project';
-import Tags from '../tags';
+import Tags from '../tags/tags';
 
 export interface Props {
   user: string;

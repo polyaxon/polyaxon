@@ -16,8 +16,8 @@ import IdMetaInfo from '../metaInfo/idMetaInfo';
 import SearchAlgorithmMetaInfo from '../metaInfo/searchAlgorithmMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
 import UserMetaInfo from '../metaInfo/userMetaInfo';
-import Status from '../status';
-import Tags from '../tags';
+import Status from '../statuses/status';
+import Tags from '../tags/tags';
 import GroupActions from './groupActions';
 
 export interface Props {

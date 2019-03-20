@@ -23,9 +23,9 @@ import Name from '../name';
 import Packages from '../packages';
 import Refresh from '../refresh';
 import RunEnv from '../runEnv';
-import Status from '../status';
+import Status from '../statuses/status';
 import VerticalTable from '../tables/verticalTable';
-import Tags from '../tags';
+import Tags from '../tags/tags';
 
 export interface Props {
   experiment: ExperimentModel;

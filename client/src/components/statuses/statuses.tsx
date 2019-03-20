@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 
-import * as actions from '../actions/statuses';
-import { StatusModel } from '../models/status';
-import { EmptyList } from './empty/emptyList';
+import * as actions from '../../actions/statuses';
+import { StatusModel } from '../../models/status';
+import { EmptyList } from '../empty/emptyList';
+import PaginatedList from '../tables/paginatedList';
 import StatusHeader from './statusHeader';
 import StatusItem from './statusItem';
-import PaginatedList from './tables/paginatedList';
 
 import './statuses.less';
 

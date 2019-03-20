@@ -10,7 +10,7 @@ import BookmarkStar from '../bookmarkStar';
 import Description from '../description';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import MetaInfo from '../metaInfo/metaInfo';
-import Tags from '../tags';
+import Tags from '../tags/tags';
 import ProjectActions from './projectActions';
 
 export interface Props {

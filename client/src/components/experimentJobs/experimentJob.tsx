@@ -9,7 +9,7 @@ import NodeMetaInfo from '../metaInfo/nodeMetaInfo';
 import PodIdMetaInfo from '../metaInfo/podIdMetaInfo';
 import ResourcesMetaInfo from '../metaInfo/resourcesMetaInfo';
 import TaskRunMetaInfo from '../metaInfo/taskRunMetaInfo';
-import Status from '../status';
+import Status from '../statuses/status';
 
 export interface Props {
   experimentJob: ExperimentJobModel;
