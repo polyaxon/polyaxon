@@ -1,13 +1,15 @@
 import * as React from 'react';
 
-import MDEdit from './mdEdit';
-import MDView from './mdView';
+import { isTrue } from '../../constants/utils';
+import MDEditorEdit from './mdEditorEdit';
+import MDEditorView from './mdEditorView';
 
 import './md.less';
 
 interface Props {
   content: string;
   onSave: (content: string) => void;
+  isEditMode?: boolean;
 }
 
 interface State {
@@ -18,7 +20,7 @@ export default class MDEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isEditMode: false
+      isEditMode: isTrue(this.props.isEditMode)
     };
   }
 
@@ -45,8 +47,8 @@ export default class MDEditor extends React.Component<Props, State> {
       <div className="row">
         <div className="col-md-12 mde">
           {this.state.isEditMode
-            ? <MDEdit content={this.props.content} onView={this.onView} onSave={this.props.onSave}/>
-            : <MDView content={this.props.content} onEdit={this.onEdit}/>
+            ? <MDEditorEdit content={this.props.content} onView={this.onView} onSave={this.props.onSave}/>
+            : <MDEditorView content={this.props.content} onEdit={this.onEdit}/>
           }
         </div>
       </div>
