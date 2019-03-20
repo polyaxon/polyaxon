@@ -1,36 +1,33 @@
 import * as React from 'react';
 
 import * as actions from '../../actions/project';
-import { NameSlug } from '../../constants/helpTexts';
 import { ProjectModel } from '../../models/project';
-import MDEdit from '../mdEditor/mdEdit';
-import TagsEdit from '../tags/tagsEdit';
+import { BaseEmptyState, BaseState, CreateMixin } from '../createMixin';
 
 export interface Props {
   user: string;
   onCreate: (project: ProjectModel) => actions.ProjectAction;
 }
 
-export interface State {
-  tags: Array<{ label: string, value: string }>;
-  readme: string;
-  description: string;
-  name: string;
+export interface State extends BaseState {
   is_public: boolean;
 }
 
-export default class ProjectCreate extends React.Component<Props, State> {
+const EmptyState = {...BaseEmptyState, is_public: true};
+
+export default class ProjectCreate extends CreateMixin<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    this.state = {
-      tags: [],
-      readme: '',
-      description: '',
-      name: '',
-      is_public: true
-    };
+    this.state = EmptyState;
   }
+
+  public update = (dict: { [key: string]: any }) => {
+    this.setState((prevState, prevProps) => ({
+      ...prevState,
+      ...dict
+    }));
+  };
 
   public createProject = (event: any) => {
     event.preventDefault();
@@ -43,40 +40,24 @@ export default class ProjectCreate extends React.Component<Props, State> {
     } as ProjectModel);
   };
 
-  public handleTagsChange = (value: Array<{ label: string, value: string }>) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      tags: value,
-    }));
-  };
-
-   public handleReadmeChange = (value: string) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      readme: value,
-    }));
-  };
-
-  public handleDescriptionChange = (description: string) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      description,
-    }));
-  };
-
-  public handleNameChange = (name: string) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      name,
-    }));
-  };
-
   public handlePrivacyChange = (privacy: string) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      is_public: privacy === 'public',
-    }));
+    this.update({is_public: privacy === 'public'});
   };
+
+  public renderVisibility = () => (
+    <div className="form-group">
+      <label className="col-sm-2 control-label">Visibility</label>
+      <div className="col-sm-2">
+        <select
+          onChange={(event) => this.handlePrivacyChange(event.target.value)}
+          className="form-control input-sm"
+        >
+          <option>Public</option>
+          <option>Private</option>
+        </select>
+      </div>
+    </div>
+  );
 
   public render() {
     return (
@@ -89,55 +70,11 @@ export default class ProjectCreate extends React.Component<Props, State> {
         <div className="row form-content">
           <div className="col-sm-offset-1 col-md-10">
             <form className="form-horizontal" onSubmit={this.createProject}>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Name</label>
-                <div className="col-sm-5">
-                  <input
-                    type="text"
-                    className="form-control input-sm"
-                    onChange={(event) => this.handleNameChange(event.target.value)}
-                  />
-                  <span id="helpBlock" className="help-block">{NameSlug}</span>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Description</label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control input-sm"
-                    onChange={(event) => this.handleDescriptionChange(event.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Visibility</label>
-                <div className="col-sm-2">
-                  <select
-                    onChange={(event) => this.handlePrivacyChange(event.target.value)}
-                    className="form-control input-sm"
-                  >
-                    <option>Public</option>
-                    <option>Private</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Read me</label>
-                <div className="col-sm-10">
-                  <MDEdit
-                    content=""
-                    handleChange={this.handleReadmeChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label className="col-sm-2 control-label">Tags</label>
-                <div className="col-sm-10">
-                  <TagsEdit tags={[]} handleChange={this.handleTagsChange}/>
-                </div>
-              </div>
-
+              {this.renderName()}
+              {this.renderDescription()}
+              {this.renderVisibility()}
+              {this.renderReadme()}
+              {this.renderTags()}
               <div className="form-group form-actions">
                 <div className="col-sm-offset-2 col-sm-10">
                   <button

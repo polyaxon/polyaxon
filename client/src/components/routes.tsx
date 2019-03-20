@@ -5,6 +5,7 @@ import Archives from '../containers/archives';
 import Bookmarks from '../containers/bookmarks';
 import BuildDetail from '../containers/builds/buildDetail';
 import ExperimentJobDetail from '../containers/experimentJobs/experimentJobDetail';
+import ExperimentCreate from '../containers/experiments/experimentCreate';
 import ExperimentDetail from '../containers/experiments/experimentDetail';
 import GroupDetail from '../containers/groups/groupDetail';
 import HealthStatus from '../containers/healthStatus';
@@ -21,11 +22,11 @@ import HistoryLogs from './activitylogs/histroyLogs';
 import { getHomeUrl } from '../constants/utils';
 
 function Routes() {
-  const tokenRoute = '/app/token';
-  const statusRoute = '/app/status';
-  const clusterActivityLogsRoute = '/app/activitylogs';
-  const historyLogsRoute = '/app/historylogs';
-  const newProjectRoute = '/app/projects/new';
+  const tokenRoute = '/app/token/';
+  const statusRoute = '/app/status/';
+  const clusterActivityLogsRoute = '/app/activitylogs/';
+  const historyLogsRoute = '/app/historylogs/';
+  const newProjectRoute = '/app/projects/new/';
   const userRoute = '/app/:user/';
   const bookmarksRoute = '/app/bookmarks/:user/';
   const archivesRoute = '/app/archives/:user/';
@@ -34,6 +35,7 @@ function Routes() {
   const notebookDetailRoute = '/app/:user/:projectName/notebooks/:notebookId/';
   const tensorboardDetailRoute = '/app/:user/:projectName/tensorboards/:tensorboardId/';
   const jobDetailRoute = '/app/:user/:projectName/jobs/:jobId/';
+  const newExperimentRoute = '/app/:user/:projectName/experiments/new';
   const experimentDetailRoute = '/app/:user/:projectName/experiments/:experimentId/';
   const groupDetailRoute = '/app/:user/:projectName/groups/:groupId/';
   const experimentJobDetailRoute = '/app/:user/:projectName/experiments/:experimentId/jobs/:jobId/';
@@ -65,6 +67,7 @@ function Routes() {
       <Route path={tensorboardDetailRoute} component={TensorboardDetail}/>
       <Route path={jobDetailRoute} component={JobDetail}/>
       <Route path={groupDetailRoute} component={GroupDetail}/>
+      <Route path={newExperimentRoute} component={ExperimentCreate}/>
       <Route path={experimentDetailRoute} component={ExperimentDetail}/>
       <Route path={bookmarksRoute} component={Bookmarks}/>
       <Route path={archivesRoute} component={Archives}/>
