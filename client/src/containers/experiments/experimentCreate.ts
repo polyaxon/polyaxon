@@ -26,7 +26,8 @@ export function mapDispatchToProps(
       actions.createExperiment(
         params.match.params.user,
         params.match.params.projectName,
-        experiment)),
+        experiment,
+        true)),
   };
 }
 

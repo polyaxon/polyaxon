@@ -3,13 +3,15 @@ from rest_framework import fields, serializers
 from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.names import NamesMixin
+from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.user import UserMixin
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from libs.spec_validation import validate_notebook_spec_config, validate_tensorboard_spec_config
 
 
-class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin):
+class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, UserMixin):
     user = fields.SerializerMethodField()
     build_job = fields.SerializerMethodField()
 
@@ -23,9 +25,6 @@ class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin):
             'build_job',
             'tags',  # Need to implement TagsSerializerMixin
         )
-
-    def get_user(self, obj):
-        return obj.user.username
 
     def _validate_spec(self, config):
         pass
@@ -57,7 +56,10 @@ class NotebookJobSerializer(PluginJobBaseSerializer):
         fields = PluginJobBaseSerializer.Meta.fields + ('data_refs',)
 
 
-class ProjectTensorboardJobSerializer(serializers.ModelSerializer, BuildMixin):
+class ProjectTensorboardJobSerializer(serializers.ModelSerializer,
+                                      BuildMixin,
+                                      ProjectMixin,
+                                      UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
@@ -86,12 +88,6 @@ class ProjectTensorboardJobSerializer(serializers.ModelSerializer, BuildMixin):
             'experiment',
         )
 
-    def get_user(self, obj):
-        return obj.user.username
-
-    def get_project(self, obj):
-        return obj.project.unique_name
-
 
 class TensorboardJobDetailSerializer(ProjectTensorboardJobSerializer,
                                      TagsSerializerMixin,
@@ -117,7 +113,10 @@ class TensorboardJobDetailSerializer(ProjectTensorboardJobSerializer,
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class ProjectNotebookJobSerializer(serializers.ModelSerializer, BuildMixin):
+class ProjectNotebookJobSerializer(serializers.ModelSerializer,
+                                   BuildMixin,
+                                   ProjectMixin,
+                                   UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
@@ -144,12 +143,6 @@ class ProjectNotebookJobSerializer(serializers.ModelSerializer, BuildMixin):
             'tags',
             'project',
         )
-
-    def get_user(self, obj):
-        return obj.user.username
-
-    def get_project(self, obj):
-        return obj.project.unique_name
 
 
 class NotebookJobDetailSerializer(ProjectNotebookJobSerializer,

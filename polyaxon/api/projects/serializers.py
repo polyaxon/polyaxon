@@ -2,10 +2,11 @@ from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.user import UserMixin
 from db.models.projects import Project
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer, UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     owner = fields.SerializerMethodField()
@@ -25,9 +26,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             'updated_at',
             'is_public',
         )
-
-    def get_user(self, obj):
-        return obj.user.username
 
     def get_owner(self, obj):
         return obj.owner.name

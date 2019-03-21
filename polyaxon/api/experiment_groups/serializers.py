@@ -3,7 +3,9 @@ from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.names import NamesMixin
+from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.user import UserMixin
 from db.models.experiment_groups import (
     ExperimentGroup,
     ExperimentGroupChartView,
@@ -21,7 +23,7 @@ class ExperimentGroupStatusSerializer(serializers.ModelSerializer):
         exclude = []
 
 
-class ExperimentGroupSerializer(serializers.ModelSerializer):
+class ExperimentGroupSerializer(serializers.ModelSerializer, ProjectMixin, UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     project = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
@@ -34,10 +36,10 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
             'name',
             'unique_name',
             'user',
+            'project',
             'description',
             'last_status',
             'group_type',
-            'project',
             'created_at',
             'updated_at',
             'started_at',
@@ -48,12 +50,6 @@ class ExperimentGroupSerializer(serializers.ModelSerializer):
         )
 
         extra_kwargs = {'group_type': {'read_only': True}}
-
-    def get_project(self, obj: ExperimentGroup):
-        return obj.project.unique_name
-
-    def get_user(self, obj: ExperimentGroup):
-        return obj.user.username
 
 
 class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedSerializerMixin):
@@ -144,6 +140,7 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
             'search_algorithm',
             'content',
         )
+        extra_kwargs = {'unique_name': {'read_only': True}}
 
     def validate_content(self, content):
         # This is optional

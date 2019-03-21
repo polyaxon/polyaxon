@@ -7,7 +7,9 @@ from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
 from api.utils.serializers.names import NamesMixin
+from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.user import UserMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
     Experiment,
@@ -115,7 +117,7 @@ class ExperimentDeclarationsSerializer(serializers.ModelSerializer):
         )
 
 
-class ExperimentSerializer(serializers.ModelSerializer, BuildMixin):
+class ExperimentSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin, UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     original = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
@@ -151,17 +153,11 @@ class ExperimentSerializer(serializers.ModelSerializer, BuildMixin):
             'declarations',
         )
 
-    def get_user(self, obj):
-        return obj.user.username
-
     def get_original(self, obj):
         return obj.original_experiment.unique_name if obj.original_experiment else None
 
     def get_experiment_group(self, obj):
         return obj.experiment_group.unique_name if obj.experiment_group else None
-
-    def get_project(self, obj):
-        return obj.project.unique_name
 
 
 class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerMixin):
@@ -237,14 +233,18 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
 
 class ExperimentCreateSerializer(serializers.ModelSerializer,
                                  InClusterMixin,
-                                 NamesMixin):
+                                 NamesMixin,
+                                 ProjectMixin,
+                                 UserMixin):
     user = fields.SerializerMethodField()
+    project = fields.SerializerMethodField()
 
     class Meta:
         model = Experiment
         fields = (
             'id',
             'unique_name',
+            'project',
             'user',
             'name',
             'description',
@@ -261,9 +261,6 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
-
-    def get_user(self, obj):
-        return obj.user.username
 
     def validate_config(self, config):
         """We only validate the config if passed.

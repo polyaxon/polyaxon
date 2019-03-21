@@ -6,7 +6,9 @@ from rest_framework.exceptions import ValidationError
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.names import NamesMixin
+from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.user import UserMixin
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
 from db.models.jobs import Job
@@ -22,7 +24,7 @@ class BuildJobStatusSerializer(serializers.ModelSerializer):
         exclude = []
 
 
-class BuildJobSerializer(serializers.ModelSerializer):
+class BuildJobSerializer(serializers.ModelSerializer, ProjectMixin, UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
@@ -48,12 +50,6 @@ class BuildJobSerializer(serializers.ModelSerializer):
             'project',
             'backend',
         )
-
-    def get_user(self, obj):
-        return obj.user.username
-
-    def get_project(self, obj):
-        return obj.project.unique_name
 
 
 class BookmarkedBuildJobSerializer(BuildJobSerializer, BookmarkedSerializerMixin):
@@ -111,15 +107,26 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
 
 class BuildJobCreateSerializer(serializers.ModelSerializer,
                                InClusterMixin,
-                               NamesMixin):
+                               NamesMixin,
+                               ProjectMixin,
+                               UserMixin):
+    project = fields.SerializerMethodField()
     user = fields.SerializerMethodField()
 
     class Meta:
         model = BuildJob
-        fields = ('id', 'user', 'name', 'description', 'config', 'in_cluster', 'tags')
-
-    def get_user(self, obj: 'BuildJob'):
-        return obj.user.username
+        fields = (
+            'id',
+            'user',
+            'project',
+            'name',
+            'unique_name',
+            'description',
+            'config',
+            'in_cluster',
+            'tags',
+        )
+        extra_kwargs = {'unique_name': {'read_only': True}}
 
     def validate_config(self, config: Dict) -> Dict:
         """We only validate the config if passed.

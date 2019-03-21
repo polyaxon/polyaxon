@@ -6,7 +6,9 @@ from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
 from api.utils.serializers.in_cluster import InClusterMixin
 from api.utils.serializers.names import NamesMixin
+from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.user import UserMixin
 from db.models.jobs import Job, JobStatus
 from libs.spec_validation import validate_job_spec_config
 
@@ -20,7 +22,7 @@ class JobStatusSerializer(serializers.ModelSerializer):
         exclude = []
 
 
-class JobSerializer(serializers.ModelSerializer, BuildMixin):
+class JobSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin, UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
@@ -48,12 +50,6 @@ class JobSerializer(serializers.ModelSerializer, BuildMixin):
             'project',
             'build_job',
         )
-
-    def get_user(self, obj):
-        return obj.user.username
-
-    def get_project(self, obj):
-        return obj.project.unique_name
 
     def get_original(self, obj):
         return obj.original_job.unique_name if obj.original_job else None
@@ -106,23 +102,26 @@ class JobDetailSerializer(BookmarkedJobSerializer,
 
 class JobCreateSerializer(serializers.ModelSerializer,
                           InClusterMixin,
-                          NamesMixin):
+                          NamesMixin,
+                          ProjectMixin,
+                          UserMixin):
     user = fields.SerializerMethodField()
 
     class Meta:
         model = Job
         fields = (
             'id',
+            'unique_name',
             'user',
+            'project',
             'name',
             'description',
             'readme',
             'in_cluster',
             'data_refs',
-            'config',)
-
-    def get_user(self, obj):
-        return obj.user.username
+            'config',
+        )
+        extra_kwargs = {'unique_name': {'read_only': True}}
 
     def validate_config(self, config):
         """We only validate the config if passed.
