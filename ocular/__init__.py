@@ -4,6 +4,7 @@ import time
 from hestia.tz_utils import now
 from kubernetes import watch
 from kubernetes.client.rest import ApiException
+from urllib3.exceptions import RequestError
 
 from ocular.exceptions import OcularException
 from ocular.processor import get_pod_state
@@ -70,4 +71,6 @@ def monitor(k8s_api,
                 else:
                     yield pod_state
         except ApiException:
+            time.sleep(sleep_interval)
+        except RequestError:
             time.sleep(sleep_interval)
