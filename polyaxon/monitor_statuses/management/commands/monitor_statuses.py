@@ -26,7 +26,7 @@ class Command(BaseMonitorCommand):
             try:
                 monitor.run(k8s_manager)
             except ApiException as e:
-                monitor.logger.error(
+                monitor.logger.warning(
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n", e)
                 time.sleep(log_sleep_interval)
             except InterfaceError:
@@ -37,5 +37,6 @@ class Command(BaseMonitorCommand):
                 connection.close()
                 monitor.logger.warning(
                     "Database connection is already closed by peer, discard old connection\n")
+                time.sleep(log_sleep_interval)
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred %s\n", e)
