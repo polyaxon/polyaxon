@@ -35,6 +35,7 @@
     "@types/sanitize-html": "^1.18.2",
     "@types/showdown": "^1.7.5",
     "@types/sprintf-js": "0.0.27",
+    "@types/yup": "^0.26.12",
     "awesome-typescript-loader": "3.5.0",
     "bootstrap": "3.4.1",
     "css-loader": "0.28.11",
@@ -52,11 +53,13 @@
     "url-loader": "0.5.9",
     "webpack": "3.12.0",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.0.0"
+    "webpack-dev-server": "^3.0.0",
+    "yup": "^0.27.0"
   },
   "dependencies": {
     "@sentry/browser": "^4.6.4",
     "copy-to-clipboard": "^3.0.8",
+    "formik": "^1.5.1",
     "history": "4.7.2",
     "js-cookie": "2.2.0",
     "js-yaml": "^3.12.0",
@@ -80,7 +83,6 @@
     "redux-thunk": "2.3.0",
     "sanitize-html": "^1.19.1",
     "showdown": "^1.8.6",
-    "sprintf-js": "1.1.2",
-    "whatwg-fetch": "3.0.0"
+    "sprintf-js": "1.1.2"
   }
 }

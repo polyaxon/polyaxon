@@ -1,1 +1,1 @@
-export const NameSlug = 'The name can only contain letters, numbers, hyphens and underscores allowed.';
+export const NameSlug = 'The name can only contain letters, numbers, hyphens and underscores.';
