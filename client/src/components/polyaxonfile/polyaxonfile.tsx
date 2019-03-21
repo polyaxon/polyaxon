@@ -1,4 +1,8 @@
 import * as React from 'react';
+import AceEditor from 'react-ace';
+
+import 'brace/mode/yaml';
+import 'brace/theme/github';
 
 interface Props {
   content: string;
@@ -18,6 +22,10 @@ export default class Polyaxonfile extends React.Component<Props, State> {
     };
   }
 
+  public shouldComponentUpdate(nextProps: Props, nextState: State) {
+    return this.state.content === nextState.content;
+  }
+
   public handleValueChange = (content: string): void => {
     this.setState({content});
     this.props.handleChange(content);
@@ -25,9 +33,15 @@ export default class Polyaxonfile extends React.Component<Props, State> {
 
   public render() {
     return (
-      <textarea
+      <AceEditor
         className="form-control input-sm"
-        onChange={(event) => this.handleValueChange(event.target.value)}
+        mode="yaml"
+        theme="github"
+        onChange={this.handleValueChange}
+        name="UNIQUE_ID_OF_DIV"
+        value={this.state.content}
+        width="auto"
+        editorProps={{$blockScrolling: true}}
       />
     );
   }
