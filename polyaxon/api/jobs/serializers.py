@@ -106,6 +106,7 @@ class JobCreateSerializer(serializers.ModelSerializer,
                           ProjectMixin,
                           UserMixin):
     user = fields.SerializerMethodField()
+    project = fields.SerializerMethodField()
 
     class Meta:
         model = Job
