@@ -218,8 +218,7 @@ export function createProject(project: ProjectModel, redirect: boolean = false):
       .then((json) => {
         const dispatched = dispatch(receiveProjectActionCreator(json));
         if (redirect) {
-          const values = json.unique_name.split('.');
-          history.push(getProjectUrl(values[0], values[1], true));
+          history.push(getProjectUrlFromName(json.unique_name, true));
         }
         return dispatched;
       });

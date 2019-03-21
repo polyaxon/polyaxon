@@ -244,6 +244,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
         model = Experiment
         fields = (
             'id',
+            'unique_name',
             'user',
             'name',
             'description',
@@ -259,6 +260,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'data_refs',
             'tags',
         )
+        extra_kwargs = {'unique_name': {'read_only': True}}
 
     def get_user(self, obj):
         return obj.user.username

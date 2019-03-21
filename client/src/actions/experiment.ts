@@ -363,6 +363,35 @@ export function deleteExperiments(projectName: string, experimentIds: number[]):
   };
 }
 
+export function createExperiment(user: string,
+                                 projectName: string,
+                                 experiment: ExperimentModel,
+                                 redirect: boolean = false): any {
+  return (dispatch: any, getState: any) => {
+    // FIX ME: We need to add a first dispatch here so we show it to the user before
+    // sending it to the backend: dispatch(createProjectActionCreator(project))
+    return fetch(`${BASE_API_URL}/${user}/${projectName}/experiments`, {
+      method: 'POST',
+      body: JSON.stringify(experiment),
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+        'Authorization': 'token ' + getState().auth.token,
+        'X-CSRFToken': getState().auth.csrftoken
+      }
+    })
+      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => response.json())
+      .then((json) => {
+        const dispatched = dispatch(receiveExperimentActionCreator(json));
+        if (redirect) {
+          history.push(getExperimentUrlFromName( json.unique_name, true));
+        }
+        return dispatched;
+      });
+  };
+}
+
 export function updateExperiment(experimentName: string, updateDict: { [key: string]: any }): any {
   const experimentUrl = getExperimentUrlFromName(experimentName, false);
   return (dispatch: any, getState: any) => {

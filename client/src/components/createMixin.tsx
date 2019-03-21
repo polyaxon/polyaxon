@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { NameSlug } from '../constants/helpTexts';
 import MDEdit from './mdEditor/mdEdit';
+import Polyaxonfile from './polyaxonfile/polyaxonfile';
 import TagsEdit from './tags/tagsEdit';
 
 export interface BaseState {
@@ -35,6 +36,10 @@ export class CreateMixin<P extends {}, S extends BaseState = BaseState> extends 
 
   public handleNameChange = (name: string) => {
     this.update({name});
+  };
+
+  public handlePolyaxonfileChange = (polyaxonfile: string) => {
+    this.update({polyaxonfile});
   };
 
   public renderName = () => (
@@ -81,6 +86,18 @@ export class CreateMixin<P extends {}, S extends BaseState = BaseState> extends 
       <label className="col-sm-2 control-label">Tags</label>
       <div className="col-sm-10">
         <TagsEdit tags={[]} handleChange={this.handleTagsChange}/>
+      </div>
+    </div>
+  );
+
+  public renderConfig = () => (
+    <div className="form-group">
+      <label className="col-sm-2 control-label">Config</label>
+      <div className="col-sm-10">
+        <Polyaxonfile
+          content=""
+          handleChange={this.handlePolyaxonfileChange}
+        />
       </div>
     </div>
   );
