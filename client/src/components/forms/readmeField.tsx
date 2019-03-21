@@ -1,12 +1,16 @@
 import { Field, FieldProps } from 'formik';
 import * as React from 'react';
+import * as Yup from 'yup';
 
 import MDEdit from '../mdEditor/mdEdit';
 
-export const ReadmeComponent: React.FunctionComponent<FieldProps> = ({
-  field,
-  form,
-}) => (
+export const ReadmeSchema = Yup.string();
+
+export const ReadmeComponent: React.FunctionComponent<FieldProps> = (
+  {
+    field,
+    form,
+  }) => (
   <MDEdit
     content=""
     handleChange={(value: string) => form.setFieldValue(field.name, value)}

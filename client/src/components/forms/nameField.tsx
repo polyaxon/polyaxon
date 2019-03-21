@@ -11,7 +11,7 @@ export const NameSchema = Yup.string()
 
 function validateName(value: string) {
   let error;
-  if (!/^([-a-zA-Z0-9_]+)$/.test(value)) {
+  if (value && !/^([-a-zA-Z0-9_]+)$/.test(value)) {
     error = 'Name is not a valid slug.';
   }
   return error;

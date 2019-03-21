@@ -1,9 +1,16 @@
+import { Formik, FormikActions, FormikProps } from 'formik';
 import * as jsYaml from 'js-yaml';
 import * as React from 'react';
+import * as Yup from 'yup';
 
 import * as actions from '../../actions/experiment';
 import { ExperimentModel } from '../../models/experiment';
-import { BaseEmptyState, BaseState, CreateMixin } from '../createMixin';
+import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
+import { ConfigField, ConfigSchema } from '../forms/configField';
+import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
+import { NameField, NameSchema } from '../forms/nameField';
+import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
+import { TagsField } from '../forms/tagsField';
 
 export interface Props {
   user: string;
@@ -12,36 +19,31 @@ export interface Props {
 }
 
 export interface State extends BaseState {
-  polyaxonfile: string;
+  config: string;
 }
 
-const EmptyState = {...BaseEmptyState, polyaxonfile: ''};
+const EmptyState = {...BaseEmptyState, config: ''};
 
-export default class ExperimentCreate extends CreateMixin<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = EmptyState;
-  }
+const ValidationSchema = Yup.object().shape({
+  config: ConfigSchema.required('Required'),
+  name: NameSchema,
+  description: DescriptionSchema,
+  readme: ReadmeSchema,
+});
 
-  public update = (dict: { [key: string]: any }) => {
-    this.setState((prevState, prevProps) => ({
-      ...prevState,
-      ...dict
-    }));
+export default class ExperimentCreate extends React.Component<Props, {}> {
+
+  public getConfig = (config: string): { [key: string]: any } => {
+    return jsYaml.safeLoad(config);
   };
 
-  public getConfig = (polyaxonfile: string): { [key: string]: any } => {
-    return jsYaml.safeLoad(polyaxonfile);
-  };
-
-  public createProject = (event: any) => {
-    event.preventDefault();
+  public createExperiment = (state: State) => {
     this.props.onCreate({
-      tags: this.state.tags.map((v) => v.value),
-      readme: this.state.readme,
-      description: this.state.description,
-      name: this.state.name,
-      config: this.getConfig(this.state.polyaxonfile)
+      tags: state.tags.map((v) => v.value),
+      readme: state.readme,
+      description: state.description,
+      name: state.name,
+      config: this.getConfig(state.config)
     } as ExperimentModel);
   };
 
@@ -55,25 +57,34 @@ export default class ExperimentCreate extends CreateMixin<Props, State> {
         </div>
         <div className="row form-content">
           <div className="col-sm-offset-1 col-md-10">
-            <form className="form-horizontal" onSubmit={this.createProject}>
-              {this.renderConfig()}
-              {this.renderName()}
-              {this.renderDescription()}
-              {this.renderReadme()}
-              {this.renderTags()}
-              <div className="form-group form-actions">
-                <div className="col-sm-offset-2 col-sm-10">
-                  <button
-                    type="submit"
-                    className="btn btn-default btn-success"
-                    onClick={this.createProject}
-                  >
-                    Create experiment
-                  </button>
-                  <button type="submit" className="btn btn-default pull-right">cancel</button>
-                </div>
-              </div>
-            </form>
+            <Formik
+              initialValues={EmptyState}
+              validationSchema={ValidationSchema}
+              onSubmit={(fValues: State, fActions: FormikActions<State>) => {
+                this.createExperiment(fValues);
+              }}
+              render={(props: FormikProps<State>) => (
+                <form className="form-horizontal" onSubmit={props.handleSubmit}>
+                  {ConfigField(props)}
+                  {NameField(props)}
+                  {DescriptionField(props)}
+                  {ReadmeField}
+                  {TagsField}
+                  <div className="form-group form-actions">
+                    <div className="col-sm-offset-2 col-sm-10">
+                      <button
+                        type="submit"
+                        className="btn btn-default btn-success"
+                        disabled={props.isSubmitting}
+                      >
+                        Create experiment
+                      </button>
+                      <button type="submit" className="btn btn-default pull-right">cancel</button>
+                    </div>
+                  </div>
+                </form>
+              )}
+            />
           </div>
         </div>
       </>

@@ -1,23 +1,11 @@
 import * as React from 'react';
 
 import { NameSlug } from '../constants/helpTexts';
+import { BaseState } from './forms/baseCeationState';
 import MDEdit from './mdEditor/mdEdit';
 import Polyaxonfile from './polyaxonfile/polyaxonfile';
 import TagsEdit from './tags/tagsEdit';
 
-export interface BaseState {
-  tags: Array<{ label: string, value: string }>;
-  readme: string;
-  description: string;
-  name: string;
-}
-
-export const BaseEmptyState = {
-  tags: [],
-  readme: '',
-  description: '',
-  name: '',
-};
 
 export class CreateMixin<P extends {}, S extends BaseState = BaseState> extends React.Component<P, S> {
   public update = (dict: { [key: string]: any }): void => { return; };

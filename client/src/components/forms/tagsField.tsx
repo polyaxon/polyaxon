@@ -3,10 +3,11 @@ import * as React from 'react';
 
 import TagsEdit from '../tags/tagsEdit';
 
-export const TagsComponent: React.FunctionComponent<FieldProps> = ({
-  field,
-  form,
-}) => (
+export const TagsComponent: React.FunctionComponent<FieldProps> = (
+  {
+    field,
+    form,
+  }) => (
   <TagsEdit
     tags={[]}
     handleChange={(value: Array<{ label: string, value: string }>) => form.setFieldValue(field.name, value)}
