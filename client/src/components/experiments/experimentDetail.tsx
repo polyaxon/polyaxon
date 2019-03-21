@@ -21,10 +21,10 @@ import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
+import YamlText from '../editors/yamlText';
 import { EmptyList } from '../empty/emptyList';
 import ExperimentInstructions from '../instructions/experimentInstructions';
 import LinkedTab from '../linkedTab';
-import YamlText from '../yamlText';
 import ExperimentActions from './experimentActions';
 import ExperimentOverview from './experimentOverview';
 

@@ -11,10 +11,10 @@ import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { GroupModel } from '../../models/group';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
+import YamlText from '../editors/yamlText';
 import { EmptyList } from '../empty/emptyList';
 import GroupInstructions from '../instructions/groupInstructions';
 import LinkedTab from '../linkedTab';
-import YamlText from '../yamlText';
 import GroupActions from './groupActions';
 import GroupOverview from './groupOverview';
 

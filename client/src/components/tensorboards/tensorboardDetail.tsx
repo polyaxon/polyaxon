@@ -9,10 +9,10 @@ import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { TensorboardModel } from '../../models/tensorboard';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
+import YamlText from '../editors/yamlText';
 import { EmptyList } from '../empty/emptyList';
 import TensorboardInstructions from '../instructions/tensorboardInstructions';
 import LinkedTab from '../linkedTab';
-import YamlText from '../yamlText';
 import TensorboardActions from './tensorboardActions';
 import TensorboardOverview from './tensorboardOverview';
 

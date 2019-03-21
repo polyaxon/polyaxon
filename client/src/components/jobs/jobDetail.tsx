@@ -17,10 +17,10 @@ import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
+import YamlText from '../editors/yamlText';
 import { EmptyList } from '../empty/emptyList';
 import JobInstructions from '../instructions/jobInstructions';
 import LinkedTab from '../linkedTab';
-import YamlText from '../yamlText';
 import JobActions from './jobActions';
 import JobOverview from './jobOverview';
 

@@ -10,11 +10,11 @@ import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { BuildModel } from '../../models/build';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
+import DockerfileText from '../editors/dockerfileText';
+import YamlText from '../editors/yamlText';
 import { EmptyList } from '../empty/emptyList';
 import BuildInstructions from '../instructions/buildInstructions';
 import LinkedTab from '../linkedTab';
-import Text from '../text';
-import YamlText from '../yamlText';
 import BuildActions from './buildActions';
 import BuildOverview from './buildOverview';
 
@@ -93,7 +93,7 @@ export default class BuildDetail extends React.Component<Props, {}> {
                   relUrl: 'logs'
                 }, {
                   title: 'Dockerfile',
-                  component: <Text title="Dockerfile" text={build.dockerfile}/>,
+                  component: <DockerfileText title="Dockerfile" text={build.dockerfile}/>,
                   relUrl: 'dockerfile'
                 }, {
                   title: 'Statuses',

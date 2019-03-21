@@ -9,10 +9,10 @@ import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { NotebookModel } from '../../models/notebook';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
+import YamlText from '../editors/yamlText';
 import { EmptyList } from '../empty/emptyList';
 import NotebookInstructions from '../instructions/notebookInstructions';
 import LinkedTab from '../linkedTab';
-import YamlText from '../yamlText';
 import NotebookActions from './notebookActions';
 import NotebookOverview from './notebookOverview';
 
