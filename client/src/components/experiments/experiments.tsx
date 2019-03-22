@@ -388,7 +388,7 @@ export default class Experiments extends React.Component<Props, State> {
             <tr className="list-header">
               {this.props.useCheckbox &&
               <th className="block">
-                <input type="checkbox" checked={this.state.allItems} onClick={this.selectAll}/>
+                <input type="checkbox" checked={this.state.allItems} onChange={this.selectAll}/>
               </th>
               }
               <th className="block">
