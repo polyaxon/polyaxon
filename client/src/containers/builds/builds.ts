@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import Builds from '../../components/builds/builds';
@@ -8,7 +9,7 @@ import { isTrue } from '../../constants/utils';
 import { BuildModel } from '../../models/build';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import * as search_actions from '../../actions/search';
 import { SearchModel } from '../../models/search';
 
@@ -63,7 +64,7 @@ export interface DispatchProps {
   onStop: (buildName: string) => actions.BuildAction;
   onArchive: (buildName: string) => actions.BuildAction;
   onRestore: (buildName: string) => actions.BuildAction;
-  onUpdate?: (build: BuildModel) => actions.BuildAction;
+  onUpdate?: (buildName: string, build: BuildModel) => actions.BuildAction;
   bookmark?: (buildName: string) => actions.BuildAction;
   unbookmark?: (buildName: string) => actions.BuildAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.BuildAction;
@@ -72,33 +73,37 @@ export interface DispatchProps {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownProps: OwnProps): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, params: any): DispatchProps {
   return {
-    onCreate: (build: BuildModel) => dispatch(actions.createBuildActionCreator(build)),
+    onCreate: (build: BuildModel) => dispatch(actions.createBuild(
+      params.match.params.user,
+      params.match.params.projectName,
+      build,
+      true)),
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
     onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
     onArchive: (buildName: string) => dispatch(actions.archiveBuild(buildName)),
     onRestore: (buildName: string) => dispatch(actions.restoreBuild(buildName)),
     bookmark: (buildName: string) => dispatch(actions.bookmark(buildName)),
     unbookmark: (buildName: string) => dispatch(actions.unbookmark(buildName)),
-    onUpdate: (build: BuildModel) => dispatch(actions.updateBuildActionCreator(build)),
+    onUpdate: (buildName: string, build: BuildModel) => dispatch(actions.updateBuild(buildName, build)),
     fetchSearches: () => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.fetchBuildSearches(ownProps.projectName));
+      if (params.projectName) {
+        return dispatch(search_actions.fetchBuildSearches(params.projectName));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.createBuildSearch(ownProps.projectName, data));
+      if (params.projectName) {
+        return dispatch(search_actions.createBuildSearch(params.projectName, data));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.deleteBuildSearch(ownProps.projectName, searchId));
+      if (params.projectName) {
+        return dispatch(search_actions.deleteBuildSearch(params.projectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }
@@ -114,12 +119,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(ownProps.projectName) && ownProps.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedBuilds(ownProps.user, filters));
-      } else if (_.isNil(ownProps.projectName) && ownProps.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedBuilds(ownProps.user, filters));
-      } else if (ownProps.projectName) {
-        return dispatch(actions.fetchBuilds(ownProps.projectName, filters));
+      if (_.isNil(params.projectName) && params.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedBuilds(params.user, filters));
+      } else if (_.isNil(params.projectName) && params.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedBuilds(params.user, filters));
+      } else if (params.projectName) {
+        return dispatch(actions.fetchBuilds(params.projectName, filters));
       } else {
         throw new Error('Builds container expects either a project name or bookmarks or archives.');
       }
@@ -127,4 +132,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, ownP
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Builds);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Builds));

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/experimentJob';
+import * as actions from '../../actions/experimentJobs';
 import { ExperimentJobModel } from '../../models/experimentJob';
 import { isLive } from '../../utils/isLive';
 import { EmptyList } from '../empty/emptyList';
@@ -11,9 +11,6 @@ import ExperimentJobHeader from './experimentJobHeader';
 export interface Props {
   jobs: ExperimentJobModel[];
   count: number;
-  onCreate: (job: ExperimentJobModel) => actions.ExperimentJobAction;
-  onUpdate: (job: ExperimentJobModel) => actions.ExperimentJobAction;
-  onDelete: (job: ExperimentJobModel) => actions.ExperimentJobAction;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
 }
 
@@ -28,10 +25,7 @@ export default class ExperimentJobs extends React.Component<Props, {}> {
           ).map(
             (experimentJob: ExperimentJobModel) =>
               <li className="list-item" key={experimentJob.unique_name}>
-                <ExperimentJob
-                  experimentJob={experimentJob}
-                  onDelete={() => this.props.onDelete(experimentJob)}
-                />
+                <ExperimentJob experimentJob={experimentJob}/>
               </li>)}
         </ul>
       );

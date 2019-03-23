@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import { BuildModel } from '../../models/build';
 import { EmptyList } from '../empty/emptyList';
 import PaginatedTable from '../tables/paginatedTable';

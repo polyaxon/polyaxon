@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/tensorboard';
+import * as actions from '../../actions/tensorboards';
 import { isDone } from '../../constants/statuses';
 import { getProjectUrl, getTensorboardApiUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Statuses from '../../containers/statuses';

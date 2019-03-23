@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { normalize } from 'normalizr';
 import { Reducer } from 'redux';
 
-import { actionTypes, ExperimentAction } from '../actions/experiment';
+import { actionTypes, ExperimentAction } from '../actions/experiments';
 import { ExperimentSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { getExperimentIndexName } from '../constants/utils';
@@ -48,16 +48,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_EXPERIMENT:
-        return {
-          ...state,
-          byUniqueNames: {
-            ...state.byUniqueNames, [
-              getExperimentIndexName(action.experiment.unique_name)]: action.experiment
-          },
-          uniqueNames: [...state.uniqueNames, getExperimentIndexName(action.experiment.unique_name)]
-        };
-      case actionTypes.DELETE_EXPERIMENT:
+      case actionTypes.DELETE_EXPERIMENT_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -67,7 +58,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
             names: state.lastFetched.names.filter(
               (name) => name !== getExperimentIndexName(action.experimentName))},
         };
-      case actionTypes.DELETE_EXPERIMENTS:
+      case actionTypes.DELETE_EXPERIMENTS_SUCCESS:
         const experimentNames = action.experimentIds.map(
           (id: number) => action.projectName + '.' + id);
         return {
@@ -79,7 +70,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
             names: state.lastFetched.names.filter(
               (name) => experimentNames.indexOf(name) === -1)},
         };
-      case actionTypes.ARCHIVE_EXPERIMENT:
+      case actionTypes.ARCHIVE_EXPERIMENT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -88,7 +79,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: true}
           },
         };
-      case actionTypes.RESTORE_EXPERIMENT:
+      case actionTypes.RESTORE_EXPERIMENT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -97,7 +88,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: false}
           },
         };
-      case actionTypes.STOP_EXPERIMENT:
+      case actionTypes.STOP_EXPERIMENT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -106,7 +97,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], last_status: STOPPED}
           },
         };
-      case actionTypes.STOP_EXPERIMENTS:
+      case actionTypes.STOP_EXPERIMENTS_SUCCESS:
         const byUniqueNames = {...state.byUniqueNames};
         for (const exprimentId of action.experimentIds) {
           const experimentName = action.projectName + '.' + exprimentId;
@@ -119,7 +110,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
             ...byUniqueNames
           },
         };
-      case actionTypes.BOOKMARK_EXPERIMENT:
+      case actionTypes.BOOKMARK_EXPERIMENT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -128,7 +119,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: true}
           },
         };
-      case actionTypes.UNBOOKMARK_EXPERIMENT:
+      case actionTypes.UNBOOKMARK_EXPERIMENT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -137,7 +128,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: false}
           },
         };
-      case actionTypes.UPDATE_EXPERIMENT:
+      case actionTypes.UPDATE_EXPERIMENT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -145,7 +136,7 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               getExperimentIndexName(action.experiment.unique_name)]: setExperimentRelated(action.experiment)
           }
         };
-      case actionTypes.STOP_EXPERIMENT_TENSORBOARD:
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -154,17 +145,17 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
               ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], has_tensorboard: false}
           }
         };
-      case actionTypes.RECEIVE_EXPERIMENTS:
+      case actionTypes.FETCH_EXPERIMENTS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const experiment of action.experiments) {
           newState = processExperiment(experiment);
         }
         return newState;
-      case actionTypes.REQUEST_EXPERIMENTS:
+      case actionTypes.FETCH_EXPERIMENTS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_EXPERIMENT:
+      case actionTypes.GET_EXPERIMENT_SUCCESS:
         return processExperiment(action.experiment);
       default:
         return state;
@@ -195,7 +186,7 @@ export const ExperimentsParamsReducer: Reducer<ExperimentParamStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_EXPERIMENTS_PARAMS:
+      case actionTypes.FETCH_EXPERIMENTS_PARAMS_SUCCESS:
         for (const experiment of action.experiments) {
           newState = processExperiment(experiment);
         }
@@ -220,9 +211,9 @@ export const ProjectExperimentsReducer: Reducer<ProjectStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_EXPERIMENT:
+      case actionTypes.GET_EXPERIMENT_SUCCESS:
         return processExperiment(action.experiment);
-      case actionTypes.RECEIVE_EXPERIMENTS:
+      case actionTypes.FETCH_EXPERIMENTS_SUCCESS:
         for (const experiment of action.experiments) {
           newState = processExperiment(experiment);
         }
@@ -248,9 +239,9 @@ export const GroupExperimentsReducer: Reducer<GroupStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_EXPERIMENT:
+      case actionTypes.GET_EXPERIMENT_SUCCESS:
         return processExperiment(action.experiment);
-      case actionTypes.RECEIVE_EXPERIMENTS:
+      case actionTypes.FETCH_EXPERIMENTS_SUCCESS:
         for (const experiment of action.experiments) {
           newState = processExperiment(experiment);
         }

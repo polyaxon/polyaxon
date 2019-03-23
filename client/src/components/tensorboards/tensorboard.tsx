@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../../actions/tensorboard';
+import * as actions from '../../actions/tensorboards';
 import { isDone } from '../../constants/statuses';
 import {
   getBuildUrl,

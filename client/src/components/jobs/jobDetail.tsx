@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/job';
+import * as actions from '../../actions/jobs';
 import { isDone } from '../../constants/statuses';
 import {
   getJobUrl,

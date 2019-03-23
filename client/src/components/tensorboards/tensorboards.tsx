@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import * as search_actions from '../../actions/search';
-import * as actions from '../../actions/tensorboard';
+import * as actions from '../../actions/tensorboards';
 import { JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { SearchModel } from '../../models/search';
@@ -24,7 +24,6 @@ export interface Props {
   showBookmarks: boolean;
   showDeleted: boolean;
   endpointList: string;
-  onCreate: (tensorboard: TensorboardModel) => actions.TensorboardAction;
   onUpdate: (tensorboard: TensorboardModel) => actions.TensorboardAction;
   onDelete: (tensorboardName: string) => actions.TensorboardAction;
   onStop: (tensorboardName: string) => actions.TensorboardAction;

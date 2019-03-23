@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/project';
+import * as actions from '../../actions/projects';
 import { ProjectModel } from '../../models/project';
 import { BOOKMARKS } from '../../utils/endpointList';
 import { isLive } from '../../utils/isLive';

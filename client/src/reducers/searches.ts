@@ -29,12 +29,12 @@ export const searchesReducer: Reducer<SearchesStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.REQUEST_SEARCHES:
+      case actionTypes.FETCH_SEARCHES_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.RECEIVE_SEARCH:
+      case actionTypes.GET_SEARCH_SUCCESS_SUCCESS:
         return processSearch(action.search);
-      case actionTypes.DELETE_SEARCH:
+      case actionTypes.DELETE_SEARCH_SUCCESS:
         return {
           ...state,
           ids: state.ids.filter(
@@ -45,7 +45,7 @@ export const searchesReducer: Reducer<SearchesStateSchema> =
               (id) => id !== action.searchId)
           },
         };
-      case actionTypes.RECEIVE_SEARCHES:
+      case actionTypes.FETCH_SEARCHES_SUCCESS:
         newState.lastFetched = new LastFetchedIds();
         newState.lastFetched.count = action.count;
         for (const search of action.searches) {

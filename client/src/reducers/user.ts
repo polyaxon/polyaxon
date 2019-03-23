@@ -25,7 +25,7 @@ export const userReducer: Reducer<UserStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_USER:
+      case actionTypes.FETCH_USER_SUCCESS:
         return processUser(action.user);
       case actionTypes.DISCARD_USER:
         return {

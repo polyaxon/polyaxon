@@ -23,12 +23,12 @@ function GroupInstructions({id}: Props) {
               <h4>Filters</h4>
               <ul>
                 <li>
-                  <a href="https://docs.polyaxon.com/query_syntax/introduction//">
+                  <a href="https://docs.polyaxon.com/references/polyaxon-query-syntax//">
                     Understanding the query syntax
                   </a>
                 </li>
                 <li>
-                  <a href="https://docs.polyaxon.com/query_syntax/entities/experiments/">
+                  <a href="https://docs.polyaxon.com/references/polyaxon-query-syntax/experiments/">
                     Searching Experiments
                   </a>
                 </li>

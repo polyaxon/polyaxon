@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { normalize } from 'normalizr';
 import { Reducer } from 'redux';
 
-import { actionTypes, GroupAction } from '../actions/group';
+import { actionTypes, GroupAction } from '../actions/groups';
 import { GroupSchema } from '../constants/schemas';
 import { STOPPING } from '../constants/statuses';
 import { GroupModel, GroupsEmptyState, GroupStateSchema } from '../models/group';
@@ -41,13 +41,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_GROUP:
-        return {
-          ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: action.group},
-          uniqueNames: [...state.uniqueNames, action.group.unique_name]
-        };
-      case actionTypes.DELETE_GROUP:
+      case actionTypes.DELETE_GROUP_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -57,7 +51,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             names: state.lastFetched.names.filter((name) => name !== action.groupName)
           },
         };
-      case actionTypes.ARCHIVE_GROUP:
+      case actionTypes.ARCHIVE_GROUP_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -67,7 +61,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
-      case actionTypes.RESTORE_GROUP:
+      case actionTypes.RESTORE_GROUP_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -77,7 +71,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
-      case actionTypes.STOP_GROUP:
+      case actionTypes.STOP_GROUP_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -87,7 +81,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
-      case actionTypes.BOOKMARK_GROUP:
+      case actionTypes.BOOKMARK_GROUP_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -97,7 +91,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
-      case actionTypes.UNBOOKMARK_GROUP:
+      case actionTypes.UNBOOKMARK_GROUP_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -107,7 +101,7 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
-      case actionTypes.STOP_GROUP_TENSORBOARD:
+      case actionTypes.STOP_GROUP_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -117,22 +111,22 @@ export const groupsReducer: Reducer<GroupStateSchema> =
             }
           },
         };
-      case actionTypes.UPDATE_GROUP:
+      case actionTypes.UPDATE_GROUP_SUCCESS:
         return {
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.group.unique_name]: setGroupRelated(action.group)}
         };
-      case actionTypes.REQUEST_GROUPS:
+      case actionTypes.FETCH_GROUPS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_GROUPS:
+      case actionTypes.FETCH_GROUPS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const group of action.groups) {
           newState = processGroup(group);
         }
         return newState;
-      case actionTypes.RECEIVE_GROUP:
+      case actionTypes.GET_GROUP_SUCCESS:
         return processGroup(action.group);
       default:
         return state;
@@ -153,9 +147,9 @@ export const ProjectGroupsReducer: Reducer<ProjectStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_GROUP:
+      case actionTypes.GET_GROUP_SUCCESS:
         return processGroup(action.group);
-      case actionTypes.RECEIVE_GROUPS:
+      case actionTypes.FETCH_GROUPS_SUCCESS:
         for (const experiment of action.groups) {
           newState = processGroup(experiment);
         }

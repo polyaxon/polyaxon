@@ -5,32 +5,35 @@ import { BASE_API_URL } from '../constants/api';
 import { TokenModel } from '../models/token';
 
 export enum actionTypes {
-  FETCH_TOKEN = 'FETCH_TOKEN',
-  RECEIVE_TOKEN = 'RECEIVE_TOKEN',
+  FETCH_TOKEN_REQUEST = 'FETCH_TOKEN_REQUEST',
+  FETCH_TOKEN_SUCCESS = 'FETCH_TOKEN_SUCCESS',
+  FETCH_TOKEN_ERROR = 'FETCH_TOKEN_ERROR',
   DISCARD_TOKEN = 'DISCARD_TOKEN',
 }
 
-export interface FetchTokenAction extends Action {
-  type: actionTypes.FETCH_TOKEN;
+export interface FetchTokenRequestAction extends Action {
+  type: actionTypes.FETCH_TOKEN_REQUEST;
   username: string;
   password: string;
 }
 
-export interface ReceiveTokenAction extends Action {
-  type: actionTypes.RECEIVE_TOKEN;
+export interface FetchTokenSuccessAction extends Action {
+  type: actionTypes.FETCH_TOKEN_SUCCESS;
   username: string;
   token: TokenModel;
+}
+
+export interface FetchTokenErrorAction extends Action {
+  type: actionTypes.FETCH_TOKEN_ERROR;
 }
 
 export interface DiscardTokenAction extends Action {
   type: actionTypes.DISCARD_TOKEN;
 }
 
-export type TokenAction = FetchTokenAction | DiscardTokenAction | ReceiveTokenAction;
-
-export function receiveTokenActionCreator(username: string, token: TokenModel): ReceiveTokenAction {
+export function fetchTokenSuccessActionCreator(username: string, token: TokenModel): FetchTokenSuccessAction {
   return {
-    type: actionTypes.RECEIVE_TOKEN,
+    type: actionTypes.FETCH_TOKEN_SUCCESS,
     username,
     token
   };
@@ -41,6 +44,12 @@ export function discardTokenActionCreator(): DiscardTokenAction {
     type: actionTypes.DISCARD_TOKEN,
   };
 }
+
+export type TokenAction =
+  FetchTokenRequestAction
+  | FetchTokenSuccessAction
+  | FetchTokenErrorAction
+  | DiscardTokenAction ;
 
 export function logout(): any {
   function handleErrors(response: any) {
@@ -95,7 +104,7 @@ export function fetchToken(username: string, password: string): any {
     })
       .then(handleErrors)
       .then((response) => response.json())
-      .then((json) => dispatch(receiveTokenActionCreator(username, json)))
+      .then((json) => dispatch(fetchTokenSuccessActionCreator(username, json)))
       .then(() => dispatch(fetchUser()));
   };
 }

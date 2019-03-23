@@ -4,50 +4,67 @@ import * as url from 'url';
 import { BASE_API_URL } from '../constants/api';
 import {
   getProjectUrl,
-  handleAuthError
 } from '../constants/utils';
 import history from '../history';
 import { ActivityLogModel } from '../models/activitylog';
+import { stdHandleError } from './utils';
 
 export enum actionTypes {
-  RECEIVE_ACTIVITY_LOGS = 'RECEIVE_ACTIVITY_LOGS',
-  REQUEST_ACTIVITY_LOGS = 'REQUEST_ACTIVITY_LOGS',
+  FETCH_ACTIVITY_LOGS_REQUEST = 'FETCH_ACTIVITY_LOGS_REQUEST',
+  FETCH_ACTIVITY_LOGS_SUCCESS = 'FETCH_ACTIVITY_LOGS_SUCCESS',
+  FETCH_ACTIVITY_LOGS_FAILURE = 'FETCH_ACTIVITY_LOGS_FAILURE',
 }
 
-export interface ReceiveActivityLogsAction extends Action {
-  type: actionTypes.RECEIVE_ACTIVITY_LOGS;
+export interface FetchActivityLogsSuccessAction extends Action {
+  type: actionTypes.FETCH_ACTIVITY_LOGS_SUCCESS;
   activityLogs: ActivityLogModel[];
   count: number;
 }
 
-export interface RequestActivityLogsAction extends Action {
-  type: actionTypes.REQUEST_ACTIVITY_LOGS;
+export interface FetchActivityLogsRequestAction extends Action {
+  type: actionTypes.FETCH_ACTIVITY_LOGS_REQUEST;
 }
 
-export type ActivityLogAction =
-  | ReceiveActivityLogsAction
-  | RequestActivityLogsAction;
-
-export function requestActivityLogsActionCreator(): RequestActivityLogsAction {
-  return {
-    type: actionTypes.REQUEST_ACTIVITY_LOGS,
-  };
+export interface FetchActivityLogsFailureAction extends Action {
+  type: actionTypes.FETCH_ACTIVITY_LOGS_FAILURE;
+  statusCode: number;
+  error: any;
 }
 
-export function receiveActivityLogsActionCreator(activityLogs: ActivityLogModel[],
-                                                 count: number): ReceiveActivityLogsAction {
+export function fetchActivityLogsSuccessActionCreator(activityLogs: ActivityLogModel[],
+                                                      count: number): FetchActivityLogsSuccessAction {
   return {
-    type: actionTypes.RECEIVE_ACTIVITY_LOGS,
+    type: actionTypes.FETCH_ACTIVITY_LOGS_SUCCESS,
     activityLogs,
     count
   };
 }
 
+export function fetchActivityLogsRequestActionCreator(): FetchActivityLogsRequestAction {
+  return {
+    type: actionTypes.FETCH_ACTIVITY_LOGS_REQUEST,
+  };
+}
+
+export function fetchActivityLogsFailureActionCreator(statusCode: number, error: any): FetchActivityLogsFailureAction {
+  return {
+    type: actionTypes.FETCH_ACTIVITY_LOGS_FAILURE,
+    statusCode,
+    error
+  };
+}
+
+export type ActivityLogAction =
+  | FetchActivityLogsSuccessAction
+  | FetchActivityLogsRequestAction
+  | FetchActivityLogsFailureAction;
+
 function _fetchActivityLogs(activityLogsUrl: string,
                             filters: { [key: string]: number | boolean | string } = {},
                             dispatch: any,
                             getState: any): any {
-  dispatch(requestActivityLogsActionCreator());
+  dispatch(fetchActivityLogsRequestActionCreator());
+
   const urlPieces = location.hash.split('?');
   const baseUrl = urlPieces[0];
   if (Object.keys(filters).length) {
@@ -64,9 +81,14 @@ function _fetchActivityLogs(activityLogsUrl: string,
         Authorization: 'token ' + getState().auth.token
       }
     })
-    .then((response) => handleAuthError(response, dispatch))
+    .then((response) => stdHandleError(
+        response,
+        dispatch,
+        fetchActivityLogsFailureActionCreator,
+        'Activities not found',
+        'Failed to fetch activities'))
     .then((response) => response.json())
-    .then((json) => dispatch(receiveActivityLogsActionCreator(json.results, json.count)));
+    .then((json) => dispatch(fetchActivityLogsSuccessActionCreator(json.results, json.count)));
 }
 
 export function fetchActivityLogs(filters: { [key: string]: number | boolean | string } = {}): any {
@@ -87,7 +109,7 @@ export function fetchProjectActivityLogs(user: string,
                                          projectName: string,
                                          filters: { [key: string]: number | boolean | string } = {}): any {
   return (dispatch: any, getState: any) => {
-    const activityLogsUrl = `${BASE_API_URL}/activitylogs/${getProjectUrl(user, projectName, false)}`;
+    const activityLogsUrl = `${BASE_API_URL}/activitylogs${getProjectUrl(user, projectName, false)}`;
     return _fetchActivityLogs(activityLogsUrl, filters, dispatch, getState);
   };
 }

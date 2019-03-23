@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import { AppState } from '../../constants/types';
 
-import * as actions from '../../actions/tensorboard';
+import * as actions from '../../actions/tensorboards';
 import TensorboardDetail from '../../components/tensorboards/tensorboardDetail';
 import { getTensorboardUniqueName } from '../../constants/utils';
 

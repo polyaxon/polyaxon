@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Collapse } from 'react-bootstrap';
 
 import * as codeRefActions from '../../actions/codeReference';
-import * as actions from '../../actions/experiment';
+import * as actions from '../../actions/experiments';
 import { getExperimentTensorboardUrl } from '../../constants/utils';
 import CodeReference from '../../containers/codeReference';
 import { ExperimentModel } from '../../models/experiment';

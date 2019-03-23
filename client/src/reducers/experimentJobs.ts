@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
-import { actionTypes, ExperimentJobAction } from '../actions/experimentJob';
+import { actionTypes, ExperimentJobAction } from '../actions/experimentJobs';
 import { JobSchema } from '../constants/schemas';
 import { getExperimentIndexName, getExperimentJobIndexName } from '../constants/utils';
 import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
@@ -30,49 +30,17 @@ export const ExperimentJobsReducer: Reducer<ExperimentJobStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_EXPERIMENT_JOB:
-        return {
-          ...state,
-          byUniqueNames: {
-            ...state.byUniqueNames,
-            [getExperimentJobIndexName(action.job.unique_name)]: action.job
-          },
-          uniqueNames: [
-            ...state.uniqueNames,
-            getExperimentJobIndexName(action.job.unique_name)
-          ]
-        };
-      case actionTypes.DELETE_EXPERIMENT_JOB:
-        return {
-          ...state,
-          byUniqueNames: {
-            ...state.byUniqueNames, [
-              getExperimentJobIndexName(action.job.unique_name)]: {
-              ...state.byUniqueNames[getExperimentJobIndexName(action.job.unique_name)],
-              deleted: true
-            }
-          },
-          uniqueNames: state.uniqueNames.filter(
-            (name) => name !== getExperimentJobIndexName(action.job.unique_name)),
-        };
-      case actionTypes.UPDATE_EXPERIMENT_JOB:
-        return {
-          ...state,
-          byUniqueNames: {
-            ...state.byUniqueNames,
-            [getExperimentJobIndexName(action.job.unique_name)]: action.job}
-        };
-      case actionTypes.REQUEST_EXPERIMENT_JOBS:
+      case actionTypes.FETCH_EXPERIMENT_JOBS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_EXPERIMENT_JOBS:
+      case actionTypes.FETCH_EXPERIMENT_JOBS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const job of action.jobs) {
           newState = processJob(job);
         }
         return newState;
-      case actionTypes.RECEIVE_EXPERIMENT_JOB:
+      case actionTypes.GET_EXPERIMENT_JOB_SUCCESS:
         return processJob(action.job);
       default:
         return state;
@@ -94,9 +62,9 @@ export const ExperimentJobExperimentsReducer: Reducer<ExperimentStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_EXPERIMENT_JOB:
+      case actionTypes.GET_EXPERIMENT_JOB_SUCCESS:
         return processJob(action.job);
-      case actionTypes.RECEIVE_EXPERIMENT_JOBS:
+      case actionTypes.FETCH_EXPERIMENT_JOBS_SUCCESS:
         for (const job of action.jobs) {
           newState = processJob(job);
         }

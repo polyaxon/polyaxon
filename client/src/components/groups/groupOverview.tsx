@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/group';
+import * as actions from '../../actions/groups';
 import { getGroupTensorboardUrl } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
 import Description from '../description';

@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/tensorboard';
+import * as actions from '../../actions/tensorboards';
 import { splitUniqueName } from '../../constants/utils';
 import { TensorboardModel } from '../../models/tensorboard';
 import Description from '../description';

@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 
-import * as actions from '../../actions/experiment';
-import * as groupActions from '../../actions/group';
+import * as actions from '../../actions/experiments';
+import * as groupActions from '../../actions/groups';
 import * as searchActions from '../../actions/search';
 import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { NameSlug } from '../../constants/helpTexts';

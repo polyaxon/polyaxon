@@ -4,7 +4,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import { receiveTokenActionCreator } from './actions/token';
+import { fetchTokenSuccessActionCreator } from './actions/token';
 import { getToken } from './constants/utils';
 // import { AppState } from './constants/types';
 import { loadState, saveState, setLocalUser } from './localStorage';
@@ -31,7 +31,7 @@ const configureStore = () => {
 
   const token = getToken();
   if (token !== null) {
-    store.dispatch(receiveTokenActionCreator(token.user, token));
+    store.dispatch(fetchTokenSuccessActionCreator(token.user, token));
   }
 
   store.subscribe(_.throttle(() => {

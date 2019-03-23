@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
-import { actionTypes, MetricsAction } from '../actions/metrics';
+import { actionTypes, ChartViewsAction } from '../actions/chartViews';
 import { chartViewSchema } from '../constants/schemas';
 import {
   ChartViewEmptyState,
@@ -13,7 +13,7 @@ import {
 import { LastFetchedIds } from '../models/utils';
 
 export const chartViewsReducer: Reducer<ChartViewStateSchema> =
-  (state: ChartViewStateSchema = ChartViewEmptyState, action: MetricsAction) => {
+  (state: ChartViewStateSchema = ChartViewEmptyState, action: ChartViewsAction) => {
     let newState = {...state};
 
     const processChartView = (chartView: ChartViewModel) => {
@@ -29,12 +29,12 @@ export const chartViewsReducer: Reducer<ChartViewStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.REQUEST_CHART_VIEWS:
+      case actionTypes.FETCH_CHART_VIEWS_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.RECEIVE_CHART_VIEW:
+      case actionTypes.GET_CHART_VIEW_SUCCESS:
         return processChartView(action.chartView);
-      case actionTypes.DELETE_CHART_VIEW:
+      case actionTypes.DELETE_CHART_VIEW_SUCCESS:
         return {
           ...state,
           ids: state.ids.filter(
@@ -45,7 +45,7 @@ export const chartViewsReducer: Reducer<ChartViewStateSchema> =
               (id) => id !== action.viewId)
           },
         };
-      case actionTypes.RECEIVE_CHART_VIEWS:
+      case actionTypes.FETCH_CHART_VIEWS_SUCCESS:
         newState.lastFetched = new LastFetchedIds();
         newState.lastFetched.count = action.count;
         for (const search of action.chartViews) {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../../actions/group';
+import * as actions from '../../actions/groups';
 import { isDone } from '../../constants/statuses';
 import { getGroupUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';

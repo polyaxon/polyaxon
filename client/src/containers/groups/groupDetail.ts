@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../../actions/group';
+import * as actions from '../../actions/groups';
 import GroupDetail from '../../components/groups/groupDetail';
 import { AppState } from '../../constants/types';
 import { getGroupUniqueName } from '../../constants/utils';

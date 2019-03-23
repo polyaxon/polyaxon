@@ -251,7 +251,7 @@ export default class FilterList extends React.Component<Props, State> {
                             <p className="filter-desc">{filterOption.desc}</p>
                           </MenuItem>
                       )}
-                      <MenuItem href="https://docs.polyaxon.com/query_syntax/introduction" target="_blank">
+                      <MenuItem href="https://docs.polyaxon.com/references/polyaxon-query-syntax/" target="_blank">
                         <i className="fas fa-external-link-alt icon" aria-hidden="true"/> View advanced search syntax
                       </MenuItem>
                     </Dropdown.Menu>

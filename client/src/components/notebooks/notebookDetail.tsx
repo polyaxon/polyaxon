@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/notebook';
+import * as actions from '../../actions/notebooks';
 import { isDone } from '../../constants/statuses';
 import { getNotebookApiUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Statuses from '../../containers/statuses';

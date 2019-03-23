@@ -7,7 +7,7 @@ export const outputsReducer: Reducer<OutputsModel> =
   (state: OutputsModel = OutputsEmptyState, action: OutputsAction) => {
     switch (action.type) {
 
-      case actionTypes.REQUEST_OUTPUTS_TREE:
+      case actionTypes.FETCH_OUTPUTS_TREE_REQUEST:
         let reqOutputsNode: OutputsNode;
         let reqOutputsFiles: { [key: string]: string };
         if (!action.path) {
@@ -22,14 +22,14 @@ export const outputsReducer: Reducer<OutputsModel> =
         } else {
           return state;
         }
-      case actionTypes.RECEIVE_OUTPUTS_FILE:
+      case actionTypes.FETCH_OUTPUTS_FILE_SUCCESS:
         const newFiles: { [key: string]: string } = {};
         newFiles[action.path] = action.outputsFile;
         return {
           ...state,
           outputsFiles: {...state.outputsFiles, ...newFiles}
         };
-      case actionTypes.RECEIVE_OUTPUTS_TREE:
+      case actionTypes.FETCH_OUTPUTS_TREE_SUCCESS:
         let outputsNode: OutputsNode;
         let outputsFiles: { [key: string]: string };
         if (!action.path) {

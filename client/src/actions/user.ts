@@ -6,25 +6,49 @@ import { getToken } from '../constants/utils';
 import { UserModel } from '../models/user';
 
 export enum actionTypes {
-  RECEIVE_USER = 'RECEIVE_USER',
+  FETCH_USER_REQUEST = 'FETCH_USER_REQUEST',
+  FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS',
+  FETCH_USER_ERROR = 'FETCH_USER_ERROR',
   DISCARD_USER = 'DISCARD_USER',
 }
 
-export interface ReceiveUserAction extends Action {
-  type: actionTypes.RECEIVE_USER;
+export interface FetchUserRequestAction extends Action {
+  type: actionTypes.FETCH_USER_REQUEST;
+}
+
+export interface FetchUserSuccessAction extends Action {
+  type: actionTypes.FETCH_USER_SUCCESS;
   user: UserModel;
+}
+
+export interface FetchUserErrorAction extends Action {
+  type: actionTypes.FETCH_USER_ERROR;
+  statusCode: number;
+  error: any;
 }
 
 export interface DiscardUserAction extends Action {
   type: actionTypes.DISCARD_USER;
 }
 
-export type UserAction = DiscardUserAction | ReceiveUserAction;
-
-export function receiveUserActionCreator(user: UserModel): ReceiveUserAction {
+export function fetchUserRequestActionCreator(): FetchUserRequestAction {
   return {
-    type: actionTypes.RECEIVE_USER,
+    type: actionTypes.FETCH_USER_REQUEST,
+  };
+}
+
+export function fetchUserSuccessActionCreator(user: UserModel): FetchUserSuccessAction {
+  return {
+    type: actionTypes.FETCH_USER_SUCCESS,
     user
+  };
+}
+
+export function fetchUserErrorActionCreator(statusCode: number, error: any): FetchUserErrorAction {
+  return {
+    type: actionTypes.FETCH_USER_ERROR,
+    statusCode,
+    error
   };
 }
 
@@ -34,9 +58,16 @@ export function discardUserActionCreator(): DiscardUserAction {
   };
 }
 
+export type UserAction =
+  DiscardUserAction
+  | FetchUserRequestAction
+  | FetchUserSuccessAction
+  | FetchUserErrorAction;
+
 export function fetchUser(): any {
   function handleAuthError(response: any, dispatch: any) {
     if (!response.ok) {
+      dispatch(fetchUserErrorActionCreator(response.status, response.statusText));
       dispatch(discardToken());
       return Promise.reject(response.statusText);
     }
@@ -44,6 +75,8 @@ export function fetchUser(): any {
   }
 
   return (dispatch: any) => {
+    dispatch(fetchUserRequestActionCreator());
+
     const token = getToken();
     if (token === null) {
       return dispatch(discardToken());
@@ -60,8 +93,8 @@ export function fetchUser(): any {
       .then((response) => handleAuthError(response, dispatch))
       .then((response) => response.json())
       .then((json) =>
-        new Promise(function(resolve: any, reject: any) {
-          dispatch(receiveUserActionCreator(json));
+        new Promise(function (resolve: any, reject: any) {
+          dispatch(fetchUserSuccessActionCreator(json));
           resolve();
         }))
       .catch((error) => undefined);
@@ -70,7 +103,7 @@ export function fetchUser(): any {
 
 export function discardUser(): any {
   return (dispatch: any) =>
-    new Promise(function(resolve: any, reject: any) {
+    new Promise(function (resolve: any, reject: any) {
       dispatch(discardUserActionCreator());
       resolve();
     });

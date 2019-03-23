@@ -26,10 +26,10 @@ export const StatusesReducer: Reducer<StatusStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.REQUEST_STATUSES:
+      case actionTypes.FETCH_STATUSES_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.RECEIVE_STATUSES:
+      case actionTypes.FETCH_STATUSES_SUCCESS:
         newState.lastFetched = new LastFetchedIds();
         newState.lastFetched.count = action.count;
         for (const build of action.statuses) {

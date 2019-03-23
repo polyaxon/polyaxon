@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import * as modalActions from '../../actions/modal';
-import * as actions from '../../actions/project';
+import * as actions from '../../actions/projects';
 import Projects from '../../components/projects/projects';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
@@ -74,7 +74,7 @@ export function mapDispatchToProps(
     onRestore: (projectName: string) => dispatch(actions.restoreProject(projectName)),
     bookmark: (projectName: string) => dispatch(actions.bookmark(projectName)),
     unbookmark: (projectName: string) => dispatch(actions.unbookmark(projectName)),
-    onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectActionCreator(project)),
+    onUpdate: (project: ProjectModel) => dispatch(actions.updateProjectSuccessActionCreator(project)),
     fetchData: (offset?: number) => {
       const filters: { [key: string]: number | boolean | string } = {};
       if (offset) {

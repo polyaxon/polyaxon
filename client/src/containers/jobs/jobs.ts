@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import Jobs from '../../components/jobs/jobs';
@@ -7,7 +8,7 @@ import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { JobModel } from '../../models/job';
 
-import * as actions from '../../actions/job';
+import * as actions from '../../actions/jobs';
 import * as search_actions from '../../actions/search';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
@@ -74,33 +75,37 @@ export interface DispatchProps {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownProps: OwnProps): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
   return {
-    onCreate: (job: JobModel) => dispatch(actions.createJobActionCreator(job)),
+    onCreate: (job: JobModel) => dispatch(actions.createJob(
+      params.match.params.user,
+      params.match.params.projectName,
+      job,
+      true)),
     onDelete: (jobName: string) => dispatch(actions.deleteJob(jobName)),
     onStop: (jobName: string) => dispatch(actions.stopJob(jobName)),
     onArchive: (jobName: string) => dispatch(actions.archiveJob(jobName)),
     onRestore: (jobName: string) => dispatch(actions.restoreJob(jobName)),
     bookmark: (jobName: string) => dispatch(actions.bookmark(jobName)),
     unbookmark: (jobName: string) => dispatch(actions.unbookmark(jobName)),
-    onUpdate: (job: JobModel) => dispatch(actions.updateJobActionCreator(job)),
+    onUpdate: (job: JobModel) => dispatch(actions.updateJobSuccessActionCreator(job)),
     fetchSearches: () => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.fetchJobSearches(ownProps.projectName));
+      if (params.projectName) {
+        return dispatch(search_actions.fetchJobSearches(params.projectName));
       } else {
         throw new Error('Jobs container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.createJobSearch(ownProps.projectName, data));
+      if (params.projectName) {
+        return dispatch(search_actions.createJobSearch(params.projectName, data));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.deleteJobSearch(ownProps.projectName, searchId));
+      if (params.projectName) {
+        return dispatch(search_actions.deleteJobSearch(params.projectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }
@@ -116,12 +121,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownPro
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(ownProps.projectName) && ownProps.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedJobs(ownProps.user, filters));
-      } else if (_.isNil(ownProps.projectName) && ownProps.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedJobs(ownProps.user, filters));
-      } else if (ownProps.projectName) {
-        return dispatch(actions.fetchJobs(ownProps.projectName, filters));
+      if (_.isNil(params.projectName) && params.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedJobs(params.user, filters));
+      } else if (_.isNil(params.projectName) && params.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedJobs(params.user, filters));
+      } else if (params.projectName) {
+        return dispatch(actions.fetchJobs(params.projectName, filters));
       } else {
         throw new Error('Jobs container expects either a project name or bookmarks or archives.');
       }
@@ -129,4 +134,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, ownPro
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Jobs);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Jobs));

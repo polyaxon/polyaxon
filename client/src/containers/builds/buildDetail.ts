@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import { AppState } from '../../constants/types';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import BuildDetail from '../../components/builds/buildDetail';
 import { getBuildUniqueName } from '../../constants/utils';
 
@@ -58,7 +58,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
       params.match.params.user,
       params.match.params.projectName,
       params.match.params.buildId),
-      true)),
+                                                   true)),
     onRestore: () => dispatch(actions.restoreBuild(getBuildUniqueName(
       params.match.params.user,
       params.match.params.projectName,

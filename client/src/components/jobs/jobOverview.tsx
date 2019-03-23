@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/job';
+import * as actions from '../../actions/jobs';
 import { JobModel } from '../../models/job';
 import { getJobCloning } from '../../utils/cloning';
 import Description from '../description';

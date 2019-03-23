@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/group';
+import * as actions from '../../actions/groups';
 import * as search_actions from '../../actions/search';
 import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';

@@ -6,7 +6,7 @@ import { AppState } from '../../constants/types';
 import { getExperimentIndexName } from '../../constants/utils';
 import { ExperimentJobModel } from '../../models/experimentJob';
 
-import * as actions from '../../actions/experimentJob';
+import * as actions from '../../actions/experimentJobs';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useFilter = () => {
@@ -37,17 +37,11 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  onCreate?: (job: ExperimentJobModel) => actions.ExperimentJobAction;
-  onDelete?: (job: ExperimentJobModel) => actions.ExperimentJobAction;
-  onUpdate?: (job: ExperimentJobModel) => actions.ExperimentJobAction;
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobAction>, params: any): DispatchProps {
   return {
-    onCreate: (job: ExperimentJobModel) => dispatch(actions.createExperimentJobActionCreator(job)),
-    onDelete: (job: ExperimentJobModel) => dispatch(actions.deleteExperimentJobActionCreator(job)),
-    onUpdate: (job: ExperimentJobModel) => dispatch(actions.updateExperimentJobActionCreator(job)),
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: { [key: string]: number | boolean | string } = {};
       if (query) {

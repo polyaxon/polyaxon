@@ -7,7 +7,7 @@ export const healthStatusReducer: Reducer<HealthStatusStateSchema> =
   (state: HealthStatusStateSchema = HealthStatusEmptyState, action: HealthStatusAction) => {
 
     switch (action.type) {
-      case actionTypes.RECEIVE_HEALTH_STATUS:
+      case actionTypes.FETCH_HEALTH_STATUS_SUCCESS:
         return {
           ...state,
           status: action.status,

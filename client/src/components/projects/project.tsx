@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../../actions/project';
+import * as actions from '../../actions/projects';
 import { getProjectUrl } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ProjectModel } from '../../models/project';

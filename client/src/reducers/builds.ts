@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
-import { actionTypes, BuildAction } from '../actions/build';
+import { actionTypes, BuildAction } from '../actions/builds';
 import { BuildSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { BuildModel, BuildsEmptyState, BuildStateSchema } from '../models/build';
@@ -33,13 +33,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_BUILD:
-        return {
-          ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.build.unique_name]: action.build},
-          uniqueNames: [...state.uniqueNames, action.build.unique_name]
-        };
-      case actionTypes.DELETE_BUILD:
+      case actionTypes.DELETE_BUILD_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -49,7 +43,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
             names: state.lastFetched.names.filter((name) => name !== action.buildName)
           },
         };
-      case actionTypes.ARCHIVE_BUILD:
+      case actionTypes.ARCHIVE_BUILD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -59,7 +53,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
             }
           },
         };
-      case actionTypes.RESTORE_BUILD:
+      case actionTypes.RESTORE_BUILD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -69,7 +63,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
             }
           },
         };
-      case actionTypes.STOP_BUILD:
+      case actionTypes.STOP_BUILD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -79,7 +73,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
             }
           },
         };
-      case actionTypes.BOOKMARK_BUILD:
+      case actionTypes.BOOKMARK_BUILD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -89,7 +83,7 @@ export const buildsReducer: Reducer<BuildStateSchema> =
             }
           },
         };
-      case actionTypes.UNBOOKMARK_BUILD:
+      case actionTypes.UNBOOKMARK_BUILD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -99,22 +93,22 @@ export const buildsReducer: Reducer<BuildStateSchema> =
             }
           },
         };
-      case actionTypes.UPDATE_BUILD:
+      case actionTypes.UPDATE_BUILD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.build.unique_name]: action.build}
         };
-      case actionTypes.REQUEST_BUILDS:
+      case actionTypes.FETCH_BUILDS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_BUILDS:
+      case actionTypes.FETCH_BUILDS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const build of action.builds) {
           newState = processBuild(build);
         }
         return newState;
-      case actionTypes.RECEIVE_BUILD:
+      case actionTypes.GET_BUILD_SUCCESS:
         return processBuild(action.build);
       default:
         return state;
@@ -136,9 +130,9 @@ export const ProjectBuildsReducer: Reducer<ProjectStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_BUILD:
+      case actionTypes.GET_BUILD_SUCCESS:
         return processBuild(action.build);
-      case actionTypes.RECEIVE_BUILDS:
+      case actionTypes.FETCH_BUILDS_SUCCESS:
         for (const build of action.builds) {
           newState = processBuild(build);
         }

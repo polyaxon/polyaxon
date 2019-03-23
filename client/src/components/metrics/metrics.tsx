@@ -2,8 +2,9 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
-import * as experimentActions from '../../actions/experiment';
-import * as actions from '../../actions/metrics';
+import * as chartViewsAction from '../../actions/chartViews';
+import * as experimentActions from '../../actions/experiments';
+import * as metricsActions from '../../actions/metrics';
 import { NameSlug } from '../../constants/helpTexts';
 import { ChartModel, ChartTypes } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
@@ -23,11 +24,11 @@ export interface Props {
   resource: string;
   count: number;
   chartTypes: string[];
-  fetchData: () => actions.MetricsAction;
+  fetchData: () => metricsActions.MetricsAction;
   fetchParamsData?: () => experimentActions.ExperimentAction;
-  fetchViews: () => actions.MetricsAction;
-  createView?: (data: ChartViewModel) => actions.MetricsAction;
-  deleteView?: (viewId: number) => actions.MetricsAction;
+  fetchViews: () => chartViewsAction.ChartViewsAction;
+  createView?: (data: ChartViewModel) => chartViewsAction.ChartViewsAction;
+  deleteView?: (viewId: number) => chartViewsAction.ChartViewsAction;
 }
 
 export interface State {

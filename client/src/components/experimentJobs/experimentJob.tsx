@@ -13,10 +13,9 @@ import Status from '../statuses/status';
 
 export interface Props {
   experimentJob: ExperimentJobModel;
-  onDelete: () => void;
 }
 
-function ExperimentJob({experimentJob, onDelete}: Props) {
+function ExperimentJob({experimentJob}: Props) {
   const values = splitUniqueName(experimentJob.unique_name);
   return (
     <div className="row">

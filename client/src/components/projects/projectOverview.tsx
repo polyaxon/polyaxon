@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/project';
+import * as actions from '../../actions/projects';
 import { getNotebookUrl, getProjectTensorboardUrl } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import Description from '../description';

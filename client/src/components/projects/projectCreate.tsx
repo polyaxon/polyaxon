@@ -2,7 +2,7 @@ import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import * as actions from '../../actions/project';
+import * as actions from '../../actions/projects';
 import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';

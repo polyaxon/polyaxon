@@ -26,10 +26,10 @@ export const MetricsReducer: Reducer<MetricStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.REQUEST_METRICS:
+      case actionTypes.FETCH_METRICS_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.RECEIVE_METRICS:
+      case actionTypes.FETCH_METRICS_SUCCESS:
         newState.lastFetched = new LastFetchedIds();
         newState.lastFetched.count = action.count;
         for (const build of action.metrics) {

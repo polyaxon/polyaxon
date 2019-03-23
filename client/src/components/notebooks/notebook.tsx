@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../../actions/notebook';
+import * as actions from '../../actions/notebooks';
 import { isDone } from '../../constants/statuses';
 import { getBuildUrl, getNotebookApiUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/job';
+import * as actions from '../../actions/jobs';
 import * as search_actions from '../../actions/search';
 import { JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';

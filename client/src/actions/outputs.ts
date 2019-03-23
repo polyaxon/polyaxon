@@ -1,80 +1,125 @@
 import { Action } from 'redux';
+
 import { BASE_API_URL } from '../constants/api';
-import { handleAuthError, urlifyProjectName } from '../constants/utils';
+import { urlifyProjectName } from '../constants/utils';
+import { stdHandleError } from './utils';
 
 export enum actionTypes {
-  RECEIVE_OUTPUTS_TREE = 'RECEIVE_OUTPUTS_TREE',
-  REQUEST_OUTPUTS_TREE = 'REQUEST_OUTPUTS_TREE',
-  RECEIVE_OUTPUTS_FILE = 'RECEIVE_OUTPUTS_FILE',
-  REQUEST_OUTPUTS_FILE = 'REQUEST_OUTPUTS_FILE',
+  FETCH_OUTPUTS_TREE_REQUEST = 'FETCH_OUTPUTS_TREE_REQUEST',
+  FETCH_OUTPUTS_TREE_SUCCESS = 'FETCH_OUTPUTS_TREE_SUCCESS',
+  FETCH_OUTPUTS_TREE_ERROR = 'FETCH_OUTPUTS_TREE_ERROR',
+  FETCH_OUTPUTS_FILE_REQUEST = 'FETCH_OUTPUTS_FILE_REQUEST',
+  FETCH_OUTPUTS_FILE_SUCCESS = 'FETCH_OUTPUTS_FILE_SUCCESS',
+  FETCH_OUTPUTS_FILE_ERROR = 'FETCH_OUTPUTS_FILE_ERROR',
 }
 
-export interface RequestOutputsTreeAction extends Action {
-  type: actionTypes.REQUEST_OUTPUTS_TREE;
+export interface FetchOutputsTreeRequestAction extends Action {
+  type: actionTypes.FETCH_OUTPUTS_TREE_REQUEST;
   path: string;
 }
 
-export interface ReceiveOutputsTreeAction extends Action {
-  type: actionTypes.RECEIVE_OUTPUTS_TREE;
+export interface FetchOutputsTreeSuccessAction extends Action {
+  type: actionTypes.FETCH_OUTPUTS_TREE_SUCCESS;
   path: string;
   outputsTree: { [key: string]: any };
 }
 
-export interface RequestOutputsFileAction extends Action {
-  type: actionTypes.REQUEST_OUTPUTS_FILE;
-  outputsFile: string;
+export interface FetchOutputsTreeErrorAction extends Action {
+  type: actionTypes.FETCH_OUTPUTS_TREE_ERROR;
+  statusCode: number;
+  error: any;
+  path: string;
 }
 
-export interface ReceiveOutputsFileAction extends Action {
-  type: actionTypes.RECEIVE_OUTPUTS_FILE;
+export interface FetchOutputsFileRequestAction extends Action {
+  type: actionTypes.FETCH_OUTPUTS_FILE_REQUEST;
   path: string;
   outputsFile: string;
 }
 
-export function requestOutputsTreeActionCreator(path: string): RequestOutputsTreeAction {
+export interface FetchOutputsFileSuccessAction extends Action {
+  type: actionTypes.FETCH_OUTPUTS_FILE_SUCCESS;
+  path: string;
+  outputsFile: string;
+}
+
+export interface FetchOutputsFileErrorAction extends Action {
+  type: actionTypes.FETCH_OUTPUTS_FILE_ERROR;
+  statusCode: number;
+  error: any;
+  path: string;
+}
+
+export function fetchOutputsTreeRequestActionCreator(path: string): FetchOutputsTreeRequestAction {
   return {
-    type: actionTypes.REQUEST_OUTPUTS_TREE,
+    type: actionTypes.FETCH_OUTPUTS_TREE_REQUEST,
     path
   };
 }
 
-export function receiveOutputsTreeActionCreator(path: string,
-                                                outputsTree: { [key: string]: any }): ReceiveOutputsTreeAction {
+export function fetchOutputsTreeSuccessActionCreator(
+  path: string,
+  outputsTree: { [key: string]: any }): FetchOutputsTreeSuccessAction {
   return {
-    type: actionTypes.RECEIVE_OUTPUTS_TREE,
+    type: actionTypes.FETCH_OUTPUTS_TREE_SUCCESS,
     path,
     outputsTree
   };
 }
 
-export function requestOutputsFileActionCreator(): RequestOutputsFileAction {
+export function fetchOutputsTreeErrorActionCreator(statusCode: number,
+                                                   error: any,
+                                                   path: string): FetchOutputsTreeErrorAction {
   return {
-    type: actionTypes.REQUEST_OUTPUTS_FILE,
+    type: actionTypes.FETCH_OUTPUTS_TREE_ERROR,
+    statusCode,
+    error,
+    path
+  };
+}
+
+export function fetchOutputsFileRequestActionCreator(path: string): FetchOutputsFileRequestAction {
+  return {
+    type: actionTypes.FETCH_OUTPUTS_FILE_REQUEST,
+    path,
     outputsFile: ''
   };
 }
 
-export function receiveOutputsFileActionCreator(path: string,
-                                                outputsFile: string): ReceiveOutputsFileAction {
+export function fetchOutputsFileSuccessActionCreator(path: string,
+                                                     outputsFile: string): FetchOutputsFileSuccessAction {
   return {
-    type: actionTypes.RECEIVE_OUTPUTS_FILE,
+    type: actionTypes.FETCH_OUTPUTS_FILE_SUCCESS,
     path,
     outputsFile
   };
 }
 
+export function fetchOutputsFileErrorActionCreator(statusCode: number,
+                                                   error: any,
+                                                   path: string): FetchOutputsFileErrorAction {
+  return {
+    type: actionTypes.FETCH_OUTPUTS_FILE_ERROR,
+    statusCode,
+    error,
+    path
+  };
+}
+
 export type OutputsAction =
-  RequestOutputsTreeAction
-  | ReceiveOutputsTreeAction
-  | ReceiveOutputsFileAction
-  | ReceiveOutputsFileAction;
+  FetchOutputsTreeRequestAction
+  | FetchOutputsTreeSuccessAction
+  | FetchOutputsTreeErrorAction
+  | FetchOutputsFileRequestAction
+  | FetchOutputsFileSuccessAction
+  | FetchOutputsFileErrorAction;
 
 export function fetchOutputsTree(projectUniqueName: string,
                                  resources: string,
                                  id: number,
                                  path: string): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestOutputsTreeActionCreator(path));
+    dispatch(fetchOutputsTreeRequestActionCreator(path));
 
     let logsUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/outputs/tree`;
@@ -89,9 +134,15 @@ export function fetchOutputsTree(projectUniqueName: string,
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => stdHandleError(
+        response,
+        dispatch,
+        fetchOutputsTreeErrorActionCreator,
+        'Logs not outputs',
+        'Failed to fetch outputs',
+        [path]))
       .then((response) => response.json())
-      .then((json) => dispatch(receiveOutputsTreeActionCreator(path, json)));
+      .then((json) => dispatch(fetchOutputsTreeSuccessActionCreator(path, json)));
   };
 }
 
@@ -101,6 +152,8 @@ export function fetchOutputsFile(projectUniqueName: string,
                                  path: string,
                                  filetype: string): any {
   return (dispatch: any, getState: any) => {
+    dispatch(fetchOutputsFileRequestActionCreator(path));
+
     const logsUrl =
       `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/outputs/files?path=${path}`;
 
@@ -110,7 +163,13 @@ export function fetchOutputsFile(projectUniqueName: string,
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then((response) => handleAuthError(response, dispatch))
+      .then((response) => stdHandleError(
+        response,
+        dispatch,
+        fetchOutputsFileErrorActionCreator,
+        'File not found',
+        'Failed to fetch file',
+        [path]))
       .then((response) => {
         if (filetype === 'img') {
           return response.blob();
@@ -119,9 +178,9 @@ export function fetchOutputsFile(projectUniqueName: string,
       })
       .then((val) => {
         if (filetype === 'img') {
-          return dispatch(receiveOutputsFileActionCreator(path, URL.createObjectURL(val)));
+          return dispatch(fetchOutputsFileSuccessActionCreator(path, URL.createObjectURL(val)));
         }
-        return dispatch(receiveOutputsFileActionCreator(path, val));
+        return dispatch(fetchOutputsFileSuccessActionCreator(path, val));
       });
   };
 }

@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import { AppState } from '../../constants/types';
 
-import * as actions from '../../actions/job';
+import * as actions from '../../actions/jobs';
 import JobDetail from '../../components/jobs/jobDetail';
 import { getJobUniqueName } from '../../constants/utils';
 

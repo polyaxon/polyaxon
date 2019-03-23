@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as codeRefActions from '../../actions/codeReference';
-import * as actions from '../../actions/experiment';
+import * as actions from '../../actions/experiments';
 import ExperimentDetail from '../../components/experiments/experimentDetail';
 import { AppState } from '../../constants/types';
 import { getExperimentUniqueName } from '../../constants/utils';
@@ -36,7 +36,7 @@ export interface DispatchProps {
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
   return {
     fetchData: () => dispatch(
-      actions.fetchExperiment(
+      actions.getExperiment(
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.experimentId)),
@@ -84,7 +84,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         params.match.params.projectName,
         params.match.params.experimentId))),
     fetchCodeReference: () => dispatch(
-      actions.fetchExperimentCodeReference(getExperimentUniqueName(
+      actions.getExperimentCodeReference(getExperimentUniqueName(
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.experimentId))),

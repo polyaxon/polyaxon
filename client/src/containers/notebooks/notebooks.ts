@@ -8,7 +8,7 @@ import { isTrue } from '../../constants/utils';
 import { NotebookModel } from '../../models/notebook';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
-import * as actions from '../../actions/notebook';
+import * as actions from '../../actions/notebooks';
 import * as search_actions from '../../actions/search';
 import { SearchModel } from '../../models/search';
 
@@ -47,7 +47,6 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 }
 
 export interface DispatchProps {
-  onCreate?: (notebook: NotebookModel) => actions.NotebookAction;
   onDelete: (notebookName: string) => actions.NotebookAction;
   onStop: (notebookName: string) => actions.NotebookAction;
   onArchive: (notebookName: string) => actions.NotebookAction;
@@ -63,14 +62,13 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.NotebookAction>, ownProps: OwnProps): DispatchProps {
   return {
-    onCreate: (notebook: NotebookModel) => dispatch(actions.createNotebookActionCreator(notebook)),
     onDelete: (notebookName: string) => dispatch(actions.deleteNotebook(notebookName)),
     onStop: (notebookName: string) => dispatch(actions.stopNotebook(notebookName)),
     onArchive: (notebookName: string) => dispatch(actions.archiveNotebook(notebookName)),
     onRestore: (notebookName: string) => dispatch(actions.restoreNotebook(notebookName)),
     bookmark: (notebookName: string) => dispatch(actions.bookmark(notebookName)),
     unbookmark: (notebookName: string) => dispatch(actions.unbookmark(notebookName)),
-    onUpdate: (notebook: NotebookModel) => dispatch(actions.updateNotebookActionCreator(notebook)),
+    onUpdate: (notebook: NotebookModel) => dispatch(actions.updateNotebookSuccessActionCreator(notebook)),
     fetchSearches: () => {
       if (ownProps.projectName) {
         return dispatch(search_actions.fetchNotebookSearches(ownProps.projectName));

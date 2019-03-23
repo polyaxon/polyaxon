@@ -3,7 +3,7 @@ import * as jsYaml from 'js-yaml';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import * as actions from '../../actions/experiment';
+import * as actions from '../../actions/experiments';
 import { ExperimentModel } from '../../models/experiment';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { ConfigField, ConfigSchema } from '../forms/configField';

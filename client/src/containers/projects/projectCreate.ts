@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import * as modalActions from '../../actions/modal';
-import * as actions from '../../actions/project';
+import * as actions from '../../actions/projects';
 import ProjectCreate from '../../components/projects/projectCreate';
 import { AppState } from '../../constants/types';
 import { ProjectModel } from '../../models/project';

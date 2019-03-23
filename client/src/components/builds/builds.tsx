@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import * as search_actions from '../../actions/search';
 import { BUILD_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
@@ -25,7 +25,7 @@ export interface Props {
   showDeleted: boolean;
   endpointList: string;
   onCreate: (build: BuildModel) => actions.BuildAction;
-  onUpdate: (build: BuildModel) => actions.BuildAction;
+  onUpdate: (buildName: string, build: BuildModel) => actions.BuildAction;
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
   onArchive: (buildName: string) => actions.BuildAction;

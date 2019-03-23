@@ -29,10 +29,10 @@ export const activityLogsReducer: Reducer<ActivityLogsStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.REQUEST_ACTIVITY_LOGS:
+      case actionTypes.FETCH_ACTIVITY_LOGS_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.RECEIVE_ACTIVITY_LOGS:
+      case actionTypes.FETCH_ACTIVITY_LOGS_SUCCESS:
         newState.lastFetched = new LastFetchedIds();
         newState.lastFetched.count = action.count;
         for (const build of action.activityLogs) {

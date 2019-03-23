@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import { getBuildUrl, getExperimentUrl, getGroupUrl, splitUniqueName } from '../../constants/utils';
 
-import * as actions from '../../actions/experiment';
+import * as actions from '../../actions/experiments';
 import { isDone } from '../../constants/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';

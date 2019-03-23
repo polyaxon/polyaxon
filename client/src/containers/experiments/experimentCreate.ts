@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../../actions/experiment';
+import * as actions from '../../actions/experiments';
 import * as modalActions from '../../actions/modal';
 import ExperimentCreate from '../../components/experiments/experimentCreate';
 import { AppState } from '../../constants/types';

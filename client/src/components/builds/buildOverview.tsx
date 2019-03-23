@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import { BuildModel } from '../../models/build';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';

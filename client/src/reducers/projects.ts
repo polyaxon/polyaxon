@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { normalize } from 'normalizr';
 import { Reducer } from 'redux';
 
-import { actionTypes, ProjectAction } from '../actions/project';
+import { actionTypes, ProjectAction } from '../actions/projects';
 import { ProjectSchema } from '../constants/schemas';
 import { ProjectModel, ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { UserEmptyState, UserModel, UserStateSchema } from '../models/user';
@@ -48,13 +48,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_PROJECT:
-        return {
-          ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: action.project},
-          uniqueNames: [...state.uniqueNames, action.project.unique_name]
-        };
-      case actionTypes.DELETE_PROJECT:
+      case actionTypes.DELETE_PROJECT_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -64,7 +58,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
             names: state.lastFetched.names.filter((name) => name !== action.projectName)
           },
         };
-      case actionTypes.ARCHIVE_PROJECT:
+      case actionTypes.ARCHIVE_PROJECT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -73,7 +67,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], deleted: true}
           },
         };
-      case actionTypes.RESTORE_PROJECT:
+      case actionTypes.RESTORE_PROJECT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -82,7 +76,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], deleted: false}
           },
         };
-      case actionTypes.BOOKMARK_PROJECT:
+      case actionTypes.BOOKMARK_PROJECT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -91,7 +85,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], bookmarked: true}
           },
         };
-      case actionTypes.UNBOOKMARK_PROJECT:
+      case actionTypes.UNBOOKMARK_PROJECT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -100,7 +94,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], bookmarked: false}
           },
         };
-      case actionTypes.STOP_PROJECT_TENSORBOARD:
+      case actionTypes.STOP_PROJECT_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -109,7 +103,7 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], has_tensorboard: false}
           },
         };
-      case actionTypes.STOP_PROJECT_NOTEBOOK:
+      case actionTypes.STOP_PROJECT_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -118,22 +112,22 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
               ...state.byUniqueNames[action.projectName], has_notebook: false}
           },
         };
-      case actionTypes.UPDATE_PROJECT:
+      case actionTypes.UPDATE_PROJECT_SUCCESS:
         return {
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: setProjectRelated(action.project)}
         };
-      case actionTypes.REQUEST_PROJECTS:
+      case actionTypes.FETCH_PROJECTS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_PROJECTS:
+      case actionTypes.FETCH_PROJECTS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const project of action.projects) {
           newState = processProject(project);
         }
         return newState;
-      case actionTypes.RECEIVE_PROJECT:
+      case actionTypes.GET_PROJECT_SUCCESS:
         return processProject(action.project);
       default:
         return state;
@@ -161,9 +155,9 @@ export const UserProjectsReducer: Reducer<UserStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_PROJECT:
+      case actionTypes.GET_PROJECT_SUCCESS:
         return processProject(action.project);
-      case actionTypes.RECEIVE_PROJECTS:
+      case actionTypes.FETCH_PROJECTS_SUCCESS:
         for (const experiment of action.projects) {
           newState = processProject(experiment, action.count);
         }

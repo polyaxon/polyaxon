@@ -4,8 +4,9 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 import { MetricModel } from '../models/metric';
 
-import * as experimentActions from '../actions/experiment';
-import * as actions from '../actions/metrics';
+import * as chartViewsActions from '../actions/chartViews';
+import * as experimentActions from '../actions/experiments';
+import * as metricsActions from '../actions/metrics';
 import Metrics from '../components/metrics/metrics';
 import { ChartViewModel } from '../models/chartView';
 
@@ -63,17 +64,18 @@ export function mapStateToProps(state: AppState, params: any) {
 }
 
 export interface DispatchProps {
-  fetchData?: () => actions.MetricsAction;
+  fetchData?: () => metricsActions.MetricsAction;
   fetchParamsData?: () => experimentActions.ExperimentAction;
-  fetchViews?: () => actions.MetricsAction;
-  createView?: (data: ChartViewModel) => actions.MetricsAction;
-  deleteView?: (viewId: number) => actions.MetricsAction;
+  fetchViews?: () => chartViewsActions.ChartViewsAction;
+  createView?: (data: ChartViewModel) => chartViewsActions.ChartViewsAction;
+  deleteView?: (viewId: number) => chartViewsActions.ChartViewsAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.MetricsAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<metricsActions.MetricsAction | chartViewsActions.ChartViewsAction>,
+                                   params: any): DispatchProps {
   return {
     fetchData: () => {
-      return dispatch(actions.fetchMetrics(params.project, params.resource, params.id));
+      return dispatch(metricsActions.fetchMetrics(params.project, params.resource, params.id));
     },
     fetchParamsData: () => {
       if (params.resource === 'groups') {
@@ -86,13 +88,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.MetricsAction>, pa
       }
     },
     fetchViews: () => {
-      return dispatch(actions.fetchChartViews(params.project, params.resource, params.id));
+      return dispatch(chartViewsActions.fetchChartViews(params.project, params.resource, params.id));
     },
     createView: (data: ChartViewModel) => {
-      return dispatch(actions.createChartView(params.project, params.resource, params.id, data));
+      return dispatch(chartViewsActions.createChartView(params.project, params.resource, params.id, data));
     },
     deleteView: (viewId: number) => {
-      return dispatch(actions.deleteChartView(params.project, params.resource, params.id, viewId));
+      return dispatch(chartViewsActions.deleteChartView(params.project, params.resource, params.id, viewId));
     },
   };
 }

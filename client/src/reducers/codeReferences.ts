@@ -29,10 +29,10 @@ export const codeReferencesReducer: Reducer<CodeReferenceStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.REQUEST_CODE_REFERENCE:
+      case actionTypes.FETCH_CODE_REFERENCE_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.RECEIVE_CODE_REFERENCE:
+      case actionTypes.FETCH_CODE_REFERENCE_SUCCESS:
         return processSearch(action.codeReference);
       default:
         return state;

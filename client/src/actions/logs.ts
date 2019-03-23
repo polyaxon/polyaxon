@@ -1,55 +1,57 @@
 import { Action } from 'redux';
+
 import { BASE_API_URL } from '../constants/api';
 import { urlifyProjectName } from '../constants/utils';
+import { stdHandleError } from './utils';
 
 export enum actionTypes {
-  RECEIVE_LOGS = 'RECEIVE_LOGS',
-  REQUEST_LOGS = 'REQUEST_LOGS',
-  RECEIVE_LOGS_ERROR = 'RECEIVE_LOGS_ERROR',
+  FETCH_LOGS_REQUEST = 'FETCH_LOGS_REQUEST',
+  FETCH_LOGS_SUCCESS = 'FETCH_LOGS_SUCCESS',
+  FETCH_LOGS_ERROR = 'FETCH_LOGS_ERROR',
 }
 
-export interface RequestLogsAction extends Action {
-  type: actionTypes.REQUEST_LOGS;
+export interface FetchLogsRequestAction extends Action {
+  type: actionTypes.FETCH_LOGS_REQUEST;
   logs: string;
 }
 
-export interface ReceiveLogsAction extends Action {
-  type: actionTypes.RECEIVE_LOGS;
+export interface FetchLogsSuccessAction extends Action {
+  type: actionTypes.FETCH_LOGS_SUCCESS;
   logs: string;
 }
 
-export interface ReceiveErrorAction extends Action {
-  type: actionTypes.RECEIVE_LOGS_ERROR;
+export interface FetchLogsErrorAction extends Action {
+  type: actionTypes.FETCH_LOGS_ERROR;
   statusCode: number;
-  msg: string;
+  error: any;
 }
 
-export function requestLogsActionCreator(): RequestLogsAction {
+export function fetchLogsRequestActionCreator(): FetchLogsRequestAction {
   return {
-    type: actionTypes.REQUEST_LOGS,
+    type: actionTypes.FETCH_LOGS_REQUEST,
     logs: ''
   };
 }
 
-export function receiveLogsActionCreator(logs: string): ReceiveLogsAction {
+export function fetchLogsSuccessActionCreator(logs: string): FetchLogsSuccessAction {
   return {
-    type: actionTypes.RECEIVE_LOGS,
+    type: actionTypes.FETCH_LOGS_SUCCESS,
     logs
   };
 }
 
-export function receiveErrorActionCreator(statusCode: number, msg: string): ReceiveErrorAction {
+export function fetchLogsErrorActionCreator(statusCode: number, error: any): FetchLogsErrorAction {
   return {
-    type: actionTypes.RECEIVE_LOGS_ERROR,
+    type: actionTypes.FETCH_LOGS_ERROR,
     statusCode,
-    msg
+    error
   };
 }
 
 export type LogsAction =
-  RequestLogsAction
-  | ReceiveLogsAction
-  | ReceiveErrorAction;
+  FetchLogsRequestAction
+  | FetchLogsSuccessAction
+  | FetchLogsErrorAction;
 
 export function fetchLogs(projectUniqueName: string,
                           resources: string,
@@ -57,7 +59,7 @@ export function fetchLogs(projectUniqueName: string,
                           subResource?: string,
                           sid?: number): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestLogsActionCreator());
+    dispatch(fetchLogsRequestActionCreator());
 
     let logsUrl = '';
     if (subResource && sid) {
@@ -68,28 +70,19 @@ export function fetchLogs(projectUniqueName: string,
         `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/logs`;
     }
 
-    function handleError(response: Response, dispatch: any): any {
-      if (!response.ok) {
-        if (response.status === 404) {
-          dispatch(receiveErrorActionCreator(response.status, 'No logs'));
-        } else {
-          dispatch(receiveErrorActionCreator(response.status, 'Failed to fetch logs'));
-        }
-
-        return Promise.reject(response.statusText);
-      }
-      return response;
-    }
-
     return fetch(logsUrl, {
       headers: {
         'Content-Type': 'text/plain;charset=UTF-8',
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then((response) => handleError(response, dispatch))
+      .then((response) => stdHandleError(
+        response,
+        dispatch,
+        fetchLogsErrorActionCreator,
+        'Logs not found',
+        'Failed to fetch logs'))
       .then((response) => response.text())
-      .then((text) => dispatch(receiveLogsActionCreator(text)))
-      .catch((error) => undefined);
+      .then((text) => dispatch(fetchLogsSuccessActionCreator(text)))
   };
 }

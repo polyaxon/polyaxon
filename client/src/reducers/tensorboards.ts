@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
-import { actionTypes, TensorboardAction } from '../actions/tensorboard';
+import { actionTypes, TensorboardAction } from '../actions/tensorboards';
 import { TensorboardSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { TensorboardModel, TensorboardsEmptyState, TensorboardStateSchema } from '../models/tensorboard';
@@ -32,13 +32,7 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_TENSORBOARD:
-        return {
-          ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.tensorboard.unique_name]: action.tensorboard},
-          uniqueNames: [...state.uniqueNames, action.tensorboard.unique_name]
-        };
-      case actionTypes.DELETE_TENSORBOARD:
+      case actionTypes.DELETE_TENSORBOARD_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -48,7 +42,7 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
             names: state.lastFetched.names.filter((name) => name !== action.tensorboardName)
           },
         };
-      case actionTypes.ARCHIVE_TENSORBOARD:
+      case actionTypes.ARCHIVE_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -58,7 +52,7 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
             }
           },
         };
-      case actionTypes.RESTORE_TENSORBOARD:
+      case actionTypes.RESTORE_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -68,7 +62,7 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
             }
           },
         };
-      case actionTypes.STOP_TENSORBOARD:
+      case actionTypes.STOP_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -78,7 +72,7 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
             }
           },
         };
-      case actionTypes.BOOKMARK_TENSORBOARD:
+      case actionTypes.BOOKMARK_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -88,7 +82,7 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
             }
           },
         };
-      case actionTypes.UNBOOKMARK_TENSORBOARD:
+      case actionTypes.UNBOOKMARK_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -98,22 +92,22 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
             }
           },
         };
-      case actionTypes.UPDATE_TENSORBOARD:
+      case actionTypes.UPDATE_TENSORBOARD_SUCCESS:
         return {
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.tensorboard.unique_name]: action.tensorboard}
         };
-      case actionTypes.REQUEST_TENSORBOARDS:
+      case actionTypes.FETCH_TENSORBOARDS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_TENSORBOARDS:
+      case actionTypes.FETCH_TENSORBOARDS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const tensorboard of action.tensorboards) {
           newState = processBuild(tensorboard);
         }
         return newState;
-      case actionTypes.RECEIVE_TENSORBOARD:
+      case actionTypes.GET_TENSORBOARD_SUCCESS:
         return processBuild(action.tensorboard);
       default:
         return state;

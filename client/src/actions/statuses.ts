@@ -1,58 +1,58 @@
 import { Action } from 'redux';
+
 import { BASE_API_URL } from '../constants/api';
 import { urlifyProjectName } from '../constants/utils';
 import { StatusModel } from '../models/status';
+import { stdHandleError } from './utils';
 
 export enum actionTypes {
-  RECEIVE_STATUSES = 'RECEIVE_STATUSES',
-  REQUEST_STATUSES = 'REQUEST_STATUSES',
-  RECEIVE_STATUSES_ERROR = 'RECEIVE_STATUSES_ERROR',
+  FETCH_STATUSES_REQUEST = 'FETCH_STATUSES_REQUEST',
+  FETCH_STATUSES_SUCCESS = 'FETCH_STATUSES_SUCCESS',
+  FETCH_STATUSES_ERROR = 'FETCH_STATUSES_ERROR',
 }
 
-export interface RequestStatusesAction extends Action {
-  type: actionTypes.REQUEST_STATUSES;
-  statuses: string;
+export interface FetchStatusesRequestAction extends Action {
+  type: actionTypes.FETCH_STATUSES_REQUEST;
 }
 
-export interface ReceiveStatusesAction extends Action {
-  type: actionTypes.RECEIVE_STATUSES;
+export interface FetchStatusesSuccessAction extends Action {
+  type: actionTypes.FETCH_STATUSES_SUCCESS;
   statuses: StatusModel[];
   count: number;
 }
 
-export interface ReceiveErrorAction extends Action {
-  type: actionTypes.RECEIVE_STATUSES_ERROR;
+export interface FetchStatusesErrorAction extends Action {
+  type: actionTypes.FETCH_STATUSES_ERROR;
   statusCode: number;
-  msg: string;
+  error: any;
 }
 
-export function requestStatusesActionCreator(): RequestStatusesAction {
+export function fetchStatusesRequestActionCreator(): FetchStatusesRequestAction {
   return {
-    type: actionTypes.REQUEST_STATUSES,
-    statuses: ''
+    type: actionTypes.FETCH_STATUSES_REQUEST,
   };
 }
 
-export function receiveStatusesActionCreator(statuses: StatusModel[], count: number): ReceiveStatusesAction {
+export function fetchStatusesSuccessActionCreator(statuses: StatusModel[], count: number): FetchStatusesSuccessAction {
   return {
-    type: actionTypes.RECEIVE_STATUSES,
+    type: actionTypes.FETCH_STATUSES_SUCCESS,
     statuses,
     count
   };
 }
 
-export function receiveErrorActionCreator(statusCode: number, msg: string): ReceiveErrorAction {
+export function fetchStatusesErrorActionCreator(statusCode: number, error: any): FetchStatusesErrorAction {
   return {
-    type: actionTypes.RECEIVE_STATUSES_ERROR,
+    type: actionTypes.FETCH_STATUSES_ERROR,
     statusCode,
-    msg
+    error
   };
 }
 
 export type StatusesAction =
-  RequestStatusesAction
-  | ReceiveStatusesAction
-  | ReceiveErrorAction;
+  FetchStatusesRequestAction
+  | FetchStatusesSuccessAction
+  | FetchStatusesErrorAction;
 
 export function fetchStatuses(projectUniqueName: string,
                               resources: string,
@@ -60,7 +60,7 @@ export function fetchStatuses(projectUniqueName: string,
                               subResource?: string,
                               sid?: number): any {
   return (dispatch: any, getState: any) => {
-    dispatch(requestStatusesActionCreator());
+    dispatch(fetchStatusesRequestActionCreator());
 
     let statusesUrl = '';
     if (subResource && sid) {
@@ -71,27 +71,19 @@ export function fetchStatuses(projectUniqueName: string,
         `${BASE_API_URL}/${urlifyProjectName(projectUniqueName)}/${resources}/${id}/statuses`;
     }
 
-    function handleError(response: Response, dispatch: any): any {
-      if (!response.ok) {
-        if (response.status === 404) {
-          dispatch(receiveErrorActionCreator(response.status, 'No statuses'));
-        } else {
-          dispatch(receiveErrorActionCreator(response.status, 'Failed to fetch statuses'));
-        }
-
-        return Promise.reject(response.statusText);
-      }
-      return response;
-    }
-
     return fetch(statusesUrl, {
       headers: {
         'Content-Type': 'text/plain;charset=UTF-8',
         'Authorization': 'token ' + getState().auth.token
       }
     })
-      .then((response) => handleError(response, dispatch))
+      .then((response) => stdHandleError(
+        response,
+        dispatch,
+        fetchStatusesErrorActionCreator,
+        'Statuses not found',
+        'Failed to fetch statuses'))
       .then((response) => response.json())
-      .then((json) => dispatch(receiveStatusesActionCreator(json.results, json.count)));
+      .then((json) => dispatch(fetchStatusesSuccessActionCreator(json.results, json.count)));
   };
 }

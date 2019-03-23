@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/notebook';
+import * as actions from '../../actions/notebooks';
 import { NotebookModel } from '../../models/notebook';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';

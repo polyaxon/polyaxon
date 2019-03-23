@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import EntityBuild from '../../components/builds/entityBuild';
 import { AppState } from '../../constants/types';
 import { splitUniqueName } from '../../constants/utils';
@@ -16,6 +16,8 @@ export function mapStateToProps(state: AppState, params: any) {
 export interface DispatchProps {
   onDelete: (buildName: string) => actions.BuildAction;
   onStop: (buildName: string) => actions.BuildAction;
+  onArchive: (buildName: string) => actions.BuildAction;
+  onRestore: (buildName: string) => actions.BuildAction;
   bookmark: (buildName: string) => actions.BuildAction;
   unbookmark: (buildName: string) => actions.BuildAction;
   fetchData: () => actions.BuildAction;
@@ -25,6 +27,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
   return {
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
     onStop: (buildName: string) => dispatch(actions.stopBuild(buildName)),
+    onArchive: (buildName: string) => dispatch(actions.archiveBuild(buildName, true)),
+    onRestore: (buildName: string) => dispatch(actions.restoreBuild(buildName)),
     bookmark: (buildName: string) => dispatch(actions.bookmark(buildName)),
     unbookmark: (buildName: string) => dispatch(actions.unbookmark(buildName)),
     fetchData: () => {

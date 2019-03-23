@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import * as actions from '../../actions/build';
+import * as actions from '../../actions/builds';
 import { isDone } from '../../constants/statuses';
 import { getBuildUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Logs from '../../containers/logs';

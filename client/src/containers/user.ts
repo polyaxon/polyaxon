@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../actions/project';
+import * as actions from '../actions/projects';
 import User from '../components/user';
 import { AppState } from '../constants/types';
 import { ProjectModel } from '../models/project';

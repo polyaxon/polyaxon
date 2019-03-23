@@ -8,7 +8,7 @@ export const tokenReducer: Reducer<TokenStateSchema> =
   (state: TokenStateSchema = TokenEmptyState, action: TokenAction) => {
 
     switch (action.type) {
-      case actionTypes.RECEIVE_TOKEN:
+      case actionTypes.FETCH_TOKEN_SUCCESS:
         Cookies.set('token', action.token.token);
         Cookies.set('user', action.username);
         return {

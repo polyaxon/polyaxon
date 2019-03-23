@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
-import { actionTypes, NotebookAction } from '../actions/notebook';
+import { actionTypes, NotebookAction } from '../actions/notebooks';
 import { NotebookSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { NotebookModel, NotebooksEmptyState, NotebookStateSchema } from '../models/notebook';
@@ -32,13 +32,7 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_NOTEBOOK:
-        return {
-          ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.notebook.unique_name]: action.notebook},
-          uniqueNames: [...state.uniqueNames, action.notebook.unique_name]
-        };
-      case actionTypes.DELETE_NOTEBOOK:
+      case actionTypes.DELETE_NOTEBOOK_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -48,7 +42,7 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
             names: state.lastFetched.names.filter((name) => name !== action.notebookName)
           },
         };
-      case actionTypes.ARCHIVE_NOTEBOOK:
+      case actionTypes.ARCHIVE_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -58,7 +52,7 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
             }
           },
         };
-      case actionTypes.RESTORE_NOTEBOOK:
+      case actionTypes.RESTORE_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -68,7 +62,7 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
             }
           },
         };
-      case actionTypes.STOP_NOTEBOOK:
+      case actionTypes.STOP_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -78,7 +72,7 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
             }
           },
         };
-      case actionTypes.BOOKMARK_NOTEBOOK:
+      case actionTypes.BOOKMARK_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -88,7 +82,7 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
             }
           },
         };
-      case actionTypes.UNBOOKMARK_NOTEBOOK:
+      case actionTypes.UNBOOKMARK_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -98,22 +92,22 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
             }
           },
         };
-      case actionTypes.UPDATE_NOTEBOOK:
+      case actionTypes.UPDATE_NOTEBOOK_SUCCESS:
         return {
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.notebook.unique_name]: action.notebook}
         };
-      case actionTypes.REQUEST_NOTEBOOKS:
+      case actionTypes.FETCH_NOTEBOOKS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_NOTEBOOKS:
+      case actionTypes.FETCH_NOTEBOOKS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const notebook of action.notebooks) {
           newState = processBuild(notebook);
         }
         return newState;
-      case actionTypes.RECEIVE_NOTEBOOK:
+      case actionTypes.GET_NOTEBOOK_SUCCESS:
         return processBuild(action.notebook);
       default:
         return state;

@@ -5,12 +5,12 @@ export const logsReducer: Reducer<string> =
   (state: string = '', action: LogsAction) => {
     switch (action.type) {
 
-      case actionTypes.REQUEST_LOGS:
+      case actionTypes.FETCH_LOGS_REQUEST:
         return 'Fetching logs...';
-      case actionTypes.RECEIVE_LOGS:
+      case actionTypes.FETCH_LOGS_SUCCESS:
         return action.logs;
-      case actionTypes.RECEIVE_LOGS_ERROR:
-        return action.msg;
+      case actionTypes.FETCH_LOGS_ERROR:
+        return action.error;
       default:
         return state;
     }

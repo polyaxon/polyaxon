@@ -3,7 +3,7 @@ import { Reducer } from 'redux';
 
 import * as _ from 'lodash';
 
-import { actionTypes, JobAction } from '../actions/job';
+import { actionTypes, JobAction } from '../actions/jobs';
 import { JobSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { JobModel, JobsEmptyState, JobStateSchema } from '../models/job';
@@ -33,13 +33,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.CREATE_JOB:
-        return {
-          ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.job.unique_name]: action.job},
-          uniqueNames: [...state.uniqueNames, action.job.unique_name]
-        };
-      case actionTypes.DELETE_JOB:
+      case actionTypes.DELETE_JOB_SUCCESS:
         return {
           ...state,
           uniqueNames: state.uniqueNames.filter(
@@ -49,7 +43,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
             names: state.lastFetched.names.filter((name) => name !== action.jobName)
           },
         };
-      case actionTypes.ARCHIVE_JOB:
+      case actionTypes.ARCHIVE_JOB_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -59,7 +53,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
             }
           },
         };
-      case actionTypes.RESTORE_JOB:
+      case actionTypes.RESTORE_JOB_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -69,7 +63,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
             }
           },
         };
-      case actionTypes.STOP_JOB:
+      case actionTypes.STOP_JOB_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -79,7 +73,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
             }
           },
         };
-      case actionTypes.BOOKMARK_JOB:
+      case actionTypes.BOOKMARK_JOB_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -89,7 +83,7 @@ export const jobsReducer: Reducer<JobStateSchema> =
             }
           },
         };
-      case actionTypes.UNBOOKMARK_JOB:
+      case actionTypes.UNBOOKMARK_JOB_SUCCESS:
         return {
           ...state,
           byUniqueNames: {
@@ -99,23 +93,23 @@ export const jobsReducer: Reducer<JobStateSchema> =
             }
           },
         };
-      case actionTypes.UPDATE_JOB:
+      case actionTypes.UPDATE_JOB_SUCCESS:
         return {
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.job.unique_name]: action.job}
         };
 
-      case actionTypes.REQUEST_JOBS:
+      case actionTypes.FETCH_JOBS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
-      case actionTypes.RECEIVE_JOBS:
+      case actionTypes.FETCH_JOBS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
         for (const job of action.jobs) {
           newState = processJob(job);
         }
         return newState;
-      case actionTypes.RECEIVE_JOB:
+      case actionTypes.GET_JOB_SUCCESS:
         return processJob(action.job);
       default:
         return state;
@@ -137,9 +131,9 @@ export const ProjectJobsReducer: Reducer<ProjectStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.RECEIVE_JOB:
+      case actionTypes.GET_JOB_SUCCESS:
         return processJob(action.job);
-      case actionTypes.RECEIVE_JOBS:
+      case actionTypes.FETCH_JOBS_SUCCESS:
         for (const job of action.jobs) {
           newState = processJob(job);
         }

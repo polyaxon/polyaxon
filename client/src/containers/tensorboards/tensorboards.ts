@@ -9,7 +9,7 @@ import { TensorboardModel } from '../../models/tensorboard';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 import * as search_actions from '../../actions/search';
-import * as actions from '../../actions/tensorboard';
+import * as actions from '../../actions/tensorboards';
 import { SearchModel } from '../../models/search';
 
 interface OwnProps {
@@ -63,14 +63,13 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>, ownProps: OwnProps): DispatchProps {
   return {
-    onCreate: (tensorboard: TensorboardModel) => dispatch(actions.createTensorboardActionCreator(tensorboard)),
     onDelete: (tensorboardName: string) => dispatch(actions.deleteTensorboard(tensorboardName)),
     onStop: (tensorboardName: string) => dispatch(actions.stopTensorboard(tensorboardName)),
     onArchive: (tensorboardName: string) => dispatch(actions.archiveTensorboard(tensorboardName)),
     onRestore: (tensorboardName: string) => dispatch(actions.restoreTensorboard(tensorboardName)),
     bookmark: (tensorboardName: string) => dispatch(actions.bookmark(tensorboardName)),
     unbookmark: (tensorboardName: string) => dispatch(actions.unbookmark(tensorboardName)),
-    onUpdate: (tensorboard: TensorboardModel) => dispatch(actions.updateTensorboardActionCreator(tensorboard)),
+    onUpdate: (tensorboard: TensorboardModel) => dispatch(actions.updateTensorboardSuccessActionCreator(tensorboard)),
     fetchSearches: () => {
       if (ownProps.projectName) {
         return dispatch(search_actions.fetchTensorboardSearches(ownProps.projectName));

@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as codeRefActions from '../../actions/codeReference';
-import * as actions from '../../actions/experiment';
+import * as actions from '../../actions/experiments';
 import { isDone } from '../../constants/statuses';
 import {
   getExperimentUrl,

@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import * as actions from '../../actions/job';
+import * as actions from '../../actions/jobs';
 import { isDone } from '../../constants/statuses';
 import { getBuildUrl, getJobUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';

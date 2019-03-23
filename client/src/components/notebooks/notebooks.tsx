@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/notebook';
+import * as actions from '../../actions/notebooks';
 import * as search_actions from '../../actions/search';
 import { JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
@@ -24,7 +24,6 @@ export interface Props {
   showBookmarks: boolean;
   showDeleted: boolean;
   endpointList: string;
-  onCreate: (notebook: NotebookModel) => actions.NotebookAction;
   onUpdate: (notebook: NotebookModel) => actions.NotebookAction;
   onDelete: (notebookName: string) => actions.NotebookAction;
   onStop: (notebookName: string) => actions.NotebookAction;
