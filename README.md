@@ -45,7 +45,7 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
     $ polyaxon login
     ```
 
-Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
+Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
 
 # Quick start
 
@@ -90,7 +90,7 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/installatio
  * Notebook
     ```bash
     # Start Jupyter notebook for your project
-    $ polyaxon notebook start -f polyaxon_notebook.yml
+    $ polyaxon notebook start -f polyaxonfile_notebook.yml
 
     Notebook is being deployed for project `quick-start`
 
