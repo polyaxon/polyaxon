@@ -140,7 +140,7 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
             'search_algorithm',
             'content',
         )
-        extra_kwargs = {'unique_name': {'read_only': True}}
+        extra_kwargs = {'unique_name': {'read_only': True}, 'group_type': {'read_only': True}}
 
     def validate_content(self, content):
         # This is optional
