@@ -1,8 +1,10 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
 
 import * as actions from '../../actions/projects';
+import { getUserUrl } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
@@ -18,9 +20,10 @@ export interface Props {
 
 export interface State extends BaseState {
   is_public: boolean;
+  visibility: string;
 }
 
-const EmptyState = {...BaseEmptyState, is_public: true};
+const EmptyState = {...BaseEmptyState, is_public: true, visibility: 'Public'};
 
 const ValidationSchema = Yup.object().shape({
   name: NameSchema.required('Required'),
@@ -36,7 +39,7 @@ export default class ProjectCreate extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      is_public: state.is_public
+      is_public: state.visibility === 'Public'
     } as ProjectModel);
   };
 
@@ -72,7 +75,9 @@ export default class ProjectCreate extends React.Component<Props, {}> {
                       >
                         Create project
                       </button>
-                      <button className="btn btn-default pull-right">cancel</button>
+                      <LinkContainer to={getUserUrl(this.props.user)}>
+                        <button className="btn btn-default pull-right">cancel</button>
+                      </LinkContainer>
                     </div>
                   </div>
                 </form>

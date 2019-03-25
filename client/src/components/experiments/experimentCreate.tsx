@@ -1,9 +1,11 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
 import * as jsYaml from 'js-yaml';
 import * as React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
 
 import * as actions from '../../actions/experiments';
+import { getProjectUrl } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { ConfigField, ConfigSchema } from '../forms/configField';
@@ -79,7 +81,9 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
                       >
                         Create experiment
                       </button>
-                      <button type="submit" className="btn btn-default pull-right">cancel</button>
+                      <LinkContainer to={getProjectUrl(this.props.user, this.props.projectName)}>
+                        <button className="btn btn-default pull-right">cancel</button>
+                      </LinkContainer>
                     </div>
                   </div>
                 </form>

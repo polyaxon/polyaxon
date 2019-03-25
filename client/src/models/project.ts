@@ -30,7 +30,6 @@ export class ProjectStateSchema {
   public byUniqueNames: { [uniqueName: string]: ProjectModel };
   public uniqueNames: string[];
   public lastFetched: LastFetchedNames;
-
 }
 
 export const ProjectsEmptyState = {
