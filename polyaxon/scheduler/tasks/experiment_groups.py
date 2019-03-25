@@ -101,7 +101,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
             kwargs={
                 'group_id': experiment_group_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP, ignore_result=True)

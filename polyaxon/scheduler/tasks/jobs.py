@@ -102,7 +102,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
             kwargs={
                 'job_id': job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)

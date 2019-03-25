@@ -24,6 +24,7 @@ ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
 GLOBAL_COUNTDOWN = config.get_int('POLYAXON_GLOBAL_COUNTDOWN',
                                   is_optional=True,
                                   default=1)
+GLOBAL_COUNTDOWN_DELAYED = GLOBAL_COUNTDOWN * 3
 # Heartbeat timeout (status -> failed as zombie)
 TTL_HEARTBEAT = config.get_int('POLYAXON_TTL_HEARTBEAT',
                                is_optional=True,

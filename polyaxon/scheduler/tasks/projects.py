@@ -94,4 +94,4 @@ def projects_schedule_deletion(project_id, immediate=False):
             kwargs={
                 'project_id': project_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))

@@ -92,7 +92,7 @@ def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
             kwargs={
                 'job_id': notebook_job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,

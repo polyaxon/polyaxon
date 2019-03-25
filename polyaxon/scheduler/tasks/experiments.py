@@ -190,7 +190,7 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
             kwargs={
                 'experiment_id': experiment_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,

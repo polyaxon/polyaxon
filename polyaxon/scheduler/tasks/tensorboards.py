@@ -61,7 +61,7 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
             kwargs={
                 'job_id': tensorboard_job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP,
