@@ -18,6 +18,8 @@ export interface Props {
   user: string;
   projectName: string;
   onCreate: (project: ExperimentModel) => actions.ExperimentAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 export interface State extends BaseState {
@@ -67,17 +69,17 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
               }}
               render={(props: FormikProps<State>) => (
                 <form className="form-horizontal" onSubmit={props.handleSubmit}>
-                  {ConfigField(props)}
-                  {NameField(props)}
-                  {DescriptionField(props)}
+                  {ConfigField(props, this.props.errors)}
+                  {NameField(props, this.props.errors)}
+                  {DescriptionField(props, this.props.errors)}
                   {ReadmeField}
-                  {TagsField}
+                  {TagsField(props, this.props.errors)}
                   <div className="form-group form-actions">
                     <div className="col-sm-offset-2 col-sm-10">
                       <button
                         type="submit"
                         className="btn btn-default btn-success"
-                        disabled={props.isSubmitting}
+                        disabled={this.props.isLoading}
                       >
                         Create experiment
                       </button>

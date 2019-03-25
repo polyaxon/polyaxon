@@ -6,12 +6,15 @@ import * as actions from '../../actions/experiments';
 import * as modalActions from '../../actions/modal';
 import ExperimentCreate from '../../components/experiments/experimentCreate';
 import { AppState } from '../../constants/types';
+import { isTrue } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 
 export function mapStateToProps(state: AppState, params: any) {
   return {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
+    isLoading: isTrue(state.loadingIndicators.experiments.global.create),
+    errors: state.errors.experiments.global.create,
   };
 }
 

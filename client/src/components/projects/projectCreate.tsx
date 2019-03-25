@@ -8,6 +8,7 @@ import { getUserUrl } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
+import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
 import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
 import { TagsField } from '../forms/tagsField';
@@ -16,6 +17,8 @@ import { VisibilityField } from '../forms/visibilityField';
 export interface Props {
   user: string;
   onCreate: (project: ProjectModel) => actions.ProjectAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 export interface State extends BaseState {
@@ -61,17 +64,18 @@ export default class ProjectCreate extends React.Component<Props, {}> {
               }}
               render={(props: FormikProps<State>) => (
                 <form className="form-horizontal" onSubmit={props.handleSubmit}>
-                  {NameField(props)}
-                  {DescriptionField(props)}
+                  {ErrorsField(this.props.errors)}
+                  {NameField(props, this.props.errors)}
+                  {DescriptionField(props, this.props.errors)}
                   {VisibilityField}
                   {ReadmeField}
-                  {TagsField}
+                  {TagsField(props, this.props.errors)}
                   <div className="form-group form-actions">
                     <div className="col-sm-offset-2 col-sm-10">
                       <button
                         type="submit"
                         className="btn btn-default btn-success"
-                        disabled={props.isSubmitting}
+                        disabled={this.props.isLoading}
                       >
                         Create project
                       </button>
