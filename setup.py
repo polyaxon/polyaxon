@@ -48,7 +48,7 @@ setup(name='polyaxon',
           'reinforcement-learning'
       ],
       install_requires=[
-          "celery==4.2.1",
+          "celery==4.2.2",
           "Django==2.1.7",
           "django-cors-headers==2.4.0",
           "djangorestframework==3.9.2",
