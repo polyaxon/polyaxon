@@ -5,6 +5,7 @@ import { Reducer } from 'redux';
 import { actionTypes, ProjectAction } from '../actions/projects';
 import { ACTIONS } from '../constants/actions';
 import { ProjectSchema } from '../constants/schemas';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -339,6 +340,171 @@ export const LoadingIndicatorProjectReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           projects: processLoadingIndicatorGlobal(state.projects, false, ACTIONS.CREATE)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorProjectReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: ProjectAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_PROJECT_REQUEST:
+      case actionTypes.UPDATE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_PROJECT_REQUEST:
+      case actionTypes.GET_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorGlobal(
+            processErrorById(state.projects, action.projectName, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_PROJECT_REQUEST:
+      case actionTypes.DELETE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_PROJECT_REQUEST:
+      case actionTypes.ARCHIVE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_PROJECT_REQUEST:
+      case actionTypes.RESTORE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.BOOKMARK_PROJECT_REQUEST:
+      case actionTypes.BOOKMARK_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_PROJECT_REQUEST:
+      case actionTypes.UNBOOKMARK_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.START_PROJECT_TENSORBOARD_REQUEST:
+      case actionTypes.START_PROJECT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.START_TENSORBOARD)
+        };
+      case actionTypes.START_PROJECT_TENSORBOARD_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.START_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_PROJECT_TENSORBOARD_REQUEST:
+      case actionTypes.STOP_PROJECT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.STOP_TENSORBOARD)
+        };
+      case actionTypes.STOP_PROJECT_TENSORBOARD_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.STOP_TENSORBOARD)
+        };
+
+      case actionTypes.START_PROJECT_NOTEBOOK_REQUEST:
+      case actionTypes.START_PROJECT_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.START_NOTEBOOK)
+        };
+      case actionTypes.START_PROJECT_NOTEBOOK_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.START_NOTEBOOK)
+        };
+
+      case actionTypes.STOP_PROJECT_NOTEBOOK_REQUEST:
+      case actionTypes.STOP_PROJECT_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, ACTIONS.STOP_NOTEBOOK)
+        };
+      case actionTypes.STOP_PROJECT_NOTEBOOK_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, ACTIONS.STOP_NOTEBOOK)
+        };
+
+      case actionTypes.FETCH_PROJECTS_REQUEST:
+      case actionTypes.FETCH_PROJECTS_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorGlobal(state.projects, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_PROJECTS_ERROR:
+        return {
+          ...state,
+          projects: processErrorGlobal(state.projects, action.error, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processErrorGlobal(state.projects, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processErrorGlobal(state.projects, action.error, ACTIONS.CREATE)
         };
       default:
         return state;

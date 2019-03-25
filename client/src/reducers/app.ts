@@ -16,6 +16,7 @@ import { activityLogsReducer } from './activityLogs';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
 import { chartViewsReducer } from './chartViews';
 import { codeReferencesReducer } from './codeReferences';
+import { ErrorReducer, ErrorSliceReducer } from './error';
 import { healthStatusReducer } from './healthStatus';
 import { LoadingIndicatorReducer, LoadingIndicatorSliceReducer } from './loadingIndicator';
 import { logsReducer } from './logs';
@@ -52,7 +53,8 @@ const combinedReducer = combineReducers<AppState>({
   searches: searchesReducer,
   chartViews: chartViewsReducer,
   codeReferences: codeReferencesReducer,
-  loadingIndicators: LoadingIndicatorReducer
+  loadingIndicators: LoadingIndicatorReducer,
+  errors: ErrorReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -87,6 +89,7 @@ function SliceReducer(state: AppState, action: Action) {
     chartViews: state.chartViews,
     codeReferences: state.codeReferences,
     loadingIndicators: LoadingIndicatorSliceReducer(state, action),
+    errors: ErrorSliceReducer(state, action),
   };
 }
 

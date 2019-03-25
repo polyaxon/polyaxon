@@ -7,6 +7,7 @@ import { actionTypes, ActivityLogAction } from '../actions/activityLog';
 import { ACTIONS } from '../constants/actions';
 import { activityLogSchema } from '../constants/schemas';
 import { ActivityLogModel, ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
+import { ErrorEmptyState, ErrorSchema, processErrorGlobal } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -59,6 +60,25 @@ export const LoadingIndicatorActivityReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           activityLogs: processLoadingIndicatorGlobal(state.activityLogs, false, ACTIONS.FETCH)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorActivityReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: ActivityLogAction) => {
+    switch (action.type) {
+      case actionTypes.FETCH_ACTIVITY_LOGS_REQUEST:
+      case actionTypes.FETCH_ACTIVITY_LOGS_SUCCESS:
+        return {
+          ...state,
+          activityLogs: processErrorGlobal(state.activityLogs, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_ACTIVITY_LOGS_ERROR:
+        return {
+          ...state,
+          activityLogs: processErrorGlobal(state.activityLogs, action.error, ACTIONS.FETCH)
         };
       default:
         return state;

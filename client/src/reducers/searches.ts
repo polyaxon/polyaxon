@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { actionTypes, SearchAction } from '../actions/search';
 import { ACTIONS } from '../constants/actions';
 import { searchSchema } from '../constants/schemas';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -102,6 +103,54 @@ export const LoadingIndicatorSearchesReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           searches: processLoadingIndicatorGlobal(state.searches, false, ACTIONS.CREATE)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorSearchesReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: SearchAction) => {
+    switch (action.type) {
+      case actionTypes.GET_SEARCH_SUCCESS:
+        return {
+          ...state,
+          searches: processErrorById(state.searches, action.searchId, null, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_SEARCH_REQUEST:
+      case actionTypes.DELETE_SEARCH_SUCCESS:
+        return {
+          ...state,
+          searches: processErrorById(state.searches, action.searchId, null, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_SEARCH_ERROR:
+        return {
+          ...state,
+          searches: processErrorById(state.searches, action.searchId, action.error, ACTIONS.DELETE)
+        };
+
+      case actionTypes.FETCH_SEARCHES_REQUEST:
+      case actionTypes.FETCH_SEARCHES_SUCCESS:
+        return {
+          ...state,
+          searches: processErrorGlobal(state.searches, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_SEARCHES_ERROR:
+        return {
+          ...state,
+          searches: processErrorGlobal(state.searches, action.error, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_SEARCH_REQUEST:
+        return {
+          ...state,
+          searches: processErrorGlobal(state.searches, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_SEARCH_ERROR:
+        return {
+          ...state,
+          searches: processErrorGlobal(state.searches, action.error, ACTIONS.CREATE)
         };
       default:
         return state;

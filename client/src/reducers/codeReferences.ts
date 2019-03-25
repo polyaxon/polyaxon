@@ -7,6 +7,7 @@ import { actionTypes, CodeReferenceAction } from '../actions/codeReference';
 import { ACTIONS } from '../constants/actions';
 import { codeReferenceSchema } from '../constants/schemas';
 import { CodeReferenceEmptyState, CodeReferenceModel, CodeReferenceStateSchema } from '../models/codeReference';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -58,6 +59,28 @@ export const LoadingIndicatorCodeReferenceReducer: Reducer<LoadingIndicatorSchem
         return {
           ...state,
           codeReference: processLoadingIndicatorById(state.codeReference, 0, false, ACTIONS.GET)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorCodeReferenceReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: CodeReferenceAction) => {
+    switch (action.type) {
+      case actionTypes.GET_CODE_REFERENCE_REQUEST:
+      case actionTypes.GET_CODE_REFERENCE_SUCCESS:
+        return {
+          ...state,
+          codeReference: processErrorGlobal(
+            processErrorById(state.codeReference, 0, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_CODE_REFERENCE_ERROR:
+        return {
+          ...state,
+          codeReference: processErrorById(state.codeReference, 0, action.error, ACTIONS.GET)
         };
       default:
         return state;

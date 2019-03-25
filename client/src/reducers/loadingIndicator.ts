@@ -6,17 +6,17 @@ import { LoadingIndicatorActivityReducer } from './activityLogs';
 import { LoadingIndicatorBuildReducer } from './builds';
 import { LoadingIndicatorChartViewReducer } from './chartViews';
 import { LoadingIndicatorCodeReferenceReducer } from './codeReferences';
-import { LoadingIndicatorProjectReducer } from './projects';
 import { LoadingIndicatorExperimentJobReducer } from './experimentJobs';
 import { LoadingIndicatorExperimentReducer } from './experiments';
 import { LoadingIndicatorGroupReducer } from './groups';
 import { LoadingIndicatorHealthStatusReducer } from './healthStatus';
 import { LoadingIndicatorJobReducer } from './jobs';
 import { LoadingIndicatorMetricReducer } from './metrics';
+import { LoadingIndicatorNotebooksReducer } from './notebooks';
 import { LoadingIndicatorOutputsReducer } from './outputs';
+import { LoadingIndicatorProjectReducer } from './projects';
 import { LoadingIndicatorSearchesReducer } from './searches';
 import { LoadingIndicatorStatusesReducer } from './statuses';
-import { LoadingIndicatorNotebooksReducer } from './notebooks';
 import { LoadingIndicatorTensorboardsReducer } from './tensorboards';
 
 export const LoadingIndicatorReducer: Reducer<LoadingIndicatorSchema> =

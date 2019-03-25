@@ -7,6 +7,7 @@ import { actionTypes, JobAction } from '../actions/jobs';
 import { ACTIONS } from '../constants/actions';
 import { JobSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import { JobModel, JobsEmptyState, JobStateSchema } from '../models/job';
 import {
   LoadingIndicatorEmptyState,
@@ -216,7 +217,7 @@ export const LoadingIndicatorJobReducer: Reducer<LoadingIndicatorSchema> =
           jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.RESTORE)
         };
 
-       case actionTypes.STOP_JOB_REQUEST:
+      case actionTypes.STOP_JOB_REQUEST:
         return {
           ...state,
           jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.STOP)
@@ -273,6 +274,135 @@ export const LoadingIndicatorJobReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           jobs: processLoadingIndicatorGlobal(state.jobs, false, ACTIONS.CREATE)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorJobReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: JobAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_JOB_REQUEST:
+      case actionTypes.UPDATE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_JOB_REQUEST:
+      case actionTypes.GET_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorGlobal(
+            processErrorById(state.jobs, action.jobName, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_JOB_REQUEST:
+      case actionTypes.DELETE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_JOB_REQUEST:
+      case actionTypes.ARCHIVE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_JOB_REQUEST:
+      case actionTypes.RESTORE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_JOB_REQUEST:
+      case actionTypes.STOP_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_JOB_REQUEST:
+      case actionTypes.BOOKMARK_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_JOB_REQUEST:
+      case actionTypes.UNBOOKMARK_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.FETCH_JOBS_REQUEST:
+      case actionTypes.FETCH_JOBS_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorGlobal(state.jobs, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_JOBS_ERROR:
+        return {
+          ...state,
+          jobs: processErrorGlobal(state.jobs, action.error, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processErrorGlobal(state.jobs, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorGlobal(state.jobs, action.error, ACTIONS.CREATE)
         };
       default:
         return state;

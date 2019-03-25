@@ -2,6 +2,7 @@ import { Reducer } from 'redux';
 
 import { actionTypes, OutputsAction } from '../actions/outputs';
 import { ACTIONS } from '../constants/actions';
+import { ErrorEmptyState, ErrorSchema, processErrorById } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -89,6 +90,38 @@ export const LoadingIndicatorOutputsReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           chartViews: processLoadingIndicatorById(state.chartViews, action.path, false, ACTIONS.GET)
+        };
+
+      default:
+        return state;
+    }
+  };
+
+export const ErrorOutputsReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: OutputsAction) => {
+    switch (action.type) {
+      case actionTypes.FETCH_OUTPUTS_FILE_REQUEST:
+      case actionTypes.FETCH_OUTPUTS_FILE_SUCCESS:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.path, null, ACTIONS.GET)
+        };
+      case actionTypes.FETCH_OUTPUTS_FILE_ERROR:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.path, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.FETCH_OUTPUTS_TREE_REQUEST:
+      case actionTypes.FETCH_OUTPUTS_TREE_SUCCESS:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.path, null, ACTIONS.GET)
+        };
+      case actionTypes.FETCH_OUTPUTS_TREE_ERROR:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.path, action.error, ACTIONS.GET)
         };
 
       default:

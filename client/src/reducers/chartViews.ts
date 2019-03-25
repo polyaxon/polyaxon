@@ -7,6 +7,7 @@ import { actionTypes, ChartViewsAction } from '../actions/chartViews';
 import { ACTIONS } from '../constants/actions';
 import { chartViewSchema } from '../constants/schemas';
 import { ChartViewEmptyState, ChartViewModel, ChartViewStateSchema } from '../models/chartView';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -111,6 +112,63 @@ export const LoadingIndicatorChartViewReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           chartViews: processLoadingIndicatorGlobal(state.chartViews, false, ACTIONS.CREATE)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorChartViewReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: ChartViewsAction) => {
+    switch (action.type) {
+      case actionTypes.GET_CHART_VIEW_REQUEST:
+      case actionTypes.GET_CHART_VIEW_SUCCESS:
+        return {
+          ...state,
+          chartViews: processErrorGlobal(
+            processErrorById(state.chartViews, action.viewId, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_CHART_VIEW_ERROR:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.viewId, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_CHART_VIEW_REQUEST:
+      case actionTypes.DELETE_CHART_VIEW_SUCCESS:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.viewId, null, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_CHART_VIEW_ERROR:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.viewId, action.error, ACTIONS.DELETE)
+        };
+
+      case actionTypes.FETCH_CHART_VIEWS_REQUEST:
+      case actionTypes.FETCH_CHART_VIEWS_SUCCESS:
+        return {
+          ...state,
+          chartViews: processErrorGlobal(state.chartViews, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_CHART_VIEWS_ERROR:
+        return {
+          ...state,
+          chartViews: processErrorGlobal(state.chartViews, action.error, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_CHART_VIEW_REQUEST:
+        return {
+          ...state,
+          chartViews: processErrorGlobal(state.chartViews, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_CHART_VIEW_ERROR:
+        return {
+          ...state,
+          chartViews: processErrorGlobal(state.chartViews, action.error, ACTIONS.CREATE)
         };
       default:
         return state;

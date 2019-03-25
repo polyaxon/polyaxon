@@ -7,6 +7,7 @@ import { ACTIONS } from '../constants/actions';
 import { ExperimentSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { getExperimentIndexName } from '../constants/utils';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import {
   ExperimentModel,
   ExperimentParamStateSchema,
@@ -439,6 +440,185 @@ export const LoadingIndicatorExperimentReducer: Reducer<LoadingIndicatorSchema> 
         return {
           ...state,
           experiments: processLoadingIndicatorGlobal(state.experiments, false, ACTIONS.CREATE)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorExperimentReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: ExperimentAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_EXPERIMENT_REQUEST:
+      case actionTypes.UPDATE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_EXPERIMENT_REQUEST:
+      case actionTypes.GET_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorGlobal(
+            processErrorById(state.experiments, action.experimentName, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_EXPERIMENT_REQUEST:
+      case actionTypes.DELETE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_EXPERIMENT_REQUEST:
+      case actionTypes.ARCHIVE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_EXPERIMENT_REQUEST:
+      case actionTypes.RESTORE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_EXPERIMENT_REQUEST:
+      case actionTypes.STOP_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_EXPERIMENT_REQUEST:
+      case actionTypes.BOOKMARK_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_EXPERIMENT_REQUEST:
+      case actionTypes.UNBOOKMARK_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.START_EXPERIMENT_TENSORBOARD_REQUEST:
+      case actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments,
+                                        action.experimentName,
+                                        null,
+                                        ACTIONS.START_TENSORBOARD)
+        };
+      case actionTypes.START_EXPERIMENT_TENSORBOARD_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments,
+                                        action.experimentName,
+                                        action.error,
+                                        ACTIONS.START_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_REQUEST:
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments,
+                                        action.experimentName,
+                                        null,
+                                        ACTIONS.STOP_TENSORBOARD)
+        };
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(
+            state.experiments,
+            action.experimentName,
+            action.error,
+            ACTIONS.STOP_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_EXPERIMENTS_REQUEST:
+      case actionTypes.STOP_EXPERIMENTS_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorGlobal(state.experiments, null, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_EXPERIMENTS_ERROR:
+        return {
+          ...state,
+          experiments: processErrorGlobal(state.experiments, action.error, ACTIONS.STOP)
+        };
+
+      case actionTypes.FETCH_EXPERIMENTS_REQUEST:
+      case actionTypes.FETCH_EXPERIMENTS_PARAMS_SUCCESS:
+      case actionTypes.FETCH_EXPERIMENTS_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorGlobal(state.experiments, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_EXPERIMENTS_ERROR:
+        return {
+          ...state,
+          experiments: processErrorGlobal(state.experiments, action.error, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processErrorGlobal(state.experiments, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorGlobal(state.experiments, action.error, ACTIONS.CREATE)
         };
       default:
         return state;

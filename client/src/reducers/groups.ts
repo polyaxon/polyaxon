@@ -6,6 +6,7 @@ import { actionTypes, GroupAction } from '../actions/groups';
 import { ACTIONS } from '../constants/actions';
 import { GroupSchema } from '../constants/schemas';
 import { STOPPING } from '../constants/statuses';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import { GroupModel, GroupsEmptyState, GroupStateSchema } from '../models/group';
 import {
   LoadingIndicatorEmptyState,
@@ -326,6 +327,172 @@ export const LoadingIndicatorGroupReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           groups: processLoadingIndicatorGlobal(state.groups, false, ACTIONS.CREATE)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorGroupReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: GroupAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_GROUP_REQUEST:
+      case actionTypes.UPDATE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_GROUP_REQUEST:
+      case actionTypes.GET_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorGlobal(
+            processErrorById(state.groups, action.groupName, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_GROUP_REQUEST:
+      case actionTypes.DELETE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_GROUP_REQUEST:
+      case actionTypes.ARCHIVE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_GROUP_REQUEST:
+      case actionTypes.RESTORE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_GROUP_REQUEST:
+      case actionTypes.STOP_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_GROUP_REQUEST:
+      case actionTypes.BOOKMARK_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_GROUP_REQUEST:
+      case actionTypes.UNBOOKMARK_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, null, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups, action.groupName, action.error, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.START_GROUP_TENSORBOARD_REQUEST:
+      case actionTypes.START_GROUP_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups,
+                                   action.groupName,
+                                   null,
+                                   ACTIONS.START_TENSORBOARD)
+        };
+      case actionTypes.START_GROUP_TENSORBOARD_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(state.groups,
+                                   action.groupName,
+                                   action.error,
+                                   ACTIONS.START_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_GROUP_TENSORBOARD_REQUEST:
+      case actionTypes.STOP_GROUP_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorById(state.groups,
+                                   action.groupName,
+                                   null,
+                                   ACTIONS.STOP_TENSORBOARD)
+        };
+      case actionTypes.STOP_GROUP_TENSORBOARD_ERROR:
+        return {
+          ...state,
+          groups: processErrorById(
+            state.groups,
+            action.groupName,
+            action.error,
+            ACTIONS.STOP_TENSORBOARD)
+        };
+
+      case actionTypes.FETCH_GROUPS_REQUEST:
+      case actionTypes.FETCH_GROUPS_SUCCESS:
+        return {
+          ...state,
+          groups: processErrorGlobal(state.groups, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_GROUPS_ERROR:
+        return {
+          ...state,
+          groups: processErrorGlobal(state.groups, action.error, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processErrorGlobal(state.groups, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processErrorGlobal(state.groups, action.error, ACTIONS.CREATE)
         };
       default:
         return state;

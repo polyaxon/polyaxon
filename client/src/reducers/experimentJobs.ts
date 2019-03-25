@@ -7,6 +7,7 @@ import { actionTypes, ExperimentJobAction } from '../actions/experimentJobs';
 import { ACTIONS } from '../constants/actions';
 import { JobSchema } from '../constants/schemas';
 import { getExperimentIndexName, getExperimentJobIndexName } from '../constants/utils';
+import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
 import { ExperimentJobModel, ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
 import {
@@ -58,7 +59,7 @@ export const ExperimentJobExperimentsReducer: Reducer<ExperimentStateSchema> =
   (state: ExperimentStateSchema = ExperimentsEmptyState, action: ExperimentJobAction) => {
     let newState = {...state};
 
-    const processJob = function(experimentJob: ExperimentJobModel) {
+    const processJob = function (experimentJob: ExperimentJobModel) {
       const uniqueName = getExperimentJobIndexName(experimentJob.unique_name);
       const experimentName = getExperimentIndexName(uniqueName, true);
       if (_.includes(newState.uniqueNames, experimentName) &&
@@ -109,6 +110,40 @@ export const LoadingIndicatorExperimentJobReducer: Reducer<LoadingIndicatorSchem
         return {
           ...state,
           experimentJobs: processLoadingIndicatorGlobal(state.experimentJobs, false, ACTIONS.FETCH)
+        };
+      default:
+        return state;
+    }
+  };
+
+export const ErrorExperimentJobReducer: Reducer<ErrorSchema> =
+  (state: ErrorSchema = ErrorEmptyState, action: ExperimentJobAction) => {
+    switch (action.type) {
+      case actionTypes.GET_EXPERIMENT_JOB_REQUEST:
+      case actionTypes.GET_EXPERIMENT_JOB_SUCCESS:
+        return {
+          ...state,
+          experimentJobs: processErrorGlobal(
+            processErrorById(state.experimentJobs, action.jobName, null, ACTIONS.GET),
+            null,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_EXPERIMENT_JOB_ERROR:
+        return {
+          ...state,
+          experimentJobs: processErrorById(state.experimentJobs, action.jobName, action.error, ACTIONS.GET)
+        };
+
+      case actionTypes.FETCH_EXPERIMENT_JOBS_REQUEST:
+      case actionTypes.FETCH_EXPERIMENT_JOBS_SUCCESS:
+        return {
+          ...state,
+          experimentJobs: processErrorGlobal(state.experimentJobs, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_EXPERIMENT_JOBS_ERROR:
+        return {
+          ...state,
+          experimentJobs: processErrorGlobal(state.experimentJobs, action.error, ACTIONS.FETCH)
         };
       default:
         return state;
