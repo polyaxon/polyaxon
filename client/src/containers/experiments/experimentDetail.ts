@@ -30,7 +30,7 @@ export interface DispatchProps {
   unbookmark: () => actions.ExperimentAction;
   startTensorboard: () => actions.ExperimentAction;
   stopTensorboard: () => actions.ExperimentAction;
-  fetchCodeReference: () => codeRefActions.CodeReferenceAction;
+  getCodeReference: () => codeRefActions.CodeReferenceAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
@@ -83,7 +83,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.experimentId))),
-    fetchCodeReference: () => dispatch(
+    getCodeReference: () => dispatch(
       actions.getExperimentCodeReference(getExperimentUniqueName(
         params.match.params.user,
         params.match.params.projectName,

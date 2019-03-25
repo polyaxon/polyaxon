@@ -14,6 +14,7 @@ export interface UpdateJobRequestAction extends Action {
 export interface UpdateJobSuccessAction extends Action {
   type: actionTypes.UPDATE_JOB_SUCCESS;
   job: JobModel;
+  jobName: string;
 }
 
 export interface UpdateJobErrorAction extends Action {
@@ -33,7 +34,8 @@ export function updateJobRequestActionCreator(jobName: string): UpdateJobRequest
 export function updateJobSuccessActionCreator(job: JobModel): UpdateJobSuccessAction {
   return {
     type: actionTypes.UPDATE_JOB_SUCCESS,
-    job
+    job,
+    jobName: job.unique_name
   };
 }
 

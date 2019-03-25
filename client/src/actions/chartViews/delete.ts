@@ -19,6 +19,7 @@ export interface DeleteChartViewErrorAction extends Action {
   type: actionTypes.DELETE_CHART_VIEW_ERROR;
   statusCode: number;
   error: any;
+  viewId: number;
 }
 
 export function deleteChartViewSuccessActionCreator(viewId: number): DeleteChartViewSuccessAction {
@@ -28,11 +29,14 @@ export function deleteChartViewSuccessActionCreator(viewId: number): DeleteChart
   };
 }
 
-export function deleteChartViewErrorActionCreator(statusCode: number, error: any): DeleteChartViewErrorAction {
+export function deleteChartViewErrorActionCreator(statusCode: number,
+                                                  error: any,
+                                                  viewId: number): DeleteChartViewErrorAction {
   return {
     type: actionTypes.DELETE_CHART_VIEW_ERROR,
     statusCode,
-    error
+    error,
+    viewId,
   };
 }
 
@@ -68,7 +72,8 @@ export function deleteChartView(projectUniqueName: string, resources: string, id
         dispatch,
         deleteChartViewErrorActionCreator,
         'Chart views not found',
-        'Failed to delete chart views'))
+        'Failed to delete chart views',
+        [viewId]))
       .then((json) => dispatch(deleteChartViewSuccessActionCreator(viewId)));
   };
 }

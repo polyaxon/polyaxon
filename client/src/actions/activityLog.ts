@@ -12,7 +12,7 @@ import { stdHandleError } from './utils';
 export enum actionTypes {
   FETCH_ACTIVITY_LOGS_REQUEST = 'FETCH_ACTIVITY_LOGS_REQUEST',
   FETCH_ACTIVITY_LOGS_SUCCESS = 'FETCH_ACTIVITY_LOGS_SUCCESS',
-  FETCH_ACTIVITY_LOGS_FAILURE = 'FETCH_ACTIVITY_LOGS_FAILURE',
+  FETCH_ACTIVITY_LOGS_ERROR = 'FETCH_ACTIVITY_LOGS_ERROR',
 }
 
 export interface FetchActivityLogsSuccessAction extends Action {
@@ -26,7 +26,7 @@ export interface FetchActivityLogsRequestAction extends Action {
 }
 
 export interface FetchActivityLogsFailureAction extends Action {
-  type: actionTypes.FETCH_ACTIVITY_LOGS_FAILURE;
+  type: actionTypes.FETCH_ACTIVITY_LOGS_ERROR;
   statusCode: number;
   error: any;
 }
@@ -48,7 +48,7 @@ export function fetchActivityLogsRequestActionCreator(): FetchActivityLogsReques
 
 export function fetchActivityLogsFailureActionCreator(statusCode: number, error: any): FetchActivityLogsFailureAction {
   return {
-    type: actionTypes.FETCH_ACTIVITY_LOGS_FAILURE,
+    type: actionTypes.FETCH_ACTIVITY_LOGS_ERROR,
     statusCode,
     error
   };

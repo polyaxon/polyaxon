@@ -14,6 +14,7 @@ export interface UpdateBuildRequestAction extends Action {
 export interface UpdateBuildSuccessAction extends Action {
   type: actionTypes.UPDATE_BUILD_SUCCESS;
   build: BuildModel;
+  buildName: string;
 }
 
 export interface UpdateBuildErrorAction extends Action {
@@ -33,7 +34,8 @@ export function updateBuildRequestActionCreator(buildName: string): UpdateBuildR
 export function updateBuildSuccessActionCreator(build: BuildModel): UpdateBuildSuccessAction {
   return {
     type: actionTypes.UPDATE_BUILD_SUCCESS,
-    build
+    build,
+    buildName: build.unique_name
   };
 }
 

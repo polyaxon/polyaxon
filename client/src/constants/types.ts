@@ -12,6 +12,7 @@ import { ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/ex
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { HealthStatusEmptyState, HealthStatusStateSchema } from '../models/healthStatus';
 import { JobsEmptyState, JobStateSchema } from '../models/job';
+import { LoadingIndicatorEmptyState, LoadingIndicatorSchema } from '../models/loadingIndicator';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
 import { NotebooksEmptyState, NotebookStateSchema } from '../models/notebook';
@@ -46,6 +47,8 @@ export interface AppState {
   searches: SearchesStateSchema;
   chartViews: ChartViewStateSchema;
   codeReferences: CodeReferenceStateSchema;
+  loadingIndicators: LoadingIndicatorSchema;
+  // errors: errorSchema;
 }
 
 export const AppEmptyState = {
@@ -67,5 +70,6 @@ export const AppEmptyState = {
   activityLogs: ActivityLogsEmptyState,
   searches: SearchesEmptyState,
   chartViews: ChartViewEmptyState,
-  codeReferences: CodeReferenceEmptyState
+  codeReferences: CodeReferenceEmptyState,
+  loadingIndicators: LoadingIndicatorEmptyState,
 };

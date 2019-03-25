@@ -14,6 +14,7 @@ export interface UpdateTensorboardRequestAction extends Action {
 export interface UpdateTensorboardSuccessAction extends Action {
   type: actionTypes.UPDATE_TENSORBOARD_SUCCESS;
   tensorboard: TensorboardModel;
+  tensorboardName: string;
 }
 
 export interface UpdateTensorboardErrorAction extends Action {
@@ -33,7 +34,8 @@ export function updateTensorboardRequestActionCreator(tensorboardName: string): 
 export function updateTensorboardSuccessActionCreator(tensorboard: TensorboardModel): UpdateTensorboardSuccessAction {
   return {
     type: actionTypes.UPDATE_TENSORBOARD_SUCCESS,
-    tensorboard
+    tensorboard,
+    tensorboardName: tensorboard.unique_name
   };
 }
 

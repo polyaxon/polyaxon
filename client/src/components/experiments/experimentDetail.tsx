@@ -40,7 +40,7 @@ export interface Props {
   unbookmark: () => actions.ExperimentAction;
   startTensorboard: () => actions.ExperimentAction;
   stopTensorboard: () => actions.ExperimentAction;
-  fetchCodeReference: () => codeRefActions.CodeReferenceAction;
+  getCodeReference: () => codeRefActions.CodeReferenceAction;
 }
 
 export default class ExperimentDetail extends React.Component<Props, {}> {
@@ -108,7 +108,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                     experiment={experiment}
                     onUpdate={this.props.onUpdate}
                     onFetch={this.props.fetchData}
-                    onFetchCodeReference={this.props.fetchCodeReference}
+                    onGetCodeReference={this.props.getCodeReference}
                   />,
                   relUrl: ''
                 }, {

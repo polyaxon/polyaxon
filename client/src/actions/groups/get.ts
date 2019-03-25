@@ -14,6 +14,7 @@ export interface GetGroupRequestAction extends Action {
 export interface GetGroupSuccessAction extends Action {
   type: actionTypes.GET_GROUP_SUCCESS;
   group: GroupModel;
+  groupName: string;
 }
 
 export interface GetGroupErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getGroupRequestActionCreator(groupName: string): GetGroupRequest
 export function getGroupSuccessActionCreator(group: GroupModel): GetGroupSuccessAction {
   return {
     type: actionTypes.GET_GROUP_SUCCESS,
-    group
+    group,
+    groupName: group.unique_name
   };
 }
 

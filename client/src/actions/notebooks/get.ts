@@ -14,6 +14,7 @@ export interface GetNotebookRequestAction extends Action {
 export interface GetNotebookSuccessAction extends Action {
   type: actionTypes.GET_NOTEBOOK_SUCCESS;
   notebook: NotebookModel;
+  notebookName: string;
 }
 
 export interface GetNotebookErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getNotebookRequestActionCreator(notebookName: string): GetNotebo
 export function getNotebookSuccessActionCreator(notebook: NotebookModel): GetNotebookSuccessAction {
   return {
     type: actionTypes.GET_NOTEBOOK_SUCCESS,
-    notebook
+    notebook,
+    notebookName: notebook.unique_name
   };
 }
 

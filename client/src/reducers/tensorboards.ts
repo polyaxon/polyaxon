@@ -4,8 +4,15 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, TensorboardAction } from '../actions/tensorboards';
+import { ACTIONS } from '../constants/actions';
 import { TensorboardSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { TensorboardModel, TensorboardsEmptyState, TensorboardStateSchema } from '../models/tensorboard';
 import { LastFetchedNames } from '../models/utils';
 
@@ -109,6 +116,140 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
         return newState;
       case actionTypes.GET_TENSORBOARD_SUCCESS:
         return processBuild(action.tensorboard);
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorTensorboardsReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: TensorboardAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, true, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_TENSORBOARD_ERROR:
+      case actionTypes.UPDATE_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, false, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.tensorboards, action.tensorboardName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_TENSORBOARD_ERROR:
+      case actionTypes.GET_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_TENSORBOARD_ERROR:
+      case actionTypes.DELETE_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, true, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_TENSORBOARD_ERROR:
+      case actionTypes.ARCHIVE_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, true, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_TENSORBOARD_ERROR:
+      case actionTypes.RESTORE_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards, action.tensorboardName, true, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_TENSORBOARD_ERROR:
+      case actionTypes.STOP_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards,
+                                                    action.tensorboardName,
+                                                    false,
+                                                    ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards,
+                                                    action.tensorboardName,
+                                                    true,
+                                                    ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_TENSORBOARD_ERROR:
+      case actionTypes.BOOKMARK_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards,
+                                                    action.tensorboardName,
+                                                    false,
+                                                    ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(
+            state.tensorboards,
+            action.tensorboardName,
+            true,
+            ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_TENSORBOARD_ERROR:
+      case actionTypes.UNBOOKMARK_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorById(state.tensorboards,
+                                                    action.tensorboardName,
+                                                    false,
+                                                    ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.FETCH_TENSORBOARDS_REQUEST:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorGlobal(state.tensorboards, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_TENSORBOARDS_ERROR:
+      case actionTypes.FETCH_TENSORBOARDS_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processLoadingIndicatorGlobal(state.tensorboards, false, ACTIONS.FETCH)
+        };
       default:
         return state;
     }

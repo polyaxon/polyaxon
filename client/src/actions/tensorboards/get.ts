@@ -14,6 +14,7 @@ export interface GetTensorboardRequestAction extends Action {
 export interface GetTensorboardSuccessAction extends Action {
   type: actionTypes.GET_TENSORBOARD_SUCCESS;
   tensorboard: TensorboardModel;
+  tensorboardName: string;
 }
 
 export interface GetTensorboardErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getTensorboardRequestActionCreator(tensorboardName: string): Get
 export function getTensorboardSuccessActionCreator(tensorboard: TensorboardModel): GetTensorboardSuccessAction {
   return {
     type: actionTypes.GET_TENSORBOARD_SUCCESS,
-    tensorboard
+    tensorboard,
+    tensorboardName: tensorboard.unique_name,
   };
 }
 

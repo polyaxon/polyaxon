@@ -4,9 +4,16 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, JobAction } from '../actions/jobs';
+import { ACTIONS } from '../constants/actions';
 import { JobSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { JobModel, JobsEmptyState, JobStateSchema } from '../models/job';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
 
@@ -138,6 +145,135 @@ export const ProjectJobsReducer: Reducer<ProjectStateSchema> =
           newState = processJob(job);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorJobReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: JobAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_JOB_ERROR:
+      case actionTypes.UPDATE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_JOB_ERROR:
+      case actionTypes.GET_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_JOB_ERROR:
+      case actionTypes.DELETE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_JOB_ERROR:
+      case actionTypes.ARCHIVE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_JOB_ERROR:
+      case actionTypes.RESTORE_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.RESTORE)
+        };
+
+       case actionTypes.STOP_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_JOB_ERROR:
+      case actionTypes.STOP_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_JOB_ERROR:
+      case actionTypes.BOOKMARK_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_JOB_ERROR:
+      case actionTypes.UNBOOKMARK_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.FETCH_JOBS_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorGlobal(state.jobs, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_JOBS_ERROR:
+      case actionTypes.FETCH_JOBS_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorGlobal(state.jobs, false, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorGlobal(state.jobs, true, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorGlobal(state.jobs, false, ACTIONS.CREATE)
+        };
       default:
         return state;
     }

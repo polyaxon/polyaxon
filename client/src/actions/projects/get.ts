@@ -14,6 +14,7 @@ export interface GetProjectRequestAction extends Action {
 export interface GetProjectSuccessAction extends Action {
   type: actionTypes.GET_PROJECT_SUCCESS;
   project: ProjectModel;
+  projectName: string;
 }
 
 export interface GetProjectErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getProjectRequestActionCreator(projectName: string): GetProjectR
 export function getProjectSuccessActionCreator(project: ProjectModel): GetProjectSuccessAction {
   return {
     type: actionTypes.GET_PROJECT_SUCCESS,
-    project
+    project,
+    projectName: project.unique_name
   };
 }
 

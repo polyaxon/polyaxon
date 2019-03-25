@@ -4,7 +4,13 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, MetricsAction } from '../actions/metrics';
+import { ACTIONS } from '../constants/actions';
 import { MetricSchema } from '../constants/schemas';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { MetricEmptyState, MetricModel, MetricStateSchema } from '../models/metric';
 import { LastFetchedIds } from '../models/utils';
 
@@ -36,6 +42,25 @@ export const MetricsReducer: Reducer<MetricStateSchema> =
           newState = processMetric(build);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorMetricReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: MetricsAction) => {
+    switch (action.type) {
+      case actionTypes.FETCH_METRICS_REQUEST:
+        return {
+          ...state,
+          metrics: processLoadingIndicatorGlobal(state.metrics, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_METRICS_ERROR:
+      case actionTypes.FETCH_METRICS_SUCCESS:
+        return {
+          ...state,
+          metrics: processLoadingIndicatorGlobal(state.metrics, false, ACTIONS.FETCH)
+        };
       default:
         return state;
     }

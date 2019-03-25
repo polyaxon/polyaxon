@@ -5,56 +5,56 @@ import { CodeReferenceModel } from '../models/codeReference';
 import { stdHandleError } from './utils';
 
 export enum actionTypes {
-  FETCH_CODE_REFERENCE_REQUEST = 'FETCH_CODE_REFERENCE_REQUEST',
-  FETCH_CODE_REFERENCE_SUCCESS = 'FETCH_CODE_REFERENCE_SUCCESS',
-  FETCH_CODE_REFERENCE_ERROR = 'FETCH_CODE_REFERENCE_ERROR',
+  GET_CODE_REFERENCE_REQUEST = 'GET_CODE_REFERENCE_REQUEST',
+  GET_CODE_REFERENCE_SUCCESS = 'GET_CODE_REFERENCE_SUCCESS',
+  GET_CODE_REFERENCE_ERROR = 'GET_CODE_REFERENCE_ERROR',
 }
 
-export interface FetchCodeReferenceRequestAction extends Action {
-  type: actionTypes.FETCH_CODE_REFERENCE_REQUEST;
+export interface GetCodeReferenceRequestAction extends Action {
+  type: actionTypes.GET_CODE_REFERENCE_REQUEST;
 }
 
-export interface FetchCodeReferenceSuccessAction extends Action {
-  type: actionTypes.FETCH_CODE_REFERENCE_SUCCESS;
+export interface GetCodeReferenceSuccessAction extends Action {
+  type: actionTypes.GET_CODE_REFERENCE_SUCCESS;
   codeReference: CodeReferenceModel;
 }
 
-export interface FetchCodeReferenceErrorAction extends Action {
-  type: actionTypes.FETCH_CODE_REFERENCE_ERROR;
+export interface GetCodeReferenceErrorAction extends Action {
+  type: actionTypes.GET_CODE_REFERENCE_ERROR;
   statusCode: number;
   error: any;
 }
 
 export type CodeReferenceAction =
-  FetchCodeReferenceRequestAction
-  | FetchCodeReferenceSuccessAction
-  | FetchCodeReferenceErrorAction;
+  GetCodeReferenceRequestAction
+  | GetCodeReferenceSuccessAction
+  | GetCodeReferenceErrorAction;
 
-export function fetchCodeReferenceRequestActionCreator(): FetchCodeReferenceRequestAction {
+export function getCodeReferenceRequestActionCreator(): GetCodeReferenceRequestAction {
   return {
-    type: actionTypes.FETCH_CODE_REFERENCE_REQUEST,
+    type: actionTypes.GET_CODE_REFERENCE_REQUEST,
   };
 }
 
-export function fetchCodeReferenceSuccessActionCreator(
-  codeReference: CodeReferenceModel): FetchCodeReferenceSuccessAction {
+export function getCodeReferenceSuccessActionCreator(
+  codeReference: CodeReferenceModel): GetCodeReferenceSuccessAction {
   return {
-    type: actionTypes.FETCH_CODE_REFERENCE_SUCCESS,
+    type: actionTypes.GET_CODE_REFERENCE_SUCCESS,
     codeReference,
   };
 }
 
-export function fetchCodeReferenceErrorActionCreator(statusCode: number, error: any): FetchCodeReferenceErrorAction {
+export function getCodeReferenceErrorActionCreator(statusCode: number, error: any): GetCodeReferenceErrorAction {
   return {
-    type: actionTypes.FETCH_CODE_REFERENCE_ERROR,
+    type: actionTypes.GET_CODE_REFERENCE_ERROR,
     statusCode,
     error
   };
 }
 
-export function fetchCodeReference(codeRefUrl: string): any {
+export function getCodeReference(codeRefUrl: string): any {
   return (dispatch: any, getState: any) => {
-    dispatch(fetchCodeReferenceRequestActionCreator());
+    dispatch(getCodeReferenceRequestActionCreator());
     return fetch(
       `${BASE_API_URL}${codeRefUrl}`, {
         headers: {
@@ -64,10 +64,10 @@ export function fetchCodeReference(codeRefUrl: string): any {
       .then((response) => stdHandleError(
         response,
         dispatch,
-        fetchCodeReferenceErrorActionCreator,
+        getCodeReferenceErrorActionCreator,
         'Code reference not found',
         'Failed to fetch code reference'))
       .then((response) => response.json())
-      .then((json) => dispatch(fetchCodeReferenceSuccessActionCreator(json)));
+      .then((json) => dispatch(getCodeReferenceSuccessActionCreator(json)));
   };
 }

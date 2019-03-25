@@ -14,6 +14,7 @@ export interface GetJobRequestAction extends Action {
 export interface GetJobSuccessAction extends Action {
   type: actionTypes.GET_JOB_SUCCESS;
   job: JobModel;
+  jobName: string;
 }
 
 export interface GetJobErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getJobRequestActionCreator(jobName: string): GetJobRequestAction
 export function getJobSuccessActionCreator(job: JobModel): GetJobSuccessAction {
   return {
     type: actionTypes.GET_JOB_SUCCESS,
-    job
+    job,
+    jobName: job.unique_name
   };
 }
 

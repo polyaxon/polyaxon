@@ -3,6 +3,7 @@ import { normalize } from 'normalizr';
 import { Reducer } from 'redux';
 
 import { actionTypes, ExperimentAction } from '../actions/experiments';
+import { ACTIONS } from '../constants/actions';
 import { ExperimentSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
 import { getExperimentIndexName } from '../constants/utils';
@@ -14,6 +15,12 @@ import {
   ExperimentStateSchema
 } from '../models/experiment';
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
 
@@ -56,7 +63,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           lastFetched: {
             ...state.lastFetched,
             names: state.lastFetched.names.filter(
-              (name) => name !== getExperimentIndexName(action.experimentName))},
+              (name) => name !== getExperimentIndexName(action.experimentName))
+          },
         };
       case actionTypes.DELETE_EXPERIMENTS_SUCCESS:
         const experimentNames = action.experimentIds.map(
@@ -68,7 +76,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           lastFetched: {
             ...state.lastFetched,
             names: state.lastFetched.names.filter(
-              (name) => experimentNames.indexOf(name) === -1)},
+              (name) => experimentNames.indexOf(name) === -1)
+          },
         };
       case actionTypes.ARCHIVE_EXPERIMENT_SUCCESS:
         return {
@@ -76,7 +85,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: true}
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: true
+            }
           },
         };
       case actionTypes.RESTORE_EXPERIMENT_SUCCESS:
@@ -85,7 +95,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: false}
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], deleted: false
+            }
           },
         };
       case actionTypes.STOP_EXPERIMENT_SUCCESS:
@@ -94,7 +105,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], last_status: STOPPED}
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], last_status: STOPPED
+            }
           },
         };
       case actionTypes.STOP_EXPERIMENTS_SUCCESS:
@@ -116,7 +128,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: true}
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: true
+            }
           },
         };
       case actionTypes.UNBOOKMARK_EXPERIMENT_SUCCESS:
@@ -125,7 +138,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: false}
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], bookmarked: false
+            }
           },
         };
       case actionTypes.UPDATE_EXPERIMENT_SUCCESS:
@@ -142,7 +156,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [getExperimentIndexName(action.experimentName)]: {
-              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], has_tensorboard: false}
+              ...state.byUniqueNames[getExperimentIndexName(action.experimentName)], has_tensorboard: false
+            }
           }
         };
       case actionTypes.FETCH_EXPERIMENTS_SUCCESS:
@@ -246,6 +261,185 @@ export const GroupExperimentsReducer: Reducer<GroupStateSchema> =
           newState = processExperiment(experiment);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorExperimentReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: ExperimentAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_EXPERIMENT_ERROR:
+      case actionTypes.UPDATE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_EXPERIMENT_ERROR:
+      case actionTypes.GET_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_EXPERIMENT_ERROR:
+      case actionTypes.DELETE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_EXPERIMENT_ERROR:
+      case actionTypes.ARCHIVE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_EXPERIMENT_ERROR:
+      case actionTypes.RESTORE_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_EXPERIMENT_ERROR:
+      case actionTypes.STOP_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_EXPERIMENT_ERROR:
+      case actionTypes.BOOKMARK_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_EXPERIMENT_ERROR:
+      case actionTypes.UNBOOKMARK_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.START_EXPERIMENT_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments,
+                                                   action.experimentName,
+                                                   true,
+                                                   ACTIONS.START_TENSORBOARD)
+        };
+      case actionTypes.START_EXPERIMENT_TENSORBOARD_ERROR:
+      case actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments,
+                                                   action.experimentName,
+                                                   false,
+                                                   ACTIONS.START_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments,
+                                                   action.experimentName,
+                                                   true,
+                                                   ACTIONS.STOP_TENSORBOARD)
+        };
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_ERROR:
+      case actionTypes.STOP_EXPERIMENT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(
+            state.experiments,
+            action.experimentName,
+            false,
+            ACTIONS.STOP_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_EXPERIMENTS_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(state.experiments, true, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_EXPERIMENTS_ERROR:
+      case actionTypes.STOP_EXPERIMENTS_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(state.experiments, false, ACTIONS.STOP)
+        };
+
+      case actionTypes.FETCH_EXPERIMENTS_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(state.experiments, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_EXPERIMENTS_ERROR:
+      case actionTypes.FETCH_EXPERIMENTS_PARAMS_SUCCESS:
+      case actionTypes.FETCH_EXPERIMENTS_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(state.experiments, false, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(state.experiments, true, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorGlobal(state.experiments, false, ACTIONS.CREATE)
+        };
       default:
         return state;
     }

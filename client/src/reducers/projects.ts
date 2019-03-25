@@ -3,7 +3,14 @@ import { normalize } from 'normalizr';
 import { Reducer } from 'redux';
 
 import { actionTypes, ProjectAction } from '../actions/projects';
+import { ACTIONS } from '../constants/actions';
 import { ProjectSchema } from '../constants/schemas';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { ProjectModel, ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { UserEmptyState, UserModel, UserStateSchema } from '../models/user';
 import { LastFetchedNames } from '../models/utils';
@@ -64,7 +71,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.projectName]: {
-              ...state.byUniqueNames[action.projectName], deleted: true}
+              ...state.byUniqueNames[action.projectName], deleted: true
+            }
           },
         };
       case actionTypes.RESTORE_PROJECT_SUCCESS:
@@ -73,7 +81,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.projectName]: {
-              ...state.byUniqueNames[action.projectName], deleted: false}
+              ...state.byUniqueNames[action.projectName], deleted: false
+            }
           },
         };
       case actionTypes.BOOKMARK_PROJECT_SUCCESS:
@@ -82,7 +91,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.projectName]: {
-              ...state.byUniqueNames[action.projectName], bookmarked: true}
+              ...state.byUniqueNames[action.projectName], bookmarked: true
+            }
           },
         };
       case actionTypes.UNBOOKMARK_PROJECT_SUCCESS:
@@ -91,7 +101,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.projectName]: {
-              ...state.byUniqueNames[action.projectName], bookmarked: false}
+              ...state.byUniqueNames[action.projectName], bookmarked: false
+            }
           },
         };
       case actionTypes.STOP_PROJECT_TENSORBOARD_SUCCESS:
@@ -100,7 +111,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.projectName]: {
-              ...state.byUniqueNames[action.projectName], has_tensorboard: false}
+              ...state.byUniqueNames[action.projectName], has_tensorboard: false
+            }
           },
         };
       case actionTypes.STOP_PROJECT_NOTEBOOK_SUCCESS:
@@ -109,7 +121,8 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           byUniqueNames: {
             ...state.byUniqueNames,
             [action.projectName]: {
-              ...state.byUniqueNames[action.projectName], has_notebook: false}
+              ...state.byUniqueNames[action.projectName], has_notebook: false
+            }
           },
         };
       case actionTypes.UPDATE_PROJECT_SUCCESS:
@@ -162,6 +175,171 @@ export const UserProjectsReducer: Reducer<UserStateSchema> =
           newState = processProject(experiment, action.count);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorProjectReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: ProjectAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_PROJECT_ERROR:
+      case actionTypes.UPDATE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_PROJECT_ERROR:
+      case actionTypes.GET_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_PROJECT_ERROR:
+      case actionTypes.DELETE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_PROJECT_ERROR:
+      case actionTypes.ARCHIVE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_PROJECT_ERROR:
+      case actionTypes.RESTORE_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.BOOKMARK_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_PROJECT_ERROR:
+      case actionTypes.BOOKMARK_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_PROJECT_ERROR:
+      case actionTypes.UNBOOKMARK_PROJECT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.START_PROJECT_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.START_TENSORBOARD)
+        };
+      case actionTypes.START_PROJECT_TENSORBOARD_ERROR:
+      case actionTypes.START_PROJECT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.START_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_PROJECT_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.STOP_TENSORBOARD)
+        };
+      case actionTypes.STOP_PROJECT_TENSORBOARD_ERROR:
+      case actionTypes.STOP_PROJECT_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.STOP_TENSORBOARD)
+        };
+
+      case actionTypes.START_PROJECT_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.START_NOTEBOOK)
+        };
+      case actionTypes.START_PROJECT_NOTEBOOK_ERROR:
+      case actionTypes.START_PROJECT_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.START_NOTEBOOK)
+        };
+
+      case actionTypes.STOP_PROJECT_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.STOP_NOTEBOOK)
+        };
+      case actionTypes.STOP_PROJECT_NOTEBOOK_ERROR:
+      case actionTypes.STOP_PROJECT_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.STOP_NOTEBOOK)
+        };
+
+      case actionTypes.FETCH_PROJECTS_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorGlobal(state.projects, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_PROJECTS_ERROR:
+      case actionTypes.FETCH_PROJECTS_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorGlobal(state.projects, false, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_PROJECT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorGlobal(state.projects, true, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_PROJECT_ERROR:
+        return {
+          ...state,
+          projects: processLoadingIndicatorGlobal(state.projects, false, ACTIONS.CREATE)
+        };
       default:
         return state;
     }

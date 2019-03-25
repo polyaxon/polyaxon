@@ -14,6 +14,7 @@ export interface UpdateProjectRequestAction extends Action {
 export interface UpdateProjectSuccessAction extends Action {
   type: actionTypes.UPDATE_PROJECT_SUCCESS;
   project: ProjectModel;
+  projectName: string;
 }
 
 export interface UpdateProjectErrorAction extends Action {
@@ -33,7 +34,8 @@ export function updateProjectRequestActionCreator(projectName: string): UpdatePr
 export function updateProjectSuccessActionCreator(project: ProjectModel): UpdateProjectSuccessAction {
   return {
     type: actionTypes.UPDATE_PROJECT_SUCCESS,
-    project
+    project,
+    projectName: project.unique_name,
   };
 }
 

@@ -15,6 +15,7 @@ export interface UpdateGroupRequestAction extends Action {
 export interface UpdateGroupSuccessAction extends Action {
   type: actionTypes.UPDATE_GROUP_SUCCESS;
   group: GroupModel;
+  groupName: string;
 }
 
 export interface UpdateGroupErrorAction extends Action {
@@ -34,7 +35,8 @@ export function updateGroupRequestActionCreator(groupName: string): UpdateGroupR
 export function updateGroupSuccessActionCreator(group: GroupModel): UpdateGroupSuccessAction {
   return {
     type: actionTypes.UPDATE_GROUP_SUCCESS,
-    group
+    group,
+    groupName: group.unique_name
   };
 }
 

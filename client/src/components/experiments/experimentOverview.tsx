@@ -31,7 +31,7 @@ export interface Props {
   experiment: ExperimentModel;
   onUpdate: (updateDict: { [key: string]: any }) => actions.ExperimentAction;
   onFetch: () => actions.ExperimentAction;
-  onFetchCodeReference: () => codeRefActions.CodeReferenceAction;
+  onGetCodeReference: () => codeRefActions.CodeReferenceAction;
 }
 
 export interface State {
@@ -234,7 +234,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
             <Collapse in={this.state.openCodeRef}>
             <div className="row">
               <div className="col-md-12">
-                <CodeReference fetchData={this.props.onFetchCodeReference} codeReferenceId={experiment.code_reference}/>
+                <CodeReference fetchData={this.props.onGetCodeReference} codeReferenceId={experiment.code_reference}/>
               </div>
             </div>
             </Collapse>

@@ -3,7 +3,7 @@ import { Action } from 'redux';
 import { BASE_API_URL } from '../../constants/api';
 import { getExperimentUniqueName, getExperimentUrl, getExperimentUrlFromName } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
-import { fetchCodeReference } from '../codeReference';
+import { getCodeReference } from '../codeReference';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
@@ -15,6 +15,7 @@ export interface GetExperimentRequestAction extends Action {
 export interface GetExperimentSuccessAction extends Action {
   type: actionTypes.GET_EXPERIMENT_SUCCESS;
   experiment: ExperimentModel;
+  experimentName: string;
 }
 
 export interface GetExperimentErrorAction extends Action {
@@ -34,7 +35,8 @@ export function getExperimentRequestActionCreator(experimentName: string): GetEx
 export function getExperimentSuccessActionCreator(experiment: ExperimentModel): GetExperimentSuccessAction {
   return {
     type: actionTypes.GET_EXPERIMENT_SUCCESS,
-    experiment
+    experiment,
+    experimentName: experiment.unique_name
   };
 }
 
@@ -57,7 +59,7 @@ export type GetExperimentAction =
 export function getExperimentCodeReference(experimentName: string): any {
   const experimentUrl = getExperimentUrlFromName(experimentName, false);
   const codeRefUrl = `${experimentUrl}/coderef`;
-  return fetchCodeReference(codeRefUrl);
+  return getCodeReference(codeRefUrl);
 }
 
 export function getExperiment(user: string, projectName: string, experimentId: number): any {

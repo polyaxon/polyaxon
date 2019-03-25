@@ -3,9 +3,16 @@ import { normalize } from 'normalizr';
 import { Reducer } from 'redux';
 
 import { actionTypes, GroupAction } from '../actions/groups';
+import { ACTIONS } from '../constants/actions';
 import { GroupSchema } from '../constants/schemas';
 import { STOPPING } from '../constants/statuses';
 import { GroupModel, GroupsEmptyState, GroupStateSchema } from '../models/group';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { LastFetchedNames } from '../models/utils';
 
@@ -154,6 +161,172 @@ export const ProjectGroupsReducer: Reducer<ProjectStateSchema> =
           newState = processGroup(experiment);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorGroupReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: GroupAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_GROUP_ERROR:
+      case actionTypes.UPDATE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_GROUP_ERROR:
+      case actionTypes.GET_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_GROUP_ERROR:
+      case actionTypes.DELETE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_GROUP_ERROR:
+      case actionTypes.ARCHIVE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_GROUP_ERROR:
+      case actionTypes.RESTORE_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_GROUP_ERROR:
+      case actionTypes.STOP_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_GROUP_ERROR:
+      case actionTypes.BOOKMARK_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, true, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_GROUP_ERROR:
+      case actionTypes.UNBOOKMARK_GROUP_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups, action.groupName, false, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.START_GROUP_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups,
+                                              action.groupName,
+                                              true,
+                                              ACTIONS.START_TENSORBOARD)
+        };
+      case actionTypes.START_GROUP_TENSORBOARD_ERROR:
+      case actionTypes.START_GROUP_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups,
+                                              action.groupName,
+                                              false,
+                                              ACTIONS.START_TENSORBOARD)
+        };
+
+      case actionTypes.STOP_GROUP_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(state.groups,
+                                              action.groupName,
+                                              true,
+                                              ACTIONS.STOP_TENSORBOARD)
+        };
+      case actionTypes.STOP_GROUP_TENSORBOARD_ERROR:
+      case actionTypes.STOP_GROUP_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorById(
+            state.groups,
+            action.groupName,
+            false,
+            ACTIONS.STOP_TENSORBOARD)
+        };
+
+      case actionTypes.FETCH_GROUPS_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorGlobal(state.groups, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_GROUPS_ERROR:
+      case actionTypes.FETCH_GROUPS_SUCCESS:
+        return {
+          ...state,
+          groups: processLoadingIndicatorGlobal(state.groups, false, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_GROUP_REQUEST:
+        return {
+          ...state,
+          groups: processLoadingIndicatorGlobal(state.groups, true, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_GROUP_ERROR:
+        return {
+          ...state,
+          groups: processLoadingIndicatorGlobal(state.groups, false, ACTIONS.CREATE)
+        };
       default:
         return state;
     }

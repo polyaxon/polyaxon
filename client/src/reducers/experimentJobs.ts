@@ -4,10 +4,17 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, ExperimentJobAction } from '../actions/experimentJobs';
+import { ACTIONS } from '../constants/actions';
 import { JobSchema } from '../constants/schemas';
 import { getExperimentIndexName, getExperimentJobIndexName } from '../constants/utils';
 import { ExperimentsEmptyState, ExperimentStateSchema } from '../models/experiment';
 import { ExperimentJobModel, ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/experimentJob';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { LastFetchedNames } from '../models/utils';
 
 export const ExperimentJobsReducer: Reducer<ExperimentJobStateSchema> =
@@ -69,6 +76,40 @@ export const ExperimentJobExperimentsReducer: Reducer<ExperimentStateSchema> =
           newState = processJob(job);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorExperimentJobReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: ExperimentJobAction) => {
+    switch (action.type) {
+      case actionTypes.GET_EXPERIMENT_JOB_REQUEST:
+        return {
+          ...state,
+          experimentJobs: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.experimentJobs, action.jobName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_EXPERIMENT_JOB_ERROR:
+      case actionTypes.GET_EXPERIMENT_JOB_SUCCESS:
+        return {
+          ...state,
+          experimentJobs: processLoadingIndicatorById(state.experimentJobs, action.jobName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.FETCH_EXPERIMENT_JOBS_REQUEST:
+        return {
+          ...state,
+          experimentJobs: processLoadingIndicatorGlobal(state.experimentJobs, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_EXPERIMENT_JOBS_ERROR:
+      case actionTypes.FETCH_EXPERIMENT_JOBS_SUCCESS:
+        return {
+          ...state,
+          experimentJobs: processLoadingIndicatorGlobal(state.experimentJobs, false, ACTIONS.FETCH)
+        };
       default:
         return state;
     }

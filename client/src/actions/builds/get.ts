@@ -14,6 +14,7 @@ export interface GetBuildRequestAction extends Action {
 export interface GetBuildSuccessAction extends Action {
   type: actionTypes.GET_BUILD_SUCCESS;
   build: BuildModel;
+  buildName: string;
 }
 
 export interface GetBuildErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getBuildRequestActionCreator(buildName: string): GetBuildRequest
 export function getBuildSuccessActionCreator(build: BuildModel): GetBuildSuccessAction {
   return {
     type: actionTypes.GET_BUILD_SUCCESS,
-    build
+    build,
+    buildName: build.unique_name
   };
 }
 

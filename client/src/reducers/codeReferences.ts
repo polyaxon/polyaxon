@@ -4,12 +4,15 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, CodeReferenceAction } from '../actions/codeReference';
+import { ACTIONS } from '../constants/actions';
 import { codeReferenceSchema } from '../constants/schemas';
+import { CodeReferenceEmptyState, CodeReferenceModel, CodeReferenceStateSchema } from '../models/codeReference';
 import {
-  CodeReferenceEmptyState,
-  CodeReferenceModel,
-  CodeReferenceStateSchema
-} from '../models/codeReference';
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { LastFetchedIds } from '../models/utils';
 
 export const codeReferencesReducer: Reducer<CodeReferenceStateSchema> =
@@ -29,11 +32,33 @@ export const codeReferencesReducer: Reducer<CodeReferenceStateSchema> =
     };
 
     switch (action.type) {
-      case actionTypes.FETCH_CODE_REFERENCE_REQUEST:
+      case actionTypes.GET_CODE_REFERENCE_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.FETCH_CODE_REFERENCE_SUCCESS:
+      case actionTypes.GET_CODE_REFERENCE_SUCCESS:
         return processSearch(action.codeReference);
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorCodeReferenceReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: CodeReferenceAction) => {
+    switch (action.type) {
+      case actionTypes.GET_CODE_REFERENCE_REQUEST:
+        return {
+          ...state,
+          codeReference: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.codeReference, 0, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_CODE_REFERENCE_ERROR:
+      case actionTypes.GET_CODE_REFERENCE_SUCCESS:
+        return {
+          ...state,
+          codeReference: processLoadingIndicatorById(state.codeReference, 0, false, ACTIONS.GET)
+        };
       default:
         return state;
     }

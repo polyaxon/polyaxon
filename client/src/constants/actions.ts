@@ -1,0 +1,16 @@
+export const ACTIONS = {
+  CREATE: 'create',
+  UPDATE: 'update',
+  DELETE: 'delete',
+  GET: 'get',
+  FETCH: 'fetch',
+  ARCHIVE: 'archive',
+  RESTORE: 'restore',
+  STOP: 'stop',
+  BOOKMARK: 'bookmark',
+  UNBOOKMARK: 'unbookmark',
+  START_NOTEBOOK: 'start_notebook',
+  STOP_NOTEBOOK: 'stop_notebook',
+  START_TENSORBOARD: 'start_tensorboard',
+  STOP_TENSORBOARD: 'stop_tensorboard',
+};

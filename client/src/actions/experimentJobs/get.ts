@@ -14,6 +14,7 @@ export interface GetExperimentJobRequestAction extends Action {
 export interface GetExperimentJobSuccessAction extends Action {
   type: actionTypes.GET_EXPERIMENT_JOB_SUCCESS;
   job: ExperimentJobModel;
+  jobName: string;
 }
 
 export interface GetExperimentJobErrorAction extends Action {
@@ -33,7 +34,8 @@ export function getExperimentJobRequestActionCreator(jobName: string): GetExperi
 export function getExperimentJobSuccessActionCreator(job: ExperimentJobModel): GetExperimentJobSuccessAction {
   return {
     type: actionTypes.GET_EXPERIMENT_JOB_SUCCESS,
-    job
+    job,
+    jobName: job.unique_name
   };
 }
 

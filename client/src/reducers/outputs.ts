@@ -1,6 +1,12 @@
 import { Reducer } from 'redux';
 
 import { actionTypes, OutputsAction } from '../actions/outputs';
+import { ACTIONS } from '../constants/actions';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById
+} from '../models/loadingIndicator';
 import { OutputsEmptyState, OutputsModel, OutputsNode } from '../models/outputs';
 
 export const outputsReducer: Reducer<OutputsModel> =
@@ -53,6 +59,38 @@ export const outputsReducer: Reducer<OutputsModel> =
           outputsTree: {root: outputsNode},
           outputsFiles
         };
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorOutputsReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: OutputsAction) => {
+    switch (action.type) {
+      case actionTypes.FETCH_OUTPUTS_FILE_REQUEST:
+        return {
+          ...state,
+          chartViews: processLoadingIndicatorById(state.chartViews, action.path, true, ACTIONS.GET)
+        };
+      case actionTypes.FETCH_OUTPUTS_FILE_ERROR:
+      case actionTypes.FETCH_OUTPUTS_FILE_SUCCESS:
+        return {
+          ...state,
+          chartViews: processLoadingIndicatorById(state.chartViews, action.path, false, ACTIONS.GET)
+        };
+
+      case actionTypes.FETCH_OUTPUTS_TREE_REQUEST:
+        return {
+          ...state,
+          chartViews: processLoadingIndicatorById(state.chartViews, action.path, true, ACTIONS.GET)
+        };
+      case actionTypes.FETCH_OUTPUTS_TREE_ERROR:
+      case actionTypes.FETCH_OUTPUTS_TREE_SUCCESS:
+        return {
+          ...state,
+          chartViews: processLoadingIndicatorById(state.chartViews, action.path, false, ACTIONS.GET)
+        };
+
       default:
         return state;
     }

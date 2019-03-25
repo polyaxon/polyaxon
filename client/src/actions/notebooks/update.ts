@@ -14,6 +14,7 @@ export interface UpdateNotebookRequestAction extends Action {
 export interface UpdateNotebookSuccessAction extends Action {
   type: actionTypes.UPDATE_NOTEBOOK_SUCCESS;
   notebook: NotebookModel;
+  notebookName: string;
 }
 
 export interface UpdateNotebookErrorAction extends Action {
@@ -33,7 +34,8 @@ export function updateNotebookRequestActionCreator(notebookName: string): Update
 export function updateNotebookSuccessActionCreator(notebook: NotebookModel): UpdateNotebookSuccessAction {
   return {
     type: actionTypes.UPDATE_NOTEBOOK_SUCCESS,
-    notebook
+    notebook,
+    notebookName: notebook.unique_name
   };
 }
 

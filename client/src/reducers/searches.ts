@@ -4,12 +4,15 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, SearchAction } from '../actions/search';
+import { ACTIONS } from '../constants/actions';
 import { searchSchema } from '../constants/schemas';
 import {
-  SearchesEmptyState,
-  SearchesStateSchema,
-  SearchModel
-} from '../models/search';
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
+import { SearchesEmptyState, SearchesStateSchema, SearchModel } from '../models/search';
 import { LastFetchedIds } from '../models/utils';
 
 export const searchesReducer: Reducer<SearchesStateSchema> =
@@ -32,7 +35,7 @@ export const searchesReducer: Reducer<SearchesStateSchema> =
       case actionTypes.FETCH_SEARCHES_REQUEST:
         newState.lastFetched = new LastFetchedIds();
         return newState;
-      case actionTypes.GET_SEARCH_SUCCESS_SUCCESS:
+      case actionTypes.GET_SEARCH_SUCCESS:
         return processSearch(action.search);
       case actionTypes.DELETE_SEARCH_SUCCESS:
         return {
@@ -52,6 +55,54 @@ export const searchesReducer: Reducer<SearchesStateSchema> =
           newState = processSearch(search);
         }
         return newState;
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorSearchesReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: SearchAction) => {
+    switch (action.type) {
+      case actionTypes.GET_SEARCH_SUCCESS:
+        return {
+          ...state,
+          searches: processLoadingIndicatorById(state.searches, action.searchId, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_SEARCH_REQUEST:
+        return {
+          ...state,
+          searches: processLoadingIndicatorById(state.searches, action.searchId, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_SEARCH_ERROR:
+      case actionTypes.DELETE_SEARCH_SUCCESS:
+        return {
+          ...state,
+          searches: processLoadingIndicatorById(state.searches, action.searchId, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.FETCH_SEARCHES_REQUEST:
+        return {
+          ...state,
+          searches: processLoadingIndicatorGlobal(state.searches, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_SEARCHES_ERROR:
+      case actionTypes.FETCH_SEARCHES_SUCCESS:
+        return {
+          ...state,
+          searches: processLoadingIndicatorGlobal(state.searches, false, ACTIONS.FETCH)
+        };
+
+      case actionTypes.CREATE_SEARCH_REQUEST:
+        return {
+          ...state,
+          searches: processLoadingIndicatorGlobal(state.searches, true, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_SEARCH_ERROR:
+        return {
+          ...state,
+          searches: processLoadingIndicatorGlobal(state.searches, false, ACTIONS.CREATE)
+        };
       default:
         return state;
     }

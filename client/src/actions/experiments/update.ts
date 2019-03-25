@@ -14,6 +14,7 @@ export interface UpdateExperimentRequestAction extends Action {
 export interface UpdateExperimentSuccessAction extends Action {
   type: actionTypes.UPDATE_EXPERIMENT_SUCCESS;
   experiment: ExperimentModel;
+  experimentName: string;
 }
 
 export interface UpdateExperimentErrorAction extends Action {
@@ -33,7 +34,8 @@ export function updateExperimentRequestActionCreator(experimentName: string): Up
 export function updateExperimentSuccessActionCreator(experiment: ExperimentModel): UpdateExperimentSuccessAction {
   return {
     type: actionTypes.UPDATE_EXPERIMENT_SUCCESS,
-    experiment
+    experiment,
+    experimentName: experiment.unique_name
   };
 }
 

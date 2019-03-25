@@ -4,8 +4,15 @@ import { Reducer } from 'redux';
 import * as _ from 'lodash';
 
 import { actionTypes, NotebookAction } from '../actions/notebooks';
+import { ACTIONS } from '../constants/actions';
 import { NotebookSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
+import {
+  LoadingIndicatorEmptyState,
+  LoadingIndicatorSchema,
+  processLoadingIndicatorById,
+  processLoadingIndicatorGlobal
+} from '../models/loadingIndicator';
 import { NotebookModel, NotebooksEmptyState, NotebookStateSchema } from '../models/notebook';
 import { LastFetchedNames } from '../models/utils';
 
@@ -109,6 +116,124 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
         return newState;
       case actionTypes.GET_NOTEBOOK_SUCCESS:
         return processBuild(action.notebook);
+      default:
+        return state;
+    }
+  };
+
+export const LoadingIndicatorNotebooksReducer: Reducer<LoadingIndicatorSchema> =
+  (state: LoadingIndicatorSchema = LoadingIndicatorEmptyState, action: NotebookAction) => {
+    switch (action.type) {
+      case actionTypes.UPDATE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.UPDATE)
+        };
+      case actionTypes.UPDATE_NOTEBOOK_ERROR:
+      case actionTypes.UPDATE_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.UPDATE)
+        };
+
+      case actionTypes.GET_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorGlobal(
+            processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.GET),
+            false,
+            ACTIONS.CREATE)
+        };
+      case actionTypes.GET_NOTEBOOK_ERROR:
+      case actionTypes.GET_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.GET)
+        };
+
+      case actionTypes.DELETE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.DELETE)
+        };
+      case actionTypes.DELETE_NOTEBOOK_ERROR:
+      case actionTypes.DELETE_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.DELETE)
+        };
+
+      case actionTypes.ARCHIVE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.ARCHIVE)
+        };
+      case actionTypes.ARCHIVE_NOTEBOOK_ERROR:
+      case actionTypes.ARCHIVE_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTORE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.RESTORE)
+        };
+      case actionTypes.RESTORE_NOTEBOOK_ERROR:
+      case actionTypes.RESTORE_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.STOP_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.STOP)
+        };
+      case actionTypes.STOP_NOTEBOOK_ERROR:
+      case actionTypes.STOP_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.STOP)
+        };
+
+      case actionTypes.BOOKMARK_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.BOOKMARK)
+        };
+      case actionTypes.BOOKMARK_NOTEBOOK_ERROR:
+      case actionTypes.BOOKMARK_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.UNBOOKMARK_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, true, ACTIONS.UNBOOKMARK)
+        };
+      case actionTypes.UNBOOKMARK_NOTEBOOK_ERROR:
+      case actionTypes.UNBOOKMARK_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorById(state.notebooks, action.notebookName, false, ACTIONS.UNBOOKMARK)
+        };
+
+      case actionTypes.FETCH_NOTEBOOKS_REQUEST:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorGlobal(state.notebooks, true, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_NOTEBOOKS_ERROR:
+      case actionTypes.FETCH_NOTEBOOKS_SUCCESS:
+        return {
+          ...state,
+          notebooks: processLoadingIndicatorGlobal(state.notebooks, false, ACTIONS.FETCH)
+        };
       default:
         return state;
     }
