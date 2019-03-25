@@ -1,9 +1,9 @@
 import { ErrorMessage, Field, FormikProps } from 'formik';
-import * as _ from 'lodash';
 import * as React from 'react';
 import * as Yup from 'yup';
 
 import { NameSlug } from '../../constants/helpTexts';
+import { checkServerError, checkValidationError } from './utils';
 
 export const NameSchema = Yup.string()
   .min(2, 'Name too Short.')
@@ -17,22 +17,27 @@ function validateName(value: string) {
   return error;
 }
 
-export const NameField = (props: FormikProps<{}>) => (
-  <div
-    className={`${(_.get(props.errors, 'name') && _.get(props.touched, 'name')) ? 'has-error' : ''} form-group`}
-  >
-    <label className="col-sm-2 control-label">Name</label>
-    <div className="col-sm-5">
-      <Field
-        type="text"
-        name="name"
-        className="form-control input-sm"
-        validate={validateName}
-      />
-      <span id="helpBlock" className="help-block">{NameSlug}</span>
-      <ErrorMessage name="name">
-        {(errorMessage) => <div className="help-block">{errorMessage}</div>}
-      </ErrorMessage>
+export const NameField = (props: FormikProps<{}>, errors: any) => {
+  const hasServerError = checkServerError(errors, 'name');
+  const hasValidationError = checkValidationError(props, 'name');
+  const hasError = hasServerError || hasValidationError;
+
+  return (
+    <div className={`${hasError ? 'has-error' : ''} form-group`}>
+      <label className="col-sm-2 control-label">Name</label>
+      <div className="col-sm-5">
+        <Field
+          type="text"
+          name="name"
+          className="form-control input-sm"
+          validate={validateName}
+        />
+        <span id="helpBlock" className="help-block">{NameSlug}</span>
+        {hasServerError && <div className="help-block">{errors.name}</div>}
+        <ErrorMessage name="name">
+          {(errorMessage) => <div className="help-block">{errorMessage}</div>}
+        </ErrorMessage>
+      </div>
     </div>
-  </div>
-);
+  );
+};
