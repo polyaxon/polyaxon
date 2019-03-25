@@ -10,6 +10,7 @@ import { ExperimentModel } from '../../models/experiment';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { ConfigField, ConfigSchema } from '../forms/configField';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
+import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
 import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
 import { TagsField } from '../forms/tagsField';
@@ -69,6 +70,7 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
               }}
               render={(props: FormikProps<State>) => (
                 <form className="form-horizontal" onSubmit={props.handleSubmit}>
+                  {ErrorsField(this.props.errors)}
                   {ConfigField(props, this.props.errors)}
                   {NameField(props, this.props.errors)}
                   {DescriptionField(props, this.props.errors)}
