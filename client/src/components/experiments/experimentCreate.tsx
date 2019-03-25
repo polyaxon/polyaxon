@@ -85,7 +85,7 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
                       >
                         Create experiment
                       </button>
-                      <LinkContainer to={getProjectUrl(this.props.user, this.props.projectName)}>
+                      <LinkContainer to={`${getProjectUrl(this.props.user, this.props.projectName)}#`}>
                         <button className="btn btn-default pull-right">cancel</button>
                       </LinkContainer>
                     </div>

@@ -259,6 +259,11 @@ a.brand {
   padding: 4px 5px 1px !important;
 }
 
+.header-item-dropdown-toggle .fa-plus-square {
+  font-size: 14px;
+}
+
+
 .header-item-link:hover {
   background-color: #dde1ea21 !important;
   color: #f9f9f9 !important;
