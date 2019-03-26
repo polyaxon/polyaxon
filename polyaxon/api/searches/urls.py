@@ -14,6 +14,10 @@ searches_urlpatterns = [
             views.BuildSearchListView.as_view()),
     re_path(r'^searches/{}/{}/jobs/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.JobSearchListView.as_view()),
+    re_path(r'^searches/{}/{}/notebooks/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.NotebookSearchListView.as_view()),
+    re_path(r'^searches/{}/{}/tensorboards/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.TensorboardSearchListView.as_view()),
 
     re_path(r'^searches/{}/{}/groups/{}?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, ID_PATTERN),
@@ -27,6 +31,12 @@ searches_urlpatterns = [
     re_path(r'^searches/{}/{}/jobs/{}?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, ID_PATTERN),
         views.JobSearchDeleteView.as_view()),
+    re_path(r'^searches/{}/{}/notebooks/{}?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, ID_PATTERN),
+        views.NotebookSearchDeleteView.as_view()),
+    re_path(r'^searches/{}/{}/tensorboards/{}?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, ID_PATTERN),
+        views.TensorboardSearchDeleteView.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(searches_urlpatterns)

@@ -53,6 +53,16 @@ class ExperimentGroupSearchListView(SearchListView):
     content_type = content_types.EXPERIMENT_GROUP
 
 
+class NotebookSearchListView(SearchListView):
+    """List notebook searches for a user and a project."""
+    content_type = content_types.NOTEBOOK_JOB
+
+
+class TensorboardSearchListView(SearchListView):
+    """List tensorboard searches for a user and a project."""
+    content_type = content_types.TENSORBOARD_JOB
+
+
 class SearchDeleteView(ProjectResourceEndpoint, DestroyEndpoint):
     """Base Search delete view."""
     lookup_field = 'id'
@@ -85,3 +95,13 @@ class ExperimentSearchDeleteView(SearchDeleteView):
 class ExperimentGroupSearchDeleteView(SearchDeleteView):
     """Delete experiment group search view."""
     content_type = content_types.EXPERIMENT_GROUP
+
+
+class NotebookSearchDeleteView(SearchDeleteView):
+    """Delete notebook search view."""
+    content_type = content_types.NOTEBOOK_JOB
+
+
+class TensorboardSearchDeleteView(SearchDeleteView):
+    """Delete tensorboard search view."""
+    content_type = content_types.TENSORBOARD_JOB

@@ -6,6 +6,8 @@ EXPERIMENT_GROUP = 'experimentgroup'
 EXPERIMENT = 'experiment'
 JOB = 'job'
 BUILD_JOB = 'buildjob'
+NOTEBOOK_JOB = 'notebookjob'
+TENSORBOARD_JOB = 'tensorboardjob'
 
 CHOICES = (
     (ORGANIZATION, ORGANIZATION),

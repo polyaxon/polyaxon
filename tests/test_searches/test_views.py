@@ -1,5 +1,4 @@
 import pytest
-
 from rest_framework import status
 
 from api.searches.serializers import SearchSerializer
@@ -113,7 +112,7 @@ class BaseTestSearchDeleteView(BaseViewTest):
 
 
 @pytest.mark.search_mark
-class TestExperimentSearchCreateView(BaseTestSearchListView):
+class TestExperimentSearchListView(BaseTestSearchListView):
     entity = 'experiments'
     content_type = content_types.EXPERIMENT
 
@@ -125,7 +124,7 @@ class TestExperimentSearchDeleteView(BaseTestSearchDeleteView):
 
 
 @pytest.mark.search_mark
-class TestExperimentGroupSearchCreateView(BaseTestSearchListView):
+class TestExperimentGroupSearchListView(BaseTestSearchListView):
     entity = 'groups'
     content_type = content_types.EXPERIMENT_GROUP
 
@@ -137,7 +136,7 @@ class TestExperimentGroupSearchDeleteView(BaseTestSearchDeleteView):
 
 
 @pytest.mark.search_mark
-class TestJobSearchCreateView(BaseTestSearchListView):
+class TestJobSearchListView(BaseTestSearchListView):
     entity = 'jobs'
     content_type = content_types.JOB
 
@@ -149,7 +148,7 @@ class TestJobSearchDeleteView(BaseTestSearchDeleteView):
 
 
 @pytest.mark.search_mark
-class TestBuildSearchCreateView(BaseTestSearchListView):
+class TestBuildSearchListView(BaseTestSearchListView):
     entity = 'builds'
     content_type = content_types.BUILD_JOB
 
@@ -158,6 +157,30 @@ class TestBuildSearchCreateView(BaseTestSearchListView):
 class TestBuildSearchDeleteView(BaseTestSearchDeleteView):
     entity = 'builds'
     content_type = content_types.BUILD_JOB
+
+
+@pytest.mark.search_mark
+class TestNotebookSearchListView(BaseTestSearchListView):
+    entity = 'notebooks'
+    content_type = content_types.NOTEBOOK_JOB
+
+
+@pytest.mark.search_mark
+class TestNotebookSearchDeleteView(BaseTestSearchDeleteView):
+    entity = 'notebooks'
+    content_type = content_types.NOTEBOOK_JOB
+
+
+@pytest.mark.search_mark
+class TestTensorboardSearchListView(BaseTestSearchListView):
+    entity = 'tensorboards'
+    content_type = content_types.TENSORBOARD_JOB
+
+
+@pytest.mark.search_mark
+class TestTensorboardSearchDeleteView(BaseTestSearchDeleteView):
+    entity = 'tensorboards'
+    content_type = content_types.TENSORBOARD_JOB
 
 
 del BaseTestSearchListView
