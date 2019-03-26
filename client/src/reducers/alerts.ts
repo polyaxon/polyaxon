@@ -24,7 +24,7 @@ export const AlertReducer: Reducer<AlertSchema> =
   };
 
 export const AlertSliceReducer = (state: AppState, action: Action) => {
-  let newState = AlertReducer(state.errors, action);
+  let newState = AlertReducer(state.alerts, action);
   newState = AlertHealthStatusReducer(newState, action);
   newState = AlertChartViewReducer(newState, action);
   newState = AlertOutputsReducer(newState, action);

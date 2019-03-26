@@ -2,16 +2,16 @@ import * as _ from 'lodash';
 
 import { AlertByIds, AlertGlobal } from '../models/alerts';
 
-export const getErrorsByIds = (errors: AlertByIds, isLoading: boolean, id: string, type: string): boolean => {
-  if (!(_.isNil(errors[id])) && errors[id].type === type && isLoading) {
-    return errors[id].error;
+export const getErrorsByIds = (alerts: AlertByIds, isLoading: boolean, id: string, type: string): boolean => {
+  if (!(_.isNil(alerts[id])) && alerts[id].type === type && isLoading) {
+    return alerts[id].error;
   }
   return false;
 };
 
-export const getErrorsGlobal = (errors: AlertGlobal, isLoading: boolean, type: string): boolean => {
-  if (!(_.isNil(errors[type])) && !(_.isNil(errors[type].error) && isLoading)) {
-    return errors[type].error;
+export const getErrorsGlobal = (alerts: AlertGlobal, isLoading: boolean, type: string): boolean => {
+  if (!(_.isNil(alerts[type])) && !(_.isNil(alerts[type].error) && isLoading)) {
+    return alerts[type].error;
   }
   return false;
 };

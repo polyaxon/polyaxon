@@ -39,7 +39,6 @@ export interface AppState {
   auth: TokenStateSchema;
   healthStatus: HealthStatusStateSchema;
   users: UserStateSchema;
-  // form: FormReducer;
   logs: string;
   outputs: OutputsModel;
   statuses: StatusStateSchema;
@@ -49,7 +48,7 @@ export interface AppState {
   chartViews: ChartViewStateSchema;
   codeReferences: CodeReferenceStateSchema;
   loadingIndicators: LoadingIndicatorSchema;
-  errors: AlertSchema;
+  alerts: AlertSchema;
 }
 
 export const AppEmptyState = {
@@ -73,5 +72,5 @@ export const AppEmptyState = {
   chartViews: ChartViewEmptyState,
   codeReferences: CodeReferenceEmptyState,
   loadingIndicators: LoadingIndicatorEmptyState,
-  errors: AlertEmptyState,
+  alerts: AlertEmptyState,
 };

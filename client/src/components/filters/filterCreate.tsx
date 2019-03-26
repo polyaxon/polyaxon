@@ -8,7 +8,6 @@ import { SortField, SortSchema } from './sortField';
 
 export interface Props {
   onCreate: (form: { name: string, query: string, sort: string }) => void;
-  onClose: () => void;
   query: string;
   sort: string;
   isLoading: boolean;
@@ -60,11 +59,6 @@ export default class FilterCreate extends React.Component<Props, {}> {
                   disabled={this.props.isLoading}
                 >
                   Save search
-                </button>
-                <button
-                  className="btn btn-default pull-right"
-                  onClick={this.props.onClose}
-                >cancel
                 </button>
               </div>
             </div>

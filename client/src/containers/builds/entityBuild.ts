@@ -12,7 +12,7 @@ import { getIsLoading } from '../../utils/isLoading';
 
 export function mapStateToProps(state: AppState, params: any) {
   const isLoading = getIsLoading(state.loadingIndicators.builds.byIds, params.buildName, ACTIONS.GET);
-  const errors = getErrorsByIds(state.errors.builds.byIds, isLoading, params.buildName, ACTIONS.GET);
+  const errors = getErrorsByIds(state.alerts.builds.byIds, isLoading, params.buildName, ACTIONS.GET);
   return _.includes(state.builds.uniqueNames, params.buildName) ?
     {
       build: state.builds.byUniqueNames[params.buildName],

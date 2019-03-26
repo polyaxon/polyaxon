@@ -36,7 +36,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     activityLogs: results.activityLogs,
     count: results.count,
     isLoading,
-    errors: getErrorsGlobal(state.errors.statuses.global, isLoading, ACTIONS.FETCH),
+    errors: getErrorsGlobal(state.alerts.statuses.global, isLoading, ACTIONS.FETCH),
   };
 }
 

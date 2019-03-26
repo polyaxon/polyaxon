@@ -39,7 +39,7 @@ export function mapStateToProps(state: AppState, params: any) {
     jobs: results.jobs,
     count: results.count,
     isLoading,
-    errors: getErrorsGlobal(state.errors.experimentJobs.global, isLoading, ACTIONS.FETCH),
+    errors: getErrorsGlobal(state.alerts.experimentJobs.global, isLoading, ACTIONS.FETCH),
   };
 }
 

@@ -17,7 +17,7 @@ export function mapStateToProps(state: AppState, params: any) {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
     isLoading,
-    errors: getErrorsGlobal(state.errors.jobs.global, isLoading, ACTIONS.CREATE),
+    errors: getErrorsGlobal(state.alerts.jobs.global, isLoading, ACTIONS.CREATE),
   };
 }
 

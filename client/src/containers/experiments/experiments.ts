@@ -83,7 +83,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     useCheckbox: isTrue(ownProps.useCheckbox),
     endpointList: ownProps.endpointList,
     isLoading,
-    errors: getErrorsGlobal(state.errors.experiments.global, isLoading, ACTIONS.FETCH)
+    errors: getErrorsGlobal(state.alerts.experiments.global, isLoading, ACTIONS.FETCH)
   };
 }
 

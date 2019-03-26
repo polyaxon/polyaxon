@@ -28,7 +28,7 @@ export function mapStateToProps(state: AppState, params: any) {
     statuses: results.statuses,
     count: results.count,
     isLoading,
-    errors: getErrorsGlobal(state.errors.statuses.global, isLoading, ACTIONS.FETCH),
+    errors: getErrorsGlobal(state.alerts.statuses.global, isLoading, ACTIONS.FETCH),
   };
 }
 

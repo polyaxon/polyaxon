@@ -301,7 +301,6 @@ export default class FilterList extends React.Component<Props, State> {
                 onCreate={this.saveSearch}
                 query={this.state.query}
                 sort={this.state.sort}
-                onClose={this.handleClose}
               />
             </Modal.Body>
           </Modal>

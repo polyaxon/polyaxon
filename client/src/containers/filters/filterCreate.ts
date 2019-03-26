@@ -8,7 +8,6 @@ import { getErrorsGlobal } from '../../utils/errors';
 
 export interface Params {
   onCreate: (form: { name: string, query: string, sort: string }) => void;
-  onClose: () => void;
   query: string;
   sort: string;
 }
@@ -21,7 +20,7 @@ export function mapStateToProps(state: AppState, params: Params) {
     query: params.query,
     sort: params.sort,
     isLoading,
-    errors: getErrorsGlobal(state.errors.searches.global, isLoading, ACTIONS.CREATE),
+    errors: getErrorsGlobal(state.alerts.searches.global, isLoading, ACTIONS.CREATE),
   };
 }
 

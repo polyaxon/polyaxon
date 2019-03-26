@@ -44,7 +44,6 @@ const combinedReducer = combineReducers<AppState>({
   auth: tokenReducer,
   healthStatus: HealthStatusReducer,
   users: userReducer,
-  // form: formReducer,
   logs: logsReducer,
   outputs: outputsReducer,
   statuses: StatusesReducer,
@@ -54,7 +53,7 @@ const combinedReducer = combineReducers<AppState>({
   chartViews: chartViewsReducer,
   codeReferences: codeReferencesReducer,
   loadingIndicators: LoadingIndicatorReducer,
-  errors: AlertReducer,
+  alerts: AlertReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -89,7 +88,7 @@ function SliceReducer(state: AppState, action: Action) {
     chartViews: state.chartViews,
     codeReferences: state.codeReferences,
     loadingIndicators: LoadingIndicatorSliceReducer(state, action),
-    errors: AlertSliceReducer(state, action),
+    alerts: AlertSliceReducer(state, action),
   };
 }
 

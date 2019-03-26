@@ -60,7 +60,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
     isLoading,
-    errors: getErrorsGlobal(state.errors.groups.global, isLoading, ACTIONS.FETCH),
+    errors: getErrorsGlobal(state.alerts.groups.global, isLoading, ACTIONS.FETCH),
   };
 }
 

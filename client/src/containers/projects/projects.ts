@@ -57,7 +57,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
     isLoading,
-    errors: getErrorsGlobal(state.errors.projects.global, isLoading, ACTIONS.FETCH),
+    errors: getErrorsGlobal(state.alerts.projects.global, isLoading, ACTIONS.FETCH),
   };
 }
 

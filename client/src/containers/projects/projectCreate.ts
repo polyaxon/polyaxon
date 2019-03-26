@@ -15,7 +15,7 @@ export function mapStateToProps(state: AppState, ownProps: {}) {
   return {
     user: state.auth.user,
     isLoading,
-    errors: getErrorsGlobal(state.errors.projects.global, isLoading, ACTIONS.CREATE),
+    errors: getErrorsGlobal(state.alerts.projects.global, isLoading, ACTIONS.CREATE),
   };
 }
 

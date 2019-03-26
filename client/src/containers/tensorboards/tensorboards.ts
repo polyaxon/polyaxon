@@ -47,7 +47,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
     isLoading,
-    errors: getErrorsGlobal(state.errors.tensorboards.global, isLoading, ACTIONS.FETCH),
+    errors: getErrorsGlobal(state.alerts.tensorboards.global, isLoading, ACTIONS.FETCH),
   };
 }
 
