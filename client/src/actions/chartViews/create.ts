@@ -11,6 +11,10 @@ export interface CreateChartViewRequestAction extends Action {
   type: actionTypes.CREATE_CHART_VIEW_REQUEST;
 }
 
+export interface CreateChartViewSuccessAction extends Action {
+  type: actionTypes.CREATE_CHART_VIEW_SUCCESS;
+}
+
 export interface CreateChartViewErrorAction extends Action {
   type: actionTypes.CREATE_CHART_VIEW_ERROR;
   statusCode: number;
@@ -20,6 +24,12 @@ export interface CreateChartViewErrorAction extends Action {
 export function createChartViewRequestActionCreator(): CreateChartViewRequestAction {
   return {
     type: actionTypes.CREATE_CHART_VIEW_REQUEST,
+  };
+}
+
+export function createChartViewSuccessActionCreator(): CreateChartViewSuccessAction {
+  return {
+    type: actionTypes.CREATE_CHART_VIEW_SUCCESS,
   };
 }
 
@@ -33,6 +43,7 @@ export function createChartViewErrorActionCreator(statusCode: number, error: any
 
 export type CreateChartViewAction =
   CreateChartViewRequestAction
+  | CreateChartViewSuccessAction
   | CreateChartViewErrorAction;
 
 export function createChartView(projectUniqueName: string, resources: string, id: number, data: ChartViewModel): any {
@@ -64,7 +75,10 @@ export function createChartView(projectUniqueName: string, resources: string, id
         'Not found',
         'Failed to create chart views'))
       .then((response) => response.json())
-      .then((json) => dispatch(getChartViewSuccessActionCreator(json)))
+      .then((json) => {
+        dispatch(createChartViewSuccessActionCreator());
+        return dispatch(getChartViewSuccessActionCreator(json));
+      })
       .catch((response) => {
         if (response.status === 400) {
           return response.value.json().then(

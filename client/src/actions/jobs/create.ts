@@ -12,6 +12,10 @@ export interface CreateJobRequestAction extends Action {
   type: actionTypes.CREATE_JOB_REQUEST;
 }
 
+export interface CreateJobSuccessAction extends Action {
+  type: actionTypes.CREATE_JOB_SUCCESS;
+}
+
 export interface CreateJobErrorAction extends Action {
   type: actionTypes.CREATE_JOB_ERROR;
   statusCode: number;
@@ -24,6 +28,13 @@ export function createJobRequestActionCreator(): CreateJobRequestAction {
   };
 }
 
+export function createJobSuccessActionCreator(): CreateJobSuccessAction {
+  return {
+    type: actionTypes.CREATE_JOB_SUCCESS,
+  };
+}
+
+
 export function createJobErrorActionCreator(statusCode: number, error: any): CreateJobErrorAction {
   return {
     type: actionTypes.CREATE_JOB_ERROR,
@@ -34,6 +45,7 @@ export function createJobErrorActionCreator(statusCode: number, error: any): Cre
 
 export type CreateJobAction =
   CreateJobRequestAction
+  | CreateJobSuccessAction
   | CreateJobErrorAction;
 
 export function createJob(user: string,
@@ -62,6 +74,7 @@ export function createJob(user: string,
         'Failed to create job'))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(createJobSuccessActionCreator());
         const dispatched = dispatch(getJobSuccessActionCreator(json));
         if (redirect) {
           history.push(getJobUrlFromName(json.unique_name, true));

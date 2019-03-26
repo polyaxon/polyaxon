@@ -12,6 +12,10 @@ export interface CreateGroupRequestAction extends Action {
   type: actionTypes.CREATE_GROUP_REQUEST;
 }
 
+export interface CreateGroupSuccessAction extends Action {
+  type: actionTypes.CREATE_GROUP_SUCCESS;
+}
+
 export interface CreateGroupErrorAction extends Action {
   type: actionTypes.CREATE_GROUP_ERROR;
   statusCode: number;
@@ -21,6 +25,12 @@ export interface CreateGroupErrorAction extends Action {
 export function createGroupRequestActionCreator(): CreateGroupRequestAction {
   return {
     type: actionTypes.CREATE_GROUP_REQUEST,
+  };
+}
+
+export function createGroupSuccessActionCreator(): CreateGroupSuccessAction {
+  return {
+    type: actionTypes.CREATE_GROUP_SUCCESS,
   };
 }
 
@@ -34,6 +44,7 @@ export function createGroupErrorActionCreator(statusCode: number, error: any): C
 
 export type CreateGroupAction =
   CreateGroupRequestAction
+  | CreateGroupSuccessAction
   | CreateGroupErrorAction;
 
 export function createGroup(user: string,
@@ -63,6 +74,7 @@ export function createGroup(user: string,
         'Failed to create group'))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(createGroupSuccessActionCreator());
         const dispatched = dispatch(getGroupSuccessActionCreator(json));
         if (redirect) {
           history.push(getGroupUrlFromName( json.unique_name, true));

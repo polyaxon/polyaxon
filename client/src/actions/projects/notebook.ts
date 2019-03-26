@@ -135,6 +135,7 @@ export function startNotebook(user: string,
         [projectName]))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(startProjectNotebookSuccessActionCreator(projectUniqueName));
         const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
         if (redirect) {
           history.push(getNotebookApiUrlFromName( json.unique_name, true));

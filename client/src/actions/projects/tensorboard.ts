@@ -17,6 +17,11 @@ export interface StartProjectTensorboardRequestAction extends Action {
   projectName: string;
 }
 
+export interface StartProjectTensorboardSuccessAction extends Action {
+  type: actionTypes.START_PROJECT_TENSORBOARD_SUCCESS;
+  projectName: string;
+}
+
 export interface StartProjectTensorboardErrorAction extends Action {
   type: actionTypes.START_PROJECT_TENSORBOARD_ERROR;
   statusCode: number;
@@ -27,6 +32,13 @@ export interface StartProjectTensorboardErrorAction extends Action {
 export function startProjectTensorboardRequestActionCreator(projectName: string): StartProjectTensorboardRequestAction {
   return {
     type: actionTypes.START_PROJECT_TENSORBOARD_REQUEST,
+    projectName
+  };
+}
+
+export function startProjectTensorboardSuccessActionCreator(projectName: string): StartProjectTensorboardSuccessAction {
+  return {
+    type: actionTypes.START_PROJECT_TENSORBOARD_SUCCESS,
     projectName
   };
 }
@@ -86,6 +98,7 @@ export function stopProjectTensorboardErrorActionCreator(statusCode: number,
 
 export type TensorboardProjectAction =
   StartProjectTensorboardRequestAction
+  | StartProjectTensorboardSuccessAction
   | StartProjectTensorboardErrorAction
   | StopProjectTensorboardRequestAction
   | StopProjectTensorboardSuccessAction
@@ -120,6 +133,7 @@ export function startTensorboard(user: string,
         [projectUniqueName]))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(startProjectTensorboardSuccessActionCreator(projectUniqueName));
         const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
         if (redirect) {
           history.push(getProjectUrlFromName( json.unique_name, true));

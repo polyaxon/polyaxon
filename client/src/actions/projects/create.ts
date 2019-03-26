@@ -8,23 +8,33 @@ import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 import { getProjectSuccessActionCreator } from './get';
 
-export interface CreateUpdateRequestProjectAction extends Action {
+export interface CreateProjectRequestAction extends Action {
   type: actionTypes.CREATE_PROJECT_REQUEST;
 }
 
-export interface CreateUpdateErrorProjectAction extends Action {
+export interface CreateProjectSuccessAction extends Action {
+  type: actionTypes.CREATE_PROJECT_SUCCESS;
+}
+
+export interface CreateProjectErrorAction extends Action {
   type: actionTypes.CREATE_PROJECT_ERROR;
   statusCode: number;
   error: any;
 }
 
-export function createProjectRequestActionCreator(): CreateUpdateRequestProjectAction {
+export function createProjectRequestActionCreator(): CreateProjectRequestAction {
   return {
     type: actionTypes.CREATE_PROJECT_REQUEST,
   };
 }
 
-export function createProjectErrorActionCreator(statusCode: number, error: any): CreateUpdateErrorProjectAction {
+export function createProjectSuccessActionCreator(): CreateProjectSuccessAction {
+  return {
+    type: actionTypes.CREATE_PROJECT_SUCCESS,
+  };
+}
+
+export function createProjectErrorActionCreator(statusCode: number, error: any): CreateProjectErrorAction {
   return {
     type: actionTypes.CREATE_PROJECT_ERROR,
     statusCode,
@@ -33,8 +43,9 @@ export function createProjectErrorActionCreator(statusCode: number, error: any):
 }
 
 export type CreateProjectAction =
-  CreateUpdateRequestProjectAction
-  | CreateUpdateErrorProjectAction;
+  CreateProjectRequestAction
+  | CreateProjectSuccessAction
+  | CreateProjectErrorAction;
 
 export function createProject(project: ProjectModel, redirect: boolean = false): any {
   return (dispatch: any, getState: any) => {
@@ -59,6 +70,7 @@ export function createProject(project: ProjectModel, redirect: boolean = false):
         'Failed to create project'))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(createProjectSuccessActionCreator());
         const dispatched = dispatch(getProjectSuccessActionCreator(json));
         if (redirect) {
           history.push(getProjectUrlFromName(json.unique_name, true));

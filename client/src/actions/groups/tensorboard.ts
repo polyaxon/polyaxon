@@ -18,6 +18,11 @@ export interface StartGroupTensorboardRequestAction extends Action {
   groupName: string;
 }
 
+export interface StartGroupTensorboardSuccessAction extends Action {
+  type: actionTypes.START_GROUP_TENSORBOARD_SUCCESS;
+  groupName: string;
+}
+
 export interface StartGroupTensorboardErrorAction extends Action {
   type: actionTypes.START_GROUP_TENSORBOARD_ERROR;
   statusCode: number;
@@ -28,6 +33,13 @@ export interface StartGroupTensorboardErrorAction extends Action {
 export function startGroupTensorboardRequestActionCreator(groupName: string): StartGroupTensorboardRequestAction {
   return {
     type: actionTypes.START_GROUP_TENSORBOARD_REQUEST,
+    groupName,
+  };
+}
+
+export function startGroupTensorboardSuccessActionCreator(groupName: string): StartGroupTensorboardSuccessAction {
+  return {
+    type: actionTypes.START_GROUP_TENSORBOARD_SUCCESS,
     groupName,
   };
 }
@@ -87,6 +99,7 @@ export function stopGroupTensorboardErrorActionCreator(statusCode: number,
 
 export type TensorboardGroupAction =
   StartGroupTensorboardRequestAction
+  | StartGroupTensorboardSuccessAction
   | StartGroupTensorboardErrorAction
   | StopGroupTensorboardRequestAction
   | StopGroupTensorboardSuccessAction
@@ -122,6 +135,7 @@ export function startTensorboard(user: string,
         [groupName]))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(startGroupTensorboardSuccessActionCreator(groupName));
         const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
         if (redirect) {
           history.push(getTensorboardApiUrlFromName( json.unique_name, true));

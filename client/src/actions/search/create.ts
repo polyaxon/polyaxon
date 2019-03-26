@@ -11,6 +11,10 @@ export interface CreateUpdateRequestSearchAction extends Action {
   type: actionTypes.CREATE_SEARCH_REQUEST;
 }
 
+export interface CreateUpdateSuccessSearchAction extends Action {
+  type: actionTypes.CREATE_SEARCH_SUCCESS;
+}
+
 export interface CreateUpdateErrorSearchAction extends Action {
   type: actionTypes.CREATE_SEARCH_ERROR;
   statusCode: number;
@@ -20,6 +24,12 @@ export interface CreateUpdateErrorSearchAction extends Action {
 export function createSearchRequestActionCreator(): CreateUpdateRequestSearchAction {
   return {
     type: actionTypes.CREATE_SEARCH_REQUEST,
+  };
+}
+
+export function createSearchSuccessActionCreator(): CreateUpdateSuccessSearchAction {
+  return {
+    type: actionTypes.CREATE_SEARCH_SUCCESS,
   };
 }
 
@@ -33,6 +43,7 @@ export function createSearchErrorActionCreator(statusCode: number, error: any): 
 
 export type CreateSearchAction =
   | CreateUpdateRequestSearchAction
+  | CreateUpdateSuccessSearchAction
   | CreateUpdateErrorSearchAction;
 
 function _createSearch(searchesUrl: string,
@@ -64,7 +75,10 @@ function _createSearch(searchesUrl: string,
       'Not found',
       'Failed to create search'))
     .then((response) => response.json())
-    .then((json) => dispatch(getSearchSuccessActionCreator(json)))
+    .then((json) => {
+      dispatch(createSearchSuccessActionCreator());
+      return dispatch(getSearchSuccessActionCreator(json));
+    })
     .catch((response) => {
       if (response.status === 400) {
         return response.value.json().then(

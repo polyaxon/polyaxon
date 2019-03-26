@@ -18,6 +18,12 @@ export interface StartExperimentTensorboardRequestAction extends Action {
   experimentName: string;
 }
 
+
+export interface StartExperimentTensorboardSuccessAction extends Action {
+  type: actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS;
+  experimentName: string;
+}
+
 export interface StartExperimentTensorboardErrorAction extends Action {
   type: actionTypes.START_EXPERIMENT_TENSORBOARD_ERROR;
   statusCode: number;
@@ -29,6 +35,14 @@ export function startExperimentTensorboardRequestActionCreator(
   experimentName: string): StartExperimentTensorboardRequestAction {
   return {
     type: actionTypes.START_EXPERIMENT_TENSORBOARD_REQUEST,
+    experimentName,
+  };
+}
+
+export function startExperimentTensorboardSuccessActionCreator(
+  experimentName: string): StartExperimentTensorboardSuccessAction {
+  return {
+    type: actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS,
     experimentName,
   };
 }
@@ -92,6 +106,7 @@ export function stopExperimentTensorboardErrorActionCreator(
 
 export type TensorboardExperimentAction =
   StartExperimentTensorboardRequestAction
+  | StartExperimentTensorboardSuccessAction
   | StartExperimentTensorboardErrorAction
   | StopExperimentTensorboardRequestAction
   | StopExperimentTensorboardSuccessAction
@@ -127,6 +142,7 @@ export function startTensorboard(user: string,
         [experimentName]))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(startExperimentTensorboardSuccessActionCreator(experimentName));
         const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
         if (redirect) {
           history.push(getTensorboardApiUrlFromName(json.unique_name, true));

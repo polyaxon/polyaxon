@@ -12,6 +12,10 @@ export interface CreateBuildRequestAction extends Action {
   type: actionTypes.CREATE_BUILD_REQUEST;
 }
 
+export interface CreateBuildSuccessAction extends Action {
+  type: actionTypes.CREATE_BUILD_SUCCESS;
+}
+
 export interface CreateBuildErrorAction extends Action {
   type: actionTypes.CREATE_BUILD_ERROR;
   statusCode: number;
@@ -21,6 +25,12 @@ export interface CreateBuildErrorAction extends Action {
 export function createBuildRequestActionCreator(): CreateBuildRequestAction {
   return {
     type: actionTypes.CREATE_BUILD_REQUEST,
+  };
+}
+
+export function createBuildSuccessActionCreator(): CreateBuildSuccessAction {
+  return {
+    type: actionTypes.CREATE_BUILD_SUCCESS,
   };
 }
 
@@ -34,6 +44,7 @@ export function createBuildErrorActionCreator(statusCode: number, error: any): C
 
 export type CreateBuildAction =
   CreateBuildRequestAction
+  | CreateBuildSuccessAction
   | CreateBuildErrorAction;
 
 export function createBuild(user: string,
@@ -61,6 +72,7 @@ export function createBuild(user: string,
         'Failed to create build'))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(createBuildSuccessActionCreator());
         const dispatched = dispatch(getBuildSuccessActionCreator(json));
         if (redirect) {
           history.push(getGroupUrlFromName(json.unique_name, true));

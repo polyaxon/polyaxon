@@ -12,6 +12,10 @@ export interface CreateExperimentRequestAction extends Action {
   type: actionTypes.CREATE_EXPERIMENT_REQUEST;
 }
 
+export interface CreateExperimentSuccessAction extends Action {
+  type: actionTypes.CREATE_EXPERIMENT_SUCCESS;
+}
+
 export interface CreateExperimentErrorAction extends Action {
   type: actionTypes.CREATE_EXPERIMENT_ERROR;
   statusCode: number;
@@ -21,6 +25,12 @@ export interface CreateExperimentErrorAction extends Action {
 export function createExperimentRequestActionCreator(): CreateExperimentRequestAction {
   return {
     type: actionTypes.CREATE_EXPERIMENT_REQUEST,
+  };
+}
+
+export function createExperimentSuccessActionCreator(): CreateExperimentSuccessAction {
+  return {
+    type: actionTypes.CREATE_EXPERIMENT_SUCCESS,
   };
 }
 
@@ -34,6 +44,7 @@ export function createExperimentErrorActionCreator(statusCode: number, error: an
 
 export type CreateExperimentAction =
   CreateExperimentRequestAction
+  | CreateExperimentSuccessAction
   | CreateExperimentErrorAction;
 
 export function createExperiment(user: string,
@@ -62,6 +73,7 @@ export function createExperiment(user: string,
         'Failed to create experiment'))
       .then((response) => response.json())
       .then((json) => {
+        dispatch(createExperimentSuccessActionCreator());
         const dispatched = dispatch(getExperimentSuccessActionCreator(json));
         if (redirect) {
           history.push(getExperimentUrlFromName( json.unique_name, true));
