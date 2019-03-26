@@ -6,7 +6,7 @@ import history from '../../history';
 import { BookmarkModel } from '../../models/bookmark';
 import { ProjectModel } from '../../models/project';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
-import { stdHandleError } from '../utils';
+import { stdFetchHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface FetchProjectsRequestAction extends Action {
@@ -97,7 +97,7 @@ function _fetchProjects(projectsUrl: string,
       Authorization: 'token ' + getState().auth.token
     }
   })
-    .then((response) => stdHandleError(
+    .then((response) => stdFetchHandleError(
       response,
       dispatch,
       fetchProjectsErrorActionCreator,
@@ -105,7 +105,15 @@ function _fetchProjects(projectsUrl: string,
       'Failed to fetch projects'))
     .then((response) => response.json())
     .then((json) => dispatchActionCreator(json.results, json.count))
-    .catch((error) => undefined);
+    .catch((error) => undefined)
+    .catch((response) => {
+      if (response.status === 400) {
+        return response.value.json().then(
+          (value: any) => dispatch(fetchProjectsErrorActionCreator(response.status, value)));
+      } else {
+        return response.value;
+      }
+    });
 }
 
 export function fetchBookmarkedProjects(user: string,

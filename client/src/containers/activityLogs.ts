@@ -5,6 +5,7 @@ import { AppState } from '../constants/types';
 
 import * as actions from '../actions/activityLog';
 import ActivityLogs from '../components/activitylogs/activityLogs';
+import { isTrue } from '../constants/utils';
 import { ActivityLogModel } from '../models/activitylog';
 
 interface OwnProps {
@@ -31,6 +32,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     isCurrentUser: state.auth.user === ownProps.user,
     activityLogs: results.activityLogs,
     count: results.count,
+    isLoading: isTrue(state.loadingIndicators.statuses.global.fetch),
+    errors: state.errors.statuses.global.fetch,
   };
 }
 

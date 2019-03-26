@@ -7,7 +7,7 @@ import history from '../../history';
 import { BookmarkModel } from '../../models/bookmark';
 import { GroupModel } from '../../models/group';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
-import { stdHandleError } from '../utils';
+import { stdFetchHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface FetchGroupsRequestAction extends Action {
@@ -102,14 +102,22 @@ function _fetchGroups(groupsUrl: string,
       Authorization: 'token ' + getState().auth.token
     }
   })
-    .then((response) => stdHandleError(
-        response,
-        dispatch,
-        fetchGroupsErrorActionCreator,
-        'Groups not found',
-        'Failed to fetch groups'))
+    .then((response) => stdFetchHandleError(
+      response,
+      dispatch,
+      fetchGroupsErrorActionCreator,
+      'Groups not found',
+      'Failed to fetch groups'))
     .then((response) => response.json())
-    .then((json) => dispatchActionCreator(json.results, json.count));
+    .then((json) => dispatchActionCreator(json.results, json.count))
+    .catch((response) => {
+      if (response.status === 400) {
+        return response.value.json().then(
+          (value: any) => dispatch(fetchGroupsErrorActionCreator(response.status, value)));
+      } else {
+        return response.value;
+      }
+    });
 }
 
 export function fetchBookmarkedGroups(user: string,

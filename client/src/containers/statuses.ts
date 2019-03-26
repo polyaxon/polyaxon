@@ -6,6 +6,7 @@ import { StatusModel } from '../models/status';
 
 import * as actions from '../actions/statuses';
 import Statuses from '../components/statuses/statuses';
+import { isTrue } from '../constants/utils';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useLastFetched = () => {
@@ -22,7 +23,9 @@ export function mapStateToProps(state: AppState, params: any) {
 
   return {
     statuses: results.statuses,
-    count: results.count
+    count: results.count,
+    isLoading: isTrue(state.loadingIndicators.statuses.global.fetch),
+    errors: state.errors.statuses.global.fetch,
   };
 }
 

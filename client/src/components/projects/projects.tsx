@@ -25,6 +25,8 @@ export interface Props {
   bookmark: (projectName: string) => actions.ProjectAction;
   unbookmark: (projectName: string) => actions.ProjectAction;
   fetchData: () => actions.ProjectAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 export default class Projects extends React.Component<Props, {}> {
@@ -69,6 +71,8 @@ export default class Projects extends React.Component<Props, {}> {
 
     return (
       <PaginatedTable
+        isLoading={this.props.isLoading}
+        errors={this.props.errors}
         count={this.props.count}
         componentList={listProjects()}
         componentEmpty={empty}

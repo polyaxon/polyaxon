@@ -7,7 +7,7 @@ import history from '../../history';
 import { BookmarkModel } from '../../models/bookmark';
 import { BuildModel } from '../../models/build';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
-import { stdHandleError } from '../utils';
+import { stdFetchHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface FetchBuildsRequestAction extends Action {
@@ -98,14 +98,22 @@ function _fetchBuilds(buildsUrl: string,
         Authorization: 'token ' + getState().auth.token
       }
     })
-    .then((response) => stdHandleError(
-        response,
-        dispatch,
-        fetchBuildsErrorActionCreator,
-        'Builds not found',
-        'Failed to fetch builds'))
+    .then((response) => stdFetchHandleError(
+      response,
+      dispatch,
+      fetchBuildsErrorActionCreator,
+      'Builds not found',
+      'Failed to fetch builds'))
     .then((response) => response.json())
-    .then((json) => dispatchActionCreator(json.results, json.count));
+    .then((json) => dispatchActionCreator(json.results, json.count))
+    .catch((response) => {
+      if (response.status === 400) {
+        return response.value.json().then(
+          (value: any) => dispatch(fetchBuildsErrorActionCreator(response.status, value)));
+      } else {
+        return response.value;
+      }
+    });
 }
 
 export function fetchBookmarkedBuilds(user: string,

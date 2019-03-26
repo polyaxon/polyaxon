@@ -12,6 +12,8 @@ export interface Props {
   jobs: ExperimentJobModel[];
   count: number;
   fetchData: (offset?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 export default class ExperimentJobs extends React.Component<Props, {}> {
@@ -32,6 +34,8 @@ export default class ExperimentJobs extends React.Component<Props, {}> {
     };
     return (
       <PaginatedList
+        isLoading={this.props.isLoading}
+        errors={this.props.errors}
         count={this.props.count}
         componentList={listExperimentJobs()}
         componentHeader={ExperimentJobHeader()}

@@ -7,7 +7,7 @@ import history from '../../history';
 import { BookmarkModel } from '../../models/bookmark';
 import { JobModel } from '../../models/job';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
-import { stdHandleError } from '../utils';
+import { stdFetchHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface FetchJobsRequestAction extends Action {
@@ -99,14 +99,22 @@ function _fetchJobs(jobsUrl: string,
         Authorization: 'token ' + getState().auth.token
       }
     })
-    .then((response) => stdHandleError(
+    .then((response) => stdFetchHandleError(
       response,
       dispatch,
       fetchJobsErrorActionCreator,
       'Jobs not found',
       'Failed to fetch jobs'))
     .then((response) => response.json())
-    .then((json) => dispatchActionCreator(json.results, json.count));
+    .then((json) => dispatchActionCreator(json.results, json.count))
+    .catch((response) => {
+      if (response.status === 400) {
+        return response.value.json().then(
+          (value: any) => dispatch(fetchJobsErrorActionCreator(response.status, value)));
+      } else {
+        return response.value;
+      }
+    });
 }
 
 export function fetchBookmarkedJobs(user: string,

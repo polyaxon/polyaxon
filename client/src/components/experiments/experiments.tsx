@@ -55,6 +55,8 @@ export interface Props {
   createSelection: (data: GroupModel) => groupActions.GroupAction;
   addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
   removeFromSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 interface State {
@@ -565,6 +567,8 @@ export default class Experiments extends React.Component<Props, State> {
     }
     return (
       <PaginatedTable
+        isLoading={this.props.isLoading}
+        errors={this.props.errors}
         count={this.props.count}
         componentList={listExperiments()}
         componentEmpty={empty}

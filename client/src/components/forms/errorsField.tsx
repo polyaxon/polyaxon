@@ -6,7 +6,7 @@ export const ErrorsField = (errors: any) => {
     return (
       <div className="has-error form-group">
         <div className="col-sm-10 col-lg-offset-2">
-          {errors.map((error) => <div className="help-block" key={error}>{errors}</div>)}
+          {errors.map((error) => <div className="help-block" key={error}>{error}</div>)}
         </div>
       </div>
     );

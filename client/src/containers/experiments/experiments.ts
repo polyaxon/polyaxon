@@ -79,6 +79,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showDeleted: isTrue(ownProps.showDeleted),
     useCheckbox: isTrue(ownProps.useCheckbox),
     endpointList: ownProps.endpointList,
+    isLoading: isTrue(state.loadingIndicators.experiments.global.fetch),
+    errors: state.errors.experiments.global.fetch,
   };
 }
 

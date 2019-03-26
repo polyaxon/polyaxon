@@ -10,6 +10,8 @@ export interface Props {
   activityLogs: ActivityLogModel[];
   count: number;
   fetchData: (offset: number) => any;
+  isLoading: boolean;
+  errors: any;
 }
 
 interface State {
@@ -43,6 +45,8 @@ export default class ActivityLogs extends React.Component<Props, State> {
     };
     return (
       <PaginatedList
+        isLoading={this.props.isLoading}
+        errors={this.props.errors}
         count={this.props.count}
         componentList={listActivities()}
         componentHeader={ActivityLogHeader()}

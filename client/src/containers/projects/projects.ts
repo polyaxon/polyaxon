@@ -53,6 +53,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
+    isLoading: isTrue(state.loadingIndicators.projects.global.fetch),
+    errors: state.errors.projects.global.fetch,
   };
 }
 

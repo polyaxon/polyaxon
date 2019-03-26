@@ -14,6 +14,8 @@ export interface Props {
   statuses: StatusModel[];
   count: number;
   fetchData: () => actions.StatusesAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 interface State {
@@ -57,6 +59,8 @@ export default class Statuses extends React.Component<Props, State> {
     return (
       <div>
         <PaginatedList
+          isLoading={this.props.isLoading}
+          errors={this.props.errors}
           count={this.props.count}
           componentList={listStatuses()}
           componentHeader={StatusHeader()}

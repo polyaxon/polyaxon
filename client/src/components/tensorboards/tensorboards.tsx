@@ -35,6 +35,8 @@ export interface Props {
   fetchSearches?: () => search_actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 export default class Tensorboards extends React.Component<Props, {}> {
@@ -89,6 +91,8 @@ export default class Tensorboards extends React.Component<Props, {}> {
 
     return (
       <PaginatedTable
+        isLoading={this.props.isLoading}
+        errors={this.props.errors}
         count={this.props.count}
         componentList={listTensorboards()}
         componentEmpty={empty}

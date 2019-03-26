@@ -7,7 +7,7 @@ import history from '../../history';
 import { BookmarkModel } from '../../models/bookmark';
 import { ExperimentModel } from '../../models/experiment';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
-import { stdHandleError } from '../utils';
+import { stdFetchHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface FetchExperimentsRequestAction extends Action {
@@ -118,14 +118,22 @@ function _fetchExperiments(experimentsUrl: string,
       Authorization: 'token ' + getState().auth.token
     }
   })
-    .then((response) => stdHandleError(
-        response,
-        dispatch,
-        fetchExperimentsErrorActionCreator,
-        'Experiments not found',
-        'Failed to fetch experiments'))
+    .then((response) => stdFetchHandleError(
+      response,
+      dispatch,
+      fetchExperimentsErrorActionCreator,
+      'Experiments not found',
+      'Failed to fetch experiments'))
     .then((response) => response.json())
-    .then((json) => dispatchActionCreator(json.results, json.count));
+    .then((json) => dispatchActionCreator(json.results, json.count))
+    .catch((response) => {
+      if (response.status === 400) {
+        return response.value.json().then(
+          (value: any) => dispatch(fetchExperimentsErrorActionCreator(response.status, value)));
+      } else {
+        return response.value;
+      }
+    });
 }
 
 export function fetchBookmarkedExperiments(user: string,
@@ -152,5 +160,3 @@ export function fetchExperiments(projectUniqueName: string,
     return _fetchExperiments(experimentsUrl, '', filters, dispatch, getState, updateHistory);
   };
 }
-
-

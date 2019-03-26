@@ -9,6 +9,8 @@ import FilterList from '../../containers/filterList';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import Refresh from '../refresh';
+import { Errors } from './errors';
+import { LoadingIndicator } from './loadingIndicator';
 
 import './paginatedList.less';
 
@@ -21,6 +23,8 @@ export interface Props {
   fetchData: (offset: number, query?: string, sort?: string, extraFilters?: {}) => any;
   sortOptions?: string[];
   filterOptions?: FilterOption[];
+  isLoading: boolean;
+  errors: any;
 }
 
 interface State {
@@ -144,24 +148,9 @@ export default class PaginatedList extends React.Component<Props, State> {
       return this.props.filters !== false;
     };
 
-    const getContent = () => {
+    const getResults = () => {
       return (
-        <div className="paginated-list">
-          {(enableFilter())
-            ? <div className="row">
-              <div className="col-md-11">
-                {getFilters()}
-              </div>
-              <div className="col-md-1">
-                <Refresh callback={this.refresh} pullRight={true}/>
-              </div>
-            </div>
-            : <div className="row">
-              <div className="col-md-12 button-refresh-alone">
-                <Refresh callback={this.refresh} pullRight={true}/>
-              </div>
-            </div>
-          }
+        <>
           {this.props.componentHeader &&
           <div className="row">
             <div className="col-md-12">
@@ -198,6 +187,31 @@ export default class PaginatedList extends React.Component<Props, State> {
             </Pager>
           </div>
           }
+        </>
+      );
+    };
+
+    const getContent = () => {
+      return (
+        <div className="paginated-list">
+          {(enableFilter())
+            ? <div className="row">
+              <div className="col-md-11">
+                {getFilters()}
+              </div>
+              <div className="col-md-1">
+                <Refresh callback={this.refresh} pullRight={true}/>
+              </div>
+            </div>
+            : <div className="row">
+              <div className="col-md-12 button-refresh-alone">
+                <Refresh callback={this.refresh} pullRight={true}/>
+              </div>
+            </div>
+          }
+          {this.props.isLoading && LoadingIndicator()}
+          {this.props.errors && Errors(this.props.errors)}
+          {!(this.props.isLoading || this.props.errors) && getResults()}
         </div>
       );
     };

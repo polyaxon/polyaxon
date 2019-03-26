@@ -17,6 +17,8 @@ export interface Props {
   showBookmarks: boolean;
   bookmark: (buildName: string) => actions.BuildAction;
   unbookmark: (buildName: string) => actions.BuildAction;
+  isLoading: boolean;
+  errors: any;
 }
 
 export default class EntityBuild extends React.Component<Props, {}> {
@@ -49,6 +51,8 @@ export default class EntityBuild extends React.Component<Props, {}> {
     };
     return (
       <PaginatedTable
+        isLoading={this.props.isLoading}
+        errors={this.props.errors}
         count={this.props.build ? 1 : 0}
         componentList={listBuilds()}
         componentEmpty={EmptyList(false, 'build', 'build')}

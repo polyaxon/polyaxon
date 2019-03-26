@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import ExperimentJobs from '../../components/experimentJobs/experimentJobs';
 import { AppState } from '../../constants/types';
-import { getExperimentIndexName } from '../../constants/utils';
+import { getExperimentIndexName, isTrue } from '../../constants/utils';
 import { ExperimentJobModel } from '../../models/experimentJob';
 
 import * as actions from '../../actions/experimentJobs';
@@ -33,7 +33,12 @@ export function mapStateToProps(state: AppState, params: any) {
   };
   const results = useLastFetched();
 
-  return {jobs: results.jobs, count: results.count};
+  return {
+    jobs: results.jobs,
+    count: results.count,
+    isLoading: isTrue(state.loadingIndicators.experimentJobs.global.fetch),
+    errors: state.errors.experimentJobs.global.fetch,
+  };
 }
 
 export interface DispatchProps {
