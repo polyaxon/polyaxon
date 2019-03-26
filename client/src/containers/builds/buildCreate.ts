@@ -5,16 +5,19 @@ import { Dispatch } from 'redux';
 import * as actions from '../../actions/builds';
 import * as modalActions from '../../actions/modal';
 import BuildCreate from '../../components/builds/buildCreate';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { BuildModel } from '../../models/build';
+import { getErrorsGlobal } from '../../utils/errors';
 
 export function mapStateToProps(state: AppState, params: any) {
+  const isLoading = isTrue(state.loadingIndicators.builds.global.create);
   return {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
-    isLoading: isTrue(state.loadingIndicators.builds.global.create),
-    errors: state.errors.builds.global.create,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.builds.global, isLoading, ACTIONS.CREATE),
   };
 }
 

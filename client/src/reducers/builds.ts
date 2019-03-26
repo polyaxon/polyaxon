@@ -7,8 +7,8 @@ import { actionTypes, BuildAction } from '../actions/builds';
 import { ACTIONS } from '../constants/actions';
 import { BuildSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
+import { AlertEmptyState, AlertSchema, processErrorById, processErrorGlobal } from '../models/alerts';
 import { BuildModel, BuildsEmptyState, BuildStateSchema } from '../models/build';
-import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -279,129 +279,171 @@ export const LoadingIndicatorBuildReducer: Reducer<LoadingIndicatorSchema> =
     }
   };
 
-export const ErrorBuildReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: BuildAction) => {
+export const AlertBuildReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: BuildAction) => {
     switch (action.type) {
       case actionTypes.UPDATE_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.UPDATE)
+        };
       case actionTypes.UPDATE_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.UPDATE)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.UPDATE)
         };
       case actionTypes.UPDATE_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.UPDATE)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.UPDATE)
         };
 
       case actionTypes.GET_BUILD_REQUEST:
-      case actionTypes.GET_BUILD_SUCCESS:
         return {
           ...state,
           builds: processErrorGlobal(
-            processErrorById(state.builds, action.buildName, null, ACTIONS.GET),
+            processErrorById(state.builds, action.buildName, null, null, ACTIONS.GET),
+            null,
             null,
             ACTIONS.CREATE)
+        };
+      case actionTypes.GET_BUILD_SUCCESS:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.GET)
         };
       case actionTypes.GET_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.GET)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.GET)
         };
 
       case actionTypes.DELETE_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.DELETE)
+        };
       case actionTypes.DELETE_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.DELETE)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.DELETE)
         };
       case actionTypes.DELETE_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.DELETE)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.DELETE)
         };
 
       case actionTypes.ARCHIVE_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.ARCHIVE)
+        };
       case actionTypes.ARCHIVE_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.ARCHIVE)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.ARCHIVE)
         };
       case actionTypes.ARCHIVE_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.ARCHIVE)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.ARCHIVE)
         };
 
       case actionTypes.RESTORE_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.RESTORE)
+        };
       case actionTypes.RESTORE_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.RESTORE)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.RESTORE)
         };
       case actionTypes.RESTORE_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.RESTORE)
+          builds: processErrorById(state.builds, action.buildName, action.error, false,  ACTIONS.RESTORE)
         };
 
       case actionTypes.STOP_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.STOP)
+        };
       case actionTypes.STOP_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.STOP)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.STOP)
         };
       case actionTypes.STOP_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.STOP)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.STOP)
         };
 
       case actionTypes.BOOKMARK_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.BOOKMARK)
+        };
       case actionTypes.BOOKMARK_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.BOOKMARK)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.BOOKMARK)
         };
       case actionTypes.BOOKMARK_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.BOOKMARK)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.BOOKMARK)
         };
 
       case actionTypes.UNBOOKMARK_BUILD_REQUEST:
+        return {
+          ...state,
+          builds: processErrorById(state.builds, action.buildName, null, null, ACTIONS.UNBOOKMARK)
+        };
       case actionTypes.UNBOOKMARK_BUILD_SUCCESS:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, null, ACTIONS.UNBOOKMARK)
+          builds: processErrorById(state.builds, action.buildName, null, true, ACTIONS.UNBOOKMARK)
         };
       case actionTypes.UNBOOKMARK_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorById(state.builds, action.buildName, action.error, ACTIONS.UNBOOKMARK)
+          builds: processErrorById(state.builds, action.buildName, action.error, false, ACTIONS.UNBOOKMARK)
         };
 
       case actionTypes.FETCH_BUILDS_REQUEST:
+        return {
+          ...state,
+          builds: processErrorGlobal(state.builds, null, null, ACTIONS.FETCH)
+        };
       case actionTypes.FETCH_BUILDS_SUCCESS:
         return {
           ...state,
-          builds: processErrorGlobal(state.builds, null, ACTIONS.FETCH)
+          builds: processErrorGlobal(state.builds, null, true, ACTIONS.FETCH)
         };
       case actionTypes.FETCH_BUILDS_ERROR:
         return {
           ...state,
-          builds: processErrorGlobal(state.builds, action.error, ACTIONS.FETCH)
+          builds: processErrorGlobal(state.builds, action.error, false, ACTIONS.FETCH)
         };
 
       case actionTypes.CREATE_BUILD_REQUEST:
         return {
           ...state,
-          builds: processErrorGlobal(state.builds, null, ACTIONS.CREATE)
+          builds: processErrorGlobal(state.builds, null, null, ACTIONS.CREATE)
+        };
+        case actionTypes.CREATE_BUILD_SUCCESS:
+        return {
+          ...state,
+          builds: processErrorGlobal(state.builds, null, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_BUILD_ERROR:
         return {
           ...state,
-          builds: processErrorGlobal(state.builds, action.error, ACTIONS.CREATE)
+          builds: processErrorGlobal(state.builds, action.error, false, ACTIONS.CREATE)
         };
       default:
         return state;

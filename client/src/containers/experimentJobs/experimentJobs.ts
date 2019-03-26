@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
+import * as actions from '../../actions/experimentJobs';
 import ExperimentJobs from '../../components/experimentJobs/experimentJobs';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { getExperimentIndexName, isTrue } from '../../constants/utils';
 import { ExperimentJobModel } from '../../models/experimentJob';
-
-import * as actions from '../../actions/experimentJobs';
+import { getErrorsGlobal } from '../../utils/errors';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useFilter = () => {
@@ -33,11 +34,12 @@ export function mapStateToProps(state: AppState, params: any) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.experimentJobs.global.fetch);
   return {
     jobs: results.jobs,
     count: results.count,
-    isLoading: isTrue(state.loadingIndicators.experimentJobs.global.fetch),
-    errors: state.errors.experimentJobs.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.experimentJobs.global, isLoading, ACTIONS.FETCH),
   };
 }
 

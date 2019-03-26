@@ -4,6 +4,8 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 import { StatusModel } from '../models/status';
 
+import { ACTIONS } from '../constants/actions';
+import { getErrorsGlobal } from '../utils/errors';
 import * as actions from '../actions/statuses';
 import Statuses from '../components/statuses/statuses';
 import { isTrue } from '../constants/utils';
@@ -21,11 +23,12 @@ export function mapStateToProps(state: AppState, params: any) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.statuses.global.fetch);
   return {
     statuses: results.statuses,
     count: results.count,
-    isLoading: isTrue(state.loadingIndicators.statuses.global.fetch),
-    errors: state.errors.statuses.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.statuses.global, isLoading, ACTIONS.FETCH),
   };
 }
 

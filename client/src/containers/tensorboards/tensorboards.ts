@@ -10,7 +10,9 @@ import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 import * as search_actions from '../../actions/search';
 import * as actions from '../../actions/tensorboards';
+import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -35,6 +37,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.tensorboards.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     tensorboards: results.tensorboards,
@@ -43,8 +46,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.tensorboards.global.fetch),
-    errors: state.errors.tensorboards.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.tensorboards.global, isLoading, ACTIONS.FETCH),
   };
 }
 

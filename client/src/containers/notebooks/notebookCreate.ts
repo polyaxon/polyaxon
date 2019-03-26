@@ -2,19 +2,22 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../../actions/projects';
 import * as modalActions from '../../actions/modal';
+import * as actions from '../../actions/projects';
 import NotebookCreate from '../../components/notebooks/notebookCreate';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { NotebookModel } from '../../models/notebook';
+import { getErrorsGlobal } from '../../utils/errors';
 
 export function mapStateToProps(state: AppState, params: any) {
+  const isLoading = isTrue(state.loadingIndicators.notebooks.global.create);
   return {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
-    isLoading: isTrue(state.loadingIndicators.notebooks.global.create),
-    errors: state.errors.notebooks.global.create,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.notebooks.global, isLoading, ACTIONS.CREATE),
   };
 }
 

@@ -7,12 +7,14 @@ import * as actions from '../../actions/experiments';
 import * as groupActions from '../../actions/groups';
 import * as searchActions from '../../actions/search';
 import Experiments from '../../components/experiments/experiments';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { getExperimentIndexName, isTrue } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -69,6 +71,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.experiments.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     experiments: results.experiments,
@@ -79,8 +82,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showDeleted: isTrue(ownProps.showDeleted),
     useCheckbox: isTrue(ownProps.useCheckbox),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.experiments.global.fetch),
-    errors: state.errors.experiments.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.experiments.global, isLoading, ACTIONS.FETCH)
   };
 }
 

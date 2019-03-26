@@ -10,8 +10,10 @@ import { JobModel } from '../../models/job';
 
 import * as actions from '../../actions/jobs';
 import * as search_actions from '../../actions/search';
+import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -49,6 +51,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.jobs.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     jobs: results.jobs,
@@ -57,8 +60,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.jobs.global.fetch),
-    errors: state.errors.jobs.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.jobs.global, isLoading, ACTIONS.FETCH),
   };
 }
 

@@ -4,15 +4,18 @@ import { Dispatch } from 'redux';
 import * as modalActions from '../../actions/modal';
 import * as actions from '../../actions/projects';
 import ProjectCreate from '../../components/projects/projectCreate';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
+import { getErrorsGlobal } from '../../utils/errors';
 
 export function mapStateToProps(state: AppState, ownProps: {}) {
+  const isLoading = isTrue(state.loadingIndicators.projects.global.create);
   return {
     user: state.auth.user,
-    isLoading: isTrue(state.loadingIndicators.projects.global.create),
-    errors: state.errors.projects.global.create,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.projects.global, isLoading, ACTIONS.CREATE),
   };
 }
 

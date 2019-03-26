@@ -5,16 +5,19 @@ import { Dispatch } from 'redux';
 import * as actions from '../../actions/experiments';
 import * as modalActions from '../../actions/modal';
 import ExperimentCreate from '../../components/experiments/experimentCreate';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
+import { getErrorsGlobal } from '../../utils/errors';
 
 export function mapStateToProps(state: AppState, params: any) {
+  const isLoading = isTrue(state.loadingIndicators.experiments.global.create);
   return {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
-    isLoading: isTrue(state.loadingIndicators.experiments.global.create),
-    errors: state.errors.experiments.global.create,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.experiments.global, isLoading, ACTIONS.CREATE),
   };
 }
 

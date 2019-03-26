@@ -7,12 +7,12 @@ import EntityBuild from '../../components/builds/entityBuild';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { splitUniqueName } from '../../constants/utils';
-import { getErrors } from '../../utils/errors';
+import { getErrorsByIds } from '../../utils/errors';
 import { getIsLoading } from '../../utils/isLoading';
 
 export function mapStateToProps(state: AppState, params: any) {
   const isLoading = getIsLoading(state.loadingIndicators.builds.byIds, params.buildName, ACTIONS.GET);
-  const errors = getErrors(state.errors.builds.byIds, params.buildName, ACTIONS.GET);
+  const errors = getErrorsByIds(state.errors.builds.byIds, isLoading, params.buildName, ACTIONS.GET);
   return _.includes(state.builds.uniqueNames, params.buildName) ?
     {
       build: state.builds.byUniqueNames[params.buildName],

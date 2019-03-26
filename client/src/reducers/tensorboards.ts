@@ -7,7 +7,7 @@ import { actionTypes, TensorboardAction } from '../actions/tensorboards';
 import { ACTIONS } from '../constants/actions';
 import { TensorboardSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
-import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
+import { AlertEmptyState, AlertSchema, processErrorById, processErrorGlobal } from '../models/alerts';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -256,77 +256,118 @@ export const LoadingIndicatorTensorboardsReducer: Reducer<LoadingIndicatorSchema
     }
   };
 
-export const ErrorTensorboardsReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: TensorboardAction) => {
+export const AlertTensorboardsReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: TensorboardAction) => {
     switch (action.type) {
       case actionTypes.UPDATE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.UPDATE)
+        };
       case actionTypes.UPDATE_TENSORBOARD_SUCCESS:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, ACTIONS.UPDATE)
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, true, ACTIONS.UPDATE)
         };
       case actionTypes.UPDATE_TENSORBOARD_ERROR:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, action.error, ACTIONS.UPDATE)
+          tensorboards: processErrorById(state.tensorboards,
+                                         action.tensorboardName,
+                                         action.error,
+                                         false,
+                                         ACTIONS.UPDATE)
         };
 
       case actionTypes.GET_TENSORBOARD_REQUEST:
-      case actionTypes.GET_TENSORBOARD_SUCCESS:
         return {
           ...state,
           tensorboards: processErrorGlobal(
-            processErrorById(state.tensorboards, action.tensorboardName, null, ACTIONS.GET),
+            processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.GET),
+            null,
             null,
             ACTIONS.CREATE)
+        };
+      case actionTypes.GET_TENSORBOARD_SUCCESS:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.GET)
         };
       case actionTypes.GET_TENSORBOARD_ERROR:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, action.error, ACTIONS.GET)
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, action.error, false, ACTIONS.GET)
         };
 
       case actionTypes.DELETE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.DELETE)
+        };
       case actionTypes.DELETE_TENSORBOARD_SUCCESS:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, ACTIONS.DELETE)
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, true, ACTIONS.DELETE)
         };
       case actionTypes.DELETE_TENSORBOARD_ERROR:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, action.error, ACTIONS.DELETE)
+          tensorboards: processErrorById(state.tensorboards,
+                                         action.tensorboardName,
+                                         action.error,
+                                         false,
+                                         ACTIONS.DELETE)
         };
 
       case actionTypes.ARCHIVE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.ARCHIVE)
+        };
       case actionTypes.ARCHIVE_TENSORBOARD_SUCCESS:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, ACTIONS.ARCHIVE)
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, true, ACTIONS.ARCHIVE)
         };
       case actionTypes.ARCHIVE_TENSORBOARD_ERROR:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, action.error, ACTIONS.ARCHIVE)
+          tensorboards: processErrorById(state.tensorboards,
+                                         action.tensorboardName,
+                                         action.error,
+                                         false,
+                                         ACTIONS.ARCHIVE)
         };
 
       case actionTypes.RESTORE_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.RESTORE)
+        };
       case actionTypes.RESTORE_TENSORBOARD_SUCCESS:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, ACTIONS.RESTORE)
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, true, ACTIONS.RESTORE)
         };
       case actionTypes.RESTORE_TENSORBOARD_ERROR:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, action.error, ACTIONS.RESTORE)
+          tensorboards: processErrorById(state.tensorboards,
+                                         action.tensorboardName,
+                                         action.error,
+                                         false,
+                                         ACTIONS.RESTORE)
         };
 
       case actionTypes.STOP_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, null, ACTIONS.STOP)
+        };
       case actionTypes.STOP_TENSORBOARD_SUCCESS:
         return {
           ...state,
-          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, ACTIONS.STOP)
+          tensorboards: processErrorById(state.tensorboards, action.tensorboardName, null, true, ACTIONS.STOP)
         };
       case actionTypes.STOP_TENSORBOARD_ERROR:
         return {
@@ -334,16 +375,26 @@ export const ErrorTensorboardsReducer: Reducer<ErrorSchema> =
           tensorboards: processErrorById(state.tensorboards,
                                          action.tensorboardName,
                                          action.error,
+                                         false,
                                          ACTIONS.STOP)
         };
 
       case actionTypes.BOOKMARK_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(state.tensorboards,
+                                         action.tensorboardName,
+                                         null,
+                                         null,
+                                         ACTIONS.BOOKMARK)
+        };
       case actionTypes.BOOKMARK_TENSORBOARD_SUCCESS:
         return {
           ...state,
           tensorboards: processErrorById(state.tensorboards,
                                          action.tensorboardName,
                                          null,
+                                         true,
                                          ACTIONS.BOOKMARK)
         };
       case actionTypes.BOOKMARK_TENSORBOARD_ERROR:
@@ -352,10 +403,20 @@ export const ErrorTensorboardsReducer: Reducer<ErrorSchema> =
           tensorboards: processErrorById(state.tensorboards,
                                          action.tensorboardName,
                                          action.error,
+                                         false,
                                          ACTIONS.BOOKMARK)
         };
 
       case actionTypes.UNBOOKMARK_TENSORBOARD_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorById(
+            state.tensorboards,
+            action.tensorboardName,
+            null,
+            null,
+            ACTIONS.UNBOOKMARK)
+        };
       case actionTypes.UNBOOKMARK_TENSORBOARD_SUCCESS:
         return {
           ...state,
@@ -363,6 +424,7 @@ export const ErrorTensorboardsReducer: Reducer<ErrorSchema> =
             state.tensorboards,
             action.tensorboardName,
             null,
+            true,
             ACTIONS.UNBOOKMARK)
         };
       case actionTypes.UNBOOKMARK_TENSORBOARD_ERROR:
@@ -371,19 +433,24 @@ export const ErrorTensorboardsReducer: Reducer<ErrorSchema> =
           tensorboards: processErrorById(state.tensorboards,
                                          action.tensorboardName,
                                          action.error,
+                                         false,
                                          ACTIONS.UNBOOKMARK)
         };
 
       case actionTypes.FETCH_TENSORBOARDS_REQUEST:
+        return {
+          ...state,
+          tensorboards: processErrorGlobal(state.tensorboards, null, null, ACTIONS.FETCH)
+        };
       case actionTypes.FETCH_TENSORBOARDS_SUCCESS:
         return {
           ...state,
-          tensorboards: processErrorGlobal(state.tensorboards, null, ACTIONS.FETCH)
+          tensorboards: processErrorGlobal(state.tensorboards, null, true, ACTIONS.FETCH)
         };
       case actionTypes.FETCH_TENSORBOARDS_ERROR:
         return {
           ...state,
-          tensorboards: processErrorGlobal(state.tensorboards, action.error, ACTIONS.FETCH)
+          tensorboards: processErrorGlobal(state.tensorboards, action.error, false, ACTIONS.FETCH)
         };
       default:
         return state;

@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 
 import { actionTypes, HealthStatusAction } from '../actions/healthStatus';
 import { ACTIONS } from '../constants/actions';
-import { ErrorEmptyState, ErrorSchema, processErrorGlobal } from '../models/errors';
+import { AlertEmptyState, AlertSchema, processErrorGlobal } from '../models/alerts';
 import { HealthStatusEmptyState, HealthStatusStateSchema } from '../models/healthStatus';
 import {
   LoadingIndicatorEmptyState,
@@ -10,7 +10,7 @@ import {
   processLoadingIndicatorGlobal
 } from '../models/loadingIndicator';
 
-export const healthStatusReducer: Reducer<HealthStatusStateSchema> =
+export const HealthStatusReducer: Reducer<HealthStatusStateSchema> =
   (state: HealthStatusStateSchema = HealthStatusEmptyState, action: HealthStatusAction) => {
 
     switch (action.type) {
@@ -43,19 +43,23 @@ export const LoadingIndicatorHealthStatusReducer: Reducer<LoadingIndicatorSchema
     }
   };
 
-export const ErrorHealthStatusReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: HealthStatusAction) => {
+export const AlertHealthStatusReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: HealthStatusAction) => {
     switch (action.type) {
       case actionTypes.FETCH_HEALTH_STATUS_REQUEST:
+        return {
+          ...state,
+          healthStatus: processErrorGlobal(state.healthStatus, null, null, ACTIONS.FETCH)
+        };
       case actionTypes.FETCH_HEALTH_STATUS_SUCCESS:
         return {
           ...state,
-          healthStatus: processErrorGlobal(state.healthStatus, null, ACTIONS.FETCH)
+          healthStatus: processErrorGlobal(state.healthStatus, null, true, ACTIONS.FETCH)
         };
       case actionTypes.FETCH_HEALTH_STATUS_ERROR:
         return {
           ...state,
-          healthStatus: processErrorGlobal(state.healthStatus, action.error, ACTIONS.FETCH)
+          healthStatus: processErrorGlobal(state.healthStatus, action.error, false, ACTIONS.FETCH)
         };
       default:
         return state;

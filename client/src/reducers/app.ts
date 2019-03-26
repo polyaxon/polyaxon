@@ -13,11 +13,11 @@ import { projectsReducer, UserProjectsReducer } from './projects';
 
 import { AppState } from '../constants/types';
 import { activityLogsReducer } from './activityLogs';
+import { AlertReducer, AlertSliceReducer } from './alerts';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
 import { chartViewsReducer } from './chartViews';
 import { codeReferencesReducer } from './codeReferences';
-import { ErrorReducer, ErrorSliceReducer } from './error';
-import { healthStatusReducer } from './healthStatus';
+import { HealthStatusReducer } from './healthStatus';
 import { LoadingIndicatorReducer, LoadingIndicatorSliceReducer } from './loadingIndicator';
 import { logsReducer } from './logs';
 import { MetricsReducer } from './metrics';
@@ -42,7 +42,7 @@ const combinedReducer = combineReducers<AppState>({
   experimentJobs: ExperimentJobsReducer,
   modal: modalReducer,
   auth: tokenReducer,
-  healthStatus: healthStatusReducer,
+  healthStatus: HealthStatusReducer,
   users: userReducer,
   // form: formReducer,
   logs: logsReducer,
@@ -54,7 +54,7 @@ const combinedReducer = combineReducers<AppState>({
   chartViews: chartViewsReducer,
   codeReferences: codeReferencesReducer,
   loadingIndicators: LoadingIndicatorReducer,
-  errors: ErrorReducer,
+  errors: AlertReducer,
 });
 
 function SliceReducer(state: AppState, action: Action) {
@@ -89,7 +89,7 @@ function SliceReducer(state: AppState, action: Action) {
     chartViews: state.chartViews,
     codeReferences: state.codeReferences,
     loadingIndicators: LoadingIndicatorSliceReducer(state, action),
-    errors: ErrorSliceReducer(state, action),
+    errors: AlertSliceReducer(state, action),
   };
 }
 

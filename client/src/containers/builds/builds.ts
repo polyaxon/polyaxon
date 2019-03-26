@@ -11,7 +11,9 @@ import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 import * as actions from '../../actions/builds';
 import * as search_actions from '../../actions/search';
+import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -47,6 +49,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.builds.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     builds: results.builds,
@@ -55,8 +58,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.builds.global.fetch),
-    errors: state.errors.builds.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.builds.global, isLoading, ACTIONS.FETCH),
   };
 }
 

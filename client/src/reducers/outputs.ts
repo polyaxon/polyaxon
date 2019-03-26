@@ -2,7 +2,7 @@ import { Reducer } from 'redux';
 
 import { actionTypes, OutputsAction } from '../actions/outputs';
 import { ACTIONS } from '../constants/actions';
-import { ErrorEmptyState, ErrorSchema, processErrorById } from '../models/errors';
+import { AlertEmptyState, AlertSchema, processErrorById } from '../models/alerts';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -97,31 +97,39 @@ export const LoadingIndicatorOutputsReducer: Reducer<LoadingIndicatorSchema> =
     }
   };
 
-export const ErrorOutputsReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: OutputsAction) => {
+export const AlertOutputsReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: OutputsAction) => {
     switch (action.type) {
       case actionTypes.FETCH_OUTPUTS_FILE_REQUEST:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.path, null, null, ACTIONS.GET)
+        };
       case actionTypes.FETCH_OUTPUTS_FILE_SUCCESS:
         return {
           ...state,
-          chartViews: processErrorById(state.chartViews, action.path, null, ACTIONS.GET)
+          chartViews: processErrorById(state.chartViews, action.path, null, true, ACTIONS.GET)
         };
       case actionTypes.FETCH_OUTPUTS_FILE_ERROR:
         return {
           ...state,
-          chartViews: processErrorById(state.chartViews, action.path, action.error, ACTIONS.GET)
+          chartViews: processErrorById(state.chartViews, action.path, action.error, false, ACTIONS.GET)
         };
 
       case actionTypes.FETCH_OUTPUTS_TREE_REQUEST:
+        return {
+          ...state,
+          chartViews: processErrorById(state.chartViews, action.path, null, null, ACTIONS.GET)
+        };
       case actionTypes.FETCH_OUTPUTS_TREE_SUCCESS:
         return {
           ...state,
-          chartViews: processErrorById(state.chartViews, action.path, null, ACTIONS.GET)
+          chartViews: processErrorById(state.chartViews, action.path, null, true, ACTIONS.GET)
         };
       case actionTypes.FETCH_OUTPUTS_TREE_ERROR:
         return {
           ...state,
-          chartViews: processErrorById(state.chartViews, action.path, action.error, ACTIONS.GET)
+          chartViews: processErrorById(state.chartViews, action.path, action.error, false, ACTIONS.GET)
         };
 
       default:

@@ -6,16 +6,19 @@ import * as experimentActions from '../../actions/experiments';
 import * as groupActions from '../../actions/groups';
 import * as projectActions from '../../actions/projects';
 import TensorboardCreate from '../../components/tensorboards/tensorboardCreate';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { TensorboardModel } from '../../models/tensorboard';
+import { getErrorsGlobal } from '../../utils/errors';
 
 export function mapStateToProps(state: AppState, params: any) {
+  const isLoading = isTrue(state.loadingIndicators.tensorboards.global.create);
   return {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
-    isLoading: isTrue(state.loadingIndicators.tensorboards.global.create),
-    errors: state.errors.tensorboards.global.create,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.tensorboards.global, isLoading, ACTIONS.CREATE),
   };
 }
 

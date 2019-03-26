@@ -1,8 +1,8 @@
 import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
+import { AlertEmptyState, AlertSchema } from '../models/alerts';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
 import { ChartViewEmptyState, ChartViewStateSchema } from '../models/chartView';
 import { CodeReferenceEmptyState, CodeReferenceStateSchema } from '../models/codeReference';
-import { ErrorEmptyState, ErrorSchema } from '../models/errors';
 import {
   ExperimentParamStateSchema,
   ExperimentsEmptyState,
@@ -49,7 +49,7 @@ export interface AppState {
   chartViews: ChartViewStateSchema;
   codeReferences: CodeReferenceStateSchema;
   loadingIndicators: LoadingIndicatorSchema;
-  errors: ErrorSchema;
+  errors: AlertSchema;
 }
 
 export const AppEmptyState = {
@@ -73,5 +73,5 @@ export const AppEmptyState = {
   chartViews: ChartViewEmptyState,
   codeReferences: CodeReferenceEmptyState,
   loadingIndicators: LoadingIndicatorEmptyState,
-  errors: ErrorEmptyState,
+  errors: AlertEmptyState,
 };

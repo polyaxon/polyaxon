@@ -9,8 +9,10 @@ import { GroupModel } from '../../models/group';
 
 import * as actions from '../../actions/groups';
 import * as search_actions from '../../actions/search';
+import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -48,6 +50,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.groups.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     groups: results.groups,
@@ -56,8 +59,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.groups.global.fetch),
-    errors: state.errors.groups.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.groups.global, isLoading, ACTIONS.FETCH),
   };
 }
 

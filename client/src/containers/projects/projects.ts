@@ -4,10 +4,12 @@ import { Dispatch } from 'redux';
 import * as modalActions from '../../actions/modal';
 import * as actions from '../../actions/projects';
 import Projects from '../../components/projects/projects';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { isTrue } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -45,6 +47,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.projects.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     user: ownProps.user,
@@ -53,8 +56,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.projects.global.fetch),
-    errors: state.errors.projects.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.projects.global, isLoading, ACTIONS.FETCH),
   };
 }
 

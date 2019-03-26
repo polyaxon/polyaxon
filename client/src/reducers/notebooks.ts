@@ -7,7 +7,7 @@ import { actionTypes, NotebookAction } from '../actions/notebooks';
 import { ACTIONS } from '../constants/actions';
 import { NotebookSchema } from '../constants/schemas';
 import { STOPPED } from '../constants/statuses';
-import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
+import { AlertEmptyState, AlertSchema, processErrorById, processErrorGlobal } from '../models/alerts';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -240,118 +240,155 @@ export const LoadingIndicatorNotebooksReducer: Reducer<LoadingIndicatorSchema> =
     }
   };
 
-export const ErrorNotebooksReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: NotebookAction) => {
+export const AlertNotebooksReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: NotebookAction) => {
     switch (action.type) {
       case actionTypes.UPDATE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.UPDATE)
+        };
       case actionTypes.UPDATE_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.UPDATE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.UPDATE)
         };
       case actionTypes.UPDATE_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.UPDATE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.UPDATE)
         };
 
       case actionTypes.GET_NOTEBOOK_REQUEST:
-      case actionTypes.GET_NOTEBOOK_SUCCESS:
         return {
           ...state,
           notebooks: processErrorGlobal(
-            processErrorById(state.notebooks, action.notebookName, null, ACTIONS.GET),
+            processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.GET),
+            null,
             null,
             ACTIONS.CREATE)
+        };
+      case actionTypes.GET_NOTEBOOK_SUCCESS:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.GET)
         };
       case actionTypes.GET_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.GET)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.GET)
         };
 
       case actionTypes.DELETE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.DELETE)
+        };
       case actionTypes.DELETE_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.DELETE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.DELETE)
         };
       case actionTypes.DELETE_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.DELETE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.DELETE)
         };
 
       case actionTypes.ARCHIVE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.ARCHIVE)
+        };
       case actionTypes.ARCHIVE_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.ARCHIVE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.ARCHIVE)
         };
       case actionTypes.ARCHIVE_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.ARCHIVE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.ARCHIVE)
         };
 
       case actionTypes.RESTORE_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.RESTORE)
+        };
       case actionTypes.RESTORE_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.RESTORE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.RESTORE)
         };
       case actionTypes.RESTORE_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.RESTORE)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.RESTORE)
         };
 
       case actionTypes.STOP_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.STOP)
+        };
       case actionTypes.STOP_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.STOP)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.STOP)
         };
       case actionTypes.STOP_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.STOP)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.STOP)
         };
 
       case actionTypes.BOOKMARK_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.BOOKMARK)
+        };
       case actionTypes.BOOKMARK_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.BOOKMARK)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.BOOKMARK)
         };
       case actionTypes.BOOKMARK_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.BOOKMARK)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, false, ACTIONS.BOOKMARK)
         };
 
       case actionTypes.UNBOOKMARK_NOTEBOOK_REQUEST:
+        return {
+          ...state,
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, null, ACTIONS.UNBOOKMARK)
+        };
       case actionTypes.UNBOOKMARK_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, null, ACTIONS.UNBOOKMARK)
+          notebooks: processErrorById(state.notebooks, action.notebookName, null, true, ACTIONS.UNBOOKMARK)
         };
       case actionTypes.UNBOOKMARK_NOTEBOOK_ERROR:
         return {
           ...state,
-          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, ACTIONS.UNBOOKMARK)
+          notebooks: processErrorById(state.notebooks, action.notebookName, action.error, null, ACTIONS.UNBOOKMARK)
         };
 
       case actionTypes.FETCH_NOTEBOOKS_REQUEST:
-      case actionTypes.FETCH_NOTEBOOKS_SUCCESS:
         return {
           ...state,
-          notebooks: processErrorGlobal(state.notebooks, null, ACTIONS.FETCH)
+          notebooks: processErrorGlobal(state.notebooks, null, null, ACTIONS.FETCH)
+        };
+      case actionTypes.FETCH_NOTEBOOKS_SUCCESS:
+         return {
+          ...state,
+          notebooks: processErrorGlobal(state.notebooks, null, true, ACTIONS.FETCH)
         };
       case actionTypes.FETCH_NOTEBOOKS_ERROR:
         return {
           ...state,
-          notebooks: processErrorGlobal(state.notebooks, action.error, ACTIONS.FETCH)
+          notebooks: processErrorGlobal(state.notebooks, action.error, false, ACTIONS.FETCH)
         };
       default:
         return state;

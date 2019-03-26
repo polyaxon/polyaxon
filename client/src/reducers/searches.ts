@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { actionTypes, SearchAction } from '../actions/search';
 import { ACTIONS } from '../constants/actions';
 import { searchSchema } from '../constants/schemas';
-import { ErrorEmptyState, ErrorSchema, processErrorById, processErrorGlobal } from '../models/errors';
+import { AlertEmptyState, AlertSchema, processErrorById, processErrorGlobal } from '../models/alerts';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -109,48 +109,61 @@ export const LoadingIndicatorSearchesReducer: Reducer<LoadingIndicatorSchema> =
     }
   };
 
-export const ErrorSearchesReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: SearchAction) => {
+export const AlertSearchesReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: SearchAction) => {
     switch (action.type) {
       case actionTypes.GET_SEARCH_SUCCESS:
         return {
           ...state,
-          searches: processErrorById(state.searches, action.searchId, null, ACTIONS.GET)
+          searches: processErrorById(state.searches, action.searchId, null, true, ACTIONS.GET)
         };
 
       case actionTypes.DELETE_SEARCH_REQUEST:
+        return {
+          ...state,
+          searches: processErrorById(state.searches, action.searchId, null, null, ACTIONS.GET)
+        };
       case actionTypes.DELETE_SEARCH_SUCCESS:
         return {
           ...state,
-          searches: processErrorById(state.searches, action.searchId, null, ACTIONS.DELETE)
+          searches: processErrorById(state.searches, action.searchId, null, true, ACTIONS.DELETE)
         };
       case actionTypes.DELETE_SEARCH_ERROR:
         return {
           ...state,
-          searches: processErrorById(state.searches, action.searchId, action.error, ACTIONS.DELETE)
+          searches: processErrorById(state.searches, action.searchId, action.error, false, ACTIONS.DELETE)
         };
 
       case actionTypes.FETCH_SEARCHES_REQUEST:
+        return {
+          ...state,
+          searches: processErrorGlobal(state.searches, null, null, ACTIONS.FETCH)
+        };
       case actionTypes.FETCH_SEARCHES_SUCCESS:
         return {
           ...state,
-          searches: processErrorGlobal(state.searches, null, ACTIONS.FETCH)
+          searches: processErrorGlobal(state.searches, null, true, ACTIONS.FETCH)
         };
       case actionTypes.FETCH_SEARCHES_ERROR:
         return {
           ...state,
-          searches: processErrorGlobal(state.searches, action.error, ACTIONS.FETCH)
+          searches: processErrorGlobal(state.searches, action.error, false, ACTIONS.FETCH)
         };
 
       case actionTypes.CREATE_SEARCH_REQUEST:
         return {
           ...state,
-          searches: processErrorGlobal(state.searches, null, ACTIONS.CREATE)
+          searches: processErrorGlobal(state.searches, null, null, ACTIONS.CREATE)
+        };
+      case actionTypes.CREATE_SEARCH_SUCCESS:
+        return {
+          ...state,
+          searches: processErrorGlobal(state.searches, null, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_SEARCH_ERROR:
         return {
           ...state,
-          searches: processErrorGlobal(state.searches, action.error, ACTIONS.CREATE)
+          searches: processErrorGlobal(state.searches, action.error, false, ACTIONS.CREATE)
         };
       default:
         return state;

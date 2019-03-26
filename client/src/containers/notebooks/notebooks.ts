@@ -10,7 +10,9 @@ import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 
 import * as actions from '../../actions/notebooks';
 import * as search_actions from '../../actions/search';
+import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
+import { getErrorsGlobal } from '../../utils/errors';
 
 interface OwnProps {
   user: string;
@@ -35,6 +37,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   };
   const results = useLastFetched();
 
+  const isLoading = isTrue(state.loadingIndicators.notebooks.global.fetch);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     notebooks: results.notebooks,
@@ -43,8 +46,8 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     showBookmarks: isTrue(ownProps.showBookmarks),
     showDeleted: isTrue(ownProps.showDeleted),
     endpointList: ownProps.endpointList,
-    isLoading: isTrue(state.loadingIndicators.notebooks.global.fetch),
-    errors: state.errors.notebooks.global.fetch,
+    isLoading,
+    errors: getErrorsGlobal(state.errors.notebooks.global, isLoading, ACTIONS.FETCH),
   };
 }
 

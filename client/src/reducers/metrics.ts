@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { actionTypes, MetricsAction } from '../actions/metrics';
 import { ACTIONS } from '../constants/actions';
 import { MetricSchema } from '../constants/schemas';
-import { ErrorEmptyState, ErrorSchema, processErrorGlobal } from '../models/errors';
+import { AlertEmptyState, AlertSchema, processErrorGlobal } from '../models/alerts';
 import {
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
@@ -67,19 +67,23 @@ export const LoadingIndicatorMetricReducer: Reducer<LoadingIndicatorSchema> =
     }
   };
 
-export const ErrorMetricReducer: Reducer<ErrorSchema> =
-  (state: ErrorSchema = ErrorEmptyState, action: MetricsAction) => {
+export const AlertMetricReducer: Reducer<AlertSchema> =
+  (state: AlertSchema = AlertEmptyState, action: MetricsAction) => {
     switch (action.type) {
       case actionTypes.FETCH_METRICS_REQUEST:
+        return {
+          ...state,
+          metrics: processErrorGlobal(state.metrics, null, null, ACTIONS.FETCH)
+        };
       case actionTypes.FETCH_METRICS_SUCCESS:
         return {
           ...state,
-          metrics: processErrorGlobal(state.metrics, null, ACTIONS.FETCH)
+          metrics: processErrorGlobal(state.metrics, null, true, ACTIONS.FETCH)
         };
       case actionTypes.FETCH_METRICS_ERROR:
         return {
           ...state,
-          metrics: processErrorGlobal(state.metrics, action.error, ACTIONS.FETCH)
+          metrics: processErrorGlobal(state.metrics, action.error, false, ACTIONS.FETCH)
         };
       default:
         return state;
