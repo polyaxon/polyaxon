@@ -5,7 +5,7 @@ import { Pager } from 'react-bootstrap';
 import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
-import FilterList from '../../containers/filterList';
+import FilterList from '../../containers/filters/filterList';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import Refresh from '../refresh';

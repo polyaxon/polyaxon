@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as actions from '../../actions/search';
-import { NameSlug } from '../../constants/helpTexts';
+import FilterCreate from '../../containers/filters/filterCreate';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 
@@ -27,7 +27,6 @@ export interface Props {
 interface State {
   query: string;
   sort: string;
-  searches: SearchModel[];
   showFilters: boolean;
   showSearchModal: boolean;
   saveQueryForm: { name: string, query: string, sort: string };
@@ -39,7 +38,6 @@ export default class FilterList extends React.Component<Props, State> {
     this.state = {
       query: props.query || '',
       sort: props.sort || props.defaultSort || '-updated_at',
-      searches: [...props.searches],
       showFilters: false,
       showSearchModal: false,
       saveQueryForm: {
@@ -61,15 +59,14 @@ export default class FilterList extends React.Component<Props, State> {
     this.props.handleFilter(this.state.query, this.state.sort);
   };
 
-  public saveSearch = (event: any) => {
-    event.preventDefault();
+  public saveSearch = (form: { name: string, query: string, sort: string }) => {
     if (this.props.createSearch) {
       this.props.createSearch({
         id: -1,
-        name: this.state.saveQueryForm.name,
+        name: form.name,
         query: {
-          query: this.state.saveQueryForm.query,
-          sort: this.state.saveQueryForm.sort
+          query: form.query,
+          sort: form.sort
         }
       });
     }
@@ -300,50 +297,12 @@ export default class FilterList extends React.Component<Props, State> {
               <Modal.Title>Save search query</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <form className="form-horizontal" onSubmit={this.saveSearch}>
-                <div className="form-group">
-                  <label className="col-sm-2 control-label">Name</label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="untitled"
-                      value={this.state.saveQueryForm.name}
-                      onChange={(event) => this.updateQueryForm('name', event.target.value)}
-                    />
-                    <span id="helpBlock" className="help-block">{NameSlug}</span>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label className="col-sm-2 control-label">Query</label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="query"
-                      value={this.state.saveQueryForm.query}
-                      onChange={(event) => this.updateQueryForm('query', event.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label className="col-sm-2 control-label">Sort</label>
-                  <div className="col-sm-10">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="sort"
-                      value={this.state.saveQueryForm.sort}
-                      onChange={(event) => this.updateQueryForm('sort', event.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <div className="col-sm-offset-2 col-sm-10">
-                    <button type="submit" className="btn btn-default" onClick={this.saveSearch}>Save</button>
-                  </div>
-                </div>
-              </form>
+              <FilterCreate
+                onCreate={this.saveSearch}
+                query={this.state.query}
+                sort={this.state.sort}
+                onClose={this.handleClose}
+              />
             </Modal.Body>
           </Modal>
         </div>

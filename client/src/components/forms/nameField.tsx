@@ -17,7 +17,7 @@ function validateName(value: string) {
   return error;
 }
 
-export const NameField = (props: FormikProps<{}>, errors: any) => {
+export const NameField = (props: FormikProps<{}>, errors: any, col?: string) => {
   const hasServerError = checkServerError(errors, 'name');
   const hasValidationError = checkValidationError(props, 'name');
   const hasError = hasServerError || hasValidationError;
@@ -25,7 +25,7 @@ export const NameField = (props: FormikProps<{}>, errors: any) => {
   return (
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
       <label className="col-sm-2 control-label">Name</label>
-      <div className="col-sm-5">
+      <div className={col ? `col-sm-${col}` : `col-sm-5`}>
         <Field
           type="text"
           name="name"

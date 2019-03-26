@@ -6,7 +6,7 @@ import * as queryString from 'query-string';
 
 import * as search_actions from '../../actions/search';
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
-import FilterList from '../../containers/filterList';
+import FilterList from '../../containers/filters/filterList';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
 import { DEFAULT_FILTERS } from '../filters/constants';

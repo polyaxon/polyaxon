@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 
-import * as actions from '../actions/search';
-import * as search_actions from '../actions/search';
-import FilterList from '../components/filters/filterList';
-import { AppState } from '../constants/types';
-import { FilterOption } from '../interfaces/filterOptions';
-import { SearchModel } from '../models/search';
+import * as actions from '../../actions/search';
+import * as search_actions from '../../actions/search';
+import FilterList from '../../components/filters/filterList';
+import { AppState } from '../../constants/types';
+import { FilterOption } from '../../interfaces/filterOptions';
+import { SearchModel } from '../../models/search';
 
 export interface Params {
   query?: string;
