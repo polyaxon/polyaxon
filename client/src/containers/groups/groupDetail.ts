@@ -27,7 +27,6 @@ export interface DispatchProps {
   fetchData?: () => actions.GroupAction;
   bookmark: () => actions.GroupAction;
   unbookmark: () => actions.GroupAction;
-  startTensorboard: () => actions.GroupAction;
   stopTensorboard: () => actions.GroupAction;
 }
 
@@ -80,12 +79,6 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.groupId))),
-    startTensorboard: () => dispatch(
-      actions.startTensorboard(
-        getGroupUniqueName(
-          params.match.params.user,
-          params.match.params.projectName,
-          params.match.params.groupId))),
     stopTensorboard: () => dispatch(
       actions.stopTensorboard(
         getGroupUniqueName(

@@ -38,7 +38,6 @@ export interface Props {
   fetchData: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
-  startTensorboard: () => actions.ExperimentAction;
   stopTensorboard: () => actions.ExperimentAction;
   getCodeReference: () => codeRefActions.CodeReferenceAction;
 }
@@ -91,8 +90,6 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   onStop={this.props.onStop}
                   onArchive={experiment.deleted ? undefined : this.props.onArchive}
                   onRestore={experiment.deleted ? this.props.onRestore : undefined}
-                  tensorboardActionCallback={
-                  experiment.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
                   hasTensorboard={experiment.has_tensorboard}
                   isRunning={!isDone(experiment.last_status)}
                   pullRight={true}

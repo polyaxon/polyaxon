@@ -278,7 +278,6 @@ export const LoadingIndicatorGroupReducer: Reducer<LoadingIndicatorSchema> =
                                               ACTIONS.START_TENSORBOARD)
         };
       case actionTypes.START_GROUP_TENSORBOARD_ERROR:
-      case actionTypes.START_GROUP_TENSORBOARD_SUCCESS:
         return {
           ...state,
           groups: processLoadingIndicatorById(state.groups,
@@ -436,7 +435,6 @@ export const ErrorGroupReducer: Reducer<ErrorSchema> =
         };
 
       case actionTypes.START_GROUP_TENSORBOARD_REQUEST:
-      case actionTypes.START_GROUP_TENSORBOARD_SUCCESS:
         return {
           ...state,
           groups: processErrorById(state.groups,

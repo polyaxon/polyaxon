@@ -102,27 +102,28 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
                        target=get_target(experiment=experiment, group=experiment_group),
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
+        return serializer
 
     def _handle_project_tensorboard(self, project):
         if project.has_tensorboard:
             return None
-        self._create_tensorboard(project=project)
+        serializer = self._create_tensorboard(project=project)
         project.clear_cached_properties()
-        return project.tensorboard
+        return project.tensorboard, serializer
 
     def _handle_group_tensorboard(self, project, group):
         if group.has_tensorboard:
             return None
-        self._create_tensorboard(project=project, experiment_group=group)
+        serializer = self._create_tensorboard(project=project, experiment_group=group)
         group.clear_cached_properties()
-        return group.tensorboard
+        return group.tensorboard, serializer
 
     def _handle_experiment_tensorboard(self, project, experiment):
         if experiment.has_tensorboard:
             return None
-        self._create_tensorboard(project=project, experiment=experiment)
+        serializer = self._create_tensorboard(project=project, experiment=experiment)
         experiment.clear_cached_properties()
-        return experiment.tensorboard
+        return experiment.tensorboard, serializer
 
     def post(self, request, *args, **kwargs):
         project = self.project
@@ -130,13 +131,13 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
         group_id = self.kwargs.get('group_id')
         if experiment_id:
             experiment = get_object_or_404(Experiment, project=project, id=experiment_id)
-            tensorboard = self._handle_experiment_tensorboard(project=project,
-                                                              experiment=experiment)
+            tensorboard, serializer = self._handle_experiment_tensorboard(project=project,
+                                                                          experiment=experiment)
         elif group_id:
             group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
-            tensorboard = self._handle_group_tensorboard(project=project, group=group)
+            tensorboard, serializer = self._handle_group_tensorboard(project=project, group=group)
         else:
-            tensorboard = self._handle_project_tensorboard(project=project)
+            tensorboard, serializer = self._handle_project_tensorboard(project=project)
 
         if not tensorboard:
             return Response(data='Tensorboard is already running', status=status.HTTP_200_OK)
@@ -146,7 +147,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
                 SchedulerCeleryTasks.TENSORBOARDS_START,
                 kwargs={'tensorboard_job_id': tensorboard.id},
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class StopTensorboardView(ProjectTensorboardEndpoint, PostEndpoint):
@@ -255,11 +256,12 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
                        target='project',
                        actor_id=self.request.user.id,
                        actor_name=self.request.user.username)
+        return serializer
 
     def post(self, request, *args, **kwargs):
         if self.project.has_notebook:
             return Response(data='Notebook is already running', status=status.HTTP_200_OK)
-        self._create_notebook(self.project)
+        serializer = self._create_notebook(self.project)
         self.project.clear_cached_properties()
         notebook = self.project.notebook
         if not notebook.is_running:
@@ -267,7 +269,7 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
                 kwargs={'notebook_job_id': notebook.id},
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):

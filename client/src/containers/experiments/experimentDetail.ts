@@ -28,7 +28,6 @@ export interface DispatchProps {
   onRestore: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
-  startTensorboard: () => actions.ExperimentAction;
   stopTensorboard: () => actions.ExperimentAction;
   getCodeReference: () => codeRefActions.CodeReferenceAction;
 }
@@ -88,12 +87,6 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.experimentId))),
-    startTensorboard: () => dispatch(
-      actions.startTensorboard(
-        getExperimentUniqueName(
-          params.match.params.user,
-          params.match.params.projectName,
-          params.match.params.experimentId))),
     stopTensorboard: () => dispatch(
       actions.stopTensorboard(
         getExperimentUniqueName(

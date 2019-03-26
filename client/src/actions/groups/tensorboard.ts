@@ -1,17 +1,20 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getGroupUrlFromName } from '../../constants/utils';
-import { stdHandleError } from '../utils';
+import {
+  getGroupUniqueName,
+  getGroupUrl,
+  getGroupUrlFromName,
+  getTensorboardApiUrlFromName
+} from '../../constants/utils';
+import history from '../../history';
+import { TensorboardModel } from '../../models/tensorboard';
+import { getTensorboardSuccessActionCreator } from '../tensorboards';
+import { stdCreateHandleError, stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface StartGroupTensorboardRequestAction extends Action {
   type: actionTypes.START_GROUP_TENSORBOARD_REQUEST;
-  groupName: string;
-}
-
-export interface StartGroupTensorboardSuccessAction extends Action {
-  type: actionTypes.START_GROUP_TENSORBOARD_SUCCESS;
   groupName: string;
 }
 
@@ -25,13 +28,6 @@ export interface StartGroupTensorboardErrorAction extends Action {
 export function startGroupTensorboardRequestActionCreator(groupName: string): StartGroupTensorboardRequestAction {
   return {
     type: actionTypes.START_GROUP_TENSORBOARD_REQUEST,
-    groupName,
-  };
-}
-
-export function startGroupTensorboardSuccessActionCreator(groupName: string): StartGroupTensorboardSuccessAction {
-  return {
-    type: actionTypes.START_GROUP_TENSORBOARD_SUCCESS,
     groupName,
   };
 }
@@ -91,33 +87,55 @@ export function stopGroupTensorboardErrorActionCreator(statusCode: number,
 
 export type TensorboardGroupAction =
   StartGroupTensorboardRequestAction
-  | StartGroupTensorboardSuccessAction
   | StartGroupTensorboardErrorAction
   | StopGroupTensorboardRequestAction
   | StopGroupTensorboardSuccessAction
   | StopGroupTensorboardErrorAction;
 
-export function startTensorboard(groupName: string): any {
+export function startTensorboard(user: string,
+                                 projectName: string,
+                                 groupId: string,
+                                 tensorboard: TensorboardModel,
+                                 redirect: boolean): any {
   return (dispatch: any, getState: any) => {
-    const groupUrl = getGroupUrlFromName(groupName, false);
+    const groupName = getGroupUniqueName(user, projectName, groupId);
+    const groupUrl = getGroupUrl(user, projectName, groupId, false);
 
     dispatch(startGroupTensorboardRequestActionCreator(groupName));
 
     return fetch(`${BASE_API_URL}${groupUrl}/tensorboard/start`, {
       method: 'POST',
+      body: JSON.stringify(tensorboard),
       headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
         'X-CSRFToken': getState().auth.csrftoken
       }
     })
-      .then((response) => stdHandleError(
+      .then((response) => stdCreateHandleError(
         response,
         dispatch,
         startGroupTensorboardErrorActionCreator,
         'Group not found',
         'Failed to start tensorboard for group',
         [groupName]))
-      .then(() => dispatch(startGroupTensorboardSuccessActionCreator(groupName)));
+      .then((response) => response.json())
+      .then((json) => {
+        const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
+        if (redirect) {
+          history.push(getTensorboardApiUrlFromName( json.unique_name, true));
+        }
+        return dispatched;
+      })
+       .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(startGroupTensorboardErrorActionCreator(response.status, value, groupName)));
+        } else {
+          return response.value;
+        }
+      });
   };
 }
 

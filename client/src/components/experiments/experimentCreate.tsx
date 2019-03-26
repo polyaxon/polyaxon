@@ -18,7 +18,7 @@ import { TagsField } from '../forms/tagsField';
 export interface Props {
   user: string;
   projectName: string;
-  onCreate: (project: ExperimentModel) => actions.ExperimentAction;
+  onCreate: (experiment: ExperimentModel) => actions.ExperimentAction;
   isLoading: boolean;
   errors: any;
 }

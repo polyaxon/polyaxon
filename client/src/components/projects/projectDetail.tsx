@@ -29,9 +29,7 @@ export interface Props {
   fetchData: () => actions.ProjectAction;
   bookmark: () => actions.ProjectAction;
   unbookmark: () => actions.ProjectAction;
-  startNotebook: () => actions.ProjectAction;
   stopNotebook: () => actions.ProjectAction;
-  startTensorboard: () => actions.ProjectAction;
   stopTensorboard: () => actions.ProjectAction;
 }
 
@@ -64,10 +62,6 @@ export default class ProjectDetail extends React.Component<Props, {}> {
                 onDelete={this.props.onDelete}
                 onArchive={project.deleted ? undefined : this.props.onArchive}
                 onRestore={project.deleted ? this.props.onRestore : undefined}
-                notebookActionCallback={
-                  project.has_notebook ? this.props.stopNotebook : this.props.startNotebook}
-                tensorboardActionCallback={
-                  project.has_tensorboard ? this.props.stopTensorboard : this.props.startTensorboard}
                 hasNotebook={project.has_notebook}
                 hasTensorboard={project.has_tensorboard}
                 pullRight={true}

@@ -378,7 +378,6 @@ export const LoadingIndicatorExperimentReducer: Reducer<LoadingIndicatorSchema> 
                                                    ACTIONS.START_TENSORBOARD)
         };
       case actionTypes.START_EXPERIMENT_TENSORBOARD_ERROR:
-      case actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS:
         return {
           ...state,
           experiments: processLoadingIndicatorById(state.experiments,
@@ -549,7 +548,6 @@ export const ErrorExperimentReducer: Reducer<ErrorSchema> =
         };
 
       case actionTypes.START_EXPERIMENT_TENSORBOARD_REQUEST:
-      case actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS:
         return {
           ...state,
           experiments: processErrorById(state.experiments,

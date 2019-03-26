@@ -1,7 +1,16 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getProjectUrlFromName } from '../../constants/utils';
+import {
+  getNotebookApiUrlFromName,
+  getProjectUniqueName,
+  getProjectUrl,
+  getProjectUrlFromName
+} from '../../constants/utils';
+import history from '../../history';
+import { NotebookModel } from '../../models/notebook';
+import { startExperimentTensorboardErrorActionCreator } from '../experiments';
+import { getTensorboardSuccessActionCreator } from '../tensorboards';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
@@ -97,15 +106,22 @@ export type NotebookProjectAction =
   | StopProjectNotebookSuccessAction
   | StopProjectNotebookErrorAction;
 
-export function startNotebook(projectName: string): any {
+export function startNotebook(user: string,
+                              projectName: string,
+                              notebook: NotebookModel,
+                              redirect: boolean): any {
   return (dispatch: any, getState: any) => {
-    const projectUrl = getProjectUrlFromName(projectName, false);
+    const projectUniqueName = getProjectUniqueName(user, projectName);
+    const projectUrl = getProjectUrl(user, projectName, false);
 
-    dispatch(startProjectNotebookRequestActionCreator(projectName));
+    dispatch(startProjectNotebookRequestActionCreator(projectUniqueName));
 
     return fetch(`${BASE_API_URL}${projectUrl}/notebook/start`, {
       method: 'POST',
+      body: JSON.stringify(notebook),
       headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
         'Authorization': 'token ' + getState().auth.token,
         'X-CSRFToken': getState().auth.csrftoken
       }
@@ -117,8 +133,22 @@ export function startNotebook(projectName: string): any {
         'Project not found',
         'Failed to start notebook for project',
         [projectName]))
-      .then(() => {
-        return dispatch(startProjectNotebookSuccessActionCreator(projectName));
+      .then((response) => response.json())
+      .then((json) => {
+        const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
+        if (redirect) {
+          history.push(getNotebookApiUrlFromName( json.unique_name, true));
+        }
+        return dispatched;
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(startExperimentTensorboardErrorActionCreator(
+              response.status, value, projectUniqueName)));
+        } else {
+          return response.value;
+        }
       });
   };
 }

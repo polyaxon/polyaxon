@@ -277,7 +277,6 @@ export const LoadingIndicatorProjectReducer: Reducer<LoadingIndicatorSchema> =
           projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.START_TENSORBOARD)
         };
       case actionTypes.START_PROJECT_TENSORBOARD_ERROR:
-      case actionTypes.START_PROJECT_TENSORBOARD_SUCCESS:
         return {
           ...state,
           projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.START_TENSORBOARD)
@@ -437,7 +436,6 @@ export const ErrorProjectReducer: Reducer<ErrorSchema> =
         };
 
       case actionTypes.START_PROJECT_TENSORBOARD_REQUEST:
-      case actionTypes.START_PROJECT_TENSORBOARD_SUCCESS:
         return {
           ...state,
           projects: processErrorById(state.projects, action.projectName, null, ACTIONS.START_TENSORBOARD)
