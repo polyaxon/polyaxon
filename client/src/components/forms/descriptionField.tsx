@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { checkServerError, checkValidationError } from './utils';
+import { checkServerError, checkValidationError } from './validation';
 
 export const DescriptionSchema = Yup.string();
 

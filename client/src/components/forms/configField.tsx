@@ -1,11 +1,16 @@
 import { ErrorMessage, Field, FieldProps, FormikProps } from 'formik';
+import * as jsYaml from 'js-yaml';
 import * as React from 'react';
 import * as Yup from 'yup';
 
 import Polyaxonfile from '../polyaxonfile/polyaxonfile';
-import { checkServerError, checkValidationError } from './utils';
+import { checkServerError, checkValidationError } from './validation';
 
 export const ConfigSchema = Yup.string();
+
+export const getConfig = (config: string): { [key: string]: any } => {
+  return jsYaml.safeLoad(config);
+};
 
 export const ConfigComponent: React.FunctionComponent<FieldProps> = (
   {

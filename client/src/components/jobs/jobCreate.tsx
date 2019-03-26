@@ -8,7 +8,7 @@ import * as actions from '../../actions/jobs';
 import { getProjectUrl } from '../../constants/utils';
 import { JobModel } from '../../models/job';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
-import { ConfigField, ConfigSchema } from '../forms/configField';
+import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
 import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
@@ -38,17 +38,13 @@ const ValidationSchema = Yup.object().shape({
 
 export default class JobCreate extends React.Component<Props, {}> {
 
-  public getConfig = (config: string): { [key: string]: any } => {
-    return jsYaml.safeLoad(config);
-  };
-
   public createJob = (state: State) => {
     this.props.onCreate({
       tags: state.tags.map((v) => v.value),
       readme: state.readme,
       description: state.description,
       name: state.name,
-      config: this.getConfig(state.config)
+      config: getConfig(state.config)
     } as JobModel);
   };
 

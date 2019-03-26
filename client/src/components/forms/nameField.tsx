@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as Yup from 'yup';
 
 import { NameSlug } from '../../constants/helpTexts';
-import { checkServerError, checkValidationError } from './utils';
+import { checkServerError, checkValidationError } from './validation';
 
 export const NameSchema = Yup.string()
   .min(2, 'Name too Short.')

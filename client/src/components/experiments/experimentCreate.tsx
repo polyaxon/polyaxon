@@ -1,5 +1,4 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
-import * as jsYaml from 'js-yaml';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
@@ -8,12 +7,13 @@ import * as actions from '../../actions/experiments';
 import { getProjectUrl } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
-import { ConfigField, ConfigSchema } from '../forms/configField';
+import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
 import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
 import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
 import { TagsField } from '../forms/tagsField';
+import { sanitizeForm } from '../forms/utils';
 
 export interface Props {
   user: string;
@@ -38,18 +38,14 @@ const ValidationSchema = Yup.object().shape({
 
 export default class ExperimentCreate extends React.Component<Props, {}> {
 
-  public getConfig = (config: string): { [key: string]: any } => {
-    return jsYaml.safeLoad(config);
-  };
-
   public createExperiment = (state: State) => {
-    this.props.onCreate({
+    this.props.onCreate(sanitizeForm({
       tags: state.tags.map((v) => v.value),
       readme: state.readme,
       description: state.description,
       name: state.name,
-      config: this.getConfig(state.config)
-    } as ExperimentModel);
+      config: getConfig(state.config)
+    }) as ExperimentModel);
   };
 
   public render() {

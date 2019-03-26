@@ -1,5 +1,4 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
-import * as jsYaml from 'js-yaml';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
@@ -8,11 +7,12 @@ import * as actions from '../../actions/builds';
 import { getProjectUrl } from '../../constants/utils';
 import { BuildModel } from '../../models/build';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
-import { ConfigField, ConfigSchema } from '../forms/configField';
+import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
 import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
 import { TagsField } from '../forms/tagsField';
+import { sanitizeForm } from '../forms/utils';
 
 export interface Props {
   user: string;
@@ -36,17 +36,13 @@ const ValidationSchema = Yup.object().shape({
 
 export default class BuildCreate extends React.Component<Props, {}> {
 
-  public getConfig = (config: string): { [key: string]: any } => {
-    return jsYaml.safeLoad(config);
-  };
-
   public createBuild = (state: State) => {
-    this.props.onCreate({
+    this.props.onCreate(sanitizeForm({
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: this.getConfig(state.config)
-    } as BuildModel);
+      config: getConfig(state.config)
+    }) as BuildModel);
   };
 
   public render() {

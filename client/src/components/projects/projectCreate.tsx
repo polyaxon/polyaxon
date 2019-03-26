@@ -12,6 +12,7 @@ import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
 import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
 import { TagsField } from '../forms/tagsField';
+import { sanitizeForm } from '../forms/utils';
 import { VisibilityField } from '../forms/visibilityField';
 
 export interface Props {
@@ -37,13 +38,13 @@ const ValidationSchema = Yup.object().shape({
 export default class ProjectCreate extends React.Component<Props, {}> {
 
   public createProject = (state: State) => {
-    this.props.onCreate({
+    this.props.onCreate(sanitizeForm({
       tags: state.tags.map((v) => v.value),
       readme: state.readme,
       description: state.description,
       name: state.name,
       is_public: state.visibility === 'Public'
-    } as ProjectModel);
+    }) as ProjectModel);
   };
 
   public render() {

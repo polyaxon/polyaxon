@@ -2,7 +2,7 @@ import { Field, FieldProps, FormikProps } from 'formik';
 import * as React from 'react';
 
 import TagsEdit from '../tags/tagsEdit';
-import { checkServerError, checkValidationError } from './utils';
+import { checkServerError, checkValidationError } from './validation';
 
 export const TagsComponent: React.FunctionComponent<FieldProps> = (
   {
