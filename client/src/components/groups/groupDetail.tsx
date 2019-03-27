@@ -5,7 +5,7 @@ import * as actions from '../../actions/groups';
 import { isDone } from '../../constants/statuses';
 import { getGroupUrl, getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import Experiments from '../../containers/experiments/experiments';
-import Metrics from '../../containers/metrics';
+import Metrics from '../../containers/metrics/metrics';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { GroupModel } from '../../models/group';

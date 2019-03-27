@@ -14,7 +14,7 @@ import {
 import EntityBuild from '../../containers/builds/entityBuild';
 import ExperimentJobs from '../../containers/experimentJobs/experimentJobs';
 import Logs from '../../containers/logs';
-import Metrics from '../../containers/metrics';
+import Metrics from '../../containers/metrics/metrics';
 import Outputs from '../../containers/outputs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';

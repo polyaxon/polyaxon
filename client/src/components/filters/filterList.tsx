@@ -70,7 +70,6 @@ export default class FilterList extends React.Component<Props, State> {
         }
       });
     }
-    this.handleClose();
   };
 
   public deleteSearch = (event: any, search: SearchModel) => {
@@ -299,6 +298,8 @@ export default class FilterList extends React.Component<Props, State> {
             <Modal.Body>
               <FilterCreate
                 onCreate={this.saveSearch}
+                onClose={this.handleClose}
+                name=""
                 query={this.state.query}
                 sort={this.state.sort}
               />

@@ -5,7 +5,7 @@ import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 import * as chartViewsAction from '../../actions/chartViews';
 import * as experimentActions from '../../actions/experiments';
 import * as metricsActions from '../../actions/metrics';
-import { NameSlug } from '../../constants/helpTexts';
+import ViewsCreate from '../../containers/metrics/viewsCreate';
 import { ChartModel, ChartTypes } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
@@ -133,12 +133,10 @@ export default class Metrics extends React.Component<Props, State> {
     }));
   };
 
-  public saveView = (event: any) => {
-    event.preventDefault();
+  public saveView = (data: {name: string}) => {
     if (this.props.createView) {
-      this.props.createView(this.state.view);
+      this.props.createView({...this.state.view, ...data});
     }
-    this.handleClose();
   };
 
   public updateViewForm = (key: string, value: string) => {
@@ -586,24 +584,11 @@ export default class Metrics extends React.Component<Props, State> {
           <Modal.Title>Save View</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className="form-horizontal" onSubmit={this.saveView}>
-            <div className="form-group">
-              <label className="col-sm-2 control-label">Name</label>
-              <div className="col-sm-10">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(event) => this.updateViewForm('name', event.target.value)}
-                />
-                <span id="helpBlock" className="help-block">{NameSlug}</span>
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
-                <button type="submit" className="btn btn-default" onClick={this.saveView}>Save</button>
-              </div>
-            </div>
-          </form>
+          <ViewsCreate
+            onCreate={this.saveView}
+            onClose={this.handleClose}
+            name={this.state.view.name || ''}
+          />
         </Modal.Body>
       </Modal>
     );

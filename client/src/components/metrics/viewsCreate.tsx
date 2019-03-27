@@ -3,15 +3,11 @@ import * as React from 'react';
 import * as Yup from 'yup';
 import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
-import { QueryField, QuerySchema } from './queryField';
-import { SortField, SortSchema } from './sortField';
 
 export interface Props {
-  onCreate: (form: { name: string, query: string, sort: string }) => void;
+  onCreate: (form: { name: string }) => void;
   onClose: () => void;
   name: string;
-  query: string;
-  sort: string;
   isLoading: boolean;
   errors: any;
   success: boolean;
@@ -19,23 +15,17 @@ export interface Props {
 
 export interface State {
   name: string;
-  query: string;
-  sort: string;
 }
 
 const ValidationSchema = Yup.object().shape({
   name: NameSchema,
-  query: QuerySchema,
-  sort: SortSchema,
 });
 
-export default class FilterCreate extends React.Component<Props, {}> {
+export default class ViewsCreate extends React.Component<Props, {}> {
 
   public createSearch = (state: State) => {
     this.props.onCreate({
       name: state.name,
-      query: state.query,
-      sort: state.sort,
     });
   };
 
@@ -46,7 +36,7 @@ export default class FilterCreate extends React.Component<Props, {}> {
   }
 
   public render() {
-    const initialValues = {name: this.props.name, query: this.props.query, sort: this.props.sort};
+    const initialValues = {name: this.props.name};
     return (
       <Formik
         initialValues={initialValues}
@@ -58,8 +48,6 @@ export default class FilterCreate extends React.Component<Props, {}> {
           <form className="form-horizontal" onSubmit={props.handleSubmit}>
             {ErrorsField(this.props.errors)}
             {NameField(props, this.props.errors, '10')}
-            {QueryField(props, this.props.errors)}
-            {SortField(props, this.props.errors)}
             <div className="form-group form-actions">
               <div className="col-sm-offset-2 col-sm-10">
                 <button
@@ -67,7 +55,7 @@ export default class FilterCreate extends React.Component<Props, {}> {
                   className="btn btn-default btn-success"
                   disabled={this.props.isLoading}
                 >
-                  Save search
+                  Save view
                 </button>
               </div>
             </div>

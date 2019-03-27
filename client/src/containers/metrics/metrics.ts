@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { AppState } from '../constants/types';
-import { MetricModel } from '../models/metric';
+import { AppState } from '../../constants/types';
+import { MetricModel } from '../../models/metric';
 
-import * as chartViewsActions from '../actions/chartViews';
-import * as experimentActions from '../actions/experiments';
-import * as metricsActions from '../actions/metrics';
-import Metrics from '../components/metrics/metrics';
-import { ChartViewModel } from '../models/chartView';
+import * as chartViewsActions from '../../actions/chartViews';
+import * as experimentActions from '../../actions/experiments';
+import * as metricsActions from '../../actions/metrics';
+import Metrics from '../../components/metrics/metrics';
+import { ChartViewModel } from '../../models/chartView';
 
 export function mapStateToProps(state: AppState, params: any) {
   const useLastFetchedViews = () => {
