@@ -109,6 +109,7 @@ export const LoadingIndicatorChartViewReducer: Reducer<LoadingIndicatorSchema> =
           chartViews: processLoadingIndicatorGlobal(state.chartViews, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_CHART_VIEW_ERROR:
+      case actionTypes.CREATE_CHART_VIEW_SUCCESS:
         return {
           ...state,
           chartViews: processLoadingIndicatorGlobal(state.chartViews, false, ACTIONS.CREATE)

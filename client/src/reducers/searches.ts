@@ -99,6 +99,7 @@ export const LoadingIndicatorSearchesReducer: Reducer<LoadingIndicatorSchema> =
           ...state,
           searches: processLoadingIndicatorGlobal(state.searches, true, ACTIONS.CREATE)
         };
+      case actionTypes.CREATE_SEARCH_SUCCESS:
       case actionTypes.CREATE_SEARCH_ERROR:
         return {
           ...state,

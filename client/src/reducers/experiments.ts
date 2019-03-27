@@ -436,6 +436,7 @@ export const LoadingIndicatorExperimentReducer: Reducer<LoadingIndicatorSchema> 
           experiments: processLoadingIndicatorGlobal(state.experiments, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_EXPERIMENT_ERROR:
+      case actionTypes.CREATE_EXPERIMENT_SUCCESS:
         return {
           ...state,
           experiments: processLoadingIndicatorGlobal(state.experiments, false, ACTIONS.CREATE)

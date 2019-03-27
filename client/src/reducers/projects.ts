@@ -336,6 +336,7 @@ export const LoadingIndicatorProjectReducer: Reducer<LoadingIndicatorSchema> =
           projects: processLoadingIndicatorGlobal(state.projects, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_PROJECT_ERROR:
+      case actionTypes.CREATE_PROJECT_SUCCESS:
         return {
           ...state,
           projects: processLoadingIndicatorGlobal(state.projects, false, ACTIONS.CREATE)

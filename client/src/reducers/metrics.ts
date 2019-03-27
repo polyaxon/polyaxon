@@ -19,7 +19,7 @@ export const MetricsReducer: Reducer<MetricStateSchema> =
   (state: MetricStateSchema = MetricEmptyState, action: MetricsAction) => {
     let newState = {...state};
 
-    const processMetric = function(metric: MetricModel) {
+    const processMetric = (metric: MetricModel) => {
       const id = metric.id;
       newState.lastFetched.ids.push(id);
       if (!_.includes(newState.ids, id)) {

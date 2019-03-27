@@ -269,7 +269,9 @@ export const LoadingIndicatorBuildReducer: Reducer<LoadingIndicatorSchema> =
           ...state,
           builds: processLoadingIndicatorGlobal(state.builds, true, ACTIONS.CREATE)
         };
+
       case actionTypes.CREATE_BUILD_ERROR:
+      case actionTypes.CREATE_BUILD_SUCCESS:
         return {
           ...state,
           builds: processLoadingIndicatorGlobal(state.builds, false, ACTIONS.CREATE)

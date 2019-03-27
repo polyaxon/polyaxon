@@ -323,6 +323,7 @@ export const LoadingIndicatorGroupReducer: Reducer<LoadingIndicatorSchema> =
           groups: processLoadingIndicatorGlobal(state.groups, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_GROUP_ERROR:
+      case actionTypes.CREATE_GROUP_SUCCESS:
         return {
           ...state,
           groups: processLoadingIndicatorGlobal(state.groups, false, ACTIONS.CREATE)

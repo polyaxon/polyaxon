@@ -271,6 +271,7 @@ export const LoadingIndicatorJobReducer: Reducer<LoadingIndicatorSchema> =
           jobs: processLoadingIndicatorGlobal(state.jobs, true, ACTIONS.CREATE)
         };
       case actionTypes.CREATE_JOB_ERROR:
+      case actionTypes.CREATE_JOB_SUCCESS:
         return {
           ...state,
           jobs: processLoadingIndicatorGlobal(state.jobs, false, ACTIONS.CREATE)
