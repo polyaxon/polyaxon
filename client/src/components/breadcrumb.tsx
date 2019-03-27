@@ -10,10 +10,11 @@ export interface Props {
   icon?: string;
   links: Array<{ name: string, value?: string }>;
   bookmark?: BookmarkInterface;
+  addActions?: React.ReactNode;
   actions?: React.ReactNode;
 }
 
-function Breadcrumb({icon, links, bookmark, actions}: Props) {
+function Breadcrumb({icon, links, bookmark, actions, addActions}: Props) {
   return (
     <ol className="breadcrumb">
       {icon && <i className={`${icon} icon`} aria-hidden="true"/>}
@@ -34,6 +35,7 @@ function Breadcrumb({icon, links, bookmark, actions}: Props) {
       )}
       {bookmark && <BookmarkStar active={bookmark.active} callback={bookmark.callback}/>}
       {actions && actions}
+      {addActions && addActions}
     </ol>
   );
 }

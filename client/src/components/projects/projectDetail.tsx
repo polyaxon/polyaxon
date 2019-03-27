@@ -18,6 +18,7 @@ import { EmptyList } from '../empty/emptyList';
 import ProjectInstructions from '../instructions/projectInstructions';
 import LinkedTab from '../linkedTab';
 import ProjectActions from './projectActions';
+import ProjectAdd from './projectAdd';
 import ProjectOverview from './projectOverview';
 
 export interface Props {
@@ -57,6 +58,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
               {name: project.user, value: getUserUrl(project.user)},
               {name: project.name}]}
             bookmark={bookmark}
+            addActions={<ProjectAdd user={project.user} projectName={project.name}/>}
             actions={
               <ProjectActions
                 onDelete={this.props.onDelete}
