@@ -56,6 +56,15 @@ rules:
   - list
   - watch
 - apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - create
+  - list
+  - update
+  - watch
+- apiGroups:
   - apps
   resources:
   - statefulsets
