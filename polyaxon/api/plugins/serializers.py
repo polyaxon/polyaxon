@@ -20,6 +20,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, UserMixin
             'id',
             'user',
             'name',
+            'unique_name',
             'config',
             'pod_id',
             'build_job',
