@@ -61,6 +61,7 @@ class DeploymentSchema(BaseSchema):
     sidecar = fields.Nested(ServiceSchema, allow_none=True)
     init = fields.Nested(HooksSchema, allow_none=True)
     dockerizer = fields.Nested(ServiceSchema, allow_none=True)
+    kaniko = fields.Nested(ServiceSchema, allow_none=True)
     tablesHook = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
@@ -82,12 +83,17 @@ class DeploymentSchema(BaseSchema):
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
     notebookBackend = fields.Str(allow_none=True)
     notebookDockerImage = fields.Str(allow_none=True)
+    mountCodeInNotebooks = fields.Bool(allow_none=True)
     tensorboardDockerImage = fields.Str(allow_none=True)
     adminModels = fields.List(fields.Str(allow_none=True), allow_none=True)
     reposAccessToken = fields.Str(allow_none=True)
     tpuTensorflowVersion = fields.Str(allow_none=True)
     tpuResourceKey = fields.Str(allow_none=True)
     logLevel = fields.Str(allow_none=True)
+    trackerBackend = fields.Str(allow_none=True)
+    buildBackend = fields.Str(allow_none=True)
+    dirs = fields.Dict(allow_none=True)
+    mountPaths = fields.Dict(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -128,6 +134,7 @@ class DeploymentConfig(BaseConfig):
                  sidecar=None,
                  init=None,
                  dockerizer=None,
+                 kaniko=None,
                  tablesHook=None,
                  hooks=None,
                  postgresql=None,
@@ -147,12 +154,17 @@ class DeploymentConfig(BaseConfig):
                  persistence=None,
                  notebookBackend=None,
                  notebookDockerImage=None,
+                 mountCodeInNotebooks=None,
                  tensorboardDockerImage=None,
                  adminModels=None,
                  reposAccessToken=None,
                  tpuTensorflowVersion=None,
                  tpuResourceKey=None,
-                 logLevel=None):
+                 logLevel=None,
+                 trackerBackend=None,
+                 buildBackend=None,
+                 dirs=None,
+                 mountPaths=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
         self.clusterId = clusterId
@@ -183,6 +195,7 @@ class DeploymentConfig(BaseConfig):
         self.sidecar = sidecar
         self.init = init
         self.dockerizer = dockerizer
+        self.kaniko = kaniko
         self.tablesHook = tablesHook
         self.hooks = hooks
         self.postgresql = postgresql
@@ -202,9 +215,14 @@ class DeploymentConfig(BaseConfig):
         self.persistence = persistence
         self.notebookBackend = notebookBackend
         self.notebookDockerImage = notebookDockerImage
+        self.mountCodeInNotebooks = mountCodeInNotebooks
         self.tensorboardDockerImage = tensorboardDockerImage
         self.adminModels = adminModels
         self.reposAccessToken = reposAccessToken
         self.tpuTensorflowVersion = tpuTensorflowVersion
         self.tpuResourceKey = tpuResourceKey
         self.logLevel = logLevel
+        self.trackerBackend = trackerBackend
+        self.buildBackend = buildBackend
+        self.dirs = dirs
+        self.mountPaths = mountPaths

@@ -168,4 +168,19 @@ ttl:
 
 notebookBackend: lab
 notebookDockerImage: "jupyter/datascience-notebook"
-mountCodeInNotebooks: true
+buildBackend: "kaniko"
+trackerBackend: "noop"
+
+dirs:
+  nvidia:
+    lib: ""  # e.g. "/usr/lib/nvidia-384"
+    bin: ""  # e.g. "/usr/lib/nvidia-384/bin"
+    libcuda: ""  # e.g. "/usr/lib/x86_64-linux-gnu/libcuda.so.1"
+
+
+mountPaths:
+  nvidia:
+    lib: ""
+    bin: ""
+    libcuda: ""
+
