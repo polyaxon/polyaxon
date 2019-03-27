@@ -59,7 +59,6 @@ mountPaths:
     lib: ""
     bin: ""
     libcuda: ""
-  docker: "/var/run/docker.sock"
 
 persistence:
   logs:
