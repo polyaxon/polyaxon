@@ -49,7 +49,7 @@ export default class ProjectAdd extends React.Component<Props, {}> {
           <LinkContainer to={`${projectUrl}/notebooks/new`}>
             <MenuItem eventKey="4">
               <i
-                className="fas fa-plus fa-sm icon"
+                className="fas fa-play fa-sm icon"
                 aria-hidden="true"
               /> Start Notebook
             </MenuItem>
@@ -57,7 +57,7 @@ export default class ProjectAdd extends React.Component<Props, {}> {
           <LinkContainer to={`${projectUrl}/tensorboards/new`}>
             <MenuItem eventKey="5">
               <i
-                className="fas fa-plus fa-sm icon"
+                className="fas fa-play fa-sm icon"
                 aria-hidden="true"
               /> Start tensorboard
             </MenuItem>
