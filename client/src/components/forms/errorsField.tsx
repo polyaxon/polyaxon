@@ -10,6 +10,14 @@ export const ErrorsField = (errors: any) => {
         </div>
       </div>
     );
+  } else if (typeof errors === 'string') {
+    return (
+      <div className="has-error form-group">
+        <div className="col-sm-10 col-lg-offset-2">
+          <div className="help-block">{errors}</div>
+        </div>
+      </div>
+    );
   }
   return null;
 };
