@@ -83,6 +83,6 @@ export function fetchLogs(projectUniqueName: string,
         'Logs not found',
         'Failed to fetch logs'))
       .then((response) => response.text())
-      .then((text) => dispatch(fetchLogsSuccessActionCreator(text)))
+      .then((text) => dispatch(fetchLogsSuccessActionCreator(text)));
   };
 }

@@ -10,7 +10,7 @@ import {
 import history from '../../history';
 import { NotebookModel } from '../../models/notebook';
 import { getNotebookSuccessActionCreator } from '../notebooks';
-import { stdHandleError } from '../utils';
+import { stdCreateHandleError, stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
 export interface StartProjectNotebookRequestAction extends Action {
@@ -125,7 +125,7 @@ export function startNotebook(user: string,
         'X-CSRFToken': getState().auth.csrftoken
       }
     })
-      .then((response) => stdHandleError(
+      .then((response) => stdCreateHandleError(
         response,
         dispatch,
         startProjectNotebookErrorActionCreator,

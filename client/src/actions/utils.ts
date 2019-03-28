@@ -9,8 +9,6 @@ export const stdHandleError = (response: Response,
   if (!response.ok) {
     if (response.status === 404) {
       dispatch(errorActionCreator(response.status, notFoundError, ...args || []));
-    } else if (response.status === 400) {
-      return Promise.reject({status: response.status, value: response});
     } else if (response.status === 401 || response.status === 403) {
       dispatch(fetchUser());
     } else {
