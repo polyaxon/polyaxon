@@ -1,4 +1,6 @@
 from sanic import Sanic
+from sanic.exceptions import NotFound
+from sanic.response import text
 
 import conf
 
@@ -39,6 +41,11 @@ add_url(endpoint=job_logs_v2, base_url=JOB_URL, url='logs')
 # Build Job urls
 # add_url(endpoint=job_resources, base_url=EXPERIMENT_URL, url='resources')
 add_url(endpoint=build_logs_v2, base_url=BUILD_URL, url='logs')
+
+
+@app.exception(NotFound)
+async def ignore_404s(request, exception):
+    return text("Page not fount: {}".format(request.url))
 
 
 @app.listener('after_server_start')
