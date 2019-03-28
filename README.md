@@ -19,7 +19,7 @@ To install the TFJob operator make sure you have helm installed, please see this
 
 ### Namespace
 
-If you are using the tfjobs in Polyaxon, please intall the chart on the same namespace where you installed Polyaxon.
+If you are using the tfjobs in Polyaxon, please install the chart on the same namespace where you installed Polyaxon.
 
 ```bash
 $ kubectl create namespace polyaxon
