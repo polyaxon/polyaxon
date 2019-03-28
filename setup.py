@@ -60,7 +60,7 @@ setup(name='polyaxon-client',
           "psutil==5.4.7",
           "requests>=2.20.0",
           "requests-toolbelt==0.8.0",
-          "websocket-client>=0.53.0,<=0.54.0",
+          "websocket-client>=0.53.0",
       ],
       extras_require={
           'gcs': ['google-cloud-storage'],
