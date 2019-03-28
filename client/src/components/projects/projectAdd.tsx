@@ -27,7 +27,7 @@ export default class ProjectAdd extends React.Component<Props, {}> {
           bsSize="small"
           noCaret={true}
         >
-            <i className="fas fa-plus icon" aria-hidden="true"/> New
+            <i className="fas fa-plus fa-sm icon" aria-hidden="true"/> New
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <LinkContainer to={`${projectUrl}/experiments/new`}>

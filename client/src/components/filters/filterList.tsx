@@ -5,6 +5,7 @@ import * as actions from '../../actions/search';
 import FilterCreate from '../../containers/filters/filterCreate';
 import { FilterOption } from '../../interfaces/filterOptions';
 import { SearchModel } from '../../models/search';
+import { DefaultSearches } from './filterDefault';
 
 import '../dropdowns.less';
 import './filterList.less';
@@ -166,6 +167,26 @@ export default class FilterList extends React.Component<Props, State> {
                       <i className="fas fa-history icon" aria-hidden="true"/> Searches
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-large">
+                      {DefaultSearches.map(
+                        (search: SearchModel, idx: number) =>
+                          <MenuItem
+                            key={`d-${idx}`}
+                            className="dropdown-select-menu"
+                            onClick={() => this.selectSearch(search)}
+                          >
+                            <span className="dropdown-title">
+                              {search.name || 'untitled'}
+                            </span>
+                            <p className="dropdown-meta">
+                              <span className="label dropdown-label">
+                                Query:
+                              </span> {search.query.query && search.query.query}
+                              <span className="label dropdown-label">
+                                Sort:
+                              </span> {search.query.sort || this.props.defaultSort || '-update_at'}
+                            </p>
+                          </MenuItem>
+                      )}
                       {this.props.searches.map(
                         (search: SearchModel, idx: number) =>
                           <MenuItem
@@ -194,11 +215,6 @@ export default class FilterList extends React.Component<Props, State> {
                             </p>
                           </MenuItem>
                       )}
-                      {this.props.searches.length === 0 &&
-                      <MenuItem className="dropdown-select-menu">
-                        No saved searches
-                      </MenuItem>
-                      }
                       <MenuItem className="searches-save" onClick={() => this.handleShow()}>
                         <i
                           className={'fas fa-search-plus icon'}
