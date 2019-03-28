@@ -493,7 +493,7 @@ export const AlertProjectReducer: Reducer<AlertSchema> =
                                      action.error,
                                      false,
                                      ACTIONS.START_TENSORBOARD),
-          tensorboards: processErrorGlobal(state.tensorboards, action.error, false, ACTIONS.FETCH)
+          tensorboards: processErrorGlobal(state.tensorboards, action.error, false, ACTIONS.CREATE)
         };
 
       case actionTypes.STOP_PROJECT_TENSORBOARD_REQUEST:
@@ -528,7 +528,7 @@ export const AlertProjectReducer: Reducer<AlertSchema> =
         return {
           ...state,
           projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.START_NOTEBOOK),
-          notebooks: processErrorGlobal(state.notebooks, action.error, false, ACTIONS.FETCH)
+          notebooks: processErrorGlobal(state.notebooks, action.error, false, ACTIONS.CREATE)
         };
 
       case actionTypes.STOP_PROJECT_NOTEBOOK_REQUEST:

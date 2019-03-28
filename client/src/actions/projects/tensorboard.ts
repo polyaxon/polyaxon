@@ -4,7 +4,8 @@ import { BASE_API_URL } from '../../constants/api';
 import {
   getProjectUniqueName,
   getProjectUrl,
-  getProjectUrlFromName
+  getProjectUrlFromName,
+  getTensorboardApiUrlFromName
 } from '../../constants/utils';
 import history from '../../history';
 import { TensorboardModel } from '../../models/tensorboard';
@@ -136,7 +137,7 @@ export function startTensorboard(user: string,
         dispatch(startProjectTensorboardSuccessActionCreator(projectUniqueName));
         const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
         if (redirect) {
-          history.push(getProjectUrlFromName( json.unique_name, true));
+          history.push(getTensorboardApiUrlFromName(json.unique_name, true));
         }
         return dispatched;
       })
