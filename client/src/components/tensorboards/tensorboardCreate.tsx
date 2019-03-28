@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
 
 import * as actions from '../../actions/projects';
-import { getProjectUrl } from '../../constants/utils';
+import { getExperimentUrl, getGroupUrl, getProjectUrl } from '../../constants/utils';
 import { TensorboardModel } from '../../models/tensorboard';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
@@ -16,6 +16,8 @@ import { TagsField } from '../forms/tagsField';
 export interface Props {
   user: string;
   projectName: string;
+  groupId: string;
+  experimentId: string;
   onCreate: (tensorboard: TensorboardModel) => actions.ProjectAction;
   isLoading: boolean;
   errors: any;
@@ -45,6 +47,12 @@ export default class TensorboardCreate extends React.Component<Props, {}> {
   };
 
   public render() {
+    let url = getProjectUrl(this.props.user, this.props.projectName);
+    if (this.props.experimentId) {
+      url = getExperimentUrl(this.props.user, this.props.projectName, this.props.experimentId);
+    } else if (this.props.groupId) {
+      url = getGroupUrl(this.props.user, this.props.projectName, this.props.groupId);
+    }
     return (
       <>
         <div className="row form-header">
@@ -76,7 +84,7 @@ export default class TensorboardCreate extends React.Component<Props, {}> {
                       >
                         Create tensorboard
                       </button>
-                      <LinkContainer to={`${getProjectUrl(this.props.user, this.props.projectName)}#`}>
+                      <LinkContainer to={`${url}#`}>
                         <button className="btn btn-default pull-right">cancel</button>
                       </LinkContainer>
                     </div>

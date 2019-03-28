@@ -468,17 +468,32 @@ export const AlertProjectReducer: Reducer<AlertSchema> =
       case actionTypes.START_PROJECT_TENSORBOARD_REQUEST:
         return {
           ...state,
-          projects: processErrorById(state.projects, action.projectName, null, null, ACTIONS.START_TENSORBOARD)
+          projects: processErrorById(state.projects,
+                                     action.projectName,
+                                     null,
+                                     null,
+                                     ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, null, null, ACTIONS.CREATE)
         };
       case actionTypes.START_PROJECT_TENSORBOARD_SUCCESS:
         return {
           ...state,
-          projects: processErrorById(state.projects, action.projectName, null, true, ACTIONS.START_TENSORBOARD)
+          projects: processErrorById(state.projects,
+                                     action.projectName,
+                                     null,
+                                     true,
+                                     ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, null, true, ACTIONS.CREATE)
         };
       case actionTypes.START_PROJECT_TENSORBOARD_ERROR:
         return {
           ...state,
-          projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.START_TENSORBOARD)
+          projects: processErrorById(state.projects,
+                                     action.projectName,
+                                     action.error,
+                                     false,
+                                     ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, action.error, false, ACTIONS.FETCH)
         };
 
       case actionTypes.STOP_PROJECT_TENSORBOARD_REQUEST:
@@ -500,17 +515,20 @@ export const AlertProjectReducer: Reducer<AlertSchema> =
       case actionTypes.START_PROJECT_NOTEBOOK_REQUEST:
         return {
           ...state,
-          projects: processErrorById(state.projects, action.projectName, null, null, ACTIONS.START_NOTEBOOK)
+          projects: processErrorById(state.projects, action.projectName, null, null, ACTIONS.START_NOTEBOOK),
+          notebooks: processErrorGlobal(state.notebooks, null, null, ACTIONS.CREATE)
         };
       case actionTypes.START_PROJECT_NOTEBOOK_SUCCESS:
         return {
           ...state,
-          projects: processErrorById(state.projects, action.projectName, null, true, ACTIONS.START_NOTEBOOK)
+          projects: processErrorById(state.projects, action.projectName, null, true, ACTIONS.START_NOTEBOOK),
+          notebooks: processErrorGlobal(state.notebooks, null, true, ACTIONS.CREATE)
         };
       case actionTypes.START_PROJECT_NOTEBOOK_ERROR:
         return {
           ...state,
-          projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.START_NOTEBOOK)
+          projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.START_NOTEBOOK),
+          notebooks: processErrorGlobal(state.notebooks, action.error, false, ACTIONS.FETCH)
         };
 
       case actionTypes.STOP_PROJECT_NOTEBOOK_REQUEST:

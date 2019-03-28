@@ -17,6 +17,8 @@ export function mapStateToProps(state: AppState, params: any) {
   return {
     user: params.match.params.user,
     projectName: params.match.params.projectName,
+    groupId: params.match.params.groupId,
+    experimentId: params.match.params.experimentId,
     isLoading,
     errors: getErrorsGlobal(state.alerts.tensorboards.global, isLoading, ACTIONS.CREATE),
   };
@@ -32,18 +34,18 @@ export function mapDispatchToProps(
   dispatch: Dispatch<experimentActions.ExperimentAction | groupActions.GroupAction | projectActions.ProjectAction>,
   params: any): DispatchProps {
   let onCreate: any;
-  if (params.match.experimentId) {
+  if (params.match.params.experimentId) {
     onCreate = (tensorboard: TensorboardModel) => experimentActions.startTensorboard(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.experimentId,
+        params.match.params.experimentId,
         tensorboard,
         true);
-  } else if (params.match.groupId) {
+  } else if (params.match.params.groupId) {
     onCreate = (tensorboard: TensorboardModel) => groupActions.startTensorboard(
         params.match.params.user,
         params.match.params.projectName,
-        params.match.groupId,
+        params.match.params.groupId,
         tensorboard,
         true);
   } else {

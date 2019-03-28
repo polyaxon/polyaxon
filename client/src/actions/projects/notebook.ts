@@ -9,8 +9,7 @@ import {
 } from '../../constants/utils';
 import history from '../../history';
 import { NotebookModel } from '../../models/notebook';
-import { startExperimentTensorboardErrorActionCreator } from '../experiments';
-import { getTensorboardSuccessActionCreator } from '../tensorboards';
+import { getNotebookSuccessActionCreator } from '../notebooks';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
@@ -136,7 +135,7 @@ export function startNotebook(user: string,
       .then((response) => response.json())
       .then((json) => {
         dispatch(startProjectNotebookSuccessActionCreator(projectUniqueName));
-        const dispatched = dispatch(getTensorboardSuccessActionCreator(json));
+        const dispatched = dispatch(getNotebookSuccessActionCreator(json));
         if (redirect) {
           history.push(getNotebookApiUrlFromName( json.unique_name, true));
         }
@@ -145,7 +144,7 @@ export function startNotebook(user: string,
       .catch((response) => {
         if (response.status === 400) {
           return response.value.json().then(
-            (value: any) => dispatch(startExperimentTensorboardErrorActionCreator(
+            (value: any) => dispatch(startProjectNotebookErrorActionCreator(
               response.status, value, projectUniqueName)));
         } else {
           return response.value;

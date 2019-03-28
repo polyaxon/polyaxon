@@ -476,7 +476,8 @@ export const AlertGroupReducer: Reducer<AlertSchema> =
                                    action.groupName,
                                    null,
                                    null,
-                                   ACTIONS.START_TENSORBOARD)
+                                   ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, null, null, ACTIONS.CREATE)
         };
       case actionTypes.START_GROUP_TENSORBOARD_SUCCESS:
         return {
@@ -485,7 +486,8 @@ export const AlertGroupReducer: Reducer<AlertSchema> =
                                    action.groupName,
                                    null,
                                    true,
-                                   ACTIONS.START_TENSORBOARD)
+                                   ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, null, true, ACTIONS.CREATE)
         };
       case actionTypes.START_GROUP_TENSORBOARD_ERROR:
         return {
@@ -494,7 +496,8 @@ export const AlertGroupReducer: Reducer<AlertSchema> =
                                    action.groupName,
                                    action.error,
                                    false,
-                                   ACTIONS.START_TENSORBOARD)
+                                   ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, action.error, false, ACTIONS.CREATE)
         };
 
       case actionTypes.STOP_GROUP_TENSORBOARD_REQUEST:

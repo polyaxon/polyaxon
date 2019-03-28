@@ -592,7 +592,8 @@ export const AlertExperimentReducer: Reducer<AlertSchema> =
                                         action.experimentName,
                                         null,
                                         null,
-                                        ACTIONS.START_TENSORBOARD)
+                                        ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, null, null, ACTIONS.CREATE)
         };
       case actionTypes.START_EXPERIMENT_TENSORBOARD_SUCCESS:
         return {
@@ -601,7 +602,8 @@ export const AlertExperimentReducer: Reducer<AlertSchema> =
                                         action.experimentName,
                                         null,
                                         true,
-                                        ACTIONS.START_TENSORBOARD)
+                                        ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, null, true, ACTIONS.CREATE)
         };
       case actionTypes.START_EXPERIMENT_TENSORBOARD_ERROR:
         return {
@@ -610,7 +612,8 @@ export const AlertExperimentReducer: Reducer<AlertSchema> =
                                         action.experimentName,
                                         action.error,
                                         false,
-                                        ACTIONS.START_TENSORBOARD)
+                                        ACTIONS.START_TENSORBOARD),
+          tensorboards: processErrorGlobal(state.tensorboards, action.error, false, ACTIONS.CREATE)
         };
 
       case actionTypes.STOP_EXPERIMENT_TENSORBOARD_REQUEST:

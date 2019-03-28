@@ -46,22 +46,6 @@ export default class ProjectAdd extends React.Component<Props, {}> {
               /> Create experiment group
             </MenuItem>
           </LinkContainer>
-          <LinkContainer to={`${projectUrl}/notebooks/new`}>
-            <MenuItem eventKey="4">
-              <i
-                className="fas fa-play fa-sm icon"
-                aria-hidden="true"
-              /> Start Notebook
-            </MenuItem>
-          </LinkContainer>
-          <LinkContainer to={`${projectUrl}/tensorboards/new`}>
-            <MenuItem eventKey="5">
-              <i
-                className="fas fa-play fa-sm icon"
-                aria-hidden="true"
-              /> Start tensorboard
-            </MenuItem>
-          </LinkContainer>
           <LinkContainer to={`${projectUrl}/jobs/new`}>
             <MenuItem eventKey="6">
               <i
@@ -76,6 +60,22 @@ export default class ProjectAdd extends React.Component<Props, {}> {
                 className="fas fa-plus fa-sm icon"
                 aria-hidden="true"
               /> Create build
+            </MenuItem>
+          </LinkContainer>
+          <LinkContainer to={`${projectUrl}/notebooks/new`}>
+            <MenuItem eventKey="4">
+              <i
+                className="fas fa-play fa-sm icon"
+                aria-hidden="true"
+              /> Start Notebook
+            </MenuItem>
+          </LinkContainer>
+          <LinkContainer to={`${projectUrl}/tensorboards/new`}>
+            <MenuItem eventKey="5">
+              <i
+                className="fas fa-play fa-sm icon"
+                aria-hidden="true"
+              /> Start tensorboard
             </MenuItem>
           </LinkContainer>
         </Dropdown.Menu>
