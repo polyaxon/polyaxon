@@ -43,9 +43,6 @@ hpsearch:
 
 eventsHandlers:
   replicas: 3
-
-eventMonitors:
-  replicas: 3
 ```
 
 ## Concurrency
