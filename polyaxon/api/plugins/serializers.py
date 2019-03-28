@@ -21,6 +21,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, ProjectMi
             'id',
             'user',
             'name',
+            'description',
             'project',
             'unique_name',
             'config',
