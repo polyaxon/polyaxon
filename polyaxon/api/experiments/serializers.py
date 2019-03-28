@@ -190,6 +190,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
             'num_jobs',
             'is_clone',
             'code_reference',
+            'tensorboard',
             'has_tensorboard',
         )
         extra_kwargs = {'original_experiment': {'write_only': True}}

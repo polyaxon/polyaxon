@@ -247,6 +247,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'tags',
         'backend',
         'framework',
+        'tensorboard',
         'has_tensorboard',
         'build_job',
         'original',

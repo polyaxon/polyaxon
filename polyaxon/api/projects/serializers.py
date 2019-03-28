@@ -51,6 +51,8 @@ class ProjectDetailSerializer(BookmarkedProjectSerializer, TagsSerializerMixin):
             'merge',
             'readme',
             'has_code',
+            'tensorboard',
+            'notebook',
             'has_tensorboard',
             'has_notebook',
             'num_experiment_groups',

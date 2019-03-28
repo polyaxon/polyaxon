@@ -115,6 +115,7 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'updated_at',
         'started_at',
         'finished_at',
+        'tensorboard',
         'has_tensorboard',
         'concurrency',
         'num_experiments',
