@@ -13,7 +13,7 @@ class SearchSerializer(serializers.ModelSerializer, NamesMixin):
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data,
                                              project=validated_data['project'],
-                                             query=Search.all)
+                                             query=Search.objects)
         try:
             return super().create(validated_data)
         except Exception as e:
