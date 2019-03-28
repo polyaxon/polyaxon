@@ -649,8 +649,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
-        Printer.print_success('Project was successfully initialized with `{}`.'.format(url),
-                              add_sign=True)
+        Printer.print_success('Project was successfully initialized with `{}`.'.format(url))
 
     def git_sync_repo():
         try:
@@ -661,8 +660,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
             sys.exit(1)
 
         click.echo(response.status_code)
-        Printer.print_success('Project was successfully synced with latest changes.',
-                              add_sign=True)
+        Printer.print_success('Project was successfully synced with latest changes.')
 
     if url:
         git_set_url()
@@ -703,8 +701,7 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
             sys.exit(1)
 
         Printer.print_success(
-            'Polyaxon CI was successfully enabled on project: `{}`.'.format(project_name),
-            add_sign=True)
+            'Polyaxon CI was successfully enabled on project: `{}`.'.format(project_name))
 
     def disable_ci():
         try:
@@ -715,8 +712,7 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
             sys.exit(1)
 
         Printer.print_success(
-            'Polyaxon CI was successfully disabled on project: `{}`.'.format(project_name),
-            add_sign=True)
+            'Polyaxon CI was successfully disabled on project: `{}`.'.format(project_name))
 
     if enable:
         enable_ci()

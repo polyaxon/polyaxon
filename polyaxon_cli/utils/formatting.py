@@ -62,19 +62,19 @@ class Printer(object):
 
     @staticmethod
     def print_header(text):
-        click.secho(u'\n{}\n'.format(text), fg='yellow')
+        click.secho('\n{}\n'.format(text), fg='yellow')
 
     @staticmethod
     def print_warning(text):
-        click.secho(u'\n{}\n'.format(text), fg='magenta')
+        click.secho('\n{}\n'.format(text), fg='magenta')
 
     @staticmethod
-    def print_success(text, add_sign=False):
-        click.secho(u'\n{}{}\n'.format(u'\u2713 ' if add_sign else '', text), fg='green')
+    def print_success(text):
+        click.secho(text, fg='green')
 
     @staticmethod
-    def print_error(text, add_sign=False):
-        click.secho(u'\n{}{}\n'.format(u'\u2717 ' if add_sign else '', text), fg='red')
+    def print_error(text):
+        click.secho(text, fg='red')
 
     @staticmethod
     def add_color(value, color):

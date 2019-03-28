@@ -51,19 +51,19 @@ def deploy(file, manager_path, check, upgrade):   # pylint:disable=redefined-bui
     exception = None
     if check:
         manager.check()
-        Printer.print_success('Polyaxon deployment file is valid.', add_sign=True)
+        Printer.print_success('Polyaxon deployment file is valid.')
     elif upgrade:
         try:
             manager.upgrade()
         except Exception as e:
-            Printer.print_error('Polyaxon could not upgrade the deployment.', add_sign=True)
+            Printer.print_error('Polyaxon could not upgrade the deployment.')
             exception = e
 
     else:
         try:
             manager.install()
         except Exception as e:
-            Printer.print_error('Polyaxon could not be installed.', add_sign=True)
+            Printer.print_error('Polyaxon could not be installed.')
             exception = e
 
     if exception:
@@ -85,7 +85,7 @@ def teardown(file):   # pylint:disable=redefined-builtin
         else:
             manager.teardown(hooks=False)
     except Exception as e:
-        Printer.print_error('Polyaxon could not teardown the deployment.', add_sign=True)
+        Printer.print_error('Polyaxon could not teardown the deployment.')
         exception = e
 
     if exception:

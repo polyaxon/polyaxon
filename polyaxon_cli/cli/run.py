@@ -105,8 +105,7 @@ def run(ctx, project, file, name, tags, description, ttl, u, l):  # pylint:disab
     # Check if we need to upload
     if u:
         if project:
-            Printer.print_error('Uploading is not supported when switching project context!',
-                                add_sign=True)
+            Printer.print_error('Uploading is not supported when switching project context!')
             click.echo('Please, either omit the `-u` option or `-p` / `--project=` option.')
             sys.exit(1)
         ctx.invoke(upload, sync=False)

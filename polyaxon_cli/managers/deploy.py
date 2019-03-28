@@ -57,12 +57,12 @@ class DeployManager(object):
         command_exist = self.kubectl.execute(args=[], is_json=False)
         if not command_exist:
             raise PolyaxonDeploymentConfigError('kubectl is required to run this command.')
-        Printer.print_success('kubectl is installed', add_sign=True)
+        Printer.print_success('kubectl is installed')
 
         command_exist = self.helm.execute(args=[])
         if not command_exist:
             raise PolyaxonDeploymentConfigError('helm is required to run this command.')
-        Printer.print_success('helm is installed', add_sign=True)
+        Printer.print_success('helm is installed')
 
         # Check the version to ensure that there's a connection
         command_exist = self.kubectl.execute(args=['version'])
@@ -196,7 +196,7 @@ class DeployManager(object):
             args += ['--no-hooks']
         click.echo('Running teardown command ...')
         self.helm.execute(args=args)
-        Printer.print_success('Deployment successfully deleted.', add_sign=True)
+        Printer.print_success('Deployment successfully deleted.')
 
     def teardown_on_docker_compose(self, hooks):
         pass

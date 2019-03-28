@@ -46,6 +46,6 @@ def upload(sync=True):  # pylint:disable=assign-to-new-keyword
                     sys.exit(1)
                 Printer.print_success('Files uploaded.')
     except Exception as e:
-        Printer.print_error("Could not upload the file.", add_sign=True)
+        Printer.print_error("Could not upload the file.")
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)

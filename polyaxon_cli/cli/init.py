@@ -27,7 +27,7 @@ def create_polyaxonfile():
             _ = PolyaxonFile(constants.INIT_FILE).specification  # noqa
             Printer.print_success("A valid polyaxonfile.yaml was found in the project.")
         except Exception as e:
-            Printer.print_error("A Polyaxonfile was found but it is not valid.", add_sign=True)
+            Printer.print_error("A Polyaxonfile was found but it is not valid.")
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
     else:
@@ -39,8 +39,7 @@ def create_polyaxonfile():
                 "Possible reasons: you don't have enough rights to create the file.")
             sys.exit(1)
 
-        Printer.print_success("{} was created successfully.".format(constants.INIT_FILE),
-                              add_sign=True)
+        Printer.print_success("{} was created successfully.".format(constants.INIT_FILE))
 
 
 @click.command()
@@ -77,7 +76,7 @@ def init(project, polyaxonfile):
     if init_project:
         ProjectManager.purge()
         ProjectManager.set_config(project_config, init=True)
-        Printer.print_success('Project was initialized', add_sign=True)
+        Printer.print_success('Project was initialized')
     else:
         Printer.print_header('Project config was not changed.')
 
@@ -91,7 +90,7 @@ def init(project, polyaxonfile):
 
     if init_ignore:
         IgnoreManager.init_config()
-        Printer.print_success('New .polyaxonignore file was created.', add_sign=True)
+        Printer.print_success('New .polyaxonignore file was created.')
     else:
         Printer.print_header('.polyaxonignore file was not changed.')
 
