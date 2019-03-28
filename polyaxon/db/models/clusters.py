@@ -35,7 +35,6 @@ class Cluster(Singleton):
             namespace=conf.get('K8S_NAMESPACE'),
             environment=conf.get('POLYAXON_ENVIRONMENT'),
             is_upgrade=conf.get('CHART_IS_UPGRADE'),
-            provisioner_enabled=conf.get('K8S_PROVISIONER_ENABLED'),
             node_selector_core_enabled=bool(conf.get('NODE_SELECTOR_CORE')),
             node_selector_experiments_enabled=bool(conf.get('NODE_SELECTOR_EXPERIMENTS')),
             node_selector_jobs_enabled=bool(conf.get('NODE_SELECTOR_JOBS')),
