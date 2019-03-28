@@ -119,14 +119,14 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
             return self._get_running_instance(group.tensorboard)
         serializer = self._create_tensorboard(project=project, experiment_group=group)
         group.clear_cached_properties()
-        return group.tensorboard, serializer
+        return group.tensorboard, serializer, False
 
     def _handle_experiment_tensorboard(self, project, experiment):
         if experiment.has_tensorboard:
             return self._get_running_instance(experiment.tensorboard)
         serializer = self._create_tensorboard(project=project, experiment=experiment)
         experiment.clear_cached_properties()
-        return experiment.tensorboard, serializer
+        return experiment.tensorboard, serializer, False
 
     def post(self, request, *args, **kwargs):
         project = self.project
@@ -134,16 +134,17 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
         group_id = self.kwargs.get('group_id')
         if experiment_id:
             experiment = get_object_or_404(Experiment, project=project, id=experiment_id)
-            tensorboard, serializer = self._handle_experiment_tensorboard(project=project,
-                                                                          experiment=experiment)
+            tensorboard, serializer, is_running = self._handle_experiment_tensorboard(
+                project=project, experiment=experiment)
         elif group_id:
             group = get_object_or_404(ExperimentGroup, project=project, id=group_id)
-            tensorboard, serializer = self._handle_group_tensorboard(project=project, group=group)
+            tensorboard, serializer, is_running = self._handle_group_tensorboard(
+                project=project, group=group)
         else:
-            tensorboard, serializer = self._handle_project_tensorboard(project=project)
+            tensorboard, serializer, is_running = self._handle_project_tensorboard(project=project)
 
-        if not tensorboard:
-            return Response(data='Tensorboard is already running', status=status.HTTP_200_OK)
+        if is_running:
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
         if not tensorboard.is_running:
             celery_app.send_task(
