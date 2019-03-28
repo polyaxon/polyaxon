@@ -8,9 +8,6 @@ Volume mounts
   {{ if .Values.persistence.upload.subPath -}}
   subPath: {{ .Values.persistence.upload.subPath | quote }}
   {{- end }}
-{{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.upload.mountPath | quote }}
-  name: upload
 {{- end }}
 {{- end -}}  {{- /* end def upload volume mounts */ -}}
 {{- define "volumes.volumeMounts.logs" -}}
@@ -22,9 +19,6 @@ Volume mounts
   subPath: {{ .Values.persistence.logs.subPath | quote }}
   {{- end }}
 {{- end }}  {{- /* end if store */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.logs.mountPath | quote }}
-  name: logs
 {{- end }}
 {{- end -}}  {{- /* end def logs volume mounts */ -}}
 {{- define "volumes.volumeMounts.repos" -}}
@@ -34,9 +28,6 @@ Volume mounts
   {{ if .Values.persistence.repos.subPath -}}
   subPath: {{ .Values.persistence.repos.subPath | quote }}
   {{- end }}
-{{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.repos.mountPath | quote }}
-  name: repos
 {{- end }}
 {{- end -}}  {{- /* end def repos volume mounts */ -}}
 {{- define "volumes.volumeMounts.data" -}}
@@ -50,9 +41,6 @@ Volume mounts
   {{- end }}
 {{- end }}  {{- /* end if store */ -}}
 {{- end }}  {{- /* end range */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.data.mountPath | quote }}
-  name: data
 {{- else }}
 - mountPath: {{ .Values.defaultPersistence.data.data.mountPath | quote }}
   name: data
@@ -69,9 +57,6 @@ Volume mounts
   {{- end }}
 {{- end }}  {{- /* end if store */ -}}
 {{- end }}  {{- /* end range */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-- mountPath: {{ .Values.nfsProvisioner.pvc.outputs.mountPath | quote }}
-  name: outputs
 {{- else }}
 - mountPath: {{ .Values.defaultPersistence.outputs.outputs.mountPath | quote }}
   name: outputs
@@ -91,9 +76,6 @@ Volumes
   hostPath:
     path: {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
 {{- end }}  {{- /* end persistence upload */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-  persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.upload.name | quote}}
 {{- end }}
 {{- end -}}  {{- /* end def upload volume mounts */ -}}
 {{- define "volumes.volumes.repos" -}}
@@ -106,9 +88,6 @@ Volumes
   hostPath:
     path: {{ .Values.persistence.repos.hostPath | default .Values.persistence.repos.mountPath | quote }}
 {{- end }}  {{- /* end persistence repos */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-  persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.repos.name | quote }}
 {{- end }}
 {{- end -}}  {{- /* end def repos volume mounts */ -}}
 {{- define "volumes.volumes.logs" -}}
@@ -123,10 +102,6 @@ Volumes
     path: {{ .Values.persistence.logs.hostPath | default .Values.persistence.logs.mountPath | quote }}
 {{- end }}  {{- /* end persistence logs */ -}}
 {{- end }} {{- /* end store check */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-- name: logs
-  persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.logs.name | quote }}
 {{- end }}
 {{- end -}}  {{- /* end def logs volume mounts */ -}}
 {{- define "volumes.volumes.data" -}}
@@ -143,10 +118,6 @@ Volumes
 {{- end }}
 {{- end }} {{- /* end volume check */ -}}
 {{- end}}  {{- /* end range */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-- name: data
-  persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.data.name | quote }}
 {{- else }}
 - name: data
   hostPath:
@@ -167,10 +138,6 @@ Volumes
 {{- end }}
 {{- end }} {{- /* end store check */ -}}
 {{- end}}  {{- /* end range */ -}}
-{{- else if .Values.nfsProvisioner.enabled }}
-- name: outputs
-  persistentVolumeClaim:
-    claimName: {{ .Values.nfsProvisioner.pvc.outputs.name | quote }}
 {{- else }}
 - name: outputs
   hostPath:
