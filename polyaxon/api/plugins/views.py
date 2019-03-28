@@ -104,23 +104,26 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
                        actor_name=self.request.user.username)
         return serializer
 
+    def _get_running_instance(self, tensorboard):
+        return tensorboard, self.serializer_class(tensorboard), True
+
     def _handle_project_tensorboard(self, project):
         if project.has_tensorboard:
-            return None
+            return self._get_running_instance(project.tensorboard)
         serializer = self._create_tensorboard(project=project)
         project.clear_cached_properties()
-        return project.tensorboard, serializer
+        return project.tensorboard, serializer, False
 
     def _handle_group_tensorboard(self, project, group):
         if group.has_tensorboard:
-            return None
+            return self._get_running_instance(group.tensorboard)
         serializer = self._create_tensorboard(project=project, experiment_group=group)
         group.clear_cached_properties()
         return group.tensorboard, serializer
 
     def _handle_experiment_tensorboard(self, project, experiment):
         if experiment.has_tensorboard:
-            return None
+            return self._get_running_instance(experiment.tensorboard)
         serializer = self._create_tensorboard(project=project, experiment=experiment)
         experiment.clear_cached_properties()
         return experiment.tensorboard, serializer
@@ -260,7 +263,8 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
 
     def post(self, request, *args, **kwargs):
         if self.project.has_notebook:
-            return Response(data='Notebook is already running', status=status.HTTP_200_OK)
+            serializer = self.serializer_class(self.project.notebook)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         serializer = self._create_notebook(self.project)
         self.project.clear_cached_properties()
         notebook = self.project.notebook

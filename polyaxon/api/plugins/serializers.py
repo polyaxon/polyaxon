@@ -27,6 +27,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, ProjectMi
             'config',
             'pod_id',
             'build_job',
+            'last_status',
             'tags',  # Need to implement TagsSerializerMixin
         )
 
