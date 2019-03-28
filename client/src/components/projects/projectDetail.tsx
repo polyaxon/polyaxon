@@ -64,6 +64,10 @@ export default class ProjectDetail extends React.Component<Props, {}> {
                 onDelete={this.props.onDelete}
                 onArchive={project.deleted ? undefined : this.props.onArchive}
                 onRestore={project.deleted ? this.props.onRestore : undefined}
+                notebookActionCallback={
+                  project.has_notebook ? this.props.stopNotebook : undefined}
+                tensorboardActionCallback={
+                  project.has_tensorboard ? this.props.stopTensorboard : undefined}
                 hasNotebook={project.has_notebook}
                 hasTensorboard={project.has_tensorboard}
                 pullRight={true}

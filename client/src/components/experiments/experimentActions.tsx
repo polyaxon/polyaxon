@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 
 import { ActionInterface } from '../../interfaces/actions';
 import ConfirmAction from '../modals/confimAction';
@@ -15,6 +16,7 @@ export interface Props {
   hasTensorboard?: boolean;
   isRunning: boolean;
   pullRight: boolean;
+  experimentUrl?: string;
   isSelection?: boolean;
   actions?: ActionInterface[];
 }
@@ -111,17 +113,27 @@ export default class ExperimentActions extends React.Component<Props, State> {
             /> Stop Tensorboard
           </MenuItem>
           }
+          {!this.props.hasTensorboard && this.props.experimentUrl &&
+          <LinkContainer to={`${this.props.experimentUrl}/tensorboards/new`}>
+            <MenuItem eventKey="2" onClick={() => this.handleShow('stopTensorboard')}>
+              <i
+                className="fas fa-play fa-sm icon"
+                aria-hidden="true"
+              /> Start Tensorboard
+            </MenuItem>
+          </LinkContainer>
+          }
           {this.props.onRestore &&
-          <MenuItem eventKey="1" onClick={this.props.onRestore}>
+          <MenuItem eventKey="3" onClick={this.props.onRestore}>
             <i className="fas fa-recycle icon" aria-hidden="true"/> Restore
           </MenuItem>
           }
           {this.props.onArchive &&
-          <MenuItem eventKey="1" onClick={() => this.handleShow('archive')}>
+          <MenuItem eventKey="4" onClick={() => this.handleShow('archive')}>
             <i className="fas fa-archive icon" aria-hidden="true"/> Archive
           </MenuItem>
           }
-          <MenuItem eventKey="2" onClick={() => this.handleShow('delete')}>
+          <MenuItem eventKey="5" onClick={() => this.handleShow('delete')}>
           <i className="fas fa-trash icon" aria-hidden="true"/> Delete
           </MenuItem>
         </Dropdown.Menu>

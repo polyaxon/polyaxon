@@ -65,8 +65,10 @@ export default class GroupDetail extends React.Component<Props, {}> {
                   onStop={group.group_type === 'study' ? this.props.onStop : undefined}
                   onArchive={group.deleted ? undefined : this.props.onArchive}
                   onRestore={group.deleted ? this.props.onRestore : undefined}
+                  tensorboardActionCallback={group.has_tensorboard ? this.props.stopTensorboard : undefined}
                   hasTensorboard={group.has_tensorboard}
                   isRunning={!isDone(group.last_status)}
+                  groupUrl={groupUrl}
                   pullRight={true}
                 />
               }

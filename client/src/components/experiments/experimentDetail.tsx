@@ -90,8 +90,10 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   onStop={this.props.onStop}
                   onArchive={experiment.deleted ? undefined : this.props.onArchive}
                   onRestore={experiment.deleted ? this.props.onRestore : undefined}
+                  tensorboardActionCallback={experiment.has_tensorboard ? this.props.stopTensorboard : undefined}
                   hasTensorboard={experiment.has_tensorboard}
                   isRunning={!isDone(experiment.last_status)}
+                  experimentUrl={experimentUrl}
                   pullRight={true}
                 />
               }
