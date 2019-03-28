@@ -11,8 +11,9 @@ from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from libs.spec_validation import validate_notebook_spec_config, validate_tensorboard_spec_config
 
 
-class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, UserMixin):
+class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin, UserMixin):
     user = fields.SerializerMethodField()
+    project = fields.SerializerMethodField()
     build_job = fields.SerializerMethodField()
 
     class Meta:
@@ -20,6 +21,7 @@ class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, UserMixin
             'id',
             'user',
             'name',
+            'project',
             'unique_name',
             'config',
             'pod_id',
