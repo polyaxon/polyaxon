@@ -83,6 +83,7 @@
     "redux-thunk": "2.3.0",
     "sanitize-html": "^1.19.1",
     "showdown": "^1.8.6",
-    "sprintf-js": "1.1.2"
+    "sprintf-js": "1.1.2",
+    "whatwg-fetch": "3.0.0"
   }
 }
