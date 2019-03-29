@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getGroupUrlFromName } from '../../constants/utils';
+import { getBuildUrlFromName } from '../../constants/utils';
 import history from '../../history';
 import { BuildModel } from '../../models/build';
 import { stdCreateHandleError } from '../utils';
@@ -75,7 +75,7 @@ export function createBuild(user: string,
         dispatch(createBuildSuccessActionCreator());
         const dispatched = dispatch(getBuildSuccessActionCreator(json));
         if (redirect) {
-          history.push(getGroupUrlFromName(json.unique_name, true));
+          history.push(getBuildUrlFromName(json.unique_name, true));
         }
         return dispatched;
       })
