@@ -25,7 +25,7 @@ You can easily add many private registries to Polyaxon to pull private images an
 
 ## Add your private docker registry to the Polyaxon deployment config
 
-Now you can use the `privateRegistries` section to set your Google container registry authentication:
+You can use the `privateRegistries` section to set your Google container registry authentication:
 
 ```yaml
 privateRegistries:

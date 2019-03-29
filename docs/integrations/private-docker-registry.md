@@ -1,0 +1,54 @@
+---
+title: "Private Docker Registry"
+meta_title: "Docker Registry"
+meta_description: "How to pull images from your private docker registry. Use your secured, private, and internal docker registry to start your machine learning and deep learning experiments on Kubernetes on Polyaxon."
+custom_excerpt: "The Docker Registry for storing and distributing Docker images."
+image: "../../content/images/integrations/docker.png"
+author:
+  name: "Polyaxon"
+  slug: "Polyaxon"
+  website: "https://polyaxon.com"
+  twitter: "polyaxonAI"
+  github: "polyaxon"
+tags: 
+  - registry
+featured: false
+visibility: public
+status: published
+---
+
+Integrate your secured, private, and internal docker registry with Polyaxon to start your machine learning and deep learning experiments on Kubernetes.
+
+## Overview
+
+You can easily add many private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
+
+## Add your private docker registries to your Polyaxon deployment config
+
+You can use the `privateRegistries` section to set your private docker registry information:
+
+```yaml
+privateRegistries:
+  - "username1:password1@registry1.example.com"
+  - "username2:password2@registry2.example.com"
+  - "username3:password3@registry3.example.com"
+```
+
+or 
+
+```yaml
+privateRegistries:
+  - host: "another.registry.com"
+    user: "myname"
+    password: "mypassword"
+```
+
+or 
+```yaml
+privateRegistries:
+  - "username1:password1@registry1.example.com"
+  - host: "another.registry.com"
+    user: "myname"
+    password: "mypassword"
+  ... 
+```
