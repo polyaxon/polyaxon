@@ -11,7 +11,7 @@
                data-toggle="dropdown"
                aria-haspopup="true"
                aria-expanded="true">
-                <i class="fas fa-plus-square" aria-hidden="true"></i>
+                <i class="fas fa-plus-square dropdown-icon" aria-hidden="true"></i>
                 <i class="fas fa-chevron-down fa-sm chevron" aria-hidden="true"></i>
             </a>
             <ul class="dropdown-menu">
@@ -51,6 +51,23 @@
                 <span class="tooltip-text">Bookmarks</span>
             </a>
         </li>
+        <li class="header-item">
+            <a class="header-item-link header-item-dropdown-toggle header-dropdown-toggle dropdown-toggle"
+               data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="true">
+                <i class="fas fa-question-circle dropdown-icon" aria-hidden="true"></i>
+                <i class="fas fa-chevron-down fa-sm chevron" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="https://docs.polyaxon.com">Docs</a></li>
+                <li><a href="https://github.com/polyaxon/">Github</a></li>
+                <li><a href="https://github.com/polyaxon/polyaxon-examples">Examples</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="https://polyaxon.com">Polyaxon</a></li>
+                <li><a href="https://polyaxon.com/about/">About</a></li>
+            </ul>
+        </li>
         <li class="header-user dropdown">
             <a class="header-user-dropdown-toggle header-dropdown-toggle dropdown-toggle"
                data-toggle="dropdown"
@@ -79,11 +96,6 @@
                 {% endif %}
                 <li role="separator" class="divider"></li>
                 <li><a href="{% url 'react-index' %}/status">Health status</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="https://polyaxon.com">Polyaxon</a></li>
-                <li><a href="https://docs.polyaxon.com">Docs</a></li>
-                <li><a href="https://github.com/polyaxon/">Github</a></li>
-                <li><a href="https://polyaxon.com/about/">About</a></li>
                 <li role="separator" class="divider"></li>
                 <li><a href="{% url 'users:logout' %}">Logout</a></li>
             </ul>

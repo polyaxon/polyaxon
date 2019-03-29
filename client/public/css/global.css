@@ -259,7 +259,7 @@ a.brand {
   padding: 4px 5px 1px !important;
 }
 
-.header-item-dropdown-toggle .fa-plus-square {
+.header-item-dropdown-toggle .dropdown-icon {
   font-size: 14px;
 }
 
@@ -275,8 +275,9 @@ a.brand {
 }
 
 /* Dropdown */
-.header-user .dropdown-menu {
+.header-user .dropdown-menu, .header-item .dropdown-menu {
   min-width: 200px;
+  border-radius: 5px !important;
 }
 
 .header-user .chevron, .header-item .chevron {
