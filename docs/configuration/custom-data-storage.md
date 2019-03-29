@@ -66,11 +66,11 @@ persistence:
       secretKey: secret-key
 ```
 
-For GCS, S3, and Azure Storage, you need to need to provide a secret with auth access to these storages.
+For GCS, S3, and Azure Storage, you need to provide a secret with auth access to these storages.
 
 ## Scheduling
 
-When the user defines a multi data volumes,
+When the user defines multi data volumes,
 Polyaxon has a default behavior for mounting these volumes during the scheduling of the jobs and experiments,
 unless the user overrides this default behavior in the polyaxonfiles.
 
@@ -92,7 +92,7 @@ environment:
 ```
 
 By providing this persistence subsection,
-Polyaxon will only mount these volumes by looking up there names from the defined volumes.
+Polyaxon will only mount these volumes by looking up their names from the defined volumes.
 
 ## Host paths
 
@@ -113,7 +113,7 @@ persistence:
 In the example above we defined 2 host paths with one with path read only permission.
 
 Users must know when to use host paths, especially in a multi-nodes deployment, 
-because jobs/experiments might only find an empty path if scheduled on a different node that the one where the data resides.
+because jobs/experiments might only find an empty path if scheduled on a different node than the one where the data resides.
 
 You can look at how you can customize the node scheduling behaviour in this [guide](/configuration/custom-node-scheduling/).
 
@@ -146,7 +146,7 @@ The way to do that is by creating a secret of your cloud storage access auth,
 and providing the secret name and key name to use from that secret. 
 (You can use the same k8s secret to manage multiple storage access auth, in this case only the key will be different).
 
-Please refer to this integration sections for more details:
+Please refer to these integration sections for more details:
 
  * [Data on GCS](/integrations/data-on-gcs/)
  * [Data on AWS S3](/integrations/data-on-s3/)
