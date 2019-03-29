@@ -27,9 +27,13 @@ config = rhea.Rhea.read_configs(config_values)
 
 K8S_NAMESPACE = config.get_string('POLYAXON_K8S_NAMESPACE')
 
-REGISTRY_USER = config.get_string('POLYAXON_REGISTRY_USER', is_optional=True)
-REGISTRY_PASSWORD = config.get_string('POLYAXON_REGISTRY_PASSWORD', is_optional=True)
-REGISTRY_URI = config.get_string('POLYAXON_REGISTRY_URI', is_optional=True)
+REGISTRY_USER = config.get_string('POLYAXON_REGISTRY_USER',
+                                  is_optional=True)
+REGISTRY_PASSWORD = config.get_string('POLYAXON_REGISTRY_PASSWORD',
+                                      is_secret=True,
+                                      is_optional=True)
+REGISTRY_URI = config.get_string('POLYAXON_REGISTRY_URI',
+                                 is_optional=True)
 
 # This is duplicated
 PRIVATE_REGISTRIES_PREFIX = 'POLYAXON_PRIVATE_REGISTRY_'
