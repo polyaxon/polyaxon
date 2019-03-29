@@ -76,7 +76,7 @@ export default class TensorboardOverview extends React.Component<Props, {}> {
                 projectName={values[1]}
                 project={tensorboard.project}
                 experiment={tensorboard.experiment}
-                group={tensorboard.group}
+                group={tensorboard.experiment_group}
                 inline={true}
               />
             </div>

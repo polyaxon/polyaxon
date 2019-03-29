@@ -15,6 +15,7 @@ export class TensorboardModel {
   public build_job: string;
   public group: string;
   public experiment: string;
+  public experiment_group: string;
   public tags: string[] = [];
   public last_status: string;
   public created_at: string;

@@ -41,6 +41,7 @@ export default class Polyaxonfile extends React.Component<Props, State> {
         name="UNIQUE_ID_OF_DIV"
         value={this.state.content}
         width="auto"
+        height="300px"
         editorProps={{$blockScrolling: true}}
       />
     );

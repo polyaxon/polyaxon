@@ -121,6 +121,7 @@ function YamlText({config, configText, title}: Props) {
                 value={processedText}
                 readOnly={true}
                 width="auto"
+                highlightActiveLine={false}
                 editorProps={{$blockScrolling: true}}
               />
             </div>

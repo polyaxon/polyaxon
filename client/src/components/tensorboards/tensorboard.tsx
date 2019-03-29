@@ -100,7 +100,7 @@ function Tensorboard({
           projectName={values[1]}
           project={tensorboard.project}
           experiment={tensorboard.experiment}
-          group={tensorboard.group}
+          group={tensorboard.experiment_group}
           inline={false}
         />
       </td>

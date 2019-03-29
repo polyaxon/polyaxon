@@ -44,6 +44,7 @@ function DockerfileText({title, text}: Props) {
                 value={text}
                 readOnly={true}
                 width="auto"
+                highlightActiveLine={false}
                 editorProps={{$blockScrolling: true}}
               />
             </div>
