@@ -49,7 +49,7 @@ export default class HealthStatus extends React.Component<Props, {}> {
       status.Rabbitmq = this.props.healthStatus.RABBITMQ.is_healthy;
       status.Redis = this.props.healthStatus.REDIS.is_healthy;
     }
-    const getClassName = (isHealthy: boolean | null) => {
+    const getServiceClassName = (isHealthy: boolean | null) => {
       if (isHealthy === null) {
         return 'status-unknown';
       } else if (isHealthy) {
@@ -58,11 +58,20 @@ export default class HealthStatus extends React.Component<Props, {}> {
         return 'status-unhealthy';
       }
     };
+
+    const getServiceIcon = (isHealthy: boolean | null) => {
+      if (isHealthy === null) {
+        return 'fas fa-circle-notch fa-spin icon';
+      } else {
+        return 'fas fa-circle icon';
+      }
+    };
+
     return (
       <div className="jumbotron jumbotron-action health-status">
         {services.map((service) => (
-          <div className={getClassName(status[service])}>
-            <i className="fas fa-circle icon" aria-hidden="true"/> {service}
+          <div className={getServiceClassName(status[service])} key={service}>
+            <i className={getServiceIcon(status[service])} aria-hidden="true"/> {service}
           </div>
         ))}
       </div>
