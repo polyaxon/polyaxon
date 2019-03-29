@@ -4,8 +4,8 @@ from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,
     ProjectDetailSerializer,
-    ProjectSerializer
-)
+    ProjectSerializer,
+    ProjectNameSerializer)
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
@@ -47,6 +47,35 @@ class TestProjectSerializer(BaseTest):
         assert data.pop('user') == self.obj1.user.username
         assert data.pop('owner') == self.obj1.owner.name
 
+        for k, v in data.items():
+            assert getattr(self.obj1, k) == v
+
+    def test_serialize_many(self):
+        data = self.serializer_class(queries.projects.all(), many=True).data
+        assert len(data) == 2
+        for d in data:
+            assert set(d.keys()) == self.expected_keys
+
+
+@pytest.mark.projects_mark
+class TestProjectNameSerializer(BaseTest):
+    serializer_class = ProjectNameSerializer
+    model_class = Project
+    factory_class = ProjectFactory
+    expected_keys = {
+        'unique_name',
+    }
+
+    def setUp(self):
+        super().setUp()
+        self.obj1 = self.factory_class()
+        self.obj2 = self.factory_class()
+        self.obj1_query = queries.projects.get(id=self.obj1.id)
+
+    def test_serialize_one(self):
+        data = self.serializer_class(self.obj1_query).data
+
+        assert set(data.keys()) == self.expected_keys
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
 

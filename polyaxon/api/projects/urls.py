@@ -16,6 +16,8 @@ projects_urlpatterns = [
             views.ProjectCreateView.as_view()),
     re_path(r'^{}/?$'.format(OWNER_NAME_PATTERN),
             views.ProjectListView.as_view()),
+    re_path(r'^{}/projects/names?$'.format(OWNER_NAME_PATTERN),
+            views.ProjectNameListView.as_view()),
     re_path(r'^{}/{}/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             views.ProjectDetailView.as_view()),
     re_path(r'^{}/{}/archive/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),

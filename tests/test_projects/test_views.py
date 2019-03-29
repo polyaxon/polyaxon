@@ -8,7 +8,8 @@ from rest_framework import status
 from django.test import override_settings
 
 from api.projects import queries
-from api.projects.serializers import BookmarkedProjectSerializer, ProjectDetailSerializer
+from api.projects.serializers import BookmarkedProjectSerializer, ProjectDetailSerializer, \
+    ProjectSerializer, ProjectNameSerializer
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle
@@ -112,6 +113,75 @@ class TestProjectListViewV1(BaseViewTest):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
         assert len([1 for obj in resp.data['results'] if obj['bookmarked'] is True]) == 1
+
+    @flaky(max_runs=3)
+    def test_get_others(self):
+        resp = self.auth_client.get(self.url_other)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data[0] == self.serializer_class(self.other_object).data
+
+    @flaky(max_runs=3)
+    def test_pagination(self):
+        limit = self.num_objects - 1
+        resp = self.auth_client.get("{}?limit={}".format(self.url, limit))
+        assert resp.status_code == status.HTTP_200_OK
+
+        next_page = resp.data.get('next')
+        assert next_page is not None
+        assert resp.data['count'] == self.queryset.count()
+
+        data = resp.data['results']
+        assert len(data) == limit
+        assert data == self.serializer_class(self.queryset[:limit], many=True).data
+
+        resp = self.auth_client.get(next_page)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+
+        data = resp.data['results']
+        assert len(data) == 1
+        assert data == self.serializer_class(self.queryset[limit:], many=True).data
+
+
+@pytest.mark.projects_mark
+class TestProjectNameListViewV1(BaseViewTest):
+    serializer_class = ProjectNameSerializer
+    model_class = Project
+    factory_class = ProjectFactory
+    num_objects = 3
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.user = self.auth_client.user
+        self.url = '/{}/{}/projects/names'.format(API_V1, self.user.username)
+        self.objects = [self.factory_class(user=self.user) for _ in range(self.num_objects)]
+        # Other user objects
+        self.other_object = self.factory_class()
+        # One private project
+        self.private = self.factory_class(user=self.other_object.user, is_public=False)
+        self.url_other = '/{}/{}/projects/names'.format(API_V1, self.other_object.user)
+
+        self.queryset = self.model_class.objects.filter(user=self.user)
+        self.queryset = self.queryset.order_by('-updated_at')
+
+    def test_get(self):
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == len(self.objects)
+
+        data = resp.data['results']
+        assert len(data) == self.queryset.count()
+        assert data == self.serializer_class(self.queryset, many=True).data
 
     @flaky(max_runs=3)
     def test_get_others(self):

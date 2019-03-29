@@ -16,13 +16,14 @@ from api.endpoint.base import (
     UpdateEndpoint
 )
 from api.endpoint.project import ProjectEndpoint
+from api.paginator import LargeLimitOffsetPagination
 from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,
     ProjectCreateSerializer,
     ProjectDetailSerializer,
     ProjectSerializer,
-)
+    ProjectNameSerializer)
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from db.models.projects import Project
 from event_manager.events.project import (
@@ -57,6 +58,19 @@ class ProjectListView(BookmarkedListMixinView, AdminResourceEndpoint, ListEndpoi
     queryset = queries.projects.order_by('-updated_at')
     permission_classes = (AdminProjectListPermission,)
     serializer_class = BookmarkedProjectSerializer
+    pagination_class = LargeLimitOffsetPagination
+
+    def filter_queryset(self, queryset):
+        if self.request.access.public_only:
+            queryset = queryset.filter(is_public=True)
+        return super().filter_queryset(queryset=queryset)
+
+
+class ProjectNameListView(AdminResourceEndpoint, ListEndpoint):
+    """List projects' names for a user."""
+    queryset = queries.projects.order_by('-updated_at')
+    permission_classes = (AdminProjectListPermission,)
+    serializer_class = ProjectNameSerializer
 
     def filter_queryset(self, queryset):
         if self.request.access.public_only:

@@ -8,6 +8,13 @@ from api.utils.serializers.user import UserMixin
 from db.models.projects import Project
 
 
+class ProjectNameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ('unique_name',)
+
+
 class ProjectSerializer(serializers.ModelSerializer, UserMixin):
     uuid = fields.UUIDField(format='hex', read_only=True)
     user = fields.SerializerMethodField()
