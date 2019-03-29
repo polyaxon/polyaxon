@@ -44,7 +44,7 @@ environment:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 ```
 
@@ -86,7 +86,7 @@ environment:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 
   replicas:
@@ -101,7 +101,7 @@ environment:
           requests: 256
           limits: 1024
         gpu:
-          request: 1
+          requests: 1
           limits: 1
 
     worker:
@@ -114,7 +114,7 @@ environment:
             requests: 256
             limits: 1024
           gpu:
-            request: 1
+            requests: 1
             limits: 1
 ```
 
@@ -131,7 +131,7 @@ resources:
     requests: 256
     limits: 1024
   gpu:
-    request: 1
+    requests: 1
     limits: 1
 ```
 
@@ -147,7 +147,7 @@ worker_resources:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 ```
 And all the other workers have the same default worker resources definition, i.e.
@@ -162,6 +162,6 @@ default_worker:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 ```

@@ -44,7 +44,7 @@ environment:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 ```
 
@@ -86,7 +86,7 @@ environment:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 
   replicas:
@@ -102,7 +102,7 @@ environment:
           requests: 256
           limits: 1024
         gpu:
-          request: 1
+          requests: 1
           limits: 1
 
     worker:
@@ -148,7 +148,7 @@ resources:
     requests: 256
     limits: 1024
   gpu:
-    request: 1
+    requests: 1
     limits: 1
 ```
 
@@ -176,7 +176,7 @@ default_worker:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
 ```
 

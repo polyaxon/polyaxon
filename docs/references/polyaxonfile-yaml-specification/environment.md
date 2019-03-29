@@ -43,10 +43,10 @@ environment:
       requests: 256
       limits: 1024
     gpu:
-      request: 1
+      requests: 1
       limits: 1
     tpu:
-      request: 8
+      requests: 8
       limits: 8
 ```
 
@@ -275,7 +275,7 @@ environment:
             requests: 256
             limits: 1024
           gpu:
-            request: 1
+            requests: 1
             limits: 1
         tolerations:
           - operator: "Exists"

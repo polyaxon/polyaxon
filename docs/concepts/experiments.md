@@ -270,7 +270,7 @@ environment:
           requests: 256
           limits: 1024
         gpu:
-          request: 1
+          requests: 1
           limits: 1
 
     worker:
