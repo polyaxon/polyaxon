@@ -1,6 +1,6 @@
 -r ../requirements-base.txt
 
-docker==3.5.1
+docker==3.7.2
 GitPython==2.1.11
 polystores==0.1.7
 polyaxon-k8s==0.4.0
