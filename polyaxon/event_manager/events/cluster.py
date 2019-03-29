@@ -17,7 +17,6 @@ class ClusterCreatedEvent(Event):
         Attribute('namespace'),
         Attribute('environment'),
         Attribute('is_upgrade'),
-        Attribute('provisioner_enabled', attr_type=bool),
         Attribute('node_selector_core_enabled', attr_type=bool),
         Attribute('node_selector_experiments_enabled', attr_type=bool),
         Attribute('cli_min_version'),

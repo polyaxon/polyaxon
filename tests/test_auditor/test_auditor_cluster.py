@@ -38,7 +38,6 @@ class AuditorClusterTest(BaseTest):
                        namespace='test',
                        environment='test',
                        is_upgrade='test',
-                       provisioner_enabled=False,
                        use_data_claim=False,
                        use_outputs_claim=False,
                        use_logs_claim=False,
