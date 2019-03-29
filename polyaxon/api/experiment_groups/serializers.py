@@ -5,6 +5,7 @@ from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.tensorboard import TensorboardSerializerMixin
 from api.utils.serializers.user import UserMixin
 from db.models.experiment_groups import (
     ExperimentGroup,
@@ -61,6 +62,7 @@ class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedS
 
 class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
                                       TagsSerializerMixin,
+                                      TensorboardSerializerMixin,
                                       NamesMixin):
     num_experiments = fields.SerializerMethodField()
     num_pending_experiments = fields.SerializerMethodField()
@@ -70,6 +72,7 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
     num_failed_experiments = fields.SerializerMethodField()
     num_stopped_experiments = fields.SerializerMethodField()
     current_iteration = fields.SerializerMethodField()
+    tensorboard = fields.SerializerMethodField()
     merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedExperimentGroupSerializer.Meta):

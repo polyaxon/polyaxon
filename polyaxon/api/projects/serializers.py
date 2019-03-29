@@ -1,7 +1,9 @@
 from rest_framework import fields, serializers
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.notebook import NotebookSerializerMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.tensorboard import TensorboardSerializerMixin
 from api.utils.serializers.user import UserMixin
 from db.models.projects import Project
 
@@ -38,12 +40,17 @@ class BookmarkedProjectSerializer(ProjectSerializer, BookmarkedSerializerMixin):
         fields = ProjectSerializer.Meta.fields + ('bookmarked',)
 
 
-class ProjectDetailSerializer(BookmarkedProjectSerializer, TagsSerializerMixin):
+class ProjectDetailSerializer(BookmarkedProjectSerializer,
+                              TensorboardSerializerMixin,
+                              NotebookSerializerMixin,
+                              TagsSerializerMixin):
     num_experiment_groups = fields.SerializerMethodField()
     num_experiments = fields.SerializerMethodField()
     num_independent_experiments = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     num_builds = fields.SerializerMethodField()
+    tensorboard = fields.SerializerMethodField()
+    notebook = fields.SerializerMethodField()
     merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedProjectSerializer.Meta):

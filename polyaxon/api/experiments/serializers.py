@@ -9,6 +9,7 @@ from api.utils.serializers.job_resources import JobResourcesSerializer
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
+from api.utils.serializers.tensorboard import TensorboardSerializerMixin
 from api.utils.serializers.user import UserMixin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
@@ -171,10 +172,12 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
                                  InClusterMixin,
                                  TagsSerializerMixin,
                                  DataRefsSerializerMixin,
+                                 TensorboardSerializerMixin,
                                  NamesMixin):
     resources = fields.SerializerMethodField()
     num_jobs = fields.SerializerMethodField()
     last_metric = fields.SerializerMethodField()
+    tensorboard = fields.SerializerMethodField()
     merge = fields.BooleanField(write_only=True, required=False)
 
     class Meta(BookmarkedExperimentSerializer.Meta):
