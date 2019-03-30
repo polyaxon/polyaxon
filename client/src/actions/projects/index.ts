@@ -3,6 +3,7 @@ import { BookmarkProjectAction } from './bookmark';
 import { CreateProjectAction } from './create';
 import { DeleteProjectAction } from './delete';
 import { FetchProjectAction } from './fetch';
+import { FetchProjectNameAction } from './fetch_names';
 import { GetProjectAction } from './get';
 import { NotebookProjectAction } from './notebook';
 import { RestoreProjectAction } from './restore';
@@ -15,6 +16,7 @@ export * from './bookmark';
 export * from './create';
 export * from './delete';
 export * from './fetch';
+export * from './fetch_names';
 export * from './get';
 export * from './notebook';
 export * from './restore';
@@ -27,6 +29,7 @@ export type ProjectAction =
   | CreateProjectAction
   | DeleteProjectAction
   | FetchProjectAction
+  | FetchProjectNameAction
   | GetProjectAction
   | NotebookProjectAction
   | RestoreProjectAction

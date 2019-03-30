@@ -25,7 +25,7 @@ export interface FetchProjectsErrorAction extends Action {
   error: any;
 }
 
-export function getProjectsRequestActionCreator(): FetchProjectsRequestAction {
+export function fetchProjectsRequestActionCreator(): FetchProjectsRequestAction {
   return {
     type: actionTypes.FETCH_PROJECTS_REQUEST,
   };
@@ -71,7 +71,7 @@ function _fetchProjects(projectsUrl: string,
                         dispatch: any,
                         getState: any): any {
 
-  dispatch(getProjectsRequestActionCreator());
+  dispatch(fetchProjectsRequestActionCreator());
 
   const urlPieces = location.hash.split('?');
   const baseUrl = urlPieces[0];

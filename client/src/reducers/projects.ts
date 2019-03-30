@@ -131,9 +131,12 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.project.unique_name]: setProjectRelated(action.project)}
         };
+      case actionTypes.FETCH_PROJECTS_NAMES_REQUEST:
       case actionTypes.FETCH_PROJECTS_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
+
+      case actionTypes.FETCH_PROJECTS_NAMES_SUCCESS:
       case actionTypes.FETCH_PROJECTS_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
@@ -172,8 +175,8 @@ export const UserProjectsReducer: Reducer<UserStateSchema> =
       case actionTypes.GET_PROJECT_SUCCESS:
         return processProject(action.project);
       case actionTypes.FETCH_PROJECTS_SUCCESS:
-        for (const experiment of action.projects) {
-          newState = processProject(experiment, action.count);
+        for (const project of action.projects) {
+          newState = processProject(project, action.count);
         }
         return newState;
       default:
@@ -318,11 +321,14 @@ export const LoadingIndicatorProjectReducer: Reducer<LoadingIndicatorSchema> =
           projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.STOP_NOTEBOOK)
         };
 
+      case actionTypes.FETCH_PROJECTS_NAMES_REQUEST:
       case actionTypes.FETCH_PROJECTS_REQUEST:
         return {
           ...state,
           projects: processLoadingIndicatorGlobal(state.projects, true, ACTIONS.FETCH)
         };
+      case actionTypes.FETCH_PROJECTS_NAMES_ERROR:
+      case actionTypes.FETCH_PROJECTS_NAMES_SUCCESS:
       case actionTypes.FETCH_PROJECTS_ERROR:
       case actionTypes.FETCH_PROJECTS_SUCCESS:
         return {
@@ -547,16 +553,19 @@ export const AlertProjectReducer: Reducer<AlertSchema> =
           projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.STOP_NOTEBOOK)
         };
 
+      case actionTypes.FETCH_PROJECTS_NAMES_REQUEST:
       case actionTypes.FETCH_PROJECTS_REQUEST:
         return {
           ...state,
           projects: processErrorGlobal(state.projects, null, null, ACTIONS.FETCH)
         };
+      case actionTypes.FETCH_PROJECTS_NAMES_SUCCESS:
       case actionTypes.FETCH_PROJECTS_SUCCESS:
         return {
           ...state,
           projects: processErrorGlobal(state.projects, null, true, ACTIONS.FETCH)
         };
+      case actionTypes.FETCH_PROJECTS_NAMES_ERROR:
       case actionTypes.FETCH_PROJECTS_ERROR:
         return {
           ...state,
