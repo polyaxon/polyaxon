@@ -12,7 +12,11 @@ from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from libs.spec_validation import validate_notebook_spec_config, validate_tensorboard_spec_config
 
 
-class PluginJobBaseSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin, UserMixin):
+class PluginJobBaseSerializer(serializers.ModelSerializer,
+                              NamesMixin,
+                              BuildMixin,
+                              ProjectMixin,
+                              UserMixin):
     user = fields.SerializerMethodField()
     project = fields.SerializerMethodField()
     build_job = fields.SerializerMethodField()
