@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as chartViewsAction from '../../actions/chartViews';
-import * as experimentActions from '../../actions/experiments';
+import * as experimentsActions from '../../actions/experiments';
 import * as metricsActions from '../../actions/metrics';
 import ViewsCreate from '../../containers/metrics/viewsCreate';
 import { ChartModel, ChartTypes } from '../../models/chart';
@@ -25,7 +25,7 @@ export interface Props {
   count: number;
   chartTypes: string[];
   fetchData: () => metricsActions.MetricsAction;
-  fetchParamsData?: () => experimentActions.ExperimentAction;
+  fetchParamsData?: () => experimentsActions.ExperimentAction;
   fetchViews: () => chartViewsAction.ChartViewsAction;
   createView?: (data: ChartViewModel) => chartViewsAction.ChartViewsAction;
   deleteView?: (viewId: number) => chartViewsAction.ChartViewsAction;

@@ -5,7 +5,7 @@ import { AppState } from '../../constants/types';
 import { MetricModel } from '../../models/metric';
 
 import * as chartViewsActions from '../../actions/chartViews';
-import * as experimentActions from '../../actions/experiments';
+import * as experimentsActions from '../../actions/experiments';
 import * as metricsActions from '../../actions/metrics';
 import Metrics from '../../components/metrics/metrics';
 import { ChartViewModel } from '../../models/chartView';
@@ -65,7 +65,7 @@ export function mapStateToProps(state: AppState, params: any) {
 
 export interface DispatchProps {
   fetchData?: () => metricsActions.MetricsAction;
-  fetchParamsData?: () => experimentActions.ExperimentAction;
+  fetchParamsData?: () => experimentsActions.ExperimentAction;
   fetchViews?: () => chartViewsActions.ChartViewsAction;
   createView?: (data: ChartViewModel) => chartViewsActions.ChartViewsAction;
   deleteView?: (viewId: number) => chartViewsActions.ChartViewsAction;
@@ -84,7 +84,7 @@ export function mapDispatchToProps(dispatch: Dispatch<metricsActions.MetricsActi
           declarations: true,
           all: true
         };
-        return dispatch(experimentActions.fetchExperiments(params.project, filters, false));
+        return dispatch(experimentsActions.fetchExperiments(params.project, filters, false));
       }
     },
     fetchViews: () => {

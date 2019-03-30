@@ -3,22 +3,29 @@ import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
 
-import * as actions from '../../actions/projects';
-import { getProjectUrl } from '../../constants/utils';
+import * as notebooksActions from '../../actions/projects';
+import * as projectsActions from '../../actions/projects';
+import { getProjectUrl, splitUniqueName } from '../../constants/utils';
 import { NotebookModel } from '../../models/notebook';
+import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
 import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
+import { ProjectField } from '../forms/projectField';
 import { TagsField } from '../forms/tagsField';
+import { sanitizeForm } from '../forms/utils';
 
 export interface Props {
   user: string;
   projectName: string;
-  onCreate: (notebook: NotebookModel) => actions.ProjectAction;
   isLoading: boolean;
+  isProjectEntity: boolean;
+  projects: ProjectModel[];
   errors: any;
+  onCreate: (notebook: NotebookModel, user?: string, projectName?: string) => notebooksActions.ProjectAction;
+  fetchProjects: (user: string) => projectsActions.ProjectAction;
 }
 
 export interface State extends BaseState {
@@ -35,13 +42,26 @@ const ValidationSchema = Yup.object().shape({
 
 export default class NotebookCreate extends React.Component<Props, {}> {
 
+  public componentDidMount() {
+    if (this.props.isProjectEntity) {
+      this.props.fetchProjects(this.props.user);
+    }
+  }
+
   public createNotebook = (state: State) => {
-    this.props.onCreate({
+    const form = sanitizeForm({
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
       config: getConfig(state.config)
-    } as NotebookModel);
+    }) as NotebookModel;
+
+    if (this.props.isProjectEntity) {
+      const values = splitUniqueName(state.project);
+      this.props.onCreate(form, values[0], values[1]);
+    } else {
+      this.props.onCreate(form);
+    }
   };
 
   public render() {
@@ -63,6 +83,7 @@ export default class NotebookCreate extends React.Component<Props, {}> {
               render={(props: FormikProps<State>) => (
                 <form className="form-horizontal" onSubmit={props.handleSubmit}>
                   {ErrorsField(this.props.errors)}
+                  {this.props.isProjectEntity && ProjectField(this.props.projects)}
                   {ConfigField(props, this.props.errors)}
                   {NameField(props, this.props.errors)}
                   {DescriptionField(props, this.props.errors)}

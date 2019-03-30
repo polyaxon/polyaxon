@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 
 import * as actions from '../../actions/experiments';
-import * as groupActions from '../../actions/groups';
+import * as groupsActions from '../../actions/groups';
 import * as searchActions from '../../actions/search';
 import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
 import { NameSlug } from '../../constants/helpTexts';
@@ -52,9 +52,9 @@ export interface Props {
   fetchSearches: () => searchActions.SearchAction;
   createSearch: (data: SearchModel) => searchActions.SearchAction;
   deleteSearch: (searchId: number) => searchActions.SearchAction;
-  createSelection: (data: GroupModel) => groupActions.GroupAction;
-  addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
-  removeFromSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
+  createSelection: (data: GroupModel) => groupsActions.GroupAction;
+  addToSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
+  removeFromSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
   isLoading: boolean;
   errors: any;
 }

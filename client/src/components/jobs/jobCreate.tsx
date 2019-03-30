@@ -1,26 +1,32 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
-import * as jsYaml from 'js-yaml';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
 
-import * as actions from '../../actions/jobs';
-import { getProjectUrl } from '../../constants/utils';
+import * as jobsActions from '../../actions/jobs';
+import * as projectsActions from '../../actions/projects';
+import { getProjectUrl, splitUniqueName } from '../../constants/utils';
 import { JobModel } from '../../models/job';
+import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
 import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
 import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
 import { ErrorsField } from '../forms/errorsField';
 import { NameField, NameSchema } from '../forms/nameField';
+import { ProjectField } from '../forms/projectField';
 import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
 import { TagsField } from '../forms/tagsField';
+import { sanitizeForm } from '../forms/utils';
 
 export interface Props {
   user: string;
   projectName: string;
-  onCreate: (job: JobModel) => actions.JobAction;
   isLoading: boolean;
+  isProjectEntity: boolean;
+  projects: ProjectModel[];
   errors: any;
+  onCreate: (job: JobModel, user?: string, projectName?: string) => jobsActions.JobAction;
+  fetchProjects: (user: string) => projectsActions.ProjectAction;
 }
 
 export interface State extends BaseState {
@@ -38,14 +44,27 @@ const ValidationSchema = Yup.object().shape({
 
 export default class JobCreate extends React.Component<Props, {}> {
 
+  public componentDidMount() {
+    if (this.props.isProjectEntity) {
+      this.props.fetchProjects(this.props.user);
+    }
+  }
+
   public createJob = (state: State) => {
-    this.props.onCreate({
+    const form = sanitizeForm({
       tags: state.tags.map((v) => v.value),
       readme: state.readme,
       description: state.description,
       name: state.name,
       config: getConfig(state.config)
-    } as JobModel);
+    }) as JobModel;
+
+    if (this.props.isProjectEntity) {
+      const values = splitUniqueName(state.project);
+      this.props.onCreate(form, values[0], values[1]);
+    } else {
+      this.props.onCreate(form);
+    }
   };
 
   public render() {
@@ -67,6 +86,7 @@ export default class JobCreate extends React.Component<Props, {}> {
               render={(props: FormikProps<State>) => (
                 <form className="form-horizontal" onSubmit={props.handleSubmit}>
                   {ErrorsField(this.props.errors)}
+                  {this.props.isProjectEntity && ProjectField(this.props.projects)}
                   {ConfigField(props, this.props.errors)}
                   {NameField(props, this.props.errors)}
                   {DescriptionField(props, this.props.errors)}

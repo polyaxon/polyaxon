@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/experiments';
-import * as groupActions from '../../actions/groups';
+import * as groupsActions from '../../actions/groups';
 import * as searchActions from '../../actions/search';
 import Experiments from '../../components/experiments/experiments';
 import { ACTIONS } from '../../constants/actions';
@@ -63,9 +63,9 @@ export interface DispatchProps {
   fetchSearches: () => searchActions.SearchAction;
   createSearch: (data: SearchModel) => searchActions.SearchAction;
   deleteSearch: (searchId: number) => searchActions.SearchAction;
-  createSelection: (data: GroupModel) => groupActions.GroupAction;
-  addToSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
-  removeFromSelection: (selectionId: number, items: number[]) => groupActions.GroupAction;
+  createSelection: (data: GroupModel) => groupsActions.GroupAction;
+  addToSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
+  removeFromSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
@@ -119,7 +119,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     },
     createSelection: (data: GroupModel) => {
       if (params.projectName) {
-        return dispatch(groupActions.createGroup(
+        return dispatch(groupsActions.createGroup(
           params.match.params.user,
           params.match.params.projectName,
           data));
@@ -131,7 +131,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (params.projectName) {
         const data = {experiment_ids: items, operation: 'add'};
         const groupName = `${params.projectName}.${selectionId}`;
-        return dispatch(groupActions.updateSelection(groupName, data));
+        return dispatch(groupsActions.updateSelection(groupName, data));
       } else {
         throw new Error('Experiments container does not have project.');
       }
@@ -140,7 +140,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (params.projectName) {
         const data = {experiment_ids: items, operation: 'remove'};
         const groupName = `${params.projectName}.${selectionId}`;
-        return dispatch(groupActions.updateSelection(groupName, data));
+        return dispatch(groupsActions.updateSelection(groupName, data));
       } else {
         throw new Error('Experiments container does not have project.');
       }
