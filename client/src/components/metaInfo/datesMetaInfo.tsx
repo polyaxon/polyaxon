@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as moment from 'moment';
+import * as React from 'react';
 
 import MetaInfo from './metaInfo';
 
@@ -10,8 +10,8 @@ export interface Props {
 }
 
 function DatesMetaInfo({createdAt, updatedAt, inline = false}: Props) {
-  let createdAtM = createdAt ? moment(createdAt) : null;
-  let updatedAtM = updatedAt ? moment(updatedAt) : null;
+  const createdAtM = createdAt ? moment(createdAt) : null;
+  const updatedAtM = updatedAt ? moment(updatedAt) : null;
   return (
     <span>
         {createdAtM &&
