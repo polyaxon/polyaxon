@@ -4,8 +4,9 @@ from api.projects import queries
 from api.projects.serializers import (
     BookmarkedProjectSerializer,
     ProjectDetailSerializer,
-    ProjectSerializer,
-    ProjectNameSerializer)
+    ProjectNameSerializer,
+    ProjectSerializer
+)
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
 from tests.utils import BaseTest
@@ -63,6 +64,7 @@ class TestProjectNameSerializer(BaseTest):
     model_class = Project
     factory_class = ProjectFactory
     expected_keys = {
+        'user',
         'unique_name',
     }
 

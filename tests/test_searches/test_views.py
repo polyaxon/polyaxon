@@ -1,4 +1,5 @@
 import pytest
+
 from rest_framework import status
 
 from api.searches.serializers import SearchSerializer

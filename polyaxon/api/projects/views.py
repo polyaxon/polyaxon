@@ -22,8 +22,9 @@ from api.projects.serializers import (
     BookmarkedProjectSerializer,
     ProjectCreateSerializer,
     ProjectDetailSerializer,
-    ProjectSerializer,
-    ProjectNameSerializer)
+    ProjectNameSerializer,
+    ProjectSerializer
+)
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from db.models.projects import Project
 from event_manager.events.project import (

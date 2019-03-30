@@ -8,8 +8,11 @@ from rest_framework import status
 from django.test import override_settings
 
 from api.projects import queries
-from api.projects.serializers import BookmarkedProjectSerializer, ProjectDetailSerializer, \
-    ProjectSerializer, ProjectNameSerializer
+from api.projects.serializers import (
+    BookmarkedProjectSerializer,
+    ProjectDetailSerializer,
+    ProjectNameSerializer
+)
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from constants.experiments import ExperimentLifeCycle
 from constants.jobs import JobLifeCycle

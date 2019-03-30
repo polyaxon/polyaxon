@@ -12,7 +12,7 @@ class ProjectNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('unique_name',)
+        fields = ('user', 'unique_name',)
 
 
 class ProjectSerializer(serializers.ModelSerializer, UserMixin):
