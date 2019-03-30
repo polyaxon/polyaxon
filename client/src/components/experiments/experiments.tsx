@@ -43,6 +43,7 @@ export interface Props {
   onDelete: (experimentName: string) => actions.ExperimentAction;
   onDeleteMany: (experimentIds: number[]) => actions.ExperimentAction;
   onStop: (experimentName: string) => actions.ExperimentAction;
+  onRestart: (experimentName: string) => actions.ExperimentAction;
   onArchive: (experimentName: string) => actions.ExperimentAction;
   onRestore: (experimentName: string) => actions.ExperimentAction;
   onStopMany: (experimentIds: number[]) => actions.ExperimentAction;
@@ -459,6 +460,7 @@ export default class Experiments extends React.Component<Props, State> {
                   metrics={this.state.metrics}
                   onDelete={() => this.props.onDelete(xp.unique_name)}
                   onStop={() => this.props.onStop(xp.unique_name)}
+                  onRestart={() => this.props.onRestart(xp.unique_name)}
                   onArchive={() => this.props.onArchive(xp.unique_name)}
                   onRestore={() => this.props.onRestore((xp.unique_name))}
                   showBookmarks={this.props.showBookmarks}

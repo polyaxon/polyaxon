@@ -48,6 +48,7 @@ export interface DispatchProps {
   onCreate?: (job: JobModel) => actions.JobAction;
   onDelete: (jobName: string) => actions.JobAction;
   onStop: (jobName: string) => actions.JobAction;
+  onRestart: (jobName: string) => actions.JobAction;
   onArchive: (jobName: string) => actions.JobAction;
   onRestore: (jobName: string) => actions.JobAction;
   bookmark: (jobName: string) => actions.JobAction;
@@ -68,6 +69,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
       true)),
     onDelete: (jobName: string) => dispatch(actions.deleteJob(jobName)),
     onStop: (jobName: string) => dispatch(actions.stopJob(jobName)),
+    onRestart: (jobName: string) => dispatch(actions.restartJob(jobName, true)),
     onArchive: (jobName: string) => dispatch(actions.archiveJob(jobName)),
     onRestore: (jobName: string) => dispatch(actions.restoreJob(jobName)),
     bookmark: (jobName: string) => dispatch(actions.bookmark(jobName)),

@@ -23,6 +23,7 @@ export interface DispatchProps {
   onDelete: () => actions.JobAction;
   onUpdate: (updateDict: { [key: string]: any }) => actions.JobAction;
   onStop: () => actions.JobAction;
+  onRestart: () => actions.JobAction;
   onRestore: () => actions.JobAction;
   onArchive: () => actions.JobAction;
   fetchData?: () => actions.JobAction;
@@ -57,6 +58,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
         params.match.params.user,
         params.match.params.projectName,
         params.match.params.jobId)
+    )),
+    onRestart: () => dispatch(actions.restartJob(
+      getJobUniqueName(
+        params.match.params.user,
+        params.match.params.projectName,
+        params.match.params.jobId),
+      true
     )),
     onArchive: () => dispatch(actions.archiveJob(
       getJobUniqueName(

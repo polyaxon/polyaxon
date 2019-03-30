@@ -62,12 +62,15 @@
                 <i class="fas fa-chevron-down fa-sm chevron" aria-hidden="true"></i>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="https://docs.polyaxon.com">Docs</a></li>
-                <li><a href="https://github.com/polyaxon/">Github</a></li>
-                <li><a href="https://github.com/polyaxon/polyaxon-examples">Examples</a></li>
+                <li><a href="https://docs.polyaxon.com/references/" target="_blank">References</a></li>
+                <li><a href="https://docs.polyaxon.com/integrations/" target="_blank">Integrations</a></li>
+                <li><a href="https://docs.polyaxon.com/concepts/architecture/" target="_blank">Concepts</a></li>
+                <li><a href="https://docs.polyaxon.com" target="_blank">Docs</a></li>
+                <li><a href="https://github.com/polyaxon/polyaxon-examples" target="_blank">Examples</a></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="https://polyaxon.com">Polyaxon</a></li>
-                <li><a href="https://polyaxon.com/about/">About</a></li>
+                <li><a href="https://github.com/polyaxon/" target="_blank">On Github</a></li>
+                <li><a href="https://polyaxon.com" target="_blank">Polyaxon</a></li>
+                <li><a href="https://polyaxon.com/about/" target="_blank">About</a></li>
             </ul>
         </li>
         <li class="header-user dropdown">
@@ -93,6 +96,7 @@
                 <li role="separator" class="divider"></li>
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'react-index' %}">Projects</a></li>
+                <li><a href="{% url 'react-index' %}/token">Personal token</a></li>
                 {% if user.is_superuser and admin_view_enabled %}
                     <li><a href="{% url 'admin:index' %}">Admin dashboard</a></li>
                 {% endif %}

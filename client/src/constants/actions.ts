@@ -5,6 +5,7 @@ export const ACTIONS = {
   GET: 'get',
   FETCH: 'fetch',
   ARCHIVE: 'archive',
+  RESTART: 'restart',
   RESTORE: 'restore',
   STOP: 'stop',
   BOOKMARK: 'bookmark',

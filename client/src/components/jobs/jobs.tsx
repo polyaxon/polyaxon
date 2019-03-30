@@ -28,6 +28,7 @@ export interface Props {
   onUpdate: (job: JobModel) => actions.JobAction;
   onDelete: (jobName: string) => actions.JobAction;
   onStop: (jobName: string) => actions.JobAction;
+  onRestart: (jobName: string) => actions.JobAction;
   onArchive: (jobName: string) => actions.JobAction;
   onRestore: (jobName: string) => actions.JobAction;
   bookmark: (jobName: string) => actions.JobAction;
@@ -60,6 +61,7 @@ export default class Jobs extends React.Component<Props, {}> {
                 job={job}
                 onDelete={() => this.props.onDelete(job.unique_name)}
                 onStop={() => this.props.onStop(job.unique_name)}
+                onRestart={() => this.props.onRestart(job.unique_name)}
                 onArchive={() => this.props.onArchive(job.unique_name)}
                 onRestore={() => this.props.onRestore((job.unique_name))}
                 showBookmarks={this.props.showBookmarks}

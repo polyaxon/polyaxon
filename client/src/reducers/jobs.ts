@@ -217,6 +217,18 @@ export const LoadingIndicatorJobReducer: Reducer<LoadingIndicatorSchema> =
           jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.RESTORE)
         };
 
+      case actionTypes.RESTART_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, true, ACTIONS.RESTART)
+        };
+      case actionTypes.RESTART_JOB_ERROR:
+      case actionTypes.RESTART_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processLoadingIndicatorById(state.jobs, action.jobName, false, ACTIONS.RESTART)
+        };
+
       case actionTypes.STOP_JOB_REQUEST:
         return {
           ...state,
@@ -366,6 +378,22 @@ export const AlertJobReducer: Reducer<AlertSchema> =
         return {
           ...state,
           jobs: processErrorById(state.jobs, action.jobName, action.error, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.RESTART_JOB_REQUEST:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, null, ACTIONS.RESTART)
+        };
+      case actionTypes.RESTART_JOB_SUCCESS:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, null, true, ACTIONS.RESTART)
+        };
+      case actionTypes.RESTART_JOB_ERROR:
+        return {
+          ...state,
+          jobs: processErrorById(state.jobs, action.jobName, action.error, null, ACTIONS.RESTART)
         };
 
       case actionTypes.STOP_JOB_REQUEST:

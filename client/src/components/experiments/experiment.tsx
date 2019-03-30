@@ -31,6 +31,7 @@ export interface Props {
   declarations: string[];
   onDelete: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
+  onRestart: () => actions.ExperimentAction;
   onArchive: () => actions.ExperimentAction;
   onRestore: () => actions.ExperimentAction;
   showBookmarks: boolean;
@@ -49,6 +50,7 @@ function Experiment({
                       declarations,
                       onDelete,
                       onStop,
+                      onRestart,
                       onArchive,
                       onRestore,
                       bookmark,
@@ -160,6 +162,7 @@ function Experiment({
         <ExperimentActions
           onDelete={onDelete}
           onStop={onStop}
+          onRestart={onRestart}
           onArchive={experiment.deleted ? undefined : onArchive}
           onRestore={experiment.deleted ? onRestore : undefined}
           isRunning={!isDone(experiment.last_status)}

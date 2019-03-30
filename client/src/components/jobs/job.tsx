@@ -26,6 +26,7 @@ export interface Props {
   job: JobModel;
   onDelete: () => actions.JobAction;
   onStop: () => actions.JobAction;
+  onRestart: () => actions.JobAction;
   onArchive: () => actions.JobAction;
   onRestore: () => actions.JobAction;
   showBookmarks: boolean;
@@ -37,6 +38,7 @@ function Job({
                job,
                onDelete,
                onStop,
+               onRestart,
                onArchive,
                onRestore,
                bookmark,
@@ -101,6 +103,7 @@ function Job({
         <JobActions
           onDelete={onDelete}
           onStop={onStop}
+          onRestart={onRestart}
           onArchive={job.deleted ? undefined : onArchive}
           onRestore={job.deleted ? onRestore : undefined}
           isRunning={!isDone(job.last_status)}

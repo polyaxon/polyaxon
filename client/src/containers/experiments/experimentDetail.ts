@@ -25,6 +25,7 @@ export interface DispatchProps {
   onDelete: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
   onArchive: () => actions.ExperimentAction;
+  onRestart: () => actions.ExperimentAction;
   onRestore: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
   unbookmark: () => actions.ExperimentAction;
@@ -61,6 +62,13 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
           params.match.params.experimentId))),
     onArchive: () => dispatch(
       actions.archiveExperiment(
+        getExperimentUniqueName(
+          params.match.params.user,
+          params.match.params.projectName,
+          params.match.params.experimentId),
+        true)),
+     onRestart: () => dispatch(
+      actions.restartExperiment(
         getExperimentUniqueName(
           params.match.params.user,
           params.match.params.projectName,

@@ -112,8 +112,8 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
         };
       case actionTypes.STOP_EXPERIMENTS_SUCCESS:
         const byUniqueNames = {...state.byUniqueNames};
-        for (const exprimentId of action.experimentIds) {
-          const experimentName = action.projectName + '.' + exprimentId;
+        for (const experimentId of action.experimentIds) {
+          const experimentName = action.projectName + '.' + experimentId;
           byUniqueNames[experimentName] = {...byUniqueNames[experimentName], last_status: STOPPED};
         }
         return {
@@ -333,6 +333,18 @@ export const LoadingIndicatorExperimentReducer: Reducer<LoadingIndicatorSchema> 
           experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.RESTORE)
         };
 
+      case actionTypes.RESTART_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, true, ACTIONS.RESTART)
+        };
+      case actionTypes.RESTART_EXPERIMENT_ERROR:
+      case actionTypes.RESTART_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processLoadingIndicatorById(state.experiments, action.experimentName, false, ACTIONS.RESTART)
+        };
+
       case actionTypes.STOP_EXPERIMENT_REQUEST:
         return {
           ...state,
@@ -515,6 +527,22 @@ export const AlertExperimentReducer: Reducer<AlertSchema> =
         return {
           ...state,
           experiments: processErrorById(state.experiments, action.experimentName, action.error, false, ACTIONS.ARCHIVE)
+        };
+
+      case actionTypes.RESTART_EXPERIMENT_REQUEST:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, null, ACTIONS.RESTART)
+        };
+      case actionTypes.RESTART_EXPERIMENT_SUCCESS:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, null, true, ACTIONS.RESTART)
+        };
+      case actionTypes.RESTART_EXPERIMENT_ERROR:
+        return {
+          ...state,
+          experiments: processErrorById(state.experiments, action.experimentName, action.error, false, ACTIONS.RESTART)
         };
 
       case actionTypes.RESTORE_EXPERIMENT_REQUEST:

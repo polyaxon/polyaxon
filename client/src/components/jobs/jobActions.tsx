@@ -8,6 +8,7 @@ import '../actions.less';
 export interface Props {
   onDelete: () => any;
   onStop?: () => any;
+  onRestart?: () => any;
   onArchive?: () => any;
   onRestore?: () => any;
   isRunning: boolean;
@@ -85,6 +86,11 @@ export default class JobActions extends React.Component<Props, State> {
           {this.props.onStop && this.props.isRunning &&
           <MenuItem eventKey="1" onClick={() => this.handleShow('stop')}>
             <i className="fas fa-stop icon" aria-hidden="true"/> Stop
+          </MenuItem>
+          }
+          {this.props.onRestart && !this.props.isRunning &&
+          <MenuItem eventKey="1" onClick={this.props.onRestart}>
+            <i className="fas fa-redo icon" aria-hidden="true"/> Restart
           </MenuItem>
           }
           {this.props.onRestore &&
