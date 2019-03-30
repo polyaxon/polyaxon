@@ -14,6 +14,7 @@ import * as search_actions from '../../actions/search';
 import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedBuilds } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -26,28 +27,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  // let useFilter = () => {
-  //   let builds: BuildModel[] = [];
-  //   let project = state.projects.byUniqueNames[ownProps.projectName];
-  //   let BuildNames = project.builds;
-  //   BuildNames.forEach(
-  //     function (build: string, idx: number) {
-  //       builds.push(state.builds.byUniqueNames[build]);
-  //     });
-  //   return {builds: builds, count: project.num_builds};
-  // };
-
-  const useLastFetched = () => {
-    const buildNames = state.builds.lastFetched.names;
-    const count = state.builds.lastFetched.count;
-    const builds: BuildModel[] = [];
-    buildNames.forEach(
-      (build: string, idx: number) => {
-        builds.push(state.builds.byUniqueNames[build]);
-      });
-    return {builds, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedBuilds(state.builds);
 
   const isLoading = isTrue(state.loadingIndicators.builds.global.fetch);
   return {

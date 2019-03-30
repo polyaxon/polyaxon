@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/builds';
-import * as modalActions from '../../actions/modal';
 import BuildCreate from '../../components/builds/buildCreate';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
@@ -26,7 +25,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.BuildAction | modalActions.ModalAction>, params: any): DispatchProps {
+  dispatch: Dispatch<actions.BuildAction>, params: any): DispatchProps {
   return {
     onCreate: (build: BuildModel) => dispatch(
       actions.createBuild(

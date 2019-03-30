@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as modalActions from '../../actions/modal';
 import * as actions from '../../actions/projects';
 import ProjectCreate from '../../components/projects/projectCreate';
 import { ACTIONS } from '../../constants/actions';
@@ -24,7 +23,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, ownProps: {}): DispatchProps {
+  dispatch: Dispatch<actions.ProjectAction>, ownProps: {}): DispatchProps {
   return {
     onCreate: (project: ProjectModel) => dispatch(actions.createProject(project, true)),
   };

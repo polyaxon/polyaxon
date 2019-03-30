@@ -14,6 +14,7 @@ import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedJobs } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -27,29 +28,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  // let useFilter = () => {
-  //   let jobs: JobModel[] = [];
-  //   let project = state.projects.byUniqueNames[ownProps.projectName];
-  //   let jobNames = project.jobs;
-  //   jobNames = getPaginatedSlice(jobNames);
-  //   jobNames.forEach(
-  //     function (job: string, idx: number) {
-  //       jobs.push(state.jobs.byUniqueNames[job]);
-  //     });
-  //   return {jobs: jobs, count: project.num_jobs};
-  // };
-
-  const useLastFetched = () => {
-    const jobNames = state.jobs.lastFetched.names;
-    const count = state.jobs.lastFetched.count;
-    const jobs: JobModel[] = [];
-    jobNames.forEach(
-      (job: string, idx: number) => {
-        jobs.push(state.jobs.byUniqueNames[job]);
-      });
-    return {jobs, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedJobs(state.jobs);
 
   const isLoading = isTrue(state.loadingIndicators.jobs.global.fetch);
   return {

@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/groups';
-import * as modalActions from '../../actions/modal';
 import GroupCreate from '../../components/groups/groupCreate';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
@@ -26,7 +25,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.GroupAction | modalActions.ModalAction>, params: any): DispatchProps {
+  dispatch: Dispatch<actions.GroupAction>, params: any): DispatchProps {
   return {
     onCreate: (group: GroupModel) => dispatch(
       actions.createGroup(

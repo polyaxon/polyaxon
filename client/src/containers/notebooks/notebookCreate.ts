@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as modalActions from '../../actions/modal';
 import * as actions from '../../actions/projects';
 import NotebookCreate from '../../components/notebooks/notebookCreate';
 import { ACTIONS } from '../../constants/actions';
@@ -26,7 +25,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, params: any): DispatchProps {
+  dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
   return {
     onCreate: (notebook: NotebookModel) => dispatch(
       actions.startNotebook(

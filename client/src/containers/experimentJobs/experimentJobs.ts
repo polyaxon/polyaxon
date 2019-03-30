@@ -5,34 +5,12 @@ import * as actions from '../../actions/experimentJobs';
 import ExperimentJobs from '../../components/experimentJobs/experimentJobs';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
-import { getExperimentIndexName, isTrue } from '../../constants/utils';
-import { ExperimentJobModel } from '../../models/experimentJob';
+import { isTrue } from '../../constants/utils';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedExperimentJobs } from '../../utils/states';
 
 export function mapStateToProps(state: AppState, params: any) {
-  const useFilter = () => {
-    const experimentName = getExperimentIndexName(params.experiment.unique_name);
-    const jobs: ExperimentJobModel[] = [];
-    const experiment = state.experiments.byUniqueNames[experimentName];
-    const jobNames = experiment.jobs;
-    jobNames.forEach(
-      (job: string, idx: number) => {
-        jobs.push(state.experimentJobs.byUniqueNames[job]);
-      });
-    return {jobs, count: experiment.num_jobs};
-  };
-
-  const useLastFetched = () => {
-    const jobNames = state.experimentJobs.lastFetched.names;
-    const count = state.experimentJobs.lastFetched.count;
-    const jobs: ExperimentJobModel[] = [];
-    jobNames.forEach(
-      function (job: string, idx: number) {
-        jobs.push(state.experimentJobs.byUniqueNames[job]);
-      });
-    return {jobs, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedExperimentJobs(state.experimentJobs);
 
   const isLoading = isTrue(state.loadingIndicators.experimentJobs.global.fetch);
   return {

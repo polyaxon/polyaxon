@@ -9,12 +9,13 @@ import * as searchActions from '../../actions/search';
 import Experiments from '../../components/experiments/experiments';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
-import { getExperimentIndexName, isTrue } from '../../constants/utils';
+import { isTrue } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedExperiments } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -29,47 +30,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  // let useFilter = () => {
-  //   let groupName = ownProps.groupId != null ?
-  //     getGroupName(ownProps.projectName, ownProps.groupId) :
-  //     null;
-  //   let experiments: ExperimentModel[] = [];
-  //   let count = 0;
-  //   if (groupName != null) {
-  //     let group = state.groups.byUniqueNames[groupName];
-  //     count = group.num_experiments;
-  //     let experimentNames = group.experiments;
-  //     experimentNames = getPaginatedSlice(experimentNames);
-  //     experimentNames.forEach(
-  //       function (experiment: string, idx: number) {
-  //         experiments.push(state.experiments.byUniqueNames[experiment]);
-  //       });
-  //   } else {
-  //     let project = state.projects.byUniqueNames[ownProps.projectName];
-  //     count = project.num_independent_experiments;
-  //     let experimentNames = project.experiments.filter(
-  //       (experiment) => state.experiments.byUniqueNames[experiment].experiment_group == null
-  //     );
-  //     experimentNames = getPaginatedSlice(experimentNames);
-  //     experimentNames.forEach(
-  //       function (experiment: string, idx: number) {
-  //         experiments.push(state.experiments.byUniqueNames[experiment]);
-  //       });
-  //   }
-  //   return {experiments: experiments, count: count};
-  // };
-
-  const useLastFetched = () => {
-    const experimentNames = state.experiments.lastFetched.names;
-    const count = state.experiments.lastFetched.count;
-    const experiments: ExperimentModel[] = [];
-    experimentNames.forEach(
-      (experiment: string, idx: number) => {
-        experiments.push(state.experiments.byUniqueNames[getExperimentIndexName(experiment)]);
-      });
-    return {experiments, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedExperiments(state.experiments);
 
   const isLoading = isTrue(state.loadingIndicators.experiments.global.fetch);
   return {

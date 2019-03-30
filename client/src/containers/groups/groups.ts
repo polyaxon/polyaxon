@@ -13,6 +13,7 @@ import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedGroups } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -26,29 +27,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  // let useFilter = () => {
-  //   let groups: GroupModel[] = [];
-  //   let project = state.projects.byUniqueNames[ownProps.projectName];
-  //   let groupNames = project.groups;
-  //   groupNames = getPaginatedSlice(groupNames);
-  //   groupNames.forEach(
-  //     function (group: string, idx: number) {
-  //       groups.push(state.groups.byUniqueNames[group]);
-  //     });
-  //   return {groups: groups, count: project.num_experiment_groups};
-  // };
-
-  const useLastFetched = () => {
-    const groupNames = state.groups.lastFetched.names;
-    const count = state.groups.lastFetched.count;
-    const groups: GroupModel[] = [];
-    groupNames.forEach(
-      (group: string, idx: number) => {
-        groups.push(state.groups.byUniqueNames[group]);
-      });
-    return {groups, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedGroups(state.groups);
 
   const isLoading = isTrue(state.loadingIndicators.groups.global.fetch);
   return {

@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import * as modalActions from '../../actions/modal';
 import * as actions from '../../actions/projects';
 import Projects from '../../components/projects/projects';
 import { ACTIONS } from '../../constants/actions';
@@ -10,6 +9,7 @@ import { isTrue } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedProjects } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -20,32 +20,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  // let useFilter = () => {
-  //   let projects: ProjectModel[] = [];
-  //   let user = state.users.byUserNames[username];
-  //   if (user == null) {
-  //     return {user: username, projects: <ProjectModel[]> [], count: 0};
-  //   }
-  //   let projectNames = user.projects;
-  //   projectNames = getPaginatedSlice(projectNames);
-  //   projectNames.forEach(
-  //     function (project: string, idx: number) {
-  //       projects.push(state.projects.byUniqueNames[project]);
-  //     });
-  //   return {projects: projects, count: user.num_projects};
-  // };
-
-  const useLastFetched = () => {
-    const projectNames = state.projects.lastFetched.names;
-    const count = state.projects.lastFetched.count;
-    const projects: ProjectModel[] = [];
-    projectNames.forEach(
-      (project: string, idx: number) => {
-        projects.push(state.projects.byUniqueNames[project]);
-      });
-    return {projects, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedProjects(state.projects);
 
   const isLoading = isTrue(state.loadingIndicators.projects.global.fetch);
   return {
@@ -72,7 +47,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.ProjectAction | modalActions.ModalAction>, ownProps: OwnProps): DispatchProps {
+  dispatch: Dispatch<actions.ProjectAction>, ownProps: OwnProps): DispatchProps {
   return {
     onDelete: (projectName: string) => dispatch(actions.deleteProject(projectName)),
     onArchive: (projectName: string) => dispatch(actions.archiveProject(projectName)),

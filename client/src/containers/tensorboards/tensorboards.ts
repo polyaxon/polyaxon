@@ -13,6 +13,7 @@ import * as actions from '../../actions/tensorboards';
 import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedTensorboards } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -25,17 +26,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  const useLastFetched = () => {
-    const tensorboardNames = state.tensorboards.lastFetched.names;
-    const count = state.tensorboards.lastFetched.count;
-    const tensorboards: TensorboardModel[] = [];
-    tensorboardNames.forEach(
-      (tensorboard: string, idx: number) => {
-        tensorboards.push(state.tensorboards.byUniqueNames[tensorboard]);
-      });
-    return {tensorboards, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedTensorboards(state.tensorboards);
 
   const isLoading = isTrue(state.loadingIndicators.tensorboards.global.fetch);
   return {

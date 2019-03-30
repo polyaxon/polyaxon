@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/jobs';
-import * as modalActions from '../../actions/modal';
 import JobCreate from '../../components/jobs/jobCreate';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
@@ -26,7 +25,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.JobAction | modalActions.ModalAction>, params: any): DispatchProps {
+  dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
   return {
     onCreate: (job: JobModel) => dispatch(
       actions.createJob(

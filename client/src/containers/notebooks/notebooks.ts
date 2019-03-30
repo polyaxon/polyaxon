@@ -13,6 +13,7 @@ import * as search_actions from '../../actions/search';
 import { ACTIONS } from '../../constants/actions';
 import { SearchModel } from '../../models/search';
 import { getErrorsGlobal } from '../../utils/errors';
+import { getLastFetchedNotebooks } from '../../utils/states';
 
 interface OwnProps {
   user: string;
@@ -25,17 +26,7 @@ interface OwnProps {
 }
 
 export function mapStateToProps(state: AppState, ownProps: OwnProps) {
-  const useLastFetched = () => {
-    const notebookNames = state.notebooks.lastFetched.names;
-    const count = state.notebooks.lastFetched.count;
-    const notebooks: NotebookModel[] = [];
-    notebookNames.forEach(
-      (build: string, idx: number) => {
-        notebooks.push(state.notebooks.byUniqueNames[build]);
-      });
-    return {notebooks, count};
-  };
-  const results = useLastFetched();
+  const results = getLastFetchedNotebooks(state.notebooks);
 
   const isLoading = isTrue(state.loadingIndicators.notebooks.global.fetch);
   return {
