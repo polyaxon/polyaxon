@@ -34,6 +34,7 @@ function Routes() {
   const newExperimentRoute = '/app/experiments/new/';
   const newGroupRoute = '/app/groups/new/';
   const newJobRoute = '/app/jobs/new/';
+  const newBuildRoute = '/app/builds/new/';
   const newNotebookRoute = '/app/notebooks/new/';
   const newTensorboardRoute = '/app/tensorboards/new/';
   const userRoute = '/app/:user/';
@@ -41,7 +42,7 @@ function Routes() {
   const archivesRoute = '/app/archives/:user/';
   const projectDetailRoute = '/app/:user/:projectName/';
   const buildDetailRoute = '/app/:user/:projectName/builds/:buildId/';
-  const newBuildRoute = '/app/:user/:projectName/builds/new/';
+  const newProjectBuildRoute = '/app/:user/:projectName/builds/new/';
   const notebookDetailRoute = '/app/:user/:projectName/notebooks/:notebookId/';
   const newProjectNotebookRoute = '/app/:user/:projectName/notebooks/new/';
   const tensorboardDetailRoute = '/app/:user/:projectName/tensorboards/:tensorboardId/';
@@ -80,10 +81,11 @@ function Routes() {
       <Route path={newExperimentRoute} component={ExperimentCreate}/>
       <Route path={newGroupRoute} component={GroupCreate}/>
       <Route path={newJobRoute} component={JobCreate}/>
+      <Route path={newBuildRoute} component={BuildCreate}/>
       <Route path={newNotebookRoute} component={NotebookCreate}/>
       <Route path={newTensorboardRoute} component={TensorboardCreate}/>
       <Route path={experimentJobDetailRoute} component={ExperimentJobDetail}/>
-      <Route path={newBuildRoute} component={BuildCreate}/>
+      <Route path={newProjectBuildRoute} component={BuildCreate}/>
       <Route path={buildDetailRoute} component={BuildDetail}/>
       <Route path={newProjectNotebookRoute} component={NotebookCreate}/>
       <Route path={notebookDetailRoute} component={NotebookDetail}/>
