@@ -1,4 +1,5 @@
 from rest_framework import fields, serializers
+from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
@@ -51,6 +52,15 @@ class TensorboardJobSerializer(PluginJobBaseSerializer):
     class Meta(PluginJobBaseSerializer.Meta):
         model = TensorboardJob
 
+    def create(self, validated_data):
+        validated_data = self.validated_name(validated_data,
+                                             project=validated_data['project'],
+                                             query=TensorboardJob.all)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            raise ValidationError(e)
+
 
 class NotebookJobSerializer(PluginJobBaseSerializer):
     def _validate_spec(self, config):
@@ -59,6 +69,15 @@ class NotebookJobSerializer(PluginJobBaseSerializer):
     class Meta(PluginJobBaseSerializer.Meta):
         model = NotebookJob
         fields = PluginJobBaseSerializer.Meta.fields + ('data_refs',)
+
+    def create(self, validated_data):
+        validated_data = self.validated_name(validated_data,
+                                             project=validated_data['project'],
+                                             query=NotebookJob.all)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            raise ValidationError(e)
 
 
 class ProjectTensorboardJobSerializer(serializers.ModelSerializer,

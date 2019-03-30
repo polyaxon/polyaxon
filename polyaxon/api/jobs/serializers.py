@@ -121,6 +121,7 @@ class JobCreateSerializer(serializers.ModelSerializer,
             'in_cluster',
             'data_refs',
             'config',
+            'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
 
