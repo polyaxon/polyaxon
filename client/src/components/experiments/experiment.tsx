@@ -94,7 +94,7 @@ function Experiment({
       </td>
       }
       <td className="block">
-        <Status status={experiment.last_status}/>
+        <Status status={experiment.last_status} reducedForm={reducedForm}/>
       </td>
       <td className="block">
         <LinkContainer to={getExperimentUrl(values[0], values[1], experiment.id)}>
