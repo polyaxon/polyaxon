@@ -36,7 +36,7 @@ export function mapStateToProps(state: AppState, params: any) {
 export interface DispatchProps {
   onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onSetGit: (updateDict: { [key: string]: any }) => actions.ProjectAction;
-  fetchData?: () => actions.ProjectAction;
+  onFetch: () => actions.ProjectAction;
 }
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
@@ -53,7 +53,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, pa
           params.match.params.user,
           params.match.params.projectName),
         updateDict)),
-    fetchData: () => dispatch(
+    onFetch: () => dispatch(
       actions.fetchProject(
         params.match.params.user,
         params.match.params.projectName)),

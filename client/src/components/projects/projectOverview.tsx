@@ -45,7 +45,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
     const visibility = project.is_public ? 'Public' : 'Private';
     return (
       <div className="entity-details">
-        {!project.has_code && !this.props.isGetLoading &&
+        {!project.has_code && !this.props.isGetLoading && !project.num_experiments &&
         <div className="row initialize-instructions">
           <div className="col-md-12">
             <div className="jumbotron jumbotron-action text-center empty-jumbotron">
