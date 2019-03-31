@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 import * as buildsActions from '../../actions/builds';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, splitUniqueName } from '../../constants/utils';
+import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import { BuildModel } from '../../models/build';
 import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
@@ -65,6 +65,12 @@ export default class BuildCreate extends React.Component<Props, {}> {
   };
 
   public render() {
+    let cancelUrl = '';
+    if (this.props.projectName) {
+      cancelUrl = getProjectUrl(this.props.user, this.props.projectName);
+    } else {
+      cancelUrl = getUserUrl(this.props.user);
+    }
     return (
       <>
         <div className="row form-header">
@@ -97,7 +103,7 @@ export default class BuildCreate extends React.Component<Props, {}> {
                       >
                         Create build
                       </button>
-                      <LinkContainer to={`${getProjectUrl(this.props.user, this.props.projectName)}#`}>
+                      <LinkContainer to={`${cancelUrl}#`}>
                         <button className="btn btn-default pull-right">cancel</button>
                       </LinkContainer>
                     </div>

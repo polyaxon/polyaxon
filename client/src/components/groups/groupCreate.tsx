@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 
 import * as groupsActions from '../../actions/groups';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, splitUniqueName } from '../../constants/utils';
+import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
 import { ProjectModel } from '../../models/project';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
@@ -68,6 +68,12 @@ export default class GroupCreate extends React.Component<Props, {}> {
   };
 
   public render() {
+    let cancelUrl = '';
+    if (this.props.projectName) {
+      cancelUrl = getProjectUrl(this.props.user, this.props.projectName);
+    } else {
+      cancelUrl = getUserUrl(this.props.user);
+    }
     return (
       <>
         <div className="row form-header">
@@ -101,7 +107,7 @@ export default class GroupCreate extends React.Component<Props, {}> {
                       >
                         Create group
                       </button>
-                      <LinkContainer to={`${getProjectUrl(this.props.user, this.props.projectName)}#`}>
+                      <LinkContainer to={`${cancelUrl}#`}>
                         <button className="btn btn-default pull-right">cancel</button>
                       </LinkContainer>
                     </div>

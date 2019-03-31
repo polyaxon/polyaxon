@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import * as experimentsActions from '../../actions/experiments';
 import * as groupsActions from '../../actions/groups';
 import * as projectsActions from '../../actions/projects';
-import { getExperimentUrl, getGroupUrl, getProjectUrl, splitUniqueName } from '../../constants/utils';
+import { getExperimentUrl, getGroupUrl, getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import { TensorboardModel } from '../../models/tensorboard';
 import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
@@ -71,12 +71,18 @@ export default class TensorboardCreate extends React.Component<Props, {}> {
   };
 
   public render() {
-    let url = getProjectUrl(this.props.user, this.props.projectName);
-    if (this.props.experimentId) {
-      url = getExperimentUrl(this.props.user, this.props.projectName, this.props.experimentId);
-    } else if (this.props.groupId) {
-      url = getGroupUrl(this.props.user, this.props.projectName, this.props.groupId);
+    let cancelUrl = '';
+    if (this.props.projectName) {
+      cancelUrl = getProjectUrl(this.props.user, this.props.projectName);
+      if (this.props.experimentId) {
+        cancelUrl = getExperimentUrl(this.props.user, this.props.projectName, this.props.experimentId);
+      } else if (this.props.groupId) {
+        cancelUrl = getGroupUrl(this.props.user, this.props.projectName, this.props.groupId);
+      }
+    } else {
+      cancelUrl = getUserUrl(this.props.user);
     }
+
     return (
       <>
         <div className="row form-header">
@@ -109,7 +115,7 @@ export default class TensorboardCreate extends React.Component<Props, {}> {
                       >
                         Create tensorboard
                       </button>
-                      <LinkContainer to={`${url}#`}>
+                      <LinkContainer to={`${cancelUrl}#`}>
                         <button className="btn btn-default pull-right">cancel</button>
                       </LinkContainer>
                     </div>
