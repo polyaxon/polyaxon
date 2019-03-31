@@ -46,7 +46,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
       <div className="entity-details">
         {!project.has_code &&
         <div className="row initialize-instructions">
-          <div className="col-md-offset-2 col-md-8">
+          <div className="col-md-12">
             <div className="jumbotron jumbotron-action text-center empty-jumbotron">
               <h3>This project is not initialized</h3>
               <div className="row instructions">

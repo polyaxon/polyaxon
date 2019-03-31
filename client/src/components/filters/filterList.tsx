@@ -174,7 +174,7 @@ export default class FilterList extends React.Component<Props, State> {
                             className="dropdown-select-menu"
                             onClick={() => this.selectSearch(search)}
                           >
-                            <span className="dropdown-title">
+                            <span className="dropdown-title dropdown-title-label">
                               {search.name || 'untitled'}
                             </span>
                             <p className="dropdown-meta">
