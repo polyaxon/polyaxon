@@ -86,6 +86,16 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
             }
           },
         };
+      case actionTypes.SET_PROJECT_GIT_SUCCESS:
+        return {
+          ...state,
+          byUniqueNames: {
+            ...state.byUniqueNames,
+            [action.projectName]: {
+              ...state.byUniqueNames[action.projectName], has_code: true
+            }
+          },
+        };
       case actionTypes.BOOKMARK_PROJECT_SUCCESS:
         return {
           ...state,
@@ -248,6 +258,18 @@ export const LoadingIndicatorProjectReducer: Reducer<LoadingIndicatorSchema> =
         return {
           ...state,
           projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.RESTORE)
+        };
+
+      case actionTypes.SET_PROJECT_GIT_REQUEST:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, true, ACTIONS.SET_GIT)
+        };
+      case actionTypes.SET_PROJECT_GIT_ERROR:
+      case actionTypes.SET_PROJECT_GIT_SUCCESS:
+        return {
+          ...state,
+          projects: processLoadingIndicatorById(state.projects, action.projectName, false, ACTIONS.SET_GIT)
         };
 
       case actionTypes.BOOKMARK_PROJECT_REQUEST:
@@ -453,6 +475,22 @@ export const AlertProjectReducer: Reducer<AlertSchema> =
         return {
           ...state,
           projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.BOOKMARK)
+        };
+
+      case actionTypes.SET_PROJECT_GIT_REQUEST:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, null, ACTIONS.SET_GIT)
+        };
+      case actionTypes.SET_PROJECT_GIT_SUCCESS:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, null, true, ACTIONS.SET_GIT)
+        };
+      case actionTypes.SET_PROJECT_GIT_ERROR:
+        return {
+          ...state,
+          projects: processErrorById(state.projects, action.projectName, action.error, false, ACTIONS.SET_GIT)
         };
 
       case actionTypes.UNBOOKMARK_PROJECT_REQUEST:

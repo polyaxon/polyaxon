@@ -7,6 +7,7 @@ export const ACTIONS = {
   ARCHIVE: 'archive',
   RESTART: 'restart',
   RESTORE: 'restore',
+  SET_GIT: 'setGit',
   STOP: 'stop',
   BOOKMARK: 'bookmark',
   UNBOOKMARK: 'unbookmark',

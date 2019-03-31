@@ -11,6 +11,7 @@ export class ProjectModel {
   public num_builds: number;
   public unique_name: string;
   public is_public: boolean;
+  public has_code: boolean;
   public deleted?: boolean;
   public description?: string;
   public readme: string;

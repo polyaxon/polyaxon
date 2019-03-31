@@ -5,6 +5,7 @@ import { DeleteProjectAction } from './delete';
 import { FetchProjectAction } from './fetch';
 import { FetchProjectNameAction } from './fetch_names';
 import { GetProjectAction } from './get';
+import { SetProjectGitAction } from './git';
 import { NotebookProjectAction } from './notebook';
 import { RestoreProjectAction } from './restore';
 import { TensorboardProjectAction } from './tensorboard';
@@ -17,6 +18,7 @@ export * from './create';
 export * from './delete';
 export * from './fetch';
 export * from './fetch_names';
+export * from './git';
 export * from './get';
 export * from './notebook';
 export * from './restore';
@@ -31,6 +33,7 @@ export type ProjectAction =
   | FetchProjectAction
   | FetchProjectNameAction
   | GetProjectAction
+  | SetProjectGitAction
   | NotebookProjectAction
   | RestoreProjectAction
   | TensorboardProjectAction

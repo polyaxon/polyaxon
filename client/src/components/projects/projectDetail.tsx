@@ -9,6 +9,7 @@ import Experiments from '../../containers/experiments/experiments';
 import Groups from '../../containers/groups/groups';
 import Jobs from '../../containers/jobs/jobs';
 import Notebooks from '../../containers/notebooks/notebooks';
+import ProjectOverview from '../../containers/projects/projectOverview';
 import Tensorboards from '../../containers/tensorboards/tensorboards';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ProjectModel } from '../../models/project';
@@ -19,11 +20,9 @@ import ProjectInstructions from '../instructions/projectInstructions';
 import LinkedTab from '../linkedTab';
 import ProjectActions from './projectActions';
 import ProjectAdd from './projectAdd';
-import ProjectOverview from './projectOverview';
 
 export interface Props {
   project: ProjectModel;
-  onUpdate: (updateDict: { [key: string]: any }) => actions.ProjectAction;
   onDelete: () => actions.ProjectAction;
   onArchive: () => actions.ProjectAction;
   onRestore: () => actions.ProjectAction;
@@ -79,11 +78,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
             tabs={[
               {
                 title: 'Overview',
-                component: <ProjectOverview
-                  project={project}
-                  onUpdate={this.props.onUpdate}
-                  onFetch={this.props.fetchData}
-                />,
+                component: <ProjectOverview project={project}/>,
                 relUrl: ''
               }, {
                 title: 'Experiments',
