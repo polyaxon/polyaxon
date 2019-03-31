@@ -96,7 +96,7 @@ export default class GroupCreate extends React.Component<Props, {}> {
                     <div className="col-sm-offset-2 col-sm-10">
                       <button
                         type="submit"
-                        className="btn btn-default btn-success"
+                        className="btn btn-success"
                         disabled={this.props.isLoading}
                       >
                         Create group
