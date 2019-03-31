@@ -16,11 +16,13 @@ export function mapStateToProps(state: AppState, params: any) {
     params.match.params.user,
     params.match.params.projectName);
 
+  const isGetLoading = getIsLoading(state.loadingIndicators.projects.byIds, projectUniqueName, ACTIONS.GET);
   const isUpdateLoading = getIsLoading(state.loadingIndicators.projects.byIds, projectUniqueName, ACTIONS.UPDATE);
   const isSetGitLoading = getIsLoading(state.loadingIndicators.projects.byIds, projectUniqueName, ACTIONS.SET_GIT);
   const UpdateErrors = getErrorsByIds(state.alerts.projects.byIds, isUpdateLoading, projectUniqueName, ACTIONS.UPDATE);
   const setGitErrors = getErrorsByIds(state.alerts.projects.byIds, isUpdateLoading, projectUniqueName, ACTIONS.SET_GIT);
   const props = {
+    isGetLoading,
     isUpdateLoading,
     isSetGitLoading,
     UpdateErrors,
