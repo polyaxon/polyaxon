@@ -22,7 +22,7 @@ export type ChartTypes =
   | 'line'
   | 'scatter'
   | 'histogram'
-  | 'parallel';
+  | 'parcoords';
 
 export class ChartModel {
   public name: string;

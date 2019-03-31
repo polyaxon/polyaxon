@@ -32,7 +32,7 @@ export function mapStateToProps(state: AppState, params: any) {
         experimentParams[id] = declarations;
       });
     if (!count && params.experiment) {
-      experimentParams[params.experiment.id] = params.experiment.declarations
+      experimentParams[params.experiment.id] = params.experiment.declarations;
       count = 1;
     }
     return {experimentParams, count};

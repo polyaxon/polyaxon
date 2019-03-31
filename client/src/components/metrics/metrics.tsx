@@ -491,6 +491,11 @@ export default class Metrics extends React.Component<Props, State> {
                     this.state.paramNames.length > 0 &&
                     <option>histogram</option>
                   }
+                  {
+                    this.props.chartTypes.indexOf('parcoords') > -1 &&
+                    this.state.paramNames.length > 0 &&
+                    <option>parcoords</option>
+                  }
                 </select>
               </div>
             </div>
@@ -544,7 +549,7 @@ export default class Metrics extends React.Component<Props, State> {
               </div>
             </div>
             }
-            {(this.state.chartForm.chart.type !== 'histogram' &&
+            {(this.state.chartForm.chart.type !== 'histogram' && this.state.chartForm.chart.type !== 'parcoords' &&
               !(this.props.resource === 'groups' &&
                 (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar'))) &&
             <div className="form-group">

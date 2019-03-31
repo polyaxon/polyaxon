@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 
 import { CHARTS_COLORS } from '../../constants/charts';
-import { Trace } from '../../interfaces/dateTrace';
+import { DataDimension, Trace } from '../../interfaces/dataTrace';
 import { ChartModel, ChartTypes, TraceModes, TraceTypes } from '../../models/chart';
 import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
@@ -367,31 +367,62 @@ export default class ChartView extends React.Component<Props, {}> {
       ] as Plotly.PlotData[];
     };
 
-    const getParallelTraces = (chart: ChartModel) => {
-      const dataTraces: { [key: string]: Plotly.Datum[] } = {};
+    const getParcoordsTraces = (chart: ChartModel) => {
+      const experimentData: { [id: number]: { [key: string]: any } } = {...this.props.params};
+      const dimensions: DataDimension[] = [];
+      const dimensionValues: { [key: string]: { values: string[] | number[], type: number | string } } = {};
+
       for (const metric of this.props.metrics) {
-        chart.metricNames.forEach((metricName) => {
-          const metricValue = metric.values[metricName];
-          if (metricName in dataTraces) {
-            dataTraces[metricName].push(metricValue);
-          } else {
-            dataTraces[metricName] = [metricValue];
-          }
-        });
-        chart.paramNames.forEach((paramName) => {
-          const paramValue = this.props.params[metric.experiment][paramName];
-          if (paramName in dataTraces) {
-            dataTraces[paramName].push(paramValue);
-          } else {
-            dataTraces[paramName] = [paramValue];
-          }
-        });
+        if (metric.experiment in experimentData) {
+          experimentData[metric.experiment] = {...experimentData[metric.experiment], ...metric.values};
+        }
       }
+      for (const xp of Object.keys(experimentData)) {
+        const experimentParams = experimentData[Number(xp)];
+        for (const dim of Object.keys(experimentParams)) {
+          if (dim in dimensionValues) {
+            dimensionValues[dim].values = [...dimensionValues[dim].values, experimentParams[dim]];
+          } else {
+            const type = typeof experimentParams[dim] === 'string' ? 'string' : 'number';
+            dimensionValues[dim] = {values: [experimentParams[dim]], type};
+          }
+        }
+      }
+
+      for (const dim of Object.keys(dimensionValues)) {
+        const dimValues = dimensionValues[dim].values;
+        const dimension = {
+          label: dim,
+        } as DataDimension;
+        if (dimensionValues[dim].type === 'number') {
+          dimension.values = dimValues;
+          dimension.range = [Math.min.apply(null, dimValues), Math.max.apply(null, dimValues)];
+        } else {
+          dimension.ticktext = dimValues as string[];
+          // dimension.constraintrange = [0, dimValues.length];
+          const dimSet = Array.from(new Set(dimension.ticktext));
+          const dimToIndex: { [key: string]: number } = {};
+          for (let k = 0; k < dimSet.length; k++) {
+            dimToIndex[dimSet[k]] = k;
+          }
+          dimension.tickvals = dimSet.map((option, index) => index);
+          dimension.values = dimension.ticktext.map((value: string) => dimToIndex[value]);
+        }
+        dimensions.push(dimension);
+      }
+
+      return [{
+        type: 'parcoords',
+        line: {
+          color: 'blue',
+        },
+        dimensions,
+      }] as Plotly.PlotData[];
     };
 
     const getTraces = (chart: ChartModel) => {
-      if (chart.type === 'parallel') {
-        return getBasicTraces(chart);
+      if (chart.type === 'parcoords') {
+        return getParcoordsTraces(chart);
       } else if (chart.type === 'histogram') {
         return getHistogramTraces(chart);
       } else if (chart.type === 'scatter') {
@@ -421,6 +452,13 @@ export default class ChartView extends React.Component<Props, {}> {
         layout.bargroupgap = 0.2;
       } else if (chart.type === 'scatter') {
         layout.hovermode = 'closest';
+      } else if (chart.type === 'parcoords') {
+        layout.margin = {
+          l: 80,
+          r: 80,
+          b: 80,
+          t: 80,
+        };
       }
       return layout;
     };

@@ -17,3 +17,12 @@ export interface Trace extends DataTrace {
   showlegend?: boolean;
   opacity?: number;
 }
+
+export interface DataDimension {
+  range: number[];
+  constraintrange: number[];
+  label: string;
+  values: number[] | string[];
+  tickvals: number[];
+  ticktext: string[];
+}
