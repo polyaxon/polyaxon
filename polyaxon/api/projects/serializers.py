@@ -8,7 +8,8 @@ from api.utils.serializers.user import UserMixin
 from db.models.projects import Project
 
 
-class ProjectNameSerializer(serializers.ModelSerializer):
+class ProjectNameSerializer(serializers.ModelSerializer, UserMixin):
+    user = fields.SerializerMethodField()
 
     class Meta:
         model = Project

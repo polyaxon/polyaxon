@@ -78,6 +78,7 @@ class TestProjectNameSerializer(BaseTest):
         data = self.serializer_class(self.obj1_query).data
 
         assert set(data.keys()) == self.expected_keys
+        assert data.pop('user') == self.obj1.user.username
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
 
