@@ -59,7 +59,6 @@ class ProjectListView(BookmarkedListMixinView, AdminResourceEndpoint, ListEndpoi
     queryset = queries.projects.order_by('-updated_at')
     permission_classes = (AdminProjectListPermission,)
     serializer_class = BookmarkedProjectSerializer
-    pagination_class = LargeLimitOffsetPagination
 
     def filter_queryset(self, queryset):
         if self.request.access.public_only:
@@ -72,6 +71,7 @@ class ProjectNameListView(AdminResourceEndpoint, ListEndpoint):
     queryset = queries.projects.order_by('-updated_at')
     permission_classes = (AdminProjectListPermission,)
     serializer_class = ProjectNameSerializer
+    pagination_class = LargeLimitOffsetPagination
 
     def filter_queryset(self, queryset):
         if self.request.access.public_only:
