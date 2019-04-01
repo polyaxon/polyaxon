@@ -11,6 +11,6 @@ if [ $? -eq 0 ]; then
     elif [ "$1" = "uwsgi" ]; then
         docker-compose run --publish 8000:8000 --rm --name=polyaxon_server web uwsgi --ini web/uwsgi.web.ini
     elif [ "$1" = "nginx" ]; then
-        docker-compose run --publish 8000:80 --rm --name=polyaxon_server web /bin/bash ./web/start.sh
+        docker-compose run --publish 8000:80 --publish 9000:443 --rm --name=polyaxon_server web /bin/bash ./web/start.sh
     fi
 fi
