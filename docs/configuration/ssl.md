@@ -56,10 +56,13 @@ you can provide a self-signed certificate or a browser trusted certificate.
  2. Make sure to update you deployment config with reference to the certificate
  
     ```yaml
-    POLYAXON_NGINX_SSL_SECRET = 'polyaxon-cert'
-    POLYAXON_NGINX_ENABLE_SSL = true
+    ssl:
+      enabled: true  
+      secretName: 'polyaxon-cert'
     ```
  3. Set the service type to `NodePort` and update the api's service port to 443.
+ 
+ N.B. By default Polyaxon mounts the ssl certificate and key to `/etc/ssl`, this value can be updated using the `.Values.ssl.path`.
 
 ## NGINX for Polyaxon single instance (docker) or Docker Compose
 
