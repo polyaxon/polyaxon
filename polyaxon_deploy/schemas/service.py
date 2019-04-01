@@ -46,6 +46,37 @@ class ServiceConfig(BaseConfig):
         self.resources = resources
 
 
+class ApiSchema(ServiceSchema):
+    service = fields.Dict(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return ApiConfig
+
+
+class ApiConfig(ServiceConfig):
+    SCHEMA = ApiSchema
+    REDUCED_ATTRIBUTES = ['replicas', 'namespace', 'statuses']
+
+    def __init__(self,  # noqa
+                 image=None,
+                 imageTag=None,
+                 imagePullPolicy=None,
+                 replicas=None,
+                 concurrency=None,
+                 resources=None,
+                 service=None):
+        super(ApiConfig, self).__init__(
+            image=image,
+            imageTag=imageTag,
+            imagePullPolicy=imagePullPolicy,
+            replicas=replicas,
+            concurrency=concurrency,
+            resources=resources,
+        )
+        self.service = service
+
+
 class EventMonitorsSchema(BaseSchema):
     replicas = fields.Int(allow_none=True)
     namespace = fields.Nested(ServiceSchema, allow_none=True)

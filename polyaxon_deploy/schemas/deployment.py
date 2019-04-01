@@ -23,8 +23,8 @@ from polyaxon_deploy.schemas.service import (
     HooksSchema,
     PostgresqlSchema,
     RabbitmqSchema,
-    ServiceSchema
-)
+    ServiceSchema,
+    ApiSchema)
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 
 from polyaxon_schemas.utils import DictOrStr
@@ -48,8 +48,8 @@ class DeploymentSchema(BaseSchema):
     limitResources = fields.Bool(allow_none=True)
     globalReplicas = fields.Int(allow_none=True)
     globalConcurrency = fields.Int(allow_none=True)
-    api = fields.Nested(ServiceSchema, allow_none=True)
-    streams = fields.Nested(ServiceSchema, allow_none=True)
+    api = fields.Nested(ApiSchema, allow_none=True)
+    streams = fields.Nested(ApiSchema, allow_none=True)
     scheduler = fields.Nested(ServiceSchema, allow_none=True)
     hpsearch = fields.Nested(ServiceSchema, allow_none=True)
     eventsHandlers = fields.Nested(ServiceSchema, allow_none=True)
