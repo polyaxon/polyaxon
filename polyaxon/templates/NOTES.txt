@@ -38,7 +38,7 @@ Polyaxon is currently running:
 
   export POLYAXON_WS_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[1].nodePort}" services {{ template "polyaxon.fullname" . }}-api)
 
-  export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  export POLYAXON_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[1].address}")
 
   echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 

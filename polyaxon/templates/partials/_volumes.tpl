@@ -62,6 +62,13 @@ Volume mounts
   name: outputs
 {{- end }}
 {{- end -}}  {{- /* end def outputs volume mounts */ -}}
+{{- define "volumes.volumeMounts.ssl" -}}
+{{- if and .Values.ssl.enabled .values.ssl.secretName }}
+- name: polyaxon-ssl-volume
+  secret:
+    secretName: {{ .values.ssl.secretName | quote }}
+{{- end }}
+{{- end -}}  {{- /* end def upload volume mounts */ -}}
 
 {{- /*
 Volumes
@@ -71,7 +78,7 @@ Volumes
 {{- if .Values.persistence.upload }}
 {{- if .Values.persistence.upload.existingClaim }}
   persistentVolumeClaim:
-    claimName: {{ .Values.persistence.upload.existingClaim | quote}}
+    claimName: {{ .Values.persistence.upload.existingClaim | quote }}
 {{- else }}
   hostPath:
     path: {{ .Values.persistence.upload.hostPath | default .Values.persistence.upload.mountPath | quote }}
@@ -144,7 +151,13 @@ Volumes
     path: {{ .Values.defaultPersistence.outputs.outputs.hostPath | quote }}
 {{- end }}
 {{- end -}}  {{- /* end def outputs volume mounts */ -}}
-
+{{- define "volumes.volumes.ssl" -}}
+{{- if and .Values.ssl.enabled .values.ssl.secretName }}
+- name: polyaxon-ssl-volume
+  readOnly: true
+  mountPath: {{ default "/etc/ssl" .Values.ssl.path | quote }}
+{{- end }}
+{{- end -}}  {{- /* end def upload volume mounts */ -}}
 
 {{- /*
 Dirs

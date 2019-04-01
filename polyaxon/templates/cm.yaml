@@ -115,6 +115,13 @@ data:
   {{- if .Values.email.backend }}
   POLYAXON_EMAIL_BACKEND: {{ .Values.email.backend | quote }}
   {{- end }}
+  # SSL
+  {{- if and .Values.ssl.enabled .Values.ssl.secretName }}
+  POLYAXON_SSL_ENABLED: "true"
+  {{- if and .Values.ssl.path }}
+  POLYAXON_SSL_PATH:  {{ .Values.ssl.path | quote }}
+  {{- end }}
+  {{- end }}
   # Queues
   POLYAXON_QUEUES_REPOS: {{ .Values.queues.repos | quote }}
   POLYAXON_QUEUES_SCHEDULER_HEALTH: {{ .Values.queues.schedulerHealth | quote }}

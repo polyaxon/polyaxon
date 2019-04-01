@@ -71,6 +71,7 @@ spec:
 {{ include "volumes.volumeMounts.outputs" . | indent 8}}
 {{ include "volumes.volumeMounts.repos" . | indent 8}}
 {{ include "volumes.volumeMounts.upload" . | indent 8}}
+{{ include "volumes.volumeMounts.ssl" . | indent 8}}
 {{ include "volumes.dirMounts" . | indent 8}}
         livenessProbe:
           failureThreshold: 10
@@ -153,4 +154,5 @@ spec:
 {{ include "volumes.volumes.outputs" . | indent 6}}
 {{ include "volumes.volumes.repos" . | indent 6}}
 {{ include "volumes.volumes.upload" . | indent 6}}
+{{ include "volumes.volumes.ssl" . | indent 6}}
 {{ include "volumes.dirs" . | indent 6 }}
