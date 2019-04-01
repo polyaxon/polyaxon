@@ -45,7 +45,7 @@ setup(name='rhea',
           'django',
       ],
       install_requires=[
-          'PyYAML==3.13',
+          'PyYAML==5.1',
           'six==1.12.0',
       ],
       classifiers=[
