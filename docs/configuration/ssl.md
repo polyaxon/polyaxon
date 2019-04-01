@@ -31,6 +31,7 @@ Polyaxon's helm chart comes with an ingress that you can use with an ingress con
  2. Add the tls configuration to Polyaxon's Ingress values.
  
     ```yaml
+    serviceType: ClusterIP
     ingress:
       enabled: true
       tls:
