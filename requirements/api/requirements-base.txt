@@ -3,7 +3,7 @@
 django-auth-ldap==1.7.0
 GitPython==2.1.11
 polyaxon-k8s==0.4.0
-polyaxon-nginx==0.4.4
+polyaxon-nginx==0.4.5
 polystores==0.1.7
 uWSGI==2.0.17.1
 
