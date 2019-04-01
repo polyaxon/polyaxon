@@ -18,14 +18,16 @@ from polyaxon_deploy.schemas.scheduling import (
     TolerationsSchema
 )
 from polyaxon_deploy.schemas.service import (
+    ApiSchema,
     DockerRegistrySchema,
     EventMonitorsSchema,
     HooksSchema,
     PostgresqlSchema,
     RabbitmqSchema,
-    ServiceSchema,
-    ApiSchema)
+    ServiceSchema
+)
 from polyaxon_deploy.schemas.service_types import ServiceTypes
+from polyaxon_deploy.schemas.ssl import SSLSchema
 
 from polyaxon_schemas.utils import DictOrStr
 
@@ -36,6 +38,7 @@ class DeploymentSchema(BaseSchema):
     clusterId = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
     rbac = fields.Nested(RBACSchema, allow_none=True)
+    ssl = fields.Nested(SSLSchema, allow_none=True)
     serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
     adminViewEnabled = fields.Bool(allow_none=True)
     timeZone = fields.Str(allow_none=True)
@@ -109,6 +112,7 @@ class DeploymentConfig(BaseConfig):
                  clusterId=None,
                  namespace=None,
                  rbac=None,
+                 ssl=None,
                  serviceType=None,
                  adminViewEnabled=None,
                  timeZone=None,
@@ -170,6 +174,7 @@ class DeploymentConfig(BaseConfig):
         self.clusterId = clusterId
         self.namespace = namespace
         self.rbac = rbac
+        self.ssl = ssl
         self.serviceType = serviceType
         self.adminViewEnabled = adminViewEnabled
         self.timeZone = timeZone
