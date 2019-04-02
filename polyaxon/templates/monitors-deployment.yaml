@@ -20,7 +20,7 @@ metadata:
     app.kubernetes.io/component: {{ .Values.roles.log }}
     app.kubernetes.io/managed-by: "helm"
 spec:
-  replicas: {{ .Values.eventMonitors.replicas }}
+  replicas: 1
   template:
     metadata:
       annotations:

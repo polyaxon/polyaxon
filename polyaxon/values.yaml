@@ -337,8 +337,6 @@ crons:
       memory: 100Mi
 
 eventMonitors:
-  replicas: 1
-
   namespace:
     enabled: true
     image: polyaxon/polyaxon-monitor-namespace
