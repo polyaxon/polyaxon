@@ -19,7 +19,7 @@ NGINX acts as a reverse proxy for the Polyaxon's front-end server, meaning NGINX
 
 The recommended way to use Https in Polyaxon on Kubernetes is by setting an ingress-nginx for the Polyaxon Cluster running on Kubernetes.
 
-Polyaxon's helm chart comes with an ingress that you can use with an ingress controller where you should use TLS so that all traffic will be served over HTTPS.
+Polyaxon's helm chart comes with an ingress resource that you can use with an ingress controller where you should use TLS so that all traffic will be served over HTTPS.
 
  1. Create a TLS secret that contains your TLS certificate and private key.
 
@@ -34,12 +34,14 @@ Polyaxon's helm chart comes with an ingress that you can use with an ingress con
     serviceType: ClusterIP
     ingress:
       enabled: true
+      hostName: polyaxon.acme.com
       tls:
-      - hosts:
-        - example.polyaxon.com
-        secretName: polyaxon-tls
+      - secretName: polyaxon.acme-tls
+        hosts:
+          - polyaxon.acme.com
     ```   
 
+    For more information visit the [Nginx Ingress Integration](/integrations/nginx/)
 
 ## NGINX for Polyaxon running with a NodePort service
 
@@ -68,3 +70,11 @@ you can provide a self-signed certificate or a browser trusted certificate.
 
 The process for using certificate with a Polyaxon deployment on docker or docker compose is quite similar to kubernetes's NodePort service, 
 you need to mount an ssl certificate and ssl certificate key to `/etc/ssl`, and set `POLYAXON_NGINX_ENABLE_SSL` to true/1.
+
+## CLI setup
+
+If you are serving Polyaxon on HTTPS, you should be aware that CLI need to have a different config:
+
+```bash
+polyaxon config set --host=IP/Host --http_port=443 --ws_port=443 --use_https=true [--verify_ssl]
+```
