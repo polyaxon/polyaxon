@@ -21,8 +21,12 @@ data:
   {{- if .Values.allowedHosts }}
   POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
   {{- end }}
-  {{- if .Values.apiHost }}
-  POLYAXON_API_HOST: {{ .Values.apiHost | quote }}
+  {{- if .Values.ingress.enabled }}
+  POLYAXON_API_HOST: {{ .Values.ingress.hostName | quote }}
+  {{- else }}
+  {{- if .Values.hostName }}
+  POLYAXON_API_HOST: {{ .Values.hostName | quote }}
+  {{- end }}
   {{- end }}
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_NAME: {{ template "polyaxon.fullname" . }}

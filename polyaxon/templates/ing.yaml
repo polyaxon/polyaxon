@@ -23,56 +23,34 @@ metadata:
   annotations:
 {{ toYaml .Values.ingress.annotations | indent 4 }}
 spec:
-  {{ if .Values.ingress.tls.enabled -}}
-  tls:
-  {{ with .Values.ingress.tls -}}
-  - hosts:
-    {{- range .hosts }}
-    - {{ . }}
+  rules:
+  - host: {{ .Values.ingress.hostName | quote }}
+    {{- if (not (empty .Values.ingress.tls)) }}
+    https:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.api.service.externalPort }}
+      - path: /ws
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.streams.service.externalPort }}
+    {{- else }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.api.service.externalPort }}
+      - path: /ws
+        backend:
+          serviceName: {{ $fullName }}-api
+          servicePort: {{ $.Values.streams.service.externalPort }}
     {{- end }}
-    secretName: {{ .secretName | default $secretName }}
-  rules:
-    {{- range .hosts }}
-  - host: {{ . }}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ $fullName }}-api
-          servicePort: {{ $.Values.api.service.externalPort }}
-      - path: /ws
-        backend:
-          serviceName: {{ $fullName }}-api
-          servicePort: {{ $.Values.streams.service.externalPort }}
-    {{- end }} {{- /* end range .hosts */ -}}
-  {{- end }}  {{- /* end loop */ -}}
-  {{- else }}  {{- /* else if tls.enabled */ -}}
-  rules:
-  {{ if .Values.ingress.hosts -}}  {{- /* else if ingress.hosts */ -}}
-  {{- range .Values.ingress.hosts }}
-  - host: {{ . }}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ $fullName }}-api
-          servicePort: {{ $.Values.api.service.externalPort }}
-      - path: /ws
-        backend:
-          serviceName: {{ $fullName }}-api
-          servicePort: {{ $.Values.streams.service.externalPort }}
-  {{- end }} {{- /* end range ingress.hosts */ -}}
-  {{- else }}  {{- /* else if not ingress.hosts (creates the ip only) */ -}}
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ $fullName }}-api
-          servicePort: {{ $.Values.api.service.externalPort }}
-      - path: /ws
-        backend:
-         serviceName: {{ $fullName }}-api
-         servicePort: {{ $.Values.streams.service.externalPort }}
-  {{- end }} {{- /* end if ingress.hosts */ -}}
-  {{- end }} {{- /* end if tls.enabled */ -}}
+
+  {{- if (not (empty .Values.ingress.tls)) }}
+  tls:
+  {{ toYaml .Values.ingress.tls | indent 4 }}
+  {{- end -}}
 {{- end }}

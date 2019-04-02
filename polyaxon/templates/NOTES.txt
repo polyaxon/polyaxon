@@ -8,9 +8,9 @@ Polyaxon is currently running:
     {{- if .Values.isMinikube }}
     export POLYAXON_IP=$(minikube ip)
     {{- else }}
-    export POLYAXON_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "polyaxon.fullname" . }}-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    export POLYAXON_IP={{ .Values.ingress.hostName }}
     {{- end }}
-    {{- if .Values.ingress.tls.enabled }}
+    {{- if (not (empty .Values.ingress.tls)) }}
     export POLYAXON_HTTP_PORT=443
     export POLYAXON_WS_PORT=443
     {{- else }}
@@ -70,7 +70,7 @@ Polyaxon is currently running:
 
 2. Setup your cli by running theses commands:
 
-  {{- if .Values.ingress.tls.enabled }}
+  {{- if (not (empty .Values.ingress.tls)) }}
   polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT --use_https=true
   {{- else }}
   polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
