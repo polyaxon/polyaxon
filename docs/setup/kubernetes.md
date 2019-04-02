@@ -79,14 +79,32 @@ This makes it easy to refer to the Polyaxon chart without having to use a long U
 
 
 ```bash
-$ helm repo add polyaxon https://charts.polyaxon.com
-$ helm repo update
+helm repo add polyaxon https://charts.polyaxon.com
+helm repo update
 ```
+
+### Validate
+ 
+You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
+
+```bash
+polyaxon deploy -f config.yml --check
+```
+
+### Deploy
 
 Now you can install Polyaxon with your `config.yml` file
 
+You can use Polyaxon CLI to manage the deployment
+
 ```bash
-$ helm install polyaxon/polyaxon \
+polyaxon deploy -f config.yml
+```
+
+Or you can use Helm to do the same:
+
+```bash
+helm install polyaxon/polyaxon \
     --name=<RELEASE_NAME> \
     --namespace=<NAMESPACE> \
     -f config.yml
@@ -100,14 +118,14 @@ We recommend using `RELEASE_NAME = polyaxon` or `RELEASE_NAME = plx`.
 we again recommend using `polyaxon` to make it always easy to remember.
 
 > TIP: We recommend using `polyaxon` for both the `--name` and `--namespace` to avoid too much confusion.
-    The same command with `polyaxon` as a value:
+> The same command with `polyaxon` as a value:
 
-    ```bash
-    $ helm install polyaxon/polyaxon \
-    --name=polyaxon \
-    --namespace=polyaxon \
-    -f config.yml
-    ```
+```bash
+helm install polyaxon/polyaxon \
+--name=polyaxon \
+--namespace=polyaxon \
+-f config.yml
+```
 
 >NOTE: "Release name already exists error"
 > If you get a release named `<RELEASE_NAME>` already exists error, then you should delete the release by running `helm delete --purge <RELEASE_NAME>`.
@@ -115,7 +133,7 @@ we again recommend using `polyaxon` to make it always easy to remember.
 You can see the pods being created by entering in a different terminal:
 
 ```bash
-$ kubectl --namespace=<NAMESPACE> get pod
+kubectl --namespace=<NAMESPACE> get pod
 ```
 
 When helm is done deploying Polyaxon, it will output some instructions `NOTES`,
@@ -197,7 +215,14 @@ Note that when using minikube, the IP address of the application is given by `mi
 
 ## Upgrade Polyaxon
 
-To upgrade Polyaxon to a newer version, you can simply run:
+To upgrade Polyaxon to a newer version, you can simply run the following command using Polyaxon CLI:
+
+```bash
+helm update
+polyaxon deploy -f config.yml --upgrade
+```
+
+Or using Helm
 
 ```bash
 helm update
@@ -209,7 +234,8 @@ helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
 The general method to modify your Kubernetes deployment is to:
 
  1. Make a change to the config.yml
- 2. Run a helm upgrade:
+ 2. [Optional] run `polyaxon deploy -f config.yml --check`
+ 2. Run a `polyaxon deploy -f config.yml --upgrade` or `helm upgrade`:
 
     ```bash
     $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml
@@ -233,6 +259,12 @@ When you are done with Polyaxon, you can turn off the deployment,
 and depending on your persistence configuration you can keep all your data saved for future deployments.
 
 You can also decide to completely turn off Polyaxon and remove the namespace and computational resources.
+
+`polyaxon teardown`
+
+Or
+
+`helm del --purge polyaxon`
 
 ### Stop/Delete running experiments/jobs
 
