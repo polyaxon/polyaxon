@@ -34,8 +34,8 @@ It also packages some required dependencies for Polyaxon:
 
 This chart can be installed on single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany`.
-An nfs provisioner can be enabled in cases where you want to try the platform on multi-nodes cluster
-without the need to create your own volumes.
+An nfs provisioner can be used in cases where you want to try the platform on multi-nodes cluster
+without the need to create your own volumes. Please see [polyaxon-nfs-provisioner](https://github.com/polyaxon/polyaxon-nfs-provisioner)
 
 > **Warning**: You should know that using the nfs provisioner is not meant to be a production option.
 
@@ -130,9 +130,7 @@ You can also provide different annotations for the ingress and it will not use `
 | `rbac.enabled`           | Use Kubernetes role-based access control (RBAC)    | `true`
 | `ingress.enabled`        | Use Kubernetes ingress                             | `true`
 | `ingress.annotations`    | Ingress annotations                                | `{}`
-| `ingress.tls.enabled`    | Use Ingress TLS                                    | `false`
-| `ingress.tls.hosts`      | Ingress Hosts list (used for configuring TLS host) | `{}`
-| `ingress.tls.secretName` | TLS secret name                                    | `{{ .Release.Name }}-tls`
+| `ingress.tls`            | Use Ingress TLS                                    | `[]`
 | `api.service.annotations`| API Service annotations                            | `{}`
 
 
@@ -153,8 +151,19 @@ To automate the creation and registration of new domain name you can use the fol
 * [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager)
 * [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) (Route53 / Google CloudDNS)
 
-once installed, you can set the values for `ingress.tls.enabled` to `true` and then set the host
-name you need the TLS on under `ingress.tls.hosts` (can be more than one host)
+once installed, you can set the values for `ingress.tls`:
+
+```yaml
+ingress:
+  enabled: true
+  hostName: polyaxon.acme.com
+  tls: 
+  - secretName: polyaxon.acme-tls
+    hosts:
+      - polyaxon.acme.com
+```
+
+TLS can have more than one host.
 
 In order to get the domain registration to work you need to set the value of `api.service.annotations`
 to the annotation needed for your domain:
@@ -162,7 +171,7 @@ i.e
 
 ```yaml
 annotations:
-    domainName: polyaxon.my.domain.com
+  domainName: polyaxon.my.domain.com
 ```
 
 ### Time zone
@@ -353,7 +362,6 @@ persistence:
 
 Example of multi-outputs persistence definition with:
 
-
 ```yaml
 persistence:
   outputs:
@@ -383,163 +391,6 @@ persistence:
       secret: secret-name
       secretKey: secret-key
 ```
-
-### Persistence with nfs provisioner
-
-Polyaxon provides options to enable a built-in nfs provisioner to create some of the persistence storage needed or all of them.
-In order to use this provisioner, you need disable the persistence option, and optional adjust the provisioner size for that volume.
-
-```yaml
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-```
-
-**logs**:
-
-To use the provisioner for the logs, you should disable `persistence.logs`
-
-```yaml
-persistence:
-  logs: null
-```
-
-And to adjust the behavior of the provisioner for the logs, for example the size:
-
-```yaml
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-  pvc:
-    logs:
-      size: 10Gi
-```
-
-| Parameter                                | Description                                       | Default
-| ---------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `nfsProvisioner.pvc.logs.name`           | Name of the PVC to create                         | `polyaxon-pvc-logs`
-| `nfsProvisioner.pvc.logs.size`           | Size of data volume                               | `5Gi`
-| `nfsProvisioner.pvc.logs.mountPath`      | Path to mount the volume at, to use other image   | `/logs`
-| `nfsProvisioner.pvc.logs.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteMany`
-
-
-**repos**:
-
-To use the provisioner for the repos, you should disable `persistence.repos`
-
-```yaml
-persistence:
-  repos: null
-```
-
-And to adjust the behavior of the provisioner for the repos, for example the size:
-
-```yaml
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-  pvc:
-    repos:
-      size: 50Gi
-```
-
-| Parameter                                 | Description                                       | Default
-| ----------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `nfsProvisioner.pvc.repos.name`           | Name of the PVC to create                         | `polyaxon-pvc-repos`
-| `nfsProvisioner.pvc.repos.size`           | Size of data volume                               | `10Gi`
-| `nfsProvisioner.pvc.repos.mountPath`      | Path to mount the volume at, to use other image   | `/repos`
-| `nfsProvisioner.pvc.repos.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteMany`
-
-
-**upload**:
-
-To use the provisioner for the upload, you should disable `persistence.upload`
-
-```yaml
-persistence:
-  upload: null
-```
-
-And to adjust the behavior of the provisioner for the upload, for example the size:
-
-```yaml
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-  pvc:
-    upload:
-      size: 50Gi
-```
-
-| Parameter                                  | Description                                       | Default
-| ------------------------------------------ | ------------------------------------------------- | ----------------------------------------------------------
-| `nfsProvisioner.pvc.upload.name`           | Name of the PVC to create                         | `polyaxon-pvc-upload`
-| `nfsProvisioner.pvc.upload.size`           | Size of data volume                               | `50Gi`
-| `nfsProvisioner.pvc.upload.mountPath`      | Path to mount the volume at, to use other image   | `/upload`
-| `nfsProvisioner.pvc.upload.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteMany`
-
-
-**data**:
-
-To use the provisioner for the data as well, you should disable `persistence.data`
-
-```yaml
-persistence:
-  data: null
-```
-
-And to adjust the behavior of the provisioner for the data, for example the size:
-
-```yaml
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-  pvc:
-    data:
-      size: 50Gi
-```
-
-| Parameter                                | Description                                       | Default
-| ---------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `nfsProvisioner.pvc.data.name`           | Name of the PVC to create                         | `polyaxon-pvc-data`
-| `nfsProvisioner.pvc.data.size`           | Size of data volume                               | `10Gi`
-| `nfsProvisioner.pvc.data.mountPath`      | Path to mount the volume at, to use other image   | `/data`
-| `nfsProvisioner.pvc.data.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteMany`
-
-
-**outputs**:
-
-To use the provisioner for the outputs as well, you should disable `persistence.outputs`
-
-```yaml
-persistence:
-  outputs: null
-```
-
-And to adjust the behavior of the provisioner for the outputs, for example the size:
-
-```yaml
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-  pvc:
-    outputs:
-      size: 50Gi
-```
-
-| Parameter                                   | Description                                       | Default
-| ------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------
-| `nfsProvisioner.pvc.outputs.name`           | Name of the PVC to create                         | `polyaxon-pvc-outputs`
-| `nfsProvisioner.pvc.outputs.size`           | Size of data volume                               | `10Gi`
-| `nfsProvisioner.pvc.outputs.mountPath`      | Path to mount the volume at, to use other image   | `/outputs`
-| `nfsProvisioner.pvc.outputs.accessMode`     | Use volume as ReadOnly or ReadWrite ReadWriteOnce | `ReadWriteMany`
-
 
 ### Node and Deployment manipulation
 
@@ -613,12 +464,12 @@ allowedHosts:
 In order to receive email and notifcation with a clickable link to the objects on the platform
 
 ```yaml
-apiHost: 159.203.150.212
+hostName: 159.203.150.212
 ``` 
 Or 
 
 ```yaml
-apiHost: polyaxon.foo.com  
+hostName: polyaxon.foo.com  
 ```
 
 ### Admin view
