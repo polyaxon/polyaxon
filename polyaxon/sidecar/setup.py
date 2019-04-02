@@ -20,7 +20,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-sidecar',
-      version='0.4.2',
+      version='0.4.3rc0',
       description='Polyaxon sidecar.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
