@@ -1,4 +1,4 @@
 -r requirements-base.txt
 
-polyaxon-schemas==0.4.2
-polyaxon-client==0.4.2
+polyaxon-schemas==0.4.3rc0
+polyaxon-client==0.4.3rc0
