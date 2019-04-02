@@ -20,7 +20,7 @@ class IngressConfig(BaseConfig):
     SCHEMA = IngressSchema
     REDUCED_ATTRIBUTES = ['enabled', 'hostName', 'tls', 'annotations']
 
-    def __init__(self,
+    def __init__(self,  # noqa
                  enabled=None,
                  hostName=None,
                  tls=None,
