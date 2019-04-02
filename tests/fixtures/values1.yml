@@ -5,6 +5,10 @@ rbac:
 
 ingress:
   enabled: true
+  tls:
+    - secretName: polyaxon.cluster.local-tls
+      hosts:
+      - polyaxon.cluster.local
 
 serviceType: ClusterIP
 

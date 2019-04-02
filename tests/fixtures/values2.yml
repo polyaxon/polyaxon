@@ -6,6 +6,10 @@ ingress:
 
 serviceType: NodePort
 
+ssl:
+  enabled: true
+  secretName: sll-secret
+
 environment: staging
 
 user:

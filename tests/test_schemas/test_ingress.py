@@ -25,9 +25,8 @@ class TestIngressConfig(TestCase):
 
         config_dict = {
             'enabled': False,
-            'tls': {'hosts': 'bar.com'},
+            'tls': [{'hosts': 'bar.com'}],
             'annotations': {'a': 'b'},
-            'resources': {'limits': {'cpu': 0.1, 'memory': '80Mi'}}
         }
 
         config = IngressConfig.from_dict(config_dict)
