@@ -18,6 +18,7 @@ Config outputs persistence
 {{- if .Values.persistence.outputs }}
 - name: POLYAXON_PERSISTENCE_OUTPUTS
   value: {{ toJson .Values.persistence.outputs | quote }}
+{{- else }}
 - name: POLYAXON_PERSISTENCE_OUTPUTS
   value: {{ toJson .Values.defaultPersistence.outputs | quote }}
 {{- end }}
