@@ -34,6 +34,9 @@ ingress:
 serviceType: LoadBalancer
 limitResources: false
 
+# To set ssl and serve https with Polyaxon deployed with NodePort service
+ssl:
+
 # Initial admin user to create
 user:
   username: "root"
