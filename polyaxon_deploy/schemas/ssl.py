@@ -19,7 +19,7 @@ class SSLConfig(BaseConfig):
     SCHEMA = SSLSchema
     REDUCED_ATTRIBUTES = ['enabled']
 
-    def __init__(self, enabled=None, secretName=None, path=None):
+    def __init__(self, enabled=None, secretName=None, path=None):  # noqa
         self.enabled = enabled
         self.secretName = secretName
         self.path = path
