@@ -5,7 +5,7 @@
 ![Release](https://img.shields.io/badge/release-0.4.2-green.svg?longCache=true)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
-Helm charts for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
+Polyaxon chart is a Helm chart for creating reproducible and maintainable deployments of Polyaxon with Kubernetes.
 
 ## TL;DR;
 
@@ -125,9 +125,7 @@ You can also provide different annotations for the ingress and it will not use `
 | `rbac.enabled`           | Use Kubernetes role-based access control (RBAC)    | `true`
 | `ingress.enabled`        | Use Kubernetes ingress                             | `true`
 | `ingress.annotations`    | Ingress annotations                                | `{}`
-| `ingress.tls.enabled`    | Use Ingress TLS                                    | `false`
-| `ingress.tls.hosts`      | Ingress Hosts list (used for configuring TLS host) | `{}`
-| `ingress.tls.secretName` | TLS secret name                                    | `{{ .Release.Name }}-tls`
+| `ingress.tls`            | Use Ingress TLS                                    | `[]`
 | `api.service.annotations`| API Service annotations                            | `{}`
 
 
@@ -148,8 +146,19 @@ To automate the creation and registration of new domain name you can use the fol
 * [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager)
 * [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) (Route53 / Google CloudDNS)
 
-once installed, you can set the values for `ingress.tls.enabled` to `true` and then set the host
-name you need the TLS on under `ingress.tls.hosts` (can be more than one host)
+once installed, you can set the values for `ingress.tls`:
+
+```yaml
+ingress:
+  enabled: true
+  hostName: polyaxon.acme.com
+  tls: 
+  - secretName: polyaxon.acme-tls
+    hosts:
+      - polyaxon.acme.com
+```
+
+TLS can have more than one host.
 
 In order to get the domain registration to work you need to set the value of `api.service.annotations`
 to the annotation needed for your domain:
@@ -157,7 +166,7 @@ i.e
 
 ```yaml
 annotations:
-    domainName: polyaxon.my.domain.com
+  domainName: polyaxon.my.domain.com
 ```
 
 ### Time zone
@@ -449,12 +458,12 @@ allowedHosts:
 In order to receive email and notifcation with a clickable link to the objects on the platform
 
 ```yaml
-apiHost: 159.203.150.212
+hostName: 159.203.150.212
 ``` 
 Or 
 
 ```yaml
-apiHost: polyaxon.foo.com  
+hostName: polyaxon.foo.com  
 ```
 
 ### Admin view

@@ -5,37 +5,38 @@ rbac:
 
 ingress:
   enabled: false
-  hosts:
-  # - polyaxon.foo.com
-  tls:
-    enabled: false
-    hosts:
-    - polyaxon.local
-    secretName: ""
+  hostName:
+  # Ingress TLS configuration
+  # Secrets must be manually created in the namespace
+  tls: []
+  # - secretName: polyaxon.cluster.local-tls
+  #   hosts:
+  #     - polyaxon.cluster.local
+
+  # Default annotation, some of these values allow uploading large files to the API
+  # if you are using a different ingress other than nginx, you need to adapt the annotations.
   annotations:
-    kubernetes.io/ingress.class: polyaxon-ingress
-    ingress.kubernetes.io/ssl-redirect: "false"
-    ingress.kubernetes.io/rewrite-target: /
-    ingress.kubernetes.io/add-base-url: "true"
-    ingress.kubernetes.io/proxy-connect-timeout: "600"
-    ingress.kubernetes.io/proxy-read-timeout: "600"
-    ingress.kubernetes.io/proxy-send-timeout: "600"
-    ingress.kubernetes.io/send-timeout: "600"
-    ingress.kubernetes.io/proxy-body-size: 4G
-  resources:
-    limits:
-      cpu: 10m
-      memory: 20Mi
-    requests:
-      cpu: 10m
-      memory: 20Mi
-# If you enable ingress, please set this value to ClusterIP or NodePort
+
+  #  ingress.kubernetes.io/ssl-redirect: "false"
+  #  ingress.kubernetes.io/rewrite-target: /
+  #  ingress.kubernetes.io/add-base-url: "true"
+  #  ingress.kubernetes.io/proxy-connect-timeout: "600"
+  #  ingress.kubernetes.io/proxy-read-timeout: "600"
+  #  ingress.kubernetes.io/proxy-send-timeout: "600"
+  #  ingress.kubernetes.io/send-timeout: "600"
+  #  ingress.kubernetes.io/proxy-body-size: 4G
+
+  # kubernetes.io/tls-acme: 'true'
+
+# If you enable ingress, please set this value to ClusterIP or NodePort (on GKE you canot use ClusterIP)
 # Otherwise you should set it to LoadBalancer
 serviceType: LoadBalancer
 limitResources: false
 
 # To set ssl and serve https with Polyaxon deployed with NodePort service
-ssl:
+ssl: {}
+
+dns: {}
 
 # Initial admin user to create
 user:
@@ -571,7 +572,7 @@ privateRegistries:
   #   password: "mypassword"
 
 # To receive email/notification with correct host
-#apiHost: 159.203.150.212 or polyaxon.foo.com
+# hostName: 159.203.150.212 or polyaxon.foo.com
 
 # White list of ip/hosts that can communicate with the api
 #allowedHosts:
