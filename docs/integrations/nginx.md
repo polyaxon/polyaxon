@@ -56,8 +56,40 @@ ingress:
 
 ## Annotations
 
-Polyaxon's ingress resource comes with default annotations to successfully handle some use cases:
- * Uploading/Downloading large files
- * Routing some internal services
+Polyaxon's ingress resource can be customized by providing annotations, we recommend the following annotations
+
+```yaml
+ingress:
+  annotations:
+      ingress.kubernetes.io/rewrite-target: /
+      ingress.kubernetes.io/add-base-url: "true"
+```
+
+If you are using the ingress without a tls, you need to set
  
-You can customize further these annotations if you have some special requirements.
+```yaml
+ingress:
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+```
+
+Also to allow the platform to upload/download large files you need to 
+
+```yaml
+ingress:
+  annotations:
+    ingress.kubernetes.io/proxy-connect-timeout: "600"
+    ingress.kubernetes.io/proxy-read-timeout: "600"
+    ingress.kubernetes.io/proxy-send-timeout: "600"
+    ingress.kubernetes.io/send-timeout: "600"
+    ingress.kubernetes.io/proxy-body-size: 4G
+```
+
+## ConfigMap for the controller
+
+In addition to the previous annotations, you might need to update the controller's config map:
+
+```yaml
+data:
+  ssl-redirect: "false"
+```
