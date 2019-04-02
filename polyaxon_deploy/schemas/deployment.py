@@ -75,7 +75,7 @@ class DeploymentSchema(BaseSchema):
     email = fields.Nested(EmailSchema, allow_none=True)
     auth = fields.Nested(AuthSchema, allow_none=True)
     integrations = fields.Nested(IntegrationsSchema, allow_none=True)
-    apiHost = fields.Str(allow_none=True)
+    hostName = fields.Str(allow_none=True)
     allowedHosts = fields.List(fields.Str(), allow_none=True)
     secretRefs = fields.List(fields.Str(), allow_none=True)
     configmapRefs = fields.List(fields.Str(), allow_none=True)
@@ -147,7 +147,7 @@ class DeploymentConfig(BaseConfig):
                  email=None,
                  auth=None,
                  integrations=None,
-                 apiHost=None,
+                 hostName=None,
                  allowedHosts=None,
                  secretRefs=None,
                  configmapRefs=None,
@@ -209,7 +209,7 @@ class DeploymentConfig(BaseConfig):
         self.email = email
         self.auth = auth
         self.integrations = integrations
-        self.apiHost = apiHost
+        self.hostName = hostName
         self.allowedHosts = allowedHosts
         self.secretRefs = secretRefs
         self.configmapRefs = configmapRefs

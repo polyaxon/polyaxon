@@ -96,7 +96,7 @@ privateRegistries:
   - "user:password@foo.bar.registry.com"
 
 
-apiHost: 123.123.123.123
+hostName: 123.123.123.123
 allowedHosts:
   - foo.bar.com
   - 123.123.12.3

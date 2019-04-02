@@ -46,7 +46,7 @@ class TestDeploymentConfig(TestCase):
         assert config.dockerRegistry is None
         assert config.email is None
         assert config.integrations is None
-        assert config.apiHost is None
+        assert config.hostName is None
         assert config.allowedHosts is None
         assert config.secretRefs is None
         assert config.configmapRefs is None
@@ -96,7 +96,7 @@ class TestDeploymentConfig(TestCase):
         assert config.email is not None
         assert len(config.integrations.slack) == 2
         assert len(config.integrations.to_dict()) == 1
-        assert config.apiHost is None
+        assert config.hostName is None
         assert config.allowedHosts is None
         assert config.secretRefs is None
         assert config.configmapRefs is None
@@ -152,7 +152,7 @@ class TestDeploymentConfig(TestCase):
         assert config.email is not None
         assert len(config.integrations.slack) == 2
         assert len(config.integrations.to_dict()) == 1
-        assert config.apiHost == '123.123.123.123'
+        assert config.hostName == '123.123.123.123'
         assert config.allowedHosts == ['foo.bar.com', '123.123.12.3']
         assert config.secretRefs == ['foo', 'moo']
         assert config.configmapRefs == ['foo', 'bar']
@@ -211,7 +211,7 @@ class TestDeploymentConfig(TestCase):
         assert config.email is None
         assert len(config.integrations.slack) == 1
         assert len(config.integrations.to_dict()) == 1
-        assert config.apiHost == '19.3.50.12'
+        assert config.hostName == '19.3.50.12'
         assert config.allowedHosts == ['127.0.0.1', '123.123.12.3']
         assert config.secretRefs == ['pubsub-key']
         assert config.configmapRefs is None
@@ -273,7 +273,7 @@ class TestDeploymentConfig(TestCase):
         assert config.email is None
         assert len(config.integrations.slack) == 1
         assert len(config.integrations.to_dict()) == 1
-        assert config.apiHost == '19.3.50.12'
+        assert config.hostName == '19.3.50.12'
         assert config.allowedHosts == ['127.0.0.1', '123.123.12.3']
         assert config.secretRefs == ['pubsub-key']
         assert config.configmapRefs is None

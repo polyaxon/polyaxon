@@ -154,7 +154,7 @@ privateRegistries:
 
 
 reposAccessToken: sdfdsfdsfsdfsdfsdfsdf
-apiHost: 19.3.50.12
+hostName: 19.3.50.12
 allowedHosts:
   - 127.0.0.1
   - 123.123.12.3
