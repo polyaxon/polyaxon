@@ -2,5 +2,5 @@
 
 kubernetes-asyncio==8.0.3
 pika==0.12.0
-polyaxon-k8s==0.4.0
+polyaxon-k8s==0.4.1
 sanic==19.3.1
