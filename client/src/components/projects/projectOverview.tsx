@@ -72,7 +72,7 @@ export default class ProjectOverview extends React.Component<Props, {}> {
                   />
                   <h4>Or using Polyaxon CLI.</h4>
                   <div className="instructions-section-content">
-                    polyaxon project -p {project.name} git --url="https://github.com/polyaxon/polyaxon-quick-start"
+                    polyaxon project -p {project.name} git --url="https://giturl"
                   </div>
                 </div>
               </div>
