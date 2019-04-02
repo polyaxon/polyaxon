@@ -63,12 +63,12 @@ Volume mounts
 {{- end }}
 {{- end -}}  {{- /* end def outputs volume mounts */ -}}
 {{- define "volumes.volumeMounts.ssl" -}}
-{{- if and .Values.ssl.enabled .values.ssl.secretName }}
+{{- if and .Values.ssl.enabled .Values.ssl.secretName }}
 - name: polyaxon-ssl-volume
   secret:
-    secretName: {{ .values.ssl.secretName | quote }}
+    secretName: {{ .Values.ssl.secretName | quote }}
 {{- end }}
-{{- end -}}  {{- /* end def upload volume mounts */ -}}
+{{- end -}}  {{- /* end def ssl volume mounts */ -}}
 
 {{- /*
 Volumes
@@ -152,12 +152,12 @@ Volumes
 {{- end }}
 {{- end -}}  {{- /* end def outputs volume mounts */ -}}
 {{- define "volumes.volumes.ssl" -}}
-{{- if and .Values.ssl.enabled .values.ssl.secretName }}
+{{- if and .Values.ssl.enabled .Values.ssl.secretName }}
 - name: polyaxon-ssl-volume
   readOnly: true
   mountPath: {{ default "/etc/ssl" .Values.ssl.path | quote }}
 {{- end }}
-{{- end -}}  {{- /* end def upload volume mounts */ -}}
+{{- end -}}  {{- /* end def ssl volume mounts */ -}}
 
 {{- /*
 Dirs
