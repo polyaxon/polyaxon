@@ -1,29 +1,14 @@
-import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import * as Yup from 'yup';
 
 import * as groupsActions from '../../actions/groups';
 import * as projectsActions from '../../actions/projects';
 import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
 import { ProjectModel } from '../../models/project';
-import {
-  BaseEmptyState,
-  BaseState,
-  ConfigField,
-  ConfigSchema,
-  DescriptionField,
-  DescriptionSchema,
-  ErrorsField,
-  NameField,
-  NameSchema,
-  ProjectField,
-  ReadmeField,
-  ReadmeSchema,
-  sanitizeForm,
-  TagsField
-} from '../forms';
+import { BaseState, sanitizeForm } from '../forms';
+import LinkedTab from '../linkedTab';
+import GroupCreateFull from './creationModes/full';
+import GroupCreateTemplate from './creationModes/template';
 
 export interface Props {
   user: string;
@@ -39,15 +24,6 @@ export interface Props {
 export interface State extends BaseState {
   config: string;
 }
-
-const EmptyState = {...BaseEmptyState, config: ''};
-
-const ValidationSchema = Yup.object().shape({
-  config: ConfigSchema.required('Required'),
-  name: NameSchema,
-  description: DescriptionSchema,
-  readme: ReadmeSchema,
-});
 
 export default class GroupCreate extends React.Component<Props, {}> {
 
@@ -76,55 +52,67 @@ export default class GroupCreate extends React.Component<Props, {}> {
 
   public render() {
     let cancelUrl = '';
+    let baseUrl = '';
     if (this.props.projectName) {
-      cancelUrl = getProjectUrl(this.props.user, this.props.projectName);
+      const projectUrl = getProjectUrl(this.props.user, this.props.projectName);
+      cancelUrl = projectUrl;
+      baseUrl = projectUrl + '/groups/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
+      baseUrl = '/app/groups/new';
     }
     return (
-      <>
-        <div className="row form-header">
-          <div className="col-md-12">
-            <h3 className="form-title">Create Group</h3>
-          </div>
+      <div className="row form-full-page">
+        <div className="col-md-3">
+          <h3 className="form-title">New Group</h3>
+          <p>
+            You can create Experiment Groups to search a large space of hyperparams.
+            Polyaxon's built-in AutoML service allows you to speed up
+            to optimize your models and effectively use your cluster's resources.
+          </p>
+          <p>
+            Polyaxon provides different algorithms and distributions to create groups,
+            you can check our documentation to learn more.
+          </p>
+          <p>
+            <strong>Tip:</strong> You can use Polyaxon CLI to create & stop Groups as well.
+          </p>
+          <p>
+            <strong>Tip:</strong> If you only need to compare experiments,
+            you can go the project's experiments table and create a group selection.
+          </p>
         </div>
-        <div className="row form-content">
-          <div className="col-md-offset-1 col-md-10">
-            <Formik
-              initialValues={EmptyState}
-              validationSchema={ValidationSchema}
-              onSubmit={(fValues: State, fActions: FormikActions<State>) => {
-                this.createGroup(fValues);
-              }}
-              render={(props: FormikProps<State>) => (
-                <form onSubmit={props.handleSubmit}>
-                  {ErrorsField(this.props.errors)}
-                  {this.props.isProjectEntity && ProjectField(this.props.projects)}
-                  {ConfigField(props, this.props.errors, true)}
-                  {NameField(props, this.props.errors)}
-                  {DescriptionField(props, this.props.errors)}
-                  {ReadmeField}
-                  {TagsField(props, this.props.errors)}
-                  <div className="form-group form-actions">
-                    <div className="col-md-offset-2 col-md-10">
-                      <button
-                        type="submit"
-                        className="btn btn-success"
-                        disabled={this.props.isLoading}
-                      >
-                        Create group
-                      </button>
-                      <LinkContainer to={`${cancelUrl}#`}>
-                        <button className="btn btn-default pull-right">cancel</button>
-                      </LinkContainer>
-                    </div>
-                  </div>
-                </form>
-              )}
-            />
-          </div>
+        <div className="col-md-offset-1 col-md-8">
+          <LinkedTab
+            baseUrl={baseUrl}
+            tabs={[
+              {
+                title: 'Create with Polyaxonfile',
+                component: <GroupCreateFull
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: ''
+              }, {
+                title: 'Create from templates',
+                component: <GroupCreateTemplate
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: 'templates'
+              },
+            ]}
+          />
         </div>
-      </>
+      </div>
     );
   }
 }

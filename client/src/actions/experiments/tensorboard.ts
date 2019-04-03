@@ -123,6 +123,10 @@ export function startTensorboard(user: string,
 
     dispatch(startExperimentTensorboardRequestActionCreator(experimentName));
 
+    if (!tensorboard.config) {
+      delete tensorboard.config;
+    }
+
     return fetch(`${BASE_API_URL}${experimentUrl}/tensorboard/start`, {
       method: 'POST',
       body: JSON.stringify(tensorboard),

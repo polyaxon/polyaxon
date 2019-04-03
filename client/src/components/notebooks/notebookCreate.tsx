@@ -1,28 +1,13 @@
-import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import * as Yup from 'yup';
 
-import * as notebooksActions from '../../actions/projects';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
+import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import { NotebookModel } from '../../models/notebook';
 import { ProjectModel } from '../../models/project';
-import {
-  BaseEmptyState,
-  BaseState,
-  ConfigField,
-  ConfigSchema,
-  DescriptionField,
-  DescriptionSchema,
-  ErrorsField,
-  getConfig,
-  NameField,
-  NameSchema,
-  ProjectField,
-  sanitizeForm,
-  TagsField
-} from '../forms';
+import LinkedTab from '../linkedTab';
+import NotebookCreateFull from './creationModes/full';
+import NotebookCreateQuick from './creationModes/quick';
+import NotebookCreateTemplate from './creationModes/template';
 
 export interface Props {
   user: string;
@@ -31,21 +16,9 @@ export interface Props {
   isProjectEntity: boolean;
   projects: ProjectModel[];
   errors: any;
-  onCreate: (notebook: NotebookModel, user?: string, projectName?: string) => notebooksActions.ProjectAction;
+  onCreate: (notebook: NotebookModel, user?: string, projectName?: string) => projectsActions.ProjectAction;
   fetchProjects: (user: string) => projectsActions.ProjectAction;
 }
-
-export interface State extends BaseState {
-  config: string;
-}
-
-const EmptyState = {...BaseEmptyState, config: ''};
-
-const ValidationSchema = Yup.object().shape({
-  config: ConfigSchema.required('Required'),
-  name: NameSchema,
-  description: DescriptionSchema,
-});
 
 export default class NotebookCreate extends React.Component<Props, {}> {
 
@@ -55,72 +28,73 @@ export default class NotebookCreate extends React.Component<Props, {}> {
     }
   }
 
-  public createNotebook = (state: State) => {
-    const form = sanitizeForm({
-      tags: state.tags.map((v) => v.value),
-      description: state.description,
-      name: state.name,
-      config: getConfig(state.config)
-    }) as NotebookModel;
-
-    if (this.props.isProjectEntity) {
-      const values = splitUniqueName(state.project);
-      this.props.onCreate(form, values[0], values[1]);
-    } else {
-      this.props.onCreate(form);
-    }
-  };
-
   public render() {
     let cancelUrl = '';
+    let baseUrl = '';
     if (this.props.projectName) {
-      cancelUrl = getProjectUrl(this.props.user, this.props.projectName);
+      const projectUrl = getProjectUrl(this.props.user, this.props.projectName);
+      cancelUrl = projectUrl;
+      baseUrl = projectUrl + '/notebooks/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
+      baseUrl = '/app/notebooks/new';
     }
     return (
-      <>
-        <div className="row form-header">
-          <div className="col-md-12">
-            <h3 className="form-title">Create Notebook</h3>
-          </div>
+      <div className="row form-full-page">
+        <div className="col-md-3">
+          <h3 className="form-title">New Notebook</h3>
+          <p>
+            You can create Jupyter Notebooks or Jupyter Labs to explore data, try out new ideas and experiments.
+          </p>
+          <p>
+            Jupyter Notebooks/Labs are created on a project level, and will give you access to project's linked code.
+          </p>
+          <p>
+            <strong>Tip:</strong> You can use Polyaxon CLI to create & stop Notebooks as well.
+          </p>
         </div>
-        <div className="row form-content">
-          <div className="col-md-offset-1 col-md-10">
-            <Formik
-              initialValues={EmptyState}
-              validationSchema={ValidationSchema}
-              onSubmit={(fValues: State, fActions: FormikActions<State>) => {
-                this.createNotebook(fValues);
-              }}
-              render={(props: FormikProps<State>) => (
-                <form onSubmit={props.handleSubmit}>
-                  {ErrorsField(this.props.errors)}
-                  {this.props.isProjectEntity && ProjectField(this.props.projects)}
-                  {ConfigField(props, this.props.errors, true)}
-                  {NameField(props, this.props.errors)}
-                  {DescriptionField(props, this.props.errors)}
-                  {TagsField(props, this.props.errors)}
-                  <div className="form-group form-actions">
-                    <div className="col-md-offset-2 col-md-10">
-                      <button
-                        type="submit"
-                        className="btn btn-success"
-                        disabled={this.props.isLoading}
-                      >
-                        Create notebook
-                      </button>
-                      <LinkContainer to={`${cancelUrl}#`}>
-                        <button className="btn btn-default pull-right">cancel</button>
-                      </LinkContainer>
-                    </div>
-                  </div>
-                </form>
-              )}
-            />
-          </div>
+        <div className="col-md-offset-1 col-md-8">
+          <LinkedTab
+            baseUrl={baseUrl}
+            tabs={[
+              {
+                title: 'Quick Mode',
+                component: <NotebookCreateQuick
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: ''
+              }, {
+                title: 'Create with Polyaxonfile',
+                component: <NotebookCreateFull
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: 'config'
+              }, {
+                title: 'Create from templates',
+                component: <NotebookCreateTemplate
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: 'templates'
+              },
+            ]}
+          />
         </div>
-      </>
+      </div>
     );
   }
 }

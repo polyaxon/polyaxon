@@ -3,11 +3,53 @@ import * as jsYaml from 'js-yaml';
 import * as React from 'react';
 import * as Yup from 'yup';
 
+import { BuildFieldSchema, GroupFieldSchema, RunFieldSchema } from '../forms';
 import Polyaxonfile from '../polyaxonfile/polyaxonfile';
 import { getRequiredClass } from './utils';
 import { checkServerError, checkValidationError } from './validation';
 
 export const ConfigSchema = Yup.string();
+
+export const getConfigFromImage = (dockerImage: string, kind: string): { [key: string]: any } => {
+  return {
+    version: 1,
+    kind,
+    build: {image: dockerImage}
+  };
+};
+
+export const getConfigFromBuild = (build: BuildFieldSchema, kind: string): { [key: string]: any } => {
+  return kind === 'build'
+    ? {
+      version: 1,
+      kind,
+      ...build
+    } :
+    {
+      version: 1,
+      kind,
+      build
+    };
+};
+
+export const getConfigFromRun = (run: RunFieldSchema, kind: string): { [key: string]: any } => {
+  return {
+    version: 1,
+    kind,
+    build: {image: run.image, build_steps: run.build_steps},
+    run: {cmd: run.command}
+  };
+};
+
+export const getConfigFromGroup = (group: GroupFieldSchema, kind: string): { [key: string]: any } => {
+  return {
+    version: 1,
+    kind,
+    hptuning: group.hptuning,
+    build: {image: group.image, build_steps: group.build_steps},
+    run: {cmd: group.command}
+  };
+};
 
 export const getConfig = (config: string): { [key: string]: any } => {
   return jsYaml.safeLoad(config);

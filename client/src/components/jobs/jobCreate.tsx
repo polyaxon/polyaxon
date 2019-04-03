@@ -1,30 +1,14 @@
-import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import * as Yup from 'yup';
 
 import * as jobsActions from '../../actions/jobs';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
+import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import { JobModel } from '../../models/job';
 import { ProjectModel } from '../../models/project';
-import {
-  BaseEmptyState,
-  BaseState,
-  ConfigField,
-  ConfigSchema,
-  DescriptionField,
-  DescriptionSchema,
-  ErrorsField,
-  getConfig,
-  NameField,
-  NameSchema,
-  ProjectField,
-  ReadmeField,
-  ReadmeSchema,
-  sanitizeForm,
-  TagsField
-} from '../forms';
+import LinkedTab from '../linkedTab';
+import JobCreateFull from './creationModes/full';
+import JobCreateQuick from './creationModes/quick';
+import JobCreateTemplate from './creationModes/template';
 
 export interface Props {
   user: string;
@@ -37,19 +21,6 @@ export interface Props {
   fetchProjects: (user: string) => projectsActions.ProjectAction;
 }
 
-export interface State extends BaseState {
-  config: string;
-}
-
-const EmptyState = {...BaseEmptyState, config: ''};
-
-const ValidationSchema = Yup.object().shape({
-  config: ConfigSchema.required('Required'),
-  name: NameSchema,
-  description: DescriptionSchema,
-  readme: ReadmeSchema,
-});
-
 export default class JobCreate extends React.Component<Props, {}> {
 
   public componentDidMount() {
@@ -58,74 +29,74 @@ export default class JobCreate extends React.Component<Props, {}> {
     }
   }
 
-  public createJob = (state: State) => {
-    const form = sanitizeForm({
-      tags: state.tags.map((v) => v.value),
-      readme: state.readme,
-      description: state.description,
-      name: state.name,
-      config: getConfig(state.config)
-    }) as JobModel;
-
-    if (this.props.isProjectEntity) {
-      const values = splitUniqueName(state.project);
-      this.props.onCreate(form, values[0], values[1]);
-    } else {
-      this.props.onCreate(form);
-    }
-  };
-
   public render() {
     let cancelUrl = '';
+    let baseUrl = '';
     if (this.props.projectName) {
-      cancelUrl = getProjectUrl(this.props.user, this.props.projectName);
+      const projectUrl = getProjectUrl(this.props.user, this.props.projectName);
+      cancelUrl = projectUrl;
+      baseUrl = projectUrl + '/jobs/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
+      baseUrl = '/app/jobs/new';
     }
     return (
-      <>
-        <div className="row form-header">
-          <div className="col-md-12">
-            <h3 className="form-title">Create Job</h3>
-          </div>
+      <div className="row form-full-page">
+        <div className="col-md-3">
+          <h3 className="form-title">New Job</h3>
+          <p>
+            You can create Jobs to download/move/process/prepare a dataset or any generic operation operations.
+          </p>
+          <p>
+            In future Polyaxon versions, several re-usable operations/actions/events/integrations
+            will be provided to interact or watch external environments.
+          </p>
+          <p>
+            <strong>Tip:</strong> You can use Polyaxon CLI to create & stop Jobs as well.
+          </p>
         </div>
-        <div className="row form-content">
-          <div className="col-md-offset-1 col-md-10">
-            <Formik
-              initialValues={EmptyState}
-              validationSchema={ValidationSchema}
-              onSubmit={(fValues: State, fActions: FormikActions<State>) => {
-                this.createJob(fValues);
-              }}
-              render={(props: FormikProps<State>) => (
-                <form onSubmit={props.handleSubmit}>
-                  {ErrorsField(this.props.errors)}
-                  {this.props.isProjectEntity && ProjectField(this.props.projects)}
-                  {ConfigField(props, this.props.errors, true)}
-                  {NameField(props, this.props.errors)}
-                  {DescriptionField(props, this.props.errors)}
-                  {ReadmeField}
-                  {TagsField(props, this.props.errors)}
-                  <div className="form-group form-actions">
-                    <div className="col-md-offset-2 col-md-10">
-                      <button
-                        type="submit"
-                        className="btn btn-success"
-                        disabled={this.props.isLoading}
-                      >
-                        Create job
-                      </button>
-                      <LinkContainer to={`${cancelUrl}#`}>
-                        <button className="btn btn-default pull-right">cancel</button>
-                      </LinkContainer>
-                    </div>
-                  </div>
-                </form>
-              )}
-            />
-          </div>
+        <div className="col-md-offset-1 col-md-8">
+          <LinkedTab
+            baseUrl={baseUrl}
+            tabs={[
+              {
+                title: 'Quick Mode',
+                component: <JobCreateQuick
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: ''
+              }, {
+                title: 'Create with Polyaxonfile',
+                component: <JobCreateFull
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: 'config'
+              }, {
+                title: 'Create from templates',
+                component: <JobCreateTemplate
+                  cancelUrl={cancelUrl}
+                  isLoading={this.props.isLoading}
+                  isProjectEntity={this.props.isProjectEntity}
+                  projects={this.props.projects}
+                  errors={this.props.errors}
+                  onCreate={this.props.onCreate}
+                />,
+                relUrl: 'templates'
+              },
+            ]}
+          />
         </div>
-      </>
+      </div>
     );
   }
 }
