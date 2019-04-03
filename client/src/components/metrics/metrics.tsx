@@ -457,8 +457,8 @@ export default class Metrics extends React.Component<Props, State> {
         <Modal.Body>
           <form className="form-horizontal" onSubmit={this.addChart}>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Name</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Name</label>
+              <div className="col-md-10">
                 <input
                   type="text"
                   className="form-control"
@@ -467,8 +467,8 @@ export default class Metrics extends React.Component<Props, State> {
               </div>
             </div>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Chart Type</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Chart Type</label>
+              <div className="col-md-10">
                 <select
                   onChange={(event) => this.updateChartForm('type', event.target.value)}
                   className="form-control"
@@ -502,8 +502,8 @@ export default class Metrics extends React.Component<Props, State> {
             {this.state.paramNames.length > 0 &&
             (this.state.chartForm.chart.type === 'histogram' || this.state.chartForm.chart.type === 'scatter') &&
             <div className="form-group">
-              <label className="col-sm-2 control-label">Param</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Param</label>
+              <div className="col-md-10">
                 <select
                   onChange={(event) => this.updateChartForm('param', event.target.value)}
                   className="form-control"
@@ -517,8 +517,8 @@ export default class Metrics extends React.Component<Props, State> {
               (this.props.resource === 'groups' &&
                 (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar'))) &&
             <div className="form-group">
-              <label className="col-sm-2 control-label">Metric</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Metric</label>
+              <div className="col-md-10">
                 <select
                   onChange={(event) => this.updateChartForm('metric', event.target.value)}
                   className="form-control"
@@ -531,7 +531,7 @@ export default class Metrics extends React.Component<Props, State> {
             {this.props.resource === 'groups' &&
             (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar') &&
             <div className="form-group">
-              <div className="col-sm-10 col-sm-offset-2">
+              <div className="col-md-10 col-md-offset-2">
                 {this.state.chartForm.chart.experiments.map(
                   (value: string, idx: number) =>
                     <AutocompleteLabel
@@ -553,7 +553,7 @@ export default class Metrics extends React.Component<Props, State> {
               !(this.props.resource === 'groups' &&
                 (this.state.chartForm.chart.type === 'line' || this.state.chartForm.chart.type === 'bar'))) &&
             <div className="form-group">
-              <div className="col-sm-10 col-sm-offset-2">
+              <div className="col-md-10 col-md-offset-2">
                 {this.state.chartForm.chart.metricNames.map(
                   (value: string, idx: number) =>
                     <AutocompleteLabel
@@ -572,7 +572,7 @@ export default class Metrics extends React.Component<Props, State> {
             </div>
             }
             <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
+              <div className="col-md-offset-2 col-md-10">
                 <button type="submit" className="btn btn-default" onClick={this.addChart}>
                   {this.state.chartForm.index > -1 ? 'Update' : 'Add'}
                 </button>

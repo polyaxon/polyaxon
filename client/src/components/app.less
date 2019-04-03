@@ -32,7 +32,6 @@ h4.polyaxon-header {
   margin-left: 10px;
 }
 
-
 input, textarea {
   padding: 9px;
   border: solid 1px #E5E5E5;
@@ -235,21 +234,34 @@ a {
   font-size: 12px;
 }
 
-.form-header {
- padding-top: 10px;
- border-bottom: 1px solid #e5e5e5;
+.form-full-page {
+  padding-top: 10px;
   .form-title {
-      margin: 16px 0;
-      font-weight: 600;
-      color: #2e2e2e;
+    margin-bottom: 25px;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    font-weight: 600;
+    color: #2e2e2e;
   }
 }
+
 .form-content {
   margin-top: 20px;
+
+  label.required:after {
+    color: #cb2431;
+    content: "*";
+    padding-left: 5px;
+  }
 }
+
 .form-actions {
-    margin-top: 0;
+  margin-top: 0;
+  padding: 16px;
+  background-color: #fafafa;
+  border-top: 1px solid #e5e5e5;
+
+  &.form-actions-inline {
     padding: 16px 0;
-    background-color: #fafafa;
-    border-top: 1px solid #e5e5e5;
+  }
 }

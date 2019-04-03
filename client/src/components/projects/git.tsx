@@ -2,7 +2,7 @@ import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { ErrorsField } from '../forms/errorsField';
+import { ErrorsField } from '../forms';
 import { UrlField, UrlSchema } from './forms/urlField';
 import { VisibilityField } from './forms/visibilityField';
 
@@ -47,7 +47,9 @@ export default class GitUrl extends React.Component<Props, {}> {
             }}
             render={(props: FormikProps<State>) => (
               <form className="form-inline" onSubmit={props.handleSubmit}>
-                {ErrorsField(this.props.errors, 'col-sm-12')}
+                <div className="col-md-12">
+                {ErrorsField(this.props.errors)}
+                </div>
                 {UrlField(props, this.props.errors)}
                 {VisibilityField}
                 <button

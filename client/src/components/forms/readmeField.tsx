@@ -19,9 +19,7 @@ export const ReadmeComponent: React.FunctionComponent<FieldProps> = (
 
 export const ReadmeField = (
   <div className="form-group">
-    <label className="col-sm-2 control-label">Readme</label>
-    <div className="col-sm-10">
-      <Field name="readme" component={ReadmeComponent}/>
-    </div>
+    <label className="control-label">Readme</label>
+    <Field name="readme" component={ReadmeComponent}/>
   </div>
 );

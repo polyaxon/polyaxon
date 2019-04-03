@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
-import { checkServerError, checkValidationError } from '../../forms/validation';
+import { checkServerError, checkValidationError } from '../../forms';
 
 export const UrlSchema = Yup.string().url();
 
@@ -13,7 +13,7 @@ export const UrlField = (props: FormikProps<{}>, errors: any) => {
 
   return (
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
-    <div className="col-sm-10">
+    <div className="col-md-10">
       <Field
         type="url"
         name="url"

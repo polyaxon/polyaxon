@@ -57,11 +57,11 @@ export default class FilterCreate extends React.Component<Props, {}> {
         render={(props: FormikProps<State>) => (
           <form className="form-horizontal" onSubmit={props.handleSubmit}>
             {ErrorsField(this.props.errors)}
-            {NameField(props, this.props.errors, '10')}
+            {NameField(props, this.props.errors, false,  '10')}
             {QueryField(props, this.props.errors)}
             {SortField(props, this.props.errors)}
-            <div className="form-group form-actions">
-              <div className="col-sm-offset-2 col-sm-10">
+            <div className="form-group">
+              <div className="col-md-offset-2 col-md-10">
                 <button
                   type="submit"
                   className="btn btn-success"

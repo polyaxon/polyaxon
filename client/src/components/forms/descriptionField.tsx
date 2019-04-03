@@ -13,19 +13,17 @@ export const DescriptionField = (props: FormikProps<{}>, errors: any) => {
 
   return (
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
-      <label className="col-sm-2 control-label">Description</label>
-      <div className="col-sm-10">
-        <Field
-          type="text"
-          name="description"
-          placeholder="Description"
-          className="form-control input-sm"
-        />
-        {hasServerError && <div className="help-block">{errors.description}</div>}
-        <ErrorMessage name="description">
-          {(errorMessage) => <div className="help-block">{errorMessage}</div>}
-        </ErrorMessage>
-      </div>
+      <label className="control-label">Description</label>
+      <Field
+        type="text"
+        name="description"
+        placeholder="Description"
+        className="form-control input-sm"
+      />
+      {hasServerError && <div className="help-block">{errors.description}</div>}
+      <ErrorMessage name="description">
+        {(errorMessage) => <div className="help-block">{errorMessage}</div>}
+      </ErrorMessage>
     </div>
   );
 };

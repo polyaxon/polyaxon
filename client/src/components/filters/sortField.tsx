@@ -14,8 +14,8 @@ export const SortField = (props: FormikProps<{}>, errors: any) => {
 
   return (
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
-      <label className="col-sm-2 control-label">Sort</label>
-      <div className="col-sm-10">
+      <label className="col-md-2 control-label">Sort</label>
+      <div className="col-md-10">
         <Field
           type="text"
           name="sort"

@@ -8,15 +8,23 @@ import * as projectsActions from '../../actions/projects';
 import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import { ProjectModel } from '../../models/project';
-import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
-import { ConfigField, ConfigSchema, getConfig } from '../forms/configField';
-import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
-import { ErrorsField } from '../forms/errorsField';
-import { NameField, NameSchema } from '../forms/nameField';
-import { ProjectField } from '../forms/projectField';
-import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
-import { TagsField } from '../forms/tagsField';
-import { sanitizeForm } from '../forms/utils';
+import {
+  BaseEmptyState,
+  BaseState,
+  ConfigField,
+  ConfigSchema,
+  DescriptionField,
+  DescriptionSchema,
+  ErrorsField,
+  getConfig,
+  NameField,
+  NameSchema,
+  ProjectField,
+  ReadmeField,
+  ReadmeSchema,
+  sanitizeForm,
+  TagsField
+} from '../forms';
 
 export interface Props {
   user: string;
@@ -82,7 +90,7 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
           </div>
         </div>
         <div className="row form-content">
-          <div className="col-sm-offset-1 col-md-10">
+          <div className="col-md-offset-1 col-md-10">
             <Formik
               initialValues={EmptyState}
               validationSchema={ValidationSchema}
@@ -90,16 +98,16 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
                 this.createExperiment(fValues);
               }}
               render={(props: FormikProps<State>) => (
-                <form className="form-horizontal" onSubmit={props.handleSubmit}>
+                <form onSubmit={props.handleSubmit}>
                   {ErrorsField(this.props.errors)}
                   {this.props.isProjectEntity && ProjectField(this.props.projects)}
-                  {ConfigField(props, this.props.errors)}
+                  {ConfigField(props, this.props.errors, true)}
                   {NameField(props, this.props.errors)}
                   {DescriptionField(props, this.props.errors)}
                   {ReadmeField}
                   {TagsField(props, this.props.errors)}
                   <div className="form-group form-actions">
-                    <div className="col-sm-offset-2 col-sm-10">
+                    <div className="col-md-offset-2 col-md-10">
                       <button
                         type="submit"
                         className="btn btn-success"

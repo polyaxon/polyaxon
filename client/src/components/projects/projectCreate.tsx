@@ -6,14 +6,20 @@ import * as Yup from 'yup';
 import * as actions from '../../actions/projects';
 import { getUserUrl } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
-import { BaseEmptyState, BaseState } from '../forms/baseCeationState';
-import { DescriptionField, DescriptionSchema } from '../forms/descriptionField';
-import { ErrorsField } from '../forms/errorsField';
-import { NameField, NameSchema } from '../forms/nameField';
-import { ReadmeField, ReadmeSchema } from '../forms/readmeField';
-import { TagsField } from '../forms/tagsField';
-import { sanitizeForm } from '../forms/utils';
-import { VisibilityField } from '../forms/visibilityField';
+import {
+  BaseEmptyState,
+  BaseState,
+  DescriptionField,
+  DescriptionSchema,
+  ErrorsField,
+  NameField,
+  NameSchema,
+  ReadmeField,
+  ReadmeSchema,
+  sanitizeForm,
+  TagsField,
+  VisibilityField
+} from '../forms';
 
 export interface Props {
   user: string;
@@ -56,23 +62,23 @@ export default class ProjectCreate extends React.Component<Props, {}> {
           </div>
         </div>
         <div className="row form-content">
-          <div className="col-sm-offset-1 col-md-10">
+          <div className="col-md-offset-1 col-md-10">
             <Formik
               initialValues={EmptyState}
               validationSchema={ValidationSchema}
-              onSubmit={(fValues:  State, fActions: FormikActions<State>) => {
+              onSubmit={(fValues: State, fActions: FormikActions<State>) => {
                 this.createProject(fValues);
               }}
               render={(props: FormikProps<State>) => (
-                <form className="form-horizontal" onSubmit={props.handleSubmit}>
+                <form onSubmit={props.handleSubmit}>
                   {ErrorsField(this.props.errors)}
-                  {NameField(props, this.props.errors)}
+                  {NameField(props, this.props.errors, true)}
                   {DescriptionField(props, this.props.errors)}
                   {VisibilityField}
                   {ReadmeField}
                   {TagsField(props, this.props.errors)}
                   <div className="form-group form-actions">
-                    <div className="col-sm-offset-2 col-sm-10">
+                    <div className="col-md-offset-2 col-md-10">
                       <button
                         type="submit"
                         className="btn btn-success"

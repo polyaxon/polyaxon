@@ -453,29 +453,29 @@ export default class Experiments extends React.Component<Props, State> {
                   (!this.props.showDeleted && isLive(xp)) || (this.props.showDeleted && !isLive(xp)))
               .map(
                 (xp: ExperimentModel) =>
-                <Experiment
-                  key={xp.unique_name}
-                  experiment={xp}
-                  declarations={this.state.declarations}
-                  metrics={this.state.metrics}
-                  onDelete={() => this.props.onDelete(xp.unique_name)}
-                  onStop={() => this.props.onStop(xp.unique_name)}
-                  onRestart={() => this.props.onRestart(xp.unique_name)}
-                  onArchive={() => this.props.onArchive(xp.unique_name)}
-                  onRestore={() => this.props.onRestore((xp.unique_name))}
-                  showBookmarks={this.props.showBookmarks}
-                  useCheckbox={this.props.useCheckbox}
-                  bookmark={() => this.props.bookmark(xp.unique_name)}
-                  unbookmark={() => this.props.unbookmark(xp.unique_name)}
-                  selectHandler={() => this.selectHandler(xp.id)}
-                  selected={this.state.items.indexOf(xp.id) > -1}
-                  reducedForm={(this.state.metrics.length + this.state.declarations.length) > 4}
-                  removeFromSelection={
-                    this.props.groupId && this.props.isSelection
-                      ? () => this.removeFromSelection([xp.id])
-                      : undefined
-                  }
-                />)}
+                  <Experiment
+                    key={xp.unique_name}
+                    experiment={xp}
+                    declarations={this.state.declarations}
+                    metrics={this.state.metrics}
+                    onDelete={() => this.props.onDelete(xp.unique_name)}
+                    onStop={() => this.props.onStop(xp.unique_name)}
+                    onRestart={() => this.props.onRestart(xp.unique_name)}
+                    onArchive={() => this.props.onArchive(xp.unique_name)}
+                    onRestore={() => this.props.onRestore((xp.unique_name))}
+                    showBookmarks={this.props.showBookmarks}
+                    useCheckbox={this.props.useCheckbox}
+                    bookmark={() => this.props.bookmark(xp.unique_name)}
+                    unbookmark={() => this.props.unbookmark(xp.unique_name)}
+                    selectHandler={() => this.selectHandler(xp.id)}
+                    selected={this.state.items.indexOf(xp.id) > -1}
+                    reducedForm={(this.state.metrics.length + this.state.declarations.length) > 4}
+                    removeFromSelection={
+                      this.props.groupId && this.props.isSelection
+                        ? () => this.removeFromSelection([xp.id])
+                        : undefined
+                    }
+                  />)}
             </tbody>
           </table>
           {createSelectionModal}
@@ -492,8 +492,8 @@ export default class Experiments extends React.Component<Props, State> {
         <Modal.Body>
           <form className="form-horizontal" onSubmit={this.addToSelection}>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Selection (group_id)</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Selection (group_id)</label>
+              <div className="col-md-10">
                 <input
                   type="text"
                   className="form-control"
@@ -502,7 +502,7 @@ export default class Experiments extends React.Component<Props, State> {
               </div>
             </div>
             <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
+              <div className="col-md-offset-2 col-md-10">
                 <button type="submit" className="btn btn-default" onClick={this.addToSelection}>Save</button>
               </div>
             </div>
@@ -519,8 +519,8 @@ export default class Experiments extends React.Component<Props, State> {
         <Modal.Body>
           <form className="form-horizontal" onSubmit={this.createSelection}>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Name</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Name</label>
+              <div className="col-md-10">
                 <input
                   type="text"
                   className="form-control"
@@ -530,8 +530,8 @@ export default class Experiments extends React.Component<Props, State> {
               </div>
             </div>
             <div className="form-group">
-              <label className="col-sm-2 control-label">Description</label>
-              <div className="col-sm-10">
+              <label className="col-md-2 control-label">Description</label>
+              <div className="col-md-10">
                 <input
                   type="text"
                   className="form-control"
@@ -540,7 +540,7 @@ export default class Experiments extends React.Component<Props, State> {
               </div>
             </div>
             <div className="form-group">
-              <div className="col-sm-offset-2 col-sm-10">
+              <div className="col-md-offset-2 col-md-10">
                 <button type="submit" className="btn btn-default" onClick={this.createSelection}>Save</button>
               </div>
             </div>
@@ -556,7 +556,7 @@ export default class Experiments extends React.Component<Props, State> {
         'experiment',
         'experiment');
     } else if (this.props.endpointList === ARCHIVES) {
-       empty = EmptyArchives(
+      empty = EmptyArchives(
         this.props.isCurrentUser,
         'experiment',
         'experiment');

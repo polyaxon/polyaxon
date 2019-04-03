@@ -22,11 +22,9 @@ export const TagsField = (props: FormikProps<{}>, errors: any) => {
 
   return (
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
-      <label className="col-sm-2 control-label">Tags</label>
-      <div className="col-sm-10">
-        <Field name="tags" component={TagsComponent}/>
-        {hasServerError && <div className="help-block">{errors.name}</div>}
-      </div>
+      <label className=" control-label">Tags</label>
+      <Field name="tags" component={TagsComponent}/>
+      {hasServerError && <div className="help-block">{errors.name}</div>}
     </div>
   );
 };

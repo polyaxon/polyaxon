@@ -1,8 +1,7 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
-import { ErrorsField } from '../forms/errorsField';
-import { NameField, NameSchema } from '../forms/nameField';
+import { ErrorsField, NameField, NameSchema } from '../forms';
 
 export interface Props {
   onCreate: (form: { name: string }) => void;
@@ -47,9 +46,9 @@ export default class ViewsCreate extends React.Component<Props, {}> {
         render={(props: FormikProps<State>) => (
           <form className="form-horizontal" onSubmit={props.handleSubmit}>
             {ErrorsField(this.props.errors)}
-            {NameField(props, this.props.errors, '10')}
-            <div className="form-group form-actions">
-              <div className="col-sm-offset-2 col-sm-10">
+            {NameField(props, this.props.errors, false, '10')}
+            <div className="form-group">
+              <div className="col-md-offset-2 col-md-10">
                 <button
                   type="submit"
                   className="btn btn-success"
