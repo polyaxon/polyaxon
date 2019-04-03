@@ -39,7 +39,7 @@ def login(token, username, password):
             access_code = auth_client.login(credentials=credentials)
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not login.')
-            Printer.print_error(e)
+            Printer.print_error('Error Message `{}`.'.format(e))
             sys.exit(1)
 
         if not access_code:
