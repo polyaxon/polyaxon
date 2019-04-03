@@ -36,6 +36,24 @@ class TestBuildConfigs(TestCase):
             BuildConfig.from_dict(config_dict)
 
         config_dict = {
+            'image': 'some_image_name / foo',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
+        config_dict = {
+            'image': 'some_image_name /foo:sdf',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
+        config_dict = {
+            'image': 'some_image_name /foo :sdf',
+        }
+        with self.assertRaises(ValidationError):
+            BuildConfig.from_dict(config_dict)
+
+        config_dict = {
             'image': 'registry.foobar.com:foo:foo/my/docker/some_image_name:foo',
         }
         with self.assertRaises(ValidationError):

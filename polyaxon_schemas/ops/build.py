@@ -12,6 +12,8 @@ from polyaxon_schemas.utils import BuildBackend
 def validate_image(image):
     if not image:
         return image
+    if ' ' in image:
+        raise ValidationError('Invalid docker image `{}`'.format(image))
     tagged_image = image.split(':')
     if len(tagged_image) > 3:
         raise ValidationError('Invalid docker image `{}`'.format(image))
