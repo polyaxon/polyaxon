@@ -16,15 +16,15 @@ export const TagsComponent: React.FunctionComponent<FieldProps> = (
 );
 
 export const TagsField = (props: FormikProps<{}>, errors: any) => {
-  const hasServerError = checkServerError(errors, 'name');
-  const hasValidationError = checkValidationError(props, 'name');
+  const hasServerError = checkServerError(errors, 'tags');
+  const hasValidationError = checkValidationError(props, 'tags');
   const hasError = hasServerError || hasValidationError;
 
   return (
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
       <label className=" control-label">Tags</label>
       <Field name="tags" component={TagsComponent}/>
-      {hasServerError && <div className="help-block">{errors.name}</div>}
+      {hasServerError && <div className="help-block">{errors.tags}</div>}
     </div>
   );
 };
