@@ -1,6 +1,6 @@
 {
   "name": "polyaxon-deploy",
-  "version": "0.4.3rc0",
+  "version": "0.4.3rc1",
   "description": "Polyaxon deploy",
   "private": true,
   "scripts": {
@@ -27,7 +27,8 @@
     "uglify-js": "3.4.2",
     "url-loader": "0.5.9",
     "webpack": "3.12.0",
-    "webpack-dev-server": "2.11.2"
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.0.0",
   },
   "dependencies": {
     "@types/history": "4.6.2",
