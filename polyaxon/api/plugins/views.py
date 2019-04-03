@@ -90,7 +90,9 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
         return {'config': specification}
 
     def _create_tensorboard(self, project, experiment_group=None, experiment=None):
-        config = self.request.data or self._get_default_tensorboard_config()
+        config = self.request.data
+        if not config.get('config'):
+            config.update(self._get_default_tensorboard_config())
         serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save(user=self.request.user,
@@ -251,7 +253,9 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
         return {'config': specification}
 
     def _create_notebook(self, project):
-        config = self.request.data or self._get_default_notebook_config()
+        config = self.request.data
+        if not config.get('config'):
+            config.update(self._get_default_notebook_config())
         serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)
         instance = serializer.save(user=self.request.user, project=project)
