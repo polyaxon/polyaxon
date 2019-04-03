@@ -6,7 +6,7 @@ ingress:
 
 serviceType: ClusterIP
 
-environment: staging
+environment: testing
 
 user:
   password: root

@@ -6,7 +6,7 @@ ingress:
 
 serviceType: NodePort
 
-environment: staging
+environment: testing
 
 user:
   password: root
