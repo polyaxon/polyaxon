@@ -3,7 +3,10 @@ version: 1
 
 kind: notebook
 
+
+backend: lab
+
 build:
-  image: tensorflow/tensorflow:1.4.1-py3
+  image: python:3
   build_steps:
-    - pip3 install jupyter
+    - pip3 install jupyterlab==0.33.12
