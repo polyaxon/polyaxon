@@ -1,5 +1,5 @@
 ---
-title: "Data on NFS Provisioner"
+title: "Outputs on NFS Provisioner"
 meta_title: "NFS Provisioner"
 meta_description: "Using outputs on an NFS server provisioner in your Polyaxon experiments and jobs. This integration simplifies the creation of ReadWriteMany and ReadOnlyMany volumes."
 custom_excerpt: "Polyaxon in-cluster NFS provisioner to simplify the creation of ReadWriteMany and ReadOnlyMany volumes."
