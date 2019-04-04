@@ -9,8 +9,14 @@ Polyaxon chart is a Helm chart for creating reproducible and maintainable deploy
 
 ## TL;DR;
 
-```console
+```bash
 $ helm install polyaxon --name polyaxon --namespace polyaxon
+```
+
+Or if you are using Polyaxon-CLI
+
+```bash
+$ polyaxon deploy
 ```
 
 ## Introduction
@@ -50,7 +56,7 @@ without the need to create your own volumes. Please see [polyaxon-nfs-provisione
 
 ## Add polyaxon charts
 
-```console
+```bash
 $ helm repo add polyaxon https://charts.polyaxon.com
 $ helm repo update
 ```
@@ -59,13 +65,13 @@ $ helm repo update
 
 To install the chart with the release name `<RELEASE_NAME>`:
 
-```console
+```bash
 $ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> --wait polyaxon/polyaxon
 ```
 
 If you encounter an error, please use the `--wait` flag
 
-```console
+```bash
 $ helm install --name=<RELEASE_NAME> --wait polyaxon/polyaxon
 ```
 
@@ -80,13 +86,13 @@ The [configuration](#configuration) section lists the parameters that can be con
 
 To uninstall/delete the `<RELEASE_NAME>` deployment:
 
-```console
+```bash
 $ helm delete <RELEASE_NAME>
 ```
 
 or with `--purge` flag
 
-```console
+```bash
 $ helm delete <RELEASE_NAME> --purge
 ```
 
@@ -96,14 +102,14 @@ The command removes all the Kubernetes components associated with the chart and 
 Jobs are only deleted if they succeeded,
 sometime if you cancel a deployment you might end up with undeleted jobs.
 
-```console
+```bash
 $ kubectl delete job ...
 ```
 
 > **Note**:
 You can delete the chart and skip the cleaning the hooks
 
-```console
+```bash
 helm del --purge  <RELEASE_NAME>  --no-hooks
 ```
 
@@ -429,7 +435,7 @@ Dependent charts can also have values overwritten. Preface values with
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
-```console
+```bash
 $ helm install --name=<RELEASE_NAME> \
     --namespace=<NAMESPACE>\
     --set persistence.enabled=false,email.host=email \
@@ -438,7 +444,7 @@ $ helm install --name=<RELEASE_NAME> \
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
 
-```console
+```bash
 $ helm install --name my-release -f values.yaml polyaxon
 ```
 
