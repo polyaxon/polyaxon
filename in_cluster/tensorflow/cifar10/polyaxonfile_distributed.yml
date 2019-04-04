@@ -33,7 +33,7 @@ environment:
 build:
   image: tensorflow/tensorflow:1.4.1-gpu
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-client==0.4.2
+    - pip install --no-cache-dir -U polyaxon-client==0.4.3
 
 run:
   cmd:  python -u run.py --train-steps=400 --sync

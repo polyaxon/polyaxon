@@ -28,7 +28,7 @@ build:
   image: pytorch/pytorch:1.0-cuda10.0-cudnn7-runtime
   build_steps:
     - pip install tensorboardX==1.6.0
-    - pip install polyaxon-client==0.4.2
+    - pip install polyaxon-client==0.4.3
 
 run:
   cmd: python -u mnist.py
