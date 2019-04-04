@@ -189,8 +189,7 @@ $ polyaxon dashboard
 
 # Project status
 
-Polyaxon is in "beta" state. All interfaces, programming interfaces, and data structures may be changed.
-We'll do our best to communicate potentially disruptive changes.
+Polyaxon is stable and it's running in production mode at many startups and Fortune 500 companies. 
 
 # Contributions
 
