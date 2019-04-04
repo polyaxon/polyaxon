@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-schemas',
-      version='0.4.3rc1',
+      version='0.4.3',
       description='Schema definitions and validation for Polyaxon.',
       long_description=read_readme(),
       maintainer='Mourad Mourafiq',
