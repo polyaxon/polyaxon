@@ -47,7 +47,7 @@ export default class NotebookCreate extends React.Component<Props, {}> {
             You can create Jupyter Notebooks or Jupyter Labs to explore data, try out new ideas and experiments.
           </p>
           <p>
-            Jupyter Notebooks/Labs are created on a project level, and will give you access to project's linked code.
+            Jupyter Notebooks/Labs are created on a project level, and will give you access to your project code.
           </p>
           <p>
             <strong>Tip:</strong> You can use Polyaxon CLI to create & stop Notebooks as well.

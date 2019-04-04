@@ -45,7 +45,7 @@ export default class JobCreate extends React.Component<Props, {}> {
         <div className="col-md-3">
           <h3 className="form-title">New Job</h3>
           <p>
-            You can create Jobs to download/move/process/prepare a dataset or any generic operation operations.
+            You can create Jobs to download/move/process/prepare a dataset or any generic operations.
           </p>
           <p>
             In future Polyaxon versions, several re-usable operations/actions/events/integrations

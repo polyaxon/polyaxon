@@ -67,8 +67,8 @@ export default class GroupCreate extends React.Component<Props, {}> {
           <h3 className="form-title">New Group</h3>
           <p>
             You can create Experiment Groups to search a large space of hyperparams.
-            Polyaxon's built-in AutoML service allows you to speed up
-            to optimize your models and effectively use your cluster's resources.
+            Polyaxon's built-in AutoML service allows to optimize your models and effectively
+            use your cluster's resources.
           </p>
           <p>
             Polyaxon provides different algorithms and distributions to create groups,

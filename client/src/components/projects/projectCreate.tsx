@@ -11,7 +11,7 @@ import {
   BaseState,
   DescriptionField,
   DescriptionSchema,
-  ErrorsField,
+  ErrorsField, FormButtons,
   NameField,
   NameSchema,
   ReadmeField,
@@ -58,7 +58,7 @@ export default class ProjectCreate extends React.Component<Props, {}> {
       <>
         <div className="row form-header">
           <div className="col-md-12">
-            <h3 className="form-title">Create Project</h3>
+            <h3 className="form-title">New Project</h3>
           </div>
         </div>
         <div className="row form-content">
@@ -77,20 +77,7 @@ export default class ProjectCreate extends React.Component<Props, {}> {
                   {VisibilityField}
                   {ReadmeField}
                   {TagsField(props, this.props.errors)}
-                  <div className="form-group form-actions">
-                    <div className="col-md-offset-2 col-md-10">
-                      <button
-                        type="submit"
-                        className="btn btn-success"
-                        disabled={this.props.isLoading}
-                      >
-                        Create project
-                      </button>
-                      <LinkContainer to={getUserUrl(this.props.user)}>
-                        <button className="btn btn-default pull-right">cancel</button>
-                      </LinkContainer>
-                    </div>
-                  </div>
+                  {FormButtons(getUserUrl(this.props.user), this.props.isLoading, 'Create project')}
                 </form>
               )}
             />

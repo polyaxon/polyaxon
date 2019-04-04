@@ -70,7 +70,7 @@ export default class TensorboardCreate extends React.Component<Props, {}> {
             <ul>
               <li>To visualize all metrics of all experiments under a project.</li>
               <li>To visualize all metrics of all experiments under a group or selection.</li>
-              <li>To visualize all metrics of particular experiment.</li>
+              <li>To visualize all metrics of a particular experiment.</li>
             </ul>
           </div>
           <p>
