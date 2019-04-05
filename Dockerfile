@@ -1,6 +1,10 @@
 FROM polyaxon/polyaxon-npm-base
 
+# This dockerfile is intended for dev only purposes
 MAINTAINER mourad mourafiq <mourad@polyaxon.com>
+
+# add our user and group first to make sure their IDs get assigned consistently
+RUN groupadd -r polyaxon && useradd -r -m -g polyaxon polyaxon
 
 RUN apt-get -y update && \
     apt-get -y install git && \
