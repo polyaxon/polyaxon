@@ -278,6 +278,7 @@ a.brand {
 .header-user .dropdown-menu, .header-item .dropdown-menu {
   min-width: 200px;
   border-radius: 5px !important;
+  z-index: 10000;
 }
 
 .header-user .chevron, .header-item .chevron {
