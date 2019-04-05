@@ -24,7 +24,7 @@ Polyaxon makes it easy to start Jupyter Notebooks on your projects for you and y
  
 Users can run notebook jobs on projects level, these jobs are subject to the same permissions of the project they belong to.
 
-> To learn more about polyaxon notebook CLI, run `polyaxon notebook --help`, or check the [command reference](/references/polyaxon-cli/notebook/)
+> To learn more about Polyaxon notebook CLI, run `polyaxon notebook --help`, or check the [command reference](/references/polyaxon-cli/notebook/)
 
 > Future releases will allow you to specify a default notebook image and backend to start notebooks/labs without providing a polyaxonfile
 

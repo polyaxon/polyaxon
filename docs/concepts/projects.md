@@ -58,7 +58,7 @@ $ polyaxon init mnist
 Project `mnist` was initialized and Polyaxonfile was created successfully `polyaxonfile.yml`
 ```
 
-When a project is initialized, polyaxon creates a default `.polyaxonignore`,
+When a project is initialized, Polyaxon creates a default `.polyaxonignore`,
 you can customize it to ignore the files that you don't want to upload.
 
 Initializing a project is a not mandatory, unless you need are using the platform's in-cluster git server. 
@@ -66,7 +66,7 @@ Most of the CLI commands allow [switching project context](/references/polyaxon-
 
 Now you can add some code to your project.
 
-Before doing anything you must update the default polyaxonfile to tell polyaxon how to run your code
+Before doing anything you must update the default polyaxonfile to tell Polyaxon how to run your code
 
 ```bash
 $ vi polyaxonfile.yml
@@ -83,7 +83,7 @@ $ vi train.py
 ...
 ```
 
-Upload the code to polyaxon to commit this current version.
+Upload the code to Polyaxon to commit this current version.
 
 ```bash
 $ polyaxon upload

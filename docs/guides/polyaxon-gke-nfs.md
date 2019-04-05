@@ -139,7 +139,7 @@ Before we can train our experiments we need to deploy Polyaxon.
 
 2. Deploy Polyaxon
 
-    Add polyaxon charts to helm.
+    Add Polyaxon charts to helm.
 
     ```bash
     $ helm repo add polyaxon https://charts.polyaxon.com

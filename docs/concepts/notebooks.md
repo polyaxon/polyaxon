@@ -65,7 +65,7 @@ start a jupyter notebook with the same permissions of the project.
 This means that if the project is private the notebook will only be visible to the project owner and superusers.
 
 > You can also execute `notebook start` with `-u` option, to upload before resuming the start the command, 
-In that case polyaxon upload is not necessary `$ polyaxon notebook -f polyaxonfile_notebook.yml -u`
+In that case Polyaxon upload is not necessary `$ polyaxon notebook -f polyaxonfile_notebook.yml -u`
 
 
 Since the notebook is create with polyaxonfile, it can be customized in the same way as any other job, e.g. you can customize the resources, request GPUs ...

@@ -241,7 +241,7 @@ The general method to modify your Kubernetes deployment is to:
     $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml
     ```
 
-    Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing polyaxon with `helm install`.
+    Where `<RELEASE_NAME>` is the parameter you passed to `--name` when installing Polyaxon with `helm install`.
 
     If you don’t remember it, you can probably find it by doing `helm list`.
 

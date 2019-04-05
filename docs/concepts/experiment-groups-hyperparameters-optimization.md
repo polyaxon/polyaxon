@@ -104,7 +104,7 @@ And distributions, when using random search, hyperband, or bayesian optimization
 
 You can check all the options available on the [matrix section reference](/references/polyaxonfile-yaml-specification/hptuning/#matrix).
 
-To make sure that the polyaxon file is valid, and creates multiple values for `lr`, we can run the following
+To make sure that the Polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 
 ```bash
 $ polyaxon check -f polyaxonfile.yml --definition
@@ -119,7 +119,7 @@ Early stopping    deactivated
 ----------------  -----------------
 ```
 
-This command validate the polyaxon file, and the option `-def` returns the group definition.
+This command validate the polyaxonfile, and the option `-def` returns the group definition.
 
 > For more details about this command please run `polyaxon check --help`, 
 or check the [command reference](/references/polyaxon-cli/check/)
@@ -158,7 +158,7 @@ we will do something different this time and override this value with a new file
 Create a new file, let's call polyaxonfile_override.yml
 
 > You can call your polyaxonfiles anything you want. 
-By default polyaxon commands look for files called `polyaxonfile.yml`.
+By default Polyaxon commands look for files called `polyaxonfile.yml`.
 If you call your files differently or want to override values, you need to use the option `-f`
 
 ```bash
@@ -181,7 +181,7 @@ If we run again the `check` command with `-def` or `--definition` option, we wil
 ```bash
 polyaxon check -f polyaxonfile.yml -f polyaxonfile_override.yml -x
 
-This polyaxon specification has experiment group with the following definition:
+This Polyaxon specification has experiment group with the following definition:
 --------------------  -----------------
 Search algorithm      random
 Concurrency           2 concurrent runs
