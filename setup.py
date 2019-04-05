@@ -61,7 +61,7 @@ setup(name='polyaxon',
           "redis==2.10.6",
           "sanic==0.8.3",
           "Unipath==1.1",
-          "uWSGI==2.0.17.1",
+          "uWSGI==2.0.18",
       ],
       classifiers=[
           'Programming Language :: Python',
