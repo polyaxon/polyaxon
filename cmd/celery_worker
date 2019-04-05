@@ -10,5 +10,5 @@ if [ $? -eq 0 ]; then
     else
         QUEUES=$*
     fi
-    docker-compose run -w /polyaxon/polyaxon --rm --name=polyaxon_worker web celery -A polyaxon worker --without-mingle --without-gossip --loglevel=DEBUG -Q $QUEUES --concurrency=4 -n default@%h
+    docker-compose run --rm --name=polyaxon_worker web /bin/bash ./worker/start.sh worker --without-mingle --without-gossip --loglevel=DEBUG -Q $QUEUES --concurrency=4 -n default@%h
 fi
