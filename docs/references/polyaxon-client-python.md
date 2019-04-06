@@ -69,3 +69,61 @@ polyaxon_client.build_job
 polyaxon_client.bookmark
 polyaxon_client.version
 ```
+
+## Authentication
+
+### In-cluster
+
+You can create an instance of `PolyaxonClient` in your code when running a job or experiment in-cluster simply by running:
+
+```python
+client = PolyaxonClient()
+``` 
+
+Polyaxon provides a context for all its runs enabling users to access scoped token to communicate with the API.
+
+### Locally with an authenticated Polyaxon CLI
+
+If your Polyaxon CLI is authenticated, you can create an instance of `PolyaxonClient` with the CLI authentication information.
+
+e.g.
+
+```python
+client = PolyaxonClient()
+```
+
+The client will check for the current authenticated user and raise if non found.
+
+### Not in-cluster and no authenticated CLI
+
+When you need to  authenticate a client in an environment outside of a Polyaxon cluster and no authenticated CLI, Polyaxon provides several option:
+
+ * Authenticating with Environment variables:
+    
+    You can set environment variables containing:
+        
+        * `POLYAXON_SECRET_USER_TOKEN`
+        * `POLYAXON_API_HOST`
+        * `POLYAXON_HTTP_PORT`
+        * `POLYAXON_WS_PORT`
+    
+    Once these environment variables are set, you can run:
+    
+    ```python
+    client = PolyaxonClient()
+    ```
+    
+    Authentication using environment variables could be useful to keep you code behave similarly on different environment.
+    
+ * Provide authentication params:
+ 
+    ```python
+    client = PolyaxonClient(token=MY_TOKEN, host=HOST_IP, http_port=HTTP_PORT, ws_port=WS_PORT, use_https=None, verify_ssl=None)
+    ```
+ 
+ * Provide an `ApiConfig` instance:
+        
+    ```python
+    api_config = ApiConfig(token=MY_TOKEN, host=HOST_IP, http_port=HTTP_PORT, ws_port=WS_PORT, use_https=None, verify_ssl=None)
+    client = PolyaxonClient(api_config=api_config)
+    ```
