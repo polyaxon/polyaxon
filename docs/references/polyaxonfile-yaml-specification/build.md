@@ -67,7 +67,7 @@ build:
 
 ```yaml
 build:
-  dockefile: path/to/Dockerfile
+  dockerfile: path/to/Dockerfile
   commit: 14e9d652151eb058afa0b51ba110671f2ca10cbf
 ```
 
@@ -92,7 +92,7 @@ build:
 
 ```yaml
 build:
-  dockefile: path/to/Dockerfile
+  dockerfile: path/to/Dockerfile
   context: different/path/to/context
 ```
 
@@ -105,6 +105,6 @@ build:
       cpu:
         requests: 1
         limits: 2
-  dockefile: path/to/Dockerfile
+  dockerfile: path/to/Dockerfile
   context: different/path/to/context
 ```
