@@ -13,7 +13,13 @@ from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
 from polyaxon_client.tracking.no_op import check_no_op
-from polyaxon_client.tracking.paths import get_base_outputs_path, get_outputs_path
+from polyaxon_client.tracking.paths import (
+    get_base_outputs_path,
+    get_data_paths,
+    get_log_level,
+    get_outputs_path,
+    get_outputs_refs_paths
+)
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
 from polyaxon_client.tracking.utils.tags import validate_tags
@@ -73,8 +79,8 @@ class Experiment(BaseTracker):
             self.log_run_env()
 
     @check_no_op
-    def get_data(self):
-        self._data = self.client.experiment.get_experiment(
+    def get_entity_data(self):
+        self._entity_data = self.client.experiment.get_experiment(
             username=self.username,
             project_name=self.project_name,
             experiment_id=self.experiment_id)
@@ -114,7 +120,7 @@ class Experiment(BaseTracker):
         if not experiment:
             raise PolyaxonClientException('Could not create experiment.')
         if not settings.IN_CLUSTER and self.track_logs:
-            setup_logging(send_logs=self._send_logs)
+            setup_logging(send_logs=self.send_logs)
         self.experiment_id = (experiment.id
                               if self.client.api_config.schema_response
                               else experiment.get('id'))
@@ -154,7 +160,7 @@ class Experiment(BaseTracker):
         self.client.set_health_check(url=health_url)
 
     @check_no_op
-    def _send_logs(self, log_line):
+    def send_logs(self, log_line):
         self.client.experiment.send_logs(username=self.username,
                                          project_name=self.project_name,
                                          experiment_id=self.experiment_id,
@@ -272,6 +278,14 @@ class Experiment(BaseTracker):
         except Exception as e:
             logger.warning('Could create data hash %s', e)
 
+    @check_no_op
+    def log_artifact(self, file_path):
+        self.experiment.outputs_store.upload_file(file_path)
+
+    @check_no_op
+    def log_artifacts(self, dir_path):
+        self.experiment.outputs_store.upload_file(dir_path)
+
     @staticmethod
     def get_cluster_def():
         """Returns cluster definition created by polyaxon.
@@ -380,3 +394,26 @@ class Experiment(BaseTracker):
             print('Could get declarations, '
                   'please make sure this is running inside a polyaxon job.')
             return None
+
+    @check_no_op
+    def get_outputs_path(self):
+        # TODO: Add handling for experiment running out of Polyaxon
+        return get_outputs_path()
+
+    @check_no_op
+    def get_log_level(self):
+        # TODO: Add handling for experiment running out of Polyaxon
+        return get_log_level()
+
+    @staticmethod
+    def get_data_paths():
+        if settings.NO_OP:
+            return None
+        return get_data_paths()
+
+    @staticmethod
+    def get_outputs_refs_paths():
+        if settings.NO_OP:
+            return None
+
+        return get_outputs_refs_paths()

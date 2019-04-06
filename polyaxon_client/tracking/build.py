@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_client.tracking.job import Job
+from polyaxon_client.tracking.job import BaseJob
 from polyaxon_client.tracking.no_op import check_no_op
 
 
-class BuildJob(Job):
+class BuildJob(BaseJob):
     REQUIRES_OUTPUTS = False
 
     @check_no_op

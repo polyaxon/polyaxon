@@ -6,12 +6,18 @@ import os
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_client.tracking import (
+    get_data_paths,
+    get_log_level,
+    get_outputs_path,
+    get_outputs_refs_paths
+)
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.in_cluster import ensure_in_custer
 from polyaxon_client.tracking.no_op import check_no_op
 
 
-class Job(BaseTracker):
+class BaseJob(BaseTracker):
     @check_no_op
     def __init__(self,
                  project=None,
@@ -28,27 +34,27 @@ class Job(BaseTracker):
             job_id = job_info['job_name'].split('.')[-1]
             job_type = job_info['job_name'].split('.')[-2]
 
-        super(Job, self).__init__(project=project,
-                                  client=client,
-                                  track_logs=track_logs,
-                                  track_code=track_code,
-                                  track_env=track_env,
-                                  outputs_store=outputs_store)
+        super(BaseJob, self).__init__(project=project,
+                                      client=client,
+                                      track_logs=track_logs,
+                                      track_code=track_code,
+                                      track_env=track_env,
+                                      outputs_store=outputs_store)
         self.job_id = job_id
         self.job_type = job_type
         self.job = None
         self.last_status = None
 
     @check_no_op
-    def get_data(self):
+    def get_entity_data(self):
         if self.job_type == 'jobs':
-            self._data = self.client_backend.get_job(
+            self._entity_data = self.client_backend.get_job(
                 username=self.username,
                 project_name=self.project_name,
                 job_id=self.job_id)
             return
         elif self.job_type == 'builds':
-            self._data = self.client_backend.get_build(
+            self._entity_data = self.client_backend.get_build(
                 username=self.username,
                 project_name=self.project_name,
                 job_id=self.job_id)
@@ -107,3 +113,27 @@ class Job(BaseTracker):
                                           message=message,
                                           traceback=traceback,
                                           background=True)
+
+
+class Job(BaseJob):
+
+    @check_no_op
+    def get_outputs_path(self):
+        return get_outputs_path()
+
+    @check_no_op
+    def get_log_level(self):
+        return get_log_level()
+
+    @staticmethod
+    def get_data_paths():
+        if settings.NO_OP:
+            return None
+        return get_data_paths()
+
+    @staticmethod
+    def get_outputs_refs_paths():
+        if settings.NO_OP:
+            return None
+
+        return get_outputs_refs_paths()

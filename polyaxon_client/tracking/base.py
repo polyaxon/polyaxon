@@ -51,7 +51,7 @@ class BaseTracker(object):
         self.username = username
         self.project_name = project_name
         self.outputs_store = outputs_store
-        self._data = None
+        self._entity_data = None
 
         # Setup the outputs store
         if outputs_store is None and settings.IN_CLUSTER and self.REQUIRES_OUTPUTS:
@@ -76,7 +76,7 @@ class BaseTracker(object):
 
         return settings.IN_CLUSTER and 'POLYAXON_NOTEBOOK_INFO' in os.environ
 
-    def get_data(self):
+    def get_entity_data(self):
         raise NotImplementedError
 
     def _set_health_url(self):
@@ -116,14 +116,29 @@ class BaseTracker(object):
 
     @check_no_op
     def succeeded(self):
+        """DEPRECATED: use log_succeeded instead"""
+        self.log_succeeded()
+
+    @check_no_op
+    def log_succeeded(self):
         self.end('succeeded')
 
     @check_no_op
     def stop(self):
+        """DEPRECATED: use log_stopped instead"""
+        self.log_stopped()
+
+    @check_no_op
+    def log_stopped(self):
         self.end('stopped')
 
     @check_no_op
     def failed(self, message=None, traceback=None):
+        """DEPRECATED: use log_failed instead"""
+        self.log_failed(message=message, traceback=traceback)
+
+    @check_no_op
+    def log_failed(self, message=None, traceback=None):
         self.end(status='failed', message=message, traceback=traceback)
 
     @check_no_op

@@ -31,8 +31,8 @@ class Group(BaseTracker):
         self.base_outputs_path = None
 
     @check_no_op
-    def get_data(self):
-        self._data = self.client.experiment_group.get_experiment_group(
+    def get_entity_data(self):
+        self._entity_data = self.client.experiment_group.get_experiment_group(
             username=self.username,
             project_name=self.project_name,
             group_id=self.group_id)
@@ -67,7 +67,12 @@ class Group(BaseTracker):
         return self
 
     @check_no_op
-    def create_experiment(self, name=None, tags=None, description=None, config=None):
+    def create_experiment(self,
+                          name=None,
+                          framework=None,
+                          tags=None,
+                          description=None,
+                          config=None):
         experiment = Experiment(project=self.project,
                                 group_id=self.group_id,
                                 client=self.client,
@@ -76,6 +81,7 @@ class Group(BaseTracker):
                                 track_env=self.track_env,
                                 outputs_store=self.outputs_store)
         experiment.create(name=name,
+                          framework=framework,
                           tags=tags,
                           description=description,
                           config=config,

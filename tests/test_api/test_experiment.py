@@ -15,11 +15,11 @@ from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.experiment import ExperimentApi
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
+    CodeReferenceConfig,
     ExperimentConfig,
     ExperimentJobConfig,
     ExperimentMetricConfig,
-    ExperimentStatusConfig,
-    CodeReferenceConfig
+    ExperimentStatusConfig
 )
 
 
