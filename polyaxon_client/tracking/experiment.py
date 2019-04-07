@@ -396,6 +396,15 @@ class Experiment(BaseTracker):
             return None
 
     @check_no_op
+    def get_params(self):
+        """
+        Returns all the experiment declarations based on both:
+            * declarations section
+            * matrix section
+        """
+        return self.get_declarations()
+
+    @check_no_op
     def get_outputs_path(self):
         # TODO: Add handling for experiment running out of Polyaxon
         return get_outputs_path()
