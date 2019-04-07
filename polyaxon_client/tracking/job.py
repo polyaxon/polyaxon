@@ -6,7 +6,7 @@ import os
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
-from polyaxon_client.tracking import (
+from polyaxon_client.tracking.paths import (
     get_data_paths,
     get_log_level,
     get_outputs_path,
