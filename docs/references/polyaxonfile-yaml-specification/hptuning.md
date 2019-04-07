@@ -180,7 +180,7 @@ For each experiment generated during the hyperparameters search, Polyaxon will a
 to your declarations, and will export them under the environment variable name `POLYAXON_DECLARATIONS`.
 
 > tip "Polyaxon append the matrix value combination to your declarations and export them under the environment variable name `POLYAXON_DECLARATIONS`" 
-Check how you can [get the cluster definition](/references/polyaxon-tracking-api/experiments/#tracking-experiments-running-inside-polyaxon) to use it with your models.
+Check how you can [get the cluster definition](/references/polyaxon-tracking-api/experiments/in-cluster/#hyperparams) to use it with your models.
 
 
 ## search algorithm: grid_search

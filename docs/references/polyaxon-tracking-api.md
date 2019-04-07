@@ -22,21 +22,54 @@ The tracked information will be later visualized and compared on the Polyaxon da
 
 Polyaxon tracking lets you log and interact with REST API in a very convenient way.
 
+> TIP. Although this section shows how to use Polyaxon tracking module, you can track experiments using any other language or directly by targeting Polyaxon API.
 
-In previous versions of Polyaxon, we only exposed metrics reporting through, [polyaxon-helper](/references/polyaxon-tracking-api/polyaxon-helper/).
+> N.B. If you are looking for the Python SDK to interact with Polyaxon API in programmatic way, 
+you need to check the [Polyaxon Python Client reference](/references/polyaxon-client-python/) instead.
+
+> N.B. In previous versions of Polyaxon, we only exposed metrics reporting through, [polyaxon-helper](/references/polyaxon-tracking-api/polyaxon-helper/).
 
 The new polyaxon-client allows more advanced workflows, both managed by Polyaxon, in-cluster runs, or on external environment (e.g. your local machine).
 
-This section will guide you how to track:
+## Concepts
 
- * [Experiments](/references/polyaxon-tracking-api/experiments/)
- * [Jobs](/references/polyaxon-tracking-api/jobs/)
- * [Experiment Groups](/references/polyaxon-tracking-api/experiment-groups/)
+Polyaxon tracking allow track several aspect of a run, i.e. n experiment or a job:
+
+ * Code Version: Git information used for the run.
+ * Run time: Start and end time of the run.
+ * Environment: Name of the file to launch the run, the command, arguments, python packages, ...
+ * Parameters: Key-value parameters used or this run.
+ * Metrics: Key-value metrics where the value is numeric. Each metric can be updated throughout the course of the run (for example, to track how your model’s loss function is converging), and MLflow records and lets you visualize the metric’s full history.
+ * Outputs/Artifacts: Output files in any format. For example, you can record images, audio, models (e.g., a pickled scikit-learn model), or even data files (e.g. a Parquet file) as artifacts.
+
+## Tracking reference
+
+The [experiment tracking reference](/references/polyaxon-tracking-api/experiments) 
+list a all methods exposed by this module, to learn more how you can use some or all of these methods in a specific context, 
+please check the next section with practical [tracking guides]((/references/polyaxon-tracking-api/#tracking-guides).)
+
+## Tracking guides
+
+This section will help you use Polyaxon Tracking module:
+
+ * In-cluster, i.e. experiments scheduled by Polyaxon inside a Kubernetes cluster
+
+    For experiments and jobs running inside a cluster managed by Polyaxon, authentication is done automatically, i.e. you can create an instance of `Experiment` and `Job` 
+    without providing any information, all information are setup automatically by Polyaxon.
+     
+     * [Experiments](/references/polyaxon-tracking-api/in-cluster/)
  
-In addition to this high level tracking APIs, when running an experiment/job inside Polyaxon, 
-some paths and other information are exposed: 
+    If you are running a generic job and you wish to get information about that job inside your container
+    
+     * [jobs](/references/polyaxon-tracking-api/jobs/) 
+        
+ * On any platform not managed by Polyaxon, laptop, spark, sagemaker, colab, ...
+    
+     For experiments and jobs running outside a cluster managed by Polyaxon, this guide will show you how to authenticate and track experiments.  
+     
+     * [Experiments](/references/polyaxon-tracking-api/other-platforms/)
+ 
 
- * [Paths](/references/polyaxon-tracking-api/paths/)
 
 ## Installation
 
@@ -69,7 +102,13 @@ run:
   cmd: ...
 ```
 
-## Disabling polyaxon tracking without changing the code
+## Installation in Dockerfile
+
+```dockerfile
+RUN pip install -U polyaxon-client
+```
+
+## Disabling Polyaxon tracking without changing the code
 
 Since using the Polyaxon client and the tracking api requires code change, e.g.
 

@@ -40,6 +40,11 @@ from polyaxon_client.tracking import Group
 
 group = Group(client=client, project='quick-start')
 group.create(tags=['foo', 'bar'], description='New group')
+
+# Create on other users' project
+
+group = Group(client=client, project='other_user/quick-start')
+group.create(tags=['foo', 'bar'], description='New group')
 ```
 
 ## Tracking 
@@ -55,7 +60,7 @@ This will create an experiment under this group, and provide all context (client
 You can then refer to [experiment tracking](references/polyaxon-tracking-api/experiments/)
 
 
-### Log statuses
+### log_status
  
 ```python
 group.log_status(status, message=None)
@@ -64,25 +69,25 @@ group.log_status(status, message=None)
 group.log_status('starting')
 ```
 
-### Stop
+### log_stopped
 
 ```python
-group.stop()
+group.log_stopped()
 ```
 
 This is just an easy way to set a `stopped` status.
 
-### Succeeded
+### log_succeeded
 
 ```python
-group.succeeded()
+group.log_succeeded()
 ```
 
 This is just an easy way to set a `succeeded` status. End of script will trigger succeeded status automatically
 
-### Failed
+### log_failed
 ```python
-group.failed()
+group.log_failed()
 ```
 
 This is just an easy way to set a `failed` status. Exception will trigger failed status automatically.

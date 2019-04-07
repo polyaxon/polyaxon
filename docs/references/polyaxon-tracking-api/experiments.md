@@ -1,8 +1,8 @@
 ---
-title: "Tracking API Experiments"
+title: "Tracking experiments reference"
 sub_link: "polyaxon-tracking-api/experiments"
-meta_title: "Tracking API Experiments - Polyaxon References"
-meta_description: "Experiments tracking is a high-level API allowing data scientists to track information related to their experiments."
+meta_title: "Tracking experiments reference - Polyaxon References"
+meta_description: "Tracking experiments reference."
 visibility: public
 status: published
 tags:
@@ -17,7 +17,7 @@ sidebar: "polyaxon-tracking-api"
 
 Experiments tracking is a high-level API allowing data scientists to track information related to their experiments.
 
-For tracking experiment running inside a Polyaxon context you can go straight to this [section](/references/polyaxon-tracking-api/experiments/#tracking-experiments-running-inside-polyaxon).
+For tracking experiment running inside a Polyaxon context you can go straight to the [in-cluster section](/references/polyaxon-tracking-api/experiments/in-cluster/). 
 
 ## Tracking
 
@@ -49,7 +49,9 @@ or create the needed information to start a new one.
 We will get back to this optional parameters in following sections with use cases and examples.
 But before we do that, let's look at what the user can do with and `Experiment` instance.
 
-### Starting an experiment
+### create
+
+> Not required for in-cluster experiments
 
 ```python
 # Example created with tags and description 
@@ -68,19 +70,25 @@ experiment.create()
 
 You can update the information later if you want.
 
-### Update the name
+### set_name
+
+> Not required for in-cluster experiments
 
 ```python
 experiment.set_name('new_name')
 ```
 
-### Update the description
+### set_description
+
+> Not required for in-cluster experiments
 
 ```python
 experiment.set_description('New description ...')
 ```
 
-### Log tags
+### log_tags
+
+> Not required for in-cluster experiments
 
 ```python
 experiment.log_tags(tags, reset=False)
@@ -95,7 +103,25 @@ experiment.log_tags('tag3', reset=True)
 This will merge the new tags with the previous ones if you had tags before, 
 otherwise you can reset the tags of the experiment.
 
-### Log run environment
+### log_framework
+
+> Not required for in-cluster experiments
+
+```python
+experiment.log_framework('tensorflow')
+```
+
+### log_backend
+
+> Not required for in-cluster experiments
+
+```python
+experiment.log_backend('spark')
+```
+
+### log_run_env
+
+> Not required for in-cluster experiments
 
 ```python
 experiment.log_run_env()
@@ -103,7 +129,9 @@ experiment.log_run_env()
 
 This step is done automatically when creating an instance with `track_env=True`
 
-### Log code reference 
+### log_code_ref
+
+> Not required for in-cluster experiments
 
 ```python
 experiment.log_code_ref()
@@ -112,7 +140,9 @@ experiment.log_code_ref()
 This step is done automatically when creating an instance with `track_git=True`
 
 
-### Log statuses
+### log_status
+
+> Not required for in-cluster experiments
  
 ```python
 experiment.log_status(status, message=None)
@@ -124,18 +154,22 @@ experiment.log_status('starting')
 This step is done automatically so this is in general is not needed, because the tracking API will take care of tracking 
 the status of your experiment both in-cluster and on other environments.
 
-### Stop
+### log_stopped
+
+> Not required for in-cluster experiments
 
 ```python
-experiment.stop()
+experiment.log_stopped()
 ```
 
 This is just an easy way to set a `stopped` status.
 
-### Succeeded
+### log_succeeded
+
+> Not required for in-cluster experiments
 
 ```python
-experiment.succeeded()
+experiment.log_succeeded()
 ```
 
 This is just an easy way to set a `succeeded` status. 
@@ -143,15 +177,17 @@ End of script will trigger succeeded status automatically,
 unless you running a loop and creating a new experiment, 
 you need to set the `done` status manually.
 
-### Failed
+### log_failed
+
+> Not required for in-cluster experiments
 
 ```python
-experiment.failed()
+experiment.log_failed()
 ```
 
 This is just an easy way to set a `failed` status. Exception will trigger failed status automatically.
 
-### Log metrics
+### log_metrics
 
 ```python
 experiment.log_metrics(step=123, loss=0.023, accuracy=0.91)
@@ -166,7 +202,9 @@ and use the steps in x-axis instead of timestamps.
     experiments ran sequentially, since the x-axis will use by default timestamps, 
     if your experiments report steps as well you can switch the series to use steps instead of timestamps.
 
-### Log params
+### log_params
+
+> Not required for in-cluster experiments
 
 ```python
 # Example logging params
@@ -182,7 +220,7 @@ experiment.log_params(activation='sigmoid', learning_rate=0.001, reset=True)
 Logging params for experiments in-cluster is generally handled through the `polyaxonfile` with the declaration section. 
 But often times, users might need to update or add more params during the experiment run.
 
-### Log data references
+### log_data_ref
 
 ```python
 # Example logging multiple datasets used for the experiment
@@ -193,100 +231,26 @@ experiment.log_data_ref(data=dataset2, data_name='my_dataset2')
 experiment.log_data_ref(data=dataset3, data_name='my_dataset3', reset=True)
 ```
 
-## Tracking experiments running inside Polyaxon
+### log_artifact
 
-For experiment running and managed by Polyaxon, an in-cluster context is exposed to the tracking API 
-to transparently detect the experiment context, project, 
-experiment group if the experiment belongs to a group, authentication, outputs paths, logs paths, and storage definition.
-
-The only step needed is to create an instance of `Experiment`:
+Logs a local file as an artifact and optionally upload it to the registered cloud storage.
 
 ```python
-from polyaxon_client.tracking import Experiment
-
-experiment = Experiment()
-...
-experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
+experiment.log_artifact(file_path)
 ```
 
-Since hyperparams are defined in the `declarations` section of the Polyaxonfile, 
-you generally don't need to  
+### log_artifacts
 
-You can access this context using the following methods:
-
- * `experiment.get_cluster_def`: Returns cluster definition created by polyaxon, 
- this value is also exposed as an env var `POLYAXON_CLUSTER`.
-    ```json
-    {
-        "master": ["plx-master0-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        "worker": ["plx-worker1-8eefb7a1146f476ca66e3bee9b88c1de:2000",
-                   "plx-worker2-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-        "ps": ["plx-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
-    }
-    ```
- * `experiment.get_declarations`: Returns all the experiment declarations based on both, 
- this value is also exposed as an env var `POLYAXON_DECLARATIONS`.
-
-    * declarations section
-    * matrix section
-
- * `experiment.get_tf_config`: Returns the TF_CONFIG defining the cluster and the current task, 
-    if the experiment is running a distributed tensorflow graph.
-    if `envvar` is not null, it will set and env variable with `envvar`.
-
- * `experiment.get_experiment_info`: Returns information about the experiment, 
- this value is also exposed as an env var `POLYAXON_EXPERIMENT_INFO`.
-
-    * project_name
-    * experiment_group_name
-    * experiment_name
-    * project_uuid
-    * experiment_group_uuid
-    * experiment_uuid
-
- * `experiment.get_task_info`: Returns the task info: `{"type": str, "index": int}`, 
- this value is also exposed as an env var `POLYAXON_TASK_INFO`.
-
-
-### Accessing the API
-
-Since the experiment is running in-cluster, the tracking API knows how to instantiate a client, 
-this client is used not only to log the previous information, 
-but it could be used to access to much richer API.
+Logs a local directory as artifacts and optionally upload it to the registered cloud storage.
 
 ```python
-client = experiment.client
+experiment.log_artifacts(dir_path)
 ```
 
-This client is authenticated with the current user, and gives scoped access to all accessible objects of the user.
+### get_log_level
 
-Please look at [Polyaxon client](/references/polyaxon-cli/) for more information.
+Returns the log level defined on the polyaxonfile
 
-## Tracking experiments running outside Polyaxon
+### get_outputs_path
 
-In order to track experiment running outside of Polyaxon, the user must configure a client.
-
-```python
-from polyaxon_client.client import PolyaxonClient
-
-client = PolyaxonClient(host='HOST_IP',
-                        token='4ee4e5e6080a196d11f637b950fce1587b29ef36')
-```
-
-The user must provide information about the experiment, the project where this experiment should be added.
-
-```python
-# An experiment in a project that belongs to the authenticated user 
-experiment = Experiment(client=client, project='quick-start')
-
-# An experiment in a project that belongs to another user 
-# The authenticated user must have access rights to the project 
-experiment = Experiment(client=client, project='user2/t2t')
-```
-
-You can use the client to create a project as well, and then create an experiment.
-
-```python
-project = client.project.create_project({name: 'new_project', 'description': 'some decription', tags: ...})
-```
-
+Returns the path generated fot this experiment.
