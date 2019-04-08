@@ -6,7 +6,7 @@ import os
 import stat
 
 from hestia.list_utils import to_list
-from hestia.paths import delete_path
+
 from polyaxon_dockgen.dockerfile import POLYAXON_DOCKER_TEMPLATE, POLYAXON_DOCKERFILE_NAME
 
 
@@ -21,7 +21,7 @@ class DockerFileGenerator(object):
                  env_vars=None,
                  nvidia_bin=None,
                  dockerfile_name=POLYAXON_DOCKERFILE_NAME,
-                 set_lang_env=True) -> None:
+                 set_lang_env=True):
         self.from_image = from_image
         self.folder_name = repo_path.split('/')[-1]
         self.repo_path = repo_path
@@ -99,7 +99,9 @@ class DockerFileGenerator(object):
 
     def clean(self):
         # Clean dockerfile
-        delete_path(self.dockerfile_path)
+        if not os.path.exists(self.dockerfile_path):
+            return
+        os.remove(self.dockerfile_path)
 
     def render(self):
         docker_template = jinja2.Template(POLYAXON_DOCKER_TEMPLATE)
