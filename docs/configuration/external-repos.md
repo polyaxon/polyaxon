@@ -66,7 +66,7 @@ You can also, specify which commit or branch to run, update the polyaxonfile wit
 
 
 ```yaml
-kind: expiriment
+kind: experiment
 
 build:
   image: tensorflow/tensorflow:1.4.1-py3
