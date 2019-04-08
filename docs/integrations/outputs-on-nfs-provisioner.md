@@ -50,7 +50,7 @@ This makes it easy to refer to the chart without having to use a long URL each t
 ## Install the nfs provisioner
 
 ```yaml
-helm install polyaxon/nfs-provisione --name=plxtf --namespace=polyaxon
+helm install polyaxon/nfs-provisioner --name=plxtf --namespace=polyaxon
 ```
 
 ## Configuration
