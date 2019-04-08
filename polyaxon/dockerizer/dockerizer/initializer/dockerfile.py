@@ -7,6 +7,9 @@ ENV LANGUAGE en_US.UTF-8
 # Use bash as default shell, rather than sh
 ENV SHELL /bin/bash
 
+# Drop root user and use Polyaxon user
+RUN groupadd -g 2222 -r polyaxon && useradd -r -m -g polyaxon -u 2222 polyaxon
+
 {% if nvidia_bin -%}
 # Update with nvidia bin
 ENV PATH="${PATH}:{{ nvidia_bin }}"
