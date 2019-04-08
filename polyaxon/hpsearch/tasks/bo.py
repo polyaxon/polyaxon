@@ -57,11 +57,6 @@ def hp_bo_create_experiments(experiment_group_id, suggestions):
     experiment_group.iteration_manager.add_iteration_experiments(
         experiment_ids=[xp.id for xp in experiments])
 
-    celery_app.send_task(
-        HPCeleryTasks.HP_BO_START,
-        kwargs={'experiment_group_id': experiment_group.id},
-        countdown=1)
-
 
 @celery_app.task(name=HPCeleryTasks.HP_BO_CREATE, ignore_result=True)
 def hp_bo_create(experiment_group_id):

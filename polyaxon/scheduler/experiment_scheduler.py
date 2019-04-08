@@ -2,6 +2,7 @@ import logging
 import traceback
 import uuid
 
+from django.db import IntegrityError
 from kubernetes.client.rest import ApiException
 
 import conf
@@ -600,7 +601,11 @@ def start_experiment(experiment):
                                 job_docker_image=job_docker_image,
                                 use_sidecar=True)
         # Create db jobs
-        create_experiment_jobs(experiment=experiment, spawner=spawner)
+        try:
+            create_experiment_jobs(experiment=experiment, spawner=spawner)
+        except IntegrityError:
+            # TODO: Add better handling for this.
+            return
         # Create k8s jobs
         response = spawner.start_experiment()
         # handle response

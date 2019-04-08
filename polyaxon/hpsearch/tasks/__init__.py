@@ -56,7 +56,7 @@ def hp_start(experiment_group_id):
 def start(experiment_group):
     task = None
     if SearchAlgorithms.is_grid(experiment_group.search_algorithm):
-        task = HPCeleryTasks.HP_GRID_SEARCH_START,
+        task = HPCeleryTasks.HP_GRID_SEARCH_START
     elif SearchAlgorithms.is_random(experiment_group.search_algorithm):
         task = HPCeleryTasks.HP_RANDOM_SEARCH_START
     elif SearchAlgorithms.is_hyperband(experiment_group.search_algorithm):
