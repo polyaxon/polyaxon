@@ -45,7 +45,7 @@ polyaxon project -p quick-start git --url="https://github.com/polyaxon/polyaxon-
 You can create an polyaxonfile to run:
 
 ```yaml
-kind: expiriment
+kind: experiment
 
 build:
   image: tensorflow/tensorflow:1.4.1-py3
