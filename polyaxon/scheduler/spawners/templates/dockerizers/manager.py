@@ -64,7 +64,8 @@ class ResourceManager(BaseResourceManager):
             health_check_url=health_check_url,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
-            log_level=log_level
+            log_level=log_level,
+            use_security_context=False
         )
         self.name = name
         self.job_name = job_name

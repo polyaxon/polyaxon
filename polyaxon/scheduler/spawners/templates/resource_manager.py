@@ -35,7 +35,8 @@ class BaseResourceManager(object):
                  health_check_url,
                  use_sidecar,
                  sidecar_config,
-                 log_level):
+                 log_level,
+                 use_security_context=True):
         self.namespace = namespace
         self.project_name = project_name
         self.project_uuid = project_uuid
@@ -61,6 +62,7 @@ class BaseResourceManager(object):
         self.sidecar_config = sidecar_config
         self.health_check_url = health_check_url
         self.log_level = log_level
+        self.use_security_context = use_security_context
 
     def get_resource_name(self):
         raise NotImplementedError()
@@ -238,7 +240,7 @@ class BaseResourceManager(object):
         tolerations = self._get_tolerations(tolerations=tolerations)
         service_account_name = self._get_service_account_name()
         return client.V1PodSpec(
-            security_context=get_security_context(),
+            security_context=get_security_context() if self.use_security_context else None,
             restart_policy=restart_policy,
             service_account_name=service_account_name,
             init_containers=init_containers,
