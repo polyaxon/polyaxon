@@ -33,6 +33,7 @@ spec:
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.worker }}
     spec:
+{{ include "securityContext" . | indent 6 }}
       {{- if .Values.nodeSelectors.core }}
       nodeSelector:
 {{ toYaml .Values.nodeSelectors.core | indent 8 }}
