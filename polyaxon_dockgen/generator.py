@@ -43,6 +43,7 @@ class DockerFileGenerator(object):
             requirements_path = os.path.join(self.repo_path, requirements_file)
             if os.path.isfile(requirements_path):
                 return os.path.join(self.folder_name, requirements_file)
+            return None
 
         requirements = get_requirements('polyaxon_requirements.txt')
         if requirements:
@@ -58,6 +59,7 @@ class DockerFileGenerator(object):
             conda_path = os.path.join(self.repo_path, conda_file)
             if os.path.isfile(conda_path):
                 return os.path.join(self.folder_name, conda_file)
+            return None
 
         conda_env = get_conda_env('polyaxon_conda_env.yaml')
         if conda_env:
@@ -84,6 +86,7 @@ class DockerFileGenerator(object):
                 st = os.stat(setup_file_path)
                 os.chmod(setup_file_path, st.st_mode | stat.S_IEXEC)
                 return os.path.join(self.folder_name, setup_file)
+            return None
 
         setup_file = get_setup('polyaxon_setup.sh')
         if setup_file:
