@@ -139,7 +139,3 @@ def generate(repo_path,
     with open(dockerfile_generator.dockerfile_path, 'w') as dockerfile:
         rendered_dockerfile = dockerfile_generator.render()
         dockerfile.write(rendered_dockerfile)
-
-
-def generate_from_polyaxonfile(repo_path, polyaxonfile):
-    pass

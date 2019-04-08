@@ -4,13 +4,17 @@ from __future__ import absolute_import, division, print_function
 import os
 import tempfile
 
-from pathlib import Path
 from unittest import TestCase
 
 from polyaxon_dockgen.generator import DockerFileGenerator
 
 
 class TestDockerfileGenerator(TestCase):
+    @staticmethod
+    def touch(path):
+        with open(path, 'w') as f:
+            f.write('test')
+
     def test_get_environment_paths_detection_work_as_expected(self):
         # Create a repo folder
         repo_path = os.path.join(tempfile.mkdtemp(), 'repo')
@@ -25,8 +29,8 @@ class TestDockerfileGenerator(TestCase):
         builder.clean()
 
         # Add a polyaxon_requirements.txt and polyaxon_setup.sh files to repo path
-        Path(os.path.join(repo_path, 'polyaxon_requirements.txt')).touch()
-        Path(os.path.join(repo_path, 'polyaxon_setup.sh')).touch()
+        self.touch(os.path.join(repo_path, 'polyaxon_requirements.txt'))
+        self.touch(os.path.join(repo_path, 'polyaxon_setup.sh'))
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox')
@@ -39,8 +43,8 @@ class TestDockerfileGenerator(TestCase):
         os.remove(os.path.join(repo_path, 'polyaxon_setup.sh'))
 
         # Add a requirements.txt and setup.sh files to repo path
-        Path(os.path.join(repo_path, 'requirements.txt')).touch()
-        Path(os.path.join(repo_path, 'setup.sh')).touch()
+        self.touch(os.path.join(repo_path, 'requirements.txt'))
+        self.touch(os.path.join(repo_path, 'setup.sh'))
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox')
@@ -49,8 +53,8 @@ class TestDockerfileGenerator(TestCase):
         builder.clean()
 
         # Add a conda_env.yaml
-        Path(os.path.join(repo_path, 'conda_env.yaml')).touch()
-        Path(os.path.join(repo_path, 'polyaxon_setup.sh')).touch()
+        self.touch(os.path.join(repo_path, 'conda_env.yaml'))
+        self.touch(os.path.join(repo_path, 'polyaxon_setup.sh'))
 
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox')
@@ -84,8 +88,8 @@ class TestDockerfileGenerator(TestCase):
         builder.clean()
 
         # Add a polyaxon_requirements.txt and polyaxon_setup.sh files to repo path
-        Path(os.path.join(repo_path, 'polyaxon_requirements.txt')).touch()
-        Path(os.path.join(repo_path, 'polyaxon_setup.sh')).touch()
+        self.touch(os.path.join(repo_path, 'polyaxon_requirements.txt'))
+        self.touch(os.path.join(repo_path, 'polyaxon_setup.sh'))
 
         # Add step to act on them
         build_steps = [
@@ -108,7 +112,7 @@ class TestDockerfileGenerator(TestCase):
         builder.clean()
 
         # Add conda env
-        Path(os.path.join(repo_path, 'conda_env.yml')).touch()
+        self.touch(os.path.join(repo_path, 'conda_env.yml'))
         build_steps.append('conda env update -n base -f environment.yml')
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',

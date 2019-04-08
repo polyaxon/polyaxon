@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-dockgen',
-      version='0.4.3',
+      version='0.0.1',
       description='Python client to interact with Polyaxon API.',
       long_description=read_readme(),
       maintainer='Mourad Mourafiq',
@@ -54,7 +54,7 @@ setup(name='polyaxon-dockgen',
           'kubernetes',
       ],
       install_requires=[
-          "polyaxon-schemas==0.4.3",
+          "hestia>=0.3.0",
       ],
       classifiers=[
           'Programming Language :: Python',

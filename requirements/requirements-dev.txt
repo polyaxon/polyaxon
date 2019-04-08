@@ -1,1 +1,3 @@
--e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas==0.4.3
+hestia>=0.3.0
+Jinja2==2.10
+Unipath==1.1
