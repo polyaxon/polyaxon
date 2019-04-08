@@ -15,6 +15,6 @@ nginx -c /etc/nginx/nginx.conf -t
 service nginx status
 service nginx restart
 service nginx status
-gosu privpolyaxon uwsgi --ini web/uwsgi.nginx.ini
+gosu polyaxon uwsgi --ini web/uwsgi.nginx.ini
 service nginx stop
 service nginx status

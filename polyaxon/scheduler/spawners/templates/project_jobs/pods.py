@@ -9,6 +9,7 @@ from scheduler.spawners.templates.env_vars import get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.project_jobs.labels import get_labels
 from scheduler.spawners.templates.resources import get_resources
+from scheduler.spawners.templates.security_context import get_security_context
 
 
 def get_pod_container(volume_mounts,
@@ -80,6 +81,7 @@ def get_project_pod_spec(volume_mounts,
         service_account_name = None
 
     return client.V1PodSpec(restart_policy=restart_policy,
+                            security_context=get_security_context(),
                             service_account_name=service_account_name,
                             containers=containers,
                             volumes=volumes,

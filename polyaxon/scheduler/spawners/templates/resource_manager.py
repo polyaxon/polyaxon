@@ -9,6 +9,7 @@ from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
+from scheduler.spawners.templates.security_context import get_security_context
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
 from scheduler.spawners.templates.tpu import get_tpu_annotations, requests_tpu
 from schemas.exceptions import PolyaxonConfigurationError
@@ -237,6 +238,7 @@ class BaseResourceManager(object):
         tolerations = self._get_tolerations(tolerations=tolerations)
         service_account_name = self._get_service_account_name()
         return client.V1PodSpec(
+            security_context=get_security_context(),
             restart_policy=restart_policy,
             service_account_name=service_account_name,
             init_containers=init_containers,
