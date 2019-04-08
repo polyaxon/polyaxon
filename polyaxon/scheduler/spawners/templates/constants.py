@@ -1,6 +1,4 @@
 DEFAULT_PORT = 2222
-POLYAXON_FS_GROUP = 2222
-POLYAXON_USER = 2222
 ENV_VAR_TEMPLATE = '{name: "{var_name}", value: "{var_value}"}'
 VOLUME_CLAIM_NAME = 'plx-pvc-{vol_name}'
 CONFIG_MAP_NAME = 'plx-config-{uuid}'

@@ -158,3 +158,9 @@ JOB_SIDECAR_LOG_SLEEP_INTERVAL = config.get_int('POLYAXON_JOB_SIDECAR_LOG_SLEEP_
 K8S_TPU_TF_VERSION = config.get_string('POLYAXON_K8S_TPU_TF_VERSION',
                                        is_optional=True,
                                        default='1.12')
+
+# SECURITY CONTEXT
+SECURITY_CONTEXT_USER = config.get_int('POLYAXON_SECURITY_CONTEXT_USER',
+                                       is_optional=True)
+SECURITY_CONTEXT_GROUP = config.get_int('POLYAXON_SECURITY_CONTEXT_GROUP',
+                                        is_optional=True)
