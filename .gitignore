@@ -26,6 +26,7 @@ target/
 # ignore devvalues
 values.dev.yaml
 values.*.test.yaml
+values.*.test.json
 
 # Chart dependencies
 **/charts/*.tgz
