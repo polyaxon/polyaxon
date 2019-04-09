@@ -1,4 +1,5 @@
 namespace: "polyaxon"
+deploymentType: "kubernetes"
 
 rbac:
   enabled: true
