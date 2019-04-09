@@ -24,7 +24,7 @@ Polyaxon tracking lets you log and interact with REST API in a very convenient w
 
 > TIP. Although this section shows how to use Polyaxon tracking module, you can track experiments using any other language or directly by targeting Polyaxon API.
 
-> N.B. If you are looking for the Python SDK to interact with Polyaxon API in programmatic way, 
+> N.B. If you are looking for the Python SDK to interact with Polyaxon API in a programmatic way, 
 you need to check the [Polyaxon Python Client reference](/references/polyaxon-client-python/) instead.
 
 > N.B. In previous versions of Polyaxon, we only exposed metrics reporting through, [polyaxon-helper](/references/polyaxon-tracking-api/polyaxon-helper/).
@@ -67,7 +67,7 @@ This section will help you use Polyaxon Tracking module:
     
      For experiments and jobs running outside a cluster managed by Polyaxon, this guide will show you how to authenticate and track experiments.  
      
-     * [Experiments](/references/polyaxon-tracking-api/other-platforms/)
+     * [Experiments](/references/polyaxon-tracking-api/other-environments/)
  
 
 
