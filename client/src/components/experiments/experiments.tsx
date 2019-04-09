@@ -6,7 +6,6 @@ import * as actions from '../../actions/experiments';
 import * as groupsActions from '../../actions/groups';
 import * as searchActions from '../../actions/search';
 import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
-import { NameSlug } from '../../constants/helpTexts';
 import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { isDone } from '../../constants/statuses';
 import { FilterOption } from '../../interfaces/filterOptions';
@@ -24,6 +23,7 @@ import { DEFAULT_FILTERS } from '../filters/constants';
 import PaginatedTable from '../tables/paginatedTable';
 import Experiment from './experiment';
 import ExperimentActions from './experimentActions';
+import SelectionCreate from './selectinCreate';
 
 import './experiments.less';
 
@@ -57,7 +57,10 @@ export interface Props {
   addToSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
   removeFromSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
   isLoading: boolean;
+  isCreateLoading: boolean;
   errors: any;
+  createErrors: any;
+  createSuccess: boolean;
 }
 
 interface State {
@@ -226,10 +229,10 @@ export default class Experiments extends React.Component<Props, State> {
     }));
   };
 
-  public createSelection = (event: any) => {
-    event.preventDefault();
+  public createSelection = (form: { name: string, description: string }) => {
     if (this.props.createSelection) {
-      const group = {...this.state.group, experiment_ids: this.state.items};
+      const groupModel = {name: form.name, description: form.description} as GroupModel;
+      const group = {...groupModel, experiment_ids: this.state.items};
       this.props.createSelection(group);
     }
     this.handleClose();
@@ -517,34 +520,13 @@ export default class Experiments extends React.Component<Props, State> {
           <Modal.Title>Save Selection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className="form-horizontal" onSubmit={this.createSelection}>
-            <div className="form-group">
-              <label className="col-md-2 control-label">Name</label>
-              <div className="col-md-10">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(event) => this.updateSelectionForm('name', event.target.value)}
-                />
-                <span id="helpBlock" className="help-block">{NameSlug}</span>
-              </div>
-            </div>
-            <div className="form-group">
-              <label className="col-md-2 control-label">Description</label>
-              <div className="col-md-10">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(event) => this.updateSelectionForm('description', event.target.value)}
-                />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="col-md-offset-2 col-md-10">
-                <button type="submit" className="btn btn-default" onClick={this.createSelection}>Save</button>
-              </div>
-            </div>
-          </form>
+          <SelectionCreate
+            onCreate={this.createSelection}
+            onClose={this.handleClose}
+            errors={this.props.createErrors}
+            isLoading={this.props.isCreateLoading}
+            success={this.props.createSuccess}
+          />
         </Modal.Body>
       </Modal>
     );

@@ -16,6 +16,7 @@ import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedExperiments } from '../../utils/states';
+import { getSuccessGlobal } from '../../utils/success';
 
 interface OwnProps {
   user: string;
@@ -33,6 +34,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
   const results = getLastFetchedExperiments(state.experiments);
 
   const isLoading = isTrue(state.loadingIndicators.experiments.global.fetch);
+  const isCreateLoading = isTrue(state.loadingIndicators.experiments.global.create);
   return {
     isCurrentUser: state.auth.user === ownProps.user,
     experiments: results.experiments,
@@ -44,7 +46,10 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
     useCheckbox: isTrue(ownProps.useCheckbox),
     endpointList: ownProps.endpointList,
     isLoading,
-    errors: getErrorsGlobal(state.alerts.experiments.global, isLoading, ACTIONS.FETCH)
+    isCreateLoading,
+    errors: getErrorsGlobal(state.alerts.experiments.global, isLoading, ACTIONS.FETCH),
+    createErrors: getErrorsGlobal(state.alerts.experiments.global, isLoading, ACTIONS.CREATE),
+    createSuccess: getSuccessGlobal(state.alerts.experiments.global, isLoading, ACTIONS.CREATE),
   };
 }
 
@@ -124,7 +129,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
         return dispatch(groupsActions.createGroup(
           params.match.params.user,
           params.match.params.projectName,
-          data));
+          data,
+          true));
       } else {
         throw new Error('Experiments container does not have project.');
       }
