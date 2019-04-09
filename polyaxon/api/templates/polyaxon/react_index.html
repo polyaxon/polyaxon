@@ -3,11 +3,11 @@
 
 {% block styles %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}?version=0.4.3">
+<link rel="stylesheet" href="{% static 'dist/css/bootstrap.min.css' %}?version=0.4.4rc0">
 {% if frontend_debug %}
-<link href="{% static 'css/loader.css' %}?version=0.4.3" media="all" rel="stylesheet" type="text/css"/>
+<link href="{% static 'css/loader.css' %}?version=0.4.4rc0" media="all" rel="stylesheet" type="text/css"/>
 {% else %}
-<link rel="stylesheet" href="{% static 'dist/css/loader.min.css' %}?version=0.4.3" media="all" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="{% static 'dist/css/loader.min.css' %}?version=0.4.4rc0" media="all" rel="stylesheet" type="text/css"/>
 {%  endif %}
 {% endblock %}
 
@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="{% static 'dist/js/react.production.min.js' %}?version=0.4.3"></script>
-    <script src="{% static 'dist/js/react-dom.production.min.js' %}?version=0.4.3"></script>
-    <script src="{% static 'dist/js/bundle.min.js' %}?version=0.4.3"></script>
+    <script src="{% static 'dist/js/react.production.min.js' %}?version=0.4.4rc0"></script>
+    <script src="{% static 'dist/js/react-dom.production.min.js' %}?version=0.4.4rc0"></script>
+    <script src="{% static 'dist/js/bundle.min.js' %}?version=0.4.4rc0"></script>
 {% endblock %}
