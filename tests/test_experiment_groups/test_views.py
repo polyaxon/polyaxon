@@ -644,7 +644,7 @@ class TestStopExperimentGroupViewV1(BaseViewTest):
                 mock_start.return_value = build, True, True
                 self.object = self.factory_class(project=project)
 
-        assert mock_fct.call_count == 2
+        assert mock_fct.call_count == 1
         # Add a running experiment
         experiment = ExperimentFactory(experiment_group=self.object)
         ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.RUNNING)
