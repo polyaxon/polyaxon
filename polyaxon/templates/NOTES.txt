@@ -5,7 +5,7 @@ Polyaxon is currently running:
 
 {{- if .Values.ingress.enabled -}}
 
-    {{- if .Values.isMinikube }}
+    {{- if contains "minikube" .Values.deploymentType }}
     export POLYAXON_IP=$(minikube ip)
     {{- else }}
     export POLYAXON_IP={{ .Values.ingress.hostName }}
@@ -20,7 +20,7 @@ Polyaxon is currently running:
 
     echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
 
-{{- else if .Values.isMinikube }}
+{{- else if contains "minikube" .Values.deploymentType }}
 
     export POLYAXON_IP=$(minikube ip)
 
