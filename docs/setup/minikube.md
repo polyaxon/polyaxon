@@ -1,22 +1,20 @@
 ---
-title: "Install Polyaxon on Kubernetes"
-title_link: "Install Polyaxon on Kubernetes"
-sub_link: "kubernetes"
+title: "Install Polyaxon on Minikube"
+title_link: "Install Polyaxon on Minikube"
+sub_link: "Minikube"
 date: "2018-10-01"
 meta_title: "How to install Polyaxon on Kubernetes"
 meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using Kubernetes."
 tags:
     - setup
     - kubernetes
+    - Minikube
     - install
 ---
 
-If you are here, it means that you have a Kubernetes cluster and [helm](/guides/setup-helm/) setup.
+If you are here, it means that you have a Minikube cluster and [helm](/guides/setup-helm/) setup.
 
-Please consider reading our [configuration guides](/configuration/introduction/) to have a deeper knowledge about how to configure and customize Polyaxon to your need,
-we also made this [interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
-
-If you are deploying Polyaxon in production mode, you should take some time to read about some [best practices](/guides/best-practices-for-deploying-polyaxon/) when deploying Polyaxon.
+Please consider reading our [configuration guides](/configuration/introduction/) to have a deeper knowledge about how to configure and customize Polyaxon to your need.
 
 Please also check the [helm reference](/references/polyaxon-helm-reference/) for all default values.
 
@@ -33,6 +31,19 @@ namespace "polyaxon" created
 
 If you would like to use a different name, you must keep im mind to update the `namespace` value in your config.
 
+
+## Minikube resources
+
+For [Minikube](https://github.com/kubernetes/minikube), we recommend Virtualbox/VMware drivers, but you can also use other drivers.
+
+We recommend also to increase the amount of resources allocates:
+
+```bash
+minikube start --cpus 4 --memory 8192 --disk-size=40g
+```
+
+By default Minikube allocates 2Gb of RAM, this not enough for Polyaxon and we recommend at least 6Gb.
+
 ## Configuration
 
 This section will guide you through how you can create a configuration file to deploy Polyaxon.
@@ -43,35 +54,33 @@ To do so, you need to create a configuration file and we recommend to save it so
 Create a config file `config.yaml` or `polyaxon_config.yaml`,
 and set up all information you want to override in the default config.
 
-Example, disabling ingress and RBAC
+### Set Minikube deployent type
+
+First thing to update your `polyaxon_config.yaml` is your deployment type:
 
 ```yaml
+deploymentType: minikube
+```
+
+### Disabling RBAC and ingress
+
+
+By default Polyaxon uses LoadBalancer and RBAC, you might need to disable one / both of them in your `config.yml`/`polyaxon_config.yml`:
+
+```yaml
+deploymentType: minikube
+
 rbac:
   enabled: false
 
 ingress:
   enabled: false
 
-serviceType: LoadBalancer
+serviceType: NodePort
 ```
 
-Example, adding database persistence
+It is however recommended to enable RBAC and start minikube with the option `--extra-config=apiserver.authorization-mode=RBAC`.
 
-```yaml
-postgresql:
-  persistence:
-    enabled: true
-    size: 5Gi
-```
-
-Example, updating the default user:
-
-```yaml
-user:
-  username: "root"
-  email: "root@polyaxon.local"
-  password: "dummypassword"
-```
 
 ## Install Polyaxon
 
@@ -141,37 +150,15 @@ kubectl --namespace=<NAMESPACE> get pod
 When helm is done deploying Polyaxon, it will output some instructions `NOTES`,
 these note will be different depending on your configuration (the service type used and / or ingress);
 
+### Minikube IP
+
+After installing polyaxon, you might need to use the following command to enable access to the API service:
+
+```bash
+minikube service -n polyaxon polyaxon-polyaxon-api
 ```
-NOTES:
-Polyaxon is currently running:
 
-
-1. Get the application URL by running these commands:
-
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status by running:
-           'kubectl get --namespace polyaxon svc -w polyaxon-polyaxon-api'
-
-
-  export POLYAXON_IP=$(kubectl get svc --namespace polyaxon polyaxon-polyaxon-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-
-  export POLYAXON_HTTP_PORT=80
-  export POLYAXON_WS_PORT=80
-
-  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
-
-2. Setup your cli by running theses commands:
-
-  polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
-
-
-3. Log in with superuser
-
-  USER: root
-  PASSWORD: Get login password with
-
-    kubectl get secret --namespace polyaxon polyaxon-polyaxon-secret -o jsonpath="{.data.POLYAXON_ADMIN_PASSWORD}" | base64 --decode
-```
+Note that when using minikube, the IP address of the application is given by `minikube ip`.
 
 These notes are important for setting the CLI, and getting access to the dashboard.
 
