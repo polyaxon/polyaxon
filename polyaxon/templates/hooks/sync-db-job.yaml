@@ -54,4 +54,6 @@ spec:
         - secretRef:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
+        - name: POLYAXON_DB_NO_CHECK
+          value: "true"
 {{ include "config.envs" . | indent 8 }}
