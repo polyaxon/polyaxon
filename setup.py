@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-client',
-      version='0.4.3',
+      version='0.4.4rc0',
       description='Python client to interact with Polyaxon API.',
       long_description=read_readme(),
       maintainer='Mourad Mourafiq',
