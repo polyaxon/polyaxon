@@ -21,7 +21,7 @@ class AuditorExperimentGroupTest(BaseTest):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -38,7 +38,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -57,7 +57,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -74,7 +74,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -93,7 +93,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -112,7 +112,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -131,7 +131,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -150,7 +150,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -169,7 +169,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -186,7 +186,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 1
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -204,7 +204,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -221,7 +221,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 1
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -238,7 +238,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -257,7 +257,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -274,7 +274,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 1
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -291,7 +291,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -308,7 +308,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -325,7 +325,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -342,7 +342,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -361,7 +361,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -380,7 +380,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -399,7 +399,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')
@@ -418,7 +418,7 @@ class AuditorExperimentGroupTest(BaseTest):
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
 
-    @patch('executor.service.ExecutorService.record_event')
+    @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')
     @patch('activitylogs.service.ActivityLogService.record_event')

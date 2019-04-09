@@ -438,14 +438,14 @@ class TestExperimentGroupModel(BaseTest):
         assert experiment_group.running_experiments.count() == 1
         with patch('scheduler.experiment_scheduler.stop_experiment') as _:  # noqa
             ExperimentStatusFactory(experiment=experiment, status=ExperimentLifeCycle.SUCCEEDED)
-        assert experiment_group.pending_experiments.count() == 1
+        assert experiment_group.pending_experiments.count() == 0
         assert experiment_group.running_experiments.count() == 0
         assert experiment_group.succeeded_experiments.count() == 1
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as start_build:
             experiment.resume()
 
         assert start_build.call_count == 1
-        assert experiment_group.pending_experiments.count() == 2
+        assert experiment_group.pending_experiments.count() == 1
         assert experiment_group.running_experiments.count() == 0
         assert experiment_group.succeeded_experiments.count() == 1
 
@@ -680,10 +680,7 @@ class TestExperimentGroupModel(BaseTest):
         with patch('hpsearch.tasks.hyperband.hp_hyperband_start.apply_async') as mock_fct:
             experiment_group = ExperimentGroupFactory(
                 content=experiment_group_spec_content_hyperband_trigger_reschedule)
-        self.assertEqual(
-            mock_fct.call_count,
-            math.ceil(experiment_group.experiments.count() / conf.get('GROUP_CHUNKS')) + 1
-        )
+        assert mock_fct.call_count == 1
         assert experiment_group.non_done_experiments.count() == 9
 
         # Mark experiment as done
