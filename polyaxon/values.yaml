@@ -581,7 +581,7 @@ ttl:
   token:  # in days
   ephemeralToken:  # in seconds
   heartbeat:  # in seconds
-  watchStatuses: 60  # in seconds
+  watchStatuses: 120  # in seconds
 
 intervals:  # in seconds
   experimentsScheduler: 15
