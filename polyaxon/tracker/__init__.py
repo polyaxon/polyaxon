@@ -12,7 +12,7 @@ def get_tracker_backend():
         return 'tracker.service.TrackerService'
     if settings.TRACKER_BACKEND == settings.TRACKER_BACKEND_PUBLISHER:
         return 'tracker.publish_tracker.PublishTrackerService'
-    return ''
+    return 'tracker.publish_tracker.PublishTrackerService'
 
 
 def get_backend_options():

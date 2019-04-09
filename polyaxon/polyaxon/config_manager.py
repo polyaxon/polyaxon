@@ -198,6 +198,10 @@ class ConfigManager(rhea.Rhea):
             return 'INFO'
         return self._log_level
 
+    @property
+    def enable_scheduler(self):
+        return self._enable_scheduler
+
     def setup_auditor_services(self):
         if not self.is_testing_env:
             import activitylogs
@@ -216,9 +220,8 @@ class ConfigManager(rhea.Rhea):
             if self._enable_notifier:
                 notifier.validate()
                 notifier.setup()
-            if self._enable_scheduler:
-                executor.validate()
-                executor.setup()
+            executor.validate()
+            executor.setup()
 
     def setup_conf_service(self):
         import conf

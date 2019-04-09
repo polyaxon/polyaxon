@@ -7,6 +7,7 @@ from .celery_settings import *
 from .context_processors import *
 from .core import *
 from .email import *
+from .executor import *
 from .integrations import *
 from .logging import *
 from .oauth import *
