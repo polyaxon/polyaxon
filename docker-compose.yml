@@ -46,8 +46,6 @@ services:
 
     environment:
       MEMCACHE_LOCATION: "memcache:11211"
-      SETTINGS_ENV_DIR: "dev"
-      DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
       POLYAXON_AMQP_URL: "rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis://redis:6379/0"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis://redis:6379/3"
@@ -55,8 +53,8 @@ services:
       POLYAXON_REDIS_SESSIONS_URL: "redis://redis:6379/5"
       POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: "redis://redis:6379/6"
       POLYAXON_REDIS_TTL_URL: "redis://redis:6379/7"
-      POLYAXON_HEARTBEAT_URL: "redis://redis:6379/8"
-      POLYAXON_GROUP_CHECKS_URL: "redis://redis:6379/9"
+      POLYAXON_REDIS_HEARTBEAT_URL: "redis://redis:6379/8"
+      POLYAXON_REDIS_GROUP_CHECKS_URL: "redis://redis:6379/9"
       POLYAXON_RABBITMQ_DEFAULT_USER: admin
       POLYAXON_RABBITMQ_DEFAULT_PASS: mypass
       KUBECONFIG: "/root/.kube/config"
@@ -76,8 +74,8 @@ services:
       POLYAXON_REDIS_SESSIONS_URL: "redis://redis:6379/5"
       POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: "redis://redis:6379/6"
       POLYAXON_REDIS_TTL_URL: "redis://redis:6379/7"
-      POLYAXON_HEARTBEAT_URL: "redis://redis:6379/8"
-      POLYAXON_GROUP_CHECKS_URL: "redis://redis:6379/9"
+      POLYAXON_REDIS_HEARTBEAT_URL: "redis://redis:6379/8"
+      POLYAXON_REDIS_GROUP_CHECKS_URL: "redis://redis:6379/9"
       KUBECONFIG: "/root/.kube/config"
     networks:
       - polyaxon
