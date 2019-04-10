@@ -23,7 +23,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-init',
-      version='0.4.4rc1',
+      version='0.4.4',
       description='Polyaxon init.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
@@ -41,7 +41,7 @@ setup(name='polyaxon-init',
           'instrumentation'
       ],
       install_requires=[
-          'polyaxon-client==0.4.4rc0',
+          'polyaxon-client==0.4.4',
           'Unipath==1.1'
       ],
       classifiers=[

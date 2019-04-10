@@ -8,6 +8,19 @@ tags:
     - reference
 ---
 
+## 0.4.4
+
+This is a patch release on top of 0.4.3/0.4.2 containing no breaking changes., this version has no data or db migrations.
+
+ * Fix issue with IntegrityError when creating large number of experiments.
+ * Add error validation and redirection when creating experiments selection.
+ * Add alpha version of configurable security context.
+ * Update Polyaxon deploy to handle Minikube and MicroK8S.
+ * Optimize and reduce size of official images.
+ * Add dockgen package and initial work on local run mode.
+ * Add docs for Polyaxon Client authentication options.
+ * Update `log_artifact` and `log_artifacts` methods on the Experiment tracking API as an alternative to `experiment.outputs_stores.upload_file/dir`.
+   
 ## 0.4.3
 
  * Re-enable possibility to create projects from dashboard.
