@@ -1,4 +1,4 @@
-isMinikube: true
+deploymentType: minikube
 
 rbac:
   enabled: false
