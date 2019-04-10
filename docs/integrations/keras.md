@@ -22,7 +22,7 @@ Polyaxon allows to schedule Keras experiments, and supports tracking metrics, ou
 
 ## Overview
 
-Polyaxon provides a [tracking API](/references/polyaxon-tracking-api/) to track experiment and report metrics, artifacts, logs, and results to a dashboard.
+Polyaxon provides a [tracking API](/references/polyaxon-tracking-api/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard.
 
 ## Tracking Keras experiments
 

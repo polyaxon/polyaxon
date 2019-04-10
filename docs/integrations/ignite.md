@@ -22,7 +22,7 @@ Polyaxon allows to schedule Ignite experiments, and supports tracking metrics, o
 
 ## Overview
 
-Polyaxon provides a [tracking API](/references/polyaxon-tracking-api/) to track experiment and report metrics, artifacts, logs, and results to a dashboard, 
+Polyaxon provides a [tracking API](/references/polyaxon-tracking-api/) to track experiment and report metrics, artifacts, logs, and results to the Polyaxon dashboard, 
 in addition to this high level API, you can leverage the built-in Polyaxon Logger provided by the [Ignite library](https://pytorch.org/ignite/contrib/handlers.html#module-ignite.contrib.handlers.polyaxon_logger).
 
 ## Setup
@@ -35,7 +35,7 @@ pip install polyaxon-client
 
 ## Usage
 
-Ignite provides a build Polyaxon Logger to log params, report metrics, and upload outputs and artifacts automatically.
+Ignite provides a built-in Polyaxon Logger to log params, report metrics, and upload outputs and artifacts automatically.
 
 ```python
 from ignite.contrib.handlers.polyaxon_logger import *
