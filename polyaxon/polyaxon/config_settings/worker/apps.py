@@ -7,6 +7,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'scheduler.apps.SchedulerConfig',
     'events_handlers.apps.EventsHandlersConfig',
     'ci.apps.CIConfig',
+    'crons.apps.CronsConfig',
 )
 
 INSTALLED_APPS += PROJECT_APPS
