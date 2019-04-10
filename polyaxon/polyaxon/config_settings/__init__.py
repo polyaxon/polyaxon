@@ -48,3 +48,5 @@ elif config.is_k8s_events_handlers_service:
     from .k8s_events_handlers import *
 elif config.is_logs_handlers_service:
     from .logs_handlers import *
+elif config.is_worker_service:
+    from .worker import *

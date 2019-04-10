@@ -125,6 +125,10 @@ class ConfigManager(rhea.Rhea):
         return self.service == 'scheduler'
 
     @property
+    def is_worker_service(self):
+        return self.service == 'worker'
+
+    @property
     def is_monitor_statuses_service(self):
         return self.service == 'monitor_statuses'
 
