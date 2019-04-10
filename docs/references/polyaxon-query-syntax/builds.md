@@ -36,6 +36,7 @@ field                         | condition
 `name`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `status`                      | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `tags`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
+`backend`                     | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 
 
 ## Sort

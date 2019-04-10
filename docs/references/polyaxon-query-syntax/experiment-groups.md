@@ -39,6 +39,7 @@ field                         | condition
 `tags`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `search_algorithm`            | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `concurrency`                 | [comparison condition](/references/polyaxon-query-syntax/#query-with-comparison-condition)
+`type`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 
 
 ## Sort

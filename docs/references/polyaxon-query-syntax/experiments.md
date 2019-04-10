@@ -40,6 +40,8 @@ field                         | condition
 `tags`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `declarations.*`              | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `metric.*`                    | [comparison condition](/references/polyaxon-query-syntax/#query-with-comparison-condition)
+`backend`                     | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
+`framework`                   | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 
 
 ## Sort
