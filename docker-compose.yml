@@ -45,7 +45,6 @@ services:
       - "9000:443"
 
     environment:
-      DJANGO_SETTINGS_MODULE: polyaxon.settings
       MEMCACHE_LOCATION: "memcache:11211"
       SETTINGS_ENV_DIR: "dev"
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
