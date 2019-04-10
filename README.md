@@ -158,10 +158,10 @@ once installed, you can set the values for `ingress.tls`:
 ingress:
   enabled: true
   hostName: polyaxon.acme.com
-  tls: 
-  - secretName: polyaxon.acme-tls
-    hosts:
-      - polyaxon.acme.com
+  tls:
+    - secretName: polyaxon.acme-tls
+      hosts:
+        - polyaxon.acme.com
 ```
 
 TLS can have more than one host.
@@ -359,7 +359,7 @@ persistence:
       hostPath: "/outputs"
 ```
 
-> N.B. Multi-outputs is not supported in CE version 
+> N.B. Multi-outputs is not supported in CE version
 
 Example of multi-outputs persistence definition with:
 
@@ -465,11 +465,11 @@ In order to receive email and notifcation with a clickable link to the objects o
 
 ```yaml
 hostName: 159.203.150.212
-``` 
-Or 
+```
+Or
 
 ```yaml
-hostName: polyaxon.foo.com  
+hostName: polyaxon.foo.com
 ```
 
 ### Admin view
@@ -479,7 +479,7 @@ Polyaxon ships with an admin interface, it disabled by default
 
 ```yaml
 adminViewEnabled: true
-``` 
+```
 
 ## Port forwarding
 
@@ -487,7 +487,7 @@ You ca yse port forwarding to access the api and dashboard on you localhost:
 
 ```bash
 kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
-``` 
+```
 
 ## Upgrade Polyaxon
 
