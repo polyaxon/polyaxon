@@ -20,6 +20,7 @@ This is a patch release on top of 0.4.3/0.4.2 containing no breaking changes., t
  * Add dockgen package and initial work on local run mode.
  * Add docs for Polyaxon Client authentication options.
  * Update `log_artifact` and `log_artifacts` methods on the Experiment tracking API as an alternative to `experiment.outputs_stores.upload_file/dir`.
+ * Fix Polyaxon Chart ingress issues and typos.
    
 ## 0.4.3
 
