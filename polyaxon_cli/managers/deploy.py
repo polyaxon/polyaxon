@@ -34,7 +34,9 @@ class DeployManager(object):
 
     @property
     def is_kubernetes(self):
-        return self.deployment_type == DeploymentTypes.KUBERNETES
+        return self.deployment_type in {DeploymentTypes.KUBERNETES,
+                                        DeploymentTypes.MINIKUBE,
+                                        DeploymentTypes.MICRO_K8S}
 
     @property
     def is_docker_compose(self):
