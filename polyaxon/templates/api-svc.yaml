@@ -17,7 +17,7 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
   {{- with .Values.api.service.annotations }}
   annotations:
-  {{ toYaml . | indent 4 }}
+  {{ toYaml . | nindent 4 }}
   {{- end }}
 spec:
   type: {{ .Values.serviceType }}
