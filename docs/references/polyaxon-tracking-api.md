@@ -46,7 +46,7 @@ Polyaxon tracking allow track several aspect of a run, i.e. n experiment or a jo
 
 The [experiment tracking reference](/references/polyaxon-tracking-api/experiments) 
 list a all methods exposed by this module, to learn more how you can use some or all of these methods in a specific context, 
-please check the next section with practical [tracking guides]((/references/polyaxon-tracking-api/#tracking-guides).)
+please check the next section with practical [tracking guides](/references/polyaxon-tracking-api/#tracking-guides).
 
 ## Tracking guides
 
@@ -57,17 +57,17 @@ This section will help you use Polyaxon Tracking module:
     For experiments and jobs running inside a cluster managed by Polyaxon, authentication is done automatically, i.e. you can create an instance of `Experiment` and `Job` 
     without providing any information, all information are setup automatically by Polyaxon.
      
-     * [Experiments](/references/polyaxon-tracking-api/in-cluster/)
+     * [In-cluster Experiments tracking](/references/polyaxon-tracking-api/in-cluster-experiments/)
  
     If you are running a generic job and you wish to get information about that job inside your container
     
-     * [jobs](/references/polyaxon-tracking-api/jobs/) 
+     * [In-cluster jobs tracking](/references/polyaxon-tracking-api/in-cluster-jobs/) 
         
  * On any platform not managed by Polyaxon, laptop, spark, sagemaker, colab, ...
     
      For experiments and jobs running outside a cluster managed by Polyaxon, this guide will show you how to authenticate and track experiments.  
      
-     * [Experiments](/references/polyaxon-tracking-api/other-environments/)
+     * [Other environments Experiments tracking](/references/polyaxon-tracking-api/other-environments/)
  
 
 
