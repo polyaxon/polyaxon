@@ -15,6 +15,9 @@ def logs_collect_experiment_jobs(experiment_uuid: str) -> None:
     except Experiment.DoesNotExist:
         return
 
+    if not experiment.in_cluster:
+        return
+
     if experiment.jobs.count() > 1:
         process_experiment_jobs_logs(experiment=experiment, temp=False)
     else:
@@ -40,6 +43,10 @@ def logs_collect_job(job_uuid: str) -> None:
         job = Job.objects.filter(uuid=job_uuid).get()
     except Job.DoesNotExist:
         return
+
+    if not job.in_cluster:
+        return
+
     process_job_logs(job=job, temp=False)
 
 
@@ -48,4 +55,8 @@ def logs_collect_build_job(build_uuid: str) -> None:
         build = BuildJob.objects.filter(uuid=build_uuid).get()
     except BuildJob.DoesNotExist:
         return
+
+    if build.in_cluster:
+        return
+
     process_build_logs(build=build, temp=False)
