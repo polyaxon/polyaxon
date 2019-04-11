@@ -551,14 +551,14 @@ CELERY_TASK_ROUTES = {
         {'queue': CeleryQueues.CRONS_HEARTBEAT},
 
     CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
-        {'queue': CeleryQueues.CRONS_CLUSTERS},
+        {'queue': CeleryQueues.CRONS_CLUSTERS_DEPLOYMENT},
     CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE:
-        {'queue': CeleryQueues.CRONS_CLUSTERS},
+        {'queue': CeleryQueues.CRONS_CLUSTERS_DEPLOYMENT},
 
     CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO:
-        {'queue': CeleryQueues.CRONS_CLUSTERS_DEPLOYMENT},
+        {'queue': CeleryQueues.CRONS_CLUSTERS},
     CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES:
-        {'queue': CeleryQueues.CRONS_CLUSTERS_DEPLOYMENT},
+        {'queue': CeleryQueues.CRONS_CLUSTERS},
 
     CronsCeleryTasks.CLEAN_ACTIVITY_LOGS:
         {'queue': CeleryQueues.CRONS_CLEAN},
