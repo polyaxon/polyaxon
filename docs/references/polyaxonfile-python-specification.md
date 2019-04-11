@@ -119,7 +119,7 @@ assert spec.build.env_vars == [['KEY1', 'en_US.UTF-8'], ['KEY2', 2]]
 # You can also get the build section as dict for instance
 spec.build.to_dict()
 
-assert spec.run.cmd == 'video_prediction_train --num_masks={{num_masks}}'
+assert spec.run.cmd == 'video_prediction_train --num_masks=2'
 ```  
 
 ## Specifications
