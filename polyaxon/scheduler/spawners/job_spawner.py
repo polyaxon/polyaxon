@@ -1,5 +1,6 @@
 from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
+from kubernetes.config import ConfigException
 
 from constants.k8s_jobs import JOB_NAME
 from libs.unique_urls import get_job_health_url
@@ -141,5 +142,5 @@ class JobSpawner(K8SManager):
         try:
             self.delete_pod(name=self.resource_manager.get_resource_name(), reraise=True)
             return True
-        except PolyaxonK8SError:
+        except (PolyaxonK8SError, ConfigException):
             return False

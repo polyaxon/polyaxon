@@ -3,6 +3,8 @@ from hestia.internal_services import InternalServices
 
 from django.conf import settings
 
+from kubernetes.config import ConfigException
+
 import conf
 
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME
@@ -189,5 +191,5 @@ class DockerizerSpawner(K8SManager):
         try:
             self.delete_pod(name=self.resource_manager.get_resource_name(), reraise=True)
             return True
-        except PolyaxonK8SError:
+        except (PolyaxonK8SError, ConfigException):
             return False

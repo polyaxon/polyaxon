@@ -1,6 +1,8 @@
 import json
 import random
 
+from kubernetes.config import ConfigException
+
 import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
@@ -238,5 +240,5 @@ class TensorboardSpawner(ProjectJobSpawner):
             if self._use_ingress():
                 self.delete_ingress(name=deployment_name)
             return True
-        except PolyaxonK8SError:
+        except (PolyaxonK8SError, ConfigException):
             return False

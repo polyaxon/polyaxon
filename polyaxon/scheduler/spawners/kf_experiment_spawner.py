@@ -1,3 +1,5 @@
+from kubernetes.config import ConfigException
+
 from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from polyaxon_k8s.exceptions import PolyaxonK8SError
@@ -148,5 +150,5 @@ class KFExperimentSpawner(ExperimentSpawner):
                                       version=self.VERSION,
                                       plural=self.PLURAL)
             return True
-        except PolyaxonK8SError:
+        except (PolyaxonK8SError, ConfigException):
             return False

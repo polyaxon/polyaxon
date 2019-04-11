@@ -4,6 +4,7 @@ import random
 from hestia.auth import AuthenticationTypes
 from hestia.crypto import get_hmac
 from hestia.internal_services import InternalServices
+from kubernetes.config import ConfigException
 
 import conf
 
@@ -254,5 +255,5 @@ class NotebookSpawner(ProjectJobSpawner):
             if self._use_ingress():
                 self.delete_ingress(name=resource_name)
             return True
-        except PolyaxonK8SError:
+        except (PolyaxonK8SError, ConfigException):
             return False

@@ -2,6 +2,7 @@ import uuid
 
 from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
+from kubernetes.config import ConfigException
 
 import conf
 
@@ -264,7 +265,7 @@ class ExperimentSpawner(K8SManager):
         for i in range(n_pods):
             try:
                 self._delete_job(task_type=task_type, task_idx=i, has_service=has_service)
-            except PolyaxonK8SError:
+            except (PolyaxonK8SError, ConfigException):
                 deleted = False
         return deleted
 
@@ -293,7 +294,7 @@ class ExperimentSpawner(K8SManager):
         try:
             self._delete_job(task_type=TaskType.MASTER, task_idx=0, has_service=self.MASTER_SERVICE)
             return True
-        except PolyaxonK8SError:
+        except (PolyaxonK8SError, ConfigException):
             return False
 
     def create_experiment_config_map(self):
