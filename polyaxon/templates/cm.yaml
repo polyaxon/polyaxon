@@ -72,6 +72,7 @@ data:
   POLYAXON_TTL_WATCH_STATUSES: {{ .Values.ttl.watchStatuses | quote }}
   {{- end }}
   POLYAXON_ENVIRONMENT: {{ default "production" .Values.environment | quote }}
+  POLYAXON_TIME_ZONE: {{ .Values.timeZone | quote }}
   # Run Env
   {{- if ge (int (include "k8s.minor" .)) 8 }}
   POLYAXON_K8S_GPU_RESOURCE_KEY: "nvidia.com/gpu"
@@ -289,7 +290,7 @@ data:
   POLYAXON_INTEGRATIONS_HIPCHAT_WEBHOOKS: {{ toJson .Values.integrations.hipchat | quote }}
   {{- end }}
   {{- if .Values.integrations.mattermost }}
-  POLYAXON_INTEGRATIONS_HIPCHAT_WEBHOOKS: {{ toJson .Values.integrations.mattermost | quote }}
+  POLYAXON_INTEGRATIONS_MATTERMOST_WEBHOOKS: {{ toJson .Values.integrations.mattermost | quote }}
   {{- end }}
   {{- if .Values.integrations.discord }}
   POLYAXON_INTEGRATIONS_DISCORD_WEBHOOKS: {{ toJson .Values.integrations.discord | quote }}
