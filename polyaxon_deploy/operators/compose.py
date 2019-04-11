@@ -19,6 +19,8 @@ class ComposeOperator(CmdOperator):
 
     @classmethod
     def generate_deploy_env(cls, config):
+        # pylint:disable=too-many-statements
+        # pylint:disable=too-many-branches
         template = '{}.{}'
         env = [
             template.format('POLYAXON_DEPLOYMENT_TYPE', config.deploymentType),
@@ -56,7 +58,8 @@ class ComposeOperator(CmdOperator):
                 env.append(template.format('POLYAXON_AUTH_GITHUB_CLIENT_SECRET',
                                            config.auth.github.clientSecret))
             elif config.auth.bitbucket and config.auth.bitbucket.enabled:
-                env.append(template.format('POLYAXON_AUTH_BITBUCKET', config.auth.bitbucket.enabled))
+                env.append(template.format('POLYAXON_AUTH_BITBUCKET',
+                                           config.auth.bitbucket.enabled))
                 env.append(template.format('POLYAXON_AUTH_BITBUCKET_CLIENT_ID',
                                            config.auth.bitbucket.clientId))
                 env.append(template.format('POLYAXON_AUTH_BITBUCKET_CLIENT_SECRET',
