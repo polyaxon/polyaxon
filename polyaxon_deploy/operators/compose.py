@@ -18,10 +18,10 @@ class ComposeOperator(CmdOperator):
         return cls._execute(params=params, env=None)
 
     @classmethod
-    def generate_deploy_env(cls, config):
+    def generate_env(cls, config):
         # pylint:disable=too-many-statements
         # pylint:disable=too-many-branches
-        template = '{}.{}'
+        template = '{}={}'
         env = [
             template.format('POLYAXON_DEPLOYMENT_TYPE', config.deploymentType),
         ]
@@ -31,7 +31,7 @@ class ComposeOperator(CmdOperator):
             env.append(template.format('POLYAXON_CLUSTER_ID', config.clusterId))
         if config.namespace:
             env.append(template.format('POLYAXON_K8S_NAMESPACE', config.namespace))
-        if config.ssl.enabled and config.ssl.path:
+        if config.ssl and config.ssl.enabled and config.ssl.path:
             env.append(template.format('POLYAXON_SSL_ENABLED', config.ssl.enabled))
             env.append(template.format('POLYAXON_SSL_PATH', config.ssl.path))
         env.append(template.format('POLYAXON_ADMIN_VIEW_ENABLED', config.adminViewEnabled or False))

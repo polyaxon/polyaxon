@@ -14,7 +14,7 @@ DUMMY_RETURN_VALUE = object()
 class TestComposeOperator(TestCase):
 
     def setUp(self):
-        self.docker = ComposeOperator()
+        self.compose = ComposeOperator()
 
     @staticmethod
     def mock_popen(return_code, out_msg, err_msg=None):
@@ -31,7 +31,7 @@ class TestComposeOperator(TestCase):
     @mock.patch('polyaxon_deploy.operators.cmd_operator.subprocess')
     def test_docker_compose(self, mock_subprocess):
         mock_subprocess.Popen = self.mock_popen(0, 'bar')
-        assert self.docker.execute(['up']) == 'bar'
+        assert self.compose.execute(['up']) == 'bar'
         assert mock_subprocess.Popen.call_args[0][0] == ['docker-compose', 'up']
 
     @mock.patch('polyaxon_deploy.operators.cmd_operator.subprocess')
@@ -41,7 +41,7 @@ class TestComposeOperator(TestCase):
         stderr = "error"
         mock_subprocess.Popen = self.mock_popen(return_code, stdout, stderr)
         with self.assertRaises(OperatorException) as exception:
-            self.docker.execute(['down'])
+            self.compose.execute(['down'])
 
         self.assertEqual(
             exception.exception.message,
