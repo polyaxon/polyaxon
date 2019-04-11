@@ -12,14 +12,15 @@ from polyaxon_deploy.operators.exceptions import OperatorException
 class CmdOperator(object):
     CMD = ''
 
-    def _execute(self, params, env, is_json=False):
+    @classmethod
+    def _execute(cls, params, env, is_json=False):
         with TemporaryFile('w+') as stdout, TemporaryFile('w+') as stderr:
             ps = subprocess.Popen(params, env=env, stdout=stdout, stderr=stderr)
             exit_status = ps.wait()
             stdout.seek(0)
             stderr.seek(0)
             if exit_status != 0:
-                raise OperatorException(cmd=self.CMD,
+                raise OperatorException(cmd=cls.CMD,
                                         args=params,
                                         return_code=exit_status,
                                         stdout=stdout,

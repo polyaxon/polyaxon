@@ -10,8 +10,9 @@ from polyaxon_deploy.operators.cmd_operator import CmdOperator
 class KubectlOperator(CmdOperator):
     CMD = 'kubectl'
 
-    def params(self, args, is_json):
-        params = [self.CMD] + args
+    @classmethod
+    def params(cls, args, is_json):
+        params = [cls.CMD] + args
         if is_json:
             params += ['-o', 'json']
         return params
@@ -28,6 +29,7 @@ class KubectlOperator(CmdOperator):
         ))
         return env
 
-    def execute(self, args, is_json=True):
-        params = self.params(args, is_json=is_json)
-        return self._execute(params=params, env=self.env(), is_json=is_json)
+    @classmethod
+    def execute(cls, args, is_json=True):
+        params = cls.params(args, is_json=is_json)
+        return cls._execute(params=params, env=cls.env(), is_json=is_json)

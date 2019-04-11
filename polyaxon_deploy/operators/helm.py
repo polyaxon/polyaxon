@@ -7,10 +7,12 @@ from polyaxon_deploy.operators.cmd_operator import CmdOperator
 class HelmOperator(CmdOperator):
     CMD = 'helm'
 
-    def params(self, args):
-        params = [self.CMD] + args
+    @classmethod
+    def params(cls, args):
+        params = [cls.CMD] + args
         return params
 
-    def execute(self, args):
-        params = self.params(args)
-        return self._execute(params=params, env=None)
+    @classmethod
+    def execute(cls, args):
+        params = cls.params(args)
+        return cls._execute(params=params, env=None)

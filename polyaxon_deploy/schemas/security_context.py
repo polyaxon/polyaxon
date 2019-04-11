@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, ValidationError, validates_schema
-
+from marshmallow import ValidationError, fields, validates_schema
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 
 
