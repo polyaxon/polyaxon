@@ -9,7 +9,6 @@ tags:
     - specifications
     - polyaxon
     - python
-sidebar: "polyaxon-yaml-specification"
 ---
 
 In order to use Polyaxon, users can author and read polyaxonfiles in programmatic way using Python. 
