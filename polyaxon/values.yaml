@@ -616,6 +616,7 @@ queues:
   cronsExperiments: 'queues.crons.experiments'
   cronsPipelines: 'queues.crons.pipelines'
   cronsClusters: 'queues.crons.clusters'
+  cronsClustersDeployment: 'queues.crons.clusters_deployment'
   cronsClean: 'queues.crons.clean'
 
   hpHealth: 'queues.hp.health'
