@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_cli.cli.admin import admin
 from polyaxon_cli.cli.auth import login, logout, whoami
 from polyaxon_cli.cli.bookmark import bookmark
 from polyaxon_cli.cli.build import build
@@ -70,5 +71,6 @@ cli.add_command(upload)
 cli.add_command(run)
 cli.add_command(dashboard)
 cli.add_command(bookmark)
+cli.add_command(admin)
 cli.add_command(deploy)
 cli.add_command(teardown)

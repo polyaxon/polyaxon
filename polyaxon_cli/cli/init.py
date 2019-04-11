@@ -7,7 +7,6 @@ import sys
 import click
 import clint
 
-
 from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
