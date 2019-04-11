@@ -479,7 +479,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
-        assert run.cmd == "video_prediction_train --model=DNA --num_masks=1"
+        assert run.cmd == "video_prediction_train --num_masks=2"
 
     def test_run_simple_file_with_cmds_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file_list_cmds.yml'))
