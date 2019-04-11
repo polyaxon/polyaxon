@@ -154,6 +154,7 @@ class CronsCeleryTasks(object):
     CLUSTERS_NODES_NOTIFICATION_ALIVE = 'clusters_nodes_notification_alive'
     CLUSTERS_UPDATE_SYSTEM_NODES = 'clusters_update_system_nodes'
     CLUSTERS_UPDATE_SYSTEM_INFO = 'clusters_update_system_info'
+
     CLEAN_ACTIVITY_LOGS = 'clean_activity_logs'
     CLEAN_NOTIFICATIONS = 'clean_notifications'
 
@@ -352,6 +353,7 @@ class CeleryQueues(object):
     CRONS_HEARTBEAT = config.get_string('POLYAXON_QUEUES_CRONS_HEARTBEAT')
     CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
     CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
+    CRONS_CLUSTERS_DEPLOYMENT = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS_DEPLOYMENT')
     CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS')
     CRONS_CLEAN = config.get_string('POLYAXON_QUEUES_CRONS_CLEAN')
 
@@ -550,12 +552,14 @@ CELERY_TASK_ROUTES = {
 
     CronsCeleryTasks.CLUSTERS_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
-    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO:
-        {'queue': CeleryQueues.CRONS_CLUSTERS},
-    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES:
-        {'queue': CeleryQueues.CRONS_CLUSTERS},
     CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE:
         {'queue': CeleryQueues.CRONS_CLUSTERS},
+
+    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO:
+        {'queue': CeleryQueues.CRONS_CLUSTERS_DEPLOYMENT},
+    CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES:
+        {'queue': CeleryQueues.CRONS_CLUSTERS_DEPLOYMENT},
+
     CronsCeleryTasks.CLEAN_ACTIVITY_LOGS:
         {'queue': CeleryQueues.CRONS_CLEAN},
     CronsCeleryTasks.CLEAN_NOTIFICATIONS:
