@@ -65,6 +65,11 @@ mountPaths:
     bin: ""
     libcuda: ""
 
+# WARNING: Please do not user this option yet
+securityContext:
+  user:
+  group:
+
 persistence:
   logs:
     existingClaim:

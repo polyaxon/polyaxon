@@ -122,7 +122,7 @@ data:
   # SSL
   {{- if and .Values.ssl.enabled .Values.ssl.secretName }}
   POLYAXON_SSL_ENABLED: "true"
-  {{- if and .Values.ssl.path }}
+  {{- if .Values.ssl.path }}
   POLYAXON_SSL_PATH:  {{ .Values.ssl.path | quote }}
   {{- end }}
   {{- end }}
@@ -193,6 +193,11 @@ data:
   POLYAXON_REDIS_GROUP_CHECKS_URL: redis://{{ template "redis.fullname" . }}:6379/9
   POLYAXON_REDIS_HOST: {{ template "redis.fullname" . }}
   POLYAXON_REDIS_PORT: "6379"
+  # Security Context
+  {{- if and .Values.securityContext.user .Values.securityContext.group }}
+  POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
+  POLYAXON_SECURITY_CONTEXT_GROUP: {{ .Values.securityContext.group | quote }}
+  {{- end }}
   # Spawner
   POLYAXON_JOB_SIDECAR_LOG_SLEEP_INTERVAL: "1"
   POLYAXON_PUBLIC_PLUGIN_JOBS: {{ default false .Values.publicJobs | quote }}
