@@ -17,6 +17,7 @@ from polyaxon_deploy.schemas.scheduling import (
     NodeSelectorsSchema,
     TolerationsSchema
 )
+from polyaxon_deploy.schemas.security_context import SecurityContextSchema
 from polyaxon_deploy.schemas.service import (
     ApiSchema,
     DockerRegistrySchema,
@@ -54,6 +55,7 @@ class DeploymentSchema(BaseSchema):
     api = fields.Nested(ApiSchema, allow_none=True)
     streams = fields.Nested(ApiSchema, allow_none=True)
     scheduler = fields.Nested(ServiceSchema, allow_none=True)
+    worker = fields.Nested(ServiceSchema, allow_none=True)
     hpsearch = fields.Nested(ServiceSchema, allow_none=True)
     eventsHandlers = fields.Nested(ServiceSchema, allow_none=True)
     k8sEventsHandlers = fields.Nested(ServiceSchema, allow_none=True)
@@ -97,6 +99,7 @@ class DeploymentSchema(BaseSchema):
     buildBackend = fields.Str(allow_none=True)
     dirs = fields.Dict(allow_none=True)
     mountPaths = fields.Dict(allow_none=True)
+    securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -128,6 +131,7 @@ class DeploymentConfig(BaseConfig):
                  api=None,
                  streams=None,
                  scheduler=None,
+                 worker=None,
                  hpsearch=None,
                  eventsHandlers=None,
                  k8sEventsHandlers=None,
@@ -168,7 +172,8 @@ class DeploymentConfig(BaseConfig):
                  trackerBackend=None,
                  buildBackend=None,
                  dirs=None,
-                 mountPaths=None):
+                 mountPaths=None,
+                 securityContext=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
         self.clusterId = clusterId
@@ -190,6 +195,7 @@ class DeploymentConfig(BaseConfig):
         self.api = api
         self.streams = streams
         self.scheduler = scheduler
+        self.worker = worker
         self.hpsearch = hpsearch
         self.eventsHandlers = eventsHandlers
         self.k8sEventsHandlers = k8sEventsHandlers
@@ -231,3 +237,4 @@ class DeploymentConfig(BaseConfig):
         self.buildBackend = buildBackend
         self.dirs = dirs
         self.mountPaths = mountPaths
+        self.securityContext = securityContext
