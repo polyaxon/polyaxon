@@ -17,6 +17,7 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 data:
   # Cluster
+  POLYAXON_DEPLOYMENT_TYPE: {{ default "kubernetes" .Values.deploymentType | quote }}
   POLYAXON_CLUSTER_ID: {{ default "" .Values.clusterId | quote }}
   {{- if .Values.allowedHosts }}
   POLYAXON_ALLOWED_HOSTS: {{ toJson .Values.allowedHosts | quote }}
