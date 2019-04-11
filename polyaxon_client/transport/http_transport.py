@@ -18,8 +18,6 @@ from polyaxon_client.logger import logger
 
 class HttpTransportMixin(object):
     """HTTP operations transport."""
-    MAX_UPLOAD_SIZE = 1024 * 1024 * 150
-
     @property
     def session(self):
         if not hasattr(self, '_session'):
@@ -119,13 +117,23 @@ class HttpTransportMixin(object):
                headers=None,
                session=None):
 
-        if files_size > self.MAX_UPLOAD_SIZE:
+        if files_size > settings.WARN_UPLOAD_SIZE:
+            logger.warning(
+                "You are uploading %s, there's a hard limit of %s.\n"
+                "If you have data files in the current directory, "
+                "please make sure to add them to .polyaxonignore or "
+                "add them directly to your data volume, or upload them "
+                "separately using `polyaxon data` command and remove them from here.\n",
+                self.format_sizeof(settings.WARN_UPLOAD_SIZE),
+                self.format_sizeof(settings.MAX_UPLOAD_SIZE))
+
+        if files_size > settings.MAX_UPLOAD_SIZE:
             raise PolyaxonShouldExitError(
                 "Files too large to sync, please keep it under {}.\n"
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
                 "separately using `polyaxon data` command and remove them from here.\n".format(
-                    self.format_sizeof(self.MAX_UPLOAD_SIZE)))
+                    self.format_sizeof(settings.MAX_UPLOAD_SIZE)))
 
         files = to_list(files)
         if json_data:
