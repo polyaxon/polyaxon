@@ -3,12 +3,16 @@ from __future__ import absolute_import, division, print_function
 
 import click
 
+from polyaxon_deploy.operators.compose import ComposeOperator
+from polyaxon_deploy.operators.docker import DockerOperator
 from polyaxon_deploy.operators.helm import HelmOperator
 from polyaxon_deploy.operators.kubectl import KubectlOperator
 from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
 
 from polyaxon_cli.exceptions import PolyaxonDeploymentConfigError
+from polyaxon_cli.managers.compose import ComposeConfigManager
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.transport import Transport
 
 
 class DeployManager(object):
@@ -19,6 +23,8 @@ class DeployManager(object):
         self.manager_path = manager_path
         self.kubectl = KubectlOperator()
         self.helm = HelmOperator()
+        self.docker = DockerOperator()
+        self.compose = ComposeOperator()
 
     @property
     def deployment_type(self):
@@ -82,6 +88,20 @@ class DeployManager(object):
         return True
 
     def check_for_docker_compose(self):
+        # Deployment on docker compose requires Docker & Docker Compose to be installed
+        command_exist = self.docker.execute(args=['version'])
+        if not command_exist:
+            raise PolyaxonDeploymentConfigError('Docker is required to run this command.')
+        Printer.print_success('Docker is installed')
+
+        command_exist = self.compose.execute(args=['version'])
+        if not command_exist:
+            raise PolyaxonDeploymentConfigError('Docker Compose is required to run this command.')
+        Printer.print_success('Docker Compose is installed')
+
+        # Check that .polyaxon/.compose is set and up-to date
+        if ComposeConfigManager.is_initialized():
+            Printer.print_success('Docker Compose deployment is initialised.')
         return True
 
     def check_for_docker(self):
@@ -130,7 +150,24 @@ class DeployManager(object):
         Printer.print_success('Deployment finished.')
 
     def install_on_docker_compose(self):
-        pass
+        path = ComposeConfigManager.get_config_file_path()
+        path = '/'.join(path.split('/')[:-2])
+        # Fetch docker-compose
+        Transport().download(
+            url='https://github.com/polyaxon/polyaxon-compose/archive/master.tar.gz',
+            filename=path + '/file',
+            untar=True,
+            delete_tar=True,
+            extract_path=path)
+        # Generate env from config
+        ComposeConfigManager.set_config(self.compose.generate_env(self.config))
+        Printer.print_success('Docker Compose deployment is initialised.')
+        self.docker.execute(['volume', 'create', '--name=polyaxon-postgres'])
+        Printer.print_success('Docker volume created.')
+        self.compose.execute(['-f', path + '/polyaxon-compose-master/docker-compose.yml', 'up', '-d'])
+        Printer.print_success('Deployment is running in the background.')
+        Printer.print_success('You can configure your CLI by running: '
+                              'polyaxon config set --host=localhost --http_port=8000.')
 
     def install_on_docker(self):
         pass
@@ -169,7 +206,7 @@ class DeployManager(object):
         Printer.print_success('Deployment upgraded.')
 
     def upgrade_on_docker_compose(self):
-        pass
+        self.install_on_docker_compose()
 
     def upgrade_on_docker(self):
         pass
@@ -200,8 +237,10 @@ class DeployManager(object):
         self.helm.execute(args=args)
         Printer.print_success('Deployment successfully deleted.')
 
-    def teardown_on_docker_compose(self, hooks):
-        pass
+    def teardown_on_docker_compose(self):
+        path = ComposeConfigManager.get_config_file_path()
+        path = '/'.join(path.split('/')[:-1])
+        self.compose.execute(['-f', path + '/docker-compose.yml', 'down'])
 
     def teardown_on_docker(self, hooks):
         pass
@@ -218,7 +257,7 @@ class DeployManager(object):
         if self.is_kubernetes:
             self.teardown_on_kubernetes(hooks=hooks)
         elif self.is_docker_compose:
-            self.teardown_on_docker_compose(hooks=hooks)
+            self.teardown_on_docker_compose()
         elif self.is_docker:
             self.teardown_on_docker(hooks=hooks)
         elif self.is_heroku:
