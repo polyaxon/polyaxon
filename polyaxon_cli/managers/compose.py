@@ -8,7 +8,7 @@ class ComposeConfigManager(BaseConfigManager):
     """Manages access cli configuration .polyaxoncli file."""
 
     IS_GLOBAL = True
-    CONFIG_FILE_NAME = '.compose/polyaxon-compose/polyaxon-compose-master/.env'
+    CONFIG_FILE_NAME = '.compose/.env'
     FREQUENCY = 3
 
     @classmethod

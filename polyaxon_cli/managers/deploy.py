@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import shutil
+
 import click
 
 from polyaxon_deploy.operators.compose import ComposeOperator
@@ -151,7 +153,7 @@ class DeployManager(object):
 
     def install_on_docker_compose(self):
         path = ComposeConfigManager.get_config_file_path()
-        path = '/'.join(path.split('/')[:-2])
+        path = '/'.join(path.split('/')[:-1])
         # Fetch docker-compose
         Transport().download(
             url='https://github.com/polyaxon/polyaxon-compose/archive/master.tar.gz',
@@ -159,12 +161,20 @@ class DeployManager(object):
             untar=True,
             delete_tar=True,
             extract_path=path)
+        # Move necessary info
+        shutil.copy(path + '/polyaxon-compose-master/docker-compose.yml',
+                    path + '/docker-compose.yml')
+        shutil.copy(path + '/polyaxon-compose-master/components.env',
+                    path + '/components.env')
+        shutil.copy(path + '/polyaxon-compose-master/base.env',
+                    path + '/base.env')
+        shutil.rmtree(path + '/polyaxon-compose-master/')
         # Generate env from config
         ComposeConfigManager.set_config(self.compose.generate_env(self.config))
         Printer.print_success('Docker Compose deployment is initialised.')
         self.docker.execute(['volume', 'create', '--name=polyaxon-postgres'])
         Printer.print_success('Docker volume created.')
-        self.compose.execute(['-f', path + '/polyaxon-compose-master/docker-compose.yml', 'up', '-d'])
+        self.compose.execute(['-f', path + '/docker-compose.yml', 'up', '-d'])
         Printer.print_success('Deployment is running in the background.')
         Printer.print_success('You can configure your CLI by running: '
                               'polyaxon config set --host=localhost --http_port=8000.')
