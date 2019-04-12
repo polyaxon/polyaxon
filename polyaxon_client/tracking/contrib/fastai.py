@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from fastai.callbacks import TrackerCallback
+from polyaxon_client.exceptions import PolyaxonClientException
+
+try:
+    from fastai.callbacks import TrackerCallback
+except ImportError:
+    raise PolyaxonClientException('Fastai is required to use PolyaxonFastai')
 
 
 class PolyaxonFastai(TrackerCallback):
