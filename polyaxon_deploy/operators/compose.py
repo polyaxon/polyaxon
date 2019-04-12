@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import uuid
+
 from polyaxon_deploy.operators.cmd_operator import CmdOperator
 
 
@@ -31,6 +33,10 @@ class ComposeOperator(CmdOperator):
             env.append(template.format('POLYAXON_CLUSTER_ID', config.clusterId))
         if config.namespace:
             env.append(template.format('POLYAXON_K8S_NAMESPACE', config.namespace))
+        env.append(template.format('POLYAXON_SECRET_KEY',
+                                   config.polyaxonSecret or uuid.uuid4().hex))
+        env.append(template.format('POLYAXON_SECRET_INTERNAL_TOKEN',
+                                   config.internalToken or uuid.uuid4().hex))
         if config.ssl and config.ssl.enabled and config.ssl.path:
             env.append(template.format('POLYAXON_SSL_ENABLED', config.ssl.enabled))
             env.append(template.format('POLYAXON_SSL_PATH', config.ssl.path))
@@ -40,7 +46,7 @@ class ComposeOperator(CmdOperator):
                 template.format('POLYAXON_TIMEZONE', config.timeZone or False))
         if config.worker and config.worker.concurrency:
             env.append(
-                template.format('POLYAXON_WORKER_CONCURRENCY', config.timeZone or False))
+                template.format('POLYAXON_WORKER_CONCURRENCY', config.worker.concurrency or 1))
         if config.email:
             env.append(template.format('POLYAXON_EMAIL_HOST', config.email.host))
             env.append(template.format('POLYAXON_EMAIL_PORT', config.email.port))

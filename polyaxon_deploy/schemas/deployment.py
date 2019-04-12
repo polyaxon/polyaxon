@@ -39,6 +39,8 @@ class DeploymentSchema(BaseSchema):
     clusterId = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
     rbac = fields.Nested(RBACSchema, allow_none=True)
+    polyaxonSecret = fields.Str(allow_none=True)
+    internalToken = fields.Str(allow_none=True)
     ssl = fields.Nested(SSLSchema, allow_none=True)
     serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
     adminViewEnabled = fields.Bool(allow_none=True)
@@ -115,6 +117,8 @@ class DeploymentConfig(BaseConfig):
                  clusterId=None,
                  namespace=None,
                  rbac=None,
+                 polyaxonSecret=None,
+                 internalToken=None,
                  ssl=None,
                  serviceType=None,
                  adminViewEnabled=None,
@@ -179,6 +183,8 @@ class DeploymentConfig(BaseConfig):
         self.clusterId = clusterId
         self.namespace = namespace
         self.rbac = rbac
+        self.polyaxonSecret = polyaxonSecret
+        self.internalToken = internalToken
         self.ssl = ssl
         self.serviceType = serviceType
         self.adminViewEnabled = adminViewEnabled
