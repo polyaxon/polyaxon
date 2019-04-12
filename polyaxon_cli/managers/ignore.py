@@ -33,6 +33,7 @@ class Pattern(namedtuple("Pattern", "pattern is_exclude re")):
 
 def translate(pat):
     def _translate_segment():
+        # pylint:disable=undefined-loop-variable
         if segment == '*':
             return '[^/]+'
         res = ''
@@ -69,11 +70,9 @@ def translate(pat):
     res = '(?ms)'
 
     if '/' not in pat[:-1]:
-        # If there's no slash, this is a filename-based match
         res += '(.*/)?'
 
     if pat.startswith('**/'):
-        # Leading **/
         pat = pat[2:]
         res += '(.*/)?'
 
