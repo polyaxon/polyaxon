@@ -214,6 +214,8 @@ class ExperimentApi(BaseApiHandler):
                 return int(value)
             if isinstance(value, np.floating):
                 return float(value)
+            if hasattr(value, 'item'):
+                return value.item()
             raise PolyaxonClientException(
                 'Client could not parse the value `{}`, it expects a number.'.format(value))
 
