@@ -41,6 +41,7 @@ class ComposeOperator(CmdOperator):
             env.append(template.format('POLYAXON_SSL_ENABLED', config.ssl.enabled))
             env.append(template.format('POLYAXON_SSL_PATH', config.ssl.path))
         env.append(template.format('POLYAXON_ADMIN_VIEW_ENABLED', config.adminViewEnabled or False))
+        env.append(template.format('POLYAXON_ADMIN_MODELS', config.adminModels))
         if config.timeZone:
             env.append(
                 template.format('POLYAXON_TIMEZONE', config.timeZone or False))
