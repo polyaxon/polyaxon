@@ -12,7 +12,7 @@ except ImportError:
 class PolyaxonFastai(TrackerCallback):
 
     def __init__(self, learn, experiment, monitor='val_loss', mode='auto'):
-        super().__init__(learn, monitor=monitor, mode=mode)
+        super(PolyaxonFastai, self).__init__(learn, monitor=monitor, mode=mode)
         self.experiment = experiment
 
     def on_epoch_end(self, epoch, smooth_loss, last_metrics, **kwargs):
