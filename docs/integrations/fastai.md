@@ -26,13 +26,13 @@ Polyaxon provides a [tracking API](/references/polyaxon-tracking-api/) to track 
 
 ## Tracking Fastai experiments
 
-Polyaxon provides a Fastai callback, you can use this callback with your experiment to report metrics automatically
+Polyaxon provides a Fastai callback. You can use this callback with your experiment to report metrics automatically:
 
 ### As a fit callback
 
 ```python
 from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.fastai import Polyaxonfastai
+from polyaxon_client.tracking.contrib.fastai import PolyaxonFastai
 
 ...
 experiment = Experiment()
@@ -40,16 +40,16 @@ experiment = Experiment()
 learn.fit_one_cycle(1, 0.02, callbacks=[PolyaxonFastai(learn=learn, experiment=experiment, monitor='accuracy')])
 ```
 
-## As a partial function
+### As a partial function
 
 ```python
 from functools import partial
 
 from polyaxon_client.tracking import Experiment
-from polyaxon_client.tracking.contrib.fastai import Polyaxonfastai
+from polyaxon_client.tracking.contrib.fastai import PolyaxonFastai
 
 ...
 experiment = Experiment()
 ...
-Learner(..., callback_fns=partial(Polyaxonfastai, experiment=experiment, ...), ...)
+Learner(..., callback_fns=partial(PolyaxonFastai, experiment=experiment, ...), ...)
 ```
