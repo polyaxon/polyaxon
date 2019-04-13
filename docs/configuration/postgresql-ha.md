@@ -73,3 +73,5 @@ postgresql:
   postgresDatabase: postgres
   externalPostgresHost: 35.262.163.88
 ```
+
+Please check this [integration guide](/integrations/database/) for cloud specific instructions on how to setup a postgreSQL server instance.

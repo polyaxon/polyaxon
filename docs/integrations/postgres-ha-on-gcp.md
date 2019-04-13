@@ -14,5 +14,49 @@ tags:
   - database
 featured: false
 visibility: public
-status: coming-soon
+status: published
 ---
+
+This integration is about using Google CLOUD SQL for postgres server to provide a High Available database for Polyaxon.
+
+> You can use this integration can used with all Polyaxon deployment types
+
+## Create a Google Cloud Project
+
+If you don't have a Google Cloud Project you have to create one:
+
+```bash
+gcloud projects create <project>
+```
+
+## Create a Google Cloud SQL Postgres instance
+
+```bash
+gcloud sql instances create <databse_name> --database-version POSTGRES_9_6 \
+       --cpu 1 --memory 3840MiB --region eastus --project <project>
+```
+
+Once the instance is created, set a password for the default postgres user. Make sure you substitute `<password>` with a strong password.
+
+```bash
+gcloud sql users set-password postgres --instance <databse_name> \
+       --password <password> --project <project>
+```
+
+## Setup a private IP address
+
+In order to connect to the Cloud SQL instance, you need to setup a private address to connect from Polyaxon to the database instance. 
+Please check this [guide](https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine)
+
+
+## Update polyaxon deployment
+
+```python
+postgresql:
+  enabled: false
+  postgresUser: <username>
+  postgresPassword: <password>
+  postgresDatabase: <database>
+  externalPostgresHost: <server_name>
+``` 
+

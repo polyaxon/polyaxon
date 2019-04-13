@@ -14,5 +14,48 @@ tags:
   - database
 featured: false
 visibility: public
-status: coming-soon
+status: published
 ---
+
+This integration is about using AWS RDS for postgres server to provide a High Available database for Polyaxon.
+
+> You can use this integration can used with all Polyaxon deployment types
+
+## Create an RDS instance
+
+Log into your [AWS Console](https://console.aws.amazon.com/console/home), click the EC2 link to go to the [RDS Console](https://console.aws.amazon.com/rds/home), 
+and click the blue “Create Database” button:
+
+![create-db](../../content/images/integrations/aws/create-db.png)
+
+Make sure to choose the “PostgreSQL” engine when creating an instance:
+
+![create-postgresql](../../content/images/integrations/aws/create-pgsql.png)
+
+Click “Next” and choose “Production” or “Dev/Test” based on your use-case.
+
+## Choose an instance for the RDS database
+
+![create-postgresql](../../content/images/integrations/aws/db-resource.png)
+
+Scroll down and setup the credentials. Keep note of the credentials (master username and password, database name etc.), which will be required later. 
+
+## VPC and security group
+
+Choose a VPC and security group, If you are going to deploy Polyaxon on AWS, then make sure the VPC used here is same as the VPC used with your EC2/ECS instances.
+
+> N.B: If you are planning to deploy Polyaxon outside AWS (e.g. On-prem, Polyaxon tracking on Heroku), then you have to make this DB instance publicly accessible.
+
+> N.B: Make sure, the security group you choose has appropriate rules for inbound connections from wherever you deploy the Polyaxon.
+
+
+## Update polyaxon deployment
+
+```python
+postgresql:
+  enabled: false
+  postgresUser: <username>
+  postgresPassword: <password>
+  postgresDatabase: <database>
+  externalPostgresHost: <server_name>
+``` 
