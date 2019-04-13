@@ -22,33 +22,20 @@ Please check the [polyaxon cli reference](https://docs.polyaxon.com/references/p
 
 ## Commands References
 
- * [Auth](https://docs.polyaxon.com/references/polyaxon-cli/auth/)
- * [Check](https://docs.polyaxon.com/references/polyaxon-cli/check)
- * [User](https://docs.polyaxon.com/references/polyaxon-cli/user)
- * [Super User role](https://docs.polyaxon.com/references/polyaxon-cli/superuser)
- * [Config](https://docs.polyaxon.com/references/polyaxon-cli/config)
- * [Init](https://docs.polyaxon.com/references/polyaxon-cli/init)
- * [Project](https://docs.polyaxon.com/references/polyaxon-cli/project)
- * [Upload](https://docs.polyaxon.com/references/polyaxon-cli/upload)
- * [Run](https://docs.polyaxon.com/references/polyaxon-cli/run)
- * [Experiment Group](https://docs.polyaxon.com/references/polyaxon-cli/experiment-group)
- * [Experiment](https://docs.polyaxon.com/references/polyaxon-cli/experiment)
- * [Job](https://docs.polyaxon.com/references/polyaxon-cli/job)
- * [Build](https://docs.polyaxon.com/references/polyaxon-cli/build)
- * [Dashboard](https://docs.polyaxon.com/references/polyaxon-cli/dashboard)
- * [Tensorboard](https://docs.polyaxon.com/references/polyaxon-cli/tensorboard)
- * [Notebook](https://docs.polyaxon.com/references/polyaxon-cli/notebook)
- * [Cluster](https://docs.polyaxon.com/references/polyaxon-cli/cluster)
- * [Version](https://docs.polyaxon.com/references/polyaxon-cli/version)
+Please run:
+
+```python
+polyaxon -h
+```
 
 ## Install polyaxon
 
-Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
+Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
 
 
 ## Quick start
 
-Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
+Please check our [quick start guide](https://docs.polyaxon.com/concepts/quick-start/) to start training your first experiment.
 
 ## License
 
