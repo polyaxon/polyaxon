@@ -19,10 +19,11 @@ from polyaxon_client.transport import Transport
 
 class DeployManager(object):
 
-    def __init__(self, config=None, filepath=None, manager_path=None):
+    def __init__(self, config=None, filepath=None, manager_path=None, dry_run=False):
         self.config = config
         self.filepath = filepath
         self.manager_path = manager_path
+        self.dry_run = dry_run
         self.kubectl = KubectlOperator()
         self.helm = HelmOperator()
         self.docker = DockerOperator()
@@ -145,6 +146,8 @@ class DeployManager(object):
             args += ['-f', self.filepath]
         if self.deployment_version:
             args += ['--version', self.deployment_version]
+        if self.dry_run:
+            args += ['--debug', '--dry-run']
 
         click.echo('Running install command ...')
         stdout = self.helm.execute(args=args)
@@ -172,6 +175,9 @@ class DeployManager(object):
         # Generate env from config
         ComposeConfigManager.set_config(self.compose.generate_env(self.config))
         Printer.print_success('Docker Compose deployment is initialised.')
+        if self.dry_run:
+            Printer.print_success('Polyaxon generated deployment env.')
+            return
         self.docker.execute(['volume', 'create', '--name=polyaxon-postgres'])
         Printer.print_success('Docker volume created.')
         self.compose.execute(['-f', path + '/docker-compose.yml', 'up', '-d'])
@@ -210,6 +216,8 @@ class DeployManager(object):
             args += ['-f', self.filepath]
         if self.deployment_version:
             args += ['--version', self.deployment_version]
+        if self.dry_run:
+            args += ['--debug', '--dry-run']
         click.echo('Running upgrade command ...')
         stdout = self.helm.execute(args=args)
         click.echo(stdout)

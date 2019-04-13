@@ -46,11 +46,16 @@ def admin():
               help='The path of the deployment manager, e.g. local chart.')
 @click.option('--check', is_flag=True, default=False,
               help='Check if deployment file and other requirements are met.')
+@click.option('--dry_run', is_flag=True, default=False,
+              help='Dry run the configuration and generate a debuggable output.')
 @clean_outputs
-def deploy(file, manager_path, check):  # pylint:disable=redefined-builtin
+def deploy(file, manager_path, check, dry_run):  # pylint:disable=redefined-builtin
     """Deploy polyaxon."""
     config = read_deployment_config(file)
-    manager = DeployManager(config=config, filepath=file, manager_path=manager_path)
+    manager = DeployManager(config=config,
+                            filepath=file,
+                            manager_path=manager_path,
+                            dry_run=dry_run)
     exception = None
     if check:
         manager.check()
@@ -73,11 +78,16 @@ def deploy(file, manager_path, check):  # pylint:disable=redefined-builtin
               help='The path of the deployment manager, e.g. local chart.')
 @click.option('--check', is_flag=True, default=False,
               help='Check if deployment file and other requirements are met.')
+@click.option('--dry_run', is_flag=True, default=False,
+              help='Dry run the configuration and generate a debuggable output.')
 @clean_outputs
-def upgrade(file, manager_path, check):  # pylint:disable=redefined-builtin
+def upgrade(file, manager_path, check, dry_run):  # pylint:disable=redefined-builtin
     """Upgrade a Polyaxon deployment."""
     config = read_deployment_config(file)
-    manager = DeployManager(config=config, filepath=file, manager_path=manager_path)
+    manager = DeployManager(config=config,
+                            filepath=file,
+                            manager_path=manager_path,
+                            dry_run=dry_run)
     exception = None
     if check:
         manager.check()
