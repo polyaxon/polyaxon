@@ -81,12 +81,12 @@ polyaxon_client.project.list_experiments(
 
 ## Install polyaxon
 
-Please check [polyaxon installation guide](https://docs.polyaxon.com/installation/introduction)
+Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
 
 
 ## Quick start
 
-Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
+Please check our [quick start guide](https://docs.polyaxon.com/concepts/quick-start/) to start training your first experiment.
 
 
 ## License
