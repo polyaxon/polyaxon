@@ -128,7 +128,7 @@ class HooksConfig(ServiceConfig):
 
 
 class ThirdPartyServiceSchema(ServiceSchema):
-    install = fields.Bool(allow_none=True)
+    enabled = fields.Bool(allow_none=True)
     persistence = fields.Dict(allow_none=True)
     nodeSelector = fields.Dict(allow_none=True)
     affinity = fields.Dict(allow_none=True)
@@ -142,7 +142,7 @@ class ThirdPartyServiceSchema(ServiceSchema):
 class ThirdPartyServiceConfig(ServiceConfig):
     SCHEMA = ThirdPartyServiceSchema
     REDUCED_ATTRIBUTES = [
-        'install',
+        'enabled',
         'image',
         'imageTag',
         'imagePullPolicy',
@@ -156,7 +156,7 @@ class ThirdPartyServiceConfig(ServiceConfig):
     ]
 
     def __init__(self,  # noqa
-                 install=None,
+                 enabled=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -173,7 +173,7 @@ class ThirdPartyServiceConfig(ServiceConfig):
             replicas=replicas,
             resources=resources,
         )
-        self.install = install
+        self.enabled = enabled
         self.persistence = persistence
         self.nodeSelector = nodeSelector
         self.affinity = affinity
@@ -201,7 +201,7 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
     ]
 
     def __init__(self,  # noqa
-                 install=None,
+                 enabled=None,
                  postgresUser=None,
                  postgresPassword=None,
                  postgresDatabase=None,
@@ -216,7 +216,7 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
                  affinity=None,
                  tolerations=None):
         super(PostgresqlConfig, self).__init__(
-            install=install,
+            enabled=enabled,
             image=image,
             imageTag=imageTag,
             imagePullPolicy=imagePullPolicy,
@@ -251,7 +251,7 @@ class RedisConfig(ThirdPartyServiceConfig):
     ]
 
     def __init__(self,  # noqa
-                 install=None,
+                 enabled=None,
                  usePassword=None,
                  redisPassword=None,
                  externalRedisHost=None,
@@ -265,7 +265,7 @@ class RedisConfig(ThirdPartyServiceConfig):
                  affinity=None,
                  tolerations=None):
         super(RedisConfig, self).__init__(
-            install=install,
+            enabled=enabled,
             image=image,
             imageTag=imageTag,
             imagePullPolicy=imagePullPolicy,
@@ -299,7 +299,7 @@ class RabbitmqConfig(ThirdPartyServiceConfig):
     ]
 
     def __init__(self,  # noqa
-                 install=None,
+                 enabled=None,
                  rabbitmqUsername=None,
                  rabbitmqPassword=None,
                  externalRabbitmqHost=None,
@@ -313,7 +313,7 @@ class RabbitmqConfig(ThirdPartyServiceConfig):
                  affinity=None,
                  tolerations=None):
         super(RabbitmqConfig, self).__init__(
-            install=install,
+            enabled=enabled,
             image=image,
             imageTag=imageTag,
             imagePullPolicy=imagePullPolicy,
@@ -347,7 +347,7 @@ class DockerRegistryConfig(ThirdPartyServiceConfig):
     ]
 
     def __init__(self,  # noqa
-                 install=None,
+                 enabled=None,
                  registryUser=None,
                  registryPassword=None,
                  externalRegistryHost=None,
@@ -361,7 +361,7 @@ class DockerRegistryConfig(ThirdPartyServiceConfig):
                  affinity=None,
                  tolerations=None):
         super(DockerRegistryConfig, self).__init__(
-            install=install,
+            enabled=enabled,
             image=image,
             imageTag=imageTag,
             imagePullPolicy=imagePullPolicy,

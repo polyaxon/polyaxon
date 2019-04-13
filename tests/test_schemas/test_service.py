@@ -131,7 +131,7 @@ class TestServiceConfig(TestCase):
                 'resources': 'foo'
             },
             {
-                'install': 'sdf'
+                'enabled': 'sdf'
             },
             {
                 'persistence': 'sdf'
@@ -189,7 +189,7 @@ class TestServiceConfig(TestCase):
             PostgresqlConfig.from_dict(config_dict)
 
         config_dict = {
-            'install': True,
+            'enabled': True,
             'postgresUser': 'dsf',
             'postgresPassword': 'sdf',
             'postgresDatabase': 'sdf',
@@ -235,7 +235,7 @@ class TestServiceConfig(TestCase):
             RedisConfig.from_dict(config_dict)
 
         config_dict = {
-            'install': True,
+            'enabled': True,
             'usePassword': True,
             'redisPassword': 'sdf',
             'externalRedisHost': 'sd123',
@@ -280,7 +280,7 @@ class TestServiceConfig(TestCase):
             RabbitmqConfig.from_dict(config_dict)
 
         config_dict = {
-            'install': True,
+            'enabled': True,
             'rabbitmqUsername': 'dsf',
             'rabbitmqPassword': 'sdf',
             'externalRabbitmqHost': 'sd123',
@@ -325,7 +325,7 @@ class TestServiceConfig(TestCase):
             DockerRegistryConfig.from_dict(config_dict)
 
         config_dict = {
-            'install': True,
+            'enabled': True,
             'registryUser': 'dsf',
             'registryPassword': 'sdf',
             'externalRegistryHost': 'sd123',

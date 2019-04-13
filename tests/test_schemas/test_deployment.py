@@ -41,7 +41,7 @@ class TestDeploymentConfig(TestCase):
         assert config.sidecar is None
         assert config.dockerizer is None
         assert config.hooks is None
-        assert config.postgresql.install is False
+        assert config.postgresql.enabled is False
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is None
@@ -146,7 +146,7 @@ class TestDeploymentConfig(TestCase):
         assert config.sidecar is None
         assert config.dockerizer is None
         assert config.hooks is None
-        assert config.postgresql.install is False
+        assert config.postgresql.enabled is False
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is not None
