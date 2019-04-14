@@ -50,7 +50,7 @@ spec:
       - name: {{ .Chart.Name }}-k8s-events
         image: "{{ .Values.k8sEventsHandlers.image }}:{{ .Values.k8sEventsHandlers.imageTag }}"
         imagePullPolicy: {{ .Values.k8sEventsHandlers.imagePullPolicy }}
-        args: ["{{ .Values.queues.k8sEventsHealth }},{{ .Values.queues.k8sEventsNamespace }},{{ .Values.queues.k8sEventsResources }},{{ .Values.queues.k8sEventsJobStatuses }}", "--concurrency={{ .Values.k8sEventsHandlers.concurrency }}"]
+        args: ["--concurrency={{ .Values.k8sEventsHandlers.concurrency }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config

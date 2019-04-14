@@ -50,7 +50,7 @@ spec:
       - name: {{ .Chart.Name }}-events
         image: "{{ .Values.eventsHandlers.image }}:{{ .Values.eventsHandlers.imageTag }}"
         imagePullPolicy: {{ .Values.eventsHandlers.imagePullPolicy }}
-        args: ["{{ .Values.queues.eventsHealth }},{{ .Values.queues.eventsNotify }},{{ .Values.queues.eventsLog }},{{ .Values.queues.eventsTrack }}", "--concurrency={{ .Values.eventsHandlers.concurrency }}"]
+        args: ["--concurrency={{ .Values.eventsHandlers.concurrency }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config

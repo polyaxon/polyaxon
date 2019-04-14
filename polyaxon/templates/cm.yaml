@@ -129,38 +129,6 @@ data:
   {{- end }}
   {{- end }}
   # Queues
-  POLYAXON_QUEUES_REPOS: {{ .Values.queues.repos | quote }}
-  POLYAXON_QUEUES_SCHEDULER_HEALTH: {{ .Values.queues.schedulerHealth | quote }}
-  POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS: {{ .Values.queues.schedulerExperiments | quote }}
-  POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS: {{ .Values.queues.schedulerExperimentGroups | quote }}
-  POLYAXON_QUEUES_SCHEDULER_PROJECTS: {{ .Values.queues.schedulerProjects | quote }}
-  POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS: {{ .Values.queues.schedulerBuildJobs | quote }}
-  POLYAXON_QUEUES_SCHEDULER_JOBS: {{ .Values.queues.schedulerJobs | quote }}
-  POLYAXON_QUEUES_SCHEDULER_STORES: {{ .Values.queues.schedulerStores | quote }}
-  POLYAXON_QUEUES_SCHEDULER_CLEAN: {{ .Values.queues.schedulerClean | quote }}
-  POLYAXON_QUEUES_PIPELINES_HEALTH: {{ .Values.queues.pipelinesHealth | quote }}
-  POLYAXON_QUEUES_PIPELINES: {{ .Values.queues.pipelines | quote }}
-  POLYAXON_QUEUES_CRONS_HEALTH: {{ .Values.queues.cronsHealth | quote }}
-  POLYAXON_QUEUES_CRONS_HEARTBEAT: {{ .Values.queues.cronsHeartbeat | quote }}
-  POLYAXON_QUEUES_CRONS_EXPERIMENTS: {{ .Values.queues.cronsExperiments | quote }}
-  POLYAXON_QUEUES_CRONS_PIPELINES: {{ .Values.queues.cronsPipelines | quote }}
-  POLYAXON_QUEUES_CRONS_CLUSTERS: {{ .Values.queues.cronsClusters | quote }}
-  POLYAXON_QUEUES_CRONS_CLUSTERS_DEPLOYMENT: {{ .Values.queues.cronsClustersDeployment | quote }}
-  POLYAXON_QUEUES_CRONS_CLEAN: {{ .Values.queues.cronsClean | quote }}
-  POLYAXON_QUEUES_HP_HEALTH: {{ .Values.queues.hpHealth | quote }}
-  POLYAXON_QUEUES_HP: {{ .Values.queues.hp | quote }}
-  POLYAXON_QUEUES_EVENTS_HEALTH: {{ .Values.queues.eventsHealth | quote }}
-  POLYAXON_QUEUES_EVENTS_NOTIFY: {{ .Values.queues.eventsNotify | quote }}
-  POLYAXON_QUEUES_EVENTS_LOG: {{ .Values.queues.eventsLog | quote }}
-  POLYAXON_QUEUES_EVENTS_TRACK: {{ .Values.queues.eventsTrack | quote }}
-  POLYAXON_QUEUES_K8S_EVENTS_HEALTH: {{ .Values.queues.k8sEventsHealth | quote }}
-  POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE: {{ .Values.queues.k8sEventsNamespace | quote }}
-  POLYAXON_QUEUES_K8S_EVENTS_RESOURCES: {{ .Values.queues.k8sEventsResources | quote }}
-  POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES: {{ .Values.queues.k8sEventsJobStatuses | quote }}
-  POLYAXON_QUEUES_LOGS_HEALTH: {{ .Values.queues.logsHealth | quote }}
-  POLYAXON_QUEUES_LOGS_SIDECARS: {{ .Values.queues.logsSidecars | quote }}
-  POLYAXON_QUEUES_LOGS_HANDLERS: {{ .Values.queues.logsHandler | quote }}
-  POLYAXON_QUEUES_STREAM_LOGS_SIDECARS: {{ .Values.queues.streamLogsSidecars | quote }}
   POLYAXON_INTERVALS_EXPERIMENTS_SCHEDULER: {{ .Values.intervals.experimentsScheduler | quote }}
   POLYAXON_INTERVALS_EXPERIMENTS_SYNC: {{ .Values.intervals.experimentsSync | quote }}
   POLYAXON_INTERVALS_CLUSTERS_UPDATE_SYSTEM_INFO: {{ .Values.intervals.clustersUpdateSystemInfo | quote }}
