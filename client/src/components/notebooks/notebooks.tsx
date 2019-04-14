@@ -86,7 +86,7 @@ export default class Notebooks extends React.Component<Props, {}> {
         this.props.isCurrentUser,
         'notebook',
         'notebook',
-        'polyaxon run --help');
+        'polyaxon notebook --help');
     }
 
     return (

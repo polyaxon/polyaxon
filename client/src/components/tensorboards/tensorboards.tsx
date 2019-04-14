@@ -86,7 +86,7 @@ export default class Tensorboards extends React.Component<Props, {}> {
         this.props.isCurrentUser,
         'tensorboard',
         'dashboard',
-        'polyaxon run --help');
+        'polyaxon tensorboard --help');
     }
 
     return (
