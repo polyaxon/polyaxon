@@ -335,45 +335,109 @@ class CeleryQueues(object):
 
     N.B. make sure that the queue name is not < 128.
     """
-    REPOS = config.get_string('POLYAXON_QUEUES_REPOS')
+    REPOS = config.get_string('POLYAXON_QUEUES_REPOS',
+                              is_optional=True,
+                              default='queues.repos')
 
-    SCHEDULER_HEALTH = config.get_string('POLYAXON_QUEUES_SCHEDULER_HEALTH')
-    SCHEDULER_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS')
-    SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS')
-    SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS')
-    SCHEDULER_STORES = config.get_string('POLYAXON_QUEUES_SCHEDULER_STORES')
-    SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS')
-    SCHEDULER_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_JOBS')
-    SCHEDULER_CLEAN = config.get_string('POLYAXON_QUEUES_SCHEDULER_CLEAN')
+    SCHEDULER_HEALTH = config.get_string('POLYAXON_QUEUES_SCHEDULER_HEALTH',
+                                         is_optional=True,
+                                         default='queues.scheduler.health')
+    SCHEDULER_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENTS',
+                                              is_optional=True,
+                                              default='queues.scheduler.experiments')
+    SCHEDULER_EXPERIMENT_GROUPS = config.get_string('POLYAXON_QUEUES_SCHEDULER_EXPERIMENT_GROUPS',
+                                                    is_optional=True,
+                                                    default='queues.scheduler.experimentGroups')
+    SCHEDULER_PROJECTS = config.get_string('POLYAXON_QUEUES_SCHEDULER_PROJECTS',
+                                           is_optional=True,
+                                           default='queues.scheduler.projects')
+    SCHEDULER_BUILD_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_BUILD_JOBS',
+                                             is_optional=True,
+                                             default='queues.scheduler.build_jobs')
+    SCHEDULER_JOBS = config.get_string('POLYAXON_QUEUES_SCHEDULER_JOBS',
+                                       is_optional=True,
+                                       default='queues.scheduler.jobs')
+    SCHEDULER_STORES = config.get_string('POLYAXON_QUEUES_SCHEDULER_STORES',
+                                         is_optional=True,
+                                         default='queues.scheduler.stores')
+    SCHEDULER_CLEAN = config.get_string('POLYAXON_QUEUES_SCHEDULER_CLEAN',
+                                        is_optional=True,
+                                        default='queues.scheduler.clean')
 
-    PIPELINES_HEALTH = config.get_string('POLYAXON_QUEUES_PIPELINES_HEALTH')
-    PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES')
+    PIPELINES_HEALTH = config.get_string('POLYAXON_QUEUES_PIPELINES_HEALTH',
+                                         is_optional=True,
+                                         default='queues.pipelines.health')
+    PIPELINES = config.get_string('POLYAXON_QUEUES_PIPELINES',
+                                  is_optional=True,
+                                  default='queues.pipelines')
 
-    CRONS_HEALTH = config.get_string('POLYAXON_QUEUES_CRONS_HEALTH')
-    CRONS_HEARTBEAT = config.get_string('POLYAXON_QUEUES_CRONS_HEARTBEAT')
-    CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS')
-    CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES')
-    CRONS_CLUSTERS_DEPLOYMENT = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS_DEPLOYMENT')
-    CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS')
-    CRONS_CLEAN = config.get_string('POLYAXON_QUEUES_CRONS_CLEAN')
+    CRONS_HEALTH = config.get_string('POLYAXON_QUEUES_CRONS_HEALTH',
+                                     is_optional=True,
+                                     default='queues.crons.health')
+    CRONS_HEARTBEAT = config.get_string('POLYAXON_QUEUES_CRONS_HEARTBEAT',
+                                        is_optional=True,
+                                        default='queues.crons.heartbeat')
+    CRONS_EXPERIMENTS = config.get_string('POLYAXON_QUEUES_CRONS_EXPERIMENTS',
+                                          is_optional=True,
+                                          default='queues.crons.experiments')
+    CRONS_PIPELINES = config.get_string('POLYAXON_QUEUES_CRONS_PIPELINES',
+                                        is_optional=True,
+                                        default='queues.crons.pipelines')
+    CRONS_CLUSTERS = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS',
+                                       is_optional=True,
+                                       default='queues.crons.clusters')
+    CRONS_CLUSTERS_DEPLOYMENT = config.get_string('POLYAXON_QUEUES_CRONS_CLUSTERS_DEPLOYMENT',
+                                                  is_optional=True,
+                                                  default='queues.crons.clusters_deployment')
+    CRONS_CLEAN = config.get_string('POLYAXON_QUEUES_CRONS_CLEAN',
+                                    is_optional=True,
+                                    default='queues.crons.clean')
 
-    HP_HEALTH = config.get_string('POLYAXON_QUEUES_HP_HEALTH')
-    HP = config.get_string('POLYAXON_QUEUES_HP')
+    HP_HEALTH = config.get_string('POLYAXON_QUEUES_HP_HEALTH',
+                                  is_optional=True,
+                                  default='queues.hp.health')
+    HP = config.get_string('POLYAXON_QUEUES_HP',
+                           is_optional=True,
+                           default='queues.hp')
 
-    EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_EVENTS_HEALTH')
-    EVENTS_NOTIFY = config.get_string('POLYAXON_QUEUES_EVENTS_NOTIFY')
-    EVENTS_LOG = config.get_string('POLYAXON_QUEUES_EVENTS_LOG')
-    EVENTS_TRACK = config.get_string('POLYAXON_QUEUES_EVENTS_TRACK')
+    EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_EVENTS_HEALTH',
+                                      is_optional=True,
+                                      default='queues.events.health')
+    EVENTS_NOTIFY = config.get_string('POLYAXON_QUEUES_EVENTS_NOTIFY',
+                                      is_optional=True,
+                                      default='queues.events.notify')
+    EVENTS_LOG = config.get_string('POLYAXON_QUEUES_EVENTS_LOG',
+                                   is_optional=True,
+                                   default='queues.events.log')
+    EVENTS_TRACK = config.get_string('POLYAXON_QUEUES_EVENTS_TRACK',
+                                     is_optional=True,
+                                     default='queues.events.track')
 
-    K8S_EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_HEALTH')
-    K8S_EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE')
-    K8S_EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_RESOURCES')
-    K8S_EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES')
+    K8S_EVENTS_HEALTH = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_HEALTH',
+                                          is_optional=True,
+                                          default='queues.k8s_events.health')
+    K8S_EVENTS_NAMESPACE = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_NAMESPACE',
+                                             is_optional=True,
+                                             default='queues.k8s_events.namespace')
+    K8S_EVENTS_RESOURCES = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_RESOURCES',
+                                             is_optional=True,
+                                             default='queues.k8s_events.resources')
+    K8S_EVENTS_JOB_STATUSES = config.get_string('POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES',
+                                                is_optional=True,
+                                                default='queues.k8s_events.jobStatuses')
 
-    LOGS_HEALTH = config.get_string('POLYAXON_QUEUES_LOGS_HEALTH')
-    LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS')
-    LOGS_HANDLERS = config.get_string('POLYAXON_QUEUES_LOGS_HANDLERS')
-    STREAM_LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_STREAM_LOGS_SIDECARS')
+    LOGS_HEALTH = config.get_string('POLYAXON_QUEUES_LOGS_HEALTH',
+                                    is_optional=True,
+                                    default='queues.logs.health')
+    LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS',
+                                      is_optional=True,
+                                      default='queues.logs.handler')
+    LOGS_HANDLERS = config.get_string('POLYAXON_QUEUES_LOGS_HANDLERS',
+                                      is_optional=True,
+                                      default='queues.logs.sidecars')
+    STREAM_LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_STREAM_LOGS_SIDECARS',
+                                             is_optional=True,
+                                             default='queues.stream.logs.sidecars')
 
 
 # Queues on non default exchange
