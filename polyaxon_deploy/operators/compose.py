@@ -48,7 +48,10 @@ class ComposeOperator(CmdOperator):
                 template.format('POLYAXON_TIMEZONE', config.timeZone or False))
         if config.worker and config.worker.concurrency:
             env.append(
-                template.format('POLYAXON_WORKER_CONCURRENCY', config.worker.concurrency or 1))
+                template.format('POLYAXON_WORKER_CONCURRENCY', config.worker.concurrency or 2))
+        else:
+            env.append(
+                template.format('POLYAXON_WORKER_CONCURRENCY', config.worker.concurrency or 2))
         if config.email:
             env.append(template.format('POLYAXON_EMAIL_HOST', config.email.host))
             env.append(template.format('POLYAXON_EMAIL_PORT', config.email.port))
