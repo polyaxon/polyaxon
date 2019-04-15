@@ -1,5 +1,6 @@
 ---
 title: "Polyaxon Release notes"
+sub_link: "release-notes"
 meta_title: "Polyaxon release notes - Polyaxon Releases"
 meta_description: "Polyaxon release notes, migrations, and deprecation notes."
 visibility: public
