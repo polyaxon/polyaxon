@@ -6,7 +6,7 @@ import tempfile
 
 from unittest import TestCase
 
-from polyaxon_dockgen.generator import DockerFileGenerator
+from polyaxon_dockerizer.generator import DockerFileGenerator
 
 
 class TestDockerfileGenerator(TestCase):

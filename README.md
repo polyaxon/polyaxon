@@ -1,11 +1,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Build Status](https://travis-ci.org/polyaxon/polyaxon-dockgen.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-dockgen)
-[![PyPI version](https://badge.fury.io/py/polyaxon-dockgen.svg)](https://badge.fury.io/py/polyaxon-dockgen)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a33947d729f94f5da7f7390dfeef7f94)](https://www.codacy.com/app/polyaxon/polyaxon-dockgen?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon-dockgen&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.com/polyaxon/polyaxon-dockerizer.svg?branch=master)](https://travis-ci.org/polyaxon/polyaxon-dockerizer)
+[![PyPI version](https://badge.fury.io/py/polyaxon-dockerizer.svg)](https://badge.fury.io/py/polyaxon-dockerizer)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a33947d729f94f5da7f7390dfeef7f94)](https://www.codacy.com/app/polyaxon/polyaxon-dockerizer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=polyaxon/polyaxon-dockerizer&amp;utm_campaign=Badge_Grade)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
 
-# polyaxon-dockgen
+# polyaxon-dockerizer
 
 Python tool to generate dockerfiles compatible with Polyaxon dockerizer and Polyaxon CLI local run.
 
@@ -13,13 +13,13 @@ Python tool to generate dockerfiles compatible with Polyaxon dockerizer and Poly
 ## Install
 
 ```bash
-$ pip install -U polyaxon-dockgen
+$ pip install -U polyaxon-dockerizer
 ```
 
 ## Usage
 
 ```python
-from polyaxon_dockgen import generate
+from polyaxon_dockerizer import generate
 
 generate(repo_path,
          from_image,
@@ -37,8 +37,3 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
 ## Quick start
 
 Please check our [quick start guide](https://docs.polyaxon.com/concepts/quick-start/) to start training your first experiment.
-
-
-## License
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-dockgen.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpolyaxon%2Fpolyaxon-dockgen?ref=badge_large)

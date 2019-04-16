@@ -7,7 +7,7 @@ import stat
 
 from hestia.list_utils import to_list
 
-from polyaxon_dockgen.dockerfile import POLYAXON_DOCKER_TEMPLATE, POLYAXON_DOCKERFILE_NAME
+from polyaxon_dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE, POLYAXON_DOCKERFILE_NAME
 
 
 class DockerFileGenerator(object):

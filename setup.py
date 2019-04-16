@@ -23,7 +23,7 @@ class PyTest(TestCommand):
         sys.exit(errcode)
 
 
-setup(name='polyaxon-dockgen',
+setup(name='polyaxon-dockerizer',
       version='0.0.1',
       description='Python client to interact with Polyaxon API.',
       long_description=read_readme(),
@@ -31,7 +31,7 @@ setup(name='polyaxon-dockgen',
       maintainer_email='mourad@polyaxon.com',
       author='Mourad Mourafiq',
       author_email='mourad@polyaxon.com',
-      url='https://github.com/polyaxon/polyaxon-dockgen',
+      url='https://github.com/polyaxon/polyaxon-dockerizer',
       license='MIT',
       platforms='any',
       packages=find_packages(),
