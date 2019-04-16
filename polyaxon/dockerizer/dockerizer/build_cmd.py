@@ -1,6 +1,7 @@
 import argparse
 
-from builders.native import build  # noqa
+from polyaxon_dockerizer import build_and_push
+from builders import settings  # noqa
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -31,7 +32,10 @@ if __name__ == '__main__':
     image_tag = arguments.pop('image_tag')
     nocache = arguments.pop('nocache')
 
-    build(build_context=build_context,
-          image_name=image_name,
-          image_tag=image_tag,
-          nocache=nocache)
+    build_and_push(
+        build_context=build_context,
+        image_name=image_name,
+        image_tag=image_tag,
+        nocache=nocache,
+        internal_registry=settings.INTERNAL_REGISTRY,
+        registries=settings.PRIVATE_REGISTRIES)

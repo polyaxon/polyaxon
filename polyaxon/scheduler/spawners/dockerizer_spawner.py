@@ -115,6 +115,14 @@ class DockerizerSpawner(K8SManager):
         for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
             env_vars.append(get_from_secret(key, key))
 
+        # Add set env lang
+        get_env_var(name='POLYAXON_JOB_DOCKERIZER_SET_LANG_ENV',
+                    value=conf.get('JOB_DOCKERIZER_SET_LANG_ENV')),
+        # Add security context if set
+        if conf.get('POLYAXON_JOB_DOCKERIZER_SET_SECURITY_CONTEXT'):
+            get_env_var('POLYAXON_SECURITY_CONTEXT_USER', value=conf.get('SECURITY_CONTEXT_USER'))
+            get_env_var('POLYAXON_SECURITY_CONTEXT_GROUP', value=conf.get('SECURITY_CONTEXT_GROUP'))
+
         return env_vars
 
     def get_init_env_vars(self):

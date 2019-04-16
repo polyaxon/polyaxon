@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from .dockerfile import POLYAXON_DOCKERFILE_NAME
+from polyaxon_dockerizer.dockerfile import POLYAXON_DOCKERFILE_NAME
 
 
 def extract_code(extract_path: str, build_path: str, context_path: str) -> bool:

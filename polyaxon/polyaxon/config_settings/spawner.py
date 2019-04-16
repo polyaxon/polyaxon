@@ -134,7 +134,15 @@ JOB_KANIKO_IMAGE_PULL_POLICY = config.get_string(
 JOB_DOCKERIZER_IMAGE = config.get_string('POLYAXON_JOB_DOCKERIZER_IMAGE')
 JOB_DOCKERIZER_IMAGE_PULL_POLICY = config.get_string(
     'POLYAXON_JOB_DOCKERIZER_IMAGE_PULL_POLICY',
-    is_optional=True,)
+    is_optional=True)
+JOB_DOCKERIZER_SET_LANG_ENV = config.get_boolean(
+    'POLYAXON_JOB_DOCKERIZER_SET_LANG_ENV',
+    is_optional=True,
+    default=False)
+JOB_DOCKERIZER_SET_SECURITY_CONTEXT = config.get_boolean(
+    'POLYAXON_JOB_DOCKERIZER_SET_SECURITY_CONTEXT',
+    is_optional=True,
+    default=True)
 
 # Tensorboard
 TENSORBOARD_DOCKER_IMAGE = config.get_string('POLYAXON_TENSORBOARD_DOCKER_IMAGE',
