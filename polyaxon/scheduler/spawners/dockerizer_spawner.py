@@ -1,9 +1,8 @@
 from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
+from kubernetes.config import ConfigException
 
 from django.conf import settings
-
-from kubernetes.config import ConfigException
 
 import conf
 
@@ -117,7 +116,7 @@ class DockerizerSpawner(K8SManager):
 
         # Add set env lang
         get_env_var(name='POLYAXON_JOB_DOCKERIZER_SET_LANG_ENV',
-                    value=conf.get('JOB_DOCKERIZER_SET_LANG_ENV')),
+                    value=conf.get('JOB_DOCKERIZER_SET_LANG_ENV'))
         # Add security context if set
         if conf.get('POLYAXON_JOB_DOCKERIZER_SET_SECURITY_CONTEXT'):
             get_env_var('POLYAXON_SECURITY_CONTEXT_USER', value=conf.get('SECURITY_CONTEXT_USER'))

@@ -318,8 +318,7 @@ class ConfigManager(rhea.Rhea):
     def get_broker_url(self) -> str:
         if self.broker_backend == 'redis':
             return self.get_redis_url('POLYAXON_REDIS_CELERY_BROKER_URL')
-        else:
-            return self._get_rabbitmq_broker_url()
+        return self._get_rabbitmq_broker_url()
 
     @cached_property
     def notification_url(self) -> Optional[str]:

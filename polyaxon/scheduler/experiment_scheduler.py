@@ -2,8 +2,9 @@ import logging
 import traceback
 import uuid
 
-from django.db import IntegrityError
 from kubernetes.client.rest import ApiException
+
+from django.db import IntegrityError
 
 import conf
 

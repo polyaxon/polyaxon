@@ -1,7 +1,7 @@
 import argparse
 
-from polyaxon_dockerizer import build_and_push
 from builders import settings  # noqa
+from polyaxon_dockerizer import build_and_push
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
