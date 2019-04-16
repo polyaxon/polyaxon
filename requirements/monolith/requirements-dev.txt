@@ -1,5 +1,5 @@
 -r requirements-base.txt
 
--e git+https://github.com/polyaxon/polyaxon-dockerizer.git@07d3d6dd358a5d40d57896f70cb08a19c3444746#egg=polyaxon-dockerizer==0.0.1
+-e git+https://github.com/polyaxon/polyaxon-dockerizer.git@9b6f9cea5d8c11dcd96d0523ed0110b9d4076a94#egg=polyaxon-dockerizer==0.0.1
 -e git+https://github.com/polyaxon/polyaxon-client.git@9fa910afc8226dae20a204c934309644d90439e7#egg=polyaxon-client==0.4.4
 -e git+https://github.com/polyaxon/polyaxon-schemas.git@f91759498bebe154c23b0e289500cb235edf7969#egg=polyaxon-schemas==0.4.4
