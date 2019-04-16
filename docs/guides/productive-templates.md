@@ -1,7 +1,7 @@
 ---
-title: "Productive templates"
-title_link: "Productive templates"
-meta_title: "Productive templates - Guide"
+title: "Productive iterations with templates"
+title_link: "Productive iterations with templates"
+meta_title: "Productive iterations with templates - Guide"
 meta_description: "Developing machine learning models requires several iterations, Polyaxon users can create several templates to run faster iterations."
 custom_excerpt: "Developing machine learning models requires several iterations, Polyaxon users can create several templates to easily update the node scheduling or parameters."
 featured: true
