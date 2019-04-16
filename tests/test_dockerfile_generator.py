@@ -85,6 +85,8 @@ class TestDockerfileGenerator(TestCase):
 
         dockerfile = builder.render()
         assert 'ENV BLA BLA' in dockerfile
+        assert 'groupadd' not in dockerfile
+        assert 'useradd' not in dockerfile
         builder.clean()
 
         # Add a polyaxon_requirements.txt and polyaxon_setup.sh files to repo path
@@ -109,6 +111,8 @@ class TestDockerfileGenerator(TestCase):
 
         assert 'RUN {}'.format(build_steps[0]) in dockerfile
         assert 'RUN {}'.format(build_steps[1]) in dockerfile
+        assert 'groupadd' not in dockerfile
+        assert 'useradd' not in dockerfile
         builder.clean()
 
         # Add conda env
@@ -128,4 +132,37 @@ class TestDockerfileGenerator(TestCase):
 
         assert 'RUN {}'.format(build_steps[0]) in dockerfile
         assert 'RUN {}'.format(build_steps[1]) in dockerfile
+        assert 'groupadd' not in dockerfile
+        assert 'useradd' not in dockerfile
+        builder.clean()
+
+        # Add uid but no gid
+        builder = DockerFileGenerator(repo_path=repo_path,
+                                      from_image='busybox',
+                                      uid=1000)
+
+        dockerfile = builder.render()
+        assert 'groupadd' not in dockerfile
+        assert 'useradd' not in dockerfile
+        builder.clean()
+
+        # Add gid but no uid
+        builder = DockerFileGenerator(repo_path=repo_path,
+                                      from_image='busybox',
+                                      gid=1000)
+
+        dockerfile = builder.render()
+        assert 'groupadd' not in dockerfile
+        assert 'useradd' not in dockerfile
+        builder.clean()
+
+        # Add uid and gid
+        builder = DockerFileGenerator(repo_path=repo_path,
+                                      from_image='busybox',
+                                      uid=1000,
+                                      gid=1000)
+
+        dockerfile = builder.render()
+        assert 'groupadd' in dockerfile
+        assert 'useradd' in dockerfile
         builder.clean()
