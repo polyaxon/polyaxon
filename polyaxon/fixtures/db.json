@@ -681,7 +681,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -741,7 +741,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -1397,7 +1397,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -1457,7 +1457,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -2113,7 +2113,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -2173,7 +2173,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -2829,7 +2829,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -2889,7 +2889,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -3548,7 +3548,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -3608,7 +3608,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -4269,7 +4269,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -4329,7 +4329,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -4990,7 +4990,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -5050,7 +5050,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -5711,7 +5711,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -5771,7 +5771,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -6432,7 +6432,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -6492,7 +6492,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -7153,7 +7153,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_ADMIN_MAIL",
@@ -7213,7 +7213,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_K8S_NAMESPACE",
@@ -8134,7 +8134,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -8379,7 +8379,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -8514,7 +8514,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -9195,7 +9195,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -9440,7 +9440,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -9575,7 +9575,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -10263,7 +10263,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -10508,7 +10508,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -10643,7 +10643,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -11331,7 +11331,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -11576,7 +11576,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -11711,7 +11711,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -12399,7 +12399,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -12644,7 +12644,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -12779,7 +12779,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -13467,7 +13467,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -13712,7 +13712,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -13847,7 +13847,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -14535,7 +14535,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -14780,7 +14780,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -14915,7 +14915,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -15603,7 +15603,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -15848,7 +15848,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -15983,7 +15983,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -16671,7 +16671,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -16916,7 +16916,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -17051,7 +17051,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -17739,7 +17739,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -17984,7 +17984,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -18119,7 +18119,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -18807,7 +18807,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -19052,7 +19052,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -19187,7 +19187,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -19875,7 +19875,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -20120,7 +20120,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -20255,7 +20255,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -20943,7 +20943,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -21188,7 +21188,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -21323,7 +21323,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -22011,7 +22011,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/4"
+                                    "value": "polyaxon-redis:6379/4"
                                 },
                                 {
                                     "name": "POLYAXON_EMAIL_HOST",
@@ -22256,7 +22256,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/3"
+                                    "value": "polyaxon-redis:6379/3"
                                 },
                                 {
                                     "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -22391,7 +22391,7 @@
                                 {
                                     "name": "POLYAXON_REDIS_SESSIONS_URL",
                                     "value_from": null,
-                                    "value": "redis://polyaxon-redis:6379/5"
+                                    "value": "polyaxon-redis:6379/5"
                                 },
                                 {
                                     "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -32080,7 +32080,7 @@
                             {
                                 "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/4"
+                                "value": "polyaxon-redis:6379/4"
                             },
                             {
                                 "name": "POLYAXON_EMAIL_HOST",
@@ -32330,7 +32330,7 @@
                             {
                                 "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/3"
+                                "value": "polyaxon-redis:6379/3"
                             },
                             {
                                 "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -32465,7 +32465,7 @@
                             {
                                 "name": "POLYAXON_REDIS_SESSIONS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/5"
+                                "value": "polyaxon-redis:6379/5"
                             },
                             {
                                 "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -33107,7 +33107,7 @@
                             {
                                 "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/4"
+                                "value": "polyaxon-redis:6379/4"
                             },
                             {
                                 "name": "POLYAXON_EMAIL_HOST",
@@ -33357,7 +33357,7 @@
                             {
                                 "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/3"
+                                "value": "polyaxon-redis:6379/3"
                             },
                             {
                                 "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -33492,7 +33492,7 @@
                             {
                                 "name": "POLYAXON_REDIS_SESSIONS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/5"
+                                "value": "polyaxon-redis:6379/5"
                             },
                             {
                                 "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -34134,7 +34134,7 @@
                             {
                                 "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/4"
+                                "value": "polyaxon-redis:6379/4"
                             },
                             {
                                 "name": "POLYAXON_EMAIL_HOST",
@@ -34384,7 +34384,7 @@
                             {
                                 "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/3"
+                                "value": "polyaxon-redis:6379/3"
                             },
                             {
                                 "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -34519,7 +34519,7 @@
                             {
                                 "name": "POLYAXON_REDIS_SESSIONS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/5"
+                                "value": "polyaxon-redis:6379/5"
                             },
                             {
                                 "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -35209,7 +35209,7 @@
                             {
                                 "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/4"
+                                "value": "polyaxon-redis:6379/4"
                             },
                             {
                                 "name": "POLYAXON_EMAIL_HOST",
@@ -35459,7 +35459,7 @@
                             {
                                 "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/3"
+                                "value": "polyaxon-redis:6379/3"
                             },
                             {
                                 "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -35594,7 +35594,7 @@
                             {
                                 "name": "POLYAXON_REDIS_SESSIONS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/5"
+                                "value": "polyaxon-redis:6379/5"
                             },
                             {
                                 "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -37736,7 +37736,7 @@
                             {
                                 "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/4"
+                                "value": "polyaxon-redis:6379/4"
                             },
                             {
                                 "name": "POLYAXON_EMAIL_HOST",
@@ -37986,7 +37986,7 @@
                             {
                                 "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/3"
+                                "value": "polyaxon-redis:6379/3"
                             },
                             {
                                 "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -38121,7 +38121,7 @@
                             {
                                 "name": "POLYAXON_REDIS_SESSIONS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/5"
+                                "value": "polyaxon-redis:6379/5"
                             },
                             {
                                 "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",
@@ -38576,7 +38576,7 @@
                             {
                                 "name": "POLYAXON_REDIS_TO_STREAM_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/4"
+                                "value": "polyaxon-redis:6379/4"
                             },
                             {
                                 "name": "POLYAXON_EMAIL_HOST",
@@ -38826,7 +38826,7 @@
                             {
                                 "name": "POLYAXON_REDIS_JOB_CONTAINERS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/3"
+                                "value": "polyaxon-redis:6379/3"
                             },
                             {
                                 "name": "POLYAXON_QUEUES_K8S_EVENTS_JOB_STATUSES",
@@ -38961,7 +38961,7 @@
                             {
                                 "name": "POLYAXON_REDIS_SESSIONS_URL",
                                 "value_from": null,
-                                "value": "redis://polyaxon-redis:6379/5"
+                                "value": "polyaxon-redis:6379/5"
                             },
                             {
                                 "name": "POLYAXON_INTERVALS_EXPERIMENTS_SYNC",

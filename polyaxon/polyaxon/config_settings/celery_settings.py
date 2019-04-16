@@ -6,28 +6,15 @@ from polyaxon.config_manager import config
 
 CELERY_TRACK_STARTED = True
 
-AMQP_URL = config.get_string('POLYAXON_AMQP_URL')
-RABBITMQ_USER = config.get_string('POLYAXON_RABBITMQ_USER', is_optional=True)
-RABBITMQ_PASSWORD = config.get_string('POLYAXON_RABBITMQ_PASSWORD',
-                                      is_secret=True,
-                                      is_optional=True)
 BROKER_POOL_LIMIT = None
 
-if RABBITMQ_USER and RABBITMQ_PASSWORD:
-    CELERY_BROKER_URL = 'amqp://{user}:{password}@{url}'.format(
-        user=RABBITMQ_USER,
-        password=RABBITMQ_PASSWORD,
-        url=AMQP_URL
-    )
-
-# todo: fix me at some point
-CELERY_BROKER_URL = 'amqp://{url}'.format(url=AMQP_URL)
+CELERY_BROKER_URL = config.get_broker_url()
 
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
                                       is_optional=True,
                                       default='internal')
 
-CELERY_RESULT_BACKEND = config.get_string('POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL')
+CELERY_RESULT_BACKEND = config.get_redis_url('POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL')
 CELERYD_PREFETCH_MULTIPLIER = config.get_int('POLYAXON_CELERYD_PREFETCH_MULTIPLIER')
 
 CELERY_TASK_ALWAYS_EAGER = config.get_boolean('POLYAXON_CELERY_ALWAYS_EAGER')
