@@ -22,7 +22,7 @@ Please also check the [helm reference](/references/polyaxon-helm-reference/) for
 
 ## Create a namespace for Polyaxon
 
-Polyaxon is installed and relies on the namespace to run experiments
+Polyaxon installs and uses a namespace to run experiments
 independently of other applications running on your cluster, we recommend using `polyaxon`.
 
 ```bash

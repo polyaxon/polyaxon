@@ -18,20 +18,6 @@ Please consider reading our [configuration guides](/configuration/introduction/)
 
 Please also check the [helm reference](/references/polyaxon-helm-reference/) for all default values.
 
-## Create a namespace for Polyaxon
-
-Polyaxon is installed and relies on the namespace to run experiments
-independently of other applications running on your cluster, we recommend using `polyaxon`.
-
-```bash
-$ kubectl create namespace polyaxon
-
-namespace "polyaxon" created
-```
-
-If you would like to use a different name, you must keep im mind to update the `namespace` value in your config.
-
-
 ## Minikube resources
 
 For [Minikube](https://github.com/kubernetes/minikube), we recommend Virtualbox/VMware drivers, but you can also use other drivers.
@@ -43,6 +29,27 @@ minikube start --cpus 4 --memory 8192 --disk-size=40g
 ```
 
 By default Minikube allocates 2Gb of RAM, this not enough for Polyaxon and we recommend at least 6Gb.
+
+## RBAC
+
+If you are using Polyaxon with RBAC enabled, you should add the following option:
+
+```bash
+--extra-config=apiserver.authorization-mode=RBAC
+```
+
+## Create a namespace for Polyaxon
+
+Polyaxon installs and uses a namespace to run experiments
+independently of other applications running on your cluster, we recommend using `polyaxon`.
+
+```bash
+$ kubectl create namespace polyaxon
+
+namespace "polyaxon" created
+```
+
+If you would like to use a different name, you must keep im mind to update the `namespace` value in your config.
 
 ## Configuration
 
