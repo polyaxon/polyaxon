@@ -131,7 +131,9 @@ def generate(repo_path,
              build_steps=None,
              env_vars=None,
              nvidia_bin=None,
-             set_lang_env=True):
+             set_lang_env=True,
+             uid=None,
+             gid=None):
     # Build the image
     dockerfile_generator = DockerFileGenerator(
         repo_path=repo_path,
@@ -139,7 +141,9 @@ def generate(repo_path,
         build_steps=build_steps,
         env_vars=env_vars,
         nvidia_bin=nvidia_bin,
-        set_lang_env=set_lang_env)
+        set_lang_env=set_lang_env,
+        uid=uid,
+        gid=gid)
 
     # Create DockerFile
     with open(dockerfile_generator.dockerfile_path, 'w') as dockerfile:

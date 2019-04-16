@@ -108,7 +108,7 @@ class DockerBuilder(object):
 
     def _handle_logs(self, log_lines):
         for log_line in log_lines:
-            print(log_line)
+            print(log_line)  # pylint:disable=superfluous-parens
 
     def _handle_log_stream(self, stream):
         log_lines = []

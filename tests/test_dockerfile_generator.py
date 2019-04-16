@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import tempfile
-
 from unittest import TestCase
 
-from polyaxon_dockerizer.generator import DockerFileGenerator
+from polyaxon_dockerizer.dockerfile import POLYAXON_DOCKERFILE_NAME
+from polyaxon_dockerizer.generator import DockerFileGenerator, generate
 
 
 class TestDockerfileGenerator(TestCase):
@@ -166,3 +166,23 @@ class TestDockerfileGenerator(TestCase):
         assert 'groupadd' in dockerfile
         assert 'useradd' in dockerfile
         builder.clean()
+
+
+class TestGenerate(TestCase):
+    def test_generate(self):
+        # Create a repo folder
+        tmp_path = tempfile.mkdtemp()
+        repo_path = os.path.join(tmp_path, 'repo')
+        os.mkdir(repo_path)
+
+        assert not os.path.isfile('{}/{}'.format(tmp_path, POLYAXON_DOCKERFILE_NAME))
+        generate(
+            repo_path=repo_path,
+            from_image='from_image',
+            build_steps=[],
+            env_vars=[],
+            nvidia_bin=None,
+            set_lang_env=False,
+            uid=100,
+            gid=100)
+        assert os.path.isfile('{}/{}'.format(tmp_path, POLYAXON_DOCKERFILE_NAME))
