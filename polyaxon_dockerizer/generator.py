@@ -149,3 +149,4 @@ def generate(repo_path,
     with open(dockerfile_generator.dockerfile_path, 'w') as dockerfile:
         rendered_dockerfile = dockerfile_generator.render()
         dockerfile.write(rendered_dockerfile)
+        return rendered_dockerfile
