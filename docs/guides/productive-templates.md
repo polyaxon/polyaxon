@@ -1,5 +1,5 @@
 ---
-title: "Productive templates""
+title: "Productive templates"
 title_link: "Productive templates"
 meta_title: "Productive templates - Guide"
 meta_description: "Developing machine learning models requires several iterations, Polyaxon users can create several templates to run faster iterations."
