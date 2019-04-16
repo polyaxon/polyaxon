@@ -2,6 +2,8 @@ from ..auditor_apps import AUDITOR_APPS
 from ..debug import *
 
 PROJECT_APPS = AUDITOR_APPS + (
+    'django.contrib.admin',
+    'django.contrib.admindocs',
     'administration.apps.AdministrationConfig',
     'ownership.apps.OwnershipConfig',
     'access.apps.AccessConfig',
