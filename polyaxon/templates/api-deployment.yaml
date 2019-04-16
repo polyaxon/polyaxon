@@ -45,7 +45,7 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
-      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+{{ include "config.sa" . | indent 6 }}
       containers:
       - name: {{ .Chart.Name }}-api
         image: "{{ .Values.api.image }}:{{ .Values.api.imageTag }}"

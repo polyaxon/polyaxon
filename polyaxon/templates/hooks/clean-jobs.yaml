@@ -42,7 +42,7 @@ spec:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
       restartPolicy: Never
-      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+{{ include "config.sa" . | indent 6 }}
       activeDeadlineSeconds: 360
       containers:
       - name: clean-jobs

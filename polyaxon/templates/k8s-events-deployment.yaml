@@ -45,7 +45,7 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations.core | indent 8 }}
       {{- end }}
-      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+{{ include "config.sa" . | indent 6 }}
       containers:
       - name: {{ .Chart.Name }}-k8s-events
         image: "{{ .Values.k8sEventsHandlers.image }}:{{ .Values.k8sEventsHandlers.imageTag }}"

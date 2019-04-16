@@ -39,7 +39,7 @@ spec:
       tolerations:
 {{ toYaml .Values.tolerations.resourcesDaemon | indent 8 }}
       {{- end }}
-      serviceAccountName: {{ template "polyaxon.fullname" . }}-serviceaccount
+{{ include "config.sa" . | indent 6 }}
       containers:
       - name: {{ .Chart.Name }}-resources
         image: "{{ .Values.resourcesDaemon.image }}:{{ .Values.resourcesDaemon.imageTag }}"
