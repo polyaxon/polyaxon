@@ -1,12 +1,15 @@
 import base64
 import os
 import uuid
+
 from distutils.util import strtobool  # pylint:disable=import-error
 from typing import List, Optional
 
 import rhea
-from django.utils.functional import cached_property
+
 from unipath import Path
+
+from django.utils.functional import cached_property
 
 
 def base_directory():
@@ -70,9 +73,11 @@ class ConfigManager(rhea.Rhea):
         else:
             self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
         self._broker_backend = self.get_string('POLYAXON_BROKER_BACKEND',
+                                               is_optional=True,
                                                default='rabbitmq',
                                                options=['redis', 'rabbitmq'])
         self._redis_password = self.get_string('POLYAXON_REDIS_PASSWORD',
+                                               is_optional=True,
                                                is_secret=True,
                                                is_local=True)
 

@@ -75,9 +75,14 @@ urlpatterns = [
             name='react-index'),
 ]
 
+
+def _handler500(request):
+    return Handler50xView.as_view()(request)
+
+
 handler404 = Handler404View.as_view()
 handler403 = Handler403View.as_view()
-handler500 = Handler50xView.as_view()
+handler500 = _handler500
 
 if conf.get('ADMIN_VIEW_ENABLED'):
     urlpatterns += [re_path(r'^_admin/', admin.site.urls)]

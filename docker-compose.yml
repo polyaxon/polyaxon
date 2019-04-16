@@ -45,6 +45,8 @@ services:
       - "9000:443"
 
     environment:
+      DJANGO_SETTINGS_MODULE: polyaxon.settings
+      DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
       MEMCACHE_LOCATION: "memcache:11211"
       POLYAXON_AMQP_URL: "rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis:6379/0"

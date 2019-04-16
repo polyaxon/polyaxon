@@ -1,6 +1,6 @@
 from typing import Any
 
-from polyaxon.settings import redis
+import redis
 
 
 class BaseRedisDb(object):
