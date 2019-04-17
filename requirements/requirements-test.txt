@@ -1,5 +1,6 @@
 -r requirements-dev.txt
--r requirements-base-test.txt
+
+polyaxon-pip-tests==0.0.1
 
 azure-storage==0.36.0
 boto3==1.7.73
