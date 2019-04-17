@@ -68,7 +68,7 @@ Your experiments and jobs outputs/artifacts and logs are stored by default in te
   * [for logs](/configuration/custom-logs-storage/)
 
 If you are storing code references on Polyaxon, i.e. you managing code repos in-cluster, we also recommend a durable storage for repos:
-  * [fo repos](/configuration/custom-repos-storage/)
+  * [for repos](/configuration/custom-repos-storage/)
 
 ## SSL
 
