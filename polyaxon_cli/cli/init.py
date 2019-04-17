@@ -5,7 +5,6 @@ import os
 import sys
 
 import click
-import clint
 
 from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
@@ -15,6 +14,7 @@ from polyaxon_cli.managers.ignore import IgnoreManager
 from polyaxon_cli.managers.project import ProjectManager
 from polyaxon_cli.schemas.polyaxonfile import PolyaxonFile
 from polyaxon_cli.utils import constants
+from polyaxon_cli.utils import indentation
 from polyaxon_cli.utils.files import create_init_file
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonClientException
@@ -64,9 +64,9 @@ def init(project, polyaxonfile):
     if ProjectManager.is_initialized():
         local_project = ProjectManager.get_config()
         click.echo('Warning! This project is already initialized with the following project:')
-        with clint.textui.indent(4):
-            clint.textui.puts('User: {}'.format(local_project.user))
-            clint.textui.puts('Project: {}'.format(local_project.name))
+        with indentation.indent(4):
+            indentation.puts('User: {}'.format(local_project.user))
+            indentation.puts('Project: {}'.format(local_project.name))
         if click.confirm('Would you like to override this current config?', default=False):
             init_project = True
     else:

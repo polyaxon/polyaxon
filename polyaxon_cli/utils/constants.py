@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+NEWLINES = ('\n', '\r', '\r\n')
+
 INIT_COMMAND = "`polyaxon init PROJECT_NAME [--polyaxonfile]`"
 
 DEFAULT_IGNORE_LIST = """

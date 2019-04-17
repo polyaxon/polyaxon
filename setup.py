@@ -48,7 +48,7 @@ setup(name='polyaxon-cli',
           'kubernetes',
       ],
       install_requires=[
-          "click==6.7",
+          "click==7.0",
           "pathlib==1.0.1",
           "polyaxon-client==0.4.4",
           "polyaxon-deploy==0.4.4",

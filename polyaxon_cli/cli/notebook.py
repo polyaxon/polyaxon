@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-import clint
 
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import get_project_or_local
@@ -12,6 +11,7 @@ from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon_cli.logger import clean_outputs
+from polyaxon_cli.utils import indentation
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonClientException
 
@@ -117,10 +117,10 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
         sys.exit(1)
 
     Printer.print_success('Notebook is being deployed for project `{}`'.format(project_name))
-    clint.textui.puts("It may take some time before you can access the notebook.\n")
-    clint.textui.puts("Your notebook will be available on:\n")
-    with clint.textui.indent(4):
-        clint.textui.puts(get_notebook_url(user, project_name))
+    indentation.puts("It may take some time before you can access the notebook.\n")
+    indentation.puts("Your notebook will be available on:\n")
+    with indentation.indent(4):
+        indentation.puts(get_notebook_url(user, project_name))
 
 
 @notebook.command()

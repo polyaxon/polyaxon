@@ -6,7 +6,6 @@ import sys
 from distutils.version import LooseVersion  # pylint:disable=import-error
 
 import click
-import clint
 import pkg_resources
 
 from polyaxon_cli.client import PolyaxonClient
@@ -18,6 +17,7 @@ from polyaxon_cli.client.exceptions import (
 from polyaxon_cli.logger import clean_outputs, logger
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.cli import CliConfigManager
+from polyaxon_cli.utils import indentation
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 from polyaxon_client.exceptions import PolyaxonClientException
 
@@ -90,24 +90,24 @@ def check_cli_version():
             pip_upgrade()
             sys.exit(0)
         else:
-            clint.textui.puts("Your can manually run:")
-            with clint.textui.indent(4):
-                clint.textui.puts("pip install -U polyaxon-cli")
-            clint.textui.puts(
+            indentation.puts("Your can manually run:")
+            with indentation.indent(4):
+                indentation.puts("pip install -U polyaxon-cli")
+            indentation.puts(
                 "to upgrade to the latest version `{}`".format(server_version.latest_version))
 
             sys.exit(0)
     elif LooseVersion(current_version) < LooseVersion(server_version.latest_version):
-        clint.textui.puts("New version of CLI ({}) is now available. To upgrade run:".format(
+        indentation.puts("New version of CLI ({}) is now available. To upgrade run:".format(
             server_version.latest_version
         ))
-        with clint.textui.indent(4):
-            clint.textui.puts("pip install -U polyaxon-cli")
+        with indentation.indent(4):
+            indentation.puts("pip install -U polyaxon-cli")
     elif LooseVersion(current_version) > LooseVersion(server_version.latest_version):
-        clint.textui.puts("You version of CLI ({}) is ahead of the latest version "
-                          "supported by Polyaxon Platform ({}) on your cluster, "
-                          "and might be incompatible.".format(current_version,
-                                                              server_version.latest_version))
+        indentation.puts("You version of CLI ({}) is ahead of the latest version "
+                         "supported by Polyaxon Platform ({}) on your cluster, "
+                         "and might be incompatible.".format(current_version,
+                                                             server_version.latest_version))
 
 
 @click.command()
