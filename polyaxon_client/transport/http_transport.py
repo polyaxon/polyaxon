@@ -26,12 +26,12 @@ class HttpTransportMixin(object):
     @staticmethod
     def create_progress_callback(encoder):
         encoder_len = encoder.len
-        bar = Bar(expected_size=encoder_len, filled_char='=')
+        callback_bar = Bar(expected_size=encoder_len, filled_char='=')
 
         def callback(monitor):
-            bar.show(monitor.bytes_read)
+            callback_bar.show(monitor.bytes_read)
 
-        return callback, bar
+        return callback, callback_bar
 
     @staticmethod
     def format_sizeof(num, suffix='B'):
@@ -145,7 +145,7 @@ class HttpTransportMixin(object):
         request_headers.update({"Content-Type": multipart_encoder.content_type})
 
         # Attach progress bar
-        progress_callback, progress_bar = self.create_progress_callback(multipart_encoder)
+        progress_callback, callback_bar = self.create_progress_callback(multipart_encoder)
         multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
 
         timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
@@ -159,7 +159,7 @@ class HttpTransportMixin(object):
                                 session=session)
         finally:
             # always make sure we clear the console
-            progress_bar.done()
+            callback_bar.done()
 
         return response
 

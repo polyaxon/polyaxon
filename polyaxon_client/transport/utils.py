@@ -111,7 +111,7 @@ def progress_bar(items,
              empty_char=BAR_EMPTY_CHAR,
              filled_char=BAR_FILLED_CHAR,
              expected_size=count,
-             every=every) as bar:
+             every=every) as _bar:
         for i, item in enumerate(items):
             yield item
-            bar.show(i + 1)
+            _bar.show(i + 1)
