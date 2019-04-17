@@ -65,25 +65,13 @@ class DeployManager(object):
 
     def check_for_kubernetes(self):
         # Deployment on k8s requires helm & kubectl to be installed
-        command_exist = self.kubectl.execute(args=[], is_json=False)
-        if not command_exist:
+        if not self.kubectl.check():
             raise PolyaxonDeploymentConfigError('kubectl is required to run this command.')
         Printer.print_success('kubectl is installed')
 
-        command_exist = self.helm.execute(args=[])
-        if not command_exist:
+        if not self.helm.check():
             raise PolyaxonDeploymentConfigError('helm is required to run this command.')
         Printer.print_success('helm is installed')
-
-        # Check the version to ensure that there's a connection
-        command_exist = self.kubectl.execute(args=['version'])
-        if not command_exist:
-            raise PolyaxonDeploymentConfigError('kubectl has no kubernetes config.')
-
-        command_exist = self.helm.execute(args=['version'])
-        if not command_exist:
-            raise PolyaxonDeploymentConfigError(
-                'helm is not configured or kubernetes config is not found.')
 
         # Check that polyaxon/polyaxon is set and up-to date
         self.helm.execute(args=['repo', 'add', 'polyaxon', 'https://charts.polyaxon.com'])
@@ -92,13 +80,11 @@ class DeployManager(object):
 
     def check_for_docker_compose(self):
         # Deployment on docker compose requires Docker & Docker Compose to be installed
-        command_exist = self.docker.execute(args=['version'])
-        if not command_exist:
+        if not self.docker.check():
             raise PolyaxonDeploymentConfigError('Docker is required to run this command.')
         Printer.print_success('Docker is installed')
 
-        command_exist = self.compose.execute(args=['version'])
-        if not command_exist:
+        if not self.compose.check():
             raise PolyaxonDeploymentConfigError('Docker Compose is required to run this command.')
         Printer.print_success('Docker Compose is installed')
 
@@ -108,6 +94,8 @@ class DeployManager(object):
         return True
 
     def check_for_docker(self):
+        if not self.docker.check():
+            raise PolyaxonDeploymentConfigError('Docker is required to run this command.')
         return True
 
     def check_for_heroku(self):
