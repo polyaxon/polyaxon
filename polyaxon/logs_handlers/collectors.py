@@ -56,7 +56,7 @@ def logs_collect_build_job(build_uuid: str) -> None:
     except BuildJob.DoesNotExist:
         return
 
-    if build.in_cluster:
+    if not build.in_cluster:
         return
 
     process_build_logs(build=build, temp=False)
