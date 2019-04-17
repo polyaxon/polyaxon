@@ -42,7 +42,7 @@ setup(name='polyaxon-dockerizer',
       ],
       install_requires=[
           'polyaxon-client==0.4.4',
-          'Unipath==1.1'
+          'polyaxon-dockerizer==0.0.1',
       ],
       classifiers=[
           'Programming Language :: Python',

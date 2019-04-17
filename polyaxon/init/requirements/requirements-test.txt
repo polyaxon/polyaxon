@@ -1,2 +1,3 @@
 -r requirements-dev.txt
--r requirements-base-test.txt
+
+polyaxon-pip-tests==0.0.2

@@ -1,5 +1,6 @@
 -r monolith/requirements-dev.txt
--r requirements-base-test.txt
+
+polyaxon-pip-tests==0.0.2
 
 execnet==1.3.0
 factory-boy
