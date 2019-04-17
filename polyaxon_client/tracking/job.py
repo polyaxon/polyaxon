@@ -6,15 +6,15 @@ import os
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_client.tracking.base import BaseTracker
+from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import (
     get_data_paths,
     get_log_level,
     get_outputs_path,
     get_outputs_refs_paths
 )
-from polyaxon_client.tracking.base import BaseTracker
-from polyaxon_client.tracking.in_cluster import ensure_in_custer
-from polyaxon_client.tracking.no_op import check_no_op
 
 
 class BaseJob(BaseTracker):

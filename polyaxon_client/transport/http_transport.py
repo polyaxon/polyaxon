@@ -6,14 +6,13 @@ import os
 import requests
 import tarfile
 
-from clint.textui import progress
-from clint.textui.progress import Bar
 from hestia.list_utils import to_list
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
 from polyaxon_client.logger import logger
+from polyaxon_client.transport.utils import Bar, progress_bar
 
 
 class HttpTransportMixin(object):
@@ -27,12 +26,12 @@ class HttpTransportMixin(object):
     @staticmethod
     def create_progress_callback(encoder):
         encoder_len = encoder.len
-        progress_bar = Bar(expected_size=encoder_len, filled_char='=')
+        bar = Bar(expected_size=encoder_len, filled_char='=')
 
         def callback(monitor):
-            progress_bar.show(monitor.bytes_read)
+            bar.show(monitor.bytes_read)
 
-        return callback, progress_bar
+        return callback, bar
 
     @staticmethod
     def format_sizeof(num, suffix='B'):
@@ -197,7 +196,7 @@ class HttpTransportMixin(object):
                 if not content_length:
                     content_length = response.headers.get('content-length')
                 if content_length:
-                    for chunk in progress.bar(response.iter_content(chunk_size=1024),
+                    for chunk in progress_bar(response.iter_content(chunk_size=1024),
                                               expected_size=(int(content_length) / 1024) + 1):
                         if chunk:
                             f.write(chunk)

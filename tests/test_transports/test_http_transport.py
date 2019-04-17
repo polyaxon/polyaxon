@@ -5,10 +5,10 @@ import requests
 
 import mock
 
-from clint.textui.progress import Bar
 from tests.test_transports.utils import BaseTestCaseTransport
 
 from polyaxon_client.transport import Transport
+from polyaxon_client.transport.utils import Bar
 
 
 class TestHttpTransport(BaseTestCaseTransport):

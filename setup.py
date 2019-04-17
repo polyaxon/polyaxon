@@ -54,7 +54,6 @@ setup(name='polyaxon-client',
           'kubernetes',
       ],
       install_requires=[
-          "clint==0.5.1",
           "polyaxon-schemas==0.4.4",
           "polystores>=0.1.7",
           "psutil==5.4.7",

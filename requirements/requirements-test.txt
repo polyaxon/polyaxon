@@ -1,5 +1,6 @@
 -r requirements-dev.txt
--r requirements-base-test.txt
+
+polyaxon-pip-tests==0.0.3
 
 fake-factory==0.7.2
 httpretty==0.8.14
