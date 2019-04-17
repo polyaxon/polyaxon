@@ -15,6 +15,13 @@ class ComposeOperator(CmdOperator):
         return params
 
     @classmethod
+    def check(cls):
+        command_exist = cls.execute(args=['version'])
+        if not command_exist:
+            return False
+        return True
+
+    @classmethod
     def execute(cls, args):
         params = cls.params(args)
         return cls._execute(params=params, env=None)

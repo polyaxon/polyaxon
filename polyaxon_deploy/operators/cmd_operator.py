@@ -27,3 +27,7 @@ class CmdOperator(object):
                                         stderr=stderr)
 
             return json.load(stdout) if is_json else stdout.read()
+
+    @classmethod
+    def check(cls):
+        return True

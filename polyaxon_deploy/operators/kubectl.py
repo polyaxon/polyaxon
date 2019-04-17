@@ -17,6 +17,16 @@ class KubectlOperator(CmdOperator):
             params += ['-o', 'json']
         return params
 
+    @classmethod
+    def check(cls):
+        command_exist = cls.execute(args=[], is_json=False)
+        if not command_exist:
+            return False
+        command_exist = cls.execute(args=['version'])
+        if not command_exist:
+            return False
+        return True
+
     @staticmethod
     def env():
         env = os.environ.copy()
