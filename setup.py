@@ -47,7 +47,11 @@ setup(name='polyaxon-dockerizer',
           'reinforcement-learning',
           'kubernetes',
       ],
-      install_requires=[],
+      install_requires=[
+          'docker==3.7.2',
+          'polyaxon-client>=0.4.4',
+          'Unipath==1.1',
+      ],
       classifiers=[
           'Programming Language :: Python',
           'Operating System :: OS Independent',
