@@ -49,7 +49,6 @@ setup(name='polyaxon-dockerizer',
       ],
       install_requires=[
           'docker==3.7.2',
-          'polyaxon-client>=0.4.4',
           'Unipath==1.1',
       ],
       classifiers=[
