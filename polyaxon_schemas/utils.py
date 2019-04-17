@@ -558,16 +558,18 @@ class TaskType(object):
 class BuildBackend(object):
     NATIVE = 'native'
     KANIKO = 'kaniko'
+    OTHER = 'other'
 
-    VALUES = [NATIVE, KANIKO]
+    VALUES = [NATIVE, KANIKO, OTHER]
 
 
 class ExperimentBackend(object):
     NATIVE = 'native'
     KUBEFLOW = 'kubeflow'
     MPI = 'mpi'
+    OTHER = 'other'
 
-    VALUES = [NATIVE, KUBEFLOW, MPI]
+    VALUES = [NATIVE, KUBEFLOW, MPI, OTHER]
 
 
 class NotebookBackend(object):
