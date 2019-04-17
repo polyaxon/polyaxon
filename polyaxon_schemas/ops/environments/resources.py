@@ -128,7 +128,7 @@ class PodResourcesConfig(BaseConfig):
         self.gpu = gpu
         self.tpu = tpu
 
-    def __add__(self, other):
+    def __add__(self, other):  # pylint:disable=too-many-branches
         if not other:
             return self
 

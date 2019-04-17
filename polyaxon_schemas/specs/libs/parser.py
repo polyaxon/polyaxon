@@ -29,7 +29,7 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def parse(cls, spec, data, matrix_declarations=None):
+    def parse(cls, spec, data, matrix_declarations=None):  # pylint:disable=too-many-branches
         declarations = copy.copy(data.get(spec.DECLARATIONS, {}))
         matrix_declarations = copy.copy(matrix_declarations)
         if matrix_declarations:
@@ -65,7 +65,7 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def parse_expression(cls,
+    def parse_expression(cls,  # pylint:disable=too-many-branches
                          spec,
                          expression,
                          declarations,
