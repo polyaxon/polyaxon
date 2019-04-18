@@ -30,6 +30,9 @@ class Rhea(object):
     def keys_endswith(self, term):
         return [k for k in self._data if k.endswith(term)]
 
+    def has_key(self, key):
+        return key in self._data
+
     @property
     def data(self):
         return self._data
