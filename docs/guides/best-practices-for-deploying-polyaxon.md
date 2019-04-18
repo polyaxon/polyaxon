@@ -59,7 +59,16 @@ We provide a reference document on how to achieve High Available Database on Pol
 
 Stateful application are very hard to setup correctly on a Kubernetes cluster, so to achieve Postgres HA, we suggest that to look at setting an external Database with Polyaxon.
 
-We also recommend users to take snapshots and backups before going through a migration, this is particularly important if an upgrade contains DB or Data migrations. 
+We also recommend users to take snapshots and backups before going through a migration, this is particularly important if an upgrade contains DB or Data migrations.
+
+## Storages
+
+Your experiments and jobs outputs/artifacts and logs are stored by default in temporary storages, in order to enable durable, i.e. available after a node failure, we recommend that you read the following guides:
+  * [for outputs](/configuration/custom-outputs-storage/)
+  * [for logs](/configuration/custom-logs-storage/)
+
+If you are storing code references on Polyaxon, i.e. you managing code repos in-cluster, we also recommend a durable storage for repos:
+  * [fo repos](/configuration/custom-repos-storage/)
 
 ## SSL
 
