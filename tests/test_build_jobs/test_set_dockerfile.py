@@ -2,7 +2,7 @@ import pytest
 
 from factories.factory_build_jobs import BuildJobFactory
 from scheduler.tasks.build_jobs import build_jobs_set_dockerfile
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.build_jobs_mark

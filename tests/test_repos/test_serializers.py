@@ -3,7 +3,7 @@ import pytest
 from api.repos.serializers import ExternalRepoSerializer, RepoSerializer
 from db.models.repos import ExternalRepo, Repo
 from factories.factory_repos import ExternalRepoFactory, RepoFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.repos_mark

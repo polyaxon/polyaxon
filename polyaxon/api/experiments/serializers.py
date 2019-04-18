@@ -4,7 +4,7 @@ from rest_framework.exceptions import ValidationError
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
-from api.utils.serializers.in_cluster import InClusterMixin
+from api.utils.serializers.is_managed import IsManagedMixin
 from api.utils.serializers.job_resources import JobResourcesSerializer
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.project import ProjectMixin
@@ -148,11 +148,16 @@ class ExperimentSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin
             'experiment_group',
             'build_job',
             'backend',
+            'is_managed',
             'framework',
             'tags',
             'last_metric',
             'declarations',
         )
+        extra_kwargs = {
+            'original_experiment': {'write_only': True},
+            'is_managed': {'read_only': True}
+        }
 
     def get_original(self, obj):
         return obj.original_experiment.unique_name if obj.original_experiment else None
@@ -169,7 +174,7 @@ class BookmarkedExperimentSerializer(ExperimentSerializer, BookmarkedSerializerM
 
 
 class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
-                                 InClusterMixin,
+                                 IsManagedMixin,
                                  TagsSerializerMixin,
                                  DataRefsSerializerMixin,
                                  TensorboardSerializerMixin,
@@ -187,7 +192,6 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
             'readme',
             'config',
             'resources',
-            'in_cluster',
             'run_env',
             'data_refs',
             'num_jobs',
@@ -196,7 +200,8 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
             'tensorboard',
             'has_tensorboard',
         )
-        extra_kwargs = {'original_experiment': {'write_only': True}}
+        extra_kwargs = {'config': {'read_only': True},
+                        **BookmarkedExperimentSerializer.Meta.extra_kwargs}
 
     def get_resources(self, obj):
         resources = obj.resources
@@ -236,7 +241,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
 
 
 class ExperimentCreateSerializer(serializers.ModelSerializer,
-                                 InClusterMixin,
+                                 IsManagedMixin,
                                  NamesMixin,
                                  ProjectMixin,
                                  UserMixin):
@@ -259,7 +264,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'declarations',
             'backend',
             'framework',
-            'in_cluster',
+            'is_managed',
             'run_env',
             'data_refs',
             'tags',
@@ -276,16 +281,12 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
         if not config:
             return config
 
-        spec = validate_experiment_spec_config(config)
+        validate_experiment_spec_config(config)
+        return config
 
-        if spec.is_experiment:
-            # Resume normal creation
-            return config
-
-        # Raise an error to tell the user to use experiment creation instead
-        raise ValidationError('Current experiment creation could not be performed.\n'
-                              'The reason is that the specification sent correspond '
-                              'to a `{}`.\n'.format(spec.kind))
+    def validate(self, attrs):
+        self.check_if_entity_is_managed(attrs=attrs, entity_name='Experiment')
+        return attrs
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data,
@@ -295,8 +296,3 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             return super().create(validated_data)
         except Exception as e:
             raise ValidationError(e)
-
-    def validate(self, attrs):
-        if self.initial_data.get('check_specification') and not attrs.get('config'):
-            raise ValidationError('Experiment expects a `config`.')
-        return attrs

@@ -4,7 +4,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
-from api.utils.serializers.in_cluster import InClusterMixin
+from api.utils.serializers.is_managed import IsManagedMixin
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
@@ -49,7 +49,9 @@ class BuildJobSerializer(serializers.ModelSerializer, ProjectMixin, UserMixin):
             'tags',
             'project',
             'backend',
+            'is_managed',
         )
+        extra_kwargs = {'is_managed': {'read_only': True}}
 
 
 class BookmarkedBuildJobSerializer(BuildJobSerializer, BookmarkedSerializerMixin):
@@ -60,7 +62,7 @@ class BookmarkedBuildJobSerializer(BuildJobSerializer, BookmarkedSerializerMixin
 
 
 class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
-                               InClusterMixin,
+                               IsManagedMixin,
                                TagsSerializerMixin,
                                NamesMixin):
     resources = fields.SerializerMethodField()
@@ -74,15 +76,15 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
             'merge',
             'description',
             'config',
-            'in_cluster',
             'resources',
             'node_scheduled',
             'num_jobs',
             'num_experiments',
             'dockerfile',
             'commit',
-            'backend',
         )
+        extra_kwargs = {'content': {'read_only': True},
+                        **BookmarkedBuildJobSerializer.Meta.extra_kwargs}
 
     def get_commit(self, obj: 'BuildJob'):
         return obj.code_reference.commit if obj.code_reference else None
@@ -106,7 +108,7 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
 
 
 class BuildJobCreateSerializer(serializers.ModelSerializer,
-                               InClusterMixin,
+                               IsManagedMixin,
                                NamesMixin,
                                ProjectMixin,
                                UserMixin):
@@ -124,19 +126,27 @@ class BuildJobCreateSerializer(serializers.ModelSerializer,
             'description',
             'config',
             'backend',
-            'in_cluster',
+            'is_managed',
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
 
-    def validate_config(self, config: Dict) -> Dict:
+    def validate_config(self, config):
         """We only validate the config if passed.
 
         Also we use the BuildSpecification to check if this config was
-        intended as job.
+        intended as an experiment.
         """
+        # config is optional
+        if not config:
+            return config
+
         validate_build_spec_config(config)
         return config
+
+    def validate(self, attrs):
+        self.check_if_entity_is_managed(attrs=attrs, entity_name='Build')
+        return attrs
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data,

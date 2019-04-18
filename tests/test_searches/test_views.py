@@ -8,7 +8,7 @@ from constants.urls import API_V1
 from db.models.searches import Search
 from factories.factory_projects import ProjectFactory
 from factories.factory_searches import SearchFactory
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.search_mark

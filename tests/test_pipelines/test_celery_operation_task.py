@@ -4,7 +4,7 @@ from constants.pipelines import OperationStatuses, PipelineStatuses
 from factories.factory_pipelines import OperationRunFactory
 from pipelines.celery_task import ClassBasedTask, OperationTask
 from polyaxon.celery_api import celery_app
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.pipelines_mark

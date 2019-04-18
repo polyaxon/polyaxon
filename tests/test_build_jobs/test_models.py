@@ -12,7 +12,7 @@ from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.build_jobs_mark

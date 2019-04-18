@@ -5,7 +5,7 @@ import pytest
 from rhea import RheaError
 
 from polyaxon.config_manager import ConfigManager
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.settings_mark

@@ -11,7 +11,7 @@ from api.jobs.serializers import (
 from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.jobs_mark
@@ -37,6 +37,8 @@ class TestJobSerializer(BaseTest):
         'tags',
         'project',
         'build_job',
+        'is_managed',
+        'backend',
     }
 
     def setUp(self):
@@ -140,7 +142,8 @@ class TestJobDetailSerializer(BaseTest):
         'description',
         'readme',
         'config',
-        'in_cluster',
+        'is_managed',
+        'backend',
         'tags',
         'started_at',
         'finished_at',

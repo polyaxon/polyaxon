@@ -6,7 +6,7 @@ from hestia.tz_utils import local_now
 
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 from schemas.job import JobLabelConfig
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.monitors_mark

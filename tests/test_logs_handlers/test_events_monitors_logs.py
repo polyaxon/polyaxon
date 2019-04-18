@@ -14,7 +14,7 @@ from logs_handlers.tasks.log_handlers import (
     logs_handle_experiment_job,
     logs_handle_job
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.logs_heandlers_mark

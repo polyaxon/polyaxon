@@ -60,7 +60,7 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
 
     @cached_property
     def specification(self) -> 'NotebookSpecification':
-        return NotebookSpecification(values=self.config)
+        return NotebookSpecification(values=self.config) if self.config else None
 
     @property
     def has_specification(self) -> bool:

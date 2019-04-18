@@ -9,7 +9,7 @@ from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_projects import ProjectFactory
 from scheduler import dockerizer_scheduler
 from schemas.specifications import BuildSpecification
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.dockerizer_mark

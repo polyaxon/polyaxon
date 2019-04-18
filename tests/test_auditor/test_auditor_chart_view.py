@@ -11,7 +11,7 @@ from db.models.experiments import ExperimentChartView
 from event_manager.events import chart_view as chart_view_events
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.auditor_mark

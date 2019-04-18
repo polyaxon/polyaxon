@@ -9,7 +9,7 @@
 #
 # from factories.factory_experiments import ExperimentFactory
 #
-# from tests.utils import BaseTest
+# from tests.base.case import BaseTest
 #
 #
 # @pytest.mark.spawner_mark

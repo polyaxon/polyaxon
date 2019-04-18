@@ -8,7 +8,7 @@ import auditor
 
 from db.models.clusters import Cluster
 from event_manager.events import bookmark as bookmarks_events
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.auditor_mark

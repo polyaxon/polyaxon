@@ -1,7 +1,7 @@
 import pytest
 
 from db.redis.group_check import GroupChecks
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.redis_mark

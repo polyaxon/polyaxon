@@ -3,7 +3,7 @@ import pytest
 from api.code_reference.serializers import CodeReferenceSerializer
 from db.models.repos import CodeReference
 from factories.factory_code_reference import CodeReferenceFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.experiments_mark

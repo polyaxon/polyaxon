@@ -3,7 +3,7 @@ import pytest
 import conf
 
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.redis_mark

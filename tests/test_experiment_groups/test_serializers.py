@@ -12,7 +12,7 @@ from factories.factory_experiment_groups import (
     ExperimentGroupChartViewFactory,
     ExperimentGroupFactory
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.experiment_groups_mark
@@ -37,6 +37,8 @@ class TestExperimentGroupSerializer(BaseTest):
         'concurrency',
         'last_status',
         'search_algorithm',
+        'is_managed',
+        'backend',
     }
 
     def setUp(self):
@@ -111,6 +113,8 @@ class TestExperimentGroupDetailSerializer(BaseTest):
         'project',
         'group_type',
         'user',
+        'is_managed',
+        'backend',
         'created_at',
         'updated_at',
         'started_at',

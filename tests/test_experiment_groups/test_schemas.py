@@ -12,7 +12,7 @@ from hpsearch.schemas import (
     HyperbandIterationConfig,
     get_iteration_config
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.experiment_groups_mark

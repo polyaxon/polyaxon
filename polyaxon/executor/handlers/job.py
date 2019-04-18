@@ -14,6 +14,9 @@ class JobHandler(BaseHandler):
 
     @classmethod
     def _handle_job_created(cls, event: 'Event') -> None:
+        if not event.data['is_managed']:
+            return
+
         if not event.data['has_specification']:
             return
 

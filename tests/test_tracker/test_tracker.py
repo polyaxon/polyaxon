@@ -5,7 +5,7 @@ from django.test import override_settings
 
 import tracker
 
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.tracker_mark

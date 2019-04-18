@@ -4,7 +4,7 @@ import pytest
 
 from checks.results import Result
 from checks.scheduler import SchedulerCheck
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.checks_mark

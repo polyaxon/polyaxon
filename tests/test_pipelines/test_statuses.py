@@ -1,7 +1,7 @@
 import pytest
 
 from constants.pipelines import OperationStatuses, PipelineStatuses
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.pipelines_mark

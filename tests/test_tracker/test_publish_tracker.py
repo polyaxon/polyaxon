@@ -8,7 +8,7 @@ from db.models.clusters import Cluster
 from event_manager.events.cluster import CLUSTER_CREATED
 from event_manager.events.user import USER_ACTIVATED
 from factories.factory_users import UserFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 from tracker.publish_tracker import PublishTrackerService
 
 

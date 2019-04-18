@@ -7,7 +7,7 @@ import pytest
 import auditor
 
 from event_manager.events import permission as permission_events
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.auditor_mark

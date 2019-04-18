@@ -231,7 +231,7 @@ export default class Experiments extends React.Component<Props, State> {
 
   public createSelection = (form: { name: string, description: string }) => {
     if (this.props.createSelection) {
-      const groupModel = {name: form.name, description: form.description} as GroupModel;
+      const groupModel = {name: form.name, description: form.description, is_managed: false} as GroupModel;
       const group = {...groupModel, experiment_ids: this.state.items};
       this.props.createSelection(group);
     }

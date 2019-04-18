@@ -9,6 +9,8 @@ export class JobModel {
   public original: string;
   public cloning_strategy: string;
   public last_status: string;
+  public is_managed: boolean;
+  public backend: string;
   public user: string;
   public definition: string;
   public description: string;

@@ -9,7 +9,7 @@ from factories.factory_jobs import JobFactory, JobStatusFactory
 from scheduler.tasks.build_jobs import build_jobs_check_heartbeat
 from scheduler.tasks.experiments import experiments_check_heartbeat
 from scheduler.tasks.jobs import jobs_check_heartbeat
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.scheduler_mark

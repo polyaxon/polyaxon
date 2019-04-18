@@ -15,7 +15,7 @@ from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 from scheduler.spawners.tf_job_spawner import TFJobSpawner
 from schemas.experiments import ExperimentBackend, ExperimentFramework
 from schemas.tasks import TaskType
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.scheduler_mark

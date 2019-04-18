@@ -9,7 +9,7 @@ from api.projects.serializers import (
 )
 from db.models.projects import Project
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.projects_mark

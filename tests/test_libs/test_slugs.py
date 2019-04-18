@@ -3,7 +3,7 @@ import pytest
 from django.utils.functional import lazy
 
 from libs.slugs import slugify
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.libs_mark

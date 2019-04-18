@@ -5,7 +5,7 @@ from constants import content_types
 from db.models.searches import Search
 from factories.factory_searches import SearchFactory
 from factories.factory_users import UserFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.search_mark

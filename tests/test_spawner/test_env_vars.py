@@ -48,7 +48,7 @@ class TestEnvVars(TestCase):
 
     def test_get_service_env_vars(self):
         env_vars = get_service_env_vars()
-        assert len(env_vars) == 9
+        assert len(env_vars) == 10
         env_var_names = [env_var.name for env_var in env_vars]
         assert 'POLYAXON_K8S_NAMESPACE' in env_var_names
         assert 'POLYAXON_SECRET_KEY' in env_var_names

@@ -26,6 +26,7 @@ from k8s_events_handlers.tasks.statuses import (
     k8s_events_handle_plugin_job_statuses
 )
 from monitor_statuses.jobs import get_job_state
+from tests.base.case import BaseTest
 from tests.fixtures import (
     status_build_job_event,
     status_build_job_event_with_conditions,
@@ -38,7 +39,6 @@ from tests.fixtures import (
     status_tensorboard_job_event,
     status_tensorboard_job_event_with_conditions
 )
-from tests.utils import BaseTest
 
 
 @pytest.mark.monitors_mark

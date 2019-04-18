@@ -11,7 +11,7 @@ from event_manager.events.experiment import EXPERIMENT_SUCCEEDED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_users import UserFactory
 from polyaxon.config_settings import CleaningIntervals
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.crons_mark

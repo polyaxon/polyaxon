@@ -8,7 +8,7 @@ from db.models.abstract_jobs import AbstractJob
 from db.models.utils import (
     DeletedModel,
     DescribableModel,
-    InCluster,
+    IsManagedModel,
     NameableModel,
     NodeSchedulingModel,
     OutputsModel,
@@ -19,7 +19,7 @@ from db.models.utils import (
 
 
 class PluginJobBase(AbstractJob,
-                    InCluster,
+                    IsManagedModel,
                     OutputsModel,
                     PersistenceModel,
                     SubPathModel,

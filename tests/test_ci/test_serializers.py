@@ -3,7 +3,7 @@ import pytest
 from api.ci.serializers import CISerializer
 from db.models.ci import CI
 from factories.ci_factory import CIFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.ci_mark

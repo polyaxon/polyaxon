@@ -7,7 +7,7 @@ import stores
 
 from stores.exceptions import VolumeNotFoundError
 from stores.validators import validate_persistence_outputs
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.paths_mark

@@ -5,7 +5,7 @@ import pytest
 
 from action_manager.actions.webhooks.webhook import WEBHOOK_ACTION_EXECUTED, WebHookAction
 from action_manager.exceptions import PolyaxonActionException
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.actions_mark

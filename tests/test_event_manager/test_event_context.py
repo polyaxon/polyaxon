@@ -12,7 +12,7 @@ from libs.unique_urls import (
     get_job_url,
     get_project_url
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.events_mark

@@ -13,8 +13,8 @@ from monitor_statuses.jobs import get_job_state
 from monitor_statuses.monitor import update_job_containers
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 from schemas.pod import PodLifeCycle
+from tests.base.case import BaseTest
 from tests.fixtures import status_experiment_job_event, status_experiment_job_event_with_conditions
-from tests.utils import BaseTest
 
 
 @pytest.mark.spawner_mark

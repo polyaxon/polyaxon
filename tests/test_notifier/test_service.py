@@ -15,7 +15,7 @@ from action_manager.actions.webhooks.webhook import WebHookAction
 from db.models.notification import Notification, NotificationEvent
 from event_manager.events.experiment import EXPERIMENT_SUCCEEDED, EXPERIMENT_VIEWED
 from factories.factory_experiments import ExperimentFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.notifier_mark

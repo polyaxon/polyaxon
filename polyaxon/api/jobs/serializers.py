@@ -4,7 +4,7 @@ from rest_framework.exceptions import ValidationError
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
 from api.utils.serializers.build import BuildMixin
 from api.utils.serializers.data_refs import DataRefsSerializerMixin
-from api.utils.serializers.in_cluster import InClusterMixin
+from api.utils.serializers.is_managed import IsManagedMixin
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
@@ -49,7 +49,10 @@ class JobSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin, UserM
             'tags',
             'project',
             'build_job',
+            'backend',
+            'is_managed',
         )
+        extra_kwargs = {'is_managed': {'read_only': True}}
 
     def get_original(self, obj):
         return obj.original_job.unique_name if obj.original_job else None
@@ -63,7 +66,7 @@ class BookmarkedJobSerializer(JobSerializer, BookmarkedSerializerMixin):
 
 
 class JobDetailSerializer(BookmarkedJobSerializer,
-                          InClusterMixin,
+                          IsManagedMixin,
                           TagsSerializerMixin,
                           DataRefsSerializerMixin,
                           NamesMixin):
@@ -78,12 +81,13 @@ class JobDetailSerializer(BookmarkedJobSerializer,
             'description',
             'readme',
             'config',
-            'in_cluster',
+            'is_managed',
             'resources',
             'data_refs',
             'node_scheduled',
         )
-        extra_kwargs = {'original_job': {'write_only': True}}
+        extra_kwargs = {'original_job': {'write_only': True},
+                        **BookmarkedJobSerializer.Meta.extra_kwargs}
 
     def get_resources(self, obj):
         return obj.resources.to_dict() if obj.resources else None
@@ -101,7 +105,7 @@ class JobDetailSerializer(BookmarkedJobSerializer,
 
 
 class JobCreateSerializer(serializers.ModelSerializer,
-                          InClusterMixin,
+                          IsManagedMixin,
                           NamesMixin,
                           ProjectMixin,
                           UserMixin):
@@ -118,7 +122,8 @@ class JobCreateSerializer(serializers.ModelSerializer,
             'name',
             'description',
             'readme',
-            'in_cluster',
+            'backend',
+            'is_managed',
             'data_refs',
             'config',
             'tags',
@@ -131,8 +136,16 @@ class JobCreateSerializer(serializers.ModelSerializer,
         Also we use the JobSpecification to check if this config was
         intended as job.
         """
+        # config is optional
+        if not config:
+            return config
+
         validate_job_spec_config(config)
         return config
+
+    def validate(self, attrs):
+        self.check_if_entity_is_managed(attrs=attrs, entity_name='Job')
+        return attrs
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data,

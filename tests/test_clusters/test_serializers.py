@@ -5,7 +5,7 @@ from api.nodes.serializers import ClusterNodeDetailSerializer, ClusterNodeSerial
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode, NodeGPU
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.clusters_mark

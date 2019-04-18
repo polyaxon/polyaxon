@@ -53,6 +53,7 @@ def get_internal_env_vars(service_internal_header,
         get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
         get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
         get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
+        get_env_var(name=constants.CONFIG_MAP_IS_MANAGED, value=True),
         get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
                     value=conf.get('HEADERS_INTERNAL').replace('_', '-')),
@@ -83,6 +84,7 @@ def get_service_env_vars(namespace='default'):
         get_env_var(name=API_HTTP_URL, value=get_settings_http_api_url()),
         get_env_var(name=API_WS_HOST, value=get_settings_ws_api_url()),
         get_env_var(name=constants.CONFIG_MAP_IN_CLUSTER, value=True),
+        get_env_var(name=constants.CONFIG_MAP_IS_MANAGED, value=True),
         get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
     ]
 

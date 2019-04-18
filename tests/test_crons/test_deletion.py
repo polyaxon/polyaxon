@@ -23,7 +23,7 @@ from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from polyaxon.config_settings import CleaningIntervals
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.crons_mark

@@ -15,7 +15,7 @@ from factories.factory_experiments import (
 )
 from query.builder import ComparisonCondition, DateTimeCondition, EqualityCondition, ValueCondition
 from query.exceptions import QueryConditionException
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 # pylint:disable=protected-access
 

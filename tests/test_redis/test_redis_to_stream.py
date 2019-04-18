@@ -3,7 +3,7 @@ import uuid
 import pytest
 
 from db.redis.to_stream import RedisToStream
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.redis_mark

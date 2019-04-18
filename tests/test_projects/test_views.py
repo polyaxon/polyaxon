@@ -31,7 +31,7 @@ from factories.factory_experiments import ExperimentFactory, ExperimentJobFactor
 from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.projects_mark

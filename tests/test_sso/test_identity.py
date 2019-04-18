@@ -2,7 +2,7 @@ import pytest
 
 from factories.factory_users import UserFactory
 from sso.wizard import IdentityWizard
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.libs_mark

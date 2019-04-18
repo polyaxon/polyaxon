@@ -24,7 +24,7 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from schemas.specifications import ExperimentSpecification
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.experiments_mark
@@ -122,6 +122,7 @@ class TestExperimentSerializer(BaseTest):
         'started_at',
         'finished_at',
         'tags',
+        'is_managed',
         'backend',
         'framework',
         'original',
@@ -257,7 +258,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'resources',
         'data_refs',
         'run_env',
-        'in_cluster',
+        'is_managed',
         'bookmarked',
     }
 

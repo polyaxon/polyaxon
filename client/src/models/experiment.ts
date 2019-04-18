@@ -8,6 +8,7 @@ export class ExperimentModel {
   public original: string;
   public cloning_strategy: string;
   public description: string;
+  public is_managed: boolean;
   public backend: string;
   public framework: string;
   public user: string;

@@ -4,7 +4,7 @@ import pytest
 
 from django.urls import reverse
 
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.sso_mark

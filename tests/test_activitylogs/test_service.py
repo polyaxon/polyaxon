@@ -10,7 +10,7 @@ from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
 from event_manager.events.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_users import UserFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.activitylogs_mark

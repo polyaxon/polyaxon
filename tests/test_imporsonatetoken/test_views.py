@@ -10,7 +10,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseViewTest, InternalClient
+from tests.base.views import BaseViewTest, InternalClient
 
 
 @pytest.mark.impersonatetokens_mark

@@ -9,7 +9,7 @@ import auditor
 from event_manager.events import notebook as notebook_events
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.auditor_mark

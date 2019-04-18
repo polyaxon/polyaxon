@@ -6,7 +6,7 @@ import conf
 
 from constants.experiment_jobs import get_experiment_job_container_name, get_experiment_job_uuid
 from schemas.experiments import ExperimentBackend, ExperimentFramework
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.experiments_mark

@@ -2,6 +2,7 @@ from rest_framework import fields, serializers
 from rest_framework.exceptions import ValidationError
 
 from api.utils.serializers.bookmarks import BookmarkedSerializerMixin
+from api.utils.serializers.is_managed import IsManagedMixin
 from api.utils.serializers.names import NamesMixin
 from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
@@ -47,10 +48,11 @@ class ExperimentGroupSerializer(serializers.ModelSerializer, ProjectMixin, UserM
             'finished_at',
             'tags',
             'concurrency',
+            'backend',
+            'is_managed',
             'search_algorithm'
         )
-
-        extra_kwargs = {'group_type': {'read_only': True}}
+        extra_kwargs = {'group_type': {'read_only': True}, 'is_managed': {'read_only': True}}
 
 
 class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedSerializerMixin):
@@ -61,6 +63,7 @@ class BookmarkedExperimentGroupSerializer(ExperimentGroupSerializer, BookmarkedS
 
 
 class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
+                                      IsManagedMixin,
                                       TagsSerializerMixin,
                                       TensorboardSerializerMixin,
                                       NamesMixin):
@@ -92,6 +95,8 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
             'num_failed_experiments',
             'num_stopped_experiments',
         )
+        extra_kwargs = {'content': {'read_only': True},
+                        **BookmarkedExperimentGroupSerializer.Meta.extra_kwargs}
 
     def get_num_experiments(self, obj: ExperimentGroup) -> int:
         return obj.group_experiments.count()
@@ -117,15 +122,6 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
     def get_current_iteration(self, obj: ExperimentGroup):
         return obj.iterations.count()
 
-    def validate_content(self, content):
-        validate_group_spec_content(content)
-        return content
-
-    def validate(self, attrs):
-        if self.initial_data.get('check_specification') and not attrs.get('content'):
-            raise ValidationError('Experiment group expects `content`.')
-        return attrs
-
     def update(self, instance: ExperimentGroup, validated_data) -> ExperimentGroup:
         validated_data = self.validated_tags(validated_data=validated_data,
                                              tags=instance.tags)
@@ -136,7 +132,9 @@ class ExperimentGroupDetailSerializer(BookmarkedExperimentGroupSerializer,
         return super().update(instance=instance, validated_data=validated_data)
 
 
-class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
+class ExperimentGroupCreateSerializer(ExperimentGroupSerializer,
+                                      IsManagedMixin,
+                                      NamesMixin):
 
     class Meta(ExperimentGroupSerializer.Meta):
         fields = ExperimentGroupSerializer.Meta.fields + (
@@ -154,8 +152,9 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer, NamesMixin):
         return content
 
     def validate(self, attrs):
-        if self.initial_data.get('check_specification') and not attrs.get('content'):
-            raise ValidationError('Experiment group expects `content`.')
+        self.check_if_entity_is_managed(attrs=attrs,
+                                        entity_name='Experiment Group',
+                                        config_field='content')
         return attrs
 
     def create(self, validated_data):

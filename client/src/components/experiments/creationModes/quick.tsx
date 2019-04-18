@@ -46,7 +46,8 @@ export default class ExperimentCreateQuick extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      config: state.run.command ? getConfigFromRun(state.run, 'experiment') : null
+      config: state.run.command ? getConfigFromRun(state.run, 'experiment') : null,
+      is_managed: true
     }) as ExperimentModel;
 
     CreateEntity(this.props.onCreate, form, state.project, this.props.isProjectEntity, this.props.projects);

@@ -15,7 +15,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.activitylogs_mark

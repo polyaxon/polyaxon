@@ -80,6 +80,8 @@ class ExperimentCreatedEvent(Event):
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('is_resume', attr_type=bool),
         Attribute('is_restart', attr_type=bool),
         Attribute('is_copy', attr_type=bool),
@@ -100,6 +102,8 @@ class ExperimentUpdatedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
@@ -124,6 +128,8 @@ class ExperimentViewedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -139,6 +145,8 @@ class ExperimentArchivedEvent(Event):
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('user.id'),
         Attribute('last_status'),
     )
@@ -153,6 +161,8 @@ class ExperimentRestoredEvent(Event):
         Attribute('project.user.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('user.id'),
         Attribute('last_status'),
     )
@@ -168,6 +178,8 @@ class ExperimentBookmarkedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -184,6 +196,8 @@ class ExperimentUnBookmarkedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -199,6 +213,8 @@ class ExperimentStoppedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
@@ -215,6 +231,8 @@ class ExperimentResumedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
@@ -231,6 +249,8 @@ class ExperimentRestartedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -246,6 +266,8 @@ class ExperimentCopiedEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -260,6 +282,8 @@ class ExperimentNewStatusEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -268,7 +292,9 @@ class ExperimentNewMetricEvent(Event):
     attributes = (
         Attribute('id'),
         Attribute('project.id'),
-        Attribute('experiment_group.id', is_required=False)
+        Attribute('experiment_group.id', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -279,6 +305,8 @@ class ExperimentSucceededEvent(Event):
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -289,6 +317,8 @@ class ExperimentFailedEvent(Event):
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -299,6 +329,8 @@ class ExperimentDoneEvent(Event):
         Attribute('project.id'),
         Attribute('experiment_group.id', is_required=False),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -396,6 +428,8 @@ class ExperimentDeletedTriggeredEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('updated_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
@@ -420,6 +454,8 @@ class ExperimentStoppedTriggeredEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -436,6 +472,8 @@ class ExperimentResumedTriggeredEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -452,6 +490,8 @@ class ExperimentRestartedTriggeredEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),
@@ -468,6 +508,8 @@ class ExperimentCopiedTriggeredEvent(Event):
         Attribute('experiment_group.id', is_required=False),
         Attribute('experiment_group.user.id', is_required=False),
         Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
         Attribute('framework', attr_type=bool, is_required=False),

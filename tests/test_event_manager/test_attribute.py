@@ -7,7 +7,7 @@ import pytest
 from dateutil.tz import UTC
 
 from event_manager.event import Attribute
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.events_mark

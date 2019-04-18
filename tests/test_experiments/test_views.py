@@ -64,7 +64,8 @@ from factories.fixtures import (
     exec_experiment_spec_parsed_content
 )
 from schemas.specifications import ExperimentSpecification
-from tests.utils import BaseFilesViewTest, BaseViewTest, EphemeralClient
+from tests.base.clients import EphemeralClient
+from tests.base.views import BaseFilesViewTest, BaseViewTest
 
 
 @pytest.mark.experiments_mark
@@ -361,40 +362,39 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
     def test_create_ttl(self):
-        data = {}
+        data = {'is_managed': False}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Experiment.objects.last()
         assert RedisTTL.get_for_experiment(xp.id) == conf.get('GLOBAL_COUNTDOWN')
 
-        data = {'ttl': 10}
+        data = {'ttl': 10, 'is_managed': False}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Experiment.objects.last()
         assert RedisTTL.get_for_experiment(xp.id) == 10
 
-        data = {'ttl': 'foo'}
+        data = {'ttl': 'foo', 'is_managed': False}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-    def test_create_in_cluster(self):
-        data = {}
+    def test_create_is_managed(self):
+        data = {'is_managed': False}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Experiment.objects.last()
-        assert xp.in_cluster is True
+        assert xp.is_managed is False
         assert xp.run_env is None
 
-        data = {'in_cluster': False, 'run_env': {'foo': 'bar'}}
+        data = {'is_managed': False, 'run_env': {'foo': 'bar'}}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Experiment.objects.last()
-        assert xp.in_cluster is False
+        assert xp.is_managed is False
         assert xp.run_env == {'foo': 'bar'}
 
     def test_create(self):
-        data = {'check_specification': True}
-        resp = self.auth_client.post(self.url, data)
+        resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {'config': exec_experiment_spec_parsed_content.parsed_data}
@@ -408,8 +408,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
     def test_create_with_runner(self):
-        data = {'check_specification': True}
-        resp = self.auth_client.post(self.url, data)
+        resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
         data = {'config': exec_experiment_spec_parsed_content.parsed_data}
@@ -446,7 +445,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert experiment.outputs_experiments is None
 
     def test_create_without_config_passes_if_no_spec_validation_requested(self):
-        data = {}
+        data = {'is_managed': False}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
@@ -456,6 +455,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
     def test_create_with_declarations(self):
         data = {
+            'is_managed': False,
             'declarations': {
                 'lr': 0.1,
                 'dropout': 0.5
@@ -478,6 +478,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert group.experiments.count() == 0
 
         data = {
+            'is_managed': False,
             'declarations': {
                 'lr': 0.1,
                 'dropout': 0.5
@@ -492,6 +493,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert group.experiments.count() == 0
 
         data = {
+            'is_managed': False,
             'declarations': {
                 'lr': 0.1,
                 'dropout': 0.5
@@ -525,6 +527,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert group.selection_experiments.count() == 0
 
         data = {
+            'is_managed': False,
             'declarations': {
                 'lr': 0.1,
                 'dropout': 0.5
@@ -1049,39 +1052,39 @@ class TestExperimentDetailViewV1(BaseViewTest):
         assert new_object.description == new_description
         assert new_object.jobs.count() == 2
 
-        # path in_cluster
-        data = {'in_cluster': False}
-        assert self.object.in_cluster is True
+        # path is_managed
+        data = {'is_managed': False}
+        assert self.object.is_managed is True
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.jobs.count() == 2
-        assert new_object.in_cluster is False
+        assert new_object.is_managed is False
 
-        # path in_cluster
-        data = {'in_cluster': None}
-        assert new_object.in_cluster is False
+        # path is_managed
+        data = {'is_managed': None}
+        assert new_object.is_managed is False
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.jobs.count() == 2
-        assert new_object.in_cluster is True
+        assert new_object.is_managed is True
 
-        # path in_cluster
-        data = {'in_cluster': False}
-        assert new_object.in_cluster is True
+        # path is_managed
+        data = {'is_managed': False}
+        assert new_object.is_managed is True
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.jobs.count() == 2
-        assert new_object.in_cluster is False
+        assert new_object.is_managed is False
 
-        data = {'in_cluster': True}
+        data = {'is_managed': True}
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.jobs.count() == 2
-        assert new_object.in_cluster is True
+        assert new_object.is_managed is True
 
         # Update original experiment
         assert new_object.is_clone is False

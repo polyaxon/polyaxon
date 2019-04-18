@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 from constants.urls import API_V1
 from factories.factory_users import UserFactory
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.users_mark

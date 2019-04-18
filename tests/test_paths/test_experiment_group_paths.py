@@ -7,7 +7,7 @@ import stores
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from scheduler.tasks.storage import stores_schedule_logs_deletion, stores_schedule_outputs_deletion
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.paths_mark

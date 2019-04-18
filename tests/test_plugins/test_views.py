@@ -39,7 +39,7 @@ from factories.factory_repos import RepoFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from scheduler import notebook_scheduler
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.plugins_mark

@@ -1,7 +1,7 @@
 import pytest
 
 from db.redis.heartbeat import RedisHeartBeat
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.redis_mark

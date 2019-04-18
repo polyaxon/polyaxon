@@ -5,7 +5,7 @@ import pytest
 import conf
 
 from api.users.ldap_signals import populate_user_handler
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.users_mark

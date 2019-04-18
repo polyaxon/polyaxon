@@ -7,7 +7,7 @@ from event_manager.events.experiment import (
     ExperimentDeletedEvent,
     ExperimentViewedEvent
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.events_mark

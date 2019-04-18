@@ -47,7 +47,8 @@ from hpsearch.tasks.hyperband import hp_hyperband_start
 from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 from schemas.hptuning import HPTuningConfig, MatrixConfig, SearchAlgorithms
 from schemas.specifications import GroupSpecification
-from tests.utils import BaseTest, BaseViewTest
+from tests.base.case import BaseTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.experiment_groups_mark

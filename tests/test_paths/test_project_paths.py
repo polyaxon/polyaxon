@@ -11,7 +11,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from libs.paths.projects import delete_project_repos, get_project_repos_path
 from scheduler.tasks.storage import stores_schedule_logs_deletion, stores_schedule_outputs_deletion
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.paths_mark

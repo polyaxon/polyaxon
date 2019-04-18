@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from events_handlers.tasks.record import events_log, events_notify, events_track
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.events_heandlers_mark

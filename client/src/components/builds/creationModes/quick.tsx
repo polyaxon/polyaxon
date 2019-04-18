@@ -43,7 +43,8 @@ export default class BuildCreateQuick extends React.Component<Props, {}> {
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: state.build.image ? getConfigFromBuild(state.build, 'build') : null
+      config: state.build.image ? getConfigFromBuild(state.build, 'build') : null,
+      is_managed: true
     }) as BuildModel;
 
     CreateEntity(this.props.onCreate, form, state.project, this.props.isProjectEntity, this.props.projects);

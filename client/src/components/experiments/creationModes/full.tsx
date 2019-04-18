@@ -48,7 +48,8 @@ export default class ExperimentCreateFull extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      config: getConfig(state.config)
+      config: getConfig(state.config),
+      is_managed: true
     }) as ExperimentModel;
 
     CreateEntity(this.props.onCreate, form, state.project, this.props.isProjectEntity, this.props.projects);

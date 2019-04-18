@@ -18,7 +18,7 @@ from hpsearch.iteration_managers import (
     HyperbandIterationManager,
     get_search_iteration_manager
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.experiment_groups_mark

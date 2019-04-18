@@ -9,7 +9,7 @@ import auditor
 from db.models.clusters import Cluster
 from event_manager.events import cluster as cluster_events
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.auditor_mark

@@ -14,10 +14,11 @@ from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    BackendModel,
     DataReference,
     DeletedModel,
     DescribableModel,
-    InCluster,
+    IsManagedModel,
     NameableModel,
     NodeSchedulingModel,
     OutputsModel,
@@ -34,7 +35,8 @@ from schemas.specifications import JobSpecification
 
 
 class Job(AbstractJob,
-          InCluster,
+          BackendModel,
+          IsManagedModel,
           DataReference,
           OutputsModel,
           PersistenceModel,
@@ -56,6 +58,8 @@ class Job(AbstractJob,
         on_delete=models.CASCADE,
         related_name='jobs')
     config = JSONField(
+        null=True,
+        blank=True,
         help_text='The compiled polyaxonfile for the run job.',
         validators=[validate_job_spec_config])
     code_reference = models.ForeignKey(
@@ -110,7 +114,7 @@ class Job(AbstractJob,
 
     @cached_property
     def specification(self) -> 'JobSpecification':
-        return JobSpecification(values=self.config)
+        return JobSpecification(values=self.config) if self.config else None
 
     @property
     def has_specification(self) -> bool:

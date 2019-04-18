@@ -2,7 +2,7 @@ import pytest
 
 from factories.factory_pipelines import OperationFactory
 from pipelines import dags
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.pipelines_mark

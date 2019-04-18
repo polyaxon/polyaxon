@@ -16,7 +16,7 @@ from libs.unique_urls import (
     get_user_project_url,
     get_user_url
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.libs_mark

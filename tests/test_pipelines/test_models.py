@@ -15,7 +15,7 @@ from factories.factory_pipelines import (
     PipelineFactory,
     PipelineRunFactory
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.pipelines_mark

@@ -25,7 +25,7 @@ from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
 from schemas.specifications import BuildSpecification
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.build_jobs_mark
@@ -234,6 +234,11 @@ class TestProjectBuildListViewV1(BaseViewTest):
         # Test other
         resp = self.auth_client.post(self.other_url, data)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_create_is_managed(self):
+        data = {'is_managed': False}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
 
     def test_create_with_runner(self):
         data = {}

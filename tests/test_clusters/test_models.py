@@ -3,7 +3,7 @@ import datetime
 import pytest
 
 from db.models.clusters import Cluster
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.clusters_mark

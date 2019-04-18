@@ -12,6 +12,8 @@ export class GroupModel {
   public user: string;
   public concurrency: number;
   public content: string;
+  public is_managed: boolean;
+  public backend: string;
   public tags: string[] = [];
   public num_scheduled_experiments: number;
   public num_pending_experiments: number;

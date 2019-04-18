@@ -12,7 +12,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from schemas.environments import OutputsConfig
 from signals.outputs import get_valid_outputs, get_valid_ref, set_outputs, set_outputs_refs
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 class InstanceSpec(namedtuple("InstanceSpec", "user project")):

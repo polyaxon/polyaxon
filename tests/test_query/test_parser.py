@@ -12,7 +12,7 @@ from query.parser import (
     split_query,
     tokenize_query
 )
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.query_mark

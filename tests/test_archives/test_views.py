@@ -20,7 +20,7 @@ from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.archives_mark

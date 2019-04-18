@@ -64,7 +64,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     @cached_property
     def specification(self) -> 'TensorboardSpecification':
-        return TensorboardSpecification(values=self.config)
+        return TensorboardSpecification(values=self.config) if self.config else None
 
     @property
     def has_specification(self) -> bool:

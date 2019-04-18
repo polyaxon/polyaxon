@@ -9,7 +9,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from libs.repos import git
 from libs.repos.git import GitCloneException
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.repos_mark

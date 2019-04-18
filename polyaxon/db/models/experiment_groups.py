@@ -21,9 +21,11 @@ from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    BackendModel,
     DeletedModel,
     DescribableModel,
     DiffModel,
+    IsManagedModel,
     NameableModel,
     PersistenceModel,
     ReadmeModel,
@@ -51,6 +53,8 @@ class GroupTypes(object):
 
 
 class ExperimentGroup(DiffModel,
+                      BackendModel,
+                      IsManagedModel,
                       RunTimeModel,
                       NameableModel,
                       PersistenceModel,

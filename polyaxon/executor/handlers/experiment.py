@@ -13,6 +13,8 @@ class ExperimentHandler(BaseHandler):
 
     @classmethod
     def _handle_experiment_created(cls, event: 'Event') -> None:
+        if not event.data['is_managed']:
+            return
         if event.data['has_specification'] and (event.data['is_independent'] or
                                                 event.data['is_clone']):
             # Start building the experiment and then Schedule it to be picked by the spawners
@@ -26,9 +28,11 @@ class ExperimentHandler(BaseHandler):
         from db.models.experiment_groups import ExperimentGroup
 
         instance = event.instance
+
+        if not instance.is_managed:
+            return
         if not instance or not instance.has_specification or not instance.is_stoppable:
             return
-
         if instance.jobs.count() == 0:
             return
 
@@ -89,7 +93,7 @@ class ExperimentHandler(BaseHandler):
                 countdown=1)
 
         # Collect tracked remote logs
-        if instance.in_cluster:
+        if instance.is_managed:
             celery_app.send_task(
                 LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
                 kwargs={

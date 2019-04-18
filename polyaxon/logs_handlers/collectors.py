@@ -15,7 +15,7 @@ def logs_collect_experiment_jobs(experiment_uuid: str) -> None:
     except Experiment.DoesNotExist:
         return
 
-    if not experiment.in_cluster:
+    if not experiment.is_managed:
         return
 
     if experiment.jobs.count() > 1:
@@ -44,7 +44,7 @@ def logs_collect_job(job_uuid: str) -> None:
     except Job.DoesNotExist:
         return
 
-    if not job.in_cluster:
+    if not job.is_managed:
         return
 
     process_job_logs(job=job, temp=False)
@@ -56,7 +56,7 @@ def logs_collect_build_job(build_uuid: str) -> None:
     except BuildJob.DoesNotExist:
         return
 
-    if not build.in_cluster:
+    if not build.is_managed:
         return
 
     process_build_logs(build=build, temp=False)

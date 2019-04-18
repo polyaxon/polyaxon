@@ -18,7 +18,7 @@ from query.managers.experiment import ExperimentQueryManager
 from query.managers.experiment_group import ExperimentGroupQueryManager
 from query.managers.job import JobQueryManager
 from query.parser import QueryOpSpec
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.query_mark

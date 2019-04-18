@@ -14,9 +14,10 @@ from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    BackendModel,
     DeletedModel,
     DescribableModel,
-    InCluster,
+    IsManagedModel,
     NameableModel,
     NodeSchedulingModel,
     PersistenceModel,
@@ -26,12 +27,12 @@ from db.models.utils import (
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config
-from schemas.build_backends import BuildBackend
 from schemas.specifications import BuildSpecification
 
 
 class BuildJob(AbstractJob,
-               InCluster,
+               BackendModel,
+               IsManagedModel,
                NodeSchedulingModel,
                NameableModel,
                DescribableModel,
@@ -50,6 +51,8 @@ class BuildJob(AbstractJob,
         on_delete=models.CASCADE,
         related_name='build_jobs')
     config = JSONField(
+        null=True,
+        blank=True,
         help_text='The compiled polyaxonfile for the build job.',
         validators=[validate_build_spec_config])
     code_reference = models.ForeignKey(
@@ -58,11 +61,6 @@ class BuildJob(AbstractJob,
         blank=True,
         null=True,
         related_name='+')
-    backend = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=BuildBackend.NATIVE)
     dockerfile = models.TextField(
         blank=True,
         null=True,
@@ -125,7 +123,7 @@ class BuildJob(AbstractJob,
 
     @cached_property
     def specification(self) -> 'BuildSpecification':
-        return BuildSpecification(values=self.config)
+        return BuildSpecification(values=self.config) if self.config else None
 
     @property
     def has_specification(self) -> bool:

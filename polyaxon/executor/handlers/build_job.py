@@ -15,6 +15,8 @@ class BuildJobHandler(BaseHandler):
     @classmethod
     def _handle_build_job_cleaned_triggered(cls, event: 'Event') -> None:
         instance = event.instance
+        if not instance.is_managed:
+            return
         if not instance or not instance.has_specification or not instance.is_stoppable:
             return
 
@@ -33,6 +35,8 @@ class BuildJobHandler(BaseHandler):
     @classmethod
     def _handle_build_job_post_run(cls, event: 'Event') -> None:
         instance = event.instance
+        if not instance.is_managed:
+            return
         if not instance or not instance.has_specification:
             return
 

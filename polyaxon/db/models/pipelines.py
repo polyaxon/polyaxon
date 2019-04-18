@@ -15,9 +15,11 @@ from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPoli
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    BackendModel,
     DeletedModel,
     DescribableModel,
     DiffModel,
+    IsManagedModel,
     NameableModel,
     RunTimeModel,
     TagModel
@@ -86,7 +88,14 @@ class ExecutableModel(models.Model):
         abstract = True
 
 
-class Pipeline(DiffModel, NameableModel, DescribableModel, TagModel, ExecutableModel, DeletedModel):
+class Pipeline(DiffModel,
+               NameableModel,
+               BackendModel,
+               IsManagedModel,
+               DescribableModel,
+               TagModel,
+               ExecutableModel,
+               DeletedModel):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.

@@ -601,7 +601,7 @@ def get_experiment_logs_path(experiment: Experiment) -> Optional[str]:
         logs_path = archive_logs_file(
             log_path=log_path,
             namepath=experiment_name)
-    elif experiment.in_cluster:
+    elif experiment.is_managed:
         process_logs(experiment=experiment, temp=True)
         logs_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
     else:
@@ -619,7 +619,7 @@ def get_experiment_job_logs_path(experiment: Experiment, job: ExperimentJob) -> 
         logs_path = archive_logs_file(
             log_path=log_path,
             namepath=job_name)
-    elif experiment.in_cluster:
+    elif experiment.is_managed:
         process_experiment_job_logs(experiment_job=job, temp=True)
         logs_path = stores.get_experiment_job_logs_path(experiment_job_name=job_name, temp=True)
     else:

@@ -7,7 +7,7 @@ from constants.urls import API_V1
 from db.models.ci import CI
 from factories.ci_factory import CIFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.ci_mark

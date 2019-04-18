@@ -38,7 +38,7 @@ from factories.factory_experiments import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.experiment_groups_mark
@@ -287,8 +287,7 @@ class TestProjectExperimentGroupListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
     def test_create_raises_with_content_for_independent_experiment(self):
-        data = {'check_specification': True}
-        resp = self.auth_client.post(self.url, data)
+        resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         content = """---
 version: 1
@@ -313,8 +312,7 @@ model:
         assert self.queryset.count() == self.num_objects
 
     def test_create_with_valid_group(self):
-        data = {'check_specification': True}
-        resp = self.auth_client.post(self.url, data)
+        resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         content = """---
 version: 1
@@ -363,7 +361,7 @@ model:
         assert last_object.selection_experiments.count() == 0
 
     def test_create_without_content_passes_if_no_spec_validation_requested(self):
-        data = {}
+        data = {'is_managed': False}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 1
@@ -375,7 +373,7 @@ model:
         # Creating a selection with experiment ids
         experiments = [ExperimentFactory(project=self.project) for _ in range(2)]
         experiment_ids = [xp.id for xp in experiments]
-        data = {'experiment_ids': experiment_ids}
+        data = {'is_managed': False, 'experiment_ids': experiment_ids}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.queryset.count() == self.num_objects + 2
@@ -386,13 +384,14 @@ model:
         # Creating a selection with an invalid experiment id raises
         experiments.append(ExperimentFactory())
         experiment_ids = [xp.id for xp in experiments]
-        data = {'experiment_ids': experiment_ids}
+        data = {'is_managed': False, 'experiment_ids': experiment_ids}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.queryset.count() == self.num_objects + 2
 
     def test_create_with_hptuning(self):
         data = {
+            'is_managed': False,
             'hptuning': {
                 'concurrency': 3,
                 'matrix': {

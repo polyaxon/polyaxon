@@ -13,7 +13,7 @@ from factories.ci_factory import CIFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import ExternalRepoFactory, RepoFactory
 from libs.repos import git
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.ci_mark

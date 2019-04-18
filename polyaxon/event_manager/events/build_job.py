@@ -44,6 +44,8 @@ class BuildJobCreatedEvent(Event):
         Attribute('created_at', is_datetime=True),
         Attribute('has_specification', attr_type=bool),
         Attribute('has_description', attr_type=bool),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -56,6 +58,8 @@ class BuildJobUpdatedEvent(Event):
         Attribute('project.user.id'),
         Attribute('created_at', is_datetime=True),
         Attribute('has_description', attr_type=bool),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -66,6 +70,8 @@ class BuildJobStartedEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -77,6 +83,8 @@ class BuildJobStartedTriggeredEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('project.user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -89,6 +97,8 @@ class BuildJobSoppedEvent(Event):
         Attribute('project.user.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -101,6 +111,8 @@ class BuildJobSoppedTriggeredEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -132,6 +144,8 @@ class BuildJobArchivedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -144,6 +158,8 @@ class BuildJobRestoredEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -156,6 +172,8 @@ class BuildJobBookmarkedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -168,6 +186,8 @@ class BuildJobUnBookmarkedEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -178,6 +198,8 @@ class BuildJobNewStatusEvent(Event):
         Attribute('user.id'),
         Attribute('project.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -189,6 +211,8 @@ class BuildJobSucceededEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -200,6 +224,8 @@ class BuildJobDoneEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -211,6 +237,8 @@ class BuildJobFailedEvent(Event):
         Attribute('project.id'),
         Attribute('last_status'),
         Attribute('previous_status', is_required=False),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -230,6 +258,8 @@ class BuildJobDeletedTriggeredEvent(Event):
         Attribute('project.id'),
         Attribute('project.user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -243,6 +273,8 @@ class BuildJobLogsViewedEvent(Event):
         Attribute('user.id'),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )
 
 
@@ -255,4 +287,6 @@ class BuildJobStatusesViewedEvent(Event):
         Attribute('project.user.id'),
         Attribute('user.id'),
         Attribute('last_status'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
     )

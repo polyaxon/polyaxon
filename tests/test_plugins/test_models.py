@@ -13,7 +13,8 @@ from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseTest, BaseViewTest
+from tests.base.case import BaseTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.plugins_mark

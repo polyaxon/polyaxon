@@ -23,7 +23,7 @@ from factories.factory_plugins import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.plugins_mark

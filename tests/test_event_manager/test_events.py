@@ -28,7 +28,7 @@ from event_manager.events import (
 from event_manager.events.experiment import ExperimentSucceededEvent
 from factories.factory_experiments import ExperimentFactory
 from libs.json_utils import loads
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.events_mark

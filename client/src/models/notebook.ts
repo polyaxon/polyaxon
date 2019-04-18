@@ -9,6 +9,7 @@ export class NotebookModel {
   public user: string;
   public definition: string;
   public description: string;
+  public is_managed: boolean;
   public backend: string;
   public deleted?: boolean;
   public project: string;

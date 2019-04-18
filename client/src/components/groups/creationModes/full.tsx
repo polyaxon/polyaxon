@@ -48,7 +48,8 @@ export default class GroupCreateFull extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      content: state.config
+      content: state.config,
+      is_managed: true
     }) as GroupModel;
 
     CreateEntity(this.props.onCreate, form, state.project, this.props.isProjectEntity, this.props.projects);

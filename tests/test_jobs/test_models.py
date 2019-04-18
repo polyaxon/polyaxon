@@ -19,7 +19,8 @@ from factories.factory_repos import RepoFactory
 from factories.fixtures import job_spec_content, job_spec_resources_content
 from scheduler.tasks.jobs import jobs_build
 from schemas.specifications import JobSpecification
-from tests.utils import BaseTest, BaseViewTest
+from tests.base.case import BaseTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.jobs_mark

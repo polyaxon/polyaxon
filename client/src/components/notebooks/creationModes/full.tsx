@@ -44,7 +44,8 @@ export default class NotebookCreateFull extends React.Component<Props, {}> {
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: getConfig(state.config)
+      config: getConfig(state.config),
+      is_managed: true
     }) as NotebookModel;
 
     CreateEntity(this.props.onCreate, form, state.project, this.props.isProjectEntity, this.props.projects);

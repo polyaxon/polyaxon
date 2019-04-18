@@ -20,11 +20,12 @@ from db.models.cloning_strategies import CloningStrategy
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.models.utils import (
+    BackendModel,
     DataReference,
     DeletedModel,
     DescribableModel,
     DiffModel,
-    InCluster,
+    IsManagedModel,
     NameableModel,
     OutputsModel,
     PersistenceModel,
@@ -41,7 +42,6 @@ from event_manager.events.experiment import (
 )
 from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
-from schemas.experiments import ExperimentBackend
 from schemas.pod_resources import PodResourcesConfig
 from schemas.specifications import ExperimentSpecification
 from schemas.tasks import TaskType
@@ -49,7 +49,8 @@ from schemas.tasks import TaskType
 
 class Experiment(DiffModel,
                  RunTimeModel,
-                 InCluster,
+                 BackendModel,
+                 IsManagedModel,
                  NameableModel,
                  DataReference,
                  OutputsModel,
@@ -83,11 +84,6 @@ class Experiment(DiffModel,
         blank=True,
         null=True,
         related_name='experiments')
-    backend = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=ExperimentBackend.NATIVE)
     framework = models.CharField(
         max_length=16,
         blank=True,

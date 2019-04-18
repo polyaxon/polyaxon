@@ -6,6 +6,7 @@ from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
+from constants.backends import NATIVE_BACKEND
 from db.managers.deleted import ArchivedManager, LiveManager
 from libs.blacklist import validate_blacklist_name
 from libs.spec_validation import validate_outputs_config, validate_persistence_config
@@ -120,8 +121,21 @@ class RunTimeModel(models.Model):
         abstract = True
 
 
-class InCluster(models.Model):
-    in_cluster = models.BooleanField(default=True)
+class IsManagedModel(models.Model):
+    is_managed = models.BooleanField(default=True,
+                                     help_text='If this entity is managed by the platform.')
+
+    class Meta:
+        abstract = True
+
+
+class BackendModel(models.Model):
+    backend = models.CharField(
+        max_length=16,
+        blank=True,
+        null=True,
+        default=NATIVE_BACKEND,
+        help_text='The default backend use for running this entity.')
 
     class Meta:
         abstract = True
@@ -177,7 +191,6 @@ class PersistenceModel(models.Model):
 
 
 class SubPathModel(models.Model):
-
     class Meta:
         abstract = True
 

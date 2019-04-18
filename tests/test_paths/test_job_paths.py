@@ -6,7 +6,7 @@ import stores
 
 from factories.factory_jobs import JobFactory
 from scheduler.tasks.storage import stores_schedule_logs_deletion, stores_schedule_outputs_deletion
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.paths_mark

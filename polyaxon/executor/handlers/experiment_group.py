@@ -13,6 +13,8 @@ class ExperimentGroupHandler(BaseHandler):
 
     @classmethod
     def _handle_experiment_group_created(cls, event: 'Event') -> None:
+        if not event.data['is_managed']:
+            return
         if not event.data['has_specification'] or not event.data['is_study']:
             return
         celery_app.send_task(

@@ -8,7 +8,7 @@ import auditor
 
 from event_manager.events import user as user_events
 from factories.factory_users import UserFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.auditor_mark

@@ -24,7 +24,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import ExternalRepoFactory, RepoFactory
 from factories.factory_users import UserFactory
 from libs.repos import git
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.repos_mark

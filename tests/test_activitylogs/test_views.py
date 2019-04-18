@@ -15,7 +15,7 @@ from event_manager.events.project import PROJECT_DELETED_TRIGGERED, PROJECT_VIEW
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
-from tests.utils import BaseViewTest
+from tests.base.views import BaseViewTest
 
 
 @pytest.mark.activitylogs_mark

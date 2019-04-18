@@ -8,7 +8,7 @@ import conf
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.paths_mark

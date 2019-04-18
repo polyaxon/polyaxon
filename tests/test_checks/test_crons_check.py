@@ -4,7 +4,7 @@ import pytest
 
 from checks.crons import CronsCheck
 from checks.results import Result
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.checks_mark

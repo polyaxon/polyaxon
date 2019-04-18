@@ -14,7 +14,7 @@ from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.build_jobs_mark
@@ -37,6 +37,7 @@ class TestBuildJobSerializer(BaseTest):
         'finished_at',
         'tags',
         'backend',
+        'is_managed',
         'project',
     }
 
@@ -131,7 +132,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         'last_status',
         'description',
         'config',
-        'in_cluster',
+        'is_managed',
         'tags',
         'started_at',
         'finished_at',

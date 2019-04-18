@@ -8,7 +8,7 @@ from crons.tasks.heartbeats import heartbeat_builds, heartbeat_experiments, hear
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.crons_mark

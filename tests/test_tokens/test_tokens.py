@@ -7,7 +7,7 @@ from django.utils import timezone
 import conf
 
 from db.models.tokens import Token
-from tests.utils import BaseTest
+from tests.base.case import BaseTest
 
 
 @pytest.mark.api_tokens_mark
