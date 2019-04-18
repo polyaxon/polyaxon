@@ -123,6 +123,7 @@ class BuildJobCreateSerializer(serializers.ModelSerializer,
             'unique_name',
             'description',
             'config',
+            'backend',
             'in_cluster',
             'tags',
         )
