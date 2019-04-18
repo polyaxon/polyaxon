@@ -6,5 +6,5 @@ djangorestframework==3.9.2
 psycopg2-binary==2.7.5
 psutil==5.4.7
 raven==6.7.0
-redis==2.10.6
+redis==3.2.1
 Unipath==1.1
