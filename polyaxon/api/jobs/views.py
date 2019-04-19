@@ -12,8 +12,8 @@ from rest_framework.settings import api_settings
 import auditor
 import conf
 import stores
-from api.code_reference.serializers import CodeReferenceSerializer
 
+from api.code_reference.serializers import CodeReferenceSerializer
 from api.endpoint.base import (
     CreateEndpoint,
     DestroyEndpoint,

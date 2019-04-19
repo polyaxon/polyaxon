@@ -85,50 +85,74 @@ class JobMixin(object):
 
     @cached_property
     def secret_refs(self) -> Optional[List[str]]:
+        if not self.specification:
+            return None
         return self.specification.secret_refs
 
     @cached_property
     def configmap_refs(self) -> Optional[List[str]]:
+        if not self.specification:
+            return None
         return self.specification.configmap_refs
 
     @cached_property
     def resources(self) -> Optional[PodResourcesConfig]:
+        if not self.specification:
+            return None
         return self.specification.resources
 
     @cached_property
     def node_selector(self) -> Optional[Dict]:
+        if not self.specification:
+            return None
         return self.specification.node_selector
 
     @cached_property
     def affinity(self) -> Optional[Dict]:
+        if not self.specification:
+            return None
         return self.specification.affinity
 
     @cached_property
     def tolerations(self) -> Optional[List[Dict]]:
+        if not self.specification:
+            return None
         return self.specification.tolerations
 
     @cached_property
     def build_image(self) -> str:
+        if not self.specification:
+            return None
         return self.specification.build.image
 
     @cached_property
     def build_dockerfile(self) -> str:
+        if not self.specification:
+            return None
         return self.specification.build.dockerfile
 
     @cached_property
     def build_context(self) -> str:
+        if not self.specification:
+            return None
         return self.specification.build.context
 
     @cached_property
     def build_steps(self) -> List[str]:
+        if not self.specification:
+            return None
         return self.specification.build.build_steps
 
     @cached_property
     def build_nocache(self) -> List[str]:
+        if not self.specification:
+            return None
         return self.specification.build.nocache
 
     @cached_property
     def build_env_vars(self) -> Optional[List[str]]:
+        if not self.specification:
+            return None
         return self.specification.build.env_vars
 
 

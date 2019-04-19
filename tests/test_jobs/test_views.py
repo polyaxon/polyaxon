@@ -1,14 +1,17 @@
 # pylint:disable=too-many-lines
 import os
+
+from faker import Faker
 from unittest.mock import patch
 
 import pytest
-from faker import Faker
+
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
 import conf
 import stores
+
 from api.jobs.serializers import (
     BookmarkedJobSerializer,
     JobDetailSerializer,
@@ -22,6 +25,7 @@ from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
@@ -259,6 +263,15 @@ class TestProjectJobListViewV1(BaseViewTest):
         # Test other
         resp = self.auth_client.post(self.other_url, data)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
+
+    def test_create_with_build(self):
+        # Test create with build
+        build = BuildJobFactory()
+        data = {'build_job': build.id, 'is_managed': False}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        last_object = self.model_class.objects.last()
+        assert last_object.build_job == build
 
 
 @pytest.mark.jobs_mark

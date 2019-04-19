@@ -1,15 +1,18 @@
 # pylint:disable=too-many-lines
 import os
 import time
+
+from faker import Faker
 from unittest.mock import patch
 
 import pytest
-from faker import Faker
+
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
 import conf
 import stores
+
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
@@ -41,6 +44,7 @@ from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.group_check import GroupChecks
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
+from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentChartViewFactory,
@@ -531,6 +535,15 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert group.selection_experiments.count() == 1
+
+    def test_create_with_build(self):
+        # Test create with build
+        build = BuildJobFactory()
+        data = {'build_job': build.id, 'is_managed': False}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        last_object = self.model_class.objects.last()
+        assert last_object.build_job == build
 
 
 @pytest.mark.experiments_mark

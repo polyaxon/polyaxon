@@ -1,12 +1,14 @@
 # pylint:disable=too-many-lines
+from faker import Faker
 from unittest.mock import patch
 
 import pytest
-from faker import Faker
+
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
 import stores
+
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BookmarkedBuildJobSerializer,
