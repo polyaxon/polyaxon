@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon_schemas.api.code_reference import CodeReferenceConfig
-
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import JobConfig, JobStatusConfig
+from polyaxon_schemas.api.code_reference import CodeReferenceConfig
 
 
 class JobApi(BaseApiHandler):

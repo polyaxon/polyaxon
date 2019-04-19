@@ -11,10 +11,13 @@ from polystores.stores.manager import StoreManager
 
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_client.logger import logger
 from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import get_outputs_path
+from polyaxon_client.tracking.utils.env import get_run_env
 from polyaxon_client.tracking.utils.project import get_project_info
+from polyaxon_client.tracking.utils.tags import validate_tags
 
 
 class BaseTracker(object):
@@ -52,6 +55,7 @@ class BaseTracker(object):
         self.project_name = project_name
         self.outputs_store = outputs_store
         self._entity_data = None
+        self._health_is_running = False
 
         # Setup the outputs store
         if outputs_store is None and settings.IS_MANAGED and self.REQUIRES_OUTPUTS:
@@ -79,10 +83,16 @@ class BaseTracker(object):
 
         return settings.IS_MANAGED and 'POLYAXON_NOTEBOOK_INFO' in os.environ
 
+    def _update(self, patch_dict):
+        raise NotImplementedError
+
     def get_entity_data(self):
         raise NotImplementedError
 
     def _set_health_url(self):
+        raise NotImplementedError
+
+    def _unset_health_url(self):
         raise NotImplementedError
 
     def log_status(self, status, message=None, traceback=None):
@@ -116,6 +126,7 @@ class BaseTracker(object):
         self.log_status(status=status, message=message, traceback=traceback)
         self.last_status = status
         time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
+        self._unset_health_url()
 
     @check_no_op
     def succeeded(self):
@@ -160,3 +171,53 @@ class BaseTracker(object):
     @check_no_op
     def log_outputs(self, dirname, **kwargs):
         self.outputs_store.upload_dir(dirname=dirname)
+
+    @check_no_op
+    def log_build(self, build_id=None):
+        self._update({'build_id': build_id()})
+
+    @check_no_op
+    def log_run_env(self):
+        self._update({'run_env': get_run_env()})
+
+    @check_no_op
+    def log_tags(self, tags, reset=False):
+        patch_dict = {'tags': validate_tags(tags)}
+        if reset is False:
+            patch_dict['merge'] = True
+        self._update(patch_dict)
+
+    @check_no_op
+    def log_backend(self, backend):
+        patch_dict = {'backend': backend}
+        self._update(patch_dict)
+
+    @check_no_op
+    def log_params(self, reset=False, **params):
+        patch_dict = {'declarations': params}
+        if reset is False:
+            patch_dict['merge'] = True
+        self._update(patch_dict)
+
+    @check_no_op
+    def set_description(self, description):
+        self._update({'description': description})
+
+    @check_no_op
+    def set_name(self, name):
+        self._update({'name': name})
+
+    @check_no_op
+    def log_data_ref(self, data, data_name='data', reset=False):
+        try:
+            import hashlib
+
+            params = {
+                data_name: hashlib.md5(str(data).encode("utf-8")).hexdigest()[:settings.HASH_LENGTH]
+            }
+            patch_dict = {'data_refs': params}
+            if reset is False:
+                patch_dict['merge'] = True
+            self._update(patch_dict)
+        except Exception as e:
+            logger.warning('Could create data hash %s', e)

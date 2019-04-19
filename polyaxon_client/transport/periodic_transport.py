@@ -54,6 +54,10 @@ class PeriodicHttpTransportMixin(RetryTransportMixin):
         worker = self.get_periodic_http_worker(request=self.post)
         worker.queue_health(url)
 
+    def unset_health_check(self, url):
+        worker = self.get_periodic_http_worker(request=self.post)
+        worker.unqueue_health(url)
+
     def periodic_post(self,
                       url,
                       params=None,

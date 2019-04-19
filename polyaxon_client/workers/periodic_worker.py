@@ -32,6 +32,10 @@ class PeriodicWorker(QueueWorker):
         if url not in self._health_urls:
             self._health_urls.append(url)
 
+    def unqueue_health(self, url):
+        if url in self._health_urls:
+            self._health_urls.remove(url)
+
     def queue(self, url, **kwargs):  # pylint:disable=arguments-differ
         self.is_running()
         self._queue.put_nowait({url: kwargs})

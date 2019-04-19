@@ -11,7 +11,7 @@ from polyaxon_client.exceptions import AuthenticationError, PolyaxonClientExcept
 from polyaxon_client.handlers.conf import setup_logging
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
-from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import (
     get_base_outputs_path,
@@ -20,9 +20,9 @@ from polyaxon_client.tracking.paths import (
     get_outputs_path,
     get_outputs_refs_paths
 )
+from polyaxon_client.tracking.utils.backend import OTHER_BACKEND
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
-from polyaxon_client.tracking.utils.tags import validate_tags
 
 
 class Experiment(BaseTracker):
@@ -40,7 +40,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return
 
-        if project is None and settings.IN_CLUSTER and not self.is_notebook_job:
+        if project is None and settings.IS_MANAGED and not self.is_notebook_job:
             experiment_info = self.get_experiment_info()
             project = experiment_info['project_name']
             experiment_id = experiment_info['experiment_name'].split('.')[-1]
@@ -56,7 +56,7 @@ class Experiment(BaseTracker):
         self.experiment = None
 
         # Check if there's an ephemeral token
-        check_ephemeral_token = (settings.IN_CLUSTER and
+        check_ephemeral_token = (settings.IS_MANAGED and
                                  hasattr(settings, 'SECRET_EPHEMERAL_TOKEN') and
                                  settings.SECRET_EPHEMERAL_TOKEN)
         if check_ephemeral_token:
@@ -71,11 +71,11 @@ class Experiment(BaseTracker):
             except AuthenticationError:
                 logger.debug('Could not log with ephemeral token.')
 
-        if settings.IN_CLUSTER:
+        if settings.IS_MANAGED:
             self._set_health_url()
 
         # Track run env
-        if settings.IN_CLUSTER and self.track_env and not self.is_notebook_job:
+        if settings.IS_MANAGED and self.track_env and not self.is_notebook_job:
             self.log_run_env()
 
     @check_no_op
@@ -93,6 +93,7 @@ class Experiment(BaseTracker):
                tags=None,
                description=None,
                config=None,
+               build_id=None,
                base_outputs_path=None):
         experiment_config = {'run_env': get_run_env()} if self.track_env else {}
         if name:
@@ -101,15 +102,19 @@ class Experiment(BaseTracker):
             experiment_config['tags'] = tags
         if framework:
             experiment_config['framework'] = framework
-        experiment_config['backend'] = 'external'
+        experiment_config['backend'] = OTHER_BACKEND
         if backend:
             experiment_config['backend'] = backend
         if description:
             experiment_config['description'] = description
         if config:
             experiment_config['config'] = config
-        if not settings.IN_CLUSTER:
-            experiment_config['in_cluster'] = False
+        if build_id:
+            experiment_config['build_job'] = str(build_id)
+        if settings.IS_MANAGED:
+            experiment_config['is_managed'] = True
+        else:
+            experiment_config['is_managed'] = False
 
         experiment = self.client.project.create_experiment(
             username=self.username,
@@ -119,11 +124,9 @@ class Experiment(BaseTracker):
         )
         if not experiment:
             raise PolyaxonClientException('Could not create experiment.')
-        if not settings.IN_CLUSTER and self.track_logs:
+        if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
-        self.experiment_id = (experiment.id
-                              if self.client.api_config.schema_response
-                              else experiment.get('id'))
+        self.experiment_id = self._get_entity_id(experiment)
         self.experiment = experiment
         self.last_status = 'created'
 
@@ -145,11 +148,18 @@ class Experiment(BaseTracker):
         if self.track_code:
             self.log_code_ref()
 
-        if not settings.IN_CLUSTER:
+        if not settings.IS_MANAGED:
             self._start()
             self._set_health_url()
 
         return self
+
+    def _update(self, patch_dict):
+        self.client.experiment.update_experiment(username=self.username,
+                                                 project_name=self.project_name,
+                                                 experiment_id=self.experiment_id,
+                                                 patch_dict=patch_dict,
+                                                 background=True)
 
     @check_no_op
     def _set_health_url(self):
@@ -158,6 +168,16 @@ class Experiment(BaseTracker):
             project_name=self.project_name,
             experiment_id=self.experiment_id)
         self.client.set_health_check(url=health_url)
+        self._health_is_running = True
+
+    @check_no_op
+    def _unset_health_url(self):
+        health_url = self.client.experiment.get_heartbeat_url(
+            username=self.username,
+            project_name=self.project_name,
+            experiment_id=self.experiment_id)
+        self.client.set_health_check(url=health_url)
+        self._health_is_running = False
 
     @check_no_op
     def send_logs(self, log_line):
@@ -166,23 +186,6 @@ class Experiment(BaseTracker):
                                          experiment_id=self.experiment_id,
                                          log_lines=log_line,
                                          periodic=True)
-
-    @check_no_op
-    def log_run_env(self):
-        patch_dict = {'run_env': get_run_env()}
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict=patch_dict,
-                                                 background=True)
-
-    @check_no_op
-    def log_code_ref(self):
-        self.client.experiment.create_code_reference(username=self.username,
-                                                     project_name=self.project_name,
-                                                     experiment_id=self.experiment_id,
-                                                     coderef=get_code_reference(),
-                                                     background=True)
 
     @check_no_op
     def log_status(self, status, message=None, traceback=None):
@@ -195,6 +198,14 @@ class Experiment(BaseTracker):
                                              background=True)
 
     @check_no_op
+    def log_code_ref(self):
+        self.client.experiment.create_code_reference(username=self.username,
+                                                     project_name=self.project_name,
+                                                     experiment_id=self.experiment_id,
+                                                     coderef=get_code_reference(),
+                                                     background=True)
+
+    @check_no_op
     def log_metrics(self, **metrics):
         self.client.experiment.create_metric(username=self.username,
                                              project_name=self.project_name,
@@ -204,79 +215,8 @@ class Experiment(BaseTracker):
                                              periodic=True)
 
     @check_no_op
-    def log_tags(self, tags, reset=False):
-        patch_dict = {'tags': validate_tags(tags)}
-        if reset is False:
-            patch_dict['merge'] = True
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict=patch_dict,
-                                                 background=True)
-
-    @check_no_op
     def log_framework(self, framework):
-        patch_dict = {'framework': framework}
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict=patch_dict,
-                                                 background=True)
-
-    @check_no_op
-    def log_backend(self, backend):
-        patch_dict = {'backend': backend}
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict=patch_dict,
-                                                 background=True)
-
-    @check_no_op
-    def log_params(self, reset=False, **params):
-        patch_dict = {'declarations': params}
-        if reset is False:
-            patch_dict['merge'] = True
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict=patch_dict,
-                                                 background=True)
-
-    @check_no_op
-    def set_description(self, description):
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict={'description': description},
-                                                 background=True)
-
-    @check_no_op
-    def set_name(self, name):
-        self.client.experiment.update_experiment(username=self.username,
-                                                 project_name=self.project_name,
-                                                 experiment_id=self.experiment_id,
-                                                 patch_dict={'name': name},
-                                                 background=True)
-
-    @check_no_op
-    def log_data_ref(self, data, data_name='data', reset=False):
-        try:
-            import hashlib
-
-            params = {
-                data_name: hashlib.md5(str(data).encode("utf-8")).hexdigest()[:settings.HASH_LENGTH]
-            }
-            patch_dict = {'data_refs': params}
-            if reset is False:
-                patch_dict['merge'] = True
-            self.client.experiment.update_experiment(username=self.username,
-                                                     project_name=self.project_name,
-                                                     experiment_id=self.experiment_id,
-                                                     patch_dict=patch_dict,
-                                                     background=True)
-        except Exception as e:
-            logger.warning('Could create data hash %s', e)
+        self._update({'framework': framework})
 
     @check_no_op
     def log_artifact(self, file_path):
@@ -300,7 +240,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return None
 
-        ensure_in_custer()
+        ensure_is_managed()
 
         cluster = os.getenv('POLYAXON_CLUSTER', None)
         try:
@@ -316,7 +256,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return None
 
-        ensure_in_custer()
+        ensure_is_managed()
 
         info = os.getenv('POLYAXON_TASK_INFO', None)
         try:
@@ -335,7 +275,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return None
 
-        ensure_in_custer()
+        ensure_is_managed()
 
         cluster_def = cls.get_cluster_def()
         task_info = cls.get_task_info()
@@ -365,7 +305,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return None
 
-        ensure_in_custer()
+        ensure_is_managed()
 
         info = os.getenv('POLYAXON_EXPERIMENT_INFO', None)
         try:
@@ -385,7 +325,7 @@ class Experiment(BaseTracker):
         if settings.NO_OP:
             return None
 
-        ensure_in_custer()
+        ensure_is_managed()
 
         declarations = os.getenv('POLYAXON_DECLARATIONS', None)
         try:

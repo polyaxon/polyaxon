@@ -160,6 +160,9 @@ class PolyaxonClient(object):
     def set_health_check(self, url):
         self.transport.set_health_check(url)
 
+    def unset_health_check(self, url):
+        self.transport.unset_health_check(url)
+
     def set_internal_health_check(self):
         if settings.INTERNAL_HEALTH_CHECK_URL:
             self.set_health_check(

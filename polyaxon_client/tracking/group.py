@@ -64,6 +64,20 @@ class Group(BaseTracker):
 
         return self
 
+    def _update(self, patch_dict):
+        self.client.experiment_group.update_experiment_group(
+            username=self.username,
+            project_name=self.project_name,
+            group_id=self.group_id,
+            patch_dict=patch_dict,
+            background=True)
+
+    def _set_health_url(self):
+        pass
+
+    def _unset_health_url(self):
+        pass
+
     @check_no_op
     def create_experiment(self,
                           name=None,

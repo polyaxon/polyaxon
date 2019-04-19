@@ -8,13 +8,12 @@ import uuid
 
 from collections import Mapping
 
-from polyaxon_schemas.api.code_reference import CodeReferenceConfig
-
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.build_job import BuildJobApi
 from polyaxon_client.schemas import BuildJobConfig, JobStatusConfig
+from polyaxon_schemas.api.code_reference import CodeReferenceConfig
 
 
 class TestBuildJobApi(TestBaseApi):
