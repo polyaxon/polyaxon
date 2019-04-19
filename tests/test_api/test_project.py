@@ -12,6 +12,7 @@ from tests.test_api.utils import TestBaseApi
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.schemas import (
+    BuildJobConfig,
     ExperimentConfig,
     ExperimentGroupConfig,
     JobConfig,
@@ -916,7 +917,7 @@ class TestProjectApi(TestBaseApi):
     @httpretty.activate
     def test_create_build(self):
         project_uuid = uuid.uuid4().hex
-        obj = JobConfig(project=project_uuid, config={})
+        obj = BuildJobConfig(project=project_uuid, config={})
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(

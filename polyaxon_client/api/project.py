@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
+    BuildJobConfig,
     ExperimentConfig,
     ExperimentGroupConfig,
     JobConfig,
@@ -359,7 +360,7 @@ class ProjectApi(BaseApiHandler):
             return []
 
     def create_build(self, username, project_name, build_config, background=False):
-        build_config = self.validate_config(config=build_config, config_schema=JobConfig)
+        build_config = self.validate_config(config=build_config, config_schema=BuildJobConfig)
         request_url = self.build_url(self._get_http_url(), username, project_name, 'builds')
 
         if background:
@@ -368,7 +369,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=build_config.to_dict())
-            return self.prepare_results(response_json=response.json(), config=JobConfig)
+            return self.prepare_results(response_json=response.json(), config=BuildJobConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while creating build job.')
             return None

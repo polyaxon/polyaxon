@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_schemas.api.code_reference import CodeReferenceConfig
+
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import BuildJobConfig, JobStatusConfig
@@ -106,6 +108,82 @@ class BuildJobApi(BaseApiHandler):
         except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while creating build status.')
+            return None
+
+    def get_code_reference(self,
+                           username,
+                           project_name,
+                           job_id):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'builds',
+                                     job_id,
+                                     'coderef')
+        try:
+            response = self.transport.get(request_url)
+            return self.prepare_results(response.json(), CodeReferenceConfig)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while retrieving build code reference.')
+            return None
+
+    def create_code_reference(self,
+                              username,
+                              project_name,
+                              job_id,
+                              coderef,
+                              background=False):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'builds',
+                                     job_id,
+                                     'coderef')
+        if background:
+            self.transport.async_post(request_url, json_data=coderef)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=coderef)
+            return self.prepare_results(response_json=response.json(),
+                                        config=CodeReferenceConfig)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while creating build coderef.')
+            return None
+
+    def send_logs(self,
+                  username,
+                  project_name,
+                  job_id,
+                  log_lines,
+                  background=False,
+                  periodic=False):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'builds',
+                                     job_id,
+                                     'logs')
+
+        if isinstance(log_lines, list):
+            log_lines = '\n'.join(log_lines)
+
+        if background:
+            self.transport.async_post(request_url, json_data=log_lines)
+            return None
+
+        if periodic:
+            self.transport.periodic_post(request_url, json_data=log_lines)
+            return None
+
+        try:
+            response = self.transport.post(request_url, json_data=log_lines)
+            return response
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while sending build logs.')
             return None
 
     def stop(self, username, project_name, job_id, background=False):

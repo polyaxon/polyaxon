@@ -8,6 +8,8 @@ import uuid
 
 from collections import Mapping
 
+from polyaxon_schemas.api.code_reference import CodeReferenceConfig
+
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
@@ -178,6 +180,44 @@ class TestJobApi(TestBaseApi):
                 traceback='traceback',
                 status='running',
                 background=True),
+            method='post')
+
+    @httpretty.activate
+    def test_create_job_code_reference(self):
+        coderef = CodeReferenceConfig(commit='3783ab36703b14b91b15736fe4302bfb8d52af1c',
+                                      head='3783ab36703b14b91b15736fe4302bfb8d52af1c',
+                                      branch='feature1',
+                                      git_url='https://bitbucket.org:foo/bar.git',
+                                      is_dirty=True).to_dict()
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'jobs',
+                1,
+                'coderef'),
+            body=json.dumps(coderef),
+            content_type='application/json',
+            status=200)
+
+        # Schema response
+        response = self.api_handler.create_code_reference(
+            'username', 'project_name', 1, coderef=coderef)
+        assert response.to_dict() == coderef
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.create_code_reference(
+            'username', 'project_name', 1, coderef=coderef)
+        assert response == coderef
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.create_code_reference(
+                'username', 'project_name', 1, coderef=coderef, background=True),
             method='post')
 
     @httpretty.activate
@@ -396,6 +436,47 @@ class TestJobApi(TestBaseApi):
         self.assert_async_call(
             api_handler_call=lambda: self.api_handler.stop(
                 'username', 'project_name', 1, background=True),
+            method='post')
+
+    @httpretty.activate
+    def test_create_build_logs(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'jobs',
+                1,
+                'logs'),
+            body=json.dumps({'log_lines': 'foo\nbar'}),
+            content_type='application/json',
+            status=200)
+
+        # Schema response
+        response = self.api_handler.send_logs('username', 'project_name', 1, log_lines='foo\nbar')
+        assert response.status_code == 200
+
+        # Raw response
+        self.set_raw_response()
+        response = self.api_handler.send_logs('username', 'project_name', 1, log_lines='foo\nbar')
+        assert response.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.send_logs(
+                'username', 'project_name', 1,
+                log_lines='foo\nbar',
+                background=True),
+            method='post')
+
+        # Periodic
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.send_logs(
+                'username', 'project_name', 1,
+                log_lines='foo\nbar',
+                periodic=True),
             method='post')
 
     @httpretty.activate
