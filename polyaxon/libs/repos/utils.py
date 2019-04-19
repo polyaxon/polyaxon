@@ -102,6 +102,8 @@ def _assign_code_reference(instance: RefModel,
 
 
 def assign_code_reference(instance: RefModel, branch: str = None, commit: str = None) -> RefModel:
+    if not instance.is_managed:
+        return instance
     if instance.code_reference is not None or instance.specification is None:
         return instance
     build = instance.specification.build if instance.specification else None
@@ -111,6 +113,8 @@ def assign_code_reference(instance: RefModel, branch: str = None, commit: str = 
 def assign_build_code_reference(instance: RefModel,
                                 branch: str = None,
                                 commit: str = None) -> RefModel:
+    if not instance.is_managed:
+        return instance
     if instance.code_reference is not None or instance.specification is None:
         return instance
     build = instance.specification.config if instance.specification else None
