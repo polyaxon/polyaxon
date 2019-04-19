@@ -29,7 +29,7 @@ class TestExperimentConfigs(TestCase):
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
-            'in_cluster': False,
+            'is_managed': False,
             'tags': ['tag1'],
             'num_jobs': 1,
             'backend': 'foo',
@@ -63,7 +63,7 @@ class TestExperimentConfigs(TestCase):
         config_dict.pop('updated_at')
         config_dict.pop('tags')
         config_dict.pop('num_jobs')
-        config_dict.pop('in_cluster')
+        config_dict.pop('is_managed')
         config_dict.pop('framework')
         config_dict.pop('backend')
         config_to_dict.pop('finished_at')
@@ -94,7 +94,7 @@ class TestExperimentConfigs(TestCase):
                        'started_at': local_now().isoformat(),
                        'finished_at': local_now().isoformat(),
                        'has_tensorboard': False,
-                       'in_cluster': False,
+                       'is_managed': False,
                        'tags': ['tag'],
                        'jobs': [ExperimentJobConfig(uuid=uuid.uuid4().hex,
                                                     experiment=2,

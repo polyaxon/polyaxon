@@ -9,7 +9,7 @@ from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
 from polyaxon_schemas.utils import UUID
 
 
-class JobSchema(BaseSchema):
+class BaseJobSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
@@ -28,18 +28,18 @@ class JobSchema(BaseSchema):
     total_run = fields.Str(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     config = fields.Dict(allow_none=True)
-    in_cluster = fields.Bool(allow_none=True)
+    is_managed = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     definition = fields.Dict(allow_none=True)
 
     @staticmethod
     def schema_config():
-        return JobConfig
+        return BaseJobConfig
 
 
-class JobConfig(BaseConfig):
-    SCHEMA = JobSchema
+class BaseJobConfig(BaseConfig):
+    SCHEMA = BaseJobSchema
     IDENTIFIER = 'Job'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'id', 'unique_name', 'user', 'last_status',
@@ -66,7 +66,7 @@ class JobConfig(BaseConfig):
                  finished_at=None,
                  is_clone=None,
                  config=None,
-                 in_cluster=None,
+                 is_managed=None,
                  num_jobs=0,
                  resources=None,
                  ttl=None,
@@ -90,7 +90,7 @@ class JobConfig(BaseConfig):
         self.updated_at = self.localize_date(updated_at)
         self.is_clone = is_clone
         self.config = config  # The json compiled content of this job
-        self.in_cluster = in_cluster
+        self.is_managed = is_managed
         self.num_jobs = num_jobs
         self.resources = resources
         self.ttl = ttl
@@ -100,19 +100,18 @@ class JobConfig(BaseConfig):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 
 
-class BuildJobSchema(JobSchema):
-    dockerfile = fields.Str(allow_none=True)
+class JobSchema(BaseJobSchema):
     backend = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
-        return BuildJobConfig
+        return JobConfig
 
 
-class BuildJobConfig(JobConfig):
-    SCHEMA = BuildJobSchema
-    IDENTIFIER = 'BuildJob'
-    DEFAULT_INCLUDE_ATTRIBUTES = JobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ['backend']
+class JobConfig(BaseJobConfig):
+    SCHEMA = JobSchema
+    IDENTIFIER = 'Job'
+    DEFAULT_INCLUDE_ATTRIBUTES = BaseJobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ['backend']
 
     def __init__(self,
                  id=None,  # pylint:disable=redefined-builtin
@@ -133,7 +132,78 @@ class BuildJobConfig(JobConfig):
                  finished_at=None,
                  is_clone=None,
                  config=None,
-                 in_cluster=None,
+                 is_managed=None,
+                 num_jobs=0,
+                 resources=None,
+                 ttl=None,
+                 jobs=None,
+                 dockerfile=None,
+                 backend=None,
+                 total_run=None):
+        super(JobConfig, self).__init__(
+            id=id,
+            user=user,
+            uuid=uuid,
+            name=name,
+            unique_name=unique_name,
+            pod_id=pod_id,
+            project=project,
+            build_job=build_job,
+            description=description,
+            tags=tags,
+            last_status=last_status,
+            definition=definition,
+            created_at=created_at,
+            updated_at=updated_at,
+            started_at=started_at,
+            finished_at=finished_at,
+            is_clone=is_clone,
+            config=config,
+            is_managed=is_managed,
+            num_jobs=num_jobs,
+            resources=resources,
+            jobs=jobs,
+            ttl=ttl,
+            total_run=total_run,
+        )
+        self.dockerfile = dockerfile
+        self.backend = backend
+
+
+class BuildJobSchema(BaseJobSchema):
+    dockerfile = fields.Str(allow_none=True)
+    backend = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return BuildJobConfig
+
+
+class BuildJobConfig(BaseJobConfig):
+    SCHEMA = BuildJobSchema
+    IDENTIFIER = 'BuildJob'
+    DEFAULT_INCLUDE_ATTRIBUTES = BaseJobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ['backend']
+
+    def __init__(self,
+                 id=None,  # pylint:disable=redefined-builtin
+                 user=None,
+                 uuid=None,
+                 name=None,
+                 unique_name=None,
+                 pod_id=None,
+                 project=None,
+                 build_job=None,
+                 description=None,
+                 tags=None,
+                 last_status=None,
+                 definition=None,
+                 created_at=None,
+                 updated_at=None,
+                 started_at=None,
+                 finished_at=None,
+                 is_clone=None,
+                 config=None,
+                 is_managed=None,
                  num_jobs=0,
                  resources=None,
                  ttl=None,
@@ -160,7 +230,7 @@ class BuildJobConfig(JobConfig):
             finished_at=finished_at,
             is_clone=is_clone,
             config=config,
-            in_cluster=in_cluster,
+            is_managed=is_managed,
             num_jobs=num_jobs,
             resources=resources,
             jobs=jobs,
@@ -171,7 +241,7 @@ class BuildJobConfig(JobConfig):
         self.backend = backend
 
 
-class TensorboardJobSchema(JobSchema):
+class TensorboardJobSchema(BaseJobSchema):
     experiment = fields.Int(allow_none=True)
     experiment_group = fields.Int(allow_none=True)
 
@@ -180,7 +250,7 @@ class TensorboardJobSchema(JobSchema):
         return TensorboardJobConfig
 
 
-class TensorboardJobConfig(JobConfig):
+class TensorboardJobConfig(BaseJobConfig):
     SCHEMA = TensorboardJobSchema
     IDENTIFIER = 'TensorboardJob'
     DEFAULT_INCLUDE_ATTRIBUTES = [
@@ -209,7 +279,7 @@ class TensorboardJobConfig(JobConfig):
                  finished_at=None,
                  is_clone=None,
                  config=None,
-                 in_cluster=None,
+                 is_managed=None,
                  num_jobs=0,
                  resources=None,
                  ttl=None,
@@ -234,7 +304,7 @@ class TensorboardJobConfig(JobConfig):
             finished_at=finished_at,
             is_clone=is_clone,
             config=config,
-            in_cluster=in_cluster,
+            is_managed=is_managed,
             num_jobs=num_jobs,
             resources=resources,
             jobs=jobs,

@@ -26,7 +26,8 @@ class TestJobConfigs(TestCase):
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
-            'in_cluster': False,
+            'is_managed': False,
+            'backend': 'other',
             'tags': ['test'],
             'definition': None,
             'created_at': local_now().isoformat(),
@@ -55,7 +56,7 @@ class TestJobConfigs(TestCase):
         config_dict.pop('definition')
         config_dict.pop('tags')
         config_dict.pop('pod_id')
-        config_dict.pop('in_cluster')
+        config_dict.pop('is_managed')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
@@ -102,7 +103,7 @@ class TestBuildJobConfigs(TestCase):
             'last_status': 'Running',
             'description': 'description',
             'config': {'k': 'v'},
-            'in_cluster': False,
+            'is_managed': False,
             'tags': ['test'],
             'definition': None,
             'dockerfile': 'some container',
@@ -133,7 +134,7 @@ class TestBuildJobConfigs(TestCase):
         config_dict.pop('definition')
         config_dict.pop('tags')
         config_dict.pop('pod_id')
-        config_dict.pop('in_cluster')
+        config_dict.pop('is_managed')
         config_dict.pop('dockerfile')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
@@ -159,7 +160,7 @@ class TestTensorboardJobConfigs(TestCase):
             'pod_id': 'job_1',
             'last_status': 'Running',
             'tags': ['test'],
-            'in_cluster': False,
+            'is_managed': False,
             'created_at': local_now().isoformat(),
             'updated_at': local_now().isoformat(),
             'started_at': local_now().isoformat(),
@@ -185,7 +186,7 @@ class TestTensorboardJobConfigs(TestCase):
         config_dict.pop('project')
         config_dict.pop('updated_at')
         config_dict.pop('tags')
-        config_dict.pop('in_cluster')
+        config_dict.pop('is_managed')
         config_to_dict.pop('id')
         config_to_dict.pop('total_run')
         config_to_dict.pop('user')
