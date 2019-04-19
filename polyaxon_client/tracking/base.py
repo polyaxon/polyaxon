@@ -16,6 +16,7 @@ from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.env import get_run_env
+from polyaxon_client.tracking.utils.hashing import hash_value
 from polyaxon_client.tracking.utils.project import get_project_info
 from polyaxon_client.tracking.utils.tags import validate_tags
 
@@ -210,10 +211,8 @@ class BaseTracker(object):
     @check_no_op
     def log_data_ref(self, data, data_name='data', reset=False):
         try:
-            import hashlib
-
             params = {
-                data_name: hashlib.md5(str(data).encode("utf-8")).hexdigest()[:settings.HASH_LENGTH]
+                data_name: hash_value(data)
             }
             patch_dict = {'data_refs': params}
             if reset is False:
