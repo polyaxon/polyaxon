@@ -16,6 +16,9 @@ build_jobs_urlpatterns = [
     re_path(r'^{}/{}/builds/{}/restore/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildRestoreView.as_view()),
+    re_path(r'^{}/{}/builds/{}/coderef/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
+        views.BuildCodeReferenceView.as_view()),
     re_path(r'^{}/{}/builds/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildStatusListView.as_view()),

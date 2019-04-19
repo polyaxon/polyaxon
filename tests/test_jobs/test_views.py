@@ -1,17 +1,14 @@
 # pylint:disable=too-many-lines
 import os
-
-from faker import Faker
 from unittest.mock import patch
 
 import pytest
-
+from faker import Faker
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
 import conf
 import stores
-
 from api.jobs.serializers import (
     BookmarkedJobSerializer,
     JobDetailSerializer,
@@ -29,7 +26,7 @@ from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
 from schemas.specifications import JobSpecification
-from tests.base.views import BaseFilesViewTest, BaseViewTest
+from tests.base.views import BaseFilesViewTest, BaseViewTest, EntityCodeReferenceBaseViewTest
 
 
 @pytest.mark.jobs_mark
@@ -464,6 +461,17 @@ class TestJobDetailViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 1
         assert self.model_class.all.count() == 1
+
+
+@pytest.mark.jobs_mark
+class TestJobCodeReferenceViewV1(EntityCodeReferenceBaseViewTest):
+    entity_factory_class = JobFactory
+
+    def get_url(self):
+        return '/{}/{}/{}/jobs/{}/coderef/'.format(API_V1,
+                                                   self.project.user.username,
+                                                   self.project.name,
+                                                   self.obj.id)
 
 
 @pytest.mark.jobs_mark

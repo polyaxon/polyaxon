@@ -26,19 +26,6 @@ def job_pre_save(sender, **kwargs):
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
     set_name(instance=instance, query=Job.all)
-
-    # Add code reference
-    # Check if :
-    # the job is new
-    # that it has an build section
-    # that is not an external repo (because we did not clone it yet)
-    # if the instance has a primary key then is getting updated
-    condition = (
-        instance.code_reference or
-        not instance.project.has_code)
-    if condition:
-        return
-
     assign_code_reference(instance)
 
 

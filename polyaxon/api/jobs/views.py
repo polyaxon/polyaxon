@@ -12,6 +12,7 @@ from rest_framework.settings import api_settings
 import auditor
 import conf
 import stores
+from api.code_reference.serializers import CodeReferenceSerializer
 
 from api.endpoint.base import (
     CreateEndpoint,
@@ -216,6 +217,27 @@ class JobRestartView(JobCloneView):
                            config=config,
                            update_code_reference=update_code_reference,
                            description=description)
+
+
+class BuildCodeReferenceView(JobEndpoint, CreateEndpoint, RetrieveEndpoint):
+    """
+    get:
+        Get an job code reference.
+    post:
+        Create an job code reference.
+    """
+    serializer_class = CodeReferenceSerializer
+
+    def perform_create(self, serializer):
+        job = self.get_object()
+        instance = serializer.save()
+        job.code_reference = instance
+        job.save(update_fields=['code_reference'])
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance.code_reference)
+        return Response(serializer.data)
 
 
 class JobViewMixin(object):

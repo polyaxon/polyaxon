@@ -371,8 +371,10 @@ class ExperimentCopyView(ExperimentCloneView):
 
 class ExperimentCodeReferenceView(ExperimentEndpoint, CreateEndpoint, RetrieveEndpoint):
     """
+    get:
+        Get an experiment code reference.
     post:
-        Create an experiment metric.
+        Create an experiment code reference.
     """
     serializer_class = CodeReferenceSerializer
 

@@ -3,6 +3,10 @@ import tempfile
 
 from rest_framework import status
 
+from api.code_reference.serializers import CodeReferenceSerializer
+from db.models.repos import CodeReference
+from factories.factory_code_reference import CodeReferenceFactory
+from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 from tests.base.clients import AuthorizedClient, InternalClient
@@ -96,3 +100,66 @@ class BaseFilesViewTest(BaseViewTest):
     def assert_same_content(self, value1, value2):
         assert len(value1) == len(value2)
         assert set(value1) == set(value2)
+
+
+class EntityCodeReferenceBaseViewTest(BaseViewTest):
+    serializer_class = CodeReferenceSerializer
+    model_class = CodeReference
+    factory_class = CodeReferenceFactory
+    entity_factory_class = None
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.obj = self.entity_factory_class(project=self.project)
+        self.url = self.get_url()
+        self.queryset = self.model_class.objects.all()
+
+    def get_url(self):
+        raise NotImplementedError()
+
+    def test_get(self):
+        coderef = CodeReferenceFactory()
+        self.obj.code_reference = coderef
+        self.obj.save()
+        resp = self.auth_client.get(self.url)
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data == self.serializer_class(coderef).data
+
+    def test_create(self):
+        count = self.model_class.objects.count()
+        data = {}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == count + 1
+        last_object = self.model_class.objects.last()
+        self.obj.refresh_from_db()
+        assert last_object == self.obj.code_reference
+        assert last_object.branch == 'master'
+        assert last_object.commit is None
+        assert last_object.head is None
+        assert last_object.is_dirty is False
+        assert last_object.git_url is None
+        assert last_object.repo is None
+        assert last_object.external_repo is None
+
+        data = {
+            'commit': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
+            'head': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
+            'branch': 'feature1',
+            'git_url': 'https://bitbucket.org:foo/bar.git',
+            'is_dirty': True
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == count + 2
+        last_object = self.model_class.objects.last()
+        self.obj.refresh_from_db()
+        assert last_object == self.obj.code_reference
+        assert last_object.branch == 'feature1'
+        assert last_object.commit == '3783ab36703b14b91b15736fe4302bfb8d52af1c'
+        assert last_object.head == '3783ab36703b14b91b15736fe4302bfb8d52af1c'
+        assert last_object.is_dirty is True
+        assert last_object.git_url == 'https://bitbucket.org:foo/bar.git'
+        assert last_object.repo is None
+        assert last_object.external_repo is None

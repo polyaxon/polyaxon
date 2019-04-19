@@ -18,6 +18,7 @@ from api.build_jobs.serializers import (
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
+from api.code_reference.serializers import CodeReferenceSerializer
 from api.endpoint.base import (
     CreateEndpoint,
     DestroyEndpoint,
@@ -159,6 +160,27 @@ class BuildRestoreView(BuildEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         obj.restore()
         return Response(status=status.HTTP_200_OK)
+
+
+class BuildCodeReferenceView(BuildEndpoint, CreateEndpoint, RetrieveEndpoint):
+    """
+    get:
+        Get an build code reference.
+    post:
+        Create an build code reference.
+    """
+    serializer_class = CodeReferenceSerializer
+
+    def perform_create(self, serializer):
+        build = self.get_object()
+        instance = serializer.save()
+        build.code_reference = instance
+        build.save(update_fields=['code_reference'])
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance.code_reference)
+        return Response(serializer.data)
 
 
 class BuildViewMixin(object):

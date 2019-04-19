@@ -1,14 +1,12 @@
 # pylint:disable=too-many-lines
-from faker import Faker
 from unittest.mock import patch
 
 import pytest
-
+from faker import Faker
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
 import stores
-
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
     BookmarkedBuildJobSerializer,
@@ -25,7 +23,7 @@ from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
 from schemas.specifications import BuildSpecification
-from tests.base.views import BaseViewTest
+from tests.base.views import BaseViewTest, EntityCodeReferenceBaseViewTest
 
 
 @pytest.mark.build_jobs_mark
@@ -465,6 +463,17 @@ class TestBuildDetailViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.model_class.objects.count() == 1
         assert self.model_class.all.count() == 1
+
+
+@pytest.mark.build_jobs_mark
+class TestBuildCodeReferenceViewV1(EntityCodeReferenceBaseViewTest):
+    entity_factory_class = BuildJobFactory
+
+    def get_url(self):
+        return '/{}/{}/{}/builds/{}/coderef/'.format(API_V1,
+                                                     self.project.user.username,
+                                                     self.project.name,
+                                                     self.obj.id)
 
 
 @pytest.mark.build_jobs_mark

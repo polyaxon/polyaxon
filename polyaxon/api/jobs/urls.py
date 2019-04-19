@@ -19,6 +19,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/restart/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobRestartView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/coderef/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
+        views.BuildCodeReferenceView.as_view()),
     re_path(r'^{}/{}/jobs/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobStatusListView.as_view()),

@@ -1,19 +1,15 @@
 # pylint:disable=too-many-lines
 import os
 import time
-
-from faker import Faker
 from unittest.mock import patch
 
 import pytest
-
+from faker import Faker
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
 import conf
 import stores
-
-from api.code_reference.serializers import CodeReferenceSerializer
 from api.experiments import queries
 from api.experiments.serializers import (
     BookmarkedExperimentSerializer,
@@ -41,12 +37,10 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
-from db.models.repos import CodeReference
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.group_check import GroupChecks
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
-from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (
     ExperimentChartViewFactory,
@@ -65,7 +59,7 @@ from factories.fixtures import (
 )
 from schemas.specifications import ExperimentSpecification
 from tests.base.clients import EphemeralClient
-from tests.base.views import BaseFilesViewTest, BaseViewTest
+from tests.base.views import BaseFilesViewTest, BaseViewTest, EntityCodeReferenceBaseViewTest
 
 
 @pytest.mark.experiments_mark
@@ -1223,65 +1217,14 @@ class TestExperimentDetailViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
-class TestExperimentCodeReferenceViewV1(BaseViewTest):
-    serializer_class = CodeReferenceSerializer
-    model_class = CodeReference
-    factory_class = CodeReferenceFactory
+class TestExperimentCodeReferenceViewV1(EntityCodeReferenceBaseViewTest):
+    entity_factory_class = ExperimentFactory
 
-    def setUp(self):
-        super().setUp()
-        project = ProjectFactory(user=self.auth_client.user)
-        self.experiment = ExperimentFactory(project=project)
-        self.url = '/{}/{}/{}/experiments/{}/coderef/'.format(API_V1,
-                                                              project.user.username,
-                                                              project.name,
-                                                              self.experiment.id)
-        self.queryset = self.model_class.objects.all()
-
-    def test_get(self):
-        coderef = CodeReferenceFactory()
-        self.experiment.code_reference = coderef
-        self.experiment.save()
-        resp = self.auth_client.get(self.url)
-        assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(coderef).data
-
-    def test_create(self):
-        data = {}
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == 1
-        last_object = self.model_class.objects.last()
-        self.experiment.refresh_from_db()
-        assert last_object == self.experiment.code_reference
-        assert last_object.branch == 'master'
-        assert last_object.commit is None
-        assert last_object.head is None
-        assert last_object.is_dirty is False
-        assert last_object.git_url is None
-        assert last_object.repo is None
-        assert last_object.external_repo is None
-
-        data = {
-            'commit': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
-            'head': '3783ab36703b14b91b15736fe4302bfb8d52af1c',
-            'branch': 'feature1',
-            'git_url': 'https://bitbucket.org:foo/bar.git',
-            'is_dirty': True
-        }
-        resp = self.auth_client.post(self.url, data)
-        assert resp.status_code == status.HTTP_201_CREATED
-        assert self.model_class.objects.count() == 2
-        last_object = self.model_class.objects.last()
-        self.experiment.refresh_from_db()
-        assert last_object == self.experiment.code_reference
-        assert last_object.branch == 'feature1'
-        assert last_object.commit == '3783ab36703b14b91b15736fe4302bfb8d52af1c'
-        assert last_object.head == '3783ab36703b14b91b15736fe4302bfb8d52af1c'
-        assert last_object.is_dirty is True
-        assert last_object.git_url == 'https://bitbucket.org:foo/bar.git'
-        assert last_object.repo is None
-        assert last_object.external_repo is None
+    def get_url(self):
+        return '/{}/{}/{}/experiments/{}/coderef/'.format(API_V1,
+                                                          self.project.user.username,
+                                                          self.project.name,
+                                                          self.obj.id)
 
 
 @pytest.mark.experiments_mark
