@@ -54,7 +54,7 @@ class QueueWorker(BaseWorker):
                 # Queue still has message, try another time
                 size = self._queue.qsize()
 
-                if not settings.IN_CLUSTER:
+                if not settings.IS_MANAGED:
                     print('Polyaxon %s is attempting to send %i pending messages' %
                           (self.NAME, size))
                     print('Waiting up to {} seconds'.format(self._timeout))

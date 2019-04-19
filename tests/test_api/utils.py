@@ -25,7 +25,7 @@ class TestBaseApi(TestCase):
                                     token='token',
                                     reraise=True,
                                     use_https=False,
-                                    in_cluster=False,
+                                    is_managed=False,
                                     interval=0,
                                     timeout=0.01,
                                     schema_response=True)

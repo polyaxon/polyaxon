@@ -26,7 +26,7 @@ class PolyaxonClient(object):
                  ws_port=None,
                  use_https=False,
                  verify_ssl=None,
-                 in_cluster=None,
+                 is_managed=None,
                  authentication_type=None,
                  api_version=None,
                  reraise=False,
@@ -41,7 +41,7 @@ class PolyaxonClient(object):
                                                    version=api_version,
                                                    use_https=use_https,
                                                    verify_ssl=verify_ssl,
-                                                   in_cluster=in_cluster,
+                                                   is_managed=is_managed,
                                                    schema_response=schema_response,
                                                    reraise=reraise,
                                                    timeout=timeout)
@@ -102,8 +102,8 @@ class PolyaxonClient(object):
         return self.api_config.authentication_type
 
     @property
-    def in_cluster(self):
-        return self.api_config.in_cluster
+    def is_managed(self):
+        return self.api_config.is_managed
 
     @property
     def api_version(self):
@@ -141,8 +141,8 @@ class PolyaxonClient(object):
         self.api_config.token = token
         self.reset()
 
-    def set_in_cluster(self, in_cluster):
-        self.api_config.in_cluster = in_cluster
+    def set_is_managed(self, is_managed):
+        self.api_config.is_managed = is_managed
         self.reset()
 
     def set_authentication_type(self, authentication_type):

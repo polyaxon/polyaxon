@@ -21,7 +21,7 @@ class ApiConfig(object):
                  authentication_type=None,
                  use_https=None,
                  verify_ssl=None,
-                 in_cluster=None,
+                 is_managed=None,
                  schema_response=None,
                  reraise=False,
                  timeout=None,
@@ -29,11 +29,11 @@ class ApiConfig(object):
 
         self.token = token or settings.SECRET_USER_TOKEN
         self.host = host or settings.API_HOST
-        self.in_cluster = self._get_bool(in_cluster, settings.IN_CLUSTER)
+        self.is_managed = self._get_bool(is_managed, settings.IS_MANAGED)
         self.use_https = self._get_bool(use_https, settings.USE_HTTPS)
         self.verify_ssl = self._get_bool(verify_ssl, settings.VERIFY_SSL)
 
-        if not self.host and not self.in_cluster:
+        if not self.host and not self.is_managed:
             raise PolyaxonClientException(
                 'Api config requires at least a host if not running in-cluster.')
 
@@ -46,7 +46,7 @@ class ApiConfig(object):
         self.version = version or settings.API_VERSION
         self.internal_header = None
 
-        if self.in_cluster:
+        if self.is_managed:
             if not settings.API_HTTP_HOST:
                 print('Could get api host info, '
                       'please make sure this is running inside a polyaxon job.')

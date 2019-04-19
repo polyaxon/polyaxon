@@ -17,7 +17,7 @@ class DummyTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
-        self.config = ApiConfig(in_cluster=True, timeout=0.01)
+        self.config = ApiConfig(is_managed=True, timeout=0.01)
         self._threaded_exceptions = 0
         self._threaded_done = 0
 
@@ -46,7 +46,7 @@ class ExceptionTransport(ThreadedTransportMixin):
     # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.delay = delay
-        self.config = ApiConfig(in_cluster=True, timeout=0.01)
+        self.config = ApiConfig(is_managed=True, timeout=0.01)
         self._threaded_exceptions = 0
         self._threaded_done = 0
 

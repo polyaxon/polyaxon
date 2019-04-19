@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 
 
@@ -14,7 +14,7 @@ def get_data_paths():
     The data paths dictionary that you mounted for the job/experiment.
     {'data1': '/data/1/', 'data-foo': '/data/foo'}
     """
-    ensure_in_custer()
+    ensure_is_managed()
     data_path = os.getenv('POLYAXON_RUN_DATA_PATHS', None)
     try:
         return json.loads(data_path) if data_path else None
@@ -41,7 +41,7 @@ def get_outputs_path():
     Jobs:
         `user/project/jobs/files`
     """
-    ensure_in_custer()
+    ensure_is_managed()
     return os.getenv('POLYAXON_RUN_OUTPUTS_PATH', None)
 
 
@@ -60,7 +60,7 @@ def get_outputs_refs_paths():
         ]
     }
     """
-    ensure_in_custer()
+    ensure_is_managed()
     outputs_refs = os.getenv('POLYAXON_REFS_OUTPUTS_PATHS', None)
     try:
         return json.loads(outputs_refs) if outputs_refs else None
@@ -73,5 +73,5 @@ def get_outputs_refs_paths():
 @check_no_op
 def get_log_level():
     """If set on the polyaxonfile it will return the log level."""
-    ensure_in_custer()
+    ensure_is_managed()
     return os.getenv('POLYAXON_LOG_LEVEL', None)

@@ -27,7 +27,7 @@ class PolyaxonHandler(logging.Handler):
         return LogSpec(log_line=record.msg, log_level=record.levelname)
 
     def emit(self, record):  # pylint:disable=inconsistent-return-statements
-        if settings.IN_CLUSTER or not self.can_record(record):
+        if settings.IS_MANAGED or not self.can_record(record):
             return
         try:
             return self._send_logs(self.format_record(record))

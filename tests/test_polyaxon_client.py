@@ -33,7 +33,7 @@ class TestPolyaxonClient(TestCase):
         settings.SECRET_USER_TOKEN = None
         with self.assertRaises(PolyaxonClientException):
             PolyaxonClient(host=None, token=None)
-        client = PolyaxonClient(host=None, token=None, in_cluster=True)
+        client = PolyaxonClient(host=None, token=None, is_managed=True)
         assert client.host is None
         assert client.http_port == 80
         assert client.ws_port == 80
@@ -59,7 +59,7 @@ class TestPolyaxonClient(TestCase):
         settings.SECRET_USER_TOKEN = 'token'  # noqa
         settings.API_HOST = 'localhost'
         client = PolyaxonClient(api_config=ApiConfig())
-        assert client.in_cluster is False
+        assert client.is_managed is False
         assert client.host == 'localhost'
         assert client.http_port == 80
         assert client.ws_port == 80
@@ -68,12 +68,12 @@ class TestPolyaxonClient(TestCase):
         assert client.api_config.http_host == 'http://localhost:80'
         assert client.api_config.ws_host == 'ws://localhost:80'
 
-        settings.IN_CLUSTER = True
+        settings.IS_MANAGED = True
         settings.API_HTTP_HOST = 'api_host'
         settings.API_WS_HOST = 'ws_host'
         settings.API_HOST = None
         client = PolyaxonClient(api_config=ApiConfig())
-        assert client.in_cluster is True
+        assert client.is_managed is True
         assert client.host is None
         assert client.http_port == 80
         assert client.ws_port == 80
@@ -83,14 +83,14 @@ class TestPolyaxonClient(TestCase):
         assert client.api_config.ws_host == 'ws_host'
 
     def test_from_env(self):
-        settings.IN_CLUSTER = False
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             PolyaxonClient()
 
         settings.SECRET_USER_TOKEN = 'token'  # noqa
         settings.API_HOST = 'localhost'
         client = PolyaxonClient()
-        assert client.in_cluster is False
+        assert client.is_managed is False
         assert client.host == 'localhost'
         assert client.http_port == 80
         assert client.ws_port == 80
@@ -99,12 +99,12 @@ class TestPolyaxonClient(TestCase):
         assert client.api_config.http_host == 'http://localhost:80'
         assert client.api_config.ws_host == 'ws://localhost:80'
 
-        settings.IN_CLUSTER = True
+        settings.IS_MANAGED = True
         settings.API_HTTP_HOST = 'api_host'
         settings.API_WS_HOST = 'ws_host'
         settings.API_HOST = None
         client = PolyaxonClient()
-        assert client.in_cluster is True
+        assert client.is_managed is True
         assert client.host is None
         assert client.http_port == 80
         assert client.ws_port == 80

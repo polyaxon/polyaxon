@@ -10,7 +10,7 @@ EXCLUDE_DEFAULT_LOGGERS = (
 
 
 def setup_logging(send_logs, exclude=EXCLUDE_DEFAULT_LOGGERS):
-    if settings.IN_CLUSTER:
+    if settings.IS_MANAGED:
         return
 
     logger = logging.getLogger()

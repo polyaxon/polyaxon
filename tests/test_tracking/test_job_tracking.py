@@ -13,10 +13,10 @@ from polyaxon_client.tracking.job import Job
 class TestJobTracking(TestEnvVarsCase):
     def setUp(self):
         super(TestJobTracking, self).setUp()
-        settings.IN_CLUSTER = True
+        settings.IS_MANAGED = True
 
-    def test_job_info_checks_in_cluster(self):
-        settings.IN_CLUSTER = False
+    def test_job_info_checks_is_managed(self):
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             Job.get_job_info()
 

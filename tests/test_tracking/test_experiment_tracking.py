@@ -15,10 +15,10 @@ from polyaxon_client.tracking.experiment import Experiment
 class TestExperimentTracking(TestEnvVarsCase):
     def setUp(self):
         super(TestExperimentTracking, self).setUp()
-        settings.IN_CLUSTER = True
+        settings.IS_MANAGED = True
 
-    def test_cluster_def_checks_in_cluster(self):
-        settings.IN_CLUSTER = False
+    def test_cluster_def_checks_is_managed(self):
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             Experiment.get_cluster_def()
 
@@ -37,8 +37,8 @@ class TestExperimentTracking(TestEnvVarsCase):
         }
         self.check_valid_dict_value('POLYAXON_CLUSTER', Experiment.get_cluster_def, cluster_def)
 
-    def test_declarations_checks_in_cluster(self):
-        settings.IN_CLUSTER = False
+    def test_declarations_checks_is_managed(self):
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             Experiment.get_declarations()
 
@@ -56,8 +56,8 @@ class TestExperimentTracking(TestEnvVarsCase):
                                     Experiment.get_declarations,
                                     declarations)
 
-    def test_experiment_info_checks_in_cluster(self):
-        settings.IN_CLUSTER = False
+    def test_experiment_info_checks_is_managed(self):
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             Experiment.get_experiment_info()
 
@@ -80,8 +80,8 @@ class TestExperimentTracking(TestEnvVarsCase):
                                     Experiment.get_experiment_info,
                                     experiment_info)
 
-    def test_task_info_checks_in_cluster(self):
-        settings.IN_CLUSTER = False
+    def test_task_info_checks_is_managed(self):
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             Experiment.get_task_info()
 
@@ -97,8 +97,8 @@ class TestExperimentTracking(TestEnvVarsCase):
                                     Experiment.get_task_info,
                                     task_info)
 
-    def test_tf_config_checks_in_cluster(self):
-        settings.IN_CLUSTER = False
+    def test_tf_config_checks_is_managed(self):
+        settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             Experiment.get_tf_config()
 

@@ -53,15 +53,13 @@ class Group(BaseTracker):
             username=self.username,
             project_name=self.project_name,
             experiment_group_config=group_config)
-        self.group_id = (group.id
-                         if self.client.api_config.schema_response
-                         else group.get('id'))
+        self.group_id = self._get_entity_id(group)
         self.group = group
         self.last_status = 'created'
 
         # Setup base_outputs_path
         self.base_outputs_path = base_outputs_path or get_base_outputs_path()
-        if not settings.IN_CLUSTER:
+        if not settings.IS_MANAGED:
             self._start()
 
         return self

@@ -17,7 +17,7 @@ class DummyTransport(PeriodicHttpTransportMixin):
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
-        self.config = ApiConfig(in_cluster=True, timeout=0.01, interval=0)
+        self.config = ApiConfig(is_managed=True, timeout=0.01, interval=0)
         self._periodic_http_exceptions = 0
         self._periodic_http_done = 0
 
@@ -30,7 +30,7 @@ class ExceptionTransport(PeriodicHttpTransportMixin):
     # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.delay = delay
-        self.config = ApiConfig(in_cluster=True, timeout=0.01, interval=0)
+        self.config = ApiConfig(is_managed=True, timeout=0.01, interval=0)
         self._periodic_http_exceptions = 0
         self._periodic_http_done = 0
 

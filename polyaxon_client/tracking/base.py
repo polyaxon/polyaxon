@@ -11,7 +11,7 @@ from polystores.stores.manager import StoreManager
 
 from polyaxon_client import PolyaxonClient, settings
 from polyaxon_client.exceptions import PolyaxonClientException
-from polyaxon_client.tracking.in_cluster import ensure_in_custer
+from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.project import get_project_info
@@ -28,7 +28,7 @@ class BaseTracker(object):
                  track_code=True,
                  track_env=True,
                  outputs_store=None):
-        if not settings.IN_CLUSTER and project is None:
+        if not settings.IS_MANAGED and project is None:
             raise PolyaxonClientException('Please provide a valid project.')
         elif self.is_notebook_job:
             job_info = self.get_notebook_job_info()
@@ -36,7 +36,7 @@ class BaseTracker(object):
 
         self.last_status = None
         self.client = client or PolyaxonClient()
-        if settings.IN_CLUSTER:
+        if settings.IS_MANAGED:
             self.user = None
         else:
             self.user = (self.client.auth.get_user().username
@@ -54,12 +54,15 @@ class BaseTracker(object):
         self._entity_data = None
 
         # Setup the outputs store
-        if outputs_store is None and settings.IN_CLUSTER and self.REQUIRES_OUTPUTS:
+        if outputs_store is None and settings.IS_MANAGED and self.REQUIRES_OUTPUTS:
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
+
+    def _get_entity_id(self, entity):
+        return entity.id if self.client.api_config.schema_response else entity.get('id')
 
     @check_no_op
     def get_notebook_job_info(self):
-        ensure_in_custer()
+        ensure_is_managed()
 
         info = os.getenv('POLYAXON_NOTEBOOK_INFO', None)
         try:
@@ -74,7 +77,7 @@ class BaseTracker(object):
         if settings.NO_OP:
             return None
 
-        return settings.IN_CLUSTER and 'POLYAXON_NOTEBOOK_INFO' in os.environ
+        return settings.IS_MANAGED and 'POLYAXON_NOTEBOOK_INFO' in os.environ
 
     def get_entity_data(self):
         raise NotImplementedError
