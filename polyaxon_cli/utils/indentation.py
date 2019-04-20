@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import sys
+
 from contextlib import contextmanager
 
 from polyaxon_cli.utils.constants import NEWLINES

@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
 
-from polyaxon_cli.schemas.base import BaseConfig, BaseSchema
+from polyaxon_cli.schemas import BaseConfig, BaseSchema
 
 
 class GlobalConfigurationSchema(BaseSchema):

@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from polyaxon_cli.managers.experiment_group import GroupManager
-from polyaxon_cli.schemas.group import ExperimentGroupConfig
+from polyaxon_cli.schemas import GroupConfig
 
 
 class TestGroupManager(TestCase):
@@ -12,4 +12,4 @@ class TestGroupManager(TestCase):
         assert GroupManager.IS_GLOBAL is False
         assert GroupManager.IS_POLYAXON_DIR is True
         assert GroupManager.CONFIG_FILE_NAME == '.polyaxongroup'
-        assert GroupManager.CONFIG == ExperimentGroupConfig
+        assert GroupManager.CONFIG == GroupConfig

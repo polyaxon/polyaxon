@@ -9,7 +9,11 @@ import rhea
 from polyaxon_cli.cli.getters.job import get_job_or_local
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
-from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_cli.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError
+)
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.job import JobManager
 from polyaxon_cli.utils import cache
@@ -22,7 +26,6 @@ from polyaxon_cli.utils.formatting import (
 )
 from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
-from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_job_details(_job):

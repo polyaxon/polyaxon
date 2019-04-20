@@ -7,7 +7,11 @@ import click
 
 from polyaxon_cli.cli.getters.build import get_build_or_local
 from polyaxon_cli.client import PolyaxonClient
-from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_cli.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError
+)
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.build_job import BuildJobManager
 from polyaxon_cli.utils import cache
@@ -20,7 +24,6 @@ from polyaxon_cli.utils.formatting import (
 )
 from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
-from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_build_details(_build):

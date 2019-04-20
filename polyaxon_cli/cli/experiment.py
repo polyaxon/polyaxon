@@ -12,7 +12,11 @@ from polyaxon_cli.cli.getters.experiment import (
 )
 from polyaxon_cli.cli.upload import upload
 from polyaxon_cli.client import PolyaxonClient
-from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_cli.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError
+)
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_job import ExperimentJobManager
@@ -26,7 +30,6 @@ from polyaxon_cli.utils.formatting import (
 )
 from polyaxon_cli.utils.log_handler import get_logs_handler
 from polyaxon_cli.utils.validation import validate_tags
-from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name

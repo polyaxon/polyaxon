@@ -10,11 +10,15 @@ from marshmallow import ValidationError
 from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.cli.init import init as init_project
 from polyaxon_cli.client import PolyaxonClient
-from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_cli.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError
+)
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.managers.auth import AuthConfigManager
 from polyaxon_cli.managers.project import ProjectManager
-from polyaxon_cli.schemas.project import ProjectConfig
+from polyaxon_cli.schemas import ProjectConfig
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
@@ -24,7 +28,6 @@ from polyaxon_cli.utils.formatting import (
     list_dicts_to_tabulate
 )
 from polyaxon_cli.utils.validation import validate_tags
-from polyaxon_client.exceptions import PolyaxonClientException
 
 
 def get_project_details(_project):

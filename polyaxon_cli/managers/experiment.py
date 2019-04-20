@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 from polyaxon_cli.managers.base import BaseConfigManager
-from polyaxon_cli.schemas.experiment import ExperimentConfig
+from polyaxon_cli.schemas import ExperimentConfig
 from polyaxon_cli.utils.formatting import Printer
 
 
