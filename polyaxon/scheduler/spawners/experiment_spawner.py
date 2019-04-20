@@ -18,7 +18,6 @@ from scheduler.spawners.templates.env_vars import (
     validate_secret_refs
 )
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
-from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -270,7 +269,7 @@ class ExperimentSpawner(K8SManager):
         return deleted
 
     def get_pod_command_args(self, task_type, task_idx):
-        return get_pod_command_args(run_config=self.spec.run)
+        return self.spec.run.get_container_cmd()
 
     def create_master(self):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)

@@ -12,7 +12,6 @@ from scheduler.spawners.templates.env_vars import (
     validate_secret_refs
 )
 from scheduler.spawners.templates.jobs import manager
-from scheduler.spawners.templates.pod_cmd import get_pod_command_args
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -67,7 +66,7 @@ class JobSpawner(K8SManager):
                          in_cluster=in_cluster)
 
     def get_pod_command_args(self):
-        return get_pod_command_args(run_config=self.spec.run)
+        return self.spec.run.get_container_cmd()
 
     def get_init_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.INITIALIZER,
