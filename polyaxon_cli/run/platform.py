@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
-from polyaxon_client.exceptions import PolyaxonClientException
 
 from polyaxon_cli.cli.build import logs as build_logs
 from polyaxon_cli.cli.check import get_group_experiments_info
@@ -17,14 +16,23 @@ from polyaxon_cli.managers.build_job import BuildJobManager
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.managers.job import JobManager
-from polyaxon_cli.schemas.experiment import ExperimentConfig
-from polyaxon_cli.schemas.group import ExperimentGroupConfig
-from polyaxon_cli.schemas.job import JobConfig
+from polyaxon_cli.schemas import ExperimentConfig, GroupConfig, JobConfig
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client.exceptions import PolyaxonClientException
 
 
-def run(ctx, name, project, user, project_name, description, tags, specification, ttl, upload, log):
+def run(ctx,
+        name,
+        user,
+        project_name,
+        description,
+        tags,
+        specification,
+        ttl,
+        upload,
+        log,
+        can_upload):
     project_client = PolyaxonClient().project
 
     def run_experiment():
@@ -34,7 +42,9 @@ def run(ctx, name, project, user, project_name, description, tags, specification
             description=description,
             tags=tags,
             config=specification.parsed_data,
-            ttl=ttl)
+            ttl=ttl,
+            is_managed=True,
+        )
         try:
             response = PolyaxonClient().project.create_experiment(user,
                                                                   project_name,
@@ -50,11 +60,13 @@ def run(ctx, name, project, user, project_name, description, tags, specification
         click.echo('Creating an experiment group with the following definition:')
         experiments_def = specification.experiments_def
         get_group_experiments_info(**experiments_def)
-        experiment_group = ExperimentGroupConfig(
+        experiment_group = GroupConfig(
             name=name,
             description=description,
             tags=tags,
-            content=specification._data)  # pylint:disable=protected-access
+            content=specification._data,  # pylint:disable=protected-access
+            is_managed=True,
+        )
         try:
             response = project_client.create_experiment_group(user,
                                                               project_name,
@@ -73,7 +85,9 @@ def run(ctx, name, project, user, project_name, description, tags, specification
             description=description,
             tags=tags,
             config=specification.parsed_data,
-            ttl=ttl)
+            ttl=ttl,
+            is_managed=True,
+        )
         try:
             response = project_client.create_job(user,
                                                  project_name,
@@ -92,7 +106,9 @@ def run(ctx, name, project, user, project_name, description, tags, specification
             description=description,
             tags=tags,
             config=specification.parsed_data,
-            ttl=ttl)
+            ttl=ttl,
+            is_managed=True,
+        )
         try:
             response = project_client.create_build(user,
                                                    project_name,
@@ -106,7 +122,7 @@ def run(ctx, name, project, user, project_name, description, tags, specification
 
     # Check if we need to upload
     if upload:
-        if project:
+        if can_upload:
             Printer.print_error('Uploading is not supported when switching project context!')
             click.echo('Please, either omit the `-u` option or `-p` / `--project=` option.')
             sys.exit(1)
