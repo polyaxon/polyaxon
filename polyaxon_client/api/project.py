@@ -6,7 +6,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.schemas import (
     BuildJobConfig,
     ExperimentConfig,
-    ExperimentGroupConfig,
+    GroupConfig,
     JobConfig,
     ProjectConfig,
     TensorboardJobConfig
@@ -226,7 +226,7 @@ class ProjectApi(BaseApiHandler):
             if sort:
                 params['sort'] = sort
             response = self.transport.get(request_url, params=params)
-            return self.prepare_list_results(response.json(), page, ExperimentGroupConfig)
+            return self.prepare_list_results(response.json(), page, GroupConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while retrieving experiment groups.')
@@ -238,7 +238,7 @@ class ProjectApi(BaseApiHandler):
                                 experiment_group_config,
                                 background=False):
         experiment_group_config = self.validate_config(config=experiment_group_config,
-                                                       config_schema=ExperimentGroupConfig)
+                                                       config_schema=GroupConfig)
         request_url = self.build_url(self._get_http_url(), username, project_name, 'groups')
 
         if background:
@@ -247,7 +247,7 @@ class ProjectApi(BaseApiHandler):
 
         try:
             response = self.transport.post(request_url, json_data=experiment_group_config.to_dict())
-            return self.prepare_results(response_json=response.json(), config=ExperimentGroupConfig)
+            return self.prepare_results(response_json=response.json(), config=GroupConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(
                 e=e, log_message='Error while creating experiment group.')

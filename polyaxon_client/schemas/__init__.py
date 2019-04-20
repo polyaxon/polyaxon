@@ -19,7 +19,8 @@ from polyaxon_schemas.api.job import (
     TensorboardJobConfig
 )
 from polyaxon_schemas.api.log_handler import LogHandlerConfig
-from polyaxon_schemas.api.project import ExperimentGroupConfig, GroupStatusConfig, ProjectConfig
+from polyaxon_schemas.api.group import GroupConfig, GroupStatusConfig
+from polyaxon_schemas.api.project import ProjectConfig
 from polyaxon_schemas.api.user import UserConfig
 from polyaxon_schemas.api.version import (
     ChartVersionConfig,

@@ -13,7 +13,7 @@ from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.bookmark import BookmarkApi
 from polyaxon_client.schemas import (
     ExperimentConfig,
-    ExperimentGroupConfig,
+    GroupConfig,
     JobConfig,
     ProjectConfig
 )
@@ -119,8 +119,7 @@ class TestBookmarkApi(TestBaseApi):
     def test_get_bookmarked_groups(self):
         project_uuid = uuid.uuid4().hex
         experiment_groups = [
-            {'content_object': ExperimentGroupConfig(content='text',
-                                                     project=project_uuid).to_dict()}
+            {'content_object': GroupConfig(content='text', project=project_uuid).to_dict()}
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -136,7 +135,7 @@ class TestBookmarkApi(TestBaseApi):
         # Schema response
         result = self.api_handler.groups('user')
         assert len(result['results']) == 10
-        assert isinstance(result['results'][0], ExperimentGroupConfig)
+        assert isinstance(result['results'][0], GroupConfig)
 
         # Raw response
         self.set_raw_response()

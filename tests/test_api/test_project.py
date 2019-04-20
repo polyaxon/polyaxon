@@ -14,7 +14,7 @@ from polyaxon_client.api.project import ProjectApi
 from polyaxon_client.schemas import (
     BuildJobConfig,
     ExperimentConfig,
-    ExperimentGroupConfig,
+    GroupConfig,
     JobConfig,
     ProjectConfig,
     TensorboardJobConfig
@@ -298,7 +298,7 @@ class TestProjectApi(TestBaseApi):
     def test_list_experiment_groups(self):
         project_uuid = uuid.uuid4().hex
         experiment_groups = [
-            ExperimentGroupConfig(content='text', project=project_uuid).to_dict()
+            GroupConfig(content='text', project=project_uuid).to_dict()
             for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -315,7 +315,7 @@ class TestProjectApi(TestBaseApi):
         # Schema response
         response = self.api_handler.list_experiment_groups('user', 'project')
         assert len(response['results']) == 10
-        assert isinstance(response['results'][0], ExperimentGroupConfig)
+        assert isinstance(response['results'][0], GroupConfig)
 
         # Raw response
         self.set_raw_response()
@@ -326,7 +326,7 @@ class TestProjectApi(TestBaseApi):
     @httpretty.activate
     def test_create_experiment_group(self):
         project_uuid = uuid.uuid4().hex
-        obj = ExperimentGroupConfig(content='text', project=project_uuid)
+        obj = GroupConfig(content='text', project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
