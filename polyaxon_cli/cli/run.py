@@ -11,7 +11,7 @@ from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.run.conda import run as conda_run
 from polyaxon_cli.run.docker import run as docker_run
 from polyaxon_cli.run.platform import run as platform_run
-from polyaxon_cli.schemas.polyaxonfile import PolyaxonFile
+from polyaxon_cli.schemas import PolyaxonFile
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_cli.utils.validation import validate_tags
 
@@ -111,7 +111,6 @@ def run(ctx,  # pylint:disable=redefined-builtin
         if conda_env:
             conda_run(ctx=ctx,
                       name=name,
-                      project=project,
                       user=user,
                       project_name=project_name,
                       description=description,
@@ -122,7 +121,6 @@ def run(ctx,  # pylint:disable=redefined-builtin
                       log=log)
         docker_run(ctx=ctx,
                    name=name,
-                   project=project,
                    user=user,
                    project_name=project_name,
                    description=description,
@@ -134,7 +132,6 @@ def run(ctx,  # pylint:disable=redefined-builtin
     else:
         platform_run(ctx=ctx,
                      name=name,
-                     project=project,
                      user=user,
                      project_name=project_name,
                      description=description,
@@ -142,4 +139,5 @@ def run(ctx,  # pylint:disable=redefined-builtin
                      specification=specification,
                      ttl=ttl,
                      upload=upload,
-                     log=log)
+                     log=log,
+                     can_upload=all([upload, project]))

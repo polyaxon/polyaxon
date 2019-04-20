@@ -101,7 +101,12 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
         job_config = specification.parsed_data
     user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
-        response = PolyaxonClient().project.start_notebook(user, project_name, job_config)
+        response = PolyaxonClient().project.start_notebook(
+            username=user,
+            project_name=project_name,
+            job_config=job_config,
+            is_managed=True,
+        )
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not start notebook project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))

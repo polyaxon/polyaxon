@@ -189,7 +189,9 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 username=user,
                 project_name=project_name,
                 experiment_id=experiment,
-                job_config=job_config)
+                job_config=job_config,
+                is_managed=True,
+            )
             obj = 'experiment `{}`'.format(experiment)
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not start tensorboard experiment `{}`.'.format(experiment))
@@ -201,7 +203,9 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 username=user,
                 project_name=project_name,
                 group_id=group,
-                job_config=job_config)
+                job_config=job_config,
+                is_managed=True,
+            )
             obj = 'group `{}`'.format(group)
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not start tensorboard group `{}`.'.format(group))
@@ -212,7 +216,9 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
             response = PolyaxonClient().project.start_tensorboard(
                 username=user,
                 project_name=project_name,
-                job_config=job_config)
+                job_config=job_config,
+                is_managed=True,
+            )
             obj = 'project `{}`'.format(project_name)
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not start tensorboard project `{}`.'.format(project_name))
