@@ -9,7 +9,7 @@ from hestia.tz_utils import local_now
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.api.experiment import ExperimentConfig
-from polyaxon_schemas.api.experiment_group import ExperimentGroupConfig, GroupStatusConfig
+from polyaxon_schemas.api.group import GroupConfig, GroupStatusConfig
 
 
 class TestGroupConfigs(TestCase):
@@ -37,7 +37,7 @@ class TestGroupConfigs(TestCase):
                                             uuid=uuid_value,
                                             experiment_group=uuid_value,
                                             project=uuid_value).to_dict()]}
-        config = ExperimentGroupConfig.from_dict(config_dict)
+        config = GroupConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         config_to_dict.pop('concurrency', None)
         config_to_dict.pop('description', None)

@@ -8,15 +8,15 @@ from polyaxon_schemas.ops.hptuning import HPTuningSchema
 from polyaxon_schemas.ops.run import BaseRunConfig
 
 
-class ExperimentGroupSchema(ExperimentSchema):
+class GroupSchema(ExperimentSchema):
     hptuning = fields.Nested(HPTuningSchema, allow_none=None)
 
     @staticmethod
     def schema_config():
-        return ExperimentGroupConfig
+        return GroupConfig
 
 
-class ExperimentGroupConfig(ExperimentConfig):
+class GroupConfig(ExperimentConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'experiment'
     REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ['backend', 'framework']
@@ -37,7 +37,7 @@ class ExperimentGroupConfig(ExperimentConfig):
                  train=None,
                  eval=None,  # pylint:disable=redefined-builtin
                  ):
-        super(ExperimentGroupConfig, self).__init__(
+        super(GroupConfig, self).__init__(
             kind=kind,
             version=version,
             logging=logging,

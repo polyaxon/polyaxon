@@ -2,7 +2,6 @@
 from __future__ import absolute_import, division, print_function
 
 from hestia.string_utils import strip_spaces
-
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema

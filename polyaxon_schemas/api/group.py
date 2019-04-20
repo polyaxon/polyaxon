@@ -9,7 +9,7 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.utils import UUID
 
 
-class ExperimentGroupSchema(BaseSchema):
+class GroupSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
@@ -42,11 +42,11 @@ class ExperimentGroupSchema(BaseSchema):
 
     @staticmethod
     def schema_config():
-        return ExperimentGroupConfig
+        return GroupConfig
 
 
-class ExperimentGroupConfig(BaseConfig):
-    SCHEMA = ExperimentGroupSchema
+class GroupConfig(BaseConfig):
+    SCHEMA = GroupSchema
     IDENTIFIER = 'experiment_group'
     DEFAULT_INCLUDE_ATTRIBUTES = [
         'id', 'unique_name', 'user', 'concurrency', 'created_at', 'last_status',

@@ -7,11 +7,10 @@ from unittest import TestCase
 
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
-
-from polyaxon_schemas.api.experiment_group import ExperimentGroupConfig
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.api.experiment import ExperimentConfig
+from polyaxon_schemas.api.group import GroupConfig
 from polyaxon_schemas.api.project import ProjectConfig
 
 
@@ -69,7 +68,7 @@ class TestProjectConfigs(TestCase):
                        'description': '',
                        'is_public': True,
                        'experiment_groups': [
-                           ExperimentGroupConfig(content='content',
+                           GroupConfig(content='content',
                                                  uuid=uuid_value,
                                                  project=uuid_value).to_dict()],
                        'experiments': [

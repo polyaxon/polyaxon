@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.api.experiment import ExperimentSchema
-from polyaxon_schemas.api.experiment_group import ExperimentGroupSchema
+from polyaxon_schemas.api.group import GroupSchema
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.utils import UUID
 
@@ -29,7 +29,7 @@ class ProjectSchema(BaseSchema):
     num_builds = fields.Int(allow_none=True)
     has_tensorboard = fields.Bool(allow_none=True)
     has_notebook = fields.Bool(allow_none=True)
-    experiment_groups = fields.Nested(ExperimentGroupSchema, many=True, allow_none=True)
+    experiment_groups = fields.Nested(GroupSchema, many=True, allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     @staticmethod
