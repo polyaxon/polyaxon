@@ -10,22 +10,31 @@ from hestia.user_path import polyaxon_user_path
 from marshmallow import EXCLUDE, RAISE
 from rhea import RheaError  # noqa
 
-TMP_AUTH_TOKEN_PATH = '/tmp/.polyaxon/.authtoken'
+TMP_POLYAXON_PATH = '/tmp/.polyaxon/'
+
+TMP_AUTH_TOKEN_PATH = os.path.join(TMP_POLYAXON_PATH, '.authtoken')
 CONTEXT_AUTH_TOKEN_PATH = '/plx-context/.authtoken'
-CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
-CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonconfig')
-AUTH_PATH = os.path.join(polyaxon_user_path(), '.polyaxonauth')
+
+TMP_CLIENT_CONFIG_PATH = os.path.join(TMP_POLYAXON_PATH, '.polyaxonclient')
+TMP_CONFIG_PATH = os.path.join(TMP_POLYAXON_PATH, '.polyaxonconfig')
+TMP_AUTH_PATH = os.path.join(TMP_POLYAXON_PATH, '.polyaxonauth')
+USER_CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonclient')
+USER_CONFIG_PATH = os.path.join(polyaxon_user_path(), '.polyaxonconfig')
+USER_AUTH_PATH = os.path.join(polyaxon_user_path(), '.polyaxonauth')
 
 global_config = rhea.Rhea.read_configs([
-    rhea.ConfigSpec(CONFIG_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(TMP_CONFIG_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(USER_CONFIG_PATH, config_type='.json', check_if_exists=False),
     {'dummy': 'dummy'}
 ])
 auth_config = rhea.Rhea.read_configs([
-    rhea.ConfigSpec(AUTH_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(TMP_AUTH_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(USER_AUTH_PATH, config_type='.json', check_if_exists=False),
     {'dummy': 'dummy'}
 ])
 config = rhea.Rhea.read_configs([
-    rhea.ConfigSpec(CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(TMP_CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False),
+    rhea.ConfigSpec(USER_CLIENT_CONFIG_PATH, config_type='.json', check_if_exists=False),
     os.environ,
     rhea.ConfigSpec(TMP_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False),
     rhea.ConfigSpec(CONTEXT_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)

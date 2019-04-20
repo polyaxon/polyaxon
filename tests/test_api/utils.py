@@ -31,7 +31,7 @@ class TestBaseApi(TestCase):
                                     schema_response=True)
         self.transport = Transport(config=self.api_config)
         settings.TMP_AUTH_TOKEN_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
-        settings.CLIENT_CONFIG_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
+        settings.USER_CLIENT_CONFIG_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
 
     def set_raw_response(self):
         self.api_config.schema_response = False
