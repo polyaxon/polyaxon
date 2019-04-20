@@ -36,6 +36,8 @@ class ExperimentGroupSchema(BaseSchema):
     num_stopped_experiments = fields.Int(allow_none=True)
     last_status = fields.Str(allow_none=True)
     has_tensorboard = fields.Bool(allow_none=True)
+    backend = fields.Str(allow_none=True)
+    is_managed = fields.Bool(allow_none=True)
     experiments = fields.Nested(ExperimentSchema, many=True, allow_none=True)
 
     @staticmethod
@@ -79,6 +81,8 @@ class ExperimentGroupConfig(BaseConfig):
                  finished_at=None,
                  concurrency=None,
                  experiments=None,
+                 backend=None,
+                 is_managed=None,
                  total_run=None):
         self.unique_name = unique_name
         self.id = id
@@ -106,6 +110,8 @@ class ExperimentGroupConfig(BaseConfig):
         self.last_status = last_status
         self.concurrency = concurrency
         self.experiments = experiments
+        self.backend = backend
+        self.is_managed = is_managed
         if all([self.started_at, self.finished_at]):
             self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
 

@@ -94,6 +94,8 @@ class TestProjectConfigs(TestCase):
                        'started_at': local_now().isoformat(),
                        'finished_at': local_now().isoformat(),
                        'group_type': 'study',
+                       'backend': 'native',
+                       'is_managed': True,
                        'search_algorithm': None,
                        'last_status': None,
                        'has_tensorboard': False,
@@ -127,6 +129,8 @@ class TestProjectConfigs(TestCase):
         config_dict.pop('experiments')
         config_dict.pop('has_tensorboard')
         config_dict.pop('tags')
+        config_dict.pop('backend')
+        config_dict.pop('is_managed')
         config_dict.pop('num_experiments', None)
         config_dict.pop('num_failed_experiments', None)
         config_dict.pop('num_pending_experiments', None)
