@@ -13,7 +13,7 @@ from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_tensorboard_spec_config
-from schemas.specifications import TensorboardSpecification
+from schemas import TensorboardSpecification
 
 
 class TensorboardJob(PluginJobBase, JobMixin):

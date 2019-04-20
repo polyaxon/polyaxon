@@ -15,7 +15,7 @@ from logs_handlers import collectors
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
-from schemas.specifications import ExperimentSpecification
+from schemas import ExperimentSpecification
 from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 _logger = logging.getLogger('polyaxon.scheduler.experiments')

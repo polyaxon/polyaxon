@@ -3,9 +3,7 @@ from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
 from scheduler.spawners.kf_experiment_spawner import KFExperimentSpawner
 from scheduler.spawners.templates import kubeflow
 from scheduler.spawners.templates.kubeflow import KUBEFLOW_JOB_GROUP
-from schemas.environments import MPIClusterConfig
-from schemas.specifications import MPISpecification
-from schemas.tasks import TaskType
+from schemas import MPIClusterConfig, MPISpecification, TaskType
 
 
 class MPIJobSpawnerMixin(object):

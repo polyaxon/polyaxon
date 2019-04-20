@@ -3,9 +3,7 @@ import stores
 from constants.experiment_jobs import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
-from schemas.environments import TensorflowClusterConfig
-from schemas.specifications import TensorflowSpecification
-from schemas.tasks import TaskType
+from schemas import TaskType, TensorflowClusterConfig, TensorflowSpecification
 
 
 class TensorflowSpawnerMixin(object):

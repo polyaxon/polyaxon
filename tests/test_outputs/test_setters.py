@@ -10,7 +10,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
-from schemas.environments import OutputsConfig
+from schemas import OutputsConfig
 from signals.outputs import get_valid_outputs, get_valid_ref, set_outputs, set_outputs_refs
 from tests.base.case import BaseTest
 

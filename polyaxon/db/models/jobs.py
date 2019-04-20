@@ -31,7 +31,7 @@ from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_job_spec_config
-from schemas.specifications import JobSpecification
+from schemas import JobSpecification
 
 
 class Job(AbstractJob,

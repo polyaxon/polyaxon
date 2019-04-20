@@ -29,7 +29,7 @@ from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
-from schemas.specifications import JobSpecification
+from schemas import JobSpecification
 from tests.base.views import BaseFilesViewTest, BaseViewTest, EntityCodeReferenceBaseViewTest
 
 

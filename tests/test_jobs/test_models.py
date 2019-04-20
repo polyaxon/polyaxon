@@ -18,7 +18,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import job_spec_content, job_spec_resources_content
 from scheduler.tasks.jobs import jobs_build
-from schemas.specifications import JobSpecification
+from schemas import JobSpecification
 from tests.base.case import BaseTest
 from tests.base.views import BaseViewTest
 

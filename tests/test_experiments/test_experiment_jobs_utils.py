@@ -5,7 +5,7 @@ import pytest
 import conf
 
 from constants.experiment_jobs import get_experiment_job_container_name, get_experiment_job_uuid
-from schemas.experiments import ExperimentBackend, ExperimentFramework
+from schemas import ExperimentBackend, ExperimentFramework
 from tests.base.case import BaseTest
 
 

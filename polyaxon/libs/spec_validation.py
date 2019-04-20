@@ -3,15 +3,17 @@ from rest_framework.exceptions import ValidationError
 
 from django.core.exceptions import ValidationError as DjangoValidationError
 
-from schemas.environments import OutputsConfig, PersistenceConfig
-from schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from schemas.hptuning import HPTuningConfig
-from schemas.specifications import (
+from schemas import (
     BuildSpecification,
     ExperimentSpecification,
     GroupSpecification,
+    HPTuningConfig,
     JobSpecification,
     NotebookSpecification,
+    OutputsConfig,
+    PersistenceConfig,
+    PolyaxonConfigurationError,
+    PolyaxonfileError,
     TensorboardSpecification
 )
 

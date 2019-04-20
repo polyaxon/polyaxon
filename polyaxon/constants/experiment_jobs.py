@@ -2,7 +2,7 @@ import uuid
 
 import conf
 
-from schemas.experiments import ExperimentBackend, ExperimentFramework
+from schemas import ExperimentBackend, ExperimentFramework
 
 
 def get_experiment_job_uuid(experiment_uuid, task_type, task_index):

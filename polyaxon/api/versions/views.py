@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from api.endpoint.base import BaseEndpoint, RetrieveEndpoint
 from db.models.versions import ChartVersion, CliVersion, LibVersion, PlatformVersion
 from polyaxon.config_manager import config
-from schemas.log_handler import LogHandlerConfig
-from schemas.version import (
+from schemas import (
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,
+    LogHandlerConfig,
     PlatformVersionConfig
 )
 

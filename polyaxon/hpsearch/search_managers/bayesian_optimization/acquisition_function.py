@@ -6,7 +6,7 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, Matern
 
 from hpsearch.search_managers.utils import get_random_generator
-from schemas.hptuning import (
+from schemas import (
     AcquisitionFunctions,
     GaussianProcessConfig,
     GaussianProcessesKernels,

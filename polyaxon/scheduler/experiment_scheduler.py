@@ -21,15 +21,16 @@ from scheduler.spawners.pytorch_spawner import PytorchSpawner
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
 from scheduler.spawners.tf_job_spawner import TFJobSpawner
 from scheduler.spawners.utils import get_job_definition
-from schemas.experiments import ExperimentBackend, ExperimentFramework
-from schemas.specifications import (
+from schemas import (
+    ExperimentBackend,
+    ExperimentFramework,
     HorovodSpecification,
     MPISpecification,
     MXNetSpecification,
     PytorchSpecification,
+    TaskType,
     TensorflowSpecification
 )
-from schemas.tasks import TaskType
 from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.experiment')

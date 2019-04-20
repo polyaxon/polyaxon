@@ -1,6 +1,6 @@
 from rest_framework.exceptions import ValidationError
 
-from schemas.environments import PersistenceConfig
+from schemas import PersistenceConfig
 from stores.exceptions import VolumeNotFoundError
 from stores.validators import validate_persistence_data, validate_persistence_outputs
 

@@ -35,8 +35,7 @@ from db.models.utils import (
 )
 from libs.paths.experiment_groups import get_experiment_group_subpath
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
-from schemas.hptuning import HPTuningConfig, Optimization
-from schemas.specifications import GroupSpecification
+from schemas import GroupSpecification, HPTuningConfig, Optimization
 
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 

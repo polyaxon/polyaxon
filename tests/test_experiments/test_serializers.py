@@ -23,7 +23,7 @@ from factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentStatusFactory
 )
-from schemas.specifications import ExperimentSpecification
+from schemas import ExperimentSpecification
 from tests.base.case import BaseTest
 
 

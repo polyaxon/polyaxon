@@ -34,7 +34,7 @@ from api.utils.views.post import PostAPIView
 from db.models.tokens import Token
 from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
 from event_manager.events.user import USER_ACTIVATED, USER_DELETED
-from schemas.user import UserConfig
+from schemas import UserConfig
 from signals import users as users_signals
 
 

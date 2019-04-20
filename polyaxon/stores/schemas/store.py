@@ -1,7 +1,7 @@
 from marshmallow import ValidationError, fields, validates_schema
 
 from constants import stores
-from schemas.base import BaseConfig, BaseSchema
+from schemas import BaseConfig, BaseSchema
 
 
 def validate_store(store):

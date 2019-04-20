@@ -61,7 +61,7 @@ from factories.fixtures import (
     exec_experiment_resources_parsed_content,
     exec_experiment_spec_parsed_content
 )
-from schemas.specifications import ExperimentSpecification
+from schemas import ExperimentSpecification
 from tests.base.clients import EphemeralClient
 from tests.base.views import BaseFilesViewTest, BaseViewTest, EntityCodeReferenceBaseViewTest
 

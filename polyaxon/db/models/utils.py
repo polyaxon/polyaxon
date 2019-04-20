@@ -10,7 +10,7 @@ from constants.backends import NATIVE_BACKEND
 from db.managers.deleted import ArchivedManager, LiveManager
 from libs.blacklist import validate_blacklist_name
 from libs.spec_validation import validate_outputs_config, validate_persistence_config
-from schemas.environments import OutputsConfig, PersistenceConfig
+from schemas import OutputsConfig, PersistenceConfig
 
 
 class DescribableModel(models.Model):

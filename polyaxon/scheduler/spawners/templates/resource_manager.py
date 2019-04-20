@@ -12,7 +12,7 @@ from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.security_context import get_security_context
 from scheduler.spawners.templates.sidecars import get_sidecar_args, get_sidecar_container
 from scheduler.spawners.templates.tpu import get_tpu_annotations, requests_tpu
-from schemas.exceptions import PolyaxonConfigurationError
+from schemas import PolyaxonConfigurationError
 
 
 class BaseResourceManager(object):

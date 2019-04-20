@@ -5,7 +5,7 @@ from scheduler.spawners.kf_experiment_spawner import KFExperimentSpawner
 from scheduler.spawners.templates import kubeflow
 from scheduler.spawners.templates.kubeflow import KUBEFLOW_JOB_GROUP
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawnerMixin
-from schemas.tasks import TaskType
+from schemas import TaskType
 
 
 class TFJobSpawner(TensorflowSpawnerMixin, KFExperimentSpawner):

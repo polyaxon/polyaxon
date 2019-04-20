@@ -2,7 +2,7 @@ from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.iteration_managers.base import BaseIterationManager
 from hpsearch.iteration_managers.logger import logger
 from hpsearch.schemas import HyperbandIterationConfig
-from schemas.hptuning import Optimization
+from schemas import Optimization
 
 
 class HyperbandIterationManager(BaseIterationManager):

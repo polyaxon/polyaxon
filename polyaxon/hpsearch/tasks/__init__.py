@@ -10,7 +10,7 @@ from event_manager.events.experiment_group import (
 from hpsearch.tasks import bo, grid, health, hyperband, random  # noqa
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
-from schemas.hptuning import SearchAlgorithms
+from schemas import SearchAlgorithms
 
 
 @celery_app.task(name=HPCeleryTasks.HP_CREATE, bind=True, max_retries=None, ignore_result=True)

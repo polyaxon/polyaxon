@@ -13,7 +13,7 @@ from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.utils import get_job_definition
-from schemas.build_backends import BuildBackend
+from schemas import BuildBackend
 from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')

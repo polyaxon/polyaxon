@@ -13,8 +13,7 @@ from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from db.models.utils import DataReference
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_notebook_spec_config
-from schemas.notebook_backend import NotebookBackend
-from schemas.specifications import NotebookSpecification
+from schemas import NotebookBackend, NotebookSpecification
 
 
 class NotebookJob(PluginJobBase, DataReference, JobMixin):

@@ -22,7 +22,7 @@ from hpsearch.search_managers import (
 )
 from hpsearch.search_managers.bayesian_optimization.optimizer import BOOptimizer
 from hpsearch.search_managers.bayesian_optimization.space import SearchSpace
-from schemas.hptuning import HPTuningConfig, MatrixConfig
+from schemas import HPTuningConfig, MatrixConfig
 from tests.base.case import BaseTest
 
 

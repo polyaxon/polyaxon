@@ -10,7 +10,7 @@ from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.abstract_jobs import AbstractJob, AbstractJobStatus
 from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from db.models.utils import NodeSchedulingModel
-from schemas.tasks import TaskType
+from schemas import TaskType
 
 
 class ExperimentJob(AbstractJob, NodeSchedulingModel):

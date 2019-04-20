@@ -8,7 +8,7 @@ from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_projects import ProjectFactory
 from scheduler import dockerizer_scheduler
-from schemas.specifications import BuildSpecification
+from schemas import BuildSpecification
 from tests.base.case import BaseTest
 
 

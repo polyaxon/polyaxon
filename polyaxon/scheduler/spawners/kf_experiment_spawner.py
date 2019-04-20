@@ -13,7 +13,7 @@ from scheduler.spawners.templates.volumes import (
     get_pod_volumes,
     get_shm_volumes
 )
-from schemas.tasks import TaskType
+from schemas import TaskType
 
 
 class KFExperimentSpawner(ExperimentSpawner):

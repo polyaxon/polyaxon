@@ -40,8 +40,7 @@ from factories.fixtures import (
     experiment_spec_content
 )
 from scheduler.tasks.experiments import copy_experiment, experiments_build, experiments_set_metrics
-from schemas.specifications import ExperimentSpecification
-from schemas.tasks import TaskType
+from schemas import ExperimentSpecification, TaskType
 from tests.base.case import BaseTest
 from tests.base.views import BaseViewTest
 from tests.fixtures import start_experiment_value

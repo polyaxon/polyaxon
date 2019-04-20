@@ -1,6 +1,6 @@
 from marshmallow import fields
 
-from schemas.base import BaseConfig, BaseSchema
+from schemas import BaseConfig, BaseSchema
 
 
 class BaseIterationSchema(BaseSchema):

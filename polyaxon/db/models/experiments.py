@@ -42,9 +42,7 @@ from event_manager.events.experiment import (
 )
 from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
-from schemas.pod_resources import PodResourcesConfig
-from schemas.specifications import ExperimentSpecification
-from schemas.tasks import TaskType
+from schemas import ExperimentSpecification, PodResourcesConfig, TaskType
 
 
 class Experiment(DiffModel,

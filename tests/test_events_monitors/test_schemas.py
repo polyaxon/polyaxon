@@ -5,7 +5,7 @@ import pytest
 from hestia.tz_utils import local_now
 
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
-from schemas.job import JobLabelConfig
+from schemas import JobLabelConfig
 from tests.base.case import BaseTest
 
 

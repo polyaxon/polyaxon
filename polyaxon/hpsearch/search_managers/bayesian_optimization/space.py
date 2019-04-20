@@ -1,7 +1,7 @@
 import logging
 import numpy as np
 
-from schemas.hptuning import Optimization
+from schemas import Optimization
 
 _logger = logging.getLogger('polyaxon.hpsearch.search_managers')
 

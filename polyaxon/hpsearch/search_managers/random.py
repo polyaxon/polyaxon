@@ -1,6 +1,6 @@
 from hpsearch.search_managers.base import BaseSearchAlgorithmManager
 from hpsearch.search_managers.utils import get_random_suggestions
-from schemas.hptuning import SearchAlgorithms
+from schemas import SearchAlgorithms
 
 
 class RandomSearchManager(BaseSearchAlgorithmManager):

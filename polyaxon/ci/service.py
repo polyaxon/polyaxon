@@ -4,7 +4,7 @@ from typing import Optional
 
 from hestia.service_interface import Service
 
-from schemas.polyaxonfile import PolyaxonFile
+from schemas import PolyaxonFile
 
 _logger = logging.getLogger('polyaxon.ci')
 

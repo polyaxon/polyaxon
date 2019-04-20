@@ -1,9 +1,7 @@
 from constants.experiment_jobs import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
-from schemas.environments import PytorchClusterConfig
-from schemas.specifications import PytorchSpecification
-from schemas.tasks import TaskType
+from schemas import PytorchClusterConfig, PytorchSpecification, TaskType
 
 
 class PytorchSpawnerMixin(object):

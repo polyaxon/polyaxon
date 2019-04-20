@@ -24,7 +24,7 @@ from db.redis.tll import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
-from schemas.specifications import BuildSpecification
+from schemas import BuildSpecification
 from tests.base.views import BaseViewTest, EntityCodeReferenceBaseViewTest
 
 

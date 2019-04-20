@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiment_groups import ExperimentGroup, GroupTypes
 from libs.repos.utils import assign_code_reference
-from schemas.hptuning import SearchAlgorithms
+from schemas import SearchAlgorithms
 from signals.names import set_name
 from signals.persistence import set_persistence
 from signals.tags import set_tags

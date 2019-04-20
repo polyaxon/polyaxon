@@ -73,8 +73,7 @@ from event_manager.events.tensorboard import (
 from libs.repos import git
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
-from schemas.notebook_backend import NotebookBackend
-from schemas.specifications import NotebookSpecification, TensorboardSpecification
+from schemas import NotebookBackend, NotebookSpecification, TensorboardSpecification
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsInitializer
 

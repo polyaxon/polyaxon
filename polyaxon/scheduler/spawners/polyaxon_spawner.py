@@ -1,7 +1,7 @@
 import json
 
 from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
-from schemas.tasks import TaskType
+from schemas import TaskType
 
 
 class PolyaxonSpawner(TensorflowSpawner):

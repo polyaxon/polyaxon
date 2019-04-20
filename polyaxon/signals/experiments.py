@@ -13,7 +13,7 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentMetric
 from event_manager.events.experiment import EXPERIMENT_NEW_METRIC
 from libs.repos.utils import assign_code_reference
-from schemas.experiments import ExperimentBackend
+from schemas import ExperimentBackend
 from signals.backend import set_backend
 from signals.framework import set_framework
 from signals.names import set_name

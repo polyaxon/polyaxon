@@ -1,4 +1,4 @@
-from schemas.specifications import (
+from schemas import (
     BuildSpecification,
     ExperimentSpecification,
     JobSpecification,
