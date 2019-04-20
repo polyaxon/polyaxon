@@ -51,6 +51,7 @@ def projects_schedule_deletion(project_id, immediate=False):
                     'specification': experiment.config,
                     'update_status': True,
                     'collect_logs': False,
+                    'is_managed': experiment.is_managed,
                     'message': message,
                 },
                 countdown=conf.get('GLOBAL_COUNTDOWN'))

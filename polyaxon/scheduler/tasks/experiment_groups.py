@@ -156,7 +156,8 @@ def experiments_group_stop_experiments(experiment_group_id,
                         'experiment_group_uuid': experiment_group.uuid.hex,
                         'specification': experiment.config,
                         'update_status': True,
-                        'collect_logs': collect_logs
+                        'collect_logs': collect_logs,
+                        'is_managed': experiment.is_managed,
                     },
                     countdown=conf.get('GLOBAL_COUNTDOWN'))
             else:

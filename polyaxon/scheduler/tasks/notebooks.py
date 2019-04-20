@@ -82,6 +82,7 @@ def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
                 'notebook_job_uuid': notebook_job.uuid.hex,
                 'update_status': True,
                 'collect_logs': False,
+                'is_managed': notebook_job.is_managed,
                 'message': 'Notebook is scheduled for deletion.'
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
@@ -106,12 +107,16 @@ def projects_notebook_stop(self,
                            notebook_job_uuid,
                            update_status=True,
                            collect_logs=False,
+                           is_managed=False,
                            message=None):
-    deleted = notebook_scheduler.stop_notebook(
-        project_name=project_name,
-        project_uuid=project_uuid,
-        notebook_job_name=notebook_job_name,
-        notebook_job_uuid=notebook_job_uuid)
+    if is_managed:
+        deleted = notebook_scheduler.stop_notebook(
+            project_name=project_name,
+            project_uuid=project_uuid,
+            notebook_job_name=notebook_job_name,
+            notebook_job_uuid=notebook_job_uuid)
+    else:
+        deleted = True
 
     if not deleted and self.request.retries < 2:
         _logger.info('Trying again to delete job `%s`.', notebook_job_name)

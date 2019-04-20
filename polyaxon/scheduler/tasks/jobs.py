@@ -92,6 +92,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
                 'job_uuid': job.uuid.hex,
                 'update_status': True,
                 'collect_logs': False,
+                'is_managed': job.is_managed,
                 'message': 'Job is scheduled for deletion.'
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
@@ -113,17 +114,21 @@ def jobs_stop(self,
               job_uuid,
               update_status=True,
               collect_logs=True,
+              is_managed=True,
               message=None):
-    if collect_logs:
+    if collect_logs and is_managed:
         try:
             logs_collect_job(job_uuid=job_uuid)
         except (OSError, VolumeNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect the logs for job `%s`.', job_name)
-    deleted = job_scheduler.stop_job(
-        project_name=project_name,
-        project_uuid=project_uuid,
-        job_name=job_name,
-        job_uuid=job_uuid)
+    if is_managed:
+        deleted = job_scheduler.stop_job(
+            project_name=project_name,
+            project_uuid=project_uuid,
+            job_name=job_name,
+            job_uuid=job_uuid)
+    else:
+        deleted = True
 
     if not deleted and self.request.retries < 2:
         _logger.info('Trying again to delete job `%s`.', job_name)

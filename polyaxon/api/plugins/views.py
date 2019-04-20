@@ -174,7 +174,8 @@ class StopTensorboardView(ProjectTensorboardEndpoint, PostEndpoint):
                     'project_uuid': project.uuid.hex,
                     'tensorboard_job_name': tensorboard.unique_name,
                     'tensorboard_job_uuid': tensorboard.uuid.hex,
-                    'update_status': True
+                    'update_status': True,
+                    'is_managed': tensorboard.is_managed,
                 },
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
@@ -201,7 +202,8 @@ class StopTensorboardJobView(TensorboardEndpoint, PostEndpoint):
                 'project_uuid': project.uuid.hex,
                 'tensorboard_job_name': tensorboard.unique_name,
                 'tensorboard_job_uuid': tensorboard.uuid.hex,
-                'update_status': True
+                'update_status': True,
+                'is_managed': tensorboard.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
         auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
@@ -309,7 +311,8 @@ class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
                     'project_uuid': self.project.uuid.hex,
                     'notebook_job_name': self.project.notebook.unique_name,
                     'notebook_job_uuid': self.project.notebook.uuid.hex,
-                    'update_status': True
+                    'update_status': True,
+                    'is_managed': self.project.notebook.is_managed,
                 },
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,

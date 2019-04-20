@@ -29,6 +29,7 @@ class BuildJobHandler(BaseHandler):
                 'build_job_uuid': instance.uuid.hex,
                 'update_status': False,
                 'collect_logs': False,
+                'is_managed': instance.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
@@ -49,6 +50,7 @@ class BuildJobHandler(BaseHandler):
                 'build_job_uuid': instance.uuid.hex,
                 'update_status': False,
                 'collect_logs': True,
+                'is_managed': instance.is_managed,
             },
             countdown=RedisTTL.get_for_build(build_id=instance.id))
 

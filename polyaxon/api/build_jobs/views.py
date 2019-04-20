@@ -93,6 +93,8 @@ class ProjectBuildListView(BookmarkedListMixinView,
 
         instance = serializer.save(user=self.request.user,
                                    project=self.project)
+        if not instance.is_managed:
+            return
         if ttl:
             RedisTTL.set_for_build(build_id=instance.id, value=ttl)
         # Trigger build scheduling
@@ -271,6 +273,7 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
                 'build_job_uuid': self.build.uuid.hex,
                 'update_status': True,
                 'collect_logs': True,
+                'is_managed': self.build.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)

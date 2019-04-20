@@ -801,6 +801,7 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                 'specification': obj.config,
                 'update_status': True,
                 'collect_logs': True,
+                'is_managed': obj.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)
@@ -831,6 +832,7 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                     'specification': experiment.config,
                     'update_status': True,
                     'collect_logs': True,
+                    'is_managed': experiment.is_managed,
                 },
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)

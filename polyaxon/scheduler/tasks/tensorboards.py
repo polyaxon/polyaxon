@@ -51,6 +51,7 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
                 'tensorboard_job_uuid': tensorboard.uuid.hex,
                 'update_status': True,
                 'collect_logs': False,
+                'is_managed': tensorboard.is_managed,
                 'message': 'Tensorboard is scheduled for deletion.'
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
@@ -75,13 +76,17 @@ def tensorboards_stop(self,
                       tensorboard_job_uuid,
                       update_status=True,
                       collect_logs=False,
+                      is_managed=True,
                       message=None):
-    deleted = tensorboard_scheduler.stop_tensorboard(
-        project_name=project_name,
-        project_uuid=project_uuid,
-        tensorboard_job_name=tensorboard_job_name,
-        tensorboard_job_uuid=tensorboard_job_uuid
-    )
+    if is_managed:
+        deleted = tensorboard_scheduler.stop_tensorboard(
+            project_name=project_name,
+            project_uuid=project_uuid,
+            tensorboard_job_name=tensorboard_job_name,
+            tensorboard_job_uuid=tensorboard_job_uuid
+        )
+    else:
+        deleted = True
 
     if not deleted and self.request.retries < 2:
         _logger.info('Trying again to delete job `%s`.', tensorboard_job_name)

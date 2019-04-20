@@ -327,6 +327,7 @@ class JobStopView(JobEndpoint, PostEndpoint):
                 'job_uuid': self.job.uuid.hex,
                 'update_status': True,
                 'collect_logs': True,
+                'is_managed': self.job.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
         return Response(status=status.HTTP_200_OK)

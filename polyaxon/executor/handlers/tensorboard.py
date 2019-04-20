@@ -27,6 +27,7 @@ class TensorboardHandler(BaseHandler):
                 'tensorboard_job_uuid': instance.uuid.hex,
                 'update_status': False,
                 'collect_logs': False,
+                'is_managed': instance.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
@@ -44,7 +45,8 @@ class TensorboardHandler(BaseHandler):
                 'tensorboard_job_name': instance.unique_name,
                 'tensorboard_job_uuid': instance.uuid.hex,
                 'update_status': False,
-                'collect_logs': True
+                'collect_logs': True,
+                'is_managed': instance.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 

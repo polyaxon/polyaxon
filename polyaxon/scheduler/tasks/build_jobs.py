@@ -77,17 +77,22 @@ def build_jobs_stop(self,
                     build_job_uuid,
                     update_status=True,
                     collect_logs=True,
+                    is_managed=True,
                     message=None):
-    if collect_logs:
+    if collect_logs and is_managed:
         try:
             logs_collect_build_job(build_uuid=build_job_uuid)
         except (OSError, VolumeNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect the logs for build `%s`.', build_job_name)
-    deleted = dockerizer_scheduler.stop_dockerizer(
-        project_name=project_name,
-        project_uuid=project_uuid,
-        build_job_name=build_job_name,
-        build_job_uuid=build_job_uuid)
+
+    if is_managed:
+        deleted = dockerizer_scheduler.stop_dockerizer(
+            project_name=project_name,
+            project_uuid=project_uuid,
+            build_job_name=build_job_name,
+            build_job_uuid=build_job_uuid)
+    else:
+        deleted = True
 
     if not deleted and self.request.retries < 2:
         _logger.info('Trying again to delete build `%s`.', build_job_name)

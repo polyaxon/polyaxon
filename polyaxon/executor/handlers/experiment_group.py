@@ -43,7 +43,8 @@ class ExperimentGroupHandler(BaseHandler):
                         'experiment_group_uuid': instance.uuid.hex,
                         'specification': experiment.config,
                         'update_status': True,
-                        'collect_logs': True
+                        'collect_logs': True,
+                        'is_managed': experiment.is_managed,
                     },
                     countdown=conf.get('GLOBAL_COUNTDOWN'))
 

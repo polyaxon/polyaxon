@@ -180,7 +180,8 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
                 'specification': experiment.config,
                 'update_status': True,
                 'collect_logs': False,
-                'message': 'Experiment is scheduled for deletion.'
+                'message': 'Experiment is scheduled for deletion.',
+                'is_managed': experiment.is_managed,
             },
             countdown=conf.get('GLOBAL_COUNTDOWN'))
 
@@ -207,14 +208,15 @@ def experiments_stop(self,
                      specification,
                      update_status=True,
                      collect_logs=True,
+                     is_managed=True,
                      message=None):
-    if collect_logs:
+    if collect_logs and is_managed:
         try:
             collectors.logs_collect_experiment_jobs(experiment_uuid=experiment_uuid)
         except (OSError, VolumeNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect '
                             'the logs for experiment `%s`.', experiment_name)
-    if specification:
+    if specification and is_managed:
         specification = ExperimentSpecification.read(specification)
         deleted = experiment_scheduler.stop_experiment(
             project_name=project_name,

@@ -50,6 +50,7 @@ class ExperimentHandler(BaseHandler):
                     'specification': instance.config,
                     'update_status': False,
                     'collect_logs': False,
+                    'is_managed': instance.is_managed,
                 },
                 countdown=conf.get('GLOBAL_COUNTDOWN'))
         except ExperimentGroup.DoesNotExist:
@@ -76,6 +77,7 @@ class ExperimentHandler(BaseHandler):
                 'specification': instance.config,
                 'update_status': False,
                 'collect_logs': True,
+                'is_managed': instance.is_managed,
             },
             countdown=RedisTTL.get_for_experiment(experiment_id=instance.id))
 
