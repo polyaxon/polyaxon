@@ -111,10 +111,7 @@ class Experiment(BaseTracker):
             experiment_config['config'] = config
         if build_id:
             experiment_config['build_job'] = str(build_id)
-        if settings.IS_MANAGED:
-            experiment_config['is_managed'] = True
-        else:
-            experiment_config['is_managed'] = False
+        experiment_config['is_managed'] = settings.IS_MANAGED
 
         experiment = self.client.project.create_experiment(
             username=self.username,

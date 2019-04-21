@@ -46,10 +46,7 @@ class BuildJob(BaseJob):
             build_config['description'] = description
         if config:
             build_config['config'] = config
-        if settings.IS_MANAGED:
-            build_config['is_managed'] = True
-        else:
-            build_config['is_managed'] = False
+        build_config['is_managed'] = settings.IS_MANAGED
 
         build = self.client.project.create_build(
             username=self.username,

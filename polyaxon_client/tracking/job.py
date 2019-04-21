@@ -188,10 +188,7 @@ class Job(BaseJob):
             job_config['config'] = config
         if build_id:
             job_config['build_job'] = str(build_id)
-        if settings.IS_MANAGED:
-            job_config['is_managed'] = True
-        else:
-            job_config['is_managed'] = False
+        job_config['is_managed'] = settings.IS_MANAGED
 
         job = self.client.project.create_job(
             username=self.username,
