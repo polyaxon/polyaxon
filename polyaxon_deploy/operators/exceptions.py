@@ -7,16 +7,25 @@ class OperatorException(Exception):
         self.cmd = cmd
         self.args = args
         self.return_code = return_code
-        self.stdout = stdout.read()
+        self.stdout = stdout.read() if stdout else None
         self.stderr = stderr.read()
-        self.message = (
-            '`{}` command {} failed with exit status {}\nstdout:\n{}\nstderr:\n{}'.format(
-                self.cmd,
-                self.args,
-                self.return_code,
-                self.stdout,
-                self.stderr,
-            ))
+        if stdout:
+            self.message = (
+                '`{}` command {} failed with exit status {}\nstdout:\n{}\nstderr:\n{}'.format(
+                    self.cmd,
+                    self.args,
+                    self.return_code,
+                    self.stdout,
+                    self.stderr,
+                ))
+        else:
+            self.message = (
+                '`{}` command {} failed with exit status {}\nstderr:\n{}'.format(
+                    self.cmd,
+                    self.args,
+                    self.return_code,
+                    self.stderr,
+                ))
         super(OperatorException, self).__init__()
 
     def __str__(self):

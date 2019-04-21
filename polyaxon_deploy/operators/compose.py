@@ -22,9 +22,9 @@ class ComposeOperator(CmdOperator):
         return True
 
     @classmethod
-    def execute(cls, args):
+    def execute(cls, args, stream=False):
         params = cls.params(args)
-        return cls._execute(params=params, env=None)
+        return cls._execute(params=params, env=None, stream=stream)
 
     @classmethod
     def generate_env(cls, config):

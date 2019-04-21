@@ -40,6 +40,6 @@ class KubectlOperator(CmdOperator):
         return env
 
     @classmethod
-    def execute(cls, args, is_json=True):
+    def execute(cls, args, is_json=True, stream=False):
         params = cls.params(args, is_json=is_json)
-        return cls._execute(params=params, env=cls.env(), is_json=is_json)
+        return cls._execute(params=params, env=cls.env(), is_json=is_json, stream=stream)
