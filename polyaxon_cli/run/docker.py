@@ -105,7 +105,7 @@ def _create_docker_build(build_job, build_config):
     return '{}:{}'.format(image_name, image_tag)
 
 
-def _run(ctx, name, user, project_name, description, tags, specification, ttl, upload, log):
+def _run(ctx, name, user, project_name, description, tags, specification, log):
     docker = DockerOperator()
     if not docker.check():
         raise PolyaxonConfigurationError('Docker is required to run this command.')
@@ -148,10 +148,14 @@ def _run(ctx, name, user, project_name, description, tags, specification, ttl, u
         sys.exit(1)
 
 
-def run(ctx, name, user, project_name, description, tags, specification, ttl, upload, log):
+def run(ctx, name, user, project_name, description, tags, specification, log):
     try:
-        _run(ctx, name, user, project_name, description, tags, specification, ttl, upload, log)
+        _run(ctx, name, user, project_name, description, tags, specification, log)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could start local run.')
         Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    except Exception as e:
+        Printer.print_error('Could start local run.')
+        Printer.print_error('Unexpected Error: `{}`.'.format(e))
         sys.exit(1)

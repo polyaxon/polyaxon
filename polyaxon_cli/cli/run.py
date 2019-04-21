@@ -26,7 +26,7 @@ from polyaxon_cli.utils.validation import validate_tags
 @click.option('--description', type=str,
               help='The description to give to this run.')
 @click.option('--ttl', type=int,
-              help="TTL for this run after it's done.")
+              help='TTL for this run after it\'s done.')
 @click.option('--upload', '-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.option('--log', '-l', is_flag=True, default=False,
@@ -116,19 +116,17 @@ def run(ctx,  # pylint:disable=redefined-builtin
                       description=description,
                       tags=tags,
                       specification=specification,
-                      ttl=ttl,
-                      upload=upload,
-                      log=log)
-        docker_run(ctx=ctx,
-                   name=name,
-                   user=user,
-                   project_name=project_name,
-                   description=description,
-                   tags=tags,
-                   specification=specification,
-                   ttl=ttl,
-                   upload=upload,
-                   log=log)
+                      log=log,
+                      conda_env=conda_env)
+        else:
+            docker_run(ctx=ctx,
+                       name=name,
+                       user=user,
+                       project_name=project_name,
+                       description=description,
+                       tags=tags,
+                       specification=specification,
+                       log=log)
     else:
         platform_run(ctx=ctx,
                      name=name,
