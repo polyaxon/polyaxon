@@ -8,6 +8,8 @@ from distutils.version import LooseVersion  # pylint:disable=import-error
 import click
 import pkg_resources
 
+from polyaxon_deploy.operators.pip import PipOperator
+
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import (
     AuthorizationError,
@@ -25,8 +27,7 @@ PROJECT_CLI_NAME = "polyaxon-cli"
 
 
 def pip_upgrade(project_name=PROJECT_CLI_NAME):
-    import subprocess
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--upgrade', project_name])
+    PipOperator.execute(['install', '--upgrade', project_name], stream=True)
     click.echo('polyaxon-cli upgraded.')
 
 
