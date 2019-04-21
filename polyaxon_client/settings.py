@@ -40,6 +40,9 @@ config = rhea.Rhea.read_configs([
     rhea.ConfigSpec(CONTEXT_AUTH_TOKEN_PATH, config_type='.json', check_if_exists=False)
 ])
 
+IS_LOCAL = config.get_boolean('POLYAXON_IS_LOCAL',
+                              is_optional=True,
+                              default=False)
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
                                 is_optional=True,
                                 default=False)
