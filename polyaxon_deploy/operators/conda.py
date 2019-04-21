@@ -20,6 +20,6 @@ class CondaOperator(CmdOperator):
         return True
 
     @classmethod
-    def execute(cls, args, stream=False):
+    def execute(cls, args, is_json=False, stream=False):
         params = cls.params(args)
-        return cls._execute(params=params, env=None, stream=stream)
+        return cls._execute(params=params, env=None, is_json=is_json, stream=stream)

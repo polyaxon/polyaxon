@@ -35,6 +35,12 @@ class TestCondaOperator(TestCase):
         assert mock_subprocess.Popen.call_args[0][0] == ['conda', 'install']
 
     @mock.patch('polyaxon_deploy.operators.cmd_operator.subprocess')
+    def test_conda_json(self, mock_subprocess):
+        mock_subprocess.Popen = self.mock_popen(0, '{"foo": "bar"}')
+        assert self.conda.execute(['env', 'list', '--json'], is_json=True) == dict(foo='bar')
+        assert mock_subprocess.Popen.call_args[0][0] == ['conda', 'env', 'list', '--json']
+
+    @mock.patch('polyaxon_deploy.operators.cmd_operator.subprocess')
     def test_conda_error(self, mock_subprocess):
         return_code = 1
         stdout = "output"
