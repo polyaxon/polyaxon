@@ -2,12 +2,12 @@ import pytest
 
 from mock import patch
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from crons.tasks.heartbeats import heartbeat_builds, heartbeat_experiments, heartbeat_jobs
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 
 

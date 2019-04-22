@@ -1,67 +1,69 @@
 import pytest
 
-from constants.pipelines import OperationStatuses, PipelineStatuses
+from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle
 from tests.base.case import BaseTest
 
 
-@pytest.mark.pipelines_mark
-class TestStatusesTransition(BaseTest):
+@pytest.mark.lifecycles_mark
+class TestPipelinesStatusesTransition(BaseTest):
+    NUM_STATUSES = 11
+
+    def test_choices(self):
+        assert len(PipelineLifeCycle.CHOICES) == self.NUM_STATUSES
+
+    def test_values(self):
+        assert len(PipelineLifeCycle.VALUES) == self.NUM_STATUSES
+
+    def test_transition(self):
+        assert len(PipelineLifeCycle.TRANSITION_MATRIX) == self.NUM_STATUSES
+
     def test_pipeline_statuses_transition(self):  # pylint:disable=too-many-branches
         # Cannot transition to `CREATED`
-        for status in PipelineStatuses.VALUES:
-            assert PipelineStatuses.can_transition(
-                status_from=status, status_to=PipelineStatuses.CREATED) is False
+        for status in PipelineLifeCycle.VALUES:
+            assert PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.CREATED) is False
 
-        # CREATED -> SCHEDULED
-        for status in PipelineStatuses.VALUES:
-            can_transition = PipelineStatuses.can_transition(
-                status_from=status, status_to=PipelineStatuses.SCHEDULED)
-            if status in {PipelineStatuses.CREATED, PipelineStatuses.WARNING}:
+        # -> SCHEDULED
+        for status in PipelineLifeCycle.VALUES:
+            can_transition = PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.SCHEDULED)
+            if status in {PipelineLifeCycle.CREATED, PipelineLifeCycle.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
 
-        # SCHEDULED -> RUNNING
-        for status in PipelineStatuses.VALUES:
-            can_transition = PipelineStatuses.can_transition(
-                status_from=status, status_to=PipelineStatuses.RUNNING)
-            if status in {PipelineStatuses.SCHEDULED, PipelineStatuses.WARNING}:
+        # -> RUNNING
+        for status in PipelineLifeCycle.VALUES:
+            can_transition = PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.RUNNING)
+            if status in {PipelineLifeCycle.SCHEDULED, PipelineLifeCycle.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
 
-        # {SCHEDULED, RUNNING} -> FINISHED
-        for status in PipelineStatuses.VALUES:
-            can_transition = PipelineStatuses.can_transition(
-                status_from=status, status_to=PipelineStatuses.FINISHED)
-            if status in {PipelineStatuses.CREATED,
-                          PipelineStatuses.SCHEDULED,
-                          PipelineStatuses.WARNING,
-                          PipelineStatuses.RUNNING}:
+        # -> DONE
+        for status in PipelineLifeCycle.VALUES:
+            can_transition = PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.DONE)
+            if status not in PipelineLifeCycle.DONE_STATUS:
                 assert can_transition is True
             else:
                 assert can_transition is False
 
-        # {CREATED, SCHEDULED, RUNNING} -> STOPPED
-        for status in PipelineStatuses.VALUES:
-            can_transition = PipelineStatuses.can_transition(
-                status_from=status, status_to=PipelineStatuses.STOPPED)
-            if status in {PipelineStatuses.CREATED,
-                          PipelineStatuses.SCHEDULED,
-                          PipelineStatuses.WARNING,
-                          PipelineStatuses.RUNNING}:
+        # -> STOPPED
+        for status in PipelineLifeCycle.VALUES:
+            can_transition = PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.STOPPED)
+            if status not in PipelineLifeCycle.DONE_STATUS:
                 assert can_transition is True
             else:
                 assert can_transition is False
 
-        # {CREATED, SCHEDULED, STOPPED} -> SKIPPED
-        for status in PipelineStatuses.VALUES:
-            can_transition = PipelineStatuses.can_transition(
-                status_from=status, status_to=PipelineStatuses.SKIPPED)
-            if status in {PipelineStatuses.CREATED,
-                          PipelineStatuses.SCHEDULED,
-                          PipelineStatuses.WARNING,
-                          PipelineStatuses.STOPPED}:
+        # -> SKIPPED
+        for status in PipelineLifeCycle.VALUES:
+            can_transition = PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.SKIPPED)
+            if status not in PipelineLifeCycle.DONE_STATUS:
                 assert can_transition is True
             else:
                 assert can_transition is False

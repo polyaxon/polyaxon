@@ -3,8 +3,8 @@ import json
 
 from kubernetes_asyncio import client, config
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.base import process_log_line
 from streams.constants import SOCKET_SLEEP
 from streams.resources.utils import get_status_message, notify, notify_ws, should_disconnect

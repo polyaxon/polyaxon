@@ -3,9 +3,9 @@ from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiment_groups import ExperimentGroup, GroupTypes
 from libs.repos.utils import assign_code_reference
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from schemas import SearchAlgorithms
 from signals.names import set_name
 from signals.persistence import set_persistence

@@ -4,9 +4,9 @@ from polystores.exceptions import PolyaxonStoresException
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
+from lifecycles.jobs import JobLifeCycle
 from logs_handlers.collectors import logs_collect_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks

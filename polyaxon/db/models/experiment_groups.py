@@ -14,8 +14,6 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
@@ -35,6 +33,8 @@ from db.models.utils import (
 )
 from libs.paths.experiment_groups import get_experiment_group_subpath
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
 from schemas import GroupSpecification, HPTuningConfig, Optimization
 
 _logger = logging.getLogger('polyaxon.db.experiment_groups')

@@ -2,8 +2,8 @@ from django.db.models import Count
 
 import conf
 
-from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment
+from lifecycles.experiments import ExperimentLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 

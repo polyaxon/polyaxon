@@ -2,9 +2,9 @@ import asyncio
 
 import auditor
 
-from constants.experiments import ExperimentLifeCycle
 from db.redis.to_stream import RedisToStream
 from event_manager.events.experiment import EXPERIMENT_LOGS_VIEWED
+from lifecycles.experiments import ExperimentLifeCycle
 from polyaxon.settings import CeleryQueues, RoutingKeys
 from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, MAX_RETRIES, SOCKET_SLEEP

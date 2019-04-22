@@ -6,13 +6,13 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 from tests.base.views import BaseViewTest
 

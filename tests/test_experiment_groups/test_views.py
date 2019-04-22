@@ -12,9 +12,6 @@ from api.experiment_groups.serializers import (
     ExperimentGroupStatusSerializer
 )
 from api.experiments.serializers import ExperimentMetricSerializer
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJobStatus
@@ -38,6 +35,9 @@ from factories.factory_experiments import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import experiment_group_spec_content_early_stopping
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from tests.base.views import BaseViewTest
 
 

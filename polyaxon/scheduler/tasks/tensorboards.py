@@ -2,8 +2,8 @@ import logging
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from db.getters.tensorboards import get_valid_tensorboard
+from lifecycles.jobs import JobLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import tensorboard_scheduler

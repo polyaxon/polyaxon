@@ -92,7 +92,7 @@ class BaseTest(TestCase):
         self.addCleanup(patcher.stop)
 
         patcher = patch('scheduler.tasks.experiment_groups.'
-                        'experiments_group_check_finished.apply_async')
+                        'experiments_group_check_done.apply_async')
         patcher.start()
         self.addCleanup(patcher.stop)
 

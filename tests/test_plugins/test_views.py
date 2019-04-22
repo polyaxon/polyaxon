@@ -18,7 +18,6 @@ from api.plugins.serializers import (
     TensorboardJobStatusSerializer
 )
 from api.utils.views.protected import ProtectedView
-from constants.jobs import JobLifeCycle
 from constants.k8s_jobs import NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
 from constants.urls import API_V1
 from db.models.experiment_groups import ExperimentGroup
@@ -37,6 +36,7 @@ from factories.factory_plugins import (
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
+from lifecycles.jobs import JobLifeCycle
 from scheduler import notebook_scheduler
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from tests.base.views import BaseViewTest

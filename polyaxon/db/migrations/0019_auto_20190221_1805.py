@@ -28,9 +28,4 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
         ),
-        migrations.AlterField(
-            model_name='experimentgroupstatus',
-            name='status',
-            field=models.CharField(blank=True, choices=[('created', 'created'), ('running', 'running'), ('done', 'done'), ('failed', 'failed'), ('stopping', 'stopping'), ('stopped', 'stopped')], default='created', max_length=64, null=True),
-        ),
     ]

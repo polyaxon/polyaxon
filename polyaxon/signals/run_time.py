@@ -1,6 +1,6 @@
 from django.utils.timezone import now
 
-from constants.jobs import JobLifeCycle
+from lifecycles.jobs import JobLifeCycle
 
 
 def set_started_at(instance, status, starting_statuses, running_status=None):

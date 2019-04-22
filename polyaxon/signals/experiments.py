@@ -7,12 +7,12 @@ from django.dispatch import receiver
 
 import auditor
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentMetric
 from event_manager.events.experiment import EXPERIMENT_NEW_METRIC
 from libs.repos.utils import assign_code_reference
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from schemas import ExperimentBackend
 from signals.backend import set_backend
 from signals.framework import set_framework

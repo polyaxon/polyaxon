@@ -28,8 +28,6 @@ from api.experiments.serializers import (
     ExperimentStatusSerializer
 )
 from api.utils.views.protected import ProtectedView
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.experiment_groups import GroupTypes
@@ -61,6 +59,8 @@ from factories.fixtures import (
     exec_experiment_resources_parsed_content,
     exec_experiment_spec_parsed_content
 )
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from schemas import ExperimentSpecification
 from tests.base.clients import EphemeralClient
 from tests.base.views import BaseEntityCodeReferenceViewTest, BaseFilesViewTest, BaseViewTest

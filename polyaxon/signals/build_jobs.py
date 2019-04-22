@@ -7,9 +7,9 @@ from django.dispatch import receiver
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from libs.repos.utils import assign_build_code_reference
+from lifecycles.jobs import JobLifeCycle
 from signals.backend import set_backend
 from signals.names import set_name
 from signals.tags import set_tags

@@ -1,7 +1,7 @@
 from typing import Any
 
-from constants.statuses import StatusOptions
 from event_manager import event_actions, event_context
+from lifecycles.statuses import StatusOptions
 
 
 class EventColor(object):
@@ -24,7 +24,7 @@ class EventColor(object):
         if action != event_actions.NEW_STATUS:
             return cls.GREY
 
-        if event_content_object.last_status in [StatusOptions.FINISHED, StatusOptions.SKIPPED]:
+        if event_content_object.last_status == StatusOptions.SKIPPED:
             return cls.GREEN
 
         if event_content_object.last_status == StatusOptions.DONE:

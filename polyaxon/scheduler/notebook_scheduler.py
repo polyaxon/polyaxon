@@ -5,8 +5,8 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from docker_images.image_info import get_image_info
+from lifecycles.jobs import JobLifeCycle
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError

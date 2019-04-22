@@ -5,9 +5,9 @@ from django.dispatch import receiver
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from db.models.notebooks import NotebookJob
 from libs.repos.utils import assign_code_reference
+from lifecycles.jobs import JobLifeCycle
 from signals.backend import set_backend
 from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs

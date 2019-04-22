@@ -11,7 +11,6 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.dispatch import Signal
 
-from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from db.models.utils import (
@@ -24,6 +23,7 @@ from db.models.utils import (
     RunTimeModel,
     TagModel
 )
+from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle, TriggerPolicy
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals
 
@@ -284,7 +284,7 @@ class Operation(DiffModel,
 
 class PipelineRunStatus(StatusModel):
     """A model that represents a pipeline run status at certain time."""
-    STATUSES = PipelineStatuses
+    STATUSES = PipelineLifeCycle
 
     status = models.CharField(
         max_length=64,
@@ -386,7 +386,7 @@ class PipelineRun(RunModel):
     we can store the sorted topology of the dag,
     which should should not change during the execution time.
     """
-    STATUSES = PipelineStatuses
+    STATUSES = PipelineLifeCycle
 
     pipeline = models.ForeignKey(
         'db.Pipeline',
@@ -417,8 +417,8 @@ class PipelineRun(RunModel):
 
         return dags.get_dag(operation_runs, get_downstream)
 
-    def on_finished(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.FINISHED, message=message)
+    def on_done(self, message: str = None) -> None:
+        self.set_status(status=self.STATUSES.DONE, message=message)
 
     def last_status_before(self, status_date: AwareDT = None) -> Optional[str]:
         if not status_date:
@@ -438,7 +438,7 @@ class PipelineRun(RunModel):
         if not self.can_transition(status_from=last_status, status_to=status):
             return
 
-        if PipelineStatuses.FINISHED != status:
+        if PipelineLifeCycle.DONE != status:
             # If the status that we want to transition to is not a final state,
             # then no further checks are required
             params = {'created_at': created_at} if created_at else {}

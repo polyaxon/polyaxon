@@ -12,8 +12,6 @@ from django.utils import timezone
 
 import stores
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from crons.tasks.experiments_statuses import experiments_sync_jobs_statuses
 from db.managers.deleted import ArchivedManager, LiveManager
@@ -39,6 +37,8 @@ from factories.fixtures import (
     exec_experiment_spec_content,
     experiment_spec_content
 )
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from scheduler.tasks.experiments import copy_experiment, experiments_build, experiments_set_metrics
 from schemas import ExperimentSpecification, TaskType
 from tests.base.case import BaseTest

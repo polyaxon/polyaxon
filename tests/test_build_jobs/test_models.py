@@ -4,7 +4,6 @@ import pytest
 
 from django.test import override_settings
 
-from constants.jobs import JobLifeCycle
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from factories.factory_build_jobs import BuildJobFactory
@@ -12,6 +11,7 @@ from factories.factory_code_reference import CodeReferenceFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 
 

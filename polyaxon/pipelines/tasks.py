@@ -1,6 +1,6 @@
 import logging
 
-from constants.pipelines import OperationStatuses, PipelineStatuses
+from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle
 from pipelines import dags
 from pipelines.utils import (
     get_operation_run,
@@ -80,5 +80,5 @@ def pipelines_check_statuses(pipeline_run_id: int, status: str, message: str = N
         _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
 
     if status in OperationStatuses.DONE_STATUS:
-        status = PipelineStatuses.FINISHED
+        status = PipelineLifeCycle.DONE
     pipeline_run.set_status(status=status, message=message)

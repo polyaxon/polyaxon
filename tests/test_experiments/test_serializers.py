@@ -14,7 +14,6 @@ from api.experiments.serializers import (
     ExperimentSerializer,
     ExperimentStatusSerializer
 )
-from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentChartView, ExperimentStatus
 from factories.factory_experiments import (
@@ -23,6 +22,7 @@ from factories.factory_experiments import (
     ExperimentJobFactory,
     ExperimentStatusFactory
 )
+from lifecycles.experiments import ExperimentLifeCycle
 from schemas import ExperimentSpecification
 from tests.base.case import BaseTest
 

@@ -8,9 +8,9 @@ import publisher
 import stores
 
 from api.experiments.serializers import ExperimentMetricSerializer
-from constants.experiments import ExperimentLifeCycle
 from db.getters.experiments import get_valid_experiment
 from db.redis.heartbeat import RedisHeartBeat
+from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers import collectors
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks

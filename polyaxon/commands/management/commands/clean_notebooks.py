@@ -1,6 +1,6 @@
-from constants.jobs import JobLifeCycle
 from db.models.notebooks import NotebookJob
 from libs.base_clean import BaseCleanCommand
+from lifecycles.jobs import JobLifeCycle
 from scheduler import notebook_scheduler
 
 

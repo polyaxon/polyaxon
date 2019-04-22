@@ -12,8 +12,6 @@ from django.utils.functional import cached_property
 
 import auditor
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.models.abstract_jobs import TensorboardJobMixin
 from db.models.charts import ChartViewModel
 from db.models.cloning_strategies import CloningStrategy
@@ -42,6 +40,8 @@ from event_manager.events.experiment import (
 )
 from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from schemas import ExperimentSpecification, PodResourcesConfig, TaskType
 
 

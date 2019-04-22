@@ -3,8 +3,8 @@ from typing import Iterable, Mapping, Optional, Tuple, Union
 from hestia.datetime_typing import AwareDT, NaiveDT
 
 from constants.containers import ContainerStatuses
-from constants.jobs import JobLifeCycle
 from constants.pods import PodConditions
+from lifecycles.jobs import JobLifeCycle
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig
 from schemas import PodLifeCycle
 

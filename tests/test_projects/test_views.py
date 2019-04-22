@@ -13,9 +13,6 @@ from api.projects.serializers import (
     ProjectDetailSerializer,
     ProjectNameSerializer
 )
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob
@@ -31,6 +28,9 @@ from factories.factory_experiments import ExperimentFactory, ExperimentJobFactor
 from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from tests.base.views import BaseViewTest
 
 

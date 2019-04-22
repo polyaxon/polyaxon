@@ -7,7 +7,6 @@ from mock import patch
 from django.conf import settings
 from django.utils import timezone
 
-from constants.pipelines import OperationStatuses, PipelineStatuses, TriggerPolicy
 from db.models.pipelines import OperationRunStatus, PipelineRunStatus
 from factories.factory_pipelines import (
     OperationFactory,
@@ -15,6 +14,7 @@ from factories.factory_pipelines import (
     PipelineFactory,
     PipelineRunFactory
 )
+from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle, TriggerPolicy
 from tests.base.case import BaseTest
 
 
@@ -105,21 +105,21 @@ class TestPipelineRunModel(BaseTest):
         # Assert `new_pipeline_run_status` task is also called
         pipeline_run = PipelineRunFactory()
         assert PipelineRunStatus.objects.filter(pipeline_run=pipeline_run).count() == 1
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
 
     def test_stopping_pipeline_run_stops_operation_runs(self):
         pipeline_run = PipelineRunFactory()
         for _ in range(2):
             OperationRunFactory(pipeline_run=pipeline_run)
         assert pipeline_run.statuses.count() == 1
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert OperationRunStatus.objects.filter().count() == 2
         assert set(OperationRunStatus.objects.values_list(
             'status', flat=True)) == {OperationStatuses.CREATED, }
         # Set pipeline run to stopped
         pipeline_run.on_stop()
         assert pipeline_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.STOPPED
+        assert pipeline_run.last_status == PipelineLifeCycle.STOPPED
         # Operation run are also stopped
         assert OperationRunStatus.objects.filter().count() == 4
         assert set(OperationRunStatus.objects.values_list(
@@ -130,14 +130,14 @@ class TestPipelineRunModel(BaseTest):
         for _ in range(2):
             OperationRunFactory(pipeline_run=pipeline_run)
         assert pipeline_run.statuses.count() == 1
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert OperationRunStatus.objects.filter().count() == 2
         assert set(OperationRunStatus.objects.values_list(
             'status', flat=True)) == {OperationStatuses.CREATED, }
         # Set pipeline run to skipped
         pipeline_run.on_skip()
         assert pipeline_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.SKIPPED
+        assert pipeline_run.last_status == PipelineLifeCycle.SKIPPED
         # Operation run are also skipped
         assert OperationRunStatus.objects.filter().count() == 6
         assert set(OperationRunStatus.objects.values_list(
@@ -229,14 +229,14 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         operation_run.on_scheduled()
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SCHEDULED
         assert operation_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.SCHEDULED
+        assert pipeline_run.last_status == PipelineLifeCycle.SCHEDULED
         assert pipeline_run.statuses.count() == 2
 
     def test_running_operation_run_sets_pipeline_run_to_running(self):
@@ -244,7 +244,7 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Create another operation run for this pipeline_run
@@ -254,14 +254,14 @@ class TestOperationRunModel(BaseTest):
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SCHEDULED
         assert operation_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.SCHEDULED
+        assert pipeline_run.last_status == PipelineLifeCycle.SCHEDULED
         assert pipeline_run.statuses.count() == 2
 
         operation_run.on_run()
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.RUNNING
         assert operation_run.statuses.count() == 3
-        assert pipeline_run.last_status == PipelineStatuses.RUNNING
+        assert pipeline_run.last_status == PipelineLifeCycle.RUNNING
         assert pipeline_run.statuses.count() == 3
 
     def test_stopping_all_operation_runs_sets_pipeline_run_to_finished(self):
@@ -269,7 +269,7 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Create another operation run for this pipeline_run
@@ -280,13 +280,13 @@ class TestOperationRunModel(BaseTest):
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.STOPPED
         assert operation_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the second operation stops the pipeline
         operation_run2.on_stop()
         pipeline_run.refresh_from_db()
-        assert pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 2
 
     def test_skipping_all_operation_runs_sets_pipeline_run_to_finished(self):
@@ -294,7 +294,7 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Create another operation run for this pipeline_run
@@ -305,13 +305,13 @@ class TestOperationRunModel(BaseTest):
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SKIPPED
         assert operation_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the second operation stops the pipeline
         operation_run2.on_skip()
         pipeline_run.refresh_from_db()
-        assert pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 2
 
     def test_succeeded_operation_runs_sets_pipeline_run_to_finished(self):
@@ -319,7 +319,7 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the first operation does not stop the pipeline
@@ -329,7 +329,7 @@ class TestOperationRunModel(BaseTest):
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SUCCEEDED
         assert operation_run.statuses.count() == 4
-        assert pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 4
 
     def test_failed_operation_runs_sets_pipeline_run_to_finished(self):
@@ -337,7 +337,7 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the first operation does not stop the pipeline
@@ -347,7 +347,7 @@ class TestOperationRunModel(BaseTest):
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.FAILED
         assert operation_run.statuses.count() == 4
-        assert pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 4
 
     def test_failed_upstream_operation_runs_sets_pipeline_run_to_finished(self):
@@ -355,7 +355,7 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.last_status == OperationStatuses.CREATED
         assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineStatuses.CREATED
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the first operation does not stop the pipeline
@@ -363,7 +363,7 @@ class TestOperationRunModel(BaseTest):
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.UPSTREAM_FAILED
         assert operation_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 2
 
     def test_check_concurrency(self):

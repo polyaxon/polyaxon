@@ -2,9 +2,9 @@ import logging
 
 import conf
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
@@ -167,11 +167,11 @@ def experiments_group_stop_experiments(experiment_group_id,
     experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED, message=message)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
+@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
                  bind=True,
                  max_retries=None,
                  ignore_result=True)
-def experiments_group_check_finished(self, experiment_group_id, auto_retry=False):
+def experiments_group_check_done(self, experiment_group_id, auto_retry=False):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group or experiment_group.is_done:
         # No need to check this group

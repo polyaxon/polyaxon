@@ -2,24 +2,11 @@ from typing import List, Optional
 
 from hestia.unknown import UNKNOWN
 
-from constants.jobs import JobLifeCycle
-from constants.statuses import BaseStatuses, StatusOptions
+from lifecycles.jobs import JobLifeCycle
+from lifecycles.statuses import BaseStatuses, StatusOptions
 
 
 class ExperimentLifeCycle(BaseStatuses):
-    """Experiment lifecycle
-
-    Props:
-        * CREATED: created and waiting to be scheduled
-        * BUILDING: started building images if necessary
-        * SCHEDULED: scheduled waiting to be picked
-        * STARTING: picked and is starting (jobs are created/building/pending)
-        * RUNNING: one or all jobs is still running
-        * SUCCEEDED: master and workers have finished successfully
-        * FAILED: one of the jobs has failed
-        * STOPPED: was stopped/deleted/killed
-        * UNKNOWN: unknown state
-    """
     CREATED = StatusOptions.CREATED
     RESUMING = StatusOptions.RESUMING
     WARNING = StatusOptions.WARNING
@@ -30,7 +17,9 @@ class ExperimentLifeCycle(BaseStatuses):
     RUNNING = StatusOptions.RUNNING
     SUCCEEDED = StatusOptions.SUCCEEDED
     FAILED = StatusOptions.FAILED
+    UPSTREAM_FAILED = StatusOptions.UPSTREAM_FAILED
     STOPPED = StatusOptions.STOPPED
+    SKIPPED = StatusOptions.SKIPPED
     UNKNOWN = UNKNOWN
 
     CHOICES = (
@@ -43,34 +32,49 @@ class ExperimentLifeCycle(BaseStatuses):
         (RUNNING, RUNNING),
         (SUCCEEDED, SUCCEEDED),
         (FAILED, FAILED),
+        (UPSTREAM_FAILED, UPSTREAM_FAILED),
         (STOPPED, STOPPED),
+        (SKIPPED, SKIPPED),
         (UNKNOWN, UNKNOWN),
     )
 
     VALUES = {
-        CREATED, RESUMING, WARNING, BUILDING, SCHEDULED, STARTING, RUNNING,
-        SUCCEEDED, FAILED, STOPPED, UNKNOWN
+        CREATED,
+        RESUMING,
+        WARNING,
+        BUILDING,
+        SCHEDULED,
+        STARTING,
+        RUNNING,
+        SUCCEEDED,
+        FAILED,
+        UPSTREAM_FAILED,
+        STOPPED,
+        SKIPPED,
+        UNKNOWN
     }
 
     HEARTBEAT_STATUS = {RUNNING, }
     WARNING_STATUS = {WARNING, }
-    PENDING_STATUS = {CREATED, RESUMING}
-    RUNNING_STATUS = {SCHEDULED, BUILDING, STARTING, RUNNING}
-    DONE_STATUS = {FAILED, STOPPED, SUCCEEDED}
-    FAILED_STATUS = {FAILED, }
+    PENDING_STATUS = {CREATED, RESUMING, }
+    RUNNING_STATUS = {SCHEDULED, BUILDING, STARTING, RUNNING, }
+    DONE_STATUS = {FAILED, UPSTREAM_FAILED, STOPPED, SKIPPED, SUCCEEDED, }
+    FAILED_STATUS = {FAILED, UPSTREAM_FAILED, }
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
-        RESUMING: {CREATED, WARNING, SUCCEEDED, STOPPED, },
+        RESUMING: {CREATED, WARNING, SUCCEEDED, SKIPPED, STOPPED, },
         BUILDING: {CREATED, RESUMING, WARNING, UNKNOWN, },
         SCHEDULED: {CREATED, RESUMING, BUILDING, WARNING, UNKNOWN, },
         STARTING: {CREATED, RESUMING, BUILDING, SCHEDULED, WARNING, },
-        RUNNING: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, WARNING, UNKNOWN},
-        SUCCEEDED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, WARNING, UNKNOWN, },
-        FAILED: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, RUNNING, WARNING, UNKNOWN, },
-        STOPPED: set(VALUES) - {STOPPED, },
-        WARNING: set(VALUES) - {SUCCEEDED, FAILED, STOPPED, WARNING, },
-        UNKNOWN: set(VALUES) - {UNKNOWN, },
+        RUNNING: {CREATED, RESUMING, BUILDING, SCHEDULED, STARTING, WARNING, UNKNOWN, },
+        SKIPPED: VALUES - DONE_STATUS,
+        SUCCEEDED: VALUES - DONE_STATUS,
+        FAILED: VALUES - DONE_STATUS,
+        UPSTREAM_FAILED: VALUES - DONE_STATUS,
+        STOPPED: VALUES - {STOPPED, SKIPPED, },
+        WARNING: VALUES - DONE_STATUS - {WARNING, },
+        UNKNOWN: VALUES - DONE_STATUS - {UNKNOWN, },
     }
 
     @staticmethod

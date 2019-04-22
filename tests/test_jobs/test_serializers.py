@@ -8,9 +8,9 @@ from api.jobs.serializers import (
     JobSerializer,
     JobStatusSerializer
 )
-from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from factories.factory_jobs import JobFactory, JobStatusFactory
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 
 

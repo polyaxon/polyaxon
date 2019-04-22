@@ -15,7 +15,6 @@ class StatusOptions:
     UPSTREAM_FAILED = 'upstream_failed'
     STOPPING = 'stopping'
     STOPPED = 'stopped'
-    FINISHED = 'finished'
     SKIPPED = 'skipped'
     RETRYING = 'retrying'
     DONE = 'done'

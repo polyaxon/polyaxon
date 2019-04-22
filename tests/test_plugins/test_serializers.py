@@ -12,7 +12,6 @@ from api.plugins.serializers import (
     TensorboardJobSerializer,
     TensorboardJobStatusSerializer
 )
-from constants.jobs import JobLifeCycle
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from factories.factory_plugins import (
@@ -23,6 +22,7 @@ from factories.factory_plugins import (
 )
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 
 

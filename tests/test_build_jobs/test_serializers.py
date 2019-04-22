@@ -9,11 +9,11 @@ from api.build_jobs.serializers import (
     BuildJobSerializer,
     BuildJobStatusSerializer
 )
-from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 
 

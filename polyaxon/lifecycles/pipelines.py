@@ -1,40 +1,68 @@
-from constants.statuses import BaseStatuses, StatusOptions
+from hestia.unknown import UNKNOWN
+
+from lifecycles.statuses import BaseStatuses, StatusOptions
 
 
-class PipelineStatuses(BaseStatuses):
+class PipelineLifeCycle(BaseStatuses):
     CREATED = StatusOptions.CREATED
     WARNING = StatusOptions.WARNING
     SCHEDULED = StatusOptions.SCHEDULED
     RUNNING = StatusOptions.RUNNING
-    FINISHED = StatusOptions.FINISHED
+    DONE = StatusOptions.DONE
     STOPPED = StatusOptions.STOPPED
+    STOPPING = StatusOptions.STOPPING
     SKIPPED = StatusOptions.SKIPPED
+    FAILED = StatusOptions.FAILED
+    UPSTREAM_FAILED = StatusOptions.UPSTREAM_FAILED
+    UNKNOWN = UNKNOWN
 
-    VALUES = {
-        CREATED, WARNING, SCHEDULED, RUNNING, FINISHED, STOPPED, SKIPPED
-    }
     CHOICES = (
         (CREATED, CREATED),
         (WARNING, WARNING),
         (SCHEDULED, SCHEDULED),
         (RUNNING, RUNNING),
-        (FINISHED, FINISHED),
+        (DONE, DONE),
+        (FAILED, FAILED),
+        (UPSTREAM_FAILED, UPSTREAM_FAILED),
         (STOPPED, STOPPED),
+        (STOPPING, STOPPING),
         (SKIPPED, SKIPPED),
+        (UNKNOWN, UNKNOWN),
     )
 
-    DONE_STATUS = {FINISHED, STOPPED, SKIPPED}
-    RUNNING_STATUS = {SCHEDULED, RUNNING}
-    FAILED_STATUS = set([])
+    VALUES = {
+        CREATED,
+        WARNING,
+        SCHEDULED,
+        RUNNING,
+        DONE,
+        FAILED,
+        UPSTREAM_FAILED,
+        STOPPED,
+        STOPPING,
+        SKIPPED,
+        UNKNOWN
+    }
+
+    HEARTBEAT_STATUS = set([])
+    WARNING_STATUS = {WARNING, }
+    STARTING_STATUS = {CREATED, }
+    RUNNING_STATUS = {SCHEDULED, RUNNING, STOPPING, }
+    DONE_STATUS = {FAILED, UPSTREAM_FAILED, DONE, STOPPED, SKIPPED, }
+    FAILED_STATUS = {FAILED, UPSTREAM_FAILED, }
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
         SCHEDULED: {CREATED, WARNING, },
         RUNNING: {SCHEDULED, WARNING, },
-        FINISHED: {CREATED, SCHEDULED, RUNNING, WARNING, },
-        STOPPED: {CREATED, SCHEDULED, RUNNING, WARNING, },
-        SKIPPED: {CREATED, SCHEDULED, STOPPED, WARNING, },
-        WARNING: set(VALUES) - {FINISHED, STOPPED, SKIPPED, STOPPED, WARNING, }
+        WARNING: set(VALUES) - {DONE, STOPPED, SKIPPED, STOPPED, WARNING, },
+        DONE: set(VALUES) - DONE_STATUS,
+        FAILED: set(VALUES) - DONE_STATUS,
+        UPSTREAM_FAILED: set(VALUES) - DONE_STATUS,
+        STOPPED: set(VALUES) - DONE_STATUS,
+        STOPPING: VALUES - DONE_STATUS - {STOPPING, },
+        SKIPPED: set(VALUES) - DONE_STATUS,
+        UNKNOWN: VALUES - {UNKNOWN, },
     }
 
 

@@ -57,7 +57,6 @@ from api.utils.files import stream_file
 from api.utils.gzip import gzip
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
-from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
@@ -95,6 +94,7 @@ from event_manager.events.experiment_job import (
 from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
 from libs.spec_validation import validate_experiment_spec_config
+from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
 from polyaxon.celery_api import celery_app

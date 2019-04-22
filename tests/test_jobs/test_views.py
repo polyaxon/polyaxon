@@ -19,7 +19,6 @@ from api.jobs.serializers import (
     JobStatusSerializer
 )
 from api.utils.views.protected import ProtectedView
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
@@ -29,6 +28,7 @@ from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
+from lifecycles.jobs import JobLifeCycle
 from schemas import JobSpecification
 from tests.base.views import BaseEntityCodeReferenceViewTest, BaseFilesViewTest, BaseViewTest
 

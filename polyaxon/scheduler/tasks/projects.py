@@ -2,10 +2,10 @@ import logging
 
 import conf
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.getters.projects import get_valid_project
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

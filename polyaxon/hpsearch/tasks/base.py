@@ -5,11 +5,11 @@ from rest_framework.exceptions import ValidationError
 
 import conf
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiments import Experiment
 from db.redis.group_check import GroupChecks
 from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks.logger import logger
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -85,8 +85,8 @@ def start_group_experiments(experiment_group):
             not experiment_group.scheduled_all_suggestions())
 
 
-def check_group_experiments_finished(experiment_group_id, auto_retry=False):
-    celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_FINISHED,
+def check_group_experiments_done(experiment_group_id, auto_retry=False):
+    celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
                          kwargs={'experiment_group_id': experiment_group_id,
                                  'auto_retry': auto_retry},
                          countdown=conf.get('GLOBAL_COUNTDOWN'))

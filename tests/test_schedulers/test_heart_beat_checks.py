@@ -1,11 +1,11 @@
 import pytest
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.redis.heartbeat import RedisHeartBeat
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_experiments import ExperimentFactory, ExperimentStatusFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from scheduler.tasks.build_jobs import build_jobs_check_heartbeat
 from scheduler.tasks.experiments import experiments_check_heartbeat
 from scheduler.tasks.jobs import jobs_check_heartbeat

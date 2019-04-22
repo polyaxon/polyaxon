@@ -4,14 +4,14 @@ from polystores.exceptions import PolyaxonStoresException
 
 import conf
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.getters.build_jobs import get_valid_build_job
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.tensorboards import TensorboardJob
 from db.redis.heartbeat import RedisHeartBeat
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from logs_handlers.collectors import logs_collect_build_job
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks

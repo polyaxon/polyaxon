@@ -2,8 +2,8 @@ import logging
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from db.getters.notebooks import get_valid_notebook
+from lifecycles.jobs import JobLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, notebook_scheduler

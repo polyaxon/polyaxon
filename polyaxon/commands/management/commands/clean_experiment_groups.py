@@ -1,6 +1,6 @@
-from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from libs.base_clean import BaseCleanCommand
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 
 

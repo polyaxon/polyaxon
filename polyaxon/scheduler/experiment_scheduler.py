@@ -8,10 +8,10 @@ from django.db import IntegrityError
 
 import conf
 
-from constants.experiments import ExperimentLifeCycle
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
+from lifecycles.experiments import ExperimentLifeCycle
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mpi_job_spawner import MPIJobSpawner

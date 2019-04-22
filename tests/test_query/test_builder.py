@@ -6,13 +6,13 @@ from hestia.date_formatter import DateTimeFormatter
 
 from django.db.models import Q
 
-from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment, ExperimentMetric
 from factories.factory_experiments import (
     ExperimentFactory,
     ExperimentMetricFactory,
     ExperimentStatusFactory
 )
+from lifecycles.experiments import ExperimentLifeCycle
 from query.builder import ComparisonCondition, DateTimeCondition, EqualityCondition, ValueCondition
 from query.exceptions import QueryConditionException
 from tests.base.case import BaseTest

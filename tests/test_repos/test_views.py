@@ -16,7 +16,6 @@ import conf
 
 from api.repos.serializers import ExternalRepoSerializer, RepoSerializer
 from api.utils.views.protected import ProtectedView
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.repos import ExternalRepo, Repo
 from factories.factory_plugins import NotebookJobFactory
@@ -24,6 +23,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import ExternalRepoFactory, RepoFactory
 from factories.factory_users import UserFactory
 from libs.repos import git
+from lifecycles.jobs import JobLifeCycle
 from tests.base.views import BaseViewTest
 
 

@@ -42,8 +42,6 @@ from api.plugins.serializers import (
     TensorboardJobStatusSerializer
 )
 from api.utils.views.protected import ProtectedView
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.notebooks import NotebookJob, NotebookJobStatus
@@ -71,6 +69,8 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_VIEWED
 )
 from libs.repos import git
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas import NotebookBackend, NotebookSpecification, TensorboardSpecification

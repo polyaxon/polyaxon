@@ -1,10 +1,10 @@
 import conf
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJob
 from db.models.experiments import Experiment
 from db.models.jobs import Job
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 

@@ -5,7 +5,7 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
-from constants.jobs import JobLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError

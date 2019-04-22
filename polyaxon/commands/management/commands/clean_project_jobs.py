@@ -1,8 +1,8 @@
 from django.db.models import Q
 
-from constants.jobs import JobLifeCycle
 from db.models.projects import Project
 from libs.base_clean import BaseCleanCommand
+from lifecycles.jobs import JobLifeCycle
 from scheduler import notebook_scheduler, tensorboard_scheduler
 
 

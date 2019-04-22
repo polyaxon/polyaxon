@@ -1,10 +1,10 @@
 import conf
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
 from db.getters.experiment_groups import get_running_experiment_group
 from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks import base
 from hpsearch.tasks.logger import logger
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 
@@ -139,4 +139,4 @@ def hp_hyperband_iterate(self, experiment_group_id, auto_retry=False):
             kwargs={'experiment_group_id': experiment_group_id})
         return
 
-    base.check_group_experiments_finished(experiment_group_id, auto_retry=auto_retry)
+    base.check_group_experiments_done(experiment_group_id, auto_retry=auto_retry)

@@ -1,6 +1,6 @@
-from constants.experiments import ExperimentLifeCycle
 from db.models.experiments import Experiment
 from libs.base_clean import BaseCleanCommand
+from lifecycles.experiments import ExperimentLifeCycle
 from scheduler import experiment_scheduler
 
 

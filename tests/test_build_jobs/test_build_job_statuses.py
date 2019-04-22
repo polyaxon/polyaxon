@@ -2,13 +2,13 @@ import pytest
 
 from mock import patch
 
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from tests.base.case import BaseTest
 
 

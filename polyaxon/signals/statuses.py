@@ -8,9 +8,6 @@ from django.utils.timezone import now
 
 import auditor
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_groups import ExperimentGroupStatus
 from db.models.experiment_jobs import ExperimentJobStatus
@@ -61,6 +58,9 @@ from event_manager.events.tensorboard import (
     TENSORBOARD_STOPPED,
     TENSORBOARD_SUCCEEDED
 )
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from signals.run_time import (
     set_finished_at,
     set_job_finished_at,

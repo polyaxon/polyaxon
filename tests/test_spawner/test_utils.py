@@ -4,11 +4,11 @@ from django.utils import timezone
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from constants.pods import EventTypes, PodConditions
 from db.models.experiment_jobs import ExperimentJob
 from db.redis.containers import RedisJobContainers
 from factories.factory_experiments import ExperimentJobFactory
+from lifecycles.jobs import JobLifeCycle
 from monitor_statuses.jobs import get_job_state
 from monitor_statuses.monitor import update_job_containers
 from monitor_statuses.schemas import JobStateConfig, PodStateConfig

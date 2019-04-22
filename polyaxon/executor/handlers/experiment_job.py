@@ -1,9 +1,9 @@
 import conf
 
-from constants.jobs import JobLifeCycle
 from event_manager import event_subjects
 from event_manager.events import experiment_job
 from executor.handlers.base import BaseHandler
+from lifecycles.jobs import JobLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

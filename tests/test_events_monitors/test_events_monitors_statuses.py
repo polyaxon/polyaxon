@@ -8,7 +8,6 @@ from django.utils import timezone
 
 import conf
 
-from constants.jobs import JobLifeCycle
 from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.jobs import JobStatus
@@ -25,6 +24,7 @@ from k8s_events_handlers.tasks.statuses import (
     k8s_events_handle_job_statuses,
     k8s_events_handle_plugin_job_statuses
 )
+from lifecycles.jobs import JobLifeCycle
 from monitor_statuses.jobs import get_job_state
 from tests.base.case import BaseTest
 from tests.fixtures import (

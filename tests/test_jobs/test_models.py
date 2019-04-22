@@ -7,7 +7,6 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJobStatus
@@ -17,6 +16,7 @@ from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import job_spec_content, job_spec_resources_content
+from lifecycles.jobs import JobLifeCycle
 from scheduler.tasks.jobs import jobs_build
 from schemas import JobSpecification
 from tests.base.case import BaseTest

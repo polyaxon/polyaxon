@@ -15,7 +15,6 @@ from api.build_jobs.serializers import (
     BuildJobDetailSerializer,
     BuildJobStatusSerializer
 )
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
@@ -24,6 +23,7 @@ from db.redis.tll import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
+from lifecycles.jobs import JobLifeCycle
 from schemas import BuildSpecification
 from tests.base.views import BaseEntityCodeReferenceViewTest, BaseViewTest
 

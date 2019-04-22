@@ -3,9 +3,9 @@ from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
-from constants.jobs import JobLifeCycle
 from db.models.tensorboards import TensorboardJob
 from libs.repos.utils import assign_code_reference
+from lifecycles.jobs import JobLifeCycle
 from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence

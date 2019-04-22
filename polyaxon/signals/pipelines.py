@@ -3,8 +3,8 @@ from hestia.signal_decorators import ignore_raw, ignore_updates
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from constants.pipelines import OperationStatuses, PipelineStatuses
 from db.models.pipelines import OperationRun, OperationRunStatus, PipelineRun, PipelineRunStatus
+from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import PipelinesCeleryTasks
 from signals.run_time import set_finished_at, set_started_at
@@ -15,7 +15,7 @@ from signals.run_time import set_finished_at, set_started_at
 @ignore_raw
 def new_pipeline_run(sender, **kwargs):
     instance = kwargs['instance']
-    instance.set_status(PipelineStatuses.CREATED)
+    instance.set_status(PipelineLifeCycle.CREATED)
 
 
 @receiver(post_save, sender=OperationRun, dispatch_uid="operation_run_saved")
@@ -36,10 +36,10 @@ def new_pipeline_run_status(sender, **kwargs):
     pipeline_run.status = instance
     set_started_at(instance=pipeline_run,
                    status=instance.status,
-                   starting_statuses=[PipelineStatuses.RUNNING])
+                   starting_statuses=[PipelineLifeCycle.RUNNING])
     set_finished_at(instance=pipeline_run,
                     status=instance.status,
-                    is_done=PipelineStatuses.is_done)
+                    is_done=PipelineLifeCycle.is_done)
     pipeline_run.save(update_fields=['status', 'started_at', 'finished_at'])
     # Notify operations with status change. This is necessary if we skip or stop the dag run.
     if pipeline_run.stopped:
@@ -65,10 +65,10 @@ def new_operation_run_status(sender, **kwargs):
     operation_run.status = instance
     set_started_at(instance=operation_run,
                    status=instance.status,
-                   starting_statuses=[PipelineStatuses.RUNNING])
+                   starting_statuses=[PipelineLifeCycle.RUNNING])
     set_finished_at(instance=operation_run,
                     status=instance.status,
-                    is_done=PipelineStatuses.is_done)
+                    is_done=PipelineLifeCycle.is_done)
     operation_run.save(update_fields=['status', 'started_at', 'finished_at'])
 
     # No need to check if it is just created

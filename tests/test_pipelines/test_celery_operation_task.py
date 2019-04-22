@@ -1,7 +1,7 @@
 import pytest
 
-from constants.pipelines import OperationStatuses, PipelineStatuses
 from factories.factory_pipelines import OperationRunFactory
+from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle
 from pipelines.celery_task import ClassBasedTask, OperationTask
 from polyaxon.celery_api import celery_app
 from tests.base.case import BaseTest
@@ -41,12 +41,12 @@ class TestOperationTask(BaseTest):
             OperationStatuses.SUCCEEDED,
         }
         self.pipeline_run.refresh_from_db()
-        assert self.operation_run.pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert self.operation_run.pipeline_run.last_status == PipelineLifeCycle.DONE
         assert set(self.operation_run.pipeline_run.statuses.values_list('status', flat=True)) == {
-            PipelineStatuses.CREATED,
-            PipelineStatuses.SCHEDULED,
-            PipelineStatuses.RUNNING,
-            PipelineStatuses.FINISHED,
+            PipelineLifeCycle.CREATED,
+            PipelineLifeCycle.SCHEDULED,
+            PipelineLifeCycle.RUNNING,
+            PipelineLifeCycle.DONE,
         }
 
     def test_task_with_error_fails(self):
@@ -65,12 +65,12 @@ class TestOperationTask(BaseTest):
             OperationStatuses.FAILED,
         }
         self.pipeline_run.refresh_from_db()
-        assert self.operation_run.pipeline_run.last_status == PipelineStatuses.FINISHED
+        assert self.operation_run.pipeline_run.last_status == PipelineLifeCycle.DONE
         assert set(self.operation_run.pipeline_run.statuses.values_list('status', flat=True)) == {
-            PipelineStatuses.CREATED,
-            PipelineStatuses.SCHEDULED,
-            PipelineStatuses.RUNNING,
-            PipelineStatuses.FINISHED,
+            PipelineLifeCycle.CREATED,
+            PipelineLifeCycle.SCHEDULED,
+            PipelineLifeCycle.RUNNING,
+            PipelineLifeCycle.DONE,
         }
 
     def test_task_retries_for_specified_exception(self):
@@ -103,9 +103,9 @@ class TestOperationTask(BaseTest):
             OperationStatuses.RETRYING,
         }
         self.pipeline_run.refresh_from_db()
-        assert self.operation_run.pipeline_run.last_status == PipelineStatuses.RUNNING
+        assert self.operation_run.pipeline_run.last_status == PipelineLifeCycle.RUNNING
         assert set(self.operation_run.pipeline_run.statuses.values_list('status', flat=True)) == {
-            PipelineStatuses.CREATED,
-            PipelineStatuses.SCHEDULED,
-            PipelineStatuses.RUNNING,
+            PipelineLifeCycle.CREATED,
+            PipelineLifeCycle.SCHEDULED,
+            PipelineLifeCycle.RUNNING,
         }

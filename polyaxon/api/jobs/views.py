@@ -36,7 +36,6 @@ from api.jobs.serializers import (
 from api.utils.files import stream_file
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
-from constants.jobs import JobLifeCycle
 from db.models.jobs import Job, JobStatus
 from db.models.tokens import Token
 from db.redis.heartbeat import RedisHeartBeat
@@ -56,6 +55,7 @@ from event_manager.events.job import (
 from event_manager.events.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
 from libs.spec_validation import validate_job_spec_config
+from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.job import process_logs
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks

@@ -8,9 +8,6 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 
-from constants.experiment_groups import ExperimentGroupLifeCycle
-from constants.experiments import ExperimentLifeCycle
-from constants.jobs import JobLifeCycle
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJobStatus
@@ -44,6 +41,9 @@ from hpsearch.search_managers import (
 )
 from hpsearch.tasks.bo import hp_bo_start
 from hpsearch.tasks.hyperband import hp_hyperband_start
+from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from lifecycles.experiments import ExperimentLifeCycle
+from lifecycles.jobs import JobLifeCycle
 from scheduler.tasks.experiment_groups import experiments_group_stop_experiments
 from schemas import GroupSpecification, HPTuningConfig, MatrixConfig, SearchAlgorithms
 from tests.base.case import BaseTest

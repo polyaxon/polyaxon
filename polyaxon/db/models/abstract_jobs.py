@@ -9,9 +9,9 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from constants.jobs import JobLifeCycle
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.utils import CachedMixin, DiffModel, RunTimeModel
+from lifecycles.jobs import JobLifeCycle
 from schemas import PodResourcesConfig
 
 _logger = logging.getLogger('polyaxon.db.jobs')
