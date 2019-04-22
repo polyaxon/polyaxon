@@ -115,7 +115,7 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
         http://52.226.37.54:80/tensorboard/root/quick-start
     ```
 
-Please check our [quick start guide](https://docs.polyaxon.com/quick_start) to start training your first experiment.
+Please check our [quick start guide](https://docs.polyaxon.com/concepts/quick-start) to start training your first experiment.
 
 # Distributed training
 
