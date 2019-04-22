@@ -24,6 +24,7 @@ if config.is_monolith_service or config.is_api_service:
 else:
     LIST_TEMPLATE_CONTEXT_PROCESSORS = [
         'django.contrib.auth.context_processors.auth',
+        'django.contrib.messages.context_processors.messages',
         'polyaxon.context_processors.versions',
         'polyaxon.context_processors.cluster',
     ]
