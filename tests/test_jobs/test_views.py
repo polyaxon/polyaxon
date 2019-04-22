@@ -30,7 +30,7 @@ from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
 from schemas import JobSpecification
-from tests.base.views import BaseFilesViewTest, BaseViewTest, EntityCodeReferenceBaseViewTest
+from tests.base.views import BaseEntityCodeReferenceViewTest, BaseFilesViewTest, BaseViewTest
 
 
 @pytest.mark.jobs_mark
@@ -477,7 +477,7 @@ class TestJobDetailViewV1(BaseViewTest):
 
 
 @pytest.mark.jobs_mark
-class TestJobCodeReferenceViewV1(EntityCodeReferenceBaseViewTest):
+class TestJobCodeReferenceViewV1(BaseEntityCodeReferenceViewTest):
     entity_factory_class = JobFactory
 
     def get_url(self):
@@ -934,3 +934,6 @@ class TestJobOutputsFilesViewV1(BaseFilesViewTest):
             assert resp.status_code == status.HTTP_200_OK
             data = [i for i in resp._iterator]  # pylint:disable=protected-access
             assert data[0].decode('utf-8') == file_content['data']
+
+
+del BaseEntityCodeReferenceViewTest

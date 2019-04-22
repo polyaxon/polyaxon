@@ -63,7 +63,7 @@ from factories.fixtures import (
 )
 from schemas import ExperimentSpecification
 from tests.base.clients import EphemeralClient
-from tests.base.views import BaseFilesViewTest, BaseViewTest, EntityCodeReferenceBaseViewTest
+from tests.base.views import BaseEntityCodeReferenceViewTest, BaseFilesViewTest, BaseViewTest
 
 
 @pytest.mark.experiments_mark
@@ -1230,7 +1230,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
 
 
 @pytest.mark.experiments_mark
-class TestExperimentCodeReferenceViewV1(EntityCodeReferenceBaseViewTest):
+class TestExperimentCodeReferenceViewV1(BaseEntityCodeReferenceViewTest):
     entity_factory_class = ExperimentFactory
 
     def get_url(self):
@@ -2525,3 +2525,6 @@ class TestExperimentHeartBeatViewV1(BaseViewTest):
         resp = self.internal_client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), True)
+
+
+del BaseEntityCodeReferenceViewTest

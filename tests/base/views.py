@@ -24,7 +24,7 @@ class BaseViewTest(BaseTest):
     INTERNAL_SERVICE = None
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls):  # noqa
         super().setUpTestData()
         cls.internal_client = InternalClient(service=cls.INTERNAL_SERVICE)
         if cls.ADMIN_USER:
@@ -102,7 +102,7 @@ class BaseFilesViewTest(BaseViewTest):
         assert set(value1) == set(value2)
 
 
-class EntityCodeReferenceBaseViewTest(BaseViewTest):
+class BaseEntityCodeReferenceViewTest(BaseViewTest):
     serializer_class = CodeReferenceSerializer
     model_class = CodeReference
     factory_class = CodeReferenceFactory
@@ -111,7 +111,7 @@ class EntityCodeReferenceBaseViewTest(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory(user=self.auth_client.user)
-        self.obj = self.entity_factory_class(project=self.project)
+        self.obj = self.entity_factory_class(project=self.project)  # pylint:disable=not-callable
         self.url = self.get_url()
         self.queryset = self.model_class.objects.all()
 

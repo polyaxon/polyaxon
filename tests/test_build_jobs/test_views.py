@@ -25,7 +25,7 @@ from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content
 from schemas import BuildSpecification
-from tests.base.views import BaseViewTest, EntityCodeReferenceBaseViewTest
+from tests.base.views import BaseEntityCodeReferenceViewTest, BaseViewTest
 
 
 @pytest.mark.build_jobs_mark
@@ -468,7 +468,7 @@ class TestBuildDetailViewV1(BaseViewTest):
 
 
 @pytest.mark.build_jobs_mark
-class TestBuildCodeReferenceViewV1(EntityCodeReferenceBaseViewTest):
+class TestBuildCodeReferenceViewV1(BaseEntityCodeReferenceViewTest):
     entity_factory_class = BuildJobFactory
 
     def get_url(self):
@@ -740,3 +740,6 @@ class TestBuildHeartBeatViewV1(BaseViewTest):
         resp = self.internal_client.post(self.url)
         assert resp.status_code == status.HTTP_200_OK
         self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), True)
+
+
+del BaseEntityCodeReferenceViewTest
