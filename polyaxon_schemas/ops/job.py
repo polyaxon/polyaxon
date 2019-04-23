@@ -11,6 +11,8 @@ class JobSchema(BaseRunSchema):
     kind = fields.Str(allow_none=None, validate=validate.Equal('job'))
     declarations = fields.Raw(allow_none=True)
     run = fields.Nested(RunSchema, allow_none=True)
+    backend = fields.Str(allow_none=True)
+    framework = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -30,12 +32,16 @@ class JobConfig(BaseRunConfig):
                  environment=None,
                  build=None,
                  run=None,
-                 ):
+                 backend=None,
+                 framework=None):
         super(JobConfig, self).__init__(kind=kind,
                                         version=version,
                                         logging=logging,
                                         tags=tags,
                                         environment=environment,
                                         build=build)
+
         self.declarations = declarations
         self.run = run
+        self.backend = backend
+        self.framework = framework
