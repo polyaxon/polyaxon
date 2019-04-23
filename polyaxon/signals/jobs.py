@@ -5,9 +5,11 @@ from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
+from constants.backends import NATIVE_BACKEND
 from db.models.jobs import Job
 from libs.repos.utils import assign_code_reference
 from lifecycles.jobs import JobLifeCycle
+from signals.backend import set_backend
 from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
 from signals.persistence import set_persistence
@@ -26,6 +28,7 @@ def job_pre_save(sender, **kwargs):
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
     set_name(instance=instance, query=Job.all)
+    set_backend(instance=instance, default_backend=NATIVE_BACKEND)
     assign_code_reference(instance)
 
 
