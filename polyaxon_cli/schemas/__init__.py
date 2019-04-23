@@ -6,7 +6,7 @@ from polyaxon_schemas.api.experiment import ContainerResourcesConfig  # noqa
 from polyaxon_schemas.api.experiment import ExperimentConfig  # noqa
 from polyaxon_schemas.api.experiment import ExperimentJobConfig  # noqa
 from polyaxon_schemas.api.group import GroupConfig  # noqa
-from polyaxon_schemas.api.job import JobConfig  # noqa
+from polyaxon_schemas.api.job import BuildJobConfig, JobConfig  # noqa
 from polyaxon_schemas.api.log_handler import LogHandlerSchema  # noqa
 from polyaxon_schemas.api.project import ProjectConfig  # noqa
 from polyaxon_schemas.base import BaseConfig, BaseSchema  # noqa

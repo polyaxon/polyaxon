@@ -16,7 +16,7 @@ from polyaxon_cli.managers.build_job import BuildJobManager
 from polyaxon_cli.managers.experiment import ExperimentManager
 from polyaxon_cli.managers.experiment_group import GroupManager
 from polyaxon_cli.managers.job import JobManager
-from polyaxon_cli.schemas import ExperimentConfig, GroupConfig, JobConfig
+from polyaxon_cli.schemas import BuildJobConfig, ExperimentConfig, GroupConfig, JobConfig
 from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonClientException
@@ -101,7 +101,7 @@ def run(ctx,
 
     def run_build():
         click.echo('Creating a build.')
-        job = JobConfig(
+        job = BuildJobConfig(
             name=name,
             description=description,
             tags=tags,
