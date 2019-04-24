@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.db import models
 
-from db.models.utils import Singleton
+from db.models.abstract.singleton import Singleton
 
 
 class BaseValidationVersion(Singleton):

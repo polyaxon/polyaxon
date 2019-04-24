@@ -7,7 +7,7 @@ from django.utils import timezone
 
 import conf
 
-from db.models.utils import DiffModel
+from db.models.abstract.diff import DiffModel
 
 
 def generate_token():

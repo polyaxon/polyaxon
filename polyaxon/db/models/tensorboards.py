@@ -7,7 +7,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
-from db.models.abstract_jobs import AbstractJobStatus, JobMixin
+from db.models.abstract.job import AbstractJobStatus, JobMixin
 from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT

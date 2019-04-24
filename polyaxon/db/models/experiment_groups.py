@@ -14,23 +14,21 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
-from db.models.abstract_jobs import TensorboardJobMixin
+from db.models.abstract.job import TensorboardJobMixin
 from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    BackendModel,
-    DeletedModel,
-    DescribableModel,
-    DiffModel,
-    IsManagedModel,
-    NameableModel,
-    PersistenceModel,
-    ReadmeModel,
-    RunTimeModel,
-    SubPathModel,
-    TagModel
-)
+from db.models.abstract.diff import DiffModel
+from db.models.abstract.readme import ReadmeModel
+from db.models.abstract.run import RunTimeModel
+from db.models.abstract.backend import BackendModel
+from db.models.abstract.deleted import DeletedModel
+from db.models.abstract.describable import DescribableModel
+from db.models.abstract.is_managed import IsManagedModel
+from db.models.abstract.nameable import NameableModel
+from db.models.abstract.persistence import PersistenceModel
+from db.models.abstract.sub_paths import SubPathModel
+from db.models.abstract.tag import TagModel
 from libs.paths.experiment_groups import get_experiment_group_subpath
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle

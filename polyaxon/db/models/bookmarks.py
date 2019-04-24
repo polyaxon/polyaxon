@@ -3,7 +3,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
-from db.models.utils import DiffModel
+from db.models.abstract.diff import DiffModel
 
 
 class Bookmark(DiffModel):

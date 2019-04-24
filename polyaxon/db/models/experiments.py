@@ -1,37 +1,33 @@
 import uuid
-
 from typing import Dict, List, Optional
-
-from hestia.datetime_typing import AwareDT
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
+from hestia.datetime_typing import AwareDT
 
 import auditor
 
-from db.models.abstract_jobs import TensorboardJobMixin
+from db.models.abstract.backend import BackendModel
+from db.models.abstract.datarefs import DataReference
+from db.models.abstract.deleted import DeletedModel
+from db.models.abstract.describable import DescribableModel
+from db.models.abstract.diff import DiffModel
+from db.models.abstract.is_managed import IsManagedModel
+from db.models.abstract.job import TensorboardJobMixin
+from db.models.abstract.nameable import NameableModel
+from db.models.abstract.outputs import OutputsModel
+from db.models.abstract.persistence import PersistenceModel
+from db.models.abstract.readme import ReadmeModel
+from db.models.abstract.run import RunTimeModel
+from db.models.abstract.sub_paths import SubPathModel
+from db.models.abstract.tag import TagModel
 from db.models.charts import ChartViewModel
 from db.models.cloning_strategies import CloningStrategy
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    BackendModel,
-    DataReference,
-    DeletedModel,
-    DescribableModel,
-    DiffModel,
-    IsManagedModel,
-    NameableModel,
-    OutputsModel,
-    PersistenceModel,
-    ReadmeModel,
-    RunTimeModel,
-    SubPathModel,
-    TagModel
-)
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.experiment import (
     EXPERIMENT_COPIED,

@@ -11,19 +11,17 @@ import conf
 
 from constants.images_tags import LATEST_IMAGE_TAG
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME, JOB_NAME_FORMAT
-from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.abstract.job import AbstractJob, AbstractJobStatus, JobMixin
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    BackendModel,
-    DeletedModel,
-    DescribableModel,
-    IsManagedModel,
-    NameableModel,
-    NodeSchedulingModel,
-    PersistenceModel,
-    SubPathModel,
-    TagModel
-)
+from db.models.abstract.backend import BackendModel
+from db.models.abstract.deleted import DeletedModel
+from db.models.abstract.describable import DescribableModel
+from db.models.abstract.is_managed import IsManagedModel
+from db.models.abstract.nameable import NameableModel
+from db.models.abstract.node_scheduling import NodeSchedulingModel
+from db.models.abstract.persistence import PersistenceModel
+from db.models.abstract.sub_paths import SubPathModel
+from db.models.abstract.tag import TagModel
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config

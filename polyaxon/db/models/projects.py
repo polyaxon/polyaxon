@@ -5,17 +5,15 @@ from django.core.validators import validate_slug
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.models.abstract_jobs import TensorboardJobMixin
+from db.models.abstract.deleted import DeletedModel
+from db.models.abstract.describable import DescribableModel
+from db.models.abstract.diff import DiffModel
+from db.models.abstract.job import TensorboardJobMixin
+from db.models.abstract.persistence import PersistenceModel
+from db.models.abstract.readme import ReadmeModel
+from db.models.abstract.sub_paths import SubPathModel
+from db.models.abstract.tag import TagModel
 from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    DeletedModel,
-    DescribableModel,
-    DiffModel,
-    PersistenceModel,
-    ReadmeModel,
-    SubPathModel,
-    TagModel
-)
 from libs.blacklist import validate_blacklist_name
 from libs.paths.projects import get_project_subpath
 

@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants import content_types
-from db.models.utils import DiffModel
+from db.models.abstract.diff import DiffModel
 
 
 class Owner(DiffModel):

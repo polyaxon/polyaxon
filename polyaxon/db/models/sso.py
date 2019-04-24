@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 
 from constants.sso_providers import Providers
-from db.models.utils import DiffModel
+from db.models.abstract.diff import DiffModel
 
 
 class SSOIdentity(DiffModel):

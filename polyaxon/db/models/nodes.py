@@ -10,7 +10,8 @@ from django.db import models
 import conf
 
 from constants.nodes import NodeLifeCycle, NodeRoles
-from db.models.utils import DiffModel, SequenceModel
+from db.models.abstract.diff import DiffModel
+from db.models.abstract.sequence import SequenceModel
 
 
 class NodeParser(object):

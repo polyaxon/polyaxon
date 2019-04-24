@@ -3,7 +3,8 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from constants import content_types
-from db.models.utils import DiffModel, NameableModel
+from db.models.abstract.diff import DiffModel
+from db.models.abstract.nameable import NameableModel
 
 
 class Search(DiffModel, NameableModel):

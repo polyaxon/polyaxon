@@ -7,7 +7,7 @@ from django.db import models
 import conf
 
 from constants.urls import API_V1
-from db.models.utils import DiffModel
+from db.models.abstract.diff import DiffModel
 
 
 class RepoMixin(object):

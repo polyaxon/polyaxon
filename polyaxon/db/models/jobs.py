@@ -1,32 +1,28 @@
 from typing import Dict, Optional
 
-from hestia.datetime_typing import AwareDT
-
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
+from hestia.datetime_typing import AwareDT
 
 import auditor
-
 from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
-from db.models.abstract_jobs import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.abstract.backend import BackendModel
+from db.models.abstract.datarefs import DataReference
+from db.models.abstract.deleted import DeletedModel
+from db.models.abstract.describable import DescribableModel
+from db.models.abstract.is_managed import IsManagedModel
+from db.models.abstract.job import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.abstract.nameable import NameableModel
+from db.models.abstract.node_scheduling import NodeSchedulingModel
+from db.models.abstract.outputs import OutputsModel
+from db.models.abstract.persistence import PersistenceModel
+from db.models.abstract.readme import ReadmeModel
+from db.models.abstract.sub_paths import SubPathModel
+from db.models.abstract.tag import TagModel
 from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    BackendModel,
-    DataReference,
-    DeletedModel,
-    DescribableModel,
-    IsManagedModel,
-    NameableModel,
-    NodeSchedulingModel,
-    OutputsModel,
-    PersistenceModel,
-    ReadmeModel,
-    SubPathModel,
-    TagModel
-)
 from db.redis.heartbeat import RedisHeartBeat
 from event_manager.events.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath
