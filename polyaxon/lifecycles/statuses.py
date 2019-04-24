@@ -25,6 +25,7 @@ class BaseStatuses(object):
     CHOICES = ()
     HEARTBEAT_STATUS = set([])
     WARNING_STATUS = set([])
+    PENDING_STATUS = set([])
     STARTING_STATUS = set([])
     DONE_STATUS = set([])
     RUNNING_STATUS = set([])
@@ -61,10 +62,7 @@ class BaseStatuses(object):
 
     @classmethod
     def is_stoppable(cls, status: str) -> bool:
-        return (cls.is_running(status=status) or
-                cls.is_unschedulable(status=status) or
-                cls.is_warning(status=status) or
-                cls.is_unknown(status=status))
+        return not cls.is_done(status)
 
     @classmethod
     def is_done(cls, status: str) -> bool:
