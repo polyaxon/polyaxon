@@ -27,6 +27,7 @@ class BaseTest(TestCase):
         from scheduler import tasks  # noqa
         from hpsearch.tasks import bo, grid, health, hyperband, random  # noqa
         from pipelines import health, tasks  # noqa
+        from operations import tasks  # noqa
         from crons import tasks  # noqa
         from events_handlers import tasks  # noqa
         from k8s_events_handlers import tasks  # noqa
