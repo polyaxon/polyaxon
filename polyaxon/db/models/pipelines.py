@@ -1,30 +1,27 @@
 import logging
 import uuid
-
 from typing import Dict, Optional, Tuple
 
-from celery.result import AsyncResult
-from hestia.datetime_typing import AwareDT
-
 from django.conf import settings
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.dispatch import Signal
+from hestia.datetime_typing import AwareDT
 
-from db.models.statuses import LastStatusMixin, StatusModel
+from db.models.abstract.backend import BackendModel
+from db.models.abstract.deleted import DeletedModel
+from db.models.abstract.describable import DescribableModel
+from db.models.abstract.diff import DiffModel
+from db.models.abstract.is_managed import IsManagedModel
+from db.models.abstract.nameable import NameableModel
+from db.models.abstract.run import RunModel
+from db.models.abstract.tag import TagModel
+from db.models.statuses import StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
-from db.models.utils import (
-    BackendModel,
-    DeletedModel,
-    DescribableModel,
-    DiffModel,
-    IsManagedModel,
-    NameableModel,
-    RunTimeModel,
-    TagModel
-)
-from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle, TriggerPolicy
-from polyaxon.celery_api import celery_app
+from lifecycles.operations import OperationStatuses
+from lifecycles.pipelines import PipelineLifeCycle, TriggerPolicy
 from polyaxon.settings import Intervals
 
 _logger = logging.getLogger('db.pipelines')
@@ -191,7 +188,7 @@ class Operation(DiffModel,
         on_delete=models.CASCADE,
         related_name='operations')
     upstream_operations = models.ManyToManyField(
-        "self",
+        'self',
         blank=True,
         symmetrical=False,
         related_name='downstream_operations')
@@ -226,22 +223,24 @@ class Operation(DiffModel,
         blank=True,
         help_text="When set, an operation will be able to limit the concurrent "
                   "runs across execution_dates")
-    run_as_user = models.CharField(
+    security_context = JSONField(
         max_length=64,
         null=True,
         blank=True,
-        help_text="unix username to impersonate while running the operation.")
-    config = models.TextField(
+        help_text="security context to impersonate while running the operation.")
+    content = models.TextField(
+        blank=True,
+        null=True,
+        help_text='The yaml content of the polyaxonfile/specification.')
+    entity_type = models.CharField(
+        max_length=24,
         blank=True,
         null=True)
-    celery_task = models.CharField(
-        max_length=128,
-        help_text="The celery task name to execute.")
-    celery_queue = models.CharField(
+    queue = models.CharField(
         max_length=128,
         blank=True,
         null=True,
-        help_text="The celery queue name to use for the executing this task. "
+        help_text="The queue name to use for the executing this task. "
                   "If provided, it will override the queue provided in CELERY_TASK_ROUTES.")
 
     class Meta:
@@ -267,8 +266,8 @@ class Operation(DiffModel,
     def get_run_params(self) -> Dict:
         """Return the params to run the celery task."""
         params = {}
-        if self.celery_queue:
-            params['queue'] = self.celery_queue
+        if self.queue:
+            params['queue'] = self.queue
 
         if self.timeout:
             params['soft_time_limit'] = self.timeout
@@ -306,79 +305,6 @@ class PipelineRunStatus(StatusModel):
         return '{} <{}>'.format(self.pipeline_run, self.status)
 
 
-class OperationRunStatus(StatusModel):
-    """A model that represents an operation run status at certain time."""
-    STATUSES = OperationStatuses
-
-    status = models.CharField(
-        max_length=64,
-        blank=True,
-        null=True,
-        default=STATUSES.CREATED,
-        choices=STATUSES.CHOICES)
-    operation_run = models.ForeignKey(
-        'db.OperationRun',
-        on_delete=models.CASCADE,
-        related_name='statuses')
-
-    class Meta:
-        app_label = 'db'
-        verbose_name_plural = 'Operation Run Statuses'
-        ordering = ['created_at']
-
-    def __str__(self) -> str:
-        return '{} <{}>'.format(self.operation_run, self.status)
-
-
-class RunModel(DiffModel, RunTimeModel, DeletedModel, LastStatusMixin):
-    """
-    A model that represents an execution behaviour of instance/run of a operation or a pipeline.
-    """
-    STATUSES = None
-
-    uuid = models.UUIDField(
-        default=uuid.uuid4,
-        editable=False,
-        unique=True,
-        null=False)
-
-    class Meta:
-        abstract = True
-
-    @property
-    def skipped(self) -> bool:
-        return self.STATUSES.skipped(self.last_status)
-
-    def can_transition(self, status_from: str, status_to: str) -> bool:
-        """Update the status of the current instance.
-
-        Returns:
-            boolean: if the instance is updated.
-        """
-        if not self.STATUSES.can_transition(status_from=status_from, status_to=status_to):
-            _logger.info(
-                '`%s` tried to transition from status `%s` to non permitted status `%s`',
-                str(self), status_from, status_to)
-            return False
-
-        return True
-
-    def on_scheduled(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.SCHEDULED, message=message)
-
-    def on_run(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.RUNNING, message=message)
-
-    def on_timeout(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.FAILED, message=message)
-
-    def on_stop(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.STOPPED, message=message)
-
-    def on_skip(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.SKIPPED, message=message)
-
-
 class PipelineRun(RunModel):
     """A model that represents an execution behaviour/run of instance of a pipeline.
 
@@ -388,6 +314,11 @@ class PipelineRun(RunModel):
     """
     STATUSES = PipelineLifeCycle
 
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     pipeline = models.ForeignKey(
         'db.Pipeline',
         on_delete=models.CASCADE,
@@ -435,7 +366,7 @@ class PipelineRun(RunModel):
                    traceback: Dict = None,
                    **kwargs) -> None:
         last_status = self.last_status_before(status_date=created_at)
-        if not self.can_transition(status_from=last_status, status_to=status):
+        if not PipelineLifeCycle.can_transition(status_from=last_status, status_to=status):
             return
 
         if PipelineLifeCycle.DONE != status:
@@ -453,15 +384,34 @@ class PipelineRun(RunModel):
         # we mark the pipeline as FINISHED if all operation runs are finished
         all_op_runs_done = not bool([
             True for status in
-            self.operation_runs.values_list('status__status', flat=True)
+            self.operation_runs.values_list('status', flat=True)
             if status not in OperationStatuses.DONE_STATUS
         ])
         if all_op_runs_done:
             PipelineRunStatus.objects.create(pipeline_run=self, status=status, message=message)
 
+    def on_scheduled(self, message: str = None) -> None:
+        self.set_status(status=PipelineLifeCycle.SCHEDULED, message=message)
+
+    def on_run(self, message: str = None) -> None:
+        self.set_status(status=PipelineLifeCycle.RUNNING, message=message)
+
+    def on_timeout(self, message: str = None) -> None:
+        self.set_status(status=PipelineLifeCycle.FAILED, message=message)
+
+    def on_stop(self, message: str = None) -> None:
+        self.set_status(status=PipelineLifeCycle.STOPPED, message=message)
+
+    def on_skip(self, message: str = None) -> None:
+        self.set_status(status=PipelineLifeCycle.SKIPPED, message=message)
+
+    @property
+    def skipped(self) -> bool:
+        return PipelineLifeCycle.skipped(self.last_status)
+
     @property
     def running_operation_runs(self):
-        return self.operation_runs.filter(status__status__in=self.STATUSES.RUNNING_STATUS)
+        return self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS)
 
     @property
     def n_operation_runs_to_start(self):
@@ -483,10 +433,13 @@ class PipelineRun(RunModel):
         return self.n_operation_runs_to_start > 0
 
 
-class OperationRun(RunModel):
+class OperationRun(DiffModel, DeletedModel):
     """A model that represents an execution behaviour/run of instance of an operation."""
-    STATUSES = OperationStatuses
-
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
     operation = models.ForeignKey(
         'db.Operation',
         on_delete=models.CASCADE,
@@ -500,29 +453,43 @@ class OperationRun(RunModel):
         blank=True,
         symmetrical=False,
         related_name='downstream_runs')
-    status = models.OneToOneField(
-        'db.OperationRunStatus',
-        related_name='+',
+    entity_content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
         blank=True,
         null=True,
-        editable=True,
-        on_delete=models.SET_NULL)
-    celery_task_context = JSONField(
+        related_name='+')
+    entity_object_id = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+    )
+    entity = GenericForeignKey('entity_content_type', 'entity_object_id')
+    status = models.CharField(
+        max_length=64,
+        blank=True,
+        null=True)
+    context = JSONField(
         blank=True,
         null=True,
         help_text='The kwargs required to execute the celery task.')
-    celery_task_id = models.CharField(max_length=36, null=False, blank=True)
 
     class Meta:
         app_label = 'db'
 
+    @property
+    def started_at(self):
+        return self.entity.started_at
+
+    @property
+    def finished_at(self):
+        return self.entity.finished_at
+
+    @property
+    def last_status(self):
+        return self.entity.last_status
+
     def last_status_before(self, status_date: AwareDT = None) -> Optional[str]:
-        if not status_date:
-            return self.last_status
-        status = OperationRunStatus.objects.filter(
-            operation_run=self,
-            created_at__lte=status_date).last()
-        return status.status if status else None
+        return self.entity.last_status_before(status_date=status_date)
 
     def set_status(self,
                    status: str,
@@ -530,14 +497,11 @@ class OperationRun(RunModel):
                    message: str = None,
                    traceback: Dict = None,
                    **kwargs) -> None:
-        last_status = self.last_status_before(status_date=created_at)
-        if self.can_transition(status_from=last_status, status_to=status):
-            params = {'created_at': created_at} if created_at else {}
-            OperationRunStatus.objects.create(operation_run=self,
-                                              status=status,
-                                              traceback=traceback,
-                                              message=message,
-                                              **params)
+        self.entity.set_status(status=status,
+                               created_at=created_at,
+                               message=message,
+                               traceback=traceback,
+                               **kwargs)
 
     def check_concurrency(self) -> bool:
         """Checks the concurrency of the operation run.
@@ -551,117 +515,50 @@ class OperationRun(RunModel):
         if not self.operation.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation.runs.filter(
-            status__status__in=self.STATUSES.RUNNING_STATUS).count()
+        ops_count = self.operation.runs.filter(status__in=OperationStatuses.RUNNING_STATUS).count()
         return ops_count < self.operation.concurrency
 
     def check_upstream_trigger(self) -> bool:
         """Checks the upstream and the trigger rule."""
         if self.operation.trigger_policy == TriggerPolicy.ONE_DONE:
-            return self.upstream_runs.filter(
-                status__status__in=self.STATUSES.DONE_STATUS).exists()
+            return self.upstream_runs.filter(status__in=OperationStatuses.DONE_STATUS).exists()
         if self.operation.trigger_policy == TriggerPolicy.ONE_SUCCEEDED:
-            return self.upstream_runs.filter(
-                status__status=self.STATUSES.SUCCEEDED).exists()
+            return self.upstream_runs.filter(status=OperationStatuses.SUCCEEDED).exists()
         if self.operation.trigger_policy == TriggerPolicy.ONE_FAILED:
-            return self.upstream_runs.filter(
-                status__status=self.STATUSES.FAILED).exists()
+            return self.upstream_runs.filter(status=OperationStatuses.FAILED).exists()
 
-        statuses = self.upstream_runs.values_list('status__status', flat=True)
+        statuses = self.upstream_runs.values_list('status', flat=True)
         if self.operation.trigger_policy == TriggerPolicy.ALL_DONE:
             return not bool([True for status in statuses
-                             if status not in self.STATUSES.DONE_STATUS])
+                             if status not in OperationStatuses.DONE_STATUS])
         if self.operation.trigger_policy == TriggerPolicy.ALL_SUCCEEDED:
             return not bool([True for status in statuses
-                             if status != self.STATUSES.SUCCEEDED])
+                             if status != OperationStatuses.SUCCEEDED])
         if self.operation.trigger_policy == TriggerPolicy.ALL_FAILED:
             return not bool([True for status in statuses
-                             if status not in self.STATUSES.FAILED_STATUS])
+                             if status not in OperationStatuses.FAILED_STATUS])
 
     @property
     def is_upstream_done(self) -> bool:
-        statuses = self.upstream_runs.values_list('status__status', flat=True)
+        statuses = self.upstream_runs.values_list('status', flat=True)
         return not bool([True for status in statuses
-                         if status not in self.STATUSES.DONE_STATUS])
-
-    def schedule_start(self) -> bool:
-        """Schedule the task: check first if the task can start:
-            1. we check that the task is still in the CREATED state.
-            2. we check that the upstream dependency is met.
-            3. we check that pipeline can start a new task;
-              i.e. we check the concurrency of the pipeline.
-            4. we check that operation can start a new instance;
-              i.e. we check the concurrency of the operation.
-
-        -> If all checks pass we schedule the task start it.
-
-        -> 1. If the operation is not in created status, nothing to do.
-        -> 2. If the upstream dependency check is not met, two use cases need to be validated:
-            * The upstream dependency is not met but could be met in the future,
-              because some ops are still CREATED/SCHEDULED/RUNNING/...
-              in this case nothing need to be done, every time an upstream operation finishes,
-              it will notify all the downstream ops including this one.
-            * The upstream dependency is not met and could not be met at all.
-              In this case we need to mark the task with `UPSTREAM_FAILED`.
-        -> 3. If the pipeline has reached it's concurrency limit,
-           we just delay schedule based on the interval/time delay defined by the user.
-           The pipeline scheduler will keep checking until the task can be scheduled or stopped.
-        -> 4. If the operation has reached it's concurrency limit,
-           Same as above we keep trying based on an interval defined by the user.
-
-        Returns:
-            boolean: Whether to try to schedule this operation run in the future or not.
-        """
-        if self.last_status != self.STATUSES.CREATED:
-            return False
-
-        upstream_trigger_check = self.check_upstream_trigger()
-        if not upstream_trigger_check and self.is_upstream_done:
-            # This task cannot be scheduled anymore
-            self.on_upstream_failed()
-            return False
-
-        if not self.pipeline_run.check_concurrency():
-            return True
-
-        if not self.check_concurrency():
-            return True
-
-        self.on_scheduled()
-        self.start()
-        return False
-
-    def start(self) -> None:
-        """Start the celery task of this operation."""
-        kwargs = self.celery_task_context
-        # Update we the operation run id
-        kwargs['operation_run_id'] = self.id  # pylint:disable=unsupported-assignment-operation
-
-        async_result = celery_app.send_task(
-            self.operation.celery_task,
-            kwargs=kwargs,
-            **self.operation.get_run_params())
-        self.celery_task_id = async_result.id
-        self.save()
+                         if status not in OperationStatuses.DONE_STATUS])
 
     def stop(self, message: str = None) -> None:
-        if self.is_stoppable:
-            task = AsyncResult(self.celery_task_id)
-            task.revoke(terminate=True, signal='SIGKILL')
-        self.on_stop(message=message)
+        if self.entity.is_stoppable:
+            self.entity.stop(message=message)
 
     def skip(self, message: str = None) -> None:
-        self.on_skip(message=message)
+        self.entity.set_status(status=OperationStatuses.SKIPPED, message=message)
 
     def on_retry(self) -> None:
-        self.set_status(status=self.STATUSES.RETRYING)
+        self.entity.set_status(status=OperationStatuses.RETRYING)
 
     def on_upstream_failed(self) -> None:
-        self.set_status(status=self.STATUSES.UPSTREAM_FAILED)
+        self.entity.set_status(status=OperationStatuses.UPSTREAM_FAILED)
 
     def on_failure(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.FAILED, message=message)
-        self.save()
+        self.entity.set_status(status=OperationStatuses.FAILED, message=message)
 
     def on_success(self, message: str = None) -> None:
-        self.set_status(status=self.STATUSES.SUCCEEDED, message=message)
+        self.entity.set_status(status=OperationStatuses.SUCCEEDED, message=message)
