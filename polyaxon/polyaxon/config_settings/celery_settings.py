@@ -175,12 +175,12 @@ class PipelinesCeleryTasks(object):
     PIPELINES_CHECK_STATUSES = 'pipelines_check_statuses'
 
 
-class CeleryOperationTasks(object):
+class OperationsCeleryTasks(object):
     """Celery operation tasks.
 
     N.B. make sure that the task name is not < 128.
     """
-    EXPERIMENTS_SCHEDULE = 'experiments_schedule'
+    START_OPERATION = 'start_operation'
 
 
 class K8SEventsCeleryTasks(object):
@@ -465,7 +465,7 @@ CELERY_TASK_ROUTES = {
     PipelinesCeleryTasks.PIPELINES_CHECK_STATUSES:
         {'queue': CeleryQueues.PIPELINES},
     # Operation tasks
-    CeleryOperationTasks.EXPERIMENTS_SCHEDULE:
+    OperationsCeleryTasks.START_OPERATION:
         {'queue': CeleryQueues.PIPELINES},
 
     CeleryPublishTask.PUBLISH_LOGS_SIDECAR_EXPERIMENTS:
