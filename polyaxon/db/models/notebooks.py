@@ -7,10 +7,10 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
+from db.models.abstract.datarefs import DataReference
 from db.models.abstract.job import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
-from db.models.abstract.datarefs import DataReference
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_notebook_spec_config
 from schemas import NotebookBackend, NotebookSpecification

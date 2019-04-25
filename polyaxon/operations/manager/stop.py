@@ -1,7 +1,6 @@
 import conf
 
 from constants import content_types
-
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 

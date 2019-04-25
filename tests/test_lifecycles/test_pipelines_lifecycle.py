@@ -6,7 +6,7 @@ from tests.base.case import BaseTest
 
 @pytest.mark.lifecycles_mark
 class TestPipelinesStatusesTransition(BaseTest):
-    NUM_STATUSES = 11
+    NUM_STATUSES = 12
 
     def test_choices(self):
         assert len(PipelineLifeCycle.CHOICES) == self.NUM_STATUSES

@@ -1,12 +1,14 @@
 from typing import Dict, Optional
 
+from hestia.datetime_typing import AwareDT
+
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
-from hestia.datetime_typing import AwareDT
 
 import auditor
+
 from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.datarefs import DataReference

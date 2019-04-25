@@ -1,9 +1,6 @@
 from django.db import models
 
 from db.managers.deleted import ArchivedManager, LiveManager
-from django.db import models
-
-from db.managers.deleted import ArchivedManager, LiveManager
 
 
 class DeletedModel(models.Model):

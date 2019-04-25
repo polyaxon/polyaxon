@@ -1,6 +1,9 @@
 import logging
 import uuid
+
 from typing import Dict, Optional, Tuple
+
+from hestia.datetime_typing import AwareDT
 
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -9,7 +12,6 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 from django.dispatch import Signal
-from hestia.datetime_typing import AwareDT
 
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.deleted import DeletedModel
@@ -19,7 +21,7 @@ from db.models.abstract.is_managed import IsManagedModel
 from db.models.abstract.nameable import NameableModel
 from db.models.abstract.run import RunModel
 from db.models.abstract.tag import TagModel
-from db.models.statuses import StatusModel, LastStatusMixin
+from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from lifecycles.operations import OperationStatuses
 from lifecycles.pipelines import PipelineLifeCycle, TriggerPolicy

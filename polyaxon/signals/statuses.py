@@ -7,8 +7,8 @@ from django.dispatch import receiver
 from django.utils.timezone import now
 
 import auditor
-from constants import content_types
 
+from constants import content_types
 from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_groups import ExperimentGroupStatus
 from db.models.experiment_jobs import ExperimentJobStatus

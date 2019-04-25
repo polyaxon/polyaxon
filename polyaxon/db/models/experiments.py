@@ -1,12 +1,14 @@
 import uuid
+
 from typing import Dict, List, Optional
+
+from hestia.datetime_typing import AwareDT
 
 from django.conf import settings
 from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
-from hestia.datetime_typing import AwareDT
 
 import auditor
 

@@ -1,7 +1,7 @@
 from django.db.models import F, Max
 
 from db.models.pipelines import OperationRun, PipelineRun
-from operations.scheduler import stop_operation_run, skip_operation_run
+from operations.scheduler import skip_operation_run, stop_operation_run
 from pipelines import dags
 
 

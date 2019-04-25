@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from db.models.jobs import JobStatus
-from db.models.pipelines import PipelineRunStatus, OperationRun
+from db.models.pipelines import OperationRun, PipelineRunStatus
 from factories.factory_pipelines import (
     OperationFactory,
     OperationRunFactory,
@@ -17,7 +17,7 @@ from factories.factory_pipelines import (
 )
 from lifecycles.operations import OperationStatuses
 from lifecycles.pipelines import PipelineLifeCycle, TriggerPolicy
-from operations.scheduler import start_operation_run, stop_operation_run, skip_operation_run
+from operations.scheduler import skip_operation_run, start_operation_run, stop_operation_run
 from tests.base.case import BaseTest
 
 
@@ -636,19 +636,19 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        upstream_run1.status=OperationStatuses.RUNNING
+        upstream_run1.status = OperationStatuses.RUNNING
         upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        upstream_run1.status=OperationStatuses.FAILED
+        upstream_run1.status = OperationStatuses.FAILED
         upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        upstream_run2.status=OperationStatuses.SKIPPED
+        upstream_run2.status = OperationStatuses.SKIPPED
         upstream_run2.save()
         assert operation_run.check_upstream_trigger() is False
 

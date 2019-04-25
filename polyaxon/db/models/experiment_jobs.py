@@ -8,8 +8,8 @@ from django.utils.functional import cached_property
 
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.abstract.job import AbstractJob, AbstractJobStatus
-from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from db.models.abstract.node_scheduling import NodeSchedulingModel
+from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from schemas import TaskType
 
 

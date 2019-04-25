@@ -9,10 +9,10 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
-from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.abstract.cache import CachedMixin
 from db.models.abstract.diff import DiffModel
 from db.models.abstract.run import RunTimeModel
+from db.models.statuses import LastStatusMixin, StatusModel
 from lifecycles.jobs import JobLifeCycle
 from schemas import PodResourcesConfig
 
