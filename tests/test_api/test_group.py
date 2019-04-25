@@ -33,8 +33,7 @@ class TestGroupConfigs(TestCase):
                        'has_tensorboard': False,
                        'tags': ['tests'],
                        'experiments': [
-                           ExperimentConfig(config={},
-                                            uuid=uuid_value,
+                           ExperimentConfig(uuid=uuid_value,
                                             experiment_group=uuid_value,
                                             project=uuid_value).to_dict()]}
         config = GroupConfig.from_dict(config_dict)

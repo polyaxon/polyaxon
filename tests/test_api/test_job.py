@@ -25,7 +25,7 @@ class TestJobConfigs(TestCase):
             'pod_id': 'job_1',
             'last_status': 'Running',
             'description': 'description',
-            'config': {'k': 'v'},
+            'content': "{'k': 'v'}",
             'is_managed': False,
             'backend': 'other',
             'tags': ['test'],
@@ -49,7 +49,7 @@ class TestJobConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         config_dict.pop('uuid')
         config_dict.pop('description')
-        config_dict.pop('config')
+        config_dict.pop('content')
         config_dict.pop('project')
         config_dict.pop('build_job')
         config_dict.pop('updated_at')
@@ -102,7 +102,7 @@ class TestBuildJobConfigs(TestCase):
             'pod_id': 'job_1',
             'last_status': 'Running',
             'description': 'description',
-            'config': {'k': 'v'},
+            'content': "{'k': 'v'}",
             'is_managed': False,
             'tags': ['test'],
             'definition': None,
@@ -127,7 +127,7 @@ class TestBuildJobConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         config_dict.pop('uuid')
         config_dict.pop('description')
-        config_dict.pop('config')
+        config_dict.pop('content')
         config_dict.pop('project')
         config_dict.pop('build_job')
         config_dict.pop('updated_at')
@@ -146,7 +146,6 @@ class TestBuildJobConfigs(TestCase):
         assert config_to_dict.pop('created_at') == 'a few seconds ago'
         assert config_to_dict.pop('started_at') == 'a few seconds ago'
         assert config_to_dict.pop('finished_at') == 'a few seconds ago'
-
 
 
 class TestTensorboardJobConfigs(TestCase):
@@ -175,7 +174,7 @@ class TestTensorboardJobConfigs(TestCase):
         config_to_dict.pop('user')
         config_to_dict.pop('name')
         config_to_dict.pop('build_job')
-        config_to_dict.pop('config')
+        config_to_dict.pop('content')
         config_to_dict.pop('definition')
         config_to_dict.pop('description')
         config_to_dict.pop('ttl')

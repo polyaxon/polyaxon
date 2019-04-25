@@ -27,7 +27,7 @@ class BaseJobSchema(BaseSchema):
     finished_at = fields.LocalDateTime(allow_none=True)
     total_run = fields.Str(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
-    config = fields.Dict(allow_none=True)
+    content = fields.Str(allow_none=True)
     is_managed = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
@@ -65,7 +65,7 @@ class BaseJobConfig(BaseConfig):
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
-                 config=None,
+                 content=None,
                  is_managed=None,
                  num_jobs=0,
                  resources=None,
@@ -89,7 +89,7 @@ class BaseJobConfig(BaseConfig):
         self.created_at = self.localize_date(created_at)
         self.updated_at = self.localize_date(updated_at)
         self.is_clone = is_clone
-        self.config = config  # The json compiled content of this job
+        self.content = content
         self.is_managed = is_managed
         self.num_jobs = num_jobs
         self.resources = resources
@@ -131,7 +131,7 @@ class JobConfig(BaseJobConfig):
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
-                 config=None,
+                 content=None,
                  is_managed=None,
                  num_jobs=0,
                  resources=None,
@@ -158,7 +158,7 @@ class JobConfig(BaseJobConfig):
             started_at=started_at,
             finished_at=finished_at,
             is_clone=is_clone,
-            config=config,
+            content=content,
             is_managed=is_managed,
             num_jobs=num_jobs,
             resources=resources,
@@ -202,7 +202,7 @@ class BuildJobConfig(BaseJobConfig):
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
-                 config=None,
+                 content=None,
                  is_managed=None,
                  num_jobs=0,
                  resources=None,
@@ -229,7 +229,7 @@ class BuildJobConfig(BaseJobConfig):
             started_at=started_at,
             finished_at=finished_at,
             is_clone=is_clone,
-            config=config,
+            content=content,
             is_managed=is_managed,
             num_jobs=num_jobs,
             resources=resources,
@@ -278,7 +278,7 @@ class TensorboardJobConfig(BaseJobConfig):
                  started_at=None,
                  finished_at=None,
                  is_clone=None,
-                 config=None,
+                 content=None,
                  is_managed=None,
                  num_jobs=0,
                  resources=None,
@@ -303,7 +303,7 @@ class TensorboardJobConfig(BaseJobConfig):
             started_at=started_at,
             finished_at=finished_at,
             is_clone=is_clone,
-            config=config,
+            content=content,
             is_managed=is_managed,
             num_jobs=num_jobs,
             resources=resources,

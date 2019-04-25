@@ -92,7 +92,7 @@ class ExperimentSchema(BaseSchema):
     total_run = fields.Str(allow_none=True)
     is_clone = fields.Bool(allow_none=True)
     has_tensorboard = fields.Bool(allow_none=True)
-    config = fields.Dict(allow_none=True)
+    content = fields.Str(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
     declarations = fields.Dict(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
@@ -134,7 +134,7 @@ class ExperimentConfig(BaseConfig):
                  finished_at=None,
                  is_clone=None,
                  has_tensorboard=False,
-                 config=None,
+                 content=None,
                  num_jobs=0,
                  declarations=None,
                  tags=None,
@@ -163,7 +163,7 @@ class ExperimentConfig(BaseConfig):
         self.updated_at = self.localize_date(updated_at)
         self.is_clone = is_clone
         self.has_tensorboard = has_tensorboard
-        self.config = config  # The json compiled content of this experiment
+        self.content = content
         self.num_jobs = num_jobs
         self.declarations = declarations
         self.tags = tags

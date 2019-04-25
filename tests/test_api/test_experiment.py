@@ -28,7 +28,7 @@ class TestExperimentConfigs(TestCase):
             'unique_name': 'user.proj.1',
             'last_status': 'Running',
             'description': 'description',
-            'config': {'k': 'v'},
+            'content': "{'k': 'v'}",
             'is_managed': False,
             'tags': ['tag1'],
             'num_jobs': 1,
@@ -58,7 +58,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict = config.to_light_dict()
         config_dict.pop('uuid')
         config_dict.pop('description')
-        config_dict.pop('config')
+        config_dict.pop('content')
         config_dict.pop('project')
         config_dict.pop('updated_at')
         config_dict.pop('tags')
@@ -80,7 +80,6 @@ class TestExperimentConfigs(TestCase):
 
     def test_experiment_with_jobs_config(self):
         config_dict = {'id': 2,
-                       'config': {},
                        'unique_name': 'adam.proj.1',
                        'uuid': uuid.uuid4().hex,
                        'project': 'user.name',
@@ -114,6 +113,7 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop('name')
         config_to_dict.pop('build_job')
         config_to_dict.pop('ttl')
+        config_to_dict.pop('content')
         assert config_to_dict == config_dict
 
         config_dict.pop('tags')
