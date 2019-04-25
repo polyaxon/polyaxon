@@ -11,7 +11,7 @@ fake = FakerFactory.create()
 
 
 class JobFactory(factory.DjangoModelFactory):
-    config = job_spec_parsed_content.parsed_data
+    content = job_spec_parsed_content.raw_data
 
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)

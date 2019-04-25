@@ -112,11 +112,11 @@ class Job(AbstractJob,
 
     @cached_property
     def specification(self) -> 'JobSpecification':
-        return JobSpecification(values=self.config) if self.config else None
+        return JobSpecification(values=self.content) if self.content else None
 
     @property
     def has_specification(self) -> bool:
-        return self.config is not None
+        return self.content is not None
 
     @property
     def is_clone(self) -> bool:
@@ -159,7 +159,7 @@ class Job(AbstractJob,
                event_type: str,
                user=None,
                description: str = None,
-               config=None,
+               content=None,
                code_reference=None,
                update_code_reference: bool = False) -> 'Job':
         if not code_reference and not update_code_reference:
@@ -168,7 +168,7 @@ class Job(AbstractJob,
             project=self.project,
             user=user or self.user,
             description=description or self.description,
-            config=config or self.config,
+            content=content or self.content,
             original_job=self,
             cloning_strategy=cloning_strategy,
             code_reference=code_reference)
@@ -178,14 +178,14 @@ class Job(AbstractJob,
     def restart(self,
                 user=None,
                 description: str = None,
-                config=None,
+                content=None,
                 code_reference=None,
                 update_code_reference: bool = False) -> 'Job':
         return self._clone(cloning_strategy=CloningStrategy.RESTART,
                            event_type=JOB_RESTARTED,
                            user=user,
                            description=description,
-                           config=config,
+                           content=content,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference)
 

@@ -833,7 +833,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
         self.object.clear_cached_properties()
-        config = self.object.tensorboard.config
+        content = self.object.tensorboard.content
 
         # Simulate stop the tensorboard
         self.object.tensorboard.delete()
@@ -845,7 +845,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
         self.object.clear_cached_properties()
-        assert config == self.object.tensorboard.config
+        assert content == self.object.tensorboard.content
 
         # Simulate stop the tensorboard
         self.object.tensorboard.delete()
@@ -855,13 +855,13 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
-                data={'config': tensorboard_spec_parsed_content.parsed_data})
+                data={'content': tensorboard_spec_parsed_content.raw_data})
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         self.object.clear_cached_properties()
         # Check that the image was update
-        assert config != self.object.tensorboard.config
+        assert content != self.object.tensorboard.content
 
         # Trying to start an already running job returns 200
         # Starting again the tensorboard with different config
@@ -869,7 +869,7 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
-                data={'config': tensorboard_spec_parsed_content.parsed_data})
+                data={'content': tensorboard_spec_parsed_content.raw_data})
 
         assert mock_fct.call_count == 0
         assert resp.status_code == status.HTTP_200_OK
@@ -951,7 +951,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
         self.object.refresh_from_db()
-        config = self.object.tensorboard.config
+        content = self.object.tensorboard.content
 
         # Simulate stop the tensorboard
         self.object.tensorboard.delete()
@@ -963,7 +963,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
         self.object.clear_cached_properties()
-        assert config == self.object.tensorboard.config
+        assert content == self.object.tensorboard.content
 
         # Simulate stop the tensorboard
         self.object.tensorboard.delete()
@@ -973,13 +973,13 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
-                data={'config': tensorboard_spec_parsed_content.parsed_data})
+                data={'content': tensorboard_spec_parsed_content.raw_data})
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         self.object.clear_cached_properties()
         # Check that the image was update
-        assert config != self.object.tensorboard.config
+        assert content != self.object.tensorboard.content
 
         # Trying to start an already running job returns 200
         # Starting again the tensorboard with different config
@@ -987,7 +987,7 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
-                data={'config': tensorboard_spec_parsed_content.parsed_data})
+                data={'content': tensorboard_spec_parsed_content.raw_data})
 
         assert mock_fct.call_count == 0
         assert resp.status_code == status.HTTP_200_OK
@@ -1073,7 +1073,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
         self.object.clear_cached_properties()
-        config = self.object.tensorboard.config
+        content = self.object.tensorboard.content
 
         # Simulate stop the tensorboard
         self.object.tensorboard.delete()
@@ -1085,7 +1085,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Check that still using same config
         self.object.clear_cached_properties()
-        assert config == self.object.tensorboard.config
+        assert content == self.object.tensorboard.content
 
         # Simulate stop the tensorboard
         self.object.tensorboard.delete()
@@ -1095,13 +1095,13 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
-                data={'config': tensorboard_spec_parsed_content.parsed_data})
+                data={'content': tensorboard_spec_parsed_content.raw_data})
 
         assert mock_fct.call_count == 1
         assert resp.status_code == status.HTTP_201_CREATED
         self.object.clear_cached_properties()
         # Check that the image was update
-        assert config != self.object.tensorboard.config
+        assert content != self.object.tensorboard.content
 
         # Trying to start an already running job returns 200
         # Starting again the tensorboard with different config
@@ -1109,7 +1109,7 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as mock_fct:
             resp = self.auth_client.post(
                 self.url,
-                data={'config': tensorboard_spec_parsed_content.parsed_data})
+                data={'content': tensorboard_spec_parsed_content.raw_data})
 
         assert mock_fct.call_count == 0
         assert resp.status_code == status.HTTP_200_OK
@@ -1282,7 +1282,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_build(self):
-        data = {'config': notebook_spec_parsed_content.parsed_data}
+        data = {'content': notebook_spec_parsed_content.raw_data}
         assert self.queryset.count() == 1
         assert self.object.notebook is None
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as mock_fct:
@@ -1294,7 +1294,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert isinstance(self.object.notebook, NotebookJob)
 
     def test_start(self):
-        data = {'config': notebook_spec_parsed_content.parsed_data}
+        data = {'content': notebook_spec_parsed_content.raw_data}
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.'
                    'projects_notebook_build.apply_async') as build_mock_fct:
@@ -1304,7 +1304,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert self.queryset.count() == 1
 
     def test_build_with_updated_config(self):
-        data = {'config': notebook_spec_parsed_content.parsed_data}
+        data = {'content': notebook_spec_parsed_content.raw_data}
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
@@ -1312,7 +1312,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_201_CREATED
         # Start with default config
         self.object.refresh_from_db()
-        config = self.object.notebook.config
+        content = self.object.notebook.content
 
         # Simulate stop the notebook
         self.object.notebook.delete()
@@ -1328,13 +1328,14 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert self.object.notebook is None
 
         # Starting again the notebook with different config
-        data['config']['build']['image'] = 'image_v2'
+        notebook_spec_parsed_content.parsed_data['build']['image'] = 'image_v2'
+        data['content'] = str(notebook_spec_parsed_content.parsed_data)
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as _:  # noqa
             self.auth_client.post(self.url, data)
 
         self.object.clear_cached_properties()
         # Check that the image was update
-        assert config != self.object.notebook.config
+        assert content != self.object.notebook.content
 
         # Trying to start an already running job returns 200
         # Starting again the tensorboard with different config
@@ -1346,7 +1347,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
 
     def test_start_during_build_process(self):
-        data = {'config': notebook_spec_parsed_content.parsed_data}
+        data = {'content': notebook_spec_parsed_content.raw_data}
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as start_mock:
             resp = self.auth_client.post(self.url, data=data)
 
@@ -1364,7 +1365,7 @@ class TestStartNotebookViewV1(BaseViewTest):
         assert start_mock.call_count == 0
 
     def test_starting_stopping_notebook_creating_new_one_create_new_job(self):
-        data = {'config': notebook_spec_parsed_content.parsed_data}
+        data = {'content': notebook_spec_parsed_content.raw_data}
         with patch('scheduler.tasks.notebooks.projects_notebook_build.apply_async') as start_mock:
             self.auth_client.post(self.url, data=data)
 

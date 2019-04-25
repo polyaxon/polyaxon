@@ -104,10 +104,10 @@ class HyperbandIterationManager(BaseIterationManager):
             if hptuning_config.hyperband.resume:
                 experiment.resume(
                     declarations=declarations,
-                    config=specification.parsed_data,
+                    content=specification.raw_data,
                     message=status_message)
             else:
                 experiment.restart(
                     experiment_group=self.experiment_group,
                     declarations=declarations,
-                    config=specification.parsed_data)
+                    content=specification.raw_data)

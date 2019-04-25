@@ -1,3 +1,3 @@
 -e git+https://github.com/polyaxon/polyaxon-dockerizer.git@77383b7bcf006b10e93618492d8ce7deef4a2c66#egg=polyaxon-dockerizer==0.0.1
--e git+https://github.com/polyaxon/polyaxon-client.git@a81f22387505fc75b309aa70fb5108d7daa40ed3#egg=polyaxon-client==0.4.4
--e git+https://github.com/polyaxon/polyaxon-schemas.git@442cc909f06d4a3ce894ff5917b16f2058eca47e#egg=polyaxon-schemas==0.4.4
+-e git+https://github.com/polyaxon/polyaxon-client.git@aef7a4d4a75720a9ffc03a3c85b32021de850e06#egg=polyaxon-client==0.4.4
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@08e2f18ed2a4ac9e838646c110c844a4556677e9#egg=polyaxon-schemas==0.4.4

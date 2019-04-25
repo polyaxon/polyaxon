@@ -210,13 +210,13 @@ class TestProjectBuildListViewV1(BaseViewTest):
         assert data == self.serializer_class(self.queryset[limit:], many=True).data
 
     def test_create_ttl(self):
-        data = {'config': build_spec_parsed_content.parsed_data, 'ttl': 10}
+        data = {'content': build_spec_parsed_content.raw_data, 'ttl': 10}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         job = BuildJob.objects.last()
         assert RedisTTL.get_for_build(job.id) == 10
 
-        data = {'config': build_spec_parsed_content.parsed_data, 'ttl': 'foo'}
+        data = {'content': build_spec_parsed_content.raw_data, 'ttl': 'foo'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -225,7 +225,7 @@ class TestProjectBuildListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'config': build_spec_parsed_content.parsed_data}
+        data = {'content': build_spec_parsed_content.raw_data}
         resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -245,7 +245,7 @@ class TestProjectBuildListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'config': build_spec_parsed_content.parsed_data}
+        data = {'content': build_spec_parsed_content.raw_data}
         with patch('scheduler.tasks.build_jobs.build_jobs_start.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
@@ -368,7 +368,7 @@ class TestBuildDetailViewV1(BaseViewTest):
         spec_parsed_content = BuildSpecification.read(spec_content)
 
         project = ProjectFactory(user=self.auth_client.user)
-        obj = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
+        obj = self.factory_class(project=project, content=spec_parsed_content.raw_data)
         url = '/{}/{}/{}/builds/{}/'.format(API_V1,
                                             project.user.username,
                                             project.name,

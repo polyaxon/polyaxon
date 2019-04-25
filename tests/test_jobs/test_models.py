@@ -137,7 +137,7 @@ class TestJobModel(BaseTest):
             build = BuildJobFactory()
             BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
             mock_start.return_value = build, True, True
-            job = JobFactory(config=config.parsed_data)
+            job = JobFactory(content=config.raw_data)
 
         assert JobStatus.objects.filter(job=job).count() == 2
         assert list(JobStatus.objects.filter(job=job).values_list(
@@ -157,7 +157,7 @@ class TestJobModel(BaseTest):
             build = BuildJobFactory()
             BuildJobStatus.objects.create(status=JobLifeCycle.SUCCEEDED, job=build)
             mock_start.return_value = build, True, True
-            job = JobFactory(config=config.parsed_data)
+            job = JobFactory(content=config.raw_data)
 
         assert mock_start.call_count == 1
 
@@ -236,7 +236,7 @@ class TestJobCommit(BaseViewTest):
 
     def create_job(self, config):
         config = JobSpecification.read(config)
-        return JobFactory(config=config.parsed_data, project=self.project)
+        return JobFactory(content=config.raw_data, project=self.project)
 
     def test_job_is_saved_with_commit(self):
         uploaded_file = self.get_upload_file()

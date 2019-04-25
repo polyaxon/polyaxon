@@ -80,7 +80,7 @@ class JobDetailSerializer(BookmarkedJobSerializer,
             'original_job',
             'description',
             'readme',
-            'config',
+            'content',
             'is_managed',
             'resources',
             'data_refs',
@@ -126,23 +126,23 @@ class JobCreateSerializer(serializers.ModelSerializer,
             'backend',
             'is_managed',
             'data_refs',
-            'config',
+            'content',
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
 
-    def validate_config(self, config):
-        """We only validate the config if passed.
+    def validate_content(self, content):
+        """We only validate the content if passed.
 
-        Also we use the JobSpecification to check if this config was
+        Also we use the JobSpecification to check if this content was
         intended as job.
         """
-        # config is optional
-        if not config:
-            return config
+        # content is optional
+        if not content:
+            return content
 
-        validate_job_spec_config(config)
-        return config
+        validate_job_spec_config(content)
+        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs, entity_name='Job')

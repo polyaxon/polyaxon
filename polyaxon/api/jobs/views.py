@@ -168,7 +168,7 @@ class JobCloneView(JobEndpoint, CreateEndpoint):
     serializer_class = JobSerializer
     event_type = None
 
-    def clone(self, obj, config, update_code_reference, description):
+    def clone(self, obj, content, update_code_reference, description):
         pass
 
     def post(self, request, *args, **kwargs):
@@ -185,12 +185,12 @@ class JobCloneView(JobEndpoint, CreateEndpoint):
                        actor_name=self.request.user.username)
 
         description = None
-        config = None
+        content = None
         update_code_reference = False
-        if 'config' in request.data:
+        if 'content' in request.data:
             spec = validate_job_spec_config(
-                [self.job.specification.parsed_data, request.data['config']], raise_for_rest=True)
-            config = spec.parsed_data
+                [self.job.specification.raw_data, request.data['content']], raise_for_rest=True)
+            content = spec.raw_data
         if 'update_code' in request.data:
             try:
                 update_code_reference = to_bool(request.data['update_code'])
@@ -199,7 +199,7 @@ class JobCloneView(JobEndpoint, CreateEndpoint):
         if 'description' in request.data:
             description = request.data['description']
         new_obj = self.clone(obj=self.job,
-                             config=config,
+                             content=content,
                              update_code_reference=update_code_reference,
                              description=description)
         if ttl:
@@ -212,9 +212,9 @@ class JobRestartView(JobCloneView):
     """Restart a job."""
     event_type = JOB_RESTARTED_TRIGGERED
 
-    def clone(self, obj, config, update_code_reference, description):
+    def clone(self, obj, content, update_code_reference, description):
         return obj.restart(user=self.request.user,
-                           config=config,
+                           content=content,
                            update_code_reference=update_code_reference,
                            description=description)
 

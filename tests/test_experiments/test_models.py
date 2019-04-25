@@ -52,17 +52,17 @@ class TestExperimentModel(BaseTest):
     DISABLE_RUNNER = False
 
     def test_create_experiment_with_no_spec_or_declarations(self):
-        experiment = ExperimentFactory(declarations=None, config=None)
+        experiment = ExperimentFactory(declarations=None, content=None)
         assert experiment.declarations is None
         assert experiment.specification is None
 
     def test_create_experiment_with_no_spec_and_declarations(self):
-        experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, config=None)
+        experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, content=None)
         assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
         assert experiment.specification is None
 
     def test_create_experiment_with_spec_trigger_declarations_creation(self):
-        experiment = ExperimentFactory(config=exec_experiment_resources_parsed_content.parsed_data)
+        experiment = ExperimentFactory(content=exec_experiment_resources_parsed_content.raw_data)
         assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
         assert isinstance(experiment.specification, ExperimentSpecification)
 
@@ -103,7 +103,7 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.project == experiment.project
         assert new_experiment.user == experiment.user
         assert new_experiment.description == experiment.description
-        assert new_experiment.config == experiment.config
+        assert new_experiment.content == experiment.content
         assert new_experiment.declarations == experiment.declarations
         assert new_experiment.code_reference == experiment.code_reference
 
@@ -117,7 +117,7 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.project == experiment.project
         assert new_experiment.user == experiment.user
         assert new_experiment.description == description
-        assert new_experiment.config == experiment.config
+        assert new_experiment.content == experiment.content
         assert new_experiment.declarations == declarations
         assert new_experiment.code_reference == experiment.code_reference
 
@@ -127,7 +127,7 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.project == experiment.project
         assert new_experiment.user == experiment.user
         assert new_experiment.description == experiment.description
-        assert new_experiment.config == experiment.config
+        assert new_experiment.content == experiment.content
         assert new_experiment.declarations == experiment.declarations
         assert new_experiment.code_reference == experiment.code_reference
 
@@ -141,7 +141,7 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.project == experiment.project
         assert new_experiment.user == experiment.user
         assert new_experiment.description == description
-        assert new_experiment.config == experiment.config
+        assert new_experiment.content == experiment.content
         assert new_experiment.declarations == declarations
         assert new_experiment.code_reference == experiment.code_reference
 
@@ -151,7 +151,7 @@ class TestExperimentModel(BaseTest):
         ExperimentStatus.objects.create(experiment=experiment, status=ExperimentLifeCycle.STOPPED)
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
 
-        config = experiment.config
+        content = experiment.content
         declarations = experiment.declarations
 
         # Resume with same config
@@ -160,7 +160,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
         last_resumed_experiment = experiment.clones.filter(
             cloning_strategy=CloningStrategy.RESUME).last()
-        assert last_resumed_experiment.config == config
+        assert last_resumed_experiment.content == content
         assert last_resumed_experiment.declarations == declarations
         assert Experiment.objects.count() == count_experiment + 1
         assert experiment.clones.count() == 1
@@ -175,7 +175,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
         last_resumed_experiment = experiment.clones.filter(
             cloning_strategy=CloningStrategy.RESUME).last()
-        assert last_resumed_experiment.config == config
+        assert last_resumed_experiment.content == content
         assert last_resumed_experiment.declarations != declarations
         assert last_resumed_experiment.declarations == new_declarations
         assert Experiment.objects.count() == count_experiment + 2
@@ -192,7 +192,7 @@ class TestExperimentModel(BaseTest):
         assert last_resumed_experiment_new.original_experiment.pk != last_resumed_experiment.pk
         assert (last_resumed_experiment_new.original_experiment.pk ==
                 last_resumed_experiment.original_experiment.pk)
-        assert last_resumed_experiment.config == config
+        assert last_resumed_experiment.content == content
         assert last_resumed_experiment.declarations != declarations
         assert last_resumed_experiment.declarations == new_declarations
         assert Experiment.objects.count() == count_experiment + 3
@@ -254,7 +254,7 @@ class TestExperimentModel(BaseTest):
 
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
         content = ExperimentSpecification.read(experiment_spec_content)
-        experiment = ExperimentFactory(config=content.parsed_data)
+        experiment = ExperimentFactory(content=content.raw_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -271,7 +271,7 @@ class TestExperimentModel(BaseTest):
         repo = RepoFactory()
 
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_build:
-            experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
+            experiment = ExperimentFactory(content=config.raw_data, project=repo.project)
 
         assert mock_build.call_count == 1
         assert experiment.project.repo is not None
@@ -298,7 +298,7 @@ class TestExperimentModel(BaseTest):
         repo = RepoFactory()
 
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_build:
-            experiment = ExperimentFactory(config=config.parsed_data, project=repo.project)
+            experiment = ExperimentFactory(content=config.raw_data, project=repo.project)
 
         assert mock_build.call_count == 1
         assert experiment.project.repo is not None
@@ -334,7 +334,7 @@ class TestExperimentModel(BaseTest):
                                    'ps': ['59e3601232b85a3d8be2511f23a62945']}
         mock_instance.spec = config
 
-        experiment = ExperimentFactory(config=config.parsed_data)
+        experiment = ExperimentFactory(content=config.raw_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -367,7 +367,7 @@ class TestExperimentModel(BaseTest):
                                    'ps': ['59e3601232b85a3d8be2511f23a62945']}
         mock_instance.spec = config
 
-        experiment = ExperimentFactory(config=config.parsed_data)
+        experiment = ExperimentFactory(content=config.raw_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -425,7 +425,7 @@ class TestExperimentModel(BaseTest):
 
     def test_set_metrics(self):
         config = ExperimentSpecification.read(experiment_spec_content)
-        experiment = ExperimentFactory(config=config.parsed_data)
+        experiment = ExperimentFactory(content=config.raw_data)
         assert experiment.metrics.count() == 0
 
         created_at = timezone.now()
@@ -562,7 +562,7 @@ class TestExperimentModel(BaseTest):
     def test_default_job_role(self):
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as _:  # noqa
             experiment = ExperimentFactory(
-                config=exec_experiment_resources_parsed_content.parsed_data)
+                content=exec_experiment_resources_parsed_content.raw_data)
             ExperimentJobFactory(experiment=experiment, role=TaskType.PS)
             ExperimentJobFactory(experiment=experiment, role=TaskType.MASTER)
             ExperimentJobFactory(experiment=experiment, role=TaskType.WORKER)
@@ -588,7 +588,7 @@ class TestExperimentCommit(BaseViewTest):
 
     def create_experiment(self, config):
         config = ExperimentSpecification.read(config)
-        return ExperimentFactory(config=config.parsed_data, project=self.project)
+        return ExperimentFactory(content=config.raw_data, project=self.project)
 
     def test_experiment_is_saved_with_commit(self):
         uploaded_file = self.get_upload_file()
@@ -627,7 +627,7 @@ class TestExperimentCommit(BaseViewTest):
             user=self.project.user,
             description=experiment.description,
             experiment_group=experiment.experiment_group,
-            config=experiment.config,
+            content=experiment.content,
             original_experiment=experiment,
             code_reference=experiment.code_reference
         )

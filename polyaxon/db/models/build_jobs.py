@@ -121,11 +121,11 @@ class BuildJob(AbstractJob,
 
     @cached_property
     def specification(self) -> 'BuildSpecification':
-        return BuildSpecification(values=self.config) if self.config else None
+        return BuildSpecification(values=self.content) if self.content else None
 
     @property
     def has_specification(self) -> bool:
-        return self.config is not None
+        return self.content is not None
 
     def _ping_heartbeat(self) -> None:
         RedisHeartBeat.build_ping(self.id)
@@ -167,14 +167,14 @@ class BuildJob(AbstractJob,
         )
         if not rebuild_cond:
             job = BuildJob.objects.filter(project=project,
-                                          config=build_spec.parsed_data,
+                                          content=build_spec.raw_data,
                                           code_reference=code_reference).last()
             if job:
                 return job, False
 
         return BuildJob.objects.create(user=user,
                                        project=project,
-                                       config=build_spec.parsed_data,
+                                       content=build_spec.raw_data,
                                        code_reference=code_reference), True
 
 

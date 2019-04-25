@@ -57,7 +57,7 @@ class CIService(Service):
             user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
-            config=specification.parsed_data,
+            content=specification.raw_data,
             code_reference_id=project.ci.code_reference_id
         )
 
@@ -69,7 +69,7 @@ class CIService(Service):
             user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
-            content=specification._data,  # pylint:disable=protected-access
+            content=specification.raw_data,
             code_reference_id=project.ci.code_reference_id
         )
 
@@ -81,7 +81,7 @@ class CIService(Service):
             user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
-            config=specification.parsed_data,
+            content=specification.raw_data,
             code_reference_id=project.ci.code_reference_id
         )
 
@@ -93,7 +93,7 @@ class CIService(Service):
             user_id=project.ci.user_id,
             project=project,
             tags=['ci'],
-            config=specification.parsed_data,
+            content=specification.raw_data,
             code_reference_id=project.ci.code_reference_id
         )
 

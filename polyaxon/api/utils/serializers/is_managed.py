@@ -8,7 +8,7 @@ class IsManagedMixin(serializers.Serializer):
     def _get_is_managed(self, value):
         return value if isinstance(value, bool) else True
 
-    def check_if_entity_is_managed(self, attrs, entity_name, config_field='config'):
+    def check_if_entity_is_managed(self, attrs, entity_name, config_field='content'):
         cond = (
             'is_managed' in attrs
             and self._get_is_managed(attrs.get('is_managed'))

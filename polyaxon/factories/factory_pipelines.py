@@ -18,7 +18,7 @@ class PipelineFactory(factory.DjangoModelFactory):
 class OperationFactory(factory.DjangoModelFactory):
     name = factory.Sequence("pipeline-{}".format)
     pipeline = factory.SubFactory(PipelineFactory)
-    content = job_spec_parsed_content.parsed_data
+    content = job_spec_parsed_content.raw_data
     entity_type = 'job'
 
     class Meta:

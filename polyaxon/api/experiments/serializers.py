@@ -190,7 +190,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
             'original_experiment',
             'merge',
             'readme',
-            'config',
+            'content',
             'resources',
             'run_env',
             'data_refs',
@@ -200,7 +200,7 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
             'tensorboard',
             'has_tensorboard',
         )
-        extra_kwargs = {'config': {'read_only': True},
+        extra_kwargs = {'content': {'read_only': True},
                         **BookmarkedExperimentSerializer.Meta.extra_kwargs}
 
     def get_resources(self, obj):
@@ -261,7 +261,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'original_experiment',
             'experiment_group',
             'build_job',
-            'config',
+            'content',
             'declarations',
             'backend',
             'framework',
@@ -272,18 +272,18 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
 
-    def validate_config(self, config):
-        """We only validate the config if passed.
+    def validate_content(self, content):
+        """We only validate the content if passed.
 
-        Also we use the ExperimentSpecification to check if this config was
+        Also we use the ExperimentSpecification to check if this content was
         intended as an experiment.
         """
-        # config is optional
-        if not config:
-            return config
+        # content is optional
+        if not content:
+            return content
 
-        validate_experiment_spec_config(config)
-        return config
+        validate_experiment_spec_config(content)
+        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs, entity_name='Experiment')

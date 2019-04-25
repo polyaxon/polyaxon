@@ -155,7 +155,7 @@ class TestTensorboardJobDetailSerializer(BaseTest):
         'finished_at',
         'last_status',
         'tags',
-        'config',
+        'content',
         'resources',
         'node_scheduled',
         'project',
@@ -344,7 +344,7 @@ class TestNotebookJobDetailSerializer(BaseTest):
         'finished_at',
         'last_status',
         'tags',
-        'config',
+        'content',
         'data_refs',
         'resources',
         'node_scheduled',
@@ -418,34 +418,34 @@ class BasePluginJobSerializerTest(BaseTest):
         assert serializer.is_valid() is False
 
         # Wrong spec
-        serializer = self.serializer_class(data={'config': {}})  # pylint:disable=not-callable
+        serializer = self.serializer_class(data={'content': {}})  # pylint:disable=not-callable
         assert serializer.is_valid() is False
 
     def test_validation_passes_for_valid_data(self):
         serializer = self.serializer_class(  # pylint:disable=not-callable
-            data={'config': self.content.parsed_data})
+            data={'content': self.content.raw_data})
         assert serializer.is_valid() is True
 
     def creating_plugin_job_from_valid_data(self):
         assert self.model_class.objects.count() == 0
         serializer = self.serializer_class(  # pylint:disable=not-callable
-            data={'config': self.content.parsed_data})
+            data={'content': self.content.raw_data})
         serializer.is_valid()
         serializer.save()
         assert self.model_class.objects.count() == 1
 
     def updating_plugin_job(self):
         obj = self.factory_class()  # pylint:disable=not-callable
-        assert obj.config['version'] == 1
+        assert 'version: 1' in obj.content
         config = self.content.parsed_data
         config['version'] = 2
         serializer = self.serializer_class(  # pylint:disable=not-callable
             instance=obj,
-            data={'config': config})
+            data={'content': str(config)})
         serializer.is_valid()
         serializer.save()
         obj.refresh_from_db()
-        assert obj.config['version'] == 2
+        assert 'version: 2' in obj.content
 
 
 @pytest.mark.plugins_mark

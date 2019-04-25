@@ -48,7 +48,7 @@ def projects_schedule_deletion(project_id, immediate=False):
                     'experiment_uuid': experiment.uuid.hex,
                     'experiment_group_name': None,
                     'experiment_group_uuid': None,
-                    'specification': experiment.config,
+                    'specification': experiment.content,
                     'update_status': True,
                     'collect_logs': False,
                     'is_managed': experiment.is_managed,

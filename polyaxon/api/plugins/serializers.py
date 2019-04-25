@@ -29,29 +29,29 @@ class PluginJobBaseSerializer(serializers.ModelSerializer,
             'description',
             'project',
             'unique_name',
-            'config',
+            'content',
             'pod_id',
             'build_job',
             'last_status',
             'tags',  # Need to implement TagsSerializerMixin
         )
 
-    def _validate_spec(self, config):
+    def _validate_spec(self, content):
         pass
 
-    def validate_config(self, config):
+    def validate_content(self, content):
         # content is optional
-        if not config:
-            return config
+        if not content:
+            return content
 
-        self._validate_spec(config)
+        self._validate_spec(content)
         # Resume normal creation
-        return config
+        return content
 
 
 class TensorboardJobSerializer(PluginJobBaseSerializer):
-    def _validate_spec(self, config):
-        validate_tensorboard_spec_config(config)
+    def _validate_spec(self, content):
+        validate_tensorboard_spec_config(content)
 
     class Meta(PluginJobBaseSerializer.Meta):
         model = TensorboardJob
@@ -67,8 +67,8 @@ class TensorboardJobSerializer(PluginJobBaseSerializer):
 
 
 class NotebookJobSerializer(PluginJobBaseSerializer):
-    def _validate_spec(self, config):
-        validate_notebook_spec_config(config)
+    def _validate_spec(self, content):
+        validate_notebook_spec_config(content)
 
     class Meta(PluginJobBaseSerializer.Meta):
         model = NotebookJob
@@ -122,7 +122,7 @@ class TensorboardJobDetailSerializer(ProjectTensorboardJobSerializer,
                                      NamesMixin):
     class Meta(ProjectTensorboardJobSerializer.Meta):
         fields = ProjectTensorboardJobSerializer.Meta.fields + (
-            'config',
+            'content',
             'description',
             'resources',
             'node_scheduled',
@@ -179,7 +179,7 @@ class NotebookJobDetailSerializer(ProjectNotebookJobSerializer,
                                   NamesMixin):
     class Meta(ProjectNotebookJobSerializer.Meta):
         fields = ProjectNotebookJobSerializer.Meta.fields + (
-            'config',
+            'content',
             'description',
             'resources',
             'data_refs',

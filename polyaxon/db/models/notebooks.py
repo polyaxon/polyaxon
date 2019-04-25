@@ -61,11 +61,11 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
 
     @cached_property
     def specification(self) -> 'NotebookSpecification':
-        return NotebookSpecification(values=self.config) if self.config else None
+        return NotebookSpecification(values=self.content) if self.content else None
 
     @property
     def has_specification(self) -> bool:
-        return self.config is not None
+        return self.content is not None
 
     def set_status(self,  # pylint:disable=arguments-differ
                    status: str,

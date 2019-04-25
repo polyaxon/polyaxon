@@ -217,13 +217,13 @@ class TestProjectJobListViewV1(BaseViewTest):
         assert data == self.serializer_class(queryset[limit:], many=True).data
 
     def test_create_ttl(self):
-        data = {'config': job_spec_parsed_content.parsed_data, 'ttl': 10}
+        data = {'content': job_spec_parsed_content.raw_data, 'ttl': 10}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         job = Job.objects.last()
         assert RedisTTL.get_for_job(job.id) == 10
 
-        data = {'config': job_spec_parsed_content.parsed_data, 'ttl': 'foo'}
+        data = {'content': job_spec_parsed_content.raw_data, 'ttl': 'foo'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -232,7 +232,7 @@ class TestProjectJobListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'config': job_spec_parsed_content.parsed_data}
+        data = {'content': job_spec_parsed_content.raw_data}
         resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -252,7 +252,7 @@ class TestProjectJobListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'config': job_spec_parsed_content.parsed_data}
+        data = {'content': job_spec_parsed_content.raw_data}
         with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
@@ -382,7 +382,7 @@ class TestJobDetailViewV1(BaseViewTest):
         spec_parsed_content = JobSpecification.read(spec_content)
 
         project = ProjectFactory(user=self.auth_client.user)
-        exp = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
+        exp = self.factory_class(project=project, content=spec_parsed_content.raw_data)
         url = '/{}/{}/{}/jobs/{}/'.format(API_V1,
                                           project.user.username,
                                           project.name,
@@ -658,13 +658,7 @@ class TestRestartJobViewV1(BaseViewTest):
 
     def test_restart_patch_config(self):
         data = {
-            'config': {
-                'environment': {
-                    'resources': {
-                        'cpu': {'limits': 0.1, 'requests': 0.2}
-                    }
-                }
-            }
+            'content': "{'environment': {'resources': {'cpu': {'limits': 0.1, 'requests': 0.2}}}}"
         }
         assert self.queryset.first().specification.environment is None
         with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:
@@ -675,7 +669,7 @@ class TestRestartJobViewV1(BaseViewTest):
         assert self.queryset.count() == 2
         assert self.queryset.first().specification.environment is None
         resources = self.queryset.last().specification.environment.resources.to_light_dict()
-        assert resources['cpu'] == data['config']['environment']['resources']['cpu']
+        assert resources['cpu'] == {'limits': 0.1, 'requests': 0.2}
 
         last_job = self.queryset.last()
         assert last_job.is_clone is True
@@ -686,7 +680,7 @@ class TestRestartJobViewV1(BaseViewTest):
         assert last_job.original_unique_name == self.object.unique_name
 
     def test_restart_patch_wrong_config_raises(self):
-        data = {'config': {'lr': 0.1}}
+        data = {'content': "{'lr': 0.1}"}
         assert self.queryset.first().specification is not None
         resp = self.auth_client.post(self.url, data)
 

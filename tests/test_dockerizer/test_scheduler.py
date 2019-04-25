@@ -42,10 +42,11 @@ class TestDockerizerScheduler(BaseTest):
         """Check the case when the job is already running and
         we just set the requesting service to running."""
         config = {'image': 'busybox:tag'}
-        build_job = BuildJobFactory(project=self.project,
-                                    user=self.project.user,
-                                    code_reference=self.code_reference,
-                                    config=BuildSpecification.create_specification(config))
+        build_job = BuildJobFactory(
+            project=self.project,
+            user=self.project.user,
+            code_reference=self.code_reference,
+            content=BuildSpecification.create_specification(config, to_dict=False).raw_data)
         build_job.set_status(JobLifeCycle.RUNNING)
 
         assert BuildJob.objects.count() == 1
@@ -65,10 +66,11 @@ class TestDockerizerScheduler(BaseTest):
         """Check the case when the job is already done and
         we need to create a new job."""
         config = {'image': 'busybox:tag'}
-        build_job = BuildJobFactory(project=self.project,
-                                    user=self.project.user,
-                                    code_reference=self.code_reference,
-                                    config=BuildSpecification.create_specification(config))
+        build_job = BuildJobFactory(
+            project=self.project,
+            user=self.project.user,
+            code_reference=self.code_reference,
+            content=BuildSpecification.create_specification(config, to_dict=False).raw_data)
         build_job.set_status(JobLifeCycle.STOPPED)
 
         assert BuildJob.objects.count() == 1

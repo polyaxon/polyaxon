@@ -85,12 +85,12 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
     @staticmethod
     def _get_default_tensorboard_config():
         specification = TensorboardSpecification.create_specification(
-            {'image': conf.get('TENSORBOARD_DOCKER_IMAGE')})
-        return {'config': specification}
+            {'image': conf.get('TENSORBOARD_DOCKER_IMAGE')}, to_dict=False)
+        return {'content': specification.raw_data}
 
     def _create_tensorboard(self, project, experiment_group=None, experiment=None):
         config = self.request.data
-        if not config.get('config'):
+        if not config.get('content'):
             config.update(self._get_default_tensorboard_config())
         serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)
@@ -250,12 +250,12 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
         if not conf.get('NOTEBOOK_DOCKER_IMAGE'):
             raise ValidationError('Please provide a polyaxonfile, or set a default notebook image.')
         specification = NotebookSpecification.create_specification(
-            {'image': conf.get('NOTEBOOK_DOCKER_IMAGE')})
-        return {'config': specification}
+            {'image': conf.get('NOTEBOOK_DOCKER_IMAGE')}, to_dict=False)
+        return {'content': specification.raw_data}
 
     def _create_notebook(self, project):
         config = self.request.data
-        if not config.get('config'):
+        if not config.get('content'):
             config.update(self._get_default_notebook_config())
         serializer = self.get_serializer(data=config)
         serializer.is_valid(raise_exception=True)

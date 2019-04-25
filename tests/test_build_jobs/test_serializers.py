@@ -131,7 +131,7 @@ class TestBuildJobDetailSerializer(BaseTest):
         'user',
         'last_status',
         'description',
-        'config',
+        'content',
         'is_managed',
         'tags',
         'started_at',

@@ -12,7 +12,7 @@ fake = FakerFactory.create()
 
 
 class BuildJobFactory(factory.DjangoModelFactory):
-    config = BuildSpecification.create_specification({'image': 'busybox'})
+    content = BuildSpecification.create_specification({'image': 'busybox'}, to_dict=False).raw_data
 
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)

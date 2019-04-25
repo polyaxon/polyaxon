@@ -12,7 +12,7 @@ fake = FakerFactory.create()
 
 
 class TensorboardJobFactory(factory.DjangoModelFactory):
-    config = tensorboard_spec_parsed_content.parsed_data
+    content = tensorboard_spec_parsed_content.raw_data
 
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)
@@ -22,7 +22,7 @@ class TensorboardJobFactory(factory.DjangoModelFactory):
 
 
 class NotebookJobFactory(factory.DjangoModelFactory):
-    config = notebook_spec_parsed_content.parsed_data
+    content = notebook_spec_parsed_content.raw_data
 
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)

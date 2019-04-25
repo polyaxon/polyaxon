@@ -287,7 +287,7 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
     serializer_class = ExperimentSerializer
     event_type = None
 
-    def clone(self, obj, config, declarations, update_code_reference, description):
+    def clone(self, obj, content, declarations, update_code_reference, description):
         pass
 
     def post(self, request, *args, **kwargs):
@@ -305,13 +305,13 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
                        actor_name=self.request.user.username)
 
         description = None
-        config = None
+        content = None
         declarations = None
         update_code_reference = False
-        if 'config' in request.data:
+        if 'content' in request.data:
             spec = validate_experiment_spec_config(
-                [obj.specification.parsed_data, request.data['config']], raise_for_rest=True)
-            config = spec.parsed_data
+                [obj.specification.raw_data, request.data['content']], raise_for_rest=True)
+            content = spec.raw_data
             declarations = spec.declarations
         if 'update_code' in request.data:
             update_code_reference = to_bool(request.data['update_code'],
@@ -320,7 +320,7 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
         if 'description' in request.data:
             description = request.data['description']
         new_obj = self.clone(obj=obj,
-                             config=config,
+                             content=content,
                              declarations=declarations,
                              update_code_reference=update_code_reference,
                              description=description)
@@ -335,9 +335,9 @@ class ExperimentRestartView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     event_type = EXPERIMENT_RESTARTED_TRIGGERED
 
-    def clone(self, obj, config, declarations, update_code_reference, description):
+    def clone(self, obj, content, declarations, update_code_reference, description):
         return obj.restart(user=self.request.user,
-                           config=config,
+                           content=content,
                            declarations=declarations,
                            update_code_reference=update_code_reference,
                            description=description)
@@ -348,9 +348,9 @@ class ExperimentResumeView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     event_type = EXPERIMENT_RESUMED_TRIGGERED
 
-    def clone(self, obj, config, declarations, update_code_reference, description):
+    def clone(self, obj, content, declarations, update_code_reference, description):
         return obj.resume(user=self.request.user,
-                          config=config,
+                          content=content,
                           declarations=declarations,
                           update_code_reference=update_code_reference,
                           description=description)
@@ -361,9 +361,9 @@ class ExperimentCopyView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     event_type = EXPERIMENT_COPIED_TRIGGERED
 
-    def clone(self, obj, config, declarations, update_code_reference, description):
+    def clone(self, obj, content, declarations, update_code_reference, description):
         return obj.copy(user=self.request.user,
-                        config=config,
+                        content=content,
                         declarations=declarations,
                         update_code_reference=update_code_reference,
                         description=description)
@@ -798,7 +798,7 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                 'experiment_uuid': obj.uuid.hex,
                 'experiment_group_name': group.unique_name if group else None,
                 'experiment_group_uuid': group.uuid.hex if group else None,
-                'specification': obj.config,
+                'specification': obj.content,
                 'update_status': True,
                 'collect_logs': True,
                 'is_managed': obj.is_managed,
@@ -829,7 +829,7 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                     'experiment_uuid': experiment.uuid.hex,
                     'experiment_group_name': group.unique_name if group else None,
                     'experiment_group_uuid': group.uuid.hex if group else None,
-                    'specification': experiment.config,
+                    'specification': experiment.content,
                     'update_status': True,
                     'collect_logs': True,
                     'is_managed': experiment.is_managed,

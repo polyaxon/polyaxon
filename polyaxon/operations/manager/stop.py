@@ -13,7 +13,7 @@ def stop_experiment(experiment: 'Experiment', message: str = None):
             'project_uuid': experiment.project.uuid.hex,
             'experiment_name': experiment.unique_name,
             'experiment_uuid': experiment.uuid.hex,
-            'specification': experiment.config,
+            'specification': experiment.content,
             'update_status': True,
             'collect_logs': True,
             'is_managed': experiment.is_managed,

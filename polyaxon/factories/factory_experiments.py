@@ -13,7 +13,7 @@ from factories.fixtures import exec_experiment_spec_parsed_content
 
 
 class ExperimentFactory(factory.DjangoModelFactory):
-    config = exec_experiment_spec_parsed_content.parsed_data
+    content = exec_experiment_spec_parsed_content.raw_data
 
     user = factory.SubFactory(UserFactory)
     project = factory.SubFactory(ProjectFactory)

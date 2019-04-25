@@ -395,7 +395,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'config': exec_experiment_spec_parsed_content.parsed_data}
+        data = {'content': exec_experiment_spec_parsed_content.raw_data}
         resp = self.auth_client.post(self.url, data)
 
         assert resp.status_code == status.HTTP_201_CREATED
@@ -409,7 +409,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
-        data = {'config': exec_experiment_spec_parsed_content.parsed_data}
+        data = {'content': exec_experiment_spec_parsed_content.raw_data}
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
 
@@ -422,7 +422,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
     def test_create_with_outputs_refs(self):
-        data = {'config': exec_experiment_outputs_refs_parsed_content.parsed_data}
+        data = {'content': exec_experiment_outputs_refs_parsed_content.raw_data}
         resp = self.auth_client.post(self.url, data)
         # No job refs
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -449,7 +449,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert self.queryset.count() == self.num_objects + 1
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
-        assert last_object.config is None
+        assert last_object.content is None
 
     def test_create_with_declarations(self):
         data = {
@@ -464,7 +464,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert self.queryset.count() == self.num_objects + 1
         last_object = self.model_class.objects.last()
         assert last_object.project == self.project
-        assert last_object.config is None
+        assert last_object.content is None
         assert last_object.declarations == {
             'lr': 0.1,
             'dropout': 0.5
@@ -840,37 +840,8 @@ class TestRunnerExperimentGroupExperimentListViewV1(BaseViewTest):
         lr:
           linspace: '1.:3.:3'
 
-    model:
-      model_type: regressor
-      loss:
-        MeanSquaredError:
-      optimizer:
-        Adam:
-          learning_rate: "{{ lr }}"
-      graph:
-        input_layers: images
-        layers:
-          - Conv2D:
-              filters: 64
-              kernel_size: [3, 3]
-              strides: [1, 1]
-              activation: relu
-          - MaxPooling2D:
-              kernels: 2
-          - Flatten:
-          - Dense:
-              units: 10
-              activation: softmax
-
-    train:
-      data_pipeline:
-        TFRecordImagePipeline:
-          batch_size: 64
-          num_epochs: 1
-          shuffle: true
-          dynamic_pad: false
-          data_files: ["../data/mnist/mnist_train.tfrecord"]
-          meta_data_file: "../data/mnist/meta_data.json"
+    run:
+      cmd: python -u model.py --lr={{ lr }}
 """
         self.project = ProjectFactory()
         with patch.object(GroupChecks, 'is_checked') as mock_is_check:
@@ -1036,7 +1007,7 @@ class TestExperimentDetailViewV1(BaseViewTest):
         spec_parsed_content = ExperimentSpecification.read(spec_content)
 
         project = ProjectFactory(user=self.auth_client.user)
-        exp = self.factory_class(project=project, config=spec_parsed_content.parsed_data)
+        exp = self.factory_class(project=project, content=spec_parsed_content.raw_data)
         url = '/{}/{}/{}/experiments/{}/'.format(API_V1,
                                                  project.user.username,
                                                  project.name,
@@ -1729,7 +1700,7 @@ class TestExperimentJobLogsViewV1(BaseViewTest):
         project = ProjectFactory(user=self.auth_client.user)
         self.experiment = ExperimentFactory(
             project=project,
-            config=exec_experiment_resources_parsed_content.parsed_data)
+            content=exec_experiment_resources_parsed_content.raw_data)
         self.experiment_job = ExperimentJobFactory(experiment=self.experiment)
         self.logs = []
         self.url = '/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
@@ -1833,7 +1804,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_restart_patch_config(self):
-        data = {'config': {'declarations': {'lr': 0.1}}}
+        data = {'content': "{'declarations': {'lr': 0.1}}"}
         assert self.queryset.first().declarations is None
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
@@ -1842,7 +1813,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert self.queryset.count() == 2
         assert self.queryset.first().declarations is None
-        assert self.queryset.last().declarations == data['config']['declarations']
+        assert self.queryset.last().declarations == {'lr': 0.1}
 
         last_experiment = self.queryset.last()
         assert last_experiment.is_clone is True
@@ -1853,7 +1824,7 @@ class TestRestartExperimentViewV1(BaseViewTest):
         assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_restart_patch_wrong_config_raises(self):
-        data = {'config': {'lr': 0.1}}
+        data = {'content': "{'lr': 0.1}"}
         assert self.queryset.first().declarations is None
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
@@ -1899,7 +1870,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
         assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_resume_patch_config(self):
-        data = {'config': {'declarations': {'lr': 0.1}}}
+        data = {'content': "{'declarations': {'lr': 0.1}}"}
         assert self.queryset.first().declarations is None
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
@@ -1908,7 +1879,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert self.queryset.count() == 2
         assert self.queryset.first().declarations is None
-        assert self.queryset.last().declarations == data['config']['declarations']
+        assert self.queryset.last().declarations == {'lr': 0.1}
 
         last_experiment = self.queryset.last()
         assert last_experiment.is_clone is True
@@ -1919,7 +1890,7 @@ class TestResumeExperimentViewV1(BaseViewTest):
         assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_resume_patch_wrong_config_raises(self):
-        data = {'config': {'lr': 0.1}}
+        data = {'content': "{'lr': 0.1}"}
         assert self.queryset.first().declarations is None
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
@@ -1967,7 +1938,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
         assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_resume_patch_config(self):
-        data = {'config': {'declarations': {'lr': 0.1}}}
+        data = {'content': "{'declarations': {'lr': 0.1}}"}
         assert self.queryset.first().declarations is None
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)
@@ -1976,7 +1947,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
         assert mock_fct.call_count == 1
         assert self.queryset.count() == 2
         assert self.queryset.first().declarations is None
-        assert self.queryset.last().declarations == data['config']['declarations']
+        assert self.queryset.last().declarations == {'lr': 0.1}
 
         last_experiment = self.queryset.last()
         assert last_experiment.is_clone is True
@@ -1987,7 +1958,7 @@ class TestCopyExperimentViewV1(BaseViewTest):
         assert last_experiment.original_unique_name == self.object.unique_name
 
     def test_resume_patch_wrong_config_raises(self):
-        data = {'config': {'lr': 0.1}}
+        data = {'content': "{'lr': 0.1}"}
         assert self.queryset.first().declarations is None
         with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
             resp = self.auth_client.post(self.url, data)

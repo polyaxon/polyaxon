@@ -141,7 +141,7 @@ class TestJobDetailSerializer(BaseTest):
         'last_status',
         'description',
         'readme',
-        'config',
+        'content',
         'is_managed',
         'backend',
         'tags',

@@ -41,7 +41,7 @@ class ExperimentGroupHandler(BaseHandler):
                         'experiment_uuid': experiment.uuid.hex,
                         'experiment_group_name': instance.unique_name,
                         'experiment_group_uuid': instance.uuid.hex,
-                        'specification': experiment.config,
+                        'specification': experiment.content,
                         'update_status': True,
                         'collect_logs': True,
                         'is_managed': experiment.is_managed,

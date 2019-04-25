@@ -15,7 +15,7 @@ def skip_experiment(experiment: 'Experiment', message: str = None):
             'project_uuid': experiment.project.uuid.hex,
             'experiment_name': experiment.unique_name,
             'experiment_uuid': experiment.uuid.hex,
-            'specification': experiment.config,
+            'specification': experiment.content,
             'update_status': False,
             'collect_logs': False,
             'is_managed': experiment.is_managed,

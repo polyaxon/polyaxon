@@ -240,7 +240,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'description',
         'readme',
         'experiment_group',
-        'config',
+        'content',
         'started_at',
         'finished_at',
         'is_clone',
@@ -379,7 +379,7 @@ class TestExperimentDetailSerializer(BaseTest):
         """
         spec = ExperimentSpecification.read(spec_content)
 
-        obj = self.factory_class(config=spec.parsed_data)
+        obj = self.factory_class(content=spec.raw_data)
         obj1_query = queries.experiments_details.get(id=obj.id)
         serializer = self.serializer_class(obj1_query)
         data = serializer.data

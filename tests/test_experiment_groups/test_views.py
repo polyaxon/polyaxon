@@ -294,17 +294,8 @@ version: 1
 
 kind: group
 
-model:
-  model_type: classifier
-
-  graph:
-    input_layers: images
-    layers:
-      - Conv2D:
-          filters: 64
-          kernel_size: [3, 3]
-          strides: [1, 1]
-          activation: relu"""
+run:
+  cmd: my_command --lr={{ lr }}"""
 
         data = {'content': content, 'description': 'new-deep'}
         resp = self.auth_client.post(self.url, data)
@@ -325,17 +316,8 @@ hptuning:
       lr:
         values: [0.1, 0.2, 0.3]
 
-model:
-  model_type: classifier
-
-  graph:
-    input_layers: images
-    layers:
-      - Conv2D:
-          filters: 64
-          kernel_size: [3, 3]
-          strides: [1, 1]
-          activation: relu"""
+run:
+  cmd: my_command --lr={{ lr }}"""
 
         data = {'content': content, 'description': 'new-deep'}
         resp = self.auth_client.post(self.url, data)

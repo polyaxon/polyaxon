@@ -75,7 +75,7 @@ class BuildJobDetailSerializer(BookmarkedBuildJobSerializer,
         fields = BookmarkedBuildJobSerializer.Meta.fields + (
             'merge',
             'description',
-            'config',
+            'content',
             'resources',
             'node_scheduled',
             'num_jobs',
@@ -124,25 +124,25 @@ class BuildJobCreateSerializer(serializers.ModelSerializer,
             'name',
             'unique_name',
             'description',
-            'config',
+            'content',
             'backend',
             'is_managed',
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
 
-    def validate_config(self, config):
-        """We only validate the config if passed.
+    def validate_content(self, content):
+        """We only validate the content if passed.
 
-        Also we use the BuildSpecification to check if this config was
+        Also we use the BuildSpecification to check if this content was
         intended as an experiment.
         """
-        # config is optional
-        if not config:
-            return config
+        # content is optional
+        if not content:
+            return content
 
-        validate_build_spec_config(config)
-        return config
+        validate_build_spec_config(content)
+        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs, entity_name='Build')

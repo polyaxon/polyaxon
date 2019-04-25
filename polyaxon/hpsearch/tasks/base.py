@@ -41,7 +41,7 @@ def create_group_experiments(experiment_group, suggestions):
                 project_id=experiment_group.project_id,
                 user_id=experiment_group.user_id,
                 experiment_group=experiment_group,
-                config=specification.get_experiment_spec(matrix_declaration=suggestion).parsed_data,
+                content=specification.get_experiment_spec(matrix_declaration=suggestion).raw_data,
                 code_reference_id=experiment_group.code_reference_id)
         except ValidationError:
             experiment_group.set_status(
