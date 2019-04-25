@@ -8,6 +8,7 @@ from hestia.cached_property import cached_property
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.build import BuildConfig
 from polyaxon_schemas.ops.environments.persistence import PersistenceConfig
+from polyaxon_schemas.ops.group import GroupConfig
 from polyaxon_schemas.specs.base import BaseSpecification
 from polyaxon_schemas.specs.experiment import ExperimentSpecification
 from polyaxon_schemas.specs.libs import validator
@@ -54,6 +55,11 @@ class GroupSpecification(BaseSpecification):
     POSSIBLE_SECTIONS = ExperimentSpecification.POSSIBLE_SECTIONS + (
         BaseSpecification.HP_TUNING,
     )
+    CONFIG = GroupConfig
+
+    def __init__(self, values):
+        super(GroupSpecification, self).__init__(values)
+        self._set_config(self._data)
 
     def _extra_validation(self):
         if not self.matrix:

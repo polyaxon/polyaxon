@@ -19,13 +19,15 @@ def get_obj_or_list_obj(container, value, min_length=None, max_length=None):
         pass
 
     if not isinstance(value, (list, tuple)):
-        raise ValidationError("This field expects an int or a list of ints.")
+        raise ValidationError("This field expects an {container} or a list of {container}s.".format(
+            container=container.__class__.__name__))
 
     value = validate.Length(min=min_length, max=max_length)(value)
     try:
         return [container.deserialize(v) for v in value]
     except (ValueError, TypeError):
-        raise ValidationError("This field expects an int or a list of ints.")
+        raise ValidationError("This field expects an {container} or a list of {container}s.".format(
+            container=container.__class__.__name__))
 
 
 class UUID(fields.UUID):

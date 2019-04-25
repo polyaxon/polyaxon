@@ -296,16 +296,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.outputs.jobs == [111]
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        model = spec.model
-        assert isinstance(model, RegressorConfig)
-        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-        assert isinstance(model.optimizer, AdamConfig)
-        assert isinstance(model.graph, GraphConfig)
-        assert len(model.graph.layers) == 4
-        assert model.graph.input_layers == [['images', 0, 0]]
-        last_layer = model.graph.layers[-1].name
-        assert model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
+            **spec.declarations
+        )
 
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(os.path.abspath(
@@ -337,13 +330,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        model = spec.model
-        assert isinstance(model, RegressorConfig)
-        assert model.optimizer.learning_rate in [3.3, 4.4]
-        assert isinstance(model.graph, GraphConfig)
-        assert len(model.graph.layers) == 4
-        assert model.graph.input_layers == [['images', 0, 0]]
-        assert model.graph.layers[1].pool_size in ((1, 1), (2, 2))
+        assert spec.run.cmd == 'train --param1={param1} --param2={param2}'.format(
+            **spec.declarations
+        )
 
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
@@ -378,17 +367,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-
-        model = spec.model
-        assert isinstance(model, RegressorConfig)
-        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-        assert isinstance(model.optimizer, AdamConfig)
-        assert isinstance(model.graph, GraphConfig)
-        assert len(model.graph.layers) == 4
-        assert model.graph.input_layers == [['images', 0, 0]]
-        last_layer = model.graph.layers[-1].name
-        assert model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
+            **spec.declarations
+        )
 
     def test_matrix_large_n_experiments_ignored_file_passes(self):
         plxfile = PolyaxonFile(
@@ -423,17 +404,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-
-        model = spec.model
-        assert isinstance(model, RegressorConfig)
-        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-        assert isinstance(model.optimizer, AdamConfig)
-        assert isinstance(model.graph, GraphConfig)
-        assert len(model.graph.layers) == 4
-        assert model.graph.input_layers == [['images', 0, 0]]
-        last_layer = model.graph.layers[-1].name
-        assert model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
+            **spec.declarations
+        )
 
     def test_one_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
@@ -453,16 +426,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        model = spec.model
-        assert isinstance(model, RegressorConfig)
-        assert isinstance(model.loss, (MeanSquaredErrorConfig, AbsoluteDifferenceConfig))
-        assert isinstance(model.optimizer, AdamConfig)
-        assert isinstance(model.graph, GraphConfig)
-        assert len(model.graph.layers) == 4
-        assert model.graph.input_layers == [['images', 0, 0]]
-        last_layer = model.graph.layers[-1].name
-        assert model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
+        assert spec.run.cmd == 'train --loss="{}"'.format(spec.declarations['loss'])
 
     def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
@@ -543,7 +507,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
-        declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+        # declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+        declarations['num_masks'] = 10
         assert run.cmd == ('video_prediction_train '
                            '--model="{model}" '
                            '--num_masks={num_masks}').format(
@@ -579,7 +544,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
-        declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+        # declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
+        declarations['num_masks'] = 10
         assert run.cmd == ('video_prediction_train '
                            '--model="{model}" '
                            '--num_masks={num_masks}').format(

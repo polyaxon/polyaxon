@@ -27,9 +27,11 @@ build:
     - pip install some_lib
 
 run:
-  cmd:
-    if:
-      cond: "'DNA' == '{{ model }}'"
-      do: video_prediction_train --model="{{ model }}" --num_masks=1
-      else_do: video_prediction_train --model="{{ model }}" --num_masks=10
+  cmd: video_prediction_train --model="{{ model }}" --num_masks=10
+#run:
+#  cmd:
+#    if:
+#      cond: "'DNA' == '{{ model }}'"
+#      do: video_prediction_train --model="{{ model }}" --num_masks=1
+#      else_do: video_prediction_train --model="{{ model }}" --num_masks=10
 ...

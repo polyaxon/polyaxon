@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields
+from marshmallow import fields, validate
 
 from polyaxon_schemas.ops.experiment import ExperimentConfig, ExperimentSchema
 from polyaxon_schemas.ops.hptuning import HPTuningSchema
@@ -9,6 +9,7 @@ from polyaxon_schemas.ops.run import BaseRunConfig
 
 
 class GroupSchema(ExperimentSchema):
+    kind = fields.Str(allow_none=None, validate=validate.Equal('group'))
     hptuning = fields.Nested(HPTuningSchema, allow_none=None)
 
     @staticmethod
@@ -17,8 +18,8 @@ class GroupSchema(ExperimentSchema):
 
 
 class GroupConfig(ExperimentConfig):
-    SCHEMA = ExperimentSchema
-    IDENTIFIER = 'experiment'
+    SCHEMA = GroupSchema
+    IDENTIFIER = 'group'
     REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ['backend', 'framework']
 
     def __init__(self,

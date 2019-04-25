@@ -105,10 +105,13 @@ class BaseSpecification(object):
     def config(self):
         return self._config
 
+    def _set_config(self, data):
+        self._config = self.CONFIG.from_dict(copy.deepcopy(data))
+
     def _set_parsed_data(self):
         parsed_data = Parser.parse(self, self._data, None)
         if self.CONFIG:
-            self._config = self.CONFIG.from_dict(copy.deepcopy(parsed_data))
+            self._set_config(parsed_data)
         else:
             self._validated_data = validator.validate(spec=self, data=parsed_data)
         self._parsed_data = parsed_data
