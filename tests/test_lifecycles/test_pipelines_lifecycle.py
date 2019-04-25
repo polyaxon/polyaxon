@@ -36,7 +36,9 @@ class TestPipelinesStatusesTransition(BaseTest):
         for status in PipelineLifeCycle.VALUES:
             can_transition = PipelineLifeCycle.can_transition(
                 status_from=status, status_to=PipelineLifeCycle.RUNNING)
-            if status in {PipelineLifeCycle.SCHEDULED, PipelineLifeCycle.WARNING}:
+            if status in {PipelineLifeCycle.CREATED,
+                          PipelineLifeCycle.SCHEDULED,
+                          PipelineLifeCycle.WARNING}:
                 assert can_transition is True
             else:
                 assert can_transition is False
@@ -54,6 +56,15 @@ class TestPipelinesStatusesTransition(BaseTest):
         for status in PipelineLifeCycle.VALUES:
             can_transition = PipelineLifeCycle.can_transition(
                 status_from=status, status_to=PipelineLifeCycle.STOPPED)
+            if status not in PipelineLifeCycle.DONE_STATUS:
+                assert can_transition is True
+            else:
+                assert can_transition is False
+
+        # -> SUCCEEDED
+        for status in PipelineLifeCycle.VALUES:
+            can_transition = PipelineLifeCycle.can_transition(
+                status_from=status, status_to=PipelineLifeCycle.SUCCEEDED)
             if status not in PipelineLifeCycle.DONE_STATUS:
                 assert can_transition is True
             else:

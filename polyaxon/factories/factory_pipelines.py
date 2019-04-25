@@ -3,6 +3,7 @@ import factory
 from db.models.pipelines import Operation, OperationRun, Pipeline, PipelineRun
 from factories.factory_projects import ProjectFactory
 from factories.factory_users import UserFactory
+from factories.fixtures import job_spec_parsed_content
 
 
 class PipelineFactory(factory.DjangoModelFactory):
@@ -17,6 +18,8 @@ class PipelineFactory(factory.DjangoModelFactory):
 class OperationFactory(factory.DjangoModelFactory):
     name = factory.Sequence("pipeline-{}".format)
     pipeline = factory.SubFactory(PipelineFactory)
+    content = job_spec_parsed_content.parsed_data
+    entity_type = 'job'
 
     class Meta:
         model = Operation

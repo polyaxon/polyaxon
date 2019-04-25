@@ -62,7 +62,10 @@ class BaseStatuses(object):
 
     @classmethod
     def is_stoppable(cls, status: str) -> bool:
-        return not cls.is_done(status)
+        return (cls.is_running(status=status) or
+                cls.is_unschedulable(status=status) or
+                cls.is_warning(status=status) or
+                cls.is_unknown(status=status))
 
     @classmethod
     def is_done(cls, status: str) -> bool:

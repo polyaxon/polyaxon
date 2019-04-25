@@ -4,7 +4,6 @@ from administration.register.utils import DiffModelAdmin
 from db.models.pipelines import (
     Operation,
     OperationRun,
-    OperationRunStatus,
     Pipeline,
     PipelineRun,
     PipelineRunStatus,
@@ -13,10 +12,6 @@ from db.models.pipelines import (
 
 
 class PipelineRunStatusAdmin(admin.ModelAdmin):
-    readonly_fields = ('created_at',)
-
-
-class OperationRunStatusAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
 
@@ -45,6 +40,5 @@ def register(admin_register):
     admin_register(Pipeline, PipelineAdmin)
     admin_register(Operation, OperationAdmin)
     admin_register(PipelineRunStatus, PipelineRunStatusAdmin)
-    admin_register(OperationRunStatus, OperationRunStatusAdmin)
     admin_register(PipelineRun, PipelineRunAdmin)
     admin_register(OperationRun, OperationRunAdmin)

@@ -7,14 +7,17 @@ from mock import patch
 from django.conf import settings
 from django.utils import timezone
 
-from db.models.pipelines import OperationRunStatus, PipelineRunStatus
+from db.models.jobs import JobStatus
+from db.models.pipelines import PipelineRunStatus, OperationRun
 from factories.factory_pipelines import (
     OperationFactory,
     OperationRunFactory,
     PipelineFactory,
     PipelineRunFactory
 )
-from lifecycles.pipelines import OperationStatuses, PipelineLifeCycle, TriggerPolicy
+from lifecycles.operations import OperationStatuses
+from lifecycles.pipelines import PipelineLifeCycle, TriggerPolicy
+from operations.scheduler import start_operation_run, stop_operation_run, skip_operation_run
 from tests.base.case import BaseTest
 
 
@@ -75,7 +78,7 @@ class TestOperationModel(BaseTest):
         operation = OperationFactory()
         assert operation.get_run_params() == {}
 
-        operation.celery_queue = 'dummy_queue'
+        operation.queue = 'dummy_queue'
         operation.save()
         assert operation.get_run_params() == {'queue': 'dummy_queue'}
 
@@ -110,39 +113,42 @@ class TestPipelineRunModel(BaseTest):
     def test_stopping_pipeline_run_stops_operation_runs(self):
         pipeline_run = PipelineRunFactory()
         for _ in range(2):
-            OperationRunFactory(pipeline_run=pipeline_run)
+            op_run = OperationRunFactory(pipeline_run=pipeline_run)
+            assert start_operation_run(op_run) is False
         assert pipeline_run.statuses.count() == 1
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
-        assert OperationRunStatus.objects.filter().count() == 2
-        assert set(OperationRunStatus.objects.values_list(
+        assert JobStatus.objects.filter().count() == 2
+        assert set(OperationRun.objects.values_list(
+            'status', flat=True)) == {OperationStatuses.CREATED, }
+        assert set(JobStatus.objects.values_list(
             'status', flat=True)) == {OperationStatuses.CREATED, }
         # Set pipeline run to stopped
-        pipeline_run.on_stop()
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
+            pipeline_run.on_stop()
         assert pipeline_run.statuses.count() == 2
         assert pipeline_run.last_status == PipelineLifeCycle.STOPPED
         # Operation run are also stopped
-        assert OperationRunStatus.objects.filter().count() == 4
-        assert set(OperationRunStatus.objects.values_list(
-            'status', flat=True)) == {OperationStatuses.CREATED, OperationStatuses.STOPPED}
+        assert JobStatus.objects.all().count() + spawner_mock_stop.call_count == 4
 
     def test_skipping_pipeline_run_stops_operation_runs(self):
         pipeline_run = PipelineRunFactory()
         for _ in range(2):
-            OperationRunFactory(pipeline_run=pipeline_run)
+            op_run = OperationRunFactory(pipeline_run=pipeline_run)
+            assert start_operation_run(op_run) is False
         assert pipeline_run.statuses.count() == 1
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
-        assert OperationRunStatus.objects.filter().count() == 2
-        assert set(OperationRunStatus.objects.values_list(
+        assert JobStatus.objects.filter().count() == 2
+        assert set(JobStatus.objects.values_list(
             'status', flat=True)) == {OperationStatuses.CREATED, }
         # Set pipeline run to skipped
-        pipeline_run.on_skip()
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
+            pipeline_run.on_skip()
         assert pipeline_run.statuses.count() == 2
         assert pipeline_run.last_status == PipelineLifeCycle.SKIPPED
         # Operation run are also skipped
-        assert OperationRunStatus.objects.filter().count() == 6
-        assert set(OperationRunStatus.objects.values_list(
+        assert JobStatus.objects.filter().count() + spawner_mock_stop.call_count == 6
+        assert set(JobStatus.objects.values_list(
             'status', flat=True)) == {OperationStatuses.CREATED,
-                                      OperationStatuses.STOPPED,
                                       OperationStatuses.SKIPPED}
 
     def test_dag_property(self):
@@ -200,8 +206,8 @@ class TestPipelineRunModel(BaseTest):
         assert pipeline_run.check_concurrency() is True
 
         # One operation run with RUNNING status
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=operation_run1)
+        operation_run1.status = OperationStatuses.RUNNING
+        operation_run1.save()
         assert pipeline_run.check_concurrency() is True
 
         # Second operation run
@@ -209,160 +215,192 @@ class TestPipelineRunModel(BaseTest):
         assert pipeline_run.check_concurrency() is True
 
         # Second operation run with RUNNING status
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=operation_run2)
+        operation_run2.status = OperationStatuses.RUNNING
+        operation_run2.save()
         assert pipeline_run.check_concurrency() is False
 
 
 @pytest.mark.pipelines_mark
 class TestOperationRunModel(BaseTest):
-    def test_operation_run_creation_sets_created_status(self):
-        assert OperationRunStatus.objects.count() == 0
+    DISABLE_EXECUTOR = False
 
+    def test_operation_run_creation_sets_created_status(self):
+        assert JobStatus.objects.count() == 0
         # Assert `new_pipeline_run_status` task is also called
         operation_run = OperationRunFactory()
-        assert OperationRunStatus.objects.filter(operation_run=operation_run).count() == 1
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
+        assert JobStatus.objects.count() == 1
         assert operation_run.last_status == OperationStatuses.CREATED
+        assert operation_run.entity.last_status == OperationStatuses.CREATED
 
     def test_scheduling_operation_run_sets_pipeline_run_to_scheduled(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
-        operation_run.on_scheduled()
+        operation_run.set_status(OperationStatuses.SCHEDULED)
+        operation_run.refresh_from_db()
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SCHEDULED
-        assert operation_run.statuses.count() == 2
         assert pipeline_run.last_status == PipelineLifeCycle.SCHEDULED
         assert pipeline_run.statuses.count() == 2
 
     def test_running_operation_run_sets_pipeline_run_to_running(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
-        pipeline_run = operation_run.pipeline_run
-        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
-        assert pipeline_run.statuses.count() == 1
-
-        # Create another operation run for this pipeline_run
-        OperationRunFactory(pipeline_run=pipeline_run)
-
-        operation_run.on_scheduled()
-        pipeline_run.refresh_from_db()
-        assert operation_run.last_status == OperationStatuses.SCHEDULED
-        assert operation_run.statuses.count() == 2
-        assert pipeline_run.last_status == PipelineLifeCycle.SCHEDULED
-        assert pipeline_run.statuses.count() == 2
-
-        operation_run.on_run()
-        pipeline_run.refresh_from_db()
-        assert operation_run.last_status == OperationStatuses.RUNNING
-        assert operation_run.statuses.count() == 3
-        assert pipeline_run.last_status == PipelineLifeCycle.RUNNING
-        assert pipeline_run.statuses.count() == 3
-
-    def test_stopping_all_operation_runs_sets_pipeline_run_to_finished(self):
-        operation_run = OperationRunFactory()
-        assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Create another operation run for this pipeline_run
         operation_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        start_operation_run(operation_run2)
+        operation_run2.refresh_from_db()
 
-        # Stopping the first operation does not stop the pipeline
-        operation_run.on_stop()
+        operation_run.set_status(OperationStatuses.SCHEDULED)
         pipeline_run.refresh_from_db()
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.SCHEDULED
+        assert pipeline_run.last_status == PipelineLifeCycle.SCHEDULED
+        assert pipeline_run.statuses.count() == 2
+
+        operation_run.set_status(OperationStatuses.RUNNING)
+        pipeline_run.refresh_from_db()
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.RUNNING
+        assert pipeline_run.last_status == PipelineLifeCycle.RUNNING
+        assert pipeline_run.statuses.count() == 3
+
+        operation_run2.set_status(OperationStatuses.SCHEDULED)
+        assert pipeline_run.last_status == PipelineLifeCycle.RUNNING
+        assert pipeline_run.statuses.count() == 3
+
+    def test_stopping_all_operation_runs_sets_pipeline_run_to_finished(self):
+        operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.CREATED
+        pipeline_run = operation_run.pipeline_run
+        assert pipeline_run.last_status == PipelineLifeCycle.CREATED
+        assert pipeline_run.statuses.count() == 1
+
+        # Create another operation run for this pipeline_run
+        operation_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        start_operation_run(operation_run2)
+        operation_run2.refresh_from_db()
+        # Stopping the first operation does not stop the pipeline
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
+            stop_operation_run(operation_run)
+        assert spawner_mock_stop.call_count == 1
+        # Manual stopping
+        operation_run.entity.set_status(OperationStatuses.STOPPED)
+        pipeline_run.refresh_from_db()
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.STOPPED
-        assert operation_run.statuses.count() == 2
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the second operation stops the pipeline
-        operation_run2.on_stop()
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
+            stop_operation_run(operation_run2)
+        assert spawner_mock_stop.call_count == 1
+        # Manual stopping
+        operation_run2.entity.set_status(OperationStatuses.STOPPED)
         pipeline_run.refresh_from_db()
         assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 2
 
     def test_skipping_all_operation_runs_sets_pipeline_run_to_finished(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Create another operation run for this pipeline_run
         operation_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        start_operation_run(operation_run2)
+        operation_run2.refresh_from_db()
 
         # Stopping the first operation does not stop the pipeline
-        operation_run.on_skip()
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
+            skip_operation_run(operation_run)
+        assert spawner_mock_stop.call_count == 1
+        operation_run.refresh_from_db()
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SKIPPED
-        assert operation_run.statuses.count() == 2
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the second operation stops the pipeline
-        operation_run2.on_skip()
+        with patch('scheduler.tasks.jobs.jobs_stop.apply_async') as spawner_mock_stop:
+            skip_operation_run(operation_run2)
+        assert spawner_mock_stop.call_count == 1
         pipeline_run.refresh_from_db()
         assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 2
 
     def test_succeeded_operation_runs_sets_pipeline_run_to_finished(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the first operation does not stop the pipeline
-        operation_run.on_scheduled()
-        operation_run.on_run()
+        operation_run.set_status(OperationStatuses.SCHEDULED)
+        operation_run.set_status(OperationStatuses.RUNNING)
         operation_run.on_success()
+        operation_run.refresh_from_db()
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.SUCCEEDED
-        assert operation_run.statuses.count() == 4
         assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 4
 
     def test_failed_operation_runs_sets_pipeline_run_to_finished(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the first operation does not stop the pipeline
-        operation_run.on_scheduled()
-        operation_run.on_run()
+        operation_run.set_status(OperationStatuses.SCHEDULED)
+        operation_run.set_status(OperationStatuses.RUNNING)
         operation_run.on_failure()
         pipeline_run.refresh_from_db()
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.FAILED
-        assert operation_run.statuses.count() == 4
         assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 4
 
     def test_failed_upstream_operation_runs_sets_pipeline_run_to_finished(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
-        assert operation_run.statuses.count() == 1
         pipeline_run = operation_run.pipeline_run
         assert pipeline_run.last_status == PipelineLifeCycle.CREATED
         assert pipeline_run.statuses.count() == 1
 
         # Stopping the first operation does not stop the pipeline
         operation_run.on_upstream_failed()
+        operation_run.refresh_from_db()
         pipeline_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.UPSTREAM_FAILED
-        assert operation_run.statuses.count() == 2
         assert pipeline_run.last_status == PipelineLifeCycle.DONE
         assert pipeline_run.statuses.count() == 2
 
@@ -384,8 +422,9 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_concurrency() is True
 
         # One operation run with RUNNING status
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=operation_run1)
+        operation_run1.status = OperationStatuses.RUNNING
+        operation_run1.save()
+
         assert operation_run.check_concurrency() is True
 
         # Second operation run
@@ -393,12 +432,14 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_concurrency() is True
 
         # Second operation run with RUNNING status
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=operation_run2)
+        operation_run2.status = OperationStatuses.RUNNING
+        operation_run2.save()
         assert operation_run.check_concurrency() is False
 
     def test_trigger_policy_one_done(self):
         operation_run = OperationRunFactory()
+        start_operation_run(operation_run)
+        operation_run.refresh_from_db()
         operation = operation_run.operation
         operation.trigger_policy = TriggerPolicy.ONE_DONE
         operation.save()
@@ -412,27 +453,27 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status = OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add another upstream still True
@@ -455,27 +496,27 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status = OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add another upstream still True
@@ -501,27 +542,27 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status = OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add another upstream still True
@@ -547,27 +588,27 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status = OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Many done upstreams
@@ -595,34 +636,34 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status=OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status=OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status=OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add many succeeded upstream
         upstream_run4 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3, upstream_run4])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run4)
+        upstream_run4.status = OperationStatuses.SUCCEEDED
+        upstream_run4.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Many done upstreams
@@ -645,34 +686,34 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.check_upstream_trigger() is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status = OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.check_upstream_trigger() is False
 
         # Add many failed upstream
         upstream_run4 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run1, upstream_run4])
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run4)
+        upstream_run4.status = OperationStatuses.FAILED
+        upstream_run4.save()
         assert operation_run.check_upstream_trigger() is True
 
         # Many done upstreams
@@ -692,27 +733,27 @@ class TestOperationRunModel(BaseTest):
         assert operation_run.is_upstream_done is False
 
         # A running upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.RUNNING
+        upstream_run1.save()
         assert operation_run.is_upstream_done is False
 
         # A failed upstream
-        OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                          operation_run=upstream_run1)
+        upstream_run1.status = OperationStatuses.FAILED
+        upstream_run1.save()
         assert operation_run.is_upstream_done is True
 
         # Add skipped upstream
         upstream_run2 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run2])
-        OperationRunStatus.objects.create(status=OperationStatuses.SKIPPED,
-                                          operation_run=upstream_run2)
+        upstream_run2.status = OperationStatuses.SKIPPED
+        upstream_run2.save()
         assert operation_run.is_upstream_done is True
 
         # Add succeeded upstream
         upstream_run3 = OperationRunFactory()
         operation_run.upstream_runs.set([upstream_run3])
-        OperationRunStatus.objects.create(status=OperationStatuses.SUCCEEDED,
-                                          operation_run=upstream_run3)
+        upstream_run3.status = OperationStatuses.SUCCEEDED
+        upstream_run3.save()
         assert operation_run.is_upstream_done is True
 
         # Many done upstreams
@@ -727,14 +768,14 @@ class TestOperationRunModel(BaseTest):
 
     def test_schedule_start_with_operation_run_already_scheduled_operation_run(self):
         operation_run = OperationRunFactory()
-        OperationRunStatus.objects.create(operation_run=operation_run,
-                                          status=OperationStatuses.FAILED)
-        assert operation_run.schedule_start() is False
+        operation_run.status = OperationStatuses.FAILED
+        operation_run.save()
+        assert start_operation_run(operation_run) is False
 
         operation_run = OperationRunFactory()
-        OperationRunStatus.objects.create(operation_run=operation_run,
-                                          status=OperationStatuses.SCHEDULED)
-        assert operation_run.schedule_start() is False
+        operation_run.status = OperationStatuses.SCHEDULED
+        operation_run.save()
+        assert start_operation_run(operation_run) is False
 
     def test_schedule_start_with_failed_upstream(self):
         operation_run = OperationRunFactory()
@@ -743,21 +784,22 @@ class TestOperationRunModel(BaseTest):
 
         # Add a failed upstream
         upstream_run1 = OperationRunFactory()
+        assert start_operation_run(upstream_run1) is False
+        upstream_run1.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1])
         with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
-            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                              operation_run=upstream_run1)
+            upstream_run1.set_status(OperationStatuses.FAILED)
 
         assert mock_fct.call_count == 1
 
-        assert operation_run.schedule_start() is False
+        assert start_operation_run(operation_run) is False
 
         # Check also that the task is marked as UPSTREAM_FAILED
         # Since this operation cannot be started anymore
         operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.UPSTREAM_FAILED
 
-    def test_schedule_start_works_when_conditions_are_met(self):
+    def test_schedule_start_works_when_conditions_are_met_manual(self):
         operation_run = OperationRunFactory()
         operation_run.operation.trigger_policy = TriggerPolicy.ONE_DONE
         operation_run.operation.save()
@@ -765,20 +807,35 @@ class TestOperationRunModel(BaseTest):
 
         # Add a failed upstream
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
+        assert start_operation_run(upstream_run1) is False
+        upstream_run1.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1])
         with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
-            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                              operation_run=upstream_run1)
+            upstream_run1.set_status(OperationStatuses.FAILED)
 
         assert mock_fct.call_count == 1
+        operation_run.refresh_from_db()
+        assert operation_run.last_status is None
 
-        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
-            assert operation_run.schedule_start() is False
+        assert start_operation_run(operation_run) is False
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.CREATED
 
-        assert mock_fct.call_count == 1
+    def test_schedule_start_works_when_conditions_are_met_auto(self):
+        operation_run = OperationRunFactory()
+        operation_run.operation.trigger_policy = TriggerPolicy.ONE_DONE
+        operation_run.operation.save()
+        pipeline_run = operation_run.pipeline_run
+
+        # Add a failed upstream
+        upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
+        assert start_operation_run(upstream_run1) is False
+        upstream_run1.refresh_from_db()
+        operation_run.upstream_runs.set([upstream_run1])
+        upstream_run1.set_status(OperationStatuses.FAILED)
 
         operation_run.refresh_from_db()
-        assert operation_run.last_status == OperationStatuses.SCHEDULED
+        assert operation_run.last_status == OperationStatuses.CREATED
 
     def test_schedule_start_works_with_pipeline_concurrency(self):
         operation_run = OperationRunFactory()
@@ -792,19 +849,32 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        assert start_operation_run(upstream_run1) is False
+        assert start_operation_run(upstream_run2) is True
+        upstream_run1.refresh_from_db()
+        upstream_run2.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
         with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
-            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                              operation_run=upstream_run1)
-            OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                              operation_run=upstream_run2)
+            upstream_run1.set_status(OperationStatuses.FAILED)
 
         assert mock_fct.call_count == 1
+        operation_run.refresh_from_db()
+        assert operation_run.last_status is None
+        upstream_run2.refresh_from_db()
+        assert upstream_run2.last_status is None  # Should be started but e mocked the process
 
-        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
-            assert operation_run.schedule_start() is True
+        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
+            assert start_operation_run(upstream_run2) is False
+            upstream_run2.refresh_from_db()
+            upstream_run2.set_status(OperationStatuses.RUNNING)
 
         assert mock_fct.call_count == 0
+
+        assert start_operation_run(operation_run) is True
+
+        assert operation_run.last_status is None
+
+        upstream_run2.set_status(OperationStatuses.SUCCEEDED)
 
         operation_run.refresh_from_db()
         assert operation_run.last_status == OperationStatuses.CREATED
@@ -821,35 +891,29 @@ class TestOperationRunModel(BaseTest):
         # Add a failed upstream
         upstream_run1 = OperationRunFactory(pipeline_run=pipeline_run)
         upstream_run2 = OperationRunFactory(pipeline_run=pipeline_run)
+        assert start_operation_run(upstream_run1) is False
+        assert start_operation_run(upstream_run2) is False
+        upstream_run1.refresh_from_db()
+        upstream_run2.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
         with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
-            OperationRunStatus.objects.create(status=OperationStatuses.FAILED,
-                                              operation_run=upstream_run1)
-            OperationRunStatus.objects.create(status=OperationStatuses.RUNNING,
-                                              operation_run=upstream_run2)
+            upstream_run1.set_status(OperationStatuses.FAILED)
+            upstream_run2.set_status(OperationStatuses.RUNNING)
 
         assert mock_fct.call_count == 1
+        operation_run.refresh_from_db()
+        assert operation_run.last_status is None
+        assert start_operation_run(operation_run) is False
+        operation_run.refresh_from_db()
+        assert operation_run.last_status == OperationStatuses.CREATED
 
         # Add another operation run for this operation with scheduled
         new_operation_run = OperationRunFactory(operation=operation_run.operation)
         new_operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-
-        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
-            assert operation_run.schedule_start() is False
-
-        assert mock_fct.call_count == 1
-
-        operation_run.refresh_from_db()
-        assert operation_run.last_status == OperationStatuses.SCHEDULED
+        assert new_operation_run.status is None
 
         # Check if we can start another instance
         new_operation_run.refresh_from_db()
-        assert new_operation_run.last_status == OperationStatuses.CREATED
-
-        with patch('db.models.pipelines.OperationRun.start') as mock_fct:
-            assert new_operation_run.schedule_start() is True
-
-        assert mock_fct.call_count == 0
-
+        assert start_operation_run(new_operation_run) is True
         new_operation_run.refresh_from_db()
-        assert new_operation_run.last_status == OperationStatuses.CREATED
+        assert new_operation_run.last_status is None

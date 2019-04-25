@@ -14,6 +14,7 @@ class PipelineLifeCycle(BaseStatuses):
     SKIPPED = StatusOptions.SKIPPED
     FAILED = StatusOptions.FAILED
     UPSTREAM_FAILED = StatusOptions.UPSTREAM_FAILED
+    SUCCEEDED = StatusOptions.SUCCEEDED
     UNKNOWN = UNKNOWN
 
     CHOICES = (
@@ -25,6 +26,7 @@ class PipelineLifeCycle(BaseStatuses):
         (FAILED, FAILED),
         (UPSTREAM_FAILED, UPSTREAM_FAILED),
         (STOPPED, STOPPED),
+        (SUCCEEDED, SUCCEEDED),
         (STOPPING, STOPPING),
         (SKIPPED, SKIPPED),
         (UNKNOWN, UNKNOWN),
@@ -39,6 +41,7 @@ class PipelineLifeCycle(BaseStatuses):
         FAILED,
         UPSTREAM_FAILED,
         STOPPED,
+        SUCCEEDED,
         STOPPING,
         SKIPPED,
         UNKNOWN
@@ -48,17 +51,18 @@ class PipelineLifeCycle(BaseStatuses):
     WARNING_STATUS = {WARNING, }
     STARTING_STATUS = {CREATED, }
     RUNNING_STATUS = {SCHEDULED, RUNNING, STOPPING, }
-    DONE_STATUS = {FAILED, UPSTREAM_FAILED, DONE, STOPPED, SKIPPED, }
+    DONE_STATUS = {FAILED, UPSTREAM_FAILED, DONE, STOPPED, SKIPPED, SUCCEEDED, }
     FAILED_STATUS = {FAILED, UPSTREAM_FAILED, }
 
     TRANSITION_MATRIX = {
         CREATED: {None, },
         SCHEDULED: {CREATED, WARNING, },
-        RUNNING: {SCHEDULED, WARNING, },
+        RUNNING: {CREATED, SCHEDULED, WARNING, },
         WARNING: set(VALUES) - {DONE, STOPPED, SKIPPED, STOPPED, WARNING, },
         DONE: set(VALUES) - DONE_STATUS,
         FAILED: set(VALUES) - DONE_STATUS,
         UPSTREAM_FAILED: set(VALUES) - DONE_STATUS,
+        SUCCEEDED: set(VALUES) - DONE_STATUS,
         STOPPED: set(VALUES) - DONE_STATUS,
         STOPPING: VALUES - DONE_STATUS - {STOPPING, },
         SKIPPED: set(VALUES) - DONE_STATUS,

@@ -7,6 +7,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from django.db.models import Q
 from django.dispatch import Signal
 from hestia.datetime_typing import AwareDT
 
@@ -18,7 +19,7 @@ from db.models.abstract.is_managed import IsManagedModel
 from db.models.abstract.nameable import NameableModel
 from db.models.abstract.run import RunModel
 from db.models.abstract.tag import TagModel
-from db.models.statuses import StatusModel
+from db.models.statuses import StatusModel, LastStatusMixin
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from lifecycles.operations import OperationStatuses
 from lifecycles.pipelines import PipelineLifeCycle, TriggerPolicy
@@ -411,7 +412,8 @@ class PipelineRun(RunModel):
 
     @property
     def running_operation_runs(self):
-        return self.operation_runs.filter(status__in=self.STATUSES.RUNNING_STATUS)
+        return self.operation_runs.exclude(Q(status__in=OperationStatuses.DONE_STATUS) |
+                                           Q(status__isnull=True))
 
     @property
     def n_operation_runs_to_start(self):
@@ -433,8 +435,10 @@ class PipelineRun(RunModel):
         return self.n_operation_runs_to_start > 0
 
 
-class OperationRun(DiffModel, DeletedModel):
+class OperationRun(DiffModel, DeletedModel, LastStatusMixin):
     """A model that represents an execution behaviour/run of instance of an operation."""
+    STATUSES = OperationStatuses
+
     uuid = models.UUIDField(
         default=uuid.uuid4,
         editable=False,
@@ -478,18 +482,18 @@ class OperationRun(DiffModel, DeletedModel):
 
     @property
     def started_at(self):
-        return self.entity.started_at
+        return self.entity.started_at if self.entity else None
 
     @property
     def finished_at(self):
-        return self.entity.finished_at
+        return self.entity.finished_at if self.entity else None
 
     @property
     def last_status(self):
-        return self.entity.last_status
+        return self.status
 
     def last_status_before(self, status_date: AwareDT = None) -> Optional[str]:
-        return self.entity.last_status_before(status_date=status_date)
+        return self.entity.last_status_before(status_date=status_date) if self.entity else None
 
     def set_status(self,
                    status: str,
@@ -497,11 +501,12 @@ class OperationRun(DiffModel, DeletedModel):
                    message: str = None,
                    traceback: Dict = None,
                    **kwargs) -> None:
-        self.entity.set_status(status=status,
-                               created_at=created_at,
-                               message=message,
-                               traceback=traceback,
-                               **kwargs)
+        if self.entity:
+            self.entity.set_status(status=status,
+                                   created_at=created_at,
+                                   message=message,
+                                   traceback=traceback,
+                                   **kwargs)
 
     def check_concurrency(self) -> bool:
         """Checks the concurrency of the operation run.
@@ -515,7 +520,8 @@ class OperationRun(DiffModel, DeletedModel):
         if not self.operation.concurrency:  # No concurrency set
             return True
 
-        ops_count = self.operation.runs.filter(status__in=OperationStatuses.RUNNING_STATUS).count()
+        ops_count = self.operation.runs.exclude(Q(status__in=OperationStatuses.DONE_STATUS) |
+                                                Q(status__isnull=True)).count()
         return ops_count < self.operation.concurrency
 
     def check_upstream_trigger(self) -> bool:
@@ -544,21 +550,30 @@ class OperationRun(DiffModel, DeletedModel):
         return not bool([True for status in statuses
                          if status not in OperationStatuses.DONE_STATUS])
 
-    def stop(self, message: str = None) -> None:
-        if self.entity.is_stoppable:
-            self.entity.stop(message=message)
-
-    def skip(self, message: str = None) -> None:
-        self.entity.set_status(status=OperationStatuses.SKIPPED, message=message)
-
     def on_retry(self) -> None:
-        self.entity.set_status(status=OperationStatuses.RETRYING)
+        if self.entity:
+            self.entity.set_status(status=OperationStatuses.RETRYING)
+        else:
+            self.status = OperationStatuses.RETRYING
+            self.save(update_fields=['status'])
 
     def on_upstream_failed(self) -> None:
-        self.entity.set_status(status=OperationStatuses.UPSTREAM_FAILED)
+        if self.entity:
+            self.entity.set_status(status=OperationStatuses.UPSTREAM_FAILED)
+        else:
+            self.status = OperationStatuses.UPSTREAM_FAILED
+            self.save(update_fields=['status'])
 
     def on_failure(self, message: str = None) -> None:
-        self.entity.set_status(status=OperationStatuses.FAILED, message=message)
+        if self.entity:
+            self.entity.set_status(status=OperationStatuses.FAILED, message=message)
+        else:
+            self.status = OperationStatuses.FAILED
+            self.save(update_fields=['status'])
 
     def on_success(self, message: str = None) -> None:
-        self.entity.set_status(status=OperationStatuses.SUCCEEDED, message=message)
+        if self.entity:
+            self.entity.set_status(status=OperationStatuses.SUCCEEDED, message=message)
+        else:
+            self.status = OperationStatuses.SUCCEEDED
+            self.save(update_fields=['status'])

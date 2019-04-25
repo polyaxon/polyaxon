@@ -1,6 +1,7 @@
 from django.db.models import F, Max
 
 from db.models.pipelines import OperationRun, PipelineRun
+from operations.scheduler import stop_operation_run, skip_operation_run
 from pipelines import dags
 
 
@@ -36,7 +37,7 @@ def create_pipeline_run(pipeline, context_by_op):
         op_run = OperationRun.objects.create(
             pipeline_run=pipeline_run,
             operation_id=op_id,
-            celery_task_context=context_by_op.get(op_id))
+            context=context_by_op.get(op_id))
         op_run_id = op_run.id
         op_runs[op_run_id] = op_run
         runs_by_ops[op_id] = op_run_id
@@ -46,38 +47,11 @@ def create_pipeline_run(pipeline, context_by_op):
     set_topological_dag_upstreams(dag=dag, ops=ops, op_runs=op_runs, runs_by_ops=runs_by_ops)
 
 
-def get_pipeline_run(pipeline_run_id=None, pipeline_run_uuid=None):
-    if not any([pipeline_run_id, pipeline_run_uuid]) or all([pipeline_run_id, pipeline_run_uuid]):
-        raise ValueError('`get_pipeline_run` function expects a pipeline run id or uuid.')
-
-    try:
-        if pipeline_run_uuid:
-            return PipelineRun.objects.get(uuid=pipeline_run_uuid)
-
-        return PipelineRun.objects.get(id=pipeline_run_id)
-    except PipelineRun.DoesNotExist:
-        return None
-
-
-def get_operation_run(operation_run_id=None, operation_run_uuid=None):
-    args = [operation_run_id, operation_run_uuid]
-    if not any(args) or all(args):
-        raise ValueError('`get_operation_run` function expects an operation run id or uuid.')
-
-    try:
-        if operation_run_uuid:
-            return OperationRun.objects.get(uuid=operation_run_uuid)
-
-        return OperationRun.objects.get(id=operation_run_id)
-    except OperationRun.DoesNotExist:
-        return None
-
-
 def stop_operation_runs_for_pipeline_run(pipeline_run, message=None):
     for op_run in pipeline_run.operation_runs.all():
-        op_run.stop(message=message)
+        stop_operation_run(operation_run=op_run, message=message)
 
 
 def skip_operation_runs_for_pipeline_run(pipeline_run, message=None):
     for op_run in pipeline_run.operation_runs.all():
-        op_run.skip(message=message)
+        skip_operation_run(operation_run=op_run, message=message)

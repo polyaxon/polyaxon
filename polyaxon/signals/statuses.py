@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.utils.timezone import now
 
 import auditor
+from constants import content_types
 
 from db.models.build_jobs import BuildJobStatus
 from db.models.experiment_groups import ExperimentGroupStatus
@@ -61,6 +62,7 @@ from event_manager.events.tensorboard import (
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from signals.operations import new_operation_run_status
 from signals.run_time import (
     set_finished_at,
     set_job_finished_at,
@@ -107,6 +109,9 @@ def build_job_status_post_save(sender, **kwargs):
         auditor.record(event_type=BUILD_JOB_DONE,
                        instance=job,
                        previous_status=previous_status)
+    new_operation_run_status(entity_type=content_types.BUILD_JOB,
+                             entity=job,
+                             status=instance.status)
 
 
 @receiver(post_save, sender=JobStatus, dispatch_uid="job_status_post_save")
@@ -143,6 +148,9 @@ def job_status_post_save(sender, **kwargs):
         auditor.record(event_type=JOB_DONE,
                        instance=job,
                        previous_status=previous_status)
+    new_operation_run_status(entity_type=content_types.JOB,
+                             entity=job,
+                             status=instance.status)
 
 
 @receiver(post_save, sender=NotebookJobStatus, dispatch_uid="notebook_job_status_post_save")
@@ -176,6 +184,9 @@ def notebook_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+    new_operation_run_status(entity_type=content_types.NOTEBOOK_JOB,
+                             entity=job,
+                             status=instance.status)
 
 
 @receiver(post_save, sender=TensorboardJobStatus, dispatch_uid="tensorboard_job_status_post_save")
@@ -209,6 +220,9 @@ def tensorboard_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+    new_operation_run_status(entity_type=content_types.TENSORBOARD_JOB,
+                             entity=job,
+                             status=instance.status)
 
 
 @receiver(post_save, sender=ExperimentGroupStatus, dispatch_uid="experiment_group_status_post_save")
@@ -246,6 +260,9 @@ def experiment_group_status_post_save(sender, **kwargs):
         auditor.record(event_type=EXPERIMENT_GROUP_DONE,
                        instance=experiment_group,
                        previous_status=previous_status)
+    new_operation_run_status(entity_type=content_types.EXPERIMENT_GROUP,
+                             entity=experiment_group,
+                             status=instance.status)
 
 
 @receiver(post_save, sender=ExperimentJobStatus, dispatch_uid="experiment_job_status_post_save")
@@ -315,3 +332,6 @@ def experiment_status_post_save(sender, **kwargs):
         auditor.record(event_type=EXPERIMENT_DONE,
                        instance=experiment,
                        previous_status=previous_status)
+    new_operation_run_status(entity_type=content_types.EXPERIMENT,
+                             entity=experiment,
+                             status=instance.status)
