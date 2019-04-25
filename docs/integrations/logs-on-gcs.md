@@ -38,7 +38,7 @@ You should then create a secret with this access keys information on Kubernetes 
 persistence:
   logs:
     store: gcs
-    bucket: gs://[BACKET-NAME]
+    bucket: gs://[BUCKET-NAME]
     secret: [SECRET-NAME]
     secretKey: [SECRET-KEY]
 ```
