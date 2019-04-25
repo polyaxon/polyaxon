@@ -38,7 +38,7 @@ class Group(BaseTracker):
             group_id=self.group_id)
 
     @check_no_op
-    def create(self, name=None, tags=None, description=None, config=None, base_outputs_path=None):
+    def create(self, name=None, tags=None, description=None, content=None, base_outputs_path=None):
         group_config = {}
         if name:
             group_config['name'] = name
@@ -46,8 +46,8 @@ class Group(BaseTracker):
             group_config['tags'] = tags
         if description:
             group_config['description'] = description
-        if config:
-            group_config['config'] = config
+        if content:
+            group_config['content'] = content
 
         group = self.client.project.create_experiment_group(
             username=self.username,

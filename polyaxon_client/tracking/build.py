@@ -33,7 +33,7 @@ class BuildJob(BaseJob):
                backend=None,
                tags=None,
                description=None,
-               config=None):
+               content=None):
         build_config = {}
         if name:
             build_config['name'] = name
@@ -44,8 +44,8 @@ class BuildJob(BaseJob):
             build_config['backend'] = backend
         if description:
             build_config['description'] = description
-        if config:
-            build_config['config'] = config
+        if content:
+            build_config['content'] = content
         build_config['is_managed'] = settings.IS_MANAGED
 
         build = self.client.project.create_build(

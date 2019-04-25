@@ -29,8 +29,7 @@ class TestBookmarkApi(TestBaseApi):
     def test_get_bookmarked_builds(self):
         project_uuid = uuid.uuid4().hex
         obj_uuid = uuid.uuid4().hex
-        objs = [{'content_object': JobConfig(config={},
-                                             uuid=obj_uuid,
+        objs = [{'content_object': JobConfig(uuid=obj_uuid,
                                              project=project_uuid).to_dict()}
                 for _ in range(10)]
         httpretty.register_uri(
@@ -59,8 +58,7 @@ class TestBookmarkApi(TestBaseApi):
     def test_get_bookmarked_jobs(self):
         project_uuid = uuid.uuid4().hex
         obj_uuid = uuid.uuid4().hex
-        objs = [{'content_object': JobConfig(config={},
-                                             uuid=obj_uuid,
+        objs = [{'content_object': JobConfig(uuid=obj_uuid,
                                              project=project_uuid).to_dict()}
                 for _ in range(10)]
         httpretty.register_uri(
@@ -89,8 +87,7 @@ class TestBookmarkApi(TestBaseApi):
     def test_get_bookmarked_experiments(self):
         project_uuid = uuid.uuid4().hex
         obj_uuid = uuid.uuid4().hex
-        objs = [{'content_object': ExperimentConfig(config={},
-                                                    uuid=obj_uuid,
+        objs = [{'content_object': ExperimentConfig(uuid=obj_uuid,
                                                     project=project_uuid).to_dict()}
                 for _ in range(10)]
         httpretty.register_uri(

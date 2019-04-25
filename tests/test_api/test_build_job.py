@@ -24,7 +24,7 @@ class TestBuildJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_build(self):
-        job = BuildJobConfig(config={}).to_dict()
+        job = BuildJobConfig().to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -50,7 +50,7 @@ class TestBuildJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_update_build(self):
-        job = BuildJobConfig(config={}).to_dict()
+        job = BuildJobConfig().to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler.build_url(

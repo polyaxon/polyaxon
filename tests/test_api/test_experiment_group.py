@@ -54,7 +54,6 @@ class TestExperimentGroupApi(TestBaseApi):
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
         xps = [ExperimentConfig(uuid=xp_uuid,
-                                config={},
                                 project=project_uuid,
                                 experiment_group=group_uuid).to_dict()
                for _ in range(10)]

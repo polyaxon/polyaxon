@@ -294,7 +294,7 @@ class ExperimentApi(BaseApiHandler):
                 username,
                 project_name,
                 experiment_id,
-                config=None,
+                content=None,
                 update_code=None,
                 background=False):
         """Restart an experiment."""
@@ -306,8 +306,8 @@ class ExperimentApi(BaseApiHandler):
                                      'restart')
 
         data = {}
-        if config:
-            data['config'] = config
+        if content:
+            data['content'] = content
         if update_code:
             data['update_code'] = update_code
 
@@ -327,7 +327,7 @@ class ExperimentApi(BaseApiHandler):
                username,
                project_name,
                experiment_id,
-               config=None,
+               content=None,
                update_code=None,
                background=False):
         """Restart an experiment."""
@@ -339,8 +339,8 @@ class ExperimentApi(BaseApiHandler):
                                      'resume')
 
         data = {}
-        if config:
-            data['config'] = config
+        if content:
+            data['content'] = content
         if update_code:
             data['update_code'] = update_code
 
@@ -359,7 +359,7 @@ class ExperimentApi(BaseApiHandler):
              username,
              project_name,
              experiment_id,
-             config=None,
+             content=None,
              update_code=None,
              background=False):
         """Restart an experiment."""
@@ -371,8 +371,8 @@ class ExperimentApi(BaseApiHandler):
                                      'copy')
 
         data = {}
-        if config:
-            data['config'] = config
+        if content:
+            data['content'] = content
         if update_code:
             data['update_code'] = update_code
 
@@ -453,7 +453,7 @@ class ExperimentApi(BaseApiHandler):
                           username,
                           project_name,
                           experiment_id,
-                          job_config=None,
+                          content=None,
                           background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
@@ -463,7 +463,7 @@ class ExperimentApi(BaseApiHandler):
                                      'tensorboard',
                                      'start')
 
-        job_config = {'config': job_config} if job_config else {}
+        job_config = {'content': content} if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)

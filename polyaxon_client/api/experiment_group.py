@@ -167,7 +167,7 @@ class ExperimentGroupApi(BaseApiHandler):
                           username,
                           project_name,
                           group_id,
-                          job_config=None,
+                          content=None,
                           background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
@@ -177,7 +177,7 @@ class ExperimentGroupApi(BaseApiHandler):
                                      'tensorboard',
                                      'start')
 
-        job_config = {'config': job_config} if job_config else {}
+        job_config = {'content': content} if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)

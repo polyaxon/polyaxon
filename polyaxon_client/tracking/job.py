@@ -171,7 +171,7 @@ class Job(BaseJob):
                backend=None,
                tags=None,
                description=None,
-               config=None,
+               content=None,
                build_id=None,
                base_outputs_path=None):
         job_config = {'run_env': get_run_env()} if self.track_env else {}
@@ -184,8 +184,8 @@ class Job(BaseJob):
             job_config['backend'] = backend
         if description:
             job_config['description'] = description
-        if config:
-            job_config['config'] = config
+        if content:
+            job_config['content'] = content
         if build_id:
             job_config['build_job'] = str(build_id)
         job_config['is_managed'] = settings.IS_MANAGED

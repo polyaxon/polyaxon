@@ -24,7 +24,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_job(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -50,7 +50,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_update_job(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler.build_url(
@@ -221,7 +221,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_restart_job(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -253,7 +253,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_restart_job_with_config_and_latest_code(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         config = {'config': {'logging': {'level': 'error'}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -286,7 +286,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_resume_job(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -318,7 +318,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_resume_job_with_config(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         config = {'config': {'logging': {'level': 'error'}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -351,7 +351,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_copy_job(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -383,7 +383,7 @@ class TestJobApi(TestBaseApi):
 
     @httpretty.activate
     def test_copy_job_with_config(self):
-        job = JobConfig(config={}).to_dict()
+        job = JobConfig().to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,

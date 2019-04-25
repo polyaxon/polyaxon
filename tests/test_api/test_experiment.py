@@ -31,7 +31,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_list_experiments(self):
-        experiments = [ExperimentConfig(config={}).to_dict() for _ in range(10)]
+        experiments = [ExperimentConfig().to_dict() for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -56,7 +56,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_get_experiment(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
@@ -82,7 +82,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_update_experiment(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
             BaseApiHandler.build_url(
@@ -454,7 +454,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_restart_experiment(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -486,7 +486,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_restart_experiment_with_config(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -519,7 +519,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_resume_experiment(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -551,7 +551,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_resume_experiment_with_config(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
@@ -584,7 +584,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_copy_experiment(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -616,7 +616,7 @@ class TestExperimentApi(TestBaseApi):
 
     @httpretty.activate
     def test_copy_experiment_with_config(self):
-        exp = ExperimentConfig(config={}).to_dict()
+        exp = ExperimentConfig().to_dict()
         config = {'config': {'declarations': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,

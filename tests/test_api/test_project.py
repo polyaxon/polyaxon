@@ -387,7 +387,7 @@ class TestProjectApi(TestBaseApi):
     def test_list_experiments(self):
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
-        xps = [ExperimentConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+        xps = [ExperimentConfig(uuid=xp_uuid, project=project_uuid).to_dict()
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -508,7 +508,7 @@ class TestProjectApi(TestBaseApi):
     @httpretty.activate
     def test_create_experiment(self):
         project_uuid = uuid.uuid4().hex
-        obj = ExperimentConfig(project=project_uuid, config={})
+        obj = ExperimentConfig(project=project_uuid)
         obj_dict = obj.to_dict()
         httpretty.register_uri(
             httpretty.POST,
@@ -603,7 +603,7 @@ class TestProjectApi(TestBaseApi):
     def test_list_jobs(self):
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
-        xps = [JobConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+        xps = [JobConfig(uuid=xp_uuid, project=project_uuid).to_dict()
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -687,7 +687,7 @@ class TestProjectApi(TestBaseApi):
     @httpretty.activate
     def test_create_job(self):
         project_uuid = uuid.uuid4().hex
-        obj = JobConfig(project=project_uuid, config={})
+        obj = JobConfig(project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
@@ -748,7 +748,7 @@ class TestProjectApi(TestBaseApi):
     def test_list_tensorboards(self):
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
-        xps = [TensorboardJobConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+        xps = [TensorboardJobConfig(uuid=xp_uuid, project=project_uuid).to_dict()
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -833,7 +833,7 @@ class TestProjectApi(TestBaseApi):
     def test_list_builds(self):
         project_uuid = uuid.uuid4().hex
         xp_uuid = uuid.uuid4().hex
-        xps = [JobConfig(config={}, uuid=xp_uuid, project=project_uuid).to_dict()
+        xps = [JobConfig(uuid=xp_uuid, project=project_uuid).to_dict()
                for _ in range(10)]
         httpretty.register_uri(
             httpretty.GET,
@@ -917,7 +917,7 @@ class TestProjectApi(TestBaseApi):
     @httpretty.activate
     def test_create_build(self):
         project_uuid = uuid.uuid4().hex
-        obj = BuildJobConfig(project=project_uuid, config={})
+        obj = BuildJobConfig(project=project_uuid)
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(

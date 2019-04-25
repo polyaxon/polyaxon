@@ -392,14 +392,14 @@ class ProjectApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving tensorboard jobs.')
             return []
 
-    def start_tensorboard(self, username, project_name, job_config=None, background=False):
+    def start_tensorboard(self, username, project_name, content=None, background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
                                      project_name,
                                      'tensorboard',
                                      'start')
 
-        job_config = {'config': job_config} if job_config else {}
+        job_config = {'content': content} if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)
@@ -428,14 +428,14 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
-    def start_notebook(self, username, project_name, job_config=None, background=False):
+    def start_notebook(self, username, project_name, content=None, background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
                                      project_name,
                                      'notebook',
                                      'start')
 
-        job_config = {'config': job_config} if job_config else {}
+        job_config = {'content': content} if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)

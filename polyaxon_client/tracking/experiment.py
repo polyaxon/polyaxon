@@ -92,7 +92,7 @@ class Experiment(BaseTracker):
                backend=None,
                tags=None,
                description=None,
-               config=None,
+               content=None,
                build_id=None,
                base_outputs_path=None):
         experiment_config = {'run_env': get_run_env()} if self.track_env else {}
@@ -107,8 +107,8 @@ class Experiment(BaseTracker):
             experiment_config['backend'] = backend
         if description:
             experiment_config['description'] = description
-        if config:
-            experiment_config['config'] = config
+        if content:
+            experiment_config['content'] = content
         if build_id:
             experiment_config['build_job'] = str(build_id)
         experiment_config['is_managed'] = settings.IS_MANAGED

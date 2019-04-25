@@ -188,7 +188,7 @@ class JobApi(BaseApiHandler):
                 username,
                 project_name,
                 job_id,
-                config=None,
+                content=None,
                 update_code=None,
                 background=False):
         """Restart an job."""
@@ -200,8 +200,8 @@ class JobApi(BaseApiHandler):
                                      'restart')
 
         data = {}
-        if config:
-            data['config'] = config
+        if content:
+            data['content'] = content
         if update_code:
             data['update_code'] = update_code
 
@@ -220,7 +220,7 @@ class JobApi(BaseApiHandler):
                username,
                project_name,
                job_id,
-               config=None,
+               content=None,
                update_code=None,
                background=False):
         """Resume a job."""
@@ -232,8 +232,8 @@ class JobApi(BaseApiHandler):
                                      'resume')
 
         data = {}
-        if config:
-            data['config'] = config
+        if content:
+            data['content'] = content
         if update_code:
             data['update_code'] = update_code
 
@@ -252,7 +252,7 @@ class JobApi(BaseApiHandler):
              username,
              project_name,
              job_id,
-             config=None,
+             content=None,
              update_code=None,
              background=False):
         """Copy an job."""
@@ -264,8 +264,8 @@ class JobApi(BaseApiHandler):
                                      'copy')
 
         data = {}
-        if config:
-            data['config'] = config
+        if content:
+            data['content'] = content
         if update_code:
             data['update_code'] = update_code
 
