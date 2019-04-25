@@ -3,10 +3,12 @@ from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
+from constants.backends import NATIVE_BACKEND
 from db.models.experiment_groups import ExperimentGroup, GroupTypes
 from libs.repos.utils import assign_code_reference
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from schemas import SearchAlgorithms
+from signals.backend import set_backend
 from signals.names import set_name
 from signals.persistence import set_persistence
 from signals.tags import set_tags
@@ -34,6 +36,7 @@ def experiment_group_pre_save(sender, **kwargs):
     else:
         instance.group_type = GroupTypes.STUDY
     set_name(instance=instance, query=ExperimentGroup.all)
+    set_backend(instance=instance, default_backend=NATIVE_BACKEND)
 
 
 @receiver(post_save, sender=ExperimentGroup, dispatch_uid="experiment_group_saved")
