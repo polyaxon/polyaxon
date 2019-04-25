@@ -22,8 +22,10 @@ class TensorboardJob(PluginJobBase, JobMixin):
         'db.Project',
         on_delete=models.CASCADE,
         related_name='tensorboard_jobs')
-    config = JSONField(
-        help_text='The compiled polyaxonfile for the tensorboard job.',
+    content = models.TextField(
+        null=True,
+        blank=True,
+        help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_tensorboard_spec_config])
     experiment_group = models.ForeignKey(
         'db.ExperimentGroup',

@@ -24,8 +24,10 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
         'db.Project',
         on_delete=models.CASCADE,
         related_name='notebook_jobs')
-    config = JSONField(
-        help_text='The compiled polyaxonfile for the notebook job.',
+    content = models.TextField(
+        null=True,
+        blank=True,
+        help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_notebook_spec_config])
     backend = models.CharField(
         max_length=16,

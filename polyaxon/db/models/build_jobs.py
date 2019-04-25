@@ -48,10 +48,10 @@ class BuildJob(AbstractJob,
         'db.Project',
         on_delete=models.CASCADE,
         related_name='build_jobs')
-    config = JSONField(
+    content = models.TextField(
         null=True,
         blank=True,
-        help_text='The compiled polyaxonfile for the build job.',
+        help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_build_spec_config])
     code_reference = models.ForeignKey(
         'db.CodeReference',

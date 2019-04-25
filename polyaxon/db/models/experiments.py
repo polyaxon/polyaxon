@@ -95,10 +95,10 @@ class Experiment(DiffModel,
         blank=True,
         null=True,
         help_text='The parameters used for this experiment.')
-    config = JSONField(
+    content = models.TextField(
         null=True,
         blank=True,
-        help_text='The compiled polyaxon with specific values for this experiment.',
+        help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_experiment_spec_config])
     run_env = JSONField(
         blank=True,

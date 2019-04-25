@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('contenttypes', '0002_remove_content_type_name'),
-        ('db', '0021_auto_20190418_1600_std_backend_is_managed'),
+        ('db', '0021_auto_20190418_1600_v05'),
     ]
 
     operations = [
@@ -83,5 +83,25 @@ class Migration(migrations.Migration):
         ),
         migrations.DeleteModel(
             name='OperationRunStatus',
+        ),
+        migrations.RemoveField(
+            model_name='buildjob',
+            name='config',
+        ),
+        migrations.RemoveField(
+            model_name='experiment',
+            name='config',
+        ),
+        migrations.RemoveField(
+            model_name='job',
+            name='config',
+        ),
+        migrations.RemoveField(
+            model_name='notebookjob',
+            name='config',
+        ),
+        migrations.RemoveField(
+            model_name='tensorboardjob',
+            name='config',
         ),
     ]

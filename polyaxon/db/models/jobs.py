@@ -55,10 +55,10 @@ class Job(AbstractJob,
         'db.Project',
         on_delete=models.CASCADE,
         related_name='jobs')
-    config = JSONField(
+    content = models.TextField(
         null=True,
         blank=True,
-        help_text='The compiled polyaxonfile for the run job.',
+        help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_job_spec_config])
     code_reference = models.ForeignKey(
         'db.CodeReference',
