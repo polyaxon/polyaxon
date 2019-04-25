@@ -53,7 +53,9 @@ class TestSpecifications(TestCase):
     def test_create_notebook_specification(self):
         build_config = {'image': 'blabla'}
         config = NotebookSpecification.create_specification(build_config)
-        assert NotebookSpecification.read(config).parsed_data == config
+        spec = NotebookSpecification.read(config)
+        assert spec.parsed_data == config
+        assert NotebookSpecification.read(spec.raw_data).parsed_data == config
         assert config['build'] == build_config
         spec = NotebookSpecification.create_specification(build_config, to_dict=False)
         assert spec.build.image == build_config['image']
@@ -61,7 +63,9 @@ class TestSpecifications(TestCase):
     def test_create_tensorboard_specification(self):
         build_config = {'image': 'blabla'}
         config = TensorboardSpecification.create_specification(build_config)
-        assert TensorboardSpecification.read(config).parsed_data == config
+        spec = TensorboardSpecification.read(config)
+        assert spec.parsed_data == config
+        assert TensorboardSpecification.read(spec.raw_data).parsed_data == config
         assert config['build'] == build_config
         spec = TensorboardSpecification.create_specification(build_config, to_dict=False)
         assert spec.build.image == build_config['image']
@@ -70,7 +74,9 @@ class TestSpecifications(TestCase):
         # Normal build config
         build_config = {'image': 'blabla'}
         config = BuildSpecification.create_specification(build_config)
-        assert BuildSpecification.read(config).parsed_data == config
+        spec = BuildSpecification.read(config)
+        assert spec.parsed_data == config
+        assert BuildSpecification.read(spec.raw_data).parsed_data == config
         assert config['image'] == build_config['image']
         spec = BuildSpecification.create_specification(build_config, to_dict=False)
         assert spec.config.image == build_config['image']
@@ -111,6 +117,8 @@ class TestSpecifications(TestCase):
         run_config = {'cmd': 'some command'}
         config = JobSpecification.create_specification(build_config=build_config,
                                                        run_config=run_config)
+        spec = JobSpecification.read(config)
+        assert JobSpecification.read(spec.raw_data).parsed_data == config
         assert JobSpecification.read(config).parsed_data == config
         assert config['run'] == run_config
         assert config['build'] == build_config
@@ -133,6 +141,7 @@ class TestSpecifications(TestCase):
             'run': {'cmd': 'train'}
         }
         spec = ExperimentSpecification.read(content)
+        assert ExperimentSpecification.read(spec.raw_data).parsed_data == content
         assert spec.declarations is None
 
         # Add declarations
@@ -244,6 +253,7 @@ class TestSpecifications(TestCase):
             'run': {'cmd': 'train'}
         }
         spec = GroupSpecification.read(content)
+        assert GroupSpecification.read(spec.raw_data).raw_data == spec.raw_data
         assert spec.environment is None
         assert spec.configmap_refs is None
         assert spec.secret_refs is None

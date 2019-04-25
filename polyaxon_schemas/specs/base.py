@@ -215,6 +215,10 @@ class BaseSpecification(object):
         return self._parsed_data
 
     @cached_property
+    def raw_data(self):
+        return '{}'.format(self._data)
+
+    @cached_property
     def version(self):
         return self.headers[self.VERSION]
 
