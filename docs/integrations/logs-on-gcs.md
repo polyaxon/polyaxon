@@ -51,5 +51,5 @@ persistence:
     store: gcs
     bucket: gs://logs-bucket
     secret: gcs-secret
-    secretKey: gcs-key.json
+    secretKey: gcs-secret.json
 ```
