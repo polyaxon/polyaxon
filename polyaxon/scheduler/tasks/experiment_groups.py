@@ -107,6 +107,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP, ignore_result=True)
 def experiments_group_stop(experiment_group_id,
                            collect_logs=True,
+                           update_status=True,
                            message=None):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id,
                                                     include_deleted=True)
@@ -120,6 +121,7 @@ def experiments_group_stop(experiment_group_id,
             'experiment_group_id': experiment_group_id,
             'pending': False,
             'collect_logs': collect_logs,
+            'update_status': update_status,
             'message': message
         },
         countdown=conf.get('GLOBAL_COUNTDOWN'))
@@ -129,6 +131,7 @@ def experiments_group_stop(experiment_group_id,
 def experiments_group_stop_experiments(experiment_group_id,
                                        pending,
                                        collect_logs=True,
+                                       update_status=True,
                                        message=None):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id,
                                                     include_deleted=True)
@@ -164,7 +167,8 @@ def experiments_group_stop_experiments(experiment_group_id,
                 # Update experiment status to show that its stopped
                 experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
 
-    experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED, message=message)
+    if update_status:
+        experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED, message=message)
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
