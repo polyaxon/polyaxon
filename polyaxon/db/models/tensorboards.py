@@ -2,7 +2,6 @@ from typing import Dict, List, Tuple
 
 from hestia.datetime_typing import AwareDT
 
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.functional import cached_property
 
