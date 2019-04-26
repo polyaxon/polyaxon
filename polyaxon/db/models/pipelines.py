@@ -68,11 +68,6 @@ class ExecutableModel(models.Model):
         editable=False,
         unique=True,
         null=False)
-    schedule = models.OneToOneField(
-        'db.Schedule',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL)
     execute_at = models.DateTimeField(
         null=True,
         blank=True,
@@ -122,6 +117,11 @@ class Pipeline(DiffModel,
         null=True,
         blank=True,
         related_name='pipelines')
+    schedule = models.OneToOneField(
+        'db.Schedule',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL)
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,

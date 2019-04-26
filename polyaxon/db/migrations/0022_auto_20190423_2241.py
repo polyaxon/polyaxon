@@ -104,4 +104,8 @@ class Migration(migrations.Migration):
             model_name='tensorboardjob',
             name='config',
         ),
+        migrations.RemoveField(
+            model_name='operation',
+            name='schedule',
+        ),
     ]
