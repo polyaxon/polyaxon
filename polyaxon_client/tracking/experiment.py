@@ -108,7 +108,7 @@ class Experiment(BaseTracker):
         if description:
             experiment_config['description'] = description
         if content:
-            experiment_config['content'] = content
+            experiment_config['content'] = self.client.project.validate_content(content=content)
         if build_id:
             experiment_config['build_job'] = str(build_id)
         experiment_config['is_managed'] = settings.IS_MANAGED

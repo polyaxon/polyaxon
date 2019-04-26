@@ -4,12 +4,7 @@ from __future__ import absolute_import, division, print_function
 from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.exceptions import PolyaxonClientException
-from polyaxon_client.schemas import (
-    ExperimentConfig,
-    GroupConfig,
-    JobConfig,
-    ProjectConfig
-)
+from polyaxon_client.schemas import ExperimentConfig, GroupConfig, JobConfig, ProjectConfig
 
 
 class BookmarkApi(BaseApiHandler):

@@ -7,6 +7,7 @@ from collections import Mapping
 
 from polyaxon_client import settings
 from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonClientException
+from polyaxon_client.schemas import BaseConfig, BaseSpecification
 
 
 class BaseApiHandler(object):
@@ -78,3 +79,19 @@ class BaseApiHandler(object):
                 'Expects a Mapping or an instance of `{}`.'.format(config_schema.__name__))
 
         return config
+
+    @staticmethod
+    def validate_content(content):
+        if not content:
+            return content
+        if isinstance(content, Mapping):
+            return '{}'.format(content)
+        if isinstance(content, BaseConfig):
+            return '{}'.format(content.to_dict())
+        if isinstance(content, six.string_types):
+            return content
+        if isinstance(content, BaseSpecification):
+            return content.raw_data
+        raise PolyaxonClientException(
+            'Received an invalid content. '
+            'Expects a Str, a Mapping or a valid instance of the entity config.')

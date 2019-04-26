@@ -4,7 +4,8 @@ from __future__ import absolute_import, division, print_function
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
-from polyaxon_client.exceptions import ERRORS_MAPPING
+from polyaxon_client.exceptions import ERRORS_MAPPING, PolyaxonClientException
+from polyaxon_client.schemas import BuildJobConfig, ExperimentConfig
 
 
 class DummyConfig(object):
@@ -67,3 +68,18 @@ class TestBaseApiHandler(TestBaseApi):
                                                         current_page=1,
                                                         config=DummyConfig)
         assert results == {'count': 0, 'next': None, 'previous': None, 'results': ['bar']}
+
+    def test_validate_config(self):
+        assert isinstance(self.api_handler.validate_config(config={}, config_schema=BuildJobConfig),
+                          BuildJobConfig)
+
+        with self.assertRaises(PolyaxonClientException):
+            self.api_handler.validate_config(config=ExperimentConfig(),
+                                             config_schema=BuildJobConfig)
+
+    def test_validate_content(self):
+        assert self.api_handler.validate_content(None) is None
+        assert self.api_handler.validate_content({'foo': 'bar'}) == "{'foo': 'bar'}"
+        assert self.api_handler.validate_content("{'foo': 'bar'}") == "{'foo': 'bar'}"
+        assert self.api_handler.validate_content(BuildJobConfig()) == '{}'.format(
+            BuildJobConfig().to_dict())

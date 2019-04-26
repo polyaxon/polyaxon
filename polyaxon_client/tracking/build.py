@@ -45,7 +45,7 @@ class BuildJob(BaseJob):
         if description:
             build_config['description'] = description
         if content:
-            build_config['content'] = content
+            build_config['content'] = self.client.project.validate_content(content=content)
         build_config['is_managed'] = settings.IS_MANAGED
 
         build = self.client.project.create_build(

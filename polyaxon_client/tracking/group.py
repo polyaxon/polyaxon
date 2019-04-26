@@ -47,7 +47,7 @@ class Group(BaseTracker):
         if description:
             group_config['description'] = description
         if content:
-            group_config['content'] = content
+            group_config['content'] = self.client.project.validate_content(content=content)
 
         group = self.client.project.create_experiment_group(
             username=self.username,

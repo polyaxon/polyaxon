@@ -307,7 +307,7 @@ class ExperimentApi(BaseApiHandler):
 
         data = {}
         if content:
-            data['content'] = content
+            data['content'] = self.validate_content(content=content)
         if update_code:
             data['update_code'] = update_code
 
@@ -340,7 +340,7 @@ class ExperimentApi(BaseApiHandler):
 
         data = {}
         if content:
-            data['content'] = content
+            data['content'] = self.validate_content(content=content)
         if update_code:
             data['update_code'] = update_code
 
@@ -372,7 +372,7 @@ class ExperimentApi(BaseApiHandler):
 
         data = {}
         if content:
-            data['content'] = content
+            data['content'] = self.validate_content(content=content)
         if update_code:
             data['update_code'] = update_code
 
@@ -463,7 +463,7 @@ class ExperimentApi(BaseApiHandler):
                                      'tensorboard',
                                      'start')
 
-        job_config = {'content': content} if content else {}
+        job_config = {'content': self.validate_content(content=content)} if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)

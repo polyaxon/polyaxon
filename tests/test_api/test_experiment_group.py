@@ -413,7 +413,7 @@ class TestExperimentGroupApi(TestBaseApi):
             method='post')
 
     @httpretty.activate
-    def test_unbookmark_experiment(self):
+    def test_unbookmark_experiment_group(self):
         httpretty.register_uri(
             httpretty.DELETE,
             BaseApiHandler.build_url(

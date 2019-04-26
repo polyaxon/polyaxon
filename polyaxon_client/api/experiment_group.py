@@ -177,7 +177,7 @@ class ExperimentGroupApi(BaseApiHandler):
                                      'tensorboard',
                                      'start')
 
-        job_config = {'content': content} if content else {}
+        job_config = {'content': self.validate_content(content=content)} if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)

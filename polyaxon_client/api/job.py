@@ -201,7 +201,7 @@ class JobApi(BaseApiHandler):
 
         data = {}
         if content:
-            data['content'] = content
+            data['content'] = self.validate_content(content=content)
         if update_code:
             data['update_code'] = update_code
 
@@ -233,7 +233,7 @@ class JobApi(BaseApiHandler):
 
         data = {}
         if content:
-            data['content'] = content
+            data['content'] = self.validate_content(content=content)
         if update_code:
             data['update_code'] = update_code
 
@@ -265,7 +265,7 @@ class JobApi(BaseApiHandler):
 
         data = {}
         if content:
-            data['content'] = content
+            data['content'] = self.validate_content(content=content)
         if update_code:
             data['update_code'] = update_code
 

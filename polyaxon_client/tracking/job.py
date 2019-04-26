@@ -185,7 +185,7 @@ class Job(BaseJob):
         if description:
             job_config['description'] = description
         if content:
-            job_config['content'] = content
+            job_config['content'] = self.client.project.validate_content(content=content)
         if build_id:
             job_config['build_job'] = str(build_id)
         job_config['is_managed'] = settings.IS_MANAGED

@@ -11,12 +11,7 @@ from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client.api.base import BaseApiHandler
 from polyaxon_client.api.bookmark import BookmarkApi
-from polyaxon_client.schemas import (
-    ExperimentConfig,
-    GroupConfig,
-    JobConfig,
-    ProjectConfig
-)
+from polyaxon_client.schemas import ExperimentConfig, GroupConfig, JobConfig, ProjectConfig
 
 
 class TestBookmarkApi(TestBaseApi):
