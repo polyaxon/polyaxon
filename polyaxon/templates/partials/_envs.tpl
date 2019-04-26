@@ -6,11 +6,13 @@ secrets config
   valueFrom:
     fieldRef:
       fieldPath: spec.nodeName
+{{- /*
 - name: POLYAXON_RABBITMQ_PASSWORD
   valueFrom:
     secretKeyRef:
       name: {{ template "rabbitmq.fullname" . }}
       key: rabbitmq-password
+*/}}
 {{- if .Values.redis.usePassword }}
 - name: POLYAXON_REDIS_PASSWORD
   valueFrom:

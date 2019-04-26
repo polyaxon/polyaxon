@@ -151,16 +151,15 @@ data:
   {{- end }}
   # AMQP
   POLYAXON_AMQP_URL: {{ template "rabbitmq.fullname" . }}:5672
-  POLYAXON_RABBITMQ_USER: {{ default "" .Values.rabbitmq.rabbitmqUsername | quote }}
   # REDIS
-  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: redis://{{ template "redis.fullname" . }}:6379/0
-  POLYAXON_REDIS_JOB_CONTAINERS_URL: redis://{{ template "redis.fullname" . }}:6379/3
-  POLYAXON_REDIS_TO_STREAM_URL: redis://{{ template "redis.fullname" . }}:6379/4
-  POLYAXON_REDIS_SESSIONS_URL: redis://{{ template "redis.fullname" . }}:6379/5
-  POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: redis://{{ template "redis.fullname" . }}:6379/6
-  POLYAXON_REDIS_TTL_URL: redis://{{ template "redis.fullname" . }}:6379/7
-  POLYAXON_REDIS_HEARTBEAT_URL: redis://{{ template "redis.fullname" . }}:6379/8
-  POLYAXON_REDIS_GROUP_CHECKS_URL: redis://{{ template "redis.fullname" . }}:6379/9
+  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.fullname" . }}:6379/0
+  POLYAXON_REDIS_JOB_CONTAINERS_URL: {{ template "redis.fullname" . }}:6379/3
+  POLYAXON_REDIS_TO_STREAM_URL: {{ template "redis.fullname" . }}:6379/4
+  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.fullname" . }}:6379/5
+  POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: {{ template "redis.fullname" . }}:6379/6
+  POLYAXON_REDIS_TTL_URL: {{ template "redis.fullname" . }}:6379/7
+  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.fullname" . }}:6379/8
+  POLYAXON_REDIS_GROUP_CHECKS_URL: {{ template "redis.fullname" . }}:6379/9
   POLYAXON_REDIS_HOST: {{ template "redis.fullname" . }}
   POLYAXON_REDIS_PORT: "6379"
   # Security Context
