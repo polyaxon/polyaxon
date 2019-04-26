@@ -31,6 +31,7 @@ class TestJobsStatusesTransition(BaseTest):
                 status_from=status, status_to=JobLifeCycle.BUILDING)
             if status in {JobLifeCycle.CREATED,
                           JobLifeCycle.RESUMING,
+                          JobLifeCycle.SCHEDULED,
                           JobLifeCycle.UNSCHEDULABLE,
                           JobLifeCycle.WARNING,
                           JobLifeCycle.UNKNOWN, }:
