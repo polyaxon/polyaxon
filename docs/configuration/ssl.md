@@ -28,7 +28,7 @@ Polyaxon's helm chart comes with an ingress resource that you can use with an in
     ```
     
 
- 2. Add the tls configuration to Polyaxon's Ingress values.
+ 2. Add the tls configuration to Polyaxon's Ingress values. **Do not use CluserIP on GKE**
  
     ```yaml
     serviceType: ClusterIP
