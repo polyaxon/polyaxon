@@ -87,7 +87,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
     ```
     """
     specification = None
-    job_config = None
+    job_content = None
     if file:
         specification = check_polyaxonfile(file, log=False).specification
 
@@ -98,13 +98,13 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
     if specification:
         # pylint:disable=protected-access
         check_polyaxonfile_kind(specification=specification, kind=specification._NOTEBOOK)
-        job_config = specification.parsed_data
+        job_content = specification.raw_data
     user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
         response = PolyaxonClient().project.start_notebook(
             username=user,
             project_name=project_name,
-            job_config=job_config,
+            content=job_content,
             is_managed=True,
         )
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:

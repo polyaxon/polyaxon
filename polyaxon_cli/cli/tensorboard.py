@@ -171,14 +171,14 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
     ```
     """
     specification = None
-    job_config = None
+    job_content = None
     if file:
         specification = check_polyaxonfile(file, log=False).specification
 
     if specification:
         # pylint:disable=protected-access
         check_polyaxonfile_kind(specification=specification, kind=specification._TENSORBOARD)
-        job_config = specification.parsed_data
+        job_content = specification.raw_data
 
     user, project_name = get_project_or_local(ctx.obj.get('project'))
     group = ctx.obj.get('group')
@@ -189,7 +189,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 username=user,
                 project_name=project_name,
                 experiment_id=experiment,
-                job_config=job_config,
+                content=job_content,
                 is_managed=True,
             )
             obj = 'experiment `{}`'.format(experiment)
@@ -203,7 +203,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
                 username=user,
                 project_name=project_name,
                 group_id=group,
-                job_config=job_config,
+                content=job_content,
                 is_managed=True,
             )
             obj = 'group `{}`'.format(group)
@@ -216,7 +216,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
             response = PolyaxonClient().project.start_tensorboard(
                 username=user,
                 project_name=project_name,
-                job_config=job_config,
+                content=job_content,
                 is_managed=True,
             )
             obj = 'project `{}`'.format(project_name)

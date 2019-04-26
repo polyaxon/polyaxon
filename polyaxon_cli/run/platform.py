@@ -41,7 +41,7 @@ def run(ctx,
             name=name,
             description=description,
             tags=tags,
-            config=specification.parsed_data,
+            content=specification.raw_data,
             ttl=ttl,
             is_managed=True,
         )
@@ -64,7 +64,7 @@ def run(ctx,
             name=name,
             description=description,
             tags=tags,
-            content=specification._data,  # pylint:disable=protected-access
+            content=specification.raw_data,  # pylint:disable=protected-access
             is_managed=True,
         )
         try:
@@ -84,7 +84,7 @@ def run(ctx,
             name=name,
             description=description,
             tags=tags,
-            config=specification.parsed_data,
+            content=specification.raw_data,
             ttl=ttl,
             is_managed=True,
         )
@@ -105,7 +105,7 @@ def run(ctx,
             name=name,
             description=description,
             tags=tags,
-            config=specification.parsed_data,
+            content=specification.raw_data,
             ttl=ttl,
             is_managed=True,
         )

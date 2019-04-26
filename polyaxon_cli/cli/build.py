@@ -37,7 +37,7 @@ def get_build_details(_build):
     response = _build.to_light_dict(
         humanize_values=True,
         exclude_attrs=[
-            'uuid', 'config', 'project', 'description', 'resources', 'is_clone', 'build_job'
+            'uuid', 'content', 'project', 'description', 'resources', 'is_clone', 'build_job'
         ])
 
     Printer.print_header("Build info:")

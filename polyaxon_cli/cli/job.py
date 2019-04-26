@@ -39,7 +39,7 @@ def get_job_details(_job):
     response = _job.to_light_dict(
         humanize_values=True,
         exclude_attrs=[
-            'uuid', 'config', 'project', 'description', 'resources',
+            'uuid', 'content', 'project', 'description', 'resources',
         ])
 
     Printer.print_header("Job info:")
@@ -232,10 +232,10 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     $ polyaxon job --job=1 restart
     ```
     """
-    config = None
+    content = None
     update_code = None
     if file:
-        config = rhea.read(file)
+        content = '{}'.format(rhea.read(file))
 
     # Check if we need to upload
     if u:
@@ -246,10 +246,10 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     try:
         if copy:
             response = PolyaxonClient().job.copy(
-                user, project_name, _job, config=config, update_code=update_code)
+                user, project_name, _job, content=content, update_code=update_code)
         else:
             response = PolyaxonClient().job.restart(
-                user, project_name, _job, config=config, update_code=update_code)
+                user, project_name, _job, content=content, update_code=update_code)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not restart job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -277,10 +277,10 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     $ polyaxon job --job=1 resume
     ```
     """
-    config = None
+    content = None
     update_code = None
     if file:
-        config = rhea.read(file)
+        content = '{}'.format(rhea.read(file))
 
     # Check if we need to upload
     if u:
@@ -291,7 +291,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
                                                 ctx.obj.get('job'))
     try:
         response = PolyaxonClient().job.resume(
-            user, project_name, _job, config=config, update_code=update_code)
+            user, project_name, _job, content=content, update_code=update_code)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not resume job `{}`.'.format(_job))
         Printer.print_error('Error message `{}`.'.format(e))
