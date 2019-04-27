@@ -26,8 +26,7 @@ redis:
       memory: 40Mi
       cpu: 20m
 
-rabbitmq:
-  imageTag: 3.6.12-management-alpine
+rabbitmq-ha:
   resources:
     requests:
       memory: 40Mi

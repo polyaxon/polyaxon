@@ -2,14 +2,14 @@ dependencies:
 - name: postgresql
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.8.7
-- name: rabbitmq
+- name: rabbitmq-ha
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 5.5.0
+  version: 1.25.0
 - name: redis
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 1.1.7
 - name: docker-registry
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 1.7.1
-digest: sha256:7e16068acc51763070747925adf0593d3d07891f5c2211bb3c82caf88e334b73
-generated: 2019-04-27T02:29:17.463176139+02:00
+digest: sha256:98c18930cdc0db5f0a0c074e3f946ba3824392c65d0c9d341bb08bad3c188a1d
+generated: 2019-04-27T17:36:11.087286599+02:00

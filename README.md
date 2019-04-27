@@ -28,7 +28,7 @@ It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
- * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq)
+ * [Rabbitmq-ha](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
  * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 

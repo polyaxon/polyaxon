@@ -471,11 +471,10 @@ redis:
                 - "polyaxon-core"
             topologyKey: "kubernetes.io/hostname"
 
-rabbitmq:
-  username: polyaxon
-  password: polyaxon
-  persistence:
-    enabled: false
+rabbitmq-ha:
+  replicaCount: 1
+  rabbitmqUsername: polyaxon
+  rabbitmqPassword: polyaxon
   resources:
     requests:
       memory: 256Mi

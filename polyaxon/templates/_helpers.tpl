@@ -52,6 +52,6 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "rabbitmq.fullname" -}}
-{{- $name := "rabbitmq" -}}
+{{- $name := "rabbitmq-ha" -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
