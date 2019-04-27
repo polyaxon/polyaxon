@@ -28,7 +28,7 @@ It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
- * [Rabbitmq-ha](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
+ * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
  * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 
@@ -419,8 +419,8 @@ Dependent charts can also have values overwritten. Preface values with
 
  * `postgresql.*`
  * `redis.*`
- * `rabbitmq.*`
- * `registry.*`
+ * `rabbitmq-ha.*`
+ * `docker-registry.*`
 
 
 ### Secrets and ConfigMaps

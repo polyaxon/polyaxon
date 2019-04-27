@@ -452,12 +452,17 @@ postgresql:
             topologyKey: "kubernetes.io/hostname"
 
 redis:
-  image: redis:4.0.9
+  enabled: true
   usePassword: false
-  persistence:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 8Gi
+  password:
+  image:
+#    repository: redis
+    tag: 5.0.4
+#  password: polyaxon
+#  port: 6379
+  master:
+    persistence:
+      enabled: true
   affinity:
     podAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
