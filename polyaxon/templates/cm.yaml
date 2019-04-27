@@ -151,7 +151,8 @@ data:
   {{- end }}
   # AMQP
   POLYAXON_AMQP_URL: {{ template "rabbitmq.fullname" . }}:5672
-  # REDIS
+  POLYAXON_RABBITMQ_USER: {{ default "" .Values.rabbitmq.username | quote }}
+    # REDIS
   POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.fullname" . }}:6379/0
   POLYAXON_REDIS_JOB_CONTAINERS_URL: {{ template "redis.fullname" . }}:6379/3
   POLYAXON_REDIS_TO_STREAM_URL: {{ template "redis.fullname" . }}:6379/4
