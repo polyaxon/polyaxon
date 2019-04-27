@@ -14,12 +14,15 @@ services:
 
   rabbitmq:
     hostname: rabbitmq
-    image: rabbitmq:3.6.12-management-alpine
+    image: bitnami/rabbitmq:3.7.14
     networks:
       - polyaxon
+    environment:
+      RABBITMQ_PASSWORD: "polyaxon"
+      RABBITMQ_USERNAME: "polyaxon"
 
   redis:
-    image: redis:3.0-alpine
+    image: redis:5.0.4-alpine
     networks:
       - polyaxon
 
@@ -57,8 +60,8 @@ services:
       POLYAXON_REDIS_TTL_URL: "redis:6379/7"
       POLYAXON_REDIS_HEARTBEAT_URL: "redis:6379/8"
       POLYAXON_REDIS_GROUP_CHECKS_URL: "redis:6379/9"
-      POLYAXON_RABBITMQ_DEFAULT_USER: admin
-      POLYAXON_RABBITMQ_DEFAULT_PASS: mypass
+      POLYAXON_RABBITMQ_USER: polyaxon
+      POLYAXON_RABBITMQ_PASSWORD: polyaxon
       KUBECONFIG: "/root/.kube/config"
 
   worker:
@@ -78,6 +81,8 @@ services:
       POLYAXON_REDIS_TTL_URL: "redis:6379/7"
       POLYAXON_REDIS_HEARTBEAT_URL: "redis:6379/8"
       POLYAXON_REDIS_GROUP_CHECKS_URL: "redis:6379/9"
+      POLYAXON_RABBITMQ_USER: polyaxon
+      POLYAXON_RABBITMQ_PASSWORD: polyaxon
       KUBECONFIG: "/root/.kube/config"
     networks:
       - polyaxon
