@@ -14,12 +14,12 @@ services:
 
   rabbitmq:
     hostname: rabbitmq
-    image: bitnami/rabbitmq:3.7.14
+    image: rabbitmq:3.7.12-alpine
     networks:
       - polyaxon
     environment:
-      RABBITMQ_PASSWORD: "polyaxon"
-      RABBITMQ_USERNAME: "polyaxon"
+      RABBITMQ_DEFAULT_USER: "polyaxon"
+      RABBITMQ_DEFAULT_PASS: "polyaxon"
 
   redis:
     image: redis:5.0.4-alpine
