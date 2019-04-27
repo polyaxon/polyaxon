@@ -9,9 +9,9 @@ hptuning:
     n_experiments: 10
 
   early_stopping:
-    - metric: loss
-      value: 0.1
-      optimization: minimize
+    - metric: accuracy
+      value: 0.9
+      optimization: maximize
 
   matrix:
     learning_rate:
