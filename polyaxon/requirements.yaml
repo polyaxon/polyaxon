@@ -10,6 +10,6 @@ dependencies:
     version: 1.1.7
     repository: https://kubernetes-charts.storage.googleapis.com/
   - name: docker-registry
-    version: 1.0.1
+    version: 1.7.1
     repository: https://kubernetes-charts.storage.googleapis.com/
     condition: docker-registry.enabled
