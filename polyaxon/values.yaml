@@ -471,9 +471,8 @@ redis:
             topologyKey: "kubernetes.io/hostname"
 
 rabbitmq:
-  image: rabbitmq:3.7.8-management
-  imagePullPolicy: IfNotPresent
-  rabbitmqUsername: polyaxon
+  username: polyaxon
+  password: polyaxon
   persistence:
     enabled: false
   resources:
