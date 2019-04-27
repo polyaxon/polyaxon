@@ -2,6 +2,8 @@
 Config securityContext with static GID
 */}}
 {{- define "securityContext" -}}
+{{- if .Values.securityContext.enabled }}
 securityContext:
-  fsGroup: 2222
+  fsGroup: {{ .Values.securityContext.group }}
+{{- end }}
 {{- end -}}

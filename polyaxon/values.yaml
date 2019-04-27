@@ -67,8 +67,9 @@ mountPaths:
 
 # WARNING: Please do not user this option yet
 securityContext:
-  user:
-  group:
+  enabled: false
+  user: 2222
+  group: 2222
 
 persistence:
   logs:
