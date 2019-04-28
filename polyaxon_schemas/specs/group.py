@@ -9,11 +9,11 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.build import BuildConfig
 from polyaxon_schemas.ops.environments.persistence import PersistenceConfig
 from polyaxon_schemas.ops.group import GroupConfig
+from polyaxon_schemas.ops.hptuning import SearchAlgorithms
 from polyaxon_schemas.specs.base import BaseSpecification
 from polyaxon_schemas.specs.experiment import ExperimentSpecification
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
-from polyaxon_schemas.utils import SearchAlgorithms
 
 
 class GroupSpecification(BaseSpecification):

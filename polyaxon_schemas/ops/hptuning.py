@@ -11,12 +11,96 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingMetricSchema
 from polyaxon_schemas.ops.matrix import MatrixConfig
 from polyaxon_schemas.ops.metrics import SearchMetricSchema
-from polyaxon_schemas.utils import (
-    AcquisitionFunctions,
-    GaussianProcessesKernels,
-    ResourceTypes,
-    SearchAlgorithms
-)
+
+
+class AcquisitionFunctions(object):
+    UCB = 'ucb'
+    EI = 'ei'
+    POI = 'poi'
+
+    UCB_VALUES = [UCB, UCB.upper(), UCB.capitalize()]
+    EI_VALUES = [EI, EI.upper(), EI.capitalize()]
+    POI_VALUES = [POI, POI.upper(), POI.capitalize()]
+
+    VALUES = UCB_VALUES + EI_VALUES + POI_VALUES
+
+    @classmethod
+    def is_ucb(cls, value):
+        return value in cls.UCB_VALUES
+
+    @classmethod
+    def is_ei(cls, value):
+        return value in cls.EI_VALUES
+
+    @classmethod
+    def is_poi(cls, value):
+        return value in cls.POI_VALUES
+
+
+class GaussianProcessesKernels(object):
+    RBF = 'rbf'
+    MATERN = 'matern'
+
+    RBF_VALUES = [RBF, RBF.upper(), RBF.capitalize()]
+    MATERN_VALUES = [MATERN, MATERN.upper(), MATERN.capitalize()]
+
+    VALUES = RBF_VALUES + MATERN_VALUES
+
+    @classmethod
+    def is_rbf(cls, value):
+        return value in cls.RBF_VALUES
+
+    @classmethod
+    def is_mattern(cls, value):
+        return value in cls.MATERN_VALUES
+
+
+class ResourceTypes(object):
+    INT = 'int'
+    FLOAT = 'float'
+
+    INT_VALUES = [INT, INT.upper(), INT.capitalize()]
+    FLOAT_VALUES = [FLOAT, FLOAT.upper(), FLOAT.capitalize()]
+
+    VALUES = INT_VALUES + FLOAT_VALUES
+
+    @classmethod
+    def is_int(cls, value):
+        return value in cls.INT_VALUES
+
+    @classmethod
+    def is_float(cls, value):
+        return value in cls.FLOAT_VALUES
+
+
+class SearchAlgorithms(object):
+    GRID = 'grid'
+    RANDOM = 'random'
+    HYPERBAND = 'hyperband'
+    BO = 'bo'  # bayesian optimization
+
+    GRID_VALUES = [GRID, GRID.upper(), GRID.capitalize()]
+    RANDOM_VALUES = [RANDOM, RANDOM.upper(), RANDOM.capitalize()]
+    HYPERBAND_VALUES = [HYPERBAND, HYPERBAND.upper(), HYPERBAND.capitalize()]
+    BO_VALUES = [BO, BO.upper(), BO.capitalize()]
+
+    VALUES = GRID_VALUES + RANDOM_VALUES + HYPERBAND_VALUES + BO_VALUES
+
+    @classmethod
+    def is_grid(cls, value):
+        return value in cls.GRID_VALUES
+
+    @classmethod
+    def is_random(cls, value):
+        return value in cls.RANDOM_VALUES
+
+    @classmethod
+    def is_hyperband(cls, value):
+        return value in cls.HYPERBAND_VALUES
+
+    @classmethod
+    def is_bo(cls, value):
+        return value in cls.BO_VALUES
 
 
 class RandomSearchSchema(BaseSchema):

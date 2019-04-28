@@ -8,14 +8,16 @@ from unittest import TestCase
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.ml.bridges import NoOpBridgeConfig
 from polyaxon_schemas.ml.graph import GraphConfig
-from polyaxon_schemas.ml.losses import AbsoluteDifferenceConfig, MeanSquaredErrorConfig
+from polyaxon_schemas.ml.losses import MeanSquaredErrorConfig
 from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, RegressorConfig
 from polyaxon_schemas.ml.optimizers import AdamConfig
 from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.ops.build import BuildConfig
+from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingMetricConfig
 from polyaxon_schemas.ops.environments.base import EnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
-from polyaxon_schemas.ops.hptuning import EarlyStoppingMetricConfig, HPTuningConfig
+from polyaxon_schemas.ops.experiment import ExperimentBackend, ExperimentFramework
+from polyaxon_schemas.ops.hptuning import HPTuningConfig, SearchAlgorithms
 from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.ops.matrix import MatrixConfig
 from polyaxon_schemas.ops.run_exec import RunConfig
@@ -27,12 +29,7 @@ from polyaxon_schemas.specs.frameworks import (
     PytorchSpecification,
     TensorflowSpecification
 )
-from polyaxon_schemas.utils import (
-    ExperimentBackend,
-    ExperimentFramework,
-    SearchAlgorithms,
-    TaskType
-)
+from polyaxon_schemas.utils import TaskType
 
 
 class TestPolyaxonfile(TestCase):

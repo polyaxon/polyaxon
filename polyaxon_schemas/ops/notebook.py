@@ -4,7 +4,13 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema
-from polyaxon_schemas.utils import NotebookBackend
+
+
+class NotebookBackend(object):
+    NOTEBOOK = 'notebook'
+    LAB = 'lab'
+
+    VALUES = [NOTEBOOK, LAB]
 
 
 def validate_notebook_backend(backend):

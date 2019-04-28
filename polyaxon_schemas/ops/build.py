@@ -6,7 +6,14 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.environments.base import EnvironmentSchema
 from polyaxon_schemas.ops.logging import LoggingSchema
-from polyaxon_schemas.utils import BuildBackend
+
+
+class BuildBackend(object):
+    NATIVE = 'native'
+    KANIKO = 'kaniko'
+    OTHER = 'other'
+
+    VALUES = [NATIVE, KANIKO, OTHER]
 
 
 def validate_image(image):

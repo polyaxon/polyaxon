@@ -7,8 +7,10 @@ from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.ops.hptuning import (
+    AcquisitionFunctions,
     BOConfig,
     GaussianProcessConfig,
+    GaussianProcessesKernels,
     GridSearchConfig,
     HPTuningConfig,
     HyperbandConfig,
@@ -16,7 +18,6 @@ from polyaxon_schemas.ops.hptuning import (
     UtilityFunctionConfig
 )
 from polyaxon_schemas.ops.metrics import Optimization, SearchMetricConfig
-from polyaxon_schemas.utils import AcquisitionFunctions, GaussianProcessesKernels
 
 
 class TestHptuningConfigs(TestCase):
