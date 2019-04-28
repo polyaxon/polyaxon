@@ -8,49 +8,15 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
+from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingMetricSchema
 from polyaxon_schemas.ops.matrix import MatrixConfig
+from polyaxon_schemas.ops.metrics import SearchMetricSchema
 from polyaxon_schemas.utils import (
     AcquisitionFunctions,
-    EarlyStoppingPolicy,
     GaussianProcessesKernels,
-    Optimization,
     ResourceTypes,
     SearchAlgorithms
 )
-
-
-class EarlyStoppingMetricSchema(BaseSchema):
-    metric = fields.Str()
-    value = fields.Float()
-    optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
-    policy = fields.Str(allow_none=True, validate=validate.OneOf(EarlyStoppingPolicy.VALUES))
-
-    @staticmethod
-    def schema_config():
-        return EarlyStoppingMetricConfig
-
-
-class EarlyStoppingMetricConfig(BaseConfig):
-    """
-    Early stopping metric config.
-
-    Args:
-        metric: `str`. The metric to use for early stopping.
-        value: `float`. The metric value to use for the condition.
-        optimization: `string`. The optimization to do: maximize or minimize.
-    """
-    SCHEMA = EarlyStoppingMetricSchema
-    IDENTIFIER = 'early_stopping_metric'
-
-    def __init__(self,
-                 metric,
-                 value=None,
-                 optimization=Optimization.MAXIMIZE,
-                 policy=EarlyStoppingPolicy.ALL):
-        self.metric = metric
-        self.value = value
-        self.optimization = optimization
-        self.policy = policy
 
 
 class RandomSearchSchema(BaseSchema):
@@ -85,26 +51,6 @@ class GridSearchConfig(BaseConfig):
 
     def __init__(self, n_experiments=None):
         self.n_experiments = n_experiments
-
-
-class SearchMetricSchema(BaseSchema):
-    name = fields.Str()
-    optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
-
-    @staticmethod
-    def schema_config():
-        return SearchMetricConfig
-
-
-class SearchMetricConfig(BaseConfig):
-    SCHEMA = SearchMetricSchema
-    IDENTIFIER = 'search_metric'
-
-    def __init__(self,
-                 name,
-                 optimization=Optimization.MAXIMIZE):
-        self.name = name
-        self.optimization = optimization
 
 
 class ResourceSchema(BaseSchema):

@@ -8,34 +8,18 @@ from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.ops.hptuning import (
     BOConfig,
-    EarlyStoppingMetricConfig,
     GaussianProcessConfig,
     GridSearchConfig,
     HPTuningConfig,
     HyperbandConfig,
     RandomSearchConfig,
-    SearchMetricConfig,
     UtilityFunctionConfig
 )
-from polyaxon_schemas.utils import (
-    AcquisitionFunctions,
-    EarlyStoppingPolicy,
-    GaussianProcessesKernels,
-    Optimization
-)
+from polyaxon_schemas.ops.metrics import Optimization, SearchMetricConfig
+from polyaxon_schemas.utils import AcquisitionFunctions, GaussianProcessesKernels
 
 
-class TestSettingConfigs(TestCase):
-
-    def test_early_stopping(self):
-        config_dict = {
-            'metric': 'loss',
-            'value': 0.1,
-            'optimization': Optimization.MINIMIZE,
-            'policy': EarlyStoppingPolicy.ALL
-        }
-        config = EarlyStoppingMetricConfig.from_dict(config_dict)
-        assert_equal_dict(config.to_dict(), config_dict)
+class TestHptuningConfigs(TestCase):
 
     def test_grid_search_config(self):
         config_dict = {'n_experiments': 10}
@@ -263,13 +247,13 @@ class TestSettingConfigs(TestCase):
                 'metric': 'loss',
                 'value': 0.1,
                 'optimization': Optimization.MINIMIZE,
-                'policy': EarlyStoppingPolicy.ALL
+                'policy': {'type': 'median', 'evaluation_interval': 1}
             },
             {
                 'metric': 'accuracy',
                 'value': 0.9,
                 'optimization': Optimization.MAXIMIZE,
-                'policy': EarlyStoppingPolicy.EXPERIMENT
+                'policy': {'type': 'truncation', 'percent': 50, 'evaluation_interval': 1}
             }
         ]
         config = HPTuningConfig.from_dict(config_dict)
