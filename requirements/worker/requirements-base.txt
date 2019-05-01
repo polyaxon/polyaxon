@@ -6,6 +6,6 @@ polystores==0.1.7
 polyaxon-k8s==0.4.2
 
 azure-storage==0.36.0
-boto3==1.7.73
+boto3==1.9.139
 botocore==1.10.84
 google-cloud-storage==1.10.0
