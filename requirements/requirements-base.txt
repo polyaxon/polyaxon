@@ -4,7 +4,7 @@ Django==2.2.1
 django-cors-headers==2.5.3
 djangorestframework==3.9.3
 psycopg2-binary==2.8.2
-psutil==5.4.7
+psutil==5.6.2
 raven==6.7.0
 redis==3.2.1
 Unipath==1.1
