@@ -6,7 +6,7 @@ docker==3.7.2
 GitPython==2.1.11
 pika==1.0.1
 sanic==19.3.1
-kubernetes-asyncio==8.0.3
+kubernetes-asyncio==9.0.0
 ocular==0.1.6
 polyaxon-k8s==0.4.2
 polyaxon-gpustat==0.3.4
