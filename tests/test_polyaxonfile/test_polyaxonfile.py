@@ -293,7 +293,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.outputs.jobs == [111]
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
+        assert spec.run.cmd == 'train --lr={lr:.15f} --loss={loss}'.format(
             **spec.declarations
         )
 
@@ -364,7 +364,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
+        assert spec.run.cmd == 'train --lr={lr:.15f} --loss={loss}'.format(
             **spec.declarations
         )
 
@@ -401,7 +401,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
+        assert spec.run.cmd == 'train --lr={lr:.15f} --loss={loss}'.format(
             **spec.declarations
         )
 
