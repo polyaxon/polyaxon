@@ -21,6 +21,8 @@ EXPERIMENT_GROUP_STOPPED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.STOPPED)
 EXPERIMENT_GROUP_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.RESUMED)
+EXPERIMENT_GROUP_FAILED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                         event_actions.FAILED)
 EXPERIMENT_GROUP_DONE = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                        event_actions.DONE)
 EXPERIMENT_GROUP_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
@@ -231,6 +233,25 @@ class ExperimentGroupResumedEvent(Event):
         Attribute('has_early_stopping', attr_type=bool, is_required=False),
         Attribute('has_description', attr_type=bool),
         Attribute('last_status'),
+    )
+
+
+class ExperimentGroupFailedEvent(Event):
+    event_type = EXPERIMENT_GROUP_FAILED
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
     )
 
 

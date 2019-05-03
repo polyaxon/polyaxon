@@ -15,6 +15,7 @@ from db.models.experiment_jobs import ExperimentJobStatus
 from db.models.experiments import ExperimentStatus
 from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
+from db.models.pipelines import PipelineRunStatus
 from db.models.tensorboards import TensorboardJobStatus
 from event_manager.events.build_job import (
     BUILD_JOB_CREATED,
@@ -62,6 +63,7 @@ from event_manager.events.tensorboard import (
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from lifecycles.pipelines import PipelineLifeCycle
 from signals.operations import new_operation_run_status
 from signals.run_time import (
     set_finished_at,
@@ -335,3 +337,30 @@ def experiment_status_post_save(sender, **kwargs):
     new_operation_run_status(entity_type=content_types.EXPERIMENT,
                              entity=experiment,
                              status=instance.status)
+
+
+@receiver(post_save, sender=PipelineRunStatus, dispatch_uid="new_pipeline_run_status_post_save")
+@ignore_updates
+@ignore_raw
+def new_pipeline_run_status_post_save(sender, **kwargs):
+    instance = kwargs['instance']
+    pipeline_run = instance.pipeline_run
+    previous_status = pipeline_run.last_status
+    # Update job last_status
+    pipeline_run.status = instance
+    set_started_at(instance=pipeline_run,
+                   status=instance.status,
+                   starting_statuses=[PipelineLifeCycle.RUNNING])
+    set_finished_at(instance=pipeline_run,
+                    status=instance.status,
+                    is_done=PipelineLifeCycle.is_done)
+    pipeline_run.save(update_fields=['status', 'started_at', 'finished_at'])
+    # Notify operations with status change. This is necessary if we skip or stop the dag run.
+    if pipeline_run.stopped:
+        auditor.record(event_type=PIPELINE_RUN_STOPPED,
+                       instance=pipeline_run,
+                       previous_status=previous_status)
+    if pipeline_run.skipped:
+        auditor.record(event_type=PIPELINE_RUN_SKIPPED,
+                       instance=pipeline_run,
+                       previous_status=previous_status)

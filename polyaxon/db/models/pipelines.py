@@ -34,7 +34,13 @@ status_change = Signal(providing_args=["instance", "status"])
 
 class Schedule(DiffModel):
     """A model that represents the scheduling behaviour of an operation or a pipeline."""
-    frequency = models.CharField(
+    frequency = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="Defines how often to run, "
+                  "this timedelta object gets added to your latest operation instance's "
+                  "execution_date to figure out the next schedule", )
+    cron = models.CharField(
         max_length=64,
         null=True,
         blank=True,
@@ -239,6 +245,8 @@ class Operation(DiffModel,
         max_length=24,
         blank=True,
         null=True)
+    skip_on_upstream_skip = models.BooleanField(default=False,
+        help_text="skip this operation if upstream operations are skipped.")
     queue = models.CharField(
         max_length=128,
         blank=True,

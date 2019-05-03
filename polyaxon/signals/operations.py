@@ -7,7 +7,7 @@ from polyaxon.settings import PipelinesCeleryTasks
 
 
 def new_operation_run_status(entity_type, entity, status):
-    # TODO
+    # TODO: may be move this to the executor, and think about making it an async task
     # If status is created, then the entity is still not set on the op
     # Set the entity and status to created
     if status == OperationStatuses.CREATED:

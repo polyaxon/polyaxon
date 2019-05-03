@@ -8,7 +8,9 @@ class PublishTrackerService(TrackerService):
         self.analytics = analytics
         self.analytics.write_key = key
 
-    def record_event(self, event):
+
+    @staticmethod
+    def _record_event(event):
         if not event.ref_id:
             return
 
@@ -22,3 +24,9 @@ class PublishTrackerService(TrackerService):
             event.event_type,
             event.serialize(dumps=False, include_actor_name=False),
         )
+
+    def record_event(self, event):
+       try:
+           self._record_event(event)
+       except:
+           pass
