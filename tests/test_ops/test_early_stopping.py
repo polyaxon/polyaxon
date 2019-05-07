@@ -26,7 +26,7 @@ class TestEarlyStoppingConfigs(TestCase):
             'metric': 'loss',
             'value': 0.1,
             'optimization': Optimization.MINIMIZE,
-            'policy': {'type': 'median', 'evaluation_interval': 1}
+            'policy': {'kind': 'median', 'evaluation_interval': 1}
         }
         config = EarlyStoppingMetricConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -36,7 +36,7 @@ class TestEarlyStoppingConfigs(TestCase):
             'metric': 'loss',
             'value': 0.1,
             'optimization': Optimization.MINIMIZE,
-            'policy': {'type': 'average', 'evaluation_interval': 1}
+            'policy': {'kind': 'average', 'evaluation_interval': 1}
         }
         config = EarlyStoppingMetricConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -46,7 +46,7 @@ class TestEarlyStoppingConfigs(TestCase):
             'metric': 'loss',
             'value': 0.1,
             'optimization': Optimization.MAXIMIZE,
-            'policy': {'type': 'truncation', 'percent': 50, 'evaluation_interval': 1}
+            'policy': {'kind': 'truncation', 'percent': 50, 'evaluation_interval': 1}
         }
         config = EarlyStoppingMetricConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

@@ -248,13 +248,13 @@ class TestHptuningConfigs(TestCase):
                 'metric': 'loss',
                 'value': 0.1,
                 'optimization': Optimization.MINIMIZE,
-                'policy': {'type': 'median', 'evaluation_interval': 1}
+                'policy': {'kind': 'median', 'evaluation_interval': 1}
             },
             {
                 'metric': 'accuracy',
                 'value': 0.9,
                 'optimization': Optimization.MAXIMIZE,
-                'policy': {'type': 'truncation', 'percent': 50, 'evaluation_interval': 1}
+                'policy': {'kind': 'truncation', 'percent': 50, 'evaluation_interval': 1}
             }
         ]
         config = HPTuningConfig.from_dict(config_dict)

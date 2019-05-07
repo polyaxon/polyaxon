@@ -8,7 +8,7 @@ from polyaxon_schemas.ops.metrics import Optimization
 
 
 class MedianStoppingPolicySchema(BaseSchema):
-    type = fields.Str(allow_none=None, validate=validate.Equal('median'))
+    kind = fields.Str(allow_none=None, validate=validate.Equal('median'))
     evaluation_interval = fields.Int()
 
     @staticmethod
@@ -31,13 +31,13 @@ class MedianStoppingPolicyConfig(BaseConfig):
 
     def __init__(self,
                  evaluation_interval,
-                 type='median'):  # pylint:disable=redefined-builtin
-        self.type = type
+                 kind='median'):
+        self.kind = kind
         self.evaluation_interval = evaluation_interval
 
 
 class AverageStoppingPolicySchema(BaseSchema):
-    type = fields.Str(allow_none=None, validate=validate.Equal('average'))
+    kind = fields.Str(allow_none=None, validate=validate.Equal('average'))
     evaluation_interval = fields.Int()
 
     @staticmethod
@@ -60,13 +60,13 @@ class AverageStoppingPolicyConfig(BaseConfig):
 
     def __init__(self,
                  evaluation_interval,
-                 type='average'):  # pylint:disable=redefined-builtin
-        self.type = type
+                 kind='average'):
+        self.kind = kind
         self.evaluation_interval = evaluation_interval
 
 
 class TruncationStoppingPolicySchema(BaseSchema):
-    type = fields.Str(allow_none=None, validate=validate.Equal('truncation'))
+    kind = fields.Str(allow_none=None, validate=validate.Equal('truncation'))
     percent = fields.Int()
     evaluation_interval = fields.Int()
 
@@ -92,8 +92,8 @@ class TruncationStoppingPolicyConfig(BaseConfig):
     def __init__(self,
                  percent,
                  evaluation_interval,
-                 type='truncation'):  # pylint:disable=redefined-builtin
-        self.type = type
+                 kind='truncation'):
+        self.kind = kind
         self.percent = percent
         self.evaluation_interval = evaluation_interval
 
@@ -102,14 +102,14 @@ def validate_policy(policy):
     if not policy:
         return None
 
-    if 'type' not in policy:
-        raise ValidationError('Policy type is a required field.')
+    if 'kind' not in policy:
+        raise ValidationError('Policy kind is a required field.')
 
-    if policy['type'] == MedianStoppingPolicyConfig.IDENTIFIER:
+    if policy['kind'] == MedianStoppingPolicyConfig.IDENTIFIER:
         return MedianStoppingPolicyConfig.from_dict(policy)
-    if policy['type'] == AverageStoppingPolicyConfig.IDENTIFIER:
+    if policy['kind'] == AverageStoppingPolicyConfig.IDENTIFIER:
         return AverageStoppingPolicyConfig.from_dict(policy)
-    if policy['type'] == TruncationStoppingPolicyConfig.IDENTIFIER:
+    if policy['kind'] == TruncationStoppingPolicyConfig.IDENTIFIER:
         return TruncationStoppingPolicyConfig.from_dict(policy)
 
 
