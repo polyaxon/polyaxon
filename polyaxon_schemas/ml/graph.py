@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import EXCLUDE, fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields import ObjectOrListObject, Tensor
 from polyaxon_schemas.ml.layers import LayerSchema
-from polyaxon_schemas.utils import ObjectOrListObject, Tensor
 
 
 class GraphSchema(BaseSchema):

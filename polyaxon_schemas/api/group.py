@@ -6,7 +6,7 @@ from marshmallow import fields, validate
 
 from polyaxon_schemas.api.experiment import ExperimentSchema
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import UUID
+from polyaxon_schemas.fields import UUID
 
 
 class GroupSchema(BaseSchema):

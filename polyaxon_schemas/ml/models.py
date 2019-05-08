@@ -4,12 +4,12 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import EXCLUDE, fields
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
+from polyaxon_schemas.fields import ObjectOrListObject
 from polyaxon_schemas.ml.bridges import BridgeSchema
 from polyaxon_schemas.ml.graph import GraphSchema
 from polyaxon_schemas.ml.losses import LossSchema
 from polyaxon_schemas.ml.metrics import MetricSchema
 from polyaxon_schemas.ml.optimizers import OptimizerSchema
-from polyaxon_schemas.utils import ObjectOrListObject
 
 
 class BaseModelSchema(BaseSchema):

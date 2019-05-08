@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
-from polyaxon_schemas.utils import DType
+from polyaxon_schemas.ml.fields import DType
 
 # pylint:disable=too-many-lines
 

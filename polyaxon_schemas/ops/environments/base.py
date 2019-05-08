@@ -3,10 +3,10 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
 
+from polyaxon_schemas.fields.uuids import UUID
 from polyaxon_schemas.ops.environments.outputs import OutputsSchema
 from polyaxon_schemas.ops.environments.persistence import PersistenceSchema
 from polyaxon_schemas.ops.environments.pods import PodEnvironmentConfig, PodEnvironmentSchema
-from polyaxon_schemas.utils import UUID
 
 
 class EnvironmentSchema(PodEnvironmentSchema):

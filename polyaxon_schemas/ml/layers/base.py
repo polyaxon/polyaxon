@@ -4,7 +4,9 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import EXCLUDE, fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import DType, ObjectOrListObject, Tensor, get_value
+from polyaxon_schemas.fields import ObjectOrListObject, Tensor
+from polyaxon_schemas.ml.fields import DType
+from polyaxon_schemas.utils import get_value
 
 
 class BaseLayerSchema(BaseSchema):

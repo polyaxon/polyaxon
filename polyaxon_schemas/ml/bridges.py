@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseMultiSchema, BaseSchema
-from polyaxon_schemas.utils import ObjectOrListObject
+from polyaxon_schemas.fields import ObjectOrListObject
 
 
 class BaseBridgeSchema(BaseSchema):

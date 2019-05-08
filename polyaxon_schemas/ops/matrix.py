@@ -1,41 +1,210 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import ast
 import copy
 import numpy as np
 import six
+
+from collections import Mapping
 
 from marshmallow import fields, validates_schema
 from marshmallow.exceptions import ValidationError
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import (
-    GeomSpace,
-    LinSpace,
-    LogNormal,
-    LogSpace,
-    LogUniform,
-    Normal,
-    PValue,
-    QLogNormal,
-    QLogUniform,
-    QNormal,
-    QUniform,
-    Range,
-    Uniform,
-    lognormal,
-    loguniform,
-    normal,
-    pvalues,
-    qlognormal,
-    qloguniform,
-    qnormal,
-    quniform,
-    uniform,
-    validate_pvalues
-)
 
 # pylint:disable=redefined-outer-name
+
+
+class PValue(fields.Field):
+    def _deserialize(self, value, attr, data, **kwargs):
+        if isinstance(value, (list, tuple)) and len(value) == 2:
+            if isinstance(value[1], float) and 0 <= value[1] < 1:
+                return value
+        raise ValidationError("This field expects a list of [value<Any>, dist<float>].")
+
+
+class Range(fields.Field):
+    REQUIRED_KEYS = ['start', 'stop', 'step']
+    OPTIONAL_KEY = None
+    KEYS = REQUIRED_KEYS
+
+    def _deserialize(self, value, attr, data, **kwargs):
+        if isinstance(value, six.string_types):
+            value = value.split(':')
+        elif isinstance(value, Mapping):
+            if set(self.REQUIRED_KEYS) - set(six.iterkeys(value)):
+                raise ValidationError("{} dict must have {} keys {}.".format(
+                    self.__class__.__name__, len(self.REQUIRED_KEYS), self.REQUIRED_KEYS))
+            if len(value) == len(self.REQUIRED_KEYS):
+                value = [value[k] for k in self.REQUIRED_KEYS]
+            elif len(value) == len(self.KEYS):
+                value = [value[k] for k in self.KEYS]
+        elif not isinstance(value, list):
+            raise ValidationError(
+                "{} accept values formatted as the following:\n"
+                " * str: {}\n"
+                " * dict: {}\n"
+                " * list: {}".format(
+                    self.__class__.__name__,
+                    ':'.join(self.REQUIRED_KEYS),
+                    dict(zip(self.REQUIRED_KEYS,
+                             ['v{}'.format(i) for i in range(len(self.REQUIRED_KEYS))])),
+                    self.REQUIRED_KEYS))
+
+        if len(value) != len(self.REQUIRED_KEYS) and len(value) != len(self.KEYS):
+            raise ValidationError("{} requires {} or {} elements received {}".format(
+                self.__class__.__name__,
+                len(self.REQUIRED_KEYS),
+                len(self.KEYS),
+                len(value)))
+
+        for i, v in enumerate(value):
+            try:
+                float(v)
+            except (ValueError, TypeError):
+                raise ValidationError(
+                    "{}: {} must of type int or float, received instead {}".format(
+                        self.__class__.__name__, self.REQUIRED_KEYS[i], v
+                    ))
+            if not isinstance(v, (int, float)):
+                value[i] = ast.literal_eval(v)
+
+        # Check that lower value is  smaller than higher value
+        if value[0] >= value[1]:
+            raise ValidationError(
+                "{key2} value must strictly higher that {key1} value, "
+                "received instead {key1}: {val1}, {key2}: {val2}".format(
+                    key1=self.REQUIRED_KEYS[0],
+                    key2=self.REQUIRED_KEYS[1],
+                    val1=value[0],
+                    val2=value[1]))
+        if len(self.REQUIRED_KEYS) == 3 and value[2] == 0:
+            raise ValidationError("{} cannot be 0".format(self.REQUIRED_KEYS[2]))
+
+        value = dict(zip(self.KEYS, value))
+        return value
+
+
+class LinSpace(Range):
+    REQUIRED_KEYS = ['start', 'stop', 'num']
+    KEYS = REQUIRED_KEYS
+
+
+class GeomSpace(Range):
+    REQUIRED_KEYS = ['start', 'stop', 'num']
+    KEYS = REQUIRED_KEYS
+
+
+class LogSpace(Range):
+    REQUIRED_KEYS = ['start', 'stop', 'num']
+    OPTIONAL_KEYS = ['base']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+def uniform(low, high, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    return rand_generator.uniform(low=low, high=high, size=size)
+
+
+def quniform(low, high, q, size=None, rand_generator=None):
+    value = uniform(low=low, high=high, size=size, rand_generator=rand_generator)
+    return np.round(value // q) * q
+
+
+def loguniform(low, high, size=None, rand_generator=None):
+    value = uniform(low=low, high=high, size=size, rand_generator=rand_generator)
+    return np.exp(value)
+
+
+def qloguniform(low, high, q, size=None, rand_generator=None):
+    value = loguniform(low=low, high=high, size=size, rand_generator=rand_generator)
+    return np.round(value // q) * q
+
+
+def normal(loc, scale, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    return rand_generator.normal(loc=loc, scale=scale, size=size)
+
+
+def qnormal(loc, scale, q, size=None, rand_generator=None):
+    draw = normal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
+    return np.round(draw // q) * q
+
+
+def lognormal(loc, scale, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    return rand_generator.lognormal(mean=loc, sigma=scale, size=size)
+
+
+def qlognormal(loc, scale, q, size=None, rand_generator=None):
+    draw = lognormal(loc=loc, scale=scale, size=size, rand_generator=rand_generator)
+    return np.exp(draw)
+
+
+def validate_pvalues(values):
+    dists = [v for v in values if v]
+    if sum(dists) > 1:
+        raise ValidationError('The distribution of different outcomes should sum to 1.')
+
+
+def pvalues(values, size=None, rand_generator=None):
+    rand_generator = rand_generator or np.random
+    keys = [v[0] for v in values]
+    dists = [v[1] for v in values]
+    validate_pvalues(dists)
+    indices = rand_generator.multinomial(1, dists, size=size)
+    if size is None:
+        return keys[indices.argmax()]
+    return [keys[ind.argmax()] for ind in indices]
+
+
+class Uniform(Range):
+    REQUIRED_KEYS = ['low', 'high']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class QUniform(Range):
+    REQUIRED_KEYS = ['low', 'high', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class LogUniform(Range):
+    REQUIRED_KEYS = ['low', 'high']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class QLogUniform(Range):
+    REQUIRED_KEYS = ['low', 'high', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class Normal(Range):
+    REQUIRED_KEYS = ['loc', 'scale']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class QNormal(Range):
+    REQUIRED_KEYS = ['loc', 'scale', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class LogNormal(Range):
+    REQUIRED_KEYS = ['loc', 'scale']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
+
+
+class QLogNormal(Range):
+    REQUIRED_KEYS = ['loc', 'scale', 'q']
+    OPTIONAL_KEYS = ['size']
+    KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 def validate_matrix(values):

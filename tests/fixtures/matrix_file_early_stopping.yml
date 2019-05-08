@@ -13,7 +13,7 @@ hptuning:
       optimization: maximize
   matrix:
     lr:
-      logspace: 0.01:0.1:5
+      linspace: 0.01:0.1:5
 
     loss:
       values: [MeanSquaredError, AbsoluteDifference]

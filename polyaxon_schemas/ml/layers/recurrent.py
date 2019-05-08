@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon_schemas.fields import StrOrFct
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
     GlorotUniformInitializerConfig,
@@ -12,7 +13,7 @@ from polyaxon_schemas.ml.initializations import (
 )
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
-from polyaxon_schemas.utils import ACTIVATION_VALUES, StrOrFct
+from polyaxon_schemas.ml.utils import ACTIVATION_VALUES
 
 
 class RecurrentSchema(BaseLayerSchema):

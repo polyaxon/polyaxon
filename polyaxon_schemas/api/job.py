@@ -5,8 +5,8 @@ from hestia.humanize import humanize_timedelta
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields import UUID
 from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
-from polyaxon_schemas.utils import UUID
 
 
 class BaseJobSchema(BaseSchema):

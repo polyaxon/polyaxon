@@ -3,11 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon_schemas.fields import ObjectOrListObject
 from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import InitializerSchema
 from polyaxon_schemas.ml.layers.recurrent import RecurrentConfig, RecurrentSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
-from polyaxon_schemas.utils import ACTIVATION_VALUES, ObjectOrListObject
+from polyaxon_schemas.ml.utils import ACTIVATION_VALUES
 
 
 class ConvRecurrent2DSchema(RecurrentSchema):

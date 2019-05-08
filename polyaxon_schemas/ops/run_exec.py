@@ -5,7 +5,7 @@ from hestia.string_utils import strip_spaces
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.utils import ObjectOrListObject
+from polyaxon_schemas.fields import ObjectOrListObject
 
 
 def get_container_command_args(run_config):

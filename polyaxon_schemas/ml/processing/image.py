@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon_schemas.ml.fields import DType
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
-from polyaxon_schemas.utils import DType
 
 # pylint:disable=too-many-lines
 
