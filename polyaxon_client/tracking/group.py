@@ -84,7 +84,7 @@ class Group(BaseTracker):
                           framework=None,
                           tags=None,
                           description=None,
-                          config=None):
+                          content=None):
         experiment = Experiment(project=self.project,
                                 group_id=self.group_id,
                                 client=self.client,
@@ -96,7 +96,7 @@ class Group(BaseTracker):
                           framework=framework,
                           tags=tags,
                           description=description,
-                          config=config,
+                          content=content,
                           base_outputs_path=self.base_outputs_path)
         return experiment
 
