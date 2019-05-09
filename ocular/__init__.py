@@ -52,7 +52,7 @@ def _monitor(k8s_api, namespace, container_names, label_selector, watch_ttl):
 def monitor(k8s_api,
             namespace,
             container_names,
-            label_selector=None,
+            label_selector='',
             return_event=False,
             watch_ttl=None,
             resource_version=None,
