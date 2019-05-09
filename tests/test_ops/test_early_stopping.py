@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingMetricConfig
+from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingConfig
 from polyaxon_schemas.ops.metrics import Optimization
 
 
@@ -16,7 +16,7 @@ class TestEarlyStoppingConfigs(TestCase):
             'metric': 'loss',
             'value': 0.1,
         }
-        config = EarlyStoppingMetricConfig.from_dict(config_dict)
+        config = EarlyStoppingConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict.pop('optimization') == Optimization.MAXIMIZE
         assert_equal_dict(config_to_dict, config_dict)
@@ -28,7 +28,7 @@ class TestEarlyStoppingConfigs(TestCase):
             'optimization': Optimization.MINIMIZE,
             'policy': {'kind': 'median', 'evaluation_interval': 1}
         }
-        config = EarlyStoppingMetricConfig.from_dict(config_dict)
+        config = EarlyStoppingConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_early_stopping_with_average_policy(self):
@@ -38,7 +38,7 @@ class TestEarlyStoppingConfigs(TestCase):
             'optimization': Optimization.MINIMIZE,
             'policy': {'kind': 'average', 'evaluation_interval': 1}
         }
-        config = EarlyStoppingMetricConfig.from_dict(config_dict)
+        config = EarlyStoppingConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
     def test_early_stopping_with_truncation_policy(self):
@@ -48,5 +48,5 @@ class TestEarlyStoppingConfigs(TestCase):
             'optimization': Optimization.MAXIMIZE,
             'policy': {'kind': 'truncation', 'percent': 50, 'evaluation_interval': 1}
         }
-        config = EarlyStoppingMetricConfig.from_dict(config_dict)
+        config = EarlyStoppingConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)

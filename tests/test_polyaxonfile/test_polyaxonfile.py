@@ -13,7 +13,7 @@ from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, Regres
 from polyaxon_schemas.ml.optimizers import AdamConfig
 from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.ops.build import BuildConfig
-from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingMetricConfig
+from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingConfig
 from polyaxon_schemas.ops.environments.base import EnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment import ExperimentBackend, ExperimentFramework
@@ -348,7 +348,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.hptuning.random_search.n_experiments == 5
         assert spec.early_stopping == spec.hptuning.early_stopping
         assert len(spec.hptuning.early_stopping) == 1
-        assert isinstance(spec.hptuning.early_stopping[0], EarlyStoppingMetricConfig)
+        assert isinstance(spec.hptuning.early_stopping[0], EarlyStoppingConfig)
 
         assert spec.experiments_def == {
             'search_algorithm': SearchAlgorithms.RANDOM,

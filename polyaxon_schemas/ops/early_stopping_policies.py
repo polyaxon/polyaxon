@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import ValidationError, fields, validate, validates_schema
+from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.base import BaseConfig, BaseSchema, BaseOneOfSchema
 from polyaxon_schemas.ops.metrics import Optimization
 
 
@@ -98,38 +98,28 @@ class TruncationStoppingPolicyConfig(BaseConfig):
         self.evaluation_interval = evaluation_interval
 
 
-def validate_policy(policy):
-    if not policy:
-        return None
-
-    if 'kind' not in policy:
-        raise ValidationError('Policy kind is a required field.')
-
-    if policy['kind'] == MedianStoppingPolicyConfig.IDENTIFIER:
-        return MedianStoppingPolicyConfig.from_dict(policy)
-    if policy['kind'] == AverageStoppingPolicyConfig.IDENTIFIER:
-        return AverageStoppingPolicyConfig.from_dict(policy)
-    if policy['kind'] == TruncationStoppingPolicyConfig.IDENTIFIER:
-        return TruncationStoppingPolicyConfig.from_dict(policy)
+class StoppingPolicySchema(BaseOneOfSchema):
+    TYPE_FIELD = 'kind'
+    TYPE_FIELD_REMOVE = False
+    SCHEMAS = {
+        MedianStoppingPolicyConfig.IDENTIFIER: MedianStoppingPolicySchema,
+        AverageStoppingPolicyConfig.IDENTIFIER: AverageStoppingPolicySchema,
+        TruncationStoppingPolicyConfig.IDENTIFIER: TruncationStoppingPolicySchema,
+    }
 
 
-class EarlyStoppingMetricSchema(BaseSchema):
+class EarlyStoppingSchema(BaseSchema):
     metric = fields.Str()
     value = fields.Float()
     optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
-    policy = fields.Dict(allow_none=True)
+    policy = fields.Nested(StoppingPolicySchema, allow_none=True)
 
     @staticmethod
     def schema_config():
-        return EarlyStoppingMetricConfig
-
-    @validates_schema
-    def validate_policy(self, data):
-        """Validates policy data"""
-        validate_policy(data.get('policy'))
+        return EarlyStoppingConfig
 
 
-class EarlyStoppingMetricConfig(BaseConfig):
+class EarlyStoppingConfig(BaseConfig):
     """
     Early stopping metric config.
 
@@ -139,7 +129,7 @@ class EarlyStoppingMetricConfig(BaseConfig):
         optimization: `string`. The optimization to do: maximize or minimize.
         policy: `Dict`. Optional, the termination policy to use.
     """
-    SCHEMA = EarlyStoppingMetricSchema
+    SCHEMA = EarlyStoppingSchema
     IDENTIFIER = 'early_stopping_metric'
 
     def __init__(self,
@@ -147,7 +137,6 @@ class EarlyStoppingMetricConfig(BaseConfig):
                  value=None,
                  optimization=Optimization.MAXIMIZE,
                  policy=None):
-        self.policy_config = validate_policy(policy)
         self.metric = metric
         self.value = value
         self.optimization = optimization

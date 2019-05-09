@@ -131,6 +131,156 @@ class BaseConfig(object):
         return JSONSchema().dump(cls.SCHEMA())  # pylint:disable=not-callable
 
 
+class BaseOneOfSchema(Schema):
+    """
+    Code taken and adapted from: marshmallow-oneofschema
+
+    This is a special kind of schema that actually multiplexes other schemas
+    based on object type. When serializing values, it uses get_obj_type() method
+    to get object type name. Then it uses `SCHEMAS` name-to-Schema mapping
+    to get schema for that particular object type, serializes object using that
+    schema and adds an extra "type" field with name of object type.
+    Deserialization is reverse.
+    """
+    TYPE_FIELD = 'type'
+    TYPE_FIELD_REMOVE = True
+    SCHEMAS = {}
+
+    class Meta:
+        unknown = RAISE
+
+    def get_obj_type(self, obj):
+        """Returns name of object schema"""
+        return obj.IDENTIFIER
+
+    def dump(self, obj, many=None, **kwargs):
+        result_data = []
+        result_errors = {}
+        many = self.many if many is None else bool(many)
+        if not many:
+            result_data = self._dump(obj, **kwargs)
+        else:
+            for idx, o in enumerate(obj):
+                try:
+                    result = self._dump(o, **kwargs)
+                    result_data.append(result)
+                except ValidationError as error:
+                    result_errors[idx] = error.messages
+                    result_data.append(error.valid_data)
+
+        result = result_data
+        errors = result_errors
+
+        if not errors:
+            return result
+        else:
+            exc = ValidationError(errors, data=obj, valid_data=result)
+            raise exc
+
+    def _dump(self, obj, update_fields=True, **kwargs):
+        obj_type = self.get_obj_type(obj)
+        if not obj_type:
+            return None, {
+                '_schema': 'Unknown object class: %s' % obj.__class__.__name__
+            }
+
+        type_schema = self.SCHEMAS.get(obj_type)
+        if not type_schema:
+            return None, {
+                '_schema': 'Unsupported object type: %s' % obj_type
+            }
+
+        schema = (
+            type_schema if isinstance(type_schema, Schema)
+            else type_schema()
+        )
+
+        schema.context.update(getattr(self, 'context', {}))
+
+        result = schema.dump(
+            obj, many=False, **kwargs
+        )
+        if result is not None:
+            result[self.TYPE_FIELD] = obj_type
+        return result
+
+    def load(self, data, many=None, partial=None, unknown=None):
+        result_data = []
+        result_errors = {}
+        many = self.many if many is None else bool(many)
+        if partial is None:
+            partial = self.partial
+        if not many:
+            try:
+                result_data = self._load(
+                    data, partial=partial, unknown=unknown
+                )
+                #  result_data.append(result)
+            except ValidationError as error:
+                result_errors[0] = error.messages
+                result_data.append(error.valid_data)
+        else:
+            for idx, item in enumerate(data):
+                try:
+                    result = self._load(item, partial=partial)
+                    result_data.append(result)
+                except ValidationError as error:
+                    result_errors[idx] = error.messages
+                    result_data.append(error.valid_data)
+
+        result = result_data
+        errors = result_errors
+
+        if not errors:
+            return result
+        else:
+            exc = ValidationError(errors, data=data, valid_data=result)
+            raise exc
+
+    def _load(self, data, partial=None, unknown=None):
+        if not isinstance(data, dict):
+            raise ValidationError({'_schema': 'Invalid data type: %s' % data})
+
+        data = dict(data)
+        unknown = unknown or self.unknown
+
+        data_type = data.get(self.TYPE_FIELD)
+        if self.TYPE_FIELD in data and self.TYPE_FIELD_REMOVE:
+            data.pop(self.TYPE_FIELD)
+
+        if not data_type:
+            raise ValidationError({
+                self.TYPE_FIELD: ['Missing data for required field.']
+            })
+
+        try:
+            type_schema = self.SCHEMAS.get(data_type)
+        except TypeError:
+            # data_type could be unhashable
+            raise ValidationError({
+                self.TYPE_FIELD: ['Invalid value: %s' % data_type]
+            })
+        if not type_schema:
+            raise ValidationError({
+                self.TYPE_FIELD: ['Unsupported value: %s' % data_type],
+            })
+
+        schema = (
+            type_schema if isinstance(type_schema, Schema) else type_schema()
+        )
+
+        schema.context.update(getattr(self, 'context', {}))
+
+        return schema.load(data, many=False, partial=partial, unknown=unknown)
+
+    def validate(self, data, many=None, partial=None):
+        try:
+            self.load(data, many=many, partial=partial)
+        except ValidationError as ve:
+            return ve.messages
+        return {}
+
+
 class BaseMultiSchema(Schema):
     __multi_schema_name__ = None
     __configs__ = None

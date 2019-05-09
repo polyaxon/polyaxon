@@ -8,7 +8,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingMetricSchema
+from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingSchema
 from polyaxon_schemas.ops.matrix import MatrixConfig
 from polyaxon_schemas.ops.metrics import SearchMetricSchema
 
@@ -352,7 +352,7 @@ class HPTuningSchema(BaseSchema):
     random_search = fields.Nested(RandomSearchSchema, allow_none=None)
     hyperband = fields.Nested(HyperbandSchema, allow_none=None)
     bo = fields.Nested(BOSchema, allow_none=None)
-    early_stopping = fields.Nested(EarlyStoppingMetricSchema, many=True, allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
