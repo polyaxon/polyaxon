@@ -97,7 +97,7 @@ def set(verbose,  # pylint:disable=redefined-builtin
     if use_https is not None:
         _config.use_https = use_https
 
-    if verify_ssl is False:
+    if verify_ssl is not None:
         _config.verify_ssl = verify_ssl
 
     GlobalConfigManager.set_config(_config)
