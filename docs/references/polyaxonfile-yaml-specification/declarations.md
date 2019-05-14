@@ -49,7 +49,7 @@ declarations:
 This declaration can be used to pass values to our program:
 
 ```yaml
- ... --batch-size={{ batch-size }}
+ ... --batch-size={{ batch_size }}
 ```
 Or
 ```yaml
