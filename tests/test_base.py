@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from unittest import TestCase
+
 from marshmallow import Schema, ValidationError, fields
 
-from polyaxon_schemas.base import BaseOneOfSchema, BaseConfig, BaseSchema
-
-from unittest import TestCase
+from polyaxon_schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
 
 REQUIRED_ERROR = u'Missing data for required field.'
 
