@@ -52,7 +52,7 @@ We welcome our users to give feedback and suggest updates and additions.
 
 ### Platform
 
- * Open sourcing PolyML: Model packaging and easy deployment options with native integration with other community projects as well as integration with cloud offerings, 
+ * Open sourcing PolŷHat: Model packaging and easy deployment options with native integration with other community projects as well as integration with cloud offerings, 
    with possibility to start test servers in-cluster.
  * Post-deployment metrics watchdogs and workflow triggers.
  * Open sourcing PolyFlow, our internal events/actions and pipelining engine.
