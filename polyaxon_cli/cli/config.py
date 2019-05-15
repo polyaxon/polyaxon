@@ -65,12 +65,7 @@ def get(keys):
 @click.option('--verify_ssl', type=bool,
               help='To set whether or not to verify the SSL certificate.')
 @clean_outputs
-def set(verbose,  # pylint:disable=redefined-builtin
-        host,
-        http_port,
-        ws_port,
-        use_https,
-        verify_ssl):
+def set(**kwargs):  # pylint:disable=redefined-builtin
     """Set the global config values.
 
     Example:
@@ -82,23 +77,9 @@ def set(verbose,  # pylint:disable=redefined-builtin
     """
     _config = GlobalConfigManager.get_config_or_default()
 
-    if verbose is not None:
-        _config.verbose = verbose
-
-    if host is not None:
-        _config.host = host
-
-    if http_port is not None:
-        _config.http_port = http_port
-
-    if ws_port is not None:
-        _config.ws_port = ws_port
-
-    if use_https is not None:
-        _config.use_https = use_https
-
-    if verify_ssl is False:
-        _config.verify_ssl = verify_ssl
+    for key, value in kwargs.items():
+        if value is not None:
+            setattr(_config, key, value)
 
     GlobalConfigManager.set_config(_config)
     Printer.print_success('Config was updated.')
