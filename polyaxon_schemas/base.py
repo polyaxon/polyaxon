@@ -153,16 +153,16 @@ class BaseOneOfSchema(Schema):
         """Returns name of object schema"""
         return obj.IDENTIFIER
 
-    def dump(self, obj, many=None, **kwargs):
+    def dump(self, obj, many=None):
         result_data = []
         result_errors = {}
         many = self.many if many is None else bool(many)
         if not many:
-            result_data = self._dump(obj, **kwargs)
+            result_data = self._dump(obj)
         else:
             for idx, o in enumerate(obj):
                 try:
-                    result = self._dump(o, **kwargs)
+                    result = self._dump(o)
                     result_data.append(result)
                 except ValidationError as error:
                     result_errors[idx] = error.messages
@@ -177,18 +177,14 @@ class BaseOneOfSchema(Schema):
             exc = ValidationError(errors, data=obj, valid_data=result)
             raise exc
 
-    def _dump(self, obj, update_fields=True, **kwargs):
+    def _dump(self, obj):
         obj_type = self.get_obj_type(obj)
         if not obj_type:
-            return None, {
-                '_schema': 'Unknown object class: %s' % obj.__class__.__name__
-            }
+            return None, {'_schema': 'Unknown object class: %s' % obj.__class__.__name__}
 
         type_schema = self.SCHEMAS.get(obj_type)
         if not type_schema:
-            return None, {
-                '_schema': 'Unsupported object type: %s' % obj_type
-            }
+            return None, {'_schema': 'Unsupported object type: %s' % obj_type}
 
         schema = (
             type_schema if isinstance(type_schema, Schema)
@@ -197,9 +193,7 @@ class BaseOneOfSchema(Schema):
 
         schema.context.update(getattr(self, 'context', {}))
 
-        result = schema.dump(
-            obj, many=False, **kwargs
-        )
+        result = schema.dump(obj, many=False)
         if result is not None:
             result[self.TYPE_FIELD] = obj_type
         return result
@@ -212,10 +206,7 @@ class BaseOneOfSchema(Schema):
             partial = self.partial
         if not many:
             try:
-                result_data = self._load(
-                    data, partial=partial, unknown=unknown
-                )
-                #  result_data.append(result)
+                result_data = self._load(data, partial=partial, unknown=unknown)
             except ValidationError as error:
                 result_errors[0] = error.messages
                 result_data.append(error.valid_data)

@@ -11,7 +11,8 @@ from polyaxon_schemas.flows.trigger_policies import TriggerPolicy
 class OperationSchema(ExecutableSchema):
     concurrency = fields.Int(allow_none=True)
     upstream_operations = fields.List(fields.Str(), allow_none=True)
-    inputs = fields.List(fields.List(fields.Str(), validate=validate.Length(equal=2)), allow_none=True)
+    inputs = fields.List(fields.List(fields.Str(), validate=validate.Length(equal=2)),
+                         allow_none=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
     conds = fields.Nested(CondSchema, allow_none=None)
     max_retries = fields.Int(allow_none=True)
