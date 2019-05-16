@@ -32,7 +32,6 @@ this gives Polyaxon all information needed at every step to expose the relevant 
 This allows natural, fast, and intuitive access to the needed information in an easy and optimal way. 
 Finally, the single project interface reduces information dissipation due to the nonexistent context switching, which results in more productivity.
 
-
 ## One on-boarding process
 
 New team members only need to learn about a single, simple, and intuitive interface and tools. Our tools and documentation are integrated, non-dependent on other unestablished projects, and open-source. 
@@ -54,10 +53,10 @@ and makes upgrades a complex process prone to errors and incompatibilities.
 Managing the state an application is hard, so imagine what it means to manage several stateful applications with different scalability, migrations, and backup processes. 
 In addition to the non-necessary complexity, several applications plane will result in redundant, and eventually inconsistent, data.
 
-Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manual extract data or create warehouse.   
+Polyaxon comes with one database, PostgreSQL, providing you with one consistent source of truth about the state of your deployment, so you don't have to manual extract data or create a warehouse.   
 
 ## One Vendor
 
 You only have to deal with Polyaxon, while ensuring that you have access to an open-source ecosystem, instead of multiple vendors with different licensing and risk pointing to each-other.
 
-If you decide to invest in an internal solution, you can base it on tool you are already using, and you only need to learn one code base, which is open source.
+If you decide to invest in an internal solution, you can base it on a tool you are already using, and you only need to learn one code base, which is open source.

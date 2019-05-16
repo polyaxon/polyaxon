@@ -34,4 +34,4 @@ Every bug fixed will be mentioned here with a link to github, if available, and 
 
 ### Helm chart does not work correctly when RBAC is disabled
 
-No github, this is issue is noticed in Minikube because start the cluster with RBAC disabled -> fixed
+this is issue is noticed in Minikube because start the cluster with RBAC disabled (`No github issue`) -> fixed

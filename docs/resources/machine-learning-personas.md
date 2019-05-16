@@ -19,7 +19,7 @@ Our core product is optimized with tools, workflows and dashboards to enable dat
 
 ### Project managers and team leads
 
-We have have feature that enable project managers and team leads to effectively manage their team members and enhance their workflows and productivity.
+We have features that enable project managers and team leads to effectively manage their team members and enhance their workflows and productivity.
 
 ### Devops
 

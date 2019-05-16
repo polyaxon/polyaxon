@@ -37,7 +37,7 @@ Polyaxon's short term vision is to enable solo-researchers, teams, and organizat
 
 How we're going to make it easier and faster for today's practitioners to build machine learning applications. In short, we will:
 
- * Favor enough profitability over funding, to keep product improvement faster and more focused. 
+ * Keep product improvement faster and more focused. 
  * Make basic data science steps intuitive while hiding any unnecessary complexity.
  * Expose major open-source tooling and initiatives.
  * Make model development reviewable and continuous.
