@@ -75,7 +75,7 @@ class PipelineConfig(ExecutableConfig):
         This is equally used for pipelines and pipeline runs.
 
         Params:
-            nodes: an instance of `OperationConfig` | `Operation` | `OperationRun`,
+            nodes: an instance of `BaseOpConfig` | `Operation` | `OperationRun`,
                    the nodes to represent the dag.
             downstream_fn: a function that returns the downstream nodes of the a node.
             op_id_fn: a function that returns a unique id of the node, e.g. op.id, op.uuid, op.name

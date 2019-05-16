@@ -8,9 +8,9 @@ from polyaxon_schemas.flows.executable import ExecutableConfig, ExecutableSchema
 from polyaxon_schemas.flows.trigger_policies import TriggerPolicy
 
 
-class OperationSchema(ExecutableSchema):
+class BaseOpSchema(ExecutableSchema):
     concurrency = fields.Int(allow_none=True)
-    upstream_operations = fields.List(fields.Str(), allow_none=True)
+    deps = fields.List(fields.Str(), allow_none=True)
     inputs = fields.List(fields.List(fields.Str(), validate=validate.Length(equal=2)),
                          allow_none=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
@@ -23,17 +23,17 @@ class OperationSchema(ExecutableSchema):
 
     @staticmethod
     def schema_config():
-        return OperationConfig
+        return BaseOpConfig
 
 
-class OperationConfig(ExecutableConfig):
-    SCHEMA = OperationSchema
+class BaseOpConfig(ExecutableConfig):
+    SCHEMA = BaseOpSchema
     IDENTIFIER = 'operation'
     REDUCED_ATTRIBUTES = []
 
     def __init__(self,
                  concurrency=None,
-                 upstream_operations=None,
+                 deps=None,
                  inputs=None,
                  trigger=None,
                  conds=None,
@@ -44,9 +44,9 @@ class OperationConfig(ExecutableConfig):
                  skip_on_upstream_skip=None,
                  execute_at=None,
                  timeout=None):
-        super(OperationConfig, self).__init__(execute_at=execute_at, timeout=timeout)
+        super(BaseOpConfig, self).__init__(execute_at=execute_at, timeout=timeout)
         self.concurrency = concurrency
-        self.upstream_operations = upstream_operations
+        self.deps = deps
         self.inputs = inputs
         self.trigger = trigger
         self.conds = conds

@@ -5,6 +5,8 @@ import os
 
 from unittest import TestCase
 
+from flaky import flaky
+
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.ml.bridges import NoOpBridgeConfig
 from polyaxon_schemas.ml.graph import GraphConfig
@@ -259,6 +261,7 @@ class TestPolyaxonfile(TestCase):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/wrong_grid_matrix_file.yml'))
 
+    @flaky(max_runs=3)
     def test_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
         spec = plxfile.specification
@@ -331,6 +334,7 @@ class TestPolyaxonfile(TestCase):
             **spec.declarations
         )
 
+    @flaky(max_runs=3)
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
         spec = plxfile.specification
@@ -368,6 +372,7 @@ class TestPolyaxonfile(TestCase):
             **spec.declarations
         )
 
+    @flaky(max_runs=3)
     def test_matrix_large_n_experiments_ignored_file_passes(self):
         plxfile = PolyaxonFile(
             os.path.abspath('tests/fixtures/matrix_file_ignored_n_experiments.yml'))
@@ -405,6 +410,7 @@ class TestPolyaxonfile(TestCase):
             **spec.declarations
         )
 
+    @flaky(max_runs=3)
     def test_one_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
         spec = plxfile.specification

@@ -33,9 +33,13 @@ class StatusTriggerPolicy(object):
 class ExpressionTriggerPolicy(object):
     EQ = 'eq'
     NE = 'ne'
+    IS_NULL = 'isnull'
+    NOT_NULL = 'not_null'
 
     VALUES = {EQ, NE}
     CHOICES = (
         (EQ, EQ),
         (NE, NE),
+        (IS_NULL, IS_NULL),
+        (NOT_NULL, NOT_NULL),
     )

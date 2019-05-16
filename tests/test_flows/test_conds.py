@@ -10,47 +10,47 @@ from polyaxon_schemas.flows.conds import OutputsCondConfig, StatusCondConfig, Co
 
 class TestCondsConfigs(TestCase):
     def test_status_cond(self):
-        config_dict = {'foo': 'bar', 'operation': 'foo', 'trigger': 'done'}
+        config_dict = {'foo': 'bar', 'op': 'foo', 'trigger': 'done'}
         with self.assertRaises(ValidationError):
             StatusCondConfig.from_dict(config_dict)
 
-        config_dict = {'kind': 'foo', 'operation': 'foo', 'trigger': 'done'}
+        config_dict = {'kind': 'foo', 'op': 'foo', 'trigger': 'done'}
         with self.assertRaises(ValidationError):
             StatusCondConfig.from_dict(config_dict)
 
         config_dict = {
-            'operation': 'foo',
+            'op': 'foo',
             'trigger': 'done'
         }
         StatusCondConfig.from_dict(config_dict)
 
         config_dict = {
             'kind': 'status_cond',
-            'operation': 'foo',
+            'op': 'foo',
             'trigger': 'done'
         }
         StatusCondConfig.from_dict(config_dict)
 
     def test_outputs_cond(self):
-        config_dict = {'operation': 'foo', 'exp': 'done', 'params': ['op1.done', 'foo']}
+        config_dict = {'op': 'foo', 'exp': 'done', 'params': ['op1.done', 'foo']}
         with self.assertRaises(ValidationError):
             OutputsCondConfig.from_dict(config_dict)
 
         config_dict = {'kind': 'foo',
-                       'operation': 'foo',
+                       'op': 'foo',
                        'exp': 'eq',
                        'params': [['op1.done', 'foo']]}
         with self.assertRaises(ValidationError):
             OutputsCondConfig.from_dict(config_dict)
 
-        config_dict = {'operation': 'foo',
+        config_dict = {'op': 'foo',
                        'exp': 'eq',
                        'params': ['op1.done', 'foo']}
         with self.assertRaises(ValidationError):
             OutputsCondConfig.from_dict(config_dict)
 
         config_dict = {
-            'operation': 'foo',
+            'op': 'foo',
             'exp': 'eq',
             'params': [['op1.done', 'foo']]
         }
@@ -58,7 +58,7 @@ class TestCondsConfigs(TestCase):
 
         config_dict = {
             'kind': 'outputs_cond',
-            'operation': 'foo',
+            'op': 'foo',
             'exp': 'eq',
             'params': [['op1.done', 'foo']]
         }
@@ -68,12 +68,12 @@ class TestCondsConfigs(TestCase):
         configs = [
             {
                 'kind': 'status_cond',
-                'operation': 'foo',
+                'op': 'foo',
                 'trigger': 'done'
             },
             {
                 'kind': 'outputs_cond',
-                'operation': 'foo',
+                'op': 'foo',
                 'exp': 'eq',
                 'params': [['op1.done', 'foo']]
             }

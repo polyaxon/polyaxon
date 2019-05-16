@@ -9,7 +9,7 @@ from polyaxon_schemas.flows.trigger_policies import ExpressionTriggerPolicy, Sta
 
 class StatusCondSchema(BaseSchema):
     kind = fields.Str(allow_none=None, validate=validate.Equal('status_cond'))
-    operation = fields.Str()
+    op = fields.Str()
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(StatusTriggerPolicy.VALUES))
 
     @staticmethod
@@ -21,15 +21,15 @@ class StatusCondConfig(BaseConfig):
     SCHEMA = StatusCondSchema
     IDENTIFIER = 'status_cond'
 
-    def __init__(self, operation, trigger, kind=None):
-        self.operation = operation
+    def __init__(self, op, trigger, kind=None):
+        self.op = op
         self.trigger = trigger
         self.kind = kind
 
 
 class OutputsCondSchema(BaseSchema):
     kind = fields.Str(allow_none=None, validate=validate.Equal('outputs_cond'))
-    operation = fields.Str()
+    op = fields.Str()
     exp = fields.Str(allow_none=True, validate=validate.OneOf(ExpressionTriggerPolicy.VALUES))
     params = env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)))
 
@@ -42,8 +42,8 @@ class OutputsCondConfig(BaseConfig):
     SCHEMA = OutputsCondSchema
     IDENTIFIER = 'outputs_cond'
 
-    def __init__(self, operation, exp, params, kind=None):
-        self.operation = operation
+    def __init__(self, op, exp, params, kind=None):
+        self.op = op
         self.exp = exp
         self.params = params
         self.kind = kind
