@@ -4,15 +4,16 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.flows.conds import CondSchema
+from polyaxon_schemas.flows.deps import DepSchema
 from polyaxon_schemas.flows.executable import ExecutableConfig, ExecutableSchema
+from polyaxon_schemas.flows.inputs import InputSchema
 from polyaxon_schemas.flows.trigger_policies import TriggerPolicy
 
 
 class BaseOpSchema(ExecutableSchema):
     concurrency = fields.Int(allow_none=True)
-    deps = fields.List(fields.Str(), allow_none=True)
-    inputs = fields.List(fields.List(fields.Str(), validate=validate.Length(equal=2)),
-                         allow_none=True)
+    deps = fields.Nested(DepSchema, allow_none=True, many=True)
+    inputs = fields.Nested(InputSchema, allow_none=True, many=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
     conds = fields.Nested(CondSchema, allow_none=None)
     max_retries = fields.Int(allow_none=True)

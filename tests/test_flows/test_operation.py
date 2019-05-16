@@ -21,13 +21,26 @@ class TestBaseOpConfigs(TestCase):
 
         config_dict = {
             'concurrency': 2,
+            'deps': ['foo', 'bar'],
+            'inputs': [{'name': 'param1', 'ref': 'foo.outputs1'}, {'name': 'param2', 'ref': 'bar.outputs1'}],
+            'trigger': 'all_succeeded',
+            'max_retries': 4,
+            'execute_at': local_now().isoformat(),
+            'timeout': 1000
+        }
+        with self.assertRaises(ValidationError):
+            BaseOpConfig.from_dict(config_dict)
+
+        config_dict = {
+            'concurrency': 2,
         }
         BaseOpConfig.from_dict(config_dict)
 
         config_dict = {
             'concurrency': 2,
-            'deps': ['foo', 'bar'],
-            'inputs': [['param1', 'foo.outputs1'], ['param2', 'bar.outputs1']],
+            'deps': [{'name': 'foo'}, {'name': 'bar'}],
+            'inputs': [{'name': 'param1', 'ref': 'foo.outputs1', 'type': 'int'},
+                       {'name': 'param2', 'ref': 'bar.outputs1'}],
             'trigger': 'all_succeeded',
             'max_retries': 4,
             'execute_at': local_now().isoformat(),
