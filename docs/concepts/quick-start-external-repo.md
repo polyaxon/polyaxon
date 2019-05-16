@@ -103,7 +103,7 @@ $ polyaxon project experiments
 Otherwise you need to run
 
 ```bash
-$ polyaxon run -p quick-start experiments
+$ polyaxon project -p quick-start experiments
 ```
 
 ### Check the logs 
@@ -175,7 +175,7 @@ declarations:
   num_epochs: 1
 
 build:
-  image: tensorflow/tensorflow:1.4.1-py3sd
+  image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip3 install --no-cache-dir -U polyaxon-client==0.4.4
   nocache: true
