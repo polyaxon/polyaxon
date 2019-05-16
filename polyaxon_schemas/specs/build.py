@@ -7,7 +7,7 @@ from hestia.cached_property import cached_property
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.ops.build import BuildConfig
+from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.specs.base import BaseSpecification, EnvironmentSpecificationMixin
 
 

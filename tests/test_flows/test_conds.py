@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.flows.conds import OutputsCondConfig, StatusCondConfig, CondSchema
+from polyaxon_schemas.flows.conds import CondSchema, OutputsCondConfig, StatusCondConfig
 
 
 class TestCondsConfigs(TestCase):

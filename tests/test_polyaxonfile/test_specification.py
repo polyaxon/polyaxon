@@ -9,7 +9,7 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.ops.environments.experiments import ExperimentEnvironmentConfig
+from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment import ExperimentConfig
 from polyaxon_schemas.specs import (
@@ -30,7 +30,7 @@ class TestSpecifications(TestCase):
 
         with self.assertRaises(PolyaxonfileError):
             NotebookSpecification.read(os.path.abspath(
-                'tests/fixtures/notebook_run_exec_simple_file_with_cmd.yml'))
+                'tests/fixtures/notebook_run_cmd_simple_file_with_cmd.yml'))
 
     def test_tensorboard_specification_raises_for_invalid_run_section(self):
         with self.assertRaises(PolyaxonfileError):
@@ -38,7 +38,7 @@ class TestSpecifications(TestCase):
 
         with self.assertRaises(PolyaxonConfigurationError):
             TensorboardSpecification.read(os.path.abspath(
-                'tests/fixtures/tensorboard_run_exec_simple_file_with_cmd.yml'))
+                'tests/fixtures/tensorboard_run_cmd_simple_file_with_cmd.yml'))
 
     def test_job_specification_raises_for_missing_build_section(self):
         with self.assertRaises(PolyaxonfileError):
@@ -48,7 +48,7 @@ class TestSpecifications(TestCase):
     def test_job_specification_raises_for_missing_run_section(self):
         with self.assertRaises(PolyaxonfileError):
             JobSpecification.read(os.path.abspath(
-                'tests/fixtures/job_missing_run_exec.yml'))
+                'tests/fixtures/job_missing_run_cmd.yml'))
 
     def test_create_notebook_specification(self):
         build_config = {'image': 'blabla'}

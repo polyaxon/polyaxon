@@ -123,9 +123,9 @@ class MXNetClusterConfig(BaseConfig):
     MXNet cluster config.
 
     Args:
-        master: list(str). The list of master host in a tensorflow cluster.
-        worker: list(str). The list of worker host in a tensorflow cluster.
-        server: list(str). The list of server host in a tensorflow cluster.
+        master: list(str). The list of master host in a mxnet cluster.
+        worker: list(str). The list of worker host in a mxnet cluster.
+        server: list(str). The list of server host in a mxnet cluster.
     """
     IDENTIFIER = 'mxnet_cluster'
     SCHEMA = MXNetClusterSchema

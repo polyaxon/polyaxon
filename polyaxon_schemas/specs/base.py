@@ -310,7 +310,7 @@ class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
     def create_specification(cls,  # pylint:disable=arguments-differ
                              build_config,
                              to_dict=True):
-        from polyaxon_schemas.ops.build import BuildConfig
+        from polyaxon_schemas.ops.build_job import BuildConfig
 
         if isinstance(build_config, BuildConfig):
             b_config = build_config.to_light_dict()

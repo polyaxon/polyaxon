@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.ops.build import BuildSchema
+from polyaxon_schemas.ops.build_job import BuildSchema
 from polyaxon_schemas.ops.environments.base import EnvironmentSchema
 from polyaxon_schemas.ops.logging import LoggingSchema
 

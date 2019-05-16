@@ -8,7 +8,7 @@ from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.job import JobConfig
-from polyaxon_schemas.ops.run_exec import RunConfig
+from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 
 

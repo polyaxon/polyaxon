@@ -6,7 +6,11 @@ from unittest import TestCase
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
-from polyaxon_schemas.flows.schedule import CronScheduleConfig, IntervalScheduleConfig, ScheduleSchema
+from polyaxon_schemas.flows.schedule import (
+    CronScheduleConfig,
+    IntervalScheduleConfig,
+    ScheduleSchema
+)
 
 
 class TestScheduleConfigs(TestCase):

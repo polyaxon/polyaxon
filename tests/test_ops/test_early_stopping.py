@@ -5,8 +5,8 @@ from unittest import TestCase
 
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingConfig
-from polyaxon_schemas.ops.metrics import Optimization
+from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingConfig
+from polyaxon_schemas.ops.group.metrics import Optimization
 
 
 class TestEarlyStoppingConfigs(TestCase):

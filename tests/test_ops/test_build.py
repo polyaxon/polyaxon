@@ -5,7 +5,8 @@ from unittest import TestCase
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.ops.build import BuildBackend, BuildConfig
+from polyaxon_schemas.ops.build_job import BuildConfig
+from polyaxon_schemas.ops.build_job.backends import BuildBackend
 
 
 class TestBuildConfigs(TestCase):

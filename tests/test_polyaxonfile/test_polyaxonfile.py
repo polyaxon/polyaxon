@@ -14,15 +14,16 @@ from polyaxon_schemas.ml.losses import MeanSquaredErrorConfig
 from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, RegressorConfig
 from polyaxon_schemas.ml.optimizers import AdamConfig
 from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
-from polyaxon_schemas.ops.build import BuildConfig
-from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingConfig
+from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.ops.environments.base import EnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
-from polyaxon_schemas.ops.experiment import ExperimentBackend, ExperimentFramework
-from polyaxon_schemas.ops.hptuning import HPTuningConfig, SearchAlgorithms
+from polyaxon_schemas.ops.experiment.backends import ExperimentBackend
+from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
+from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingConfig
+from polyaxon_schemas.ops.group.hptuning import HPTuningConfig, SearchAlgorithms
+from polyaxon_schemas.ops.group.matrix import MatrixConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
-from polyaxon_schemas.ops.matrix import MatrixConfig
-from polyaxon_schemas.ops.run_exec import RunConfig
+from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
@@ -432,7 +433,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.run.cmd == 'train --loss="{}"'.format(spec.declarations['loss'])
 
     def test_run_simple_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -449,7 +450,7 @@ class TestPolyaxonfile(TestCase):
         assert run.cmd == "video_prediction_train --num_masks=2"
 
     def test_run_simple_file_with_cmds_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_simple_file_list_cmds.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_simple_file_list_cmds.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -467,7 +468,7 @@ class TestPolyaxonfile(TestCase):
                            'video_prediction_train --model=DNA --num_masks=10']
 
     def test_run_simple_file_with_build_env_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_with_build_env.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_with_build_env.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -489,7 +490,7 @@ class TestPolyaxonfile(TestCase):
                            'video_prediction_train --model=DNA --num_masks=10']
 
     def test_run_matrix_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -519,7 +520,7 @@ class TestPolyaxonfile(TestCase):
         )
 
     def test_run_matrix_sampling_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_exec_matrix_sampling_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_matrix_sampling_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group

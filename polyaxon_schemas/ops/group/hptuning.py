@@ -8,9 +8,9 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.ops.early_stopping_policies import EarlyStoppingSchema
-from polyaxon_schemas.ops.matrix import MatrixConfig
-from polyaxon_schemas.ops.metrics import SearchMetricSchema
+from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingSchema
+from polyaxon_schemas.ops.group.matrix import MatrixConfig
+from polyaxon_schemas.ops.group.metrics import SearchMetricSchema
 
 
 class AcquisitionFunctions(object):

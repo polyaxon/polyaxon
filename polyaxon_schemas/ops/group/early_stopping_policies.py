@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
-from polyaxon_schemas.ops.metrics import Optimization
+from polyaxon_schemas.ops.group.metrics import Optimization
 
 
 class MedianStoppingPolicySchema(BaseSchema):

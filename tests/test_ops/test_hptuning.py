@@ -6,7 +6,7 @@ from unittest import TestCase
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.hptuning import (
+from polyaxon_schemas.ops.group.hptuning import (
     AcquisitionFunctions,
     BOConfig,
     GaussianProcessConfig,
@@ -17,7 +17,7 @@ from polyaxon_schemas.ops.hptuning import (
     RandomSearchConfig,
     UtilityFunctionConfig
 )
-from polyaxon_schemas.ops.metrics import Optimization, SearchMetricConfig
+from polyaxon_schemas.ops.group.metrics import Optimization, SearchMetricConfig
 
 
 class TestHptuningConfigs(TestCase):

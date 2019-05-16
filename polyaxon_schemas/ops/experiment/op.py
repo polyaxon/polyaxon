@@ -7,7 +7,7 @@ from polyaxon_schemas.base import BaseConfig
 from polyaxon_schemas.ml.eval import EvalSchema
 from polyaxon_schemas.ml.models import ModelSchema
 from polyaxon_schemas.ml.train import TrainSchema
-from polyaxon_schemas.ops.environments.experiments import (
+from polyaxon_schemas.ops.experiment.environment import (
     ExperimentEnvironmentSchema,
     HorovodConfig,
     MPIConfig,
@@ -15,26 +15,9 @@ from polyaxon_schemas.ops.environments.experiments import (
     PytorchConfig,
     TensorflowConfig
 )
-from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema
-from polyaxon_schemas.ops.run_exec import RunSchema
-
-
-class ExperimentFramework(object):
-    TENSORFLOW = 'tensorflow'
-    MXNET = 'mxnet'
-    HOROVOD = 'horovod'
-    PYTORCH = 'pytorch'
-
-    VALUES = [TENSORFLOW, MXNET, HOROVOD, PYTORCH]
-
-
-class ExperimentBackend(object):
-    NATIVE = 'native'
-    KUBEFLOW = 'kubeflow'
-    MPI = 'mpi'
-    OTHER = 'other'
-
-    VALUES = [NATIVE, KUBEFLOW, MPI, OTHER]
+from polyaxon_schemas.ops.experiment.backends import ExperimentBackend
+from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
+from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema, RunSchema
 
 
 def validate_backend(backend):

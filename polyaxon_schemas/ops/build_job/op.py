@@ -4,16 +4,9 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.ops.build_job.backends import BuildBackend
 from polyaxon_schemas.ops.environments.base import EnvironmentSchema
 from polyaxon_schemas.ops.logging import LoggingSchema
-
-
-class BuildBackend(object):
-    NATIVE = 'native'
-    KANIKO = 'kaniko'
-    OTHER = 'other'
-
-    VALUES = [NATIVE, KANIKO, OTHER]
 
 
 def validate_image(image):

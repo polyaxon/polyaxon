@@ -7,9 +7,9 @@ from hestia.cached_property import cached_property
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.ops.environments.experiments import ExperimentEnvironmentConfig
+from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.experiment import ExperimentConfig
-from polyaxon_schemas.ops.run_exec import RunConfig
+from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,

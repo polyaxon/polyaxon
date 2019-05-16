@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from polyaxon_schemas.ops.run_exec import RunConfig, get_container_command_args
+from polyaxon_schemas.ops.run import RunConfig, get_container_command_args
 
 
 class TestContainerCmdArgs(TestCase):

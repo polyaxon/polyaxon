@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.ops.experiment import ExperimentConfig, ExperimentSchema
-from polyaxon_schemas.ops.hptuning import HPTuningSchema
+from polyaxon_schemas.ops.group.hptuning import HPTuningSchema
 from polyaxon_schemas.ops.run import BaseRunConfig
 
 
