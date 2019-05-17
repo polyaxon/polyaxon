@@ -30,7 +30,7 @@ from polyaxon_deploy.schemas.service import (
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.ssl import SSLSchema
 
-from polyaxon_schemas.utils import DictOrStr
+from polyaxon_schemas.fields import DictOrStr
 
 
 class DeploymentSchema(BaseSchema):
