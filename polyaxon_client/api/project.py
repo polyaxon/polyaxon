@@ -392,14 +392,21 @@ class ProjectApi(BaseApiHandler):
                 e=e, log_message='Error while retrieving tensorboard jobs.')
             return []
 
-    def start_tensorboard(self, username, project_name, content=None, background=False):
+    def start_tensorboard(self,
+                          username,
+                          project_name, content=None,
+                          is_managed=True,
+                          background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
                                      project_name,
                                      'tensorboard',
                                      'start')
 
-        job_config = {'content': self.validate_content(content=content)} if content else {}
+        job_config = {
+            'content': self.validate_content(content=content),
+            'is_managed': is_managed
+        } if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)
@@ -428,7 +435,12 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while stopping tensorboard.')
             return None
 
-    def start_notebook(self, username, project_name, content=None, background=False):
+    def start_notebook(self,
+                       username,
+                       project_name,
+                       content=None,
+                       is_managed=True,
+                       background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
                                      project_name,
@@ -436,7 +448,10 @@ class ProjectApi(BaseApiHandler):
                                      'start')
 
         content = self.validate_content(content=content)
-        job_config = {'content': self.validate_content(content=content)} if content else {}
+        job_config = {
+            'content': self.validate_content(content=content),
+            'is_managed': is_managed
+        } if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)
