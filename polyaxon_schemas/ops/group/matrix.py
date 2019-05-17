@@ -29,7 +29,7 @@ class Range(fields.Field):
     OPTIONAL_KEY = None
     KEYS = REQUIRED_KEYS
 
-    def _deserialize(self, value, attr, data, **kwargs):
+    def _deserialize(self, value, attr, data, **kwargs):  # pylint:disable=too-many-branches
         if isinstance(value, six.string_types):
             value = value.split(':')
         elif isinstance(value, Mapping):

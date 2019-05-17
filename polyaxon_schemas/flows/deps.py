@@ -11,7 +11,8 @@ from polyaxon_schemas.fields import IntOrStr, UUID
 
 def validate_dep(**kwargs):
     if len([i for i in six.itervalues(kwargs) if i is not None]) != 1:
-        raise ValidationError('One and only one value, [id, uuid, name], is allowed for declaring a dependency.')
+        raise ValidationError('One and only one value, [id, uuid, name], '
+                              'is allowed for declaring a dependency.')
 
 
 class DepSchema(BaseSchema):
