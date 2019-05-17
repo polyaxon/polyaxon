@@ -13,6 +13,26 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='schedule',
+            name='cron',
+            field=models.CharField(blank=True,
+                                   help_text="Defines how often to run, this timedelta object gets added to your latest operation instance's execution_date to figure out the next schedule",
+                                   max_length=64, null=True),
+        ),
+        migrations.AlterField(
+            model_name='schedule',
+            name='frequency',
+            field=models.PositiveIntegerField(blank=True,
+                                              help_text="Defines how often to run, this timedelta object gets added to your latest operation instance's execution_date to figure out the next schedule",
+                                              null=True),
+        ),
+        migrations.AddField(
+            model_name='operation',
+            name='skip_on_upstream_skip',
+            field=models.BooleanField(default=False,
+                                      help_text='skip this operation if upstream operations are skipped.'),
+        ),
         migrations.RenameField(
             model_name='operation',
             old_name='celery_queue',
