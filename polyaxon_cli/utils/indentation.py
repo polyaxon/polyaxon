@@ -20,7 +20,7 @@ def _indent(depth=0, quote=''):
     else:
         indent_string = ''.join((('\x08' * (-1 * (depth - len(quote)))), str(quote)))
 
-    if len(indent_string):
+    if indent_string:
         INDENT_STRINGS.append(indent_string)
 
 

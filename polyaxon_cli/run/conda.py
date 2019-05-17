@@ -29,7 +29,7 @@ def _get_conda_env_name(conda_env):
 
 def _run(ctx, name, user, project_name, description, tags, specification, log, conda_env):
     conda = CondaOperator()
-    cmd = CmdOperator()
+    # cmd = CmdOperator()
     if not conda.check():
         raise PolyaxonConfigurationError('Conda is required to run this command.')
 

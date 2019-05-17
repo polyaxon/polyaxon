@@ -36,8 +36,9 @@ def _get_env_vars(project, experiment_id):
     env_vars = [
         ('POLYAXON_IS_MANAGED', 'true'),
         ('POLYAXON_IS_LOCAL', 'true'),
-        ('POLYAXON_EXPERIMENT_INFO', json.dumps({'project_name': project,
-                                                 'experiment_name': '{}.{}'.format(project, experiment_id)})),
+        ('POLYAXON_EXPERIMENT_INFO', json.dumps({
+            'project_name': project,
+            'experiment_name': '{}.{}'.format(project, experiment_id)})),
     ]
     if POLYAXON_NO_OP_KEY in os.environ:
         env_vars += [('POLYAXON_NO_OP', 'true')]

@@ -364,10 +364,10 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     $ polyaxon experiment --experiment=1 resume
     ```
     """
-    config = None
+    content = None
     update_code = None
     if file:
-        config = rhea.read(file)
+        content = '{}'.format(rhea.read(file))
 
     # Check if we need to upload
     if u:
@@ -378,7 +378,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
                                                                       ctx.obj.get('experiment'))
     try:
         response = PolyaxonClient().experiment.resume(
-            user, project_name, _experiment, config=config, update_code=update_code)
+            user, project_name, _experiment, content=content, update_code=update_code)
         Printer.print_success('Experiment was resumed with id {}'.format(response.id))
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not resume experiment `{}`.'.format(_experiment))
