@@ -8,18 +8,24 @@ import auditor
 
 from event_manager.events import experiment_job as experiment_job_events
 from factories.factory_experiments import ExperimentJobFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorExperimentJobTest(BaseTest):
+class AuditorExperimentJobTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = experiment_job_events.EVENTS
 
     def setUp(self):
         super().setUp()
         self.experiment_job = ExperimentJobFactory()
+        self.tested_events = {
+            experiment_job_events.EXPERIMENT_JOB_VIEWED,
+            experiment_job_events.EXPERIMENT_JOB_RESOURCES_VIEWED,
+            experiment_job_events.EXPERIMENT_JOB_LOGS_VIEWED,
+            experiment_job_events.EXPERIMENT_JOB_STATUSES_VIEWED,
+            experiment_job_events.EXPERIMENT_JOB_NEW_STATUS,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -113,3 +119,6 @@ class AuditorExperimentJobTest(BaseTest):
         assert activitylogs_record.call_count == 0
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 1
+
+
+del AuditorBaseTest

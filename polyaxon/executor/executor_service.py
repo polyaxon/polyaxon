@@ -5,6 +5,7 @@ from executor.handlers.experiment_job import ExperimentJobHandler
 from executor.handlers.job import JobHandler
 from executor.handlers.notebook import NotebookHandler
 from executor.handlers.tensorboard import TensorboardHandler
+from executor.handlers.pipeline_runs import PipelineRunHandler
 from executor.service import BaseExecutorService
 
 
@@ -17,6 +18,7 @@ class ExecutorService(BaseExecutorService):
         TensorboardHandler.SUBJECT: TensorboardHandler,
         NotebookHandler.SUBJECT: NotebookHandler,
         ExperimentJobHandler.SUBJECT: ExperimentJobHandler,
+        PipelineRunHandler.SUBJECT: PipelineRunHandler,
     }
 
     def __init__(self) -> None:

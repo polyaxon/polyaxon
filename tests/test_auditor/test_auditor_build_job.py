@@ -9,18 +9,39 @@ import auditor
 from event_manager.events import build_job as build_job_events
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorBuildJobTest(BaseTest):
+class AuditorBuildJobTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = build_job_events.EVENTS
 
     def setUp(self):
-        self.build_job = BuildJobFactory(project=ProjectFactory())
         super().setUp()
+        self.build_job = BuildJobFactory(project=ProjectFactory())
+        self.tested_events = {
+            build_job_events.BUILD_JOB_CREATED,
+            build_job_events.BUILD_JOB_UPDATED,
+            build_job_events.BUILD_JOB_STARTED,
+            build_job_events.BUILD_JOB_STARTED_TRIGGERED,
+            build_job_events.BUILD_JOB_DELETED,
+            build_job_events.BUILD_JOB_DELETED_TRIGGERED,
+            build_job_events.BUILD_JOB_STOPPED,
+            build_job_events.BUILD_JOB_STOPPED_TRIGGERED,
+            build_job_events.BUILD_JOB_CLEANED_TRIGGERED,
+            build_job_events.BUILD_JOB_VIEWED,
+            build_job_events.BUILD_JOB_ARCHIVED,
+            build_job_events.BUILD_JOB_RESTORED,
+            build_job_events.BUILD_JOB_BOOKMARKED,
+            build_job_events.BUILD_JOB_UNBOOKMARKED,
+            build_job_events.BUILD_JOB_NEW_STATUS,
+            build_job_events.BUILD_JOB_FAILED,
+            build_job_events.BUILD_JOB_SUCCEEDED,
+            build_job_events.BUILD_JOB_DONE,
+            build_job_events.BUILD_JOB_LOGS_VIEWED,
+            build_job_events.BUILD_JOB_STATUSES_VIEWED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -383,3 +404,6 @@ class AuditorBuildJobTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

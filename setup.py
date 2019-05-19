@@ -49,7 +49,7 @@ setup(name='polyaxon',
       ],
       install_requires=[
           "celery==4.3.0",
-          "Django==2.2",
+          "Django==2.2.1",
           "django-cors-headers==2.4.0",
           "djangorestframework==3.9.2",
           "docker==3.7.2",

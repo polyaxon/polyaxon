@@ -8,18 +8,36 @@ import auditor
 
 from event_manager.events import project as project_events
 from factories.factory_projects import ProjectFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorProjectTest(BaseTest):
+class AuditorProjectTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = project_events.EVENTS
 
     def setUp(self):
         self.project = ProjectFactory()
         super().setUp()
+        self.tested_events = {
+            project_events.PROJECT_CREATED,
+            project_events.PROJECT_UPDATED,
+            project_events.PROJECT_DELETED,
+            project_events.PROJECT_DELETED_TRIGGERED,
+            project_events.PROJECT_VIEWED,
+            project_events.PROJECT_ARCHIVED,
+            project_events.PROJECT_RESTORED,
+            project_events.PROJECT_UNBOOKMARKED,
+            project_events.PROJECT_BOOKMARKED,
+            project_events.PROJECT_SET_PUBLIC,
+            project_events.PROJECT_SET_PRIVATE,
+            project_events.PROJECT_EXPERIMENT_GROUPS_VIEWED,
+            project_events.PROJECT_EXPERIMENTS_VIEWED,
+            project_events.PROJECT_JOBS_VIEWED,
+            project_events.PROJECT_BUILDS_VIEWED,
+            project_events.PROJECT_TENSORBOARDS_VIEWED,
+            project_events.PROJECT_NOTEBOOKS_VIEWED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -337,3 +355,6 @@ class AuditorProjectTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

@@ -7,14 +7,28 @@ import pytest
 import auditor
 
 from event_manager.events import permission as permission_events
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorPermissionTest(BaseTest):
+class AuditorPermissionTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = permission_events.EVENTS
+
+    def setUp(self):
+        super().setUp()
+        self.tested_events = {
+            permission_events.PERMISSION_PROJECT_DENIED,
+            permission_events.PERMISSION_REPO_DENIED,
+            permission_events.PERMISSION_EXPERIMENT_GROUP_DENIED,
+            permission_events.PERMISSION_EXPERIMENT_DENIED,
+            permission_events.PERMISSION_TENSORBOARD_DENIED,
+            permission_events.PERMISSION_NOTEBOOK_DENIED,
+            permission_events.PERMISSION_BUILD_JOB_DENIED,
+            permission_events.PERMISSION_EXPERIMENT_JOB_DENIED,
+            permission_events.PERMISSION_CLUSTER_DENIED,
+            permission_events.PERMISSION_USER_ROLE_DENIED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -234,3 +248,6 @@ class AuditorPermissionTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

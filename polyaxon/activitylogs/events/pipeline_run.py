@@ -1,0 +1,14 @@
+import activitylogs
+
+from event_manager.events import pipeline_run
+
+activitylogs.subscribe(pipeline_run.PipelineRunCreatedEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunUpdatedEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunViewedEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunArchivedEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunRestoredEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunDeletedTriggeredEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunStoppedTriggeredEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunResumedTriggeredEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunRestartedTriggeredEvent)
+activitylogs.subscribe(pipeline_run.PipelineRunSkippedTriggeredEvent)

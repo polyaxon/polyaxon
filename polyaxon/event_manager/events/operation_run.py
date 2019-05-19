@@ -19,6 +19,8 @@ OPERATION_RUN_RESUMED = '{}.{}'.format(event_subjects.OPERATION_RUN,
                                        event_actions.RESUMED)
 OPERATION_RUN_RESTARTED = '{}.{}'.format(event_subjects.OPERATION_RUN,
                                          event_actions.RESTARTED)
+OPERATION_RUN_SKIPPED = '{}.{}'.format(event_subjects.OPERATION_RUN,
+                                       event_actions.SKIPPED)
 OPERATION_RUN_NEW_STATUS = '{}.{}'.format(event_subjects.OPERATION_RUN,
                                           event_actions.NEW_STATUS)
 OPERATION_RUN_SUCCEEDED = '{}.{}'.format(event_subjects.OPERATION_RUN,
@@ -42,13 +44,37 @@ OPERATION_RUN_RESUMED_TRIGGERED = '{}.{}.{}'.format(event_subjects.OPERATION_RUN
 OPERATION_RUN_RESTARTED_TRIGGERED = '{}.{}.{}'.format(event_subjects.OPERATION_RUN,
                                                       event_actions.RESTARTED,
                                                       event_subjects.TRIGGER)
+OPERATION_RUN_SKIPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.OPERATION_RUN,
+                                                    event_actions.SKIPPED,
+                                                    event_subjects.TRIGGER)
+
+EVENTS = {
+    OPERATION_RUN_CREATED,
+    OPERATION_RUN_UPDATED,
+    OPERATION_RUN_DELETED,
+    OPERATION_RUN_VIEWED,
+    OPERATION_RUN_ARCHIVED,
+    OPERATION_RUN_RESTORED,
+    OPERATION_RUN_STOPPED,
+    OPERATION_RUN_RESUMED,
+    OPERATION_RUN_RESTARTED,
+    OPERATION_RUN_SKIPPED,
+    OPERATION_RUN_NEW_STATUS,
+    OPERATION_RUN_SUCCEEDED,
+    OPERATION_RUN_FAILED,
+    OPERATION_RUN_DONE,
+    OPERATION_RUN_DELETED_TRIGGERED,
+    OPERATION_RUN_CLEANED_TRIGGERED,
+    OPERATION_RUN_STOPPED_TRIGGERED,
+    OPERATION_RUN_RESUMED_TRIGGERED,
+    OPERATION_RUN_RESTARTED_TRIGGERED,
+    OPERATION_RUN_SKIPPED_TRIGGERED
+}
 
 
 class OperationRunCreatedEvent(Event):
     event_type = OPERATION_RUN_CREATED
     actor = True
-    actor_id = 'user.id'
-    actor_name = 'user.username'
     attributes = (
         Attribute('id'),
         Attribute('operation.id'),
@@ -130,6 +156,16 @@ class OperationRunResumedEvent(Event):
 
 class OperationRunRestartedEvent(Event):
     event_type = OPERATION_RUN_RESTARTED
+    attributes = (
+        Attribute('id'),
+        Attribute('operation.id'),
+        Attribute('pipeline_run.id'),
+        Attribute('last_status'),
+    )
+
+
+class OperationRunSkippedEvent(Event):
+    event_type = OPERATION_RUN_SKIPPED
     attributes = (
         Attribute('id'),
         Attribute('operation.id'),
@@ -223,6 +259,17 @@ class OperationRunResumedTriggeredEvent(Event):
 
 class OperationRunRestartedTriggeredEvent(Event):
     event_type = OPERATION_RUN_RESTARTED_TRIGGERED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('operation.id'),
+        Attribute('pipeline_run.id'),
+        Attribute('last_status'),
+    )
+
+
+class OperationRunSkippedTriggeredEvent(Event):
+    event_type = OPERATION_RUN_SKIPPED_TRIGGERED
     actor = True
     attributes = (
         Attribute('id'),

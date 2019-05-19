@@ -1,0 +1,23 @@
+import activitylogs
+
+from event_manager.events import operation_run
+
+activitylogs.subscribe(operation_run.OperationRunCreatedEvent)
+activitylogs.subscribe(operation_run.OperationRunUpdatedEvent)
+activitylogs.subscribe(operation_run.OperationRunViewedEvent)
+activitylogs.subscribe(operation_run.OperationRunArchivedEvent)
+activitylogs.subscribe(operation_run.OperationRunRestoredEvent)
+activitylogs.subscribe(operation_run.OperationRunSkippedEvent)
+activitylogs.subscribe(operation_run.OperationRunDeletedEvent)
+activitylogs.subscribe(operation_run.OperationRunDeletedTriggeredEvent)
+activitylogs.subscribe(operation_run.OperationRunStoppedEvent)
+activitylogs.subscribe(operation_run.OperationRunStoppedTriggeredEvent)
+activitylogs.subscribe(operation_run.OperationRunResumedEvent)
+activitylogs.subscribe(operation_run.OperationRunResumedTriggeredEvent)
+activitylogs.subscribe(operation_run.OperationRunRestartedEvent)
+activitylogs.subscribe(operation_run.OperationRunRestartedTriggeredEvent)
+activitylogs.subscribe(operation_run.OperationRunSkippedTriggeredEvent)
+activitylogs.subscribe(operation_run.OperationRunNewStatusEvent)
+activitylogs.subscribe(operation_run.OperationRunSucceededEvent)
+activitylogs.subscribe(operation_run.OperationRunFailedEvent)
+activitylogs.subscribe(operation_run.OperationRunDoneEvent)

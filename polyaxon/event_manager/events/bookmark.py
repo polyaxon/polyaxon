@@ -12,6 +12,14 @@ BOOKMARK_EXPERIMENT_GROUPS_VIEWED = '{}.{}'.format(event_subjects.BOOKMARK,
 BOOKMARK_PROJECTS_VIEWED = '{}.{}'.format(event_subjects.BOOKMARK,
                                           event_actions.PROJECTS_VIEWED)
 
+EVENTS = {
+    BOOKMARK_BUILD_JOBS_VIEWED,
+    BOOKMARK_JOBS_VIEWED,
+    BOOKMARK_EXPERIMENTS_VIEWED,
+    BOOKMARK_EXPERIMENT_GROUPS_VIEWED,
+    BOOKMARK_PROJECTS_VIEWED,
+}
+
 
 class BookmarkBuildJobsViewedEvent(Event):
     event_type = BOOKMARK_BUILD_JOBS_VIEWED

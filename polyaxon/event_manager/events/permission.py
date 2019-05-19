@@ -32,6 +32,18 @@ PERMISSION_USER_ROLE_DENIED = '{}.{}.{}'.format(event_subjects.SUPERUSER,
                                                 event_actions.DENIED,
                                                 event_subjects.PERMISSION)
 
+EVENTS = {
+    PERMISSION_PROJECT_DENIED,
+    PERMISSION_REPO_DENIED,
+    PERMISSION_EXPERIMENT_GROUP_DENIED,
+    PERMISSION_EXPERIMENT_DENIED,
+    PERMISSION_TENSORBOARD_DENIED,
+    PERMISSION_NOTEBOOK_DENIED,
+    PERMISSION_BUILD_JOB_DENIED,
+    PERMISSION_EXPERIMENT_JOB_DENIED,
+    PERMISSION_CLUSTER_DENIED,
+    PERMISSION_USER_ROLE_DENIED,
+}
 
 class PermissionProjectDeniedEvent(Event):
     event_type = PERMISSION_PROJECT_DENIED

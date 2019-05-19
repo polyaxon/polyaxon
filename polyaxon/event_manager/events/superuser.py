@@ -4,6 +4,11 @@ from event_manager.event import Attribute, Event
 SUPERUSER_ROLE_GRANTED = '{}.{}'.format(event_subjects.SUPERUSER, event_actions.GRANTED)
 SUPERUSER_ROLE_REVOKED = '{}.{}'.format(event_subjects.SUPERUSER, event_actions.REVOKED)
 
+EVENTS = {
+    SUPERUSER_ROLE_GRANTED,
+    SUPERUSER_ROLE_REVOKED,
+}
+
 
 class SuperUserRoleGrantedEvent(Event):
     event_type = SUPERUSER_ROLE_GRANTED

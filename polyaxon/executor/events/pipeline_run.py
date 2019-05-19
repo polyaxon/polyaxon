@@ -1,0 +1,11 @@
+import executor
+
+from event_manager.events import pipeline_run
+
+executor.subscribe(pipeline_run.PipelineRunCreatedEvent)
+executor.subscribe(pipeline_run.PipelineRunStoppedEvent)
+executor.subscribe(pipeline_run.PipelineRunSkippedEvent)
+executor.subscribe(pipeline_run.PipelineRunSucceededEvent)
+executor.subscribe(pipeline_run.PipelineRunFailedEvent)
+executor.subscribe(pipeline_run.PipelineRunDoneEvent)
+executor.subscribe(pipeline_run.PipelineRunCleanedTriggeredEvent)

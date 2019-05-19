@@ -11,19 +11,23 @@ from db.models.experiments import ExperimentChartView
 from event_manager.events import chart_view as chart_view_events
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import ExperimentFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorChartViewsTest(BaseTest):
+class AuditorChartViewsTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = chart_view_events.EVENTS
 
     def setUp(self):
         super().setUp()
         self.experiment = ExperimentFactory()
         self.experiment_group = ExperimentGroupFactory()
+        self.tested_events = {
+            chart_view_events.CHART_VIEW_CREATED,
+            chart_view_events.CHART_VIEW_CREATED,
+            chart_view_events.CHART_VIEW_DELETED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -120,3 +124,6 @@ class AuditorChartViewsTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

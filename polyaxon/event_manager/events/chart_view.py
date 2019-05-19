@@ -7,6 +7,11 @@ CHART_VIEW_CREATED = '{}.{}'.format(event_subjects.CHART_VIEW,
 CHART_VIEW_DELETED = '{}.{}'.format(event_subjects.CHART_VIEW,
                                     event_actions.DELETED)
 
+EVENTS = {
+    CHART_VIEW_CREATED,
+    CHART_VIEW_DELETED
+}
+
 
 class ChartViewCreatedEvent(Event):
     event_type = CHART_VIEW_CREATED

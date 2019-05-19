@@ -15,6 +15,8 @@ PIPELINE_RUN_RESTORED = '{}.{}'.format(event_subjects.PIPELINE_RUN,
                                        event_actions.RESTORED)
 PIPELINE_RUN_STOPPED = '{}.{}'.format(event_subjects.PIPELINE_RUN,
                                       event_actions.STOPPED)
+PIPELINE_RUN_SKIPPED = '{}.{}'.format(event_subjects.PIPELINE_RUN,
+                                      event_actions.SKIPPED)
 PIPELINE_RUN_RESUMED = '{}.{}'.format(event_subjects.PIPELINE_RUN,
                                       event_actions.RESUMED)
 PIPELINE_RUN_RESTARTED = '{}.{}'.format(event_subjects.PIPELINE_RUN,
@@ -42,13 +44,37 @@ PIPELINE_RUN_RESUMED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PIPELINE_RUN,
 PIPELINE_RUN_RESTARTED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PIPELINE_RUN,
                                                      event_actions.RESTARTED,
                                                      event_subjects.TRIGGER)
+PIPELINE_RUN_SKIPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PIPELINE_RUN,
+                                                   event_actions.SKIPPED,
+                                                   event_subjects.TRIGGER)
+
+EVENTS = {
+    PIPELINE_RUN_CREATED,
+    PIPELINE_RUN_UPDATED,
+    PIPELINE_RUN_DELETED,
+    PIPELINE_RUN_VIEWED,
+    PIPELINE_RUN_ARCHIVED,
+    PIPELINE_RUN_RESTORED,
+    PIPELINE_RUN_STOPPED,
+    PIPELINE_RUN_SKIPPED,
+    PIPELINE_RUN_RESUMED,
+    PIPELINE_RUN_RESTARTED,
+    PIPELINE_RUN_NEW_STATUS,
+    PIPELINE_RUN_SUCCEEDED,
+    PIPELINE_RUN_FAILED,
+    PIPELINE_RUN_DONE,
+    PIPELINE_RUN_DELETED_TRIGGERED,
+    PIPELINE_RUN_CLEANED_TRIGGERED,
+    PIPELINE_RUN_STOPPED_TRIGGERED,
+    PIPELINE_RUN_RESUMED_TRIGGERED,
+    PIPELINE_RUN_RESTARTED_TRIGGERED,
+    PIPELINE_RUN_SKIPPED_TRIGGERED,
+}
 
 
 class PipelineRunCreatedEvent(Event):
     event_type = PIPELINE_RUN_CREATED
     actor = True
-    actor_id = 'user.id'
-    actor_name = 'user.username'
     attributes = (
         Attribute('id'),
         Attribute('pipeline.id'),
@@ -103,6 +129,16 @@ class PipelineRunRestoredEvent(Event):
 
 class PipelineRunStoppedEvent(Event):
     event_type = PIPELINE_RUN_STOPPED
+    attributes = (
+        Attribute('id'),
+        Attribute('pipeline.id'),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class PipelineRunSkippedEvent(Event):
+    event_type = PIPELINE_RUN_SKIPPED
     attributes = (
         Attribute('id'),
         Attribute('pipeline.id'),
@@ -208,6 +244,16 @@ class PipelineRunResumedTriggeredEvent(Event):
 
 class PipelineRunRestartedTriggeredEvent(Event):
     event_type = PIPELINE_RUN_RESTARTED_TRIGGERED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('pipeline.id'),
+        Attribute('last_status'),
+    )
+
+
+class PipelineRunSkippedTriggeredEvent(Event):
+    event_type = PIPELINE_RUN_SKIPPED_TRIGGERED
     actor = True
     attributes = (
         Attribute('id'),

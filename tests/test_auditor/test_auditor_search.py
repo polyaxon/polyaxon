@@ -10,19 +10,28 @@ from constants import content_types
 from db.models.searches import Search
 from event_manager.events import search as searches_events
 from factories.factory_projects import ProjectFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorSearchesTest(BaseTest):
+class AuditorSearchesTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = searches_events.EVENTS
 
     def setUp(self):
         super().setUp()
         self.project = ProjectFactory()
         self.user = self.project.user
+        self.tested_events = {
+            searches_events.SEARCH_CREATED,
+            searches_events.SEARCH_CREATED,
+            searches_events.SEARCH_CREATED,
+            searches_events.SEARCH_CREATED,
+            searches_events.SEARCH_DELETED,
+            searches_events.SEARCH_DELETED,
+            searches_events.SEARCH_DELETED,
+            searches_events.SEARCH_DELETED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -191,3 +200,6 @@ class AuditorSearchesTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

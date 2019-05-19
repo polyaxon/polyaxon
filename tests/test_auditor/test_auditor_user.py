@@ -8,18 +8,28 @@ import auditor
 
 from event_manager.events import user as user_events
 from factories.factory_users import UserFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorUserTest(BaseTest):
+class AuditorUserTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = user_events.EVENTS
 
     def setUp(self):
         self.user = UserFactory()
         super().setUp()
+        self.tested_events = {
+            user_events.USER_REGISTERED,
+            user_events.USER_UPDATED,
+            user_events.USER_ACTIVATED,
+            user_events.USER_DELETED,
+            user_events.USER_LDAP,
+            user_events.USER_GITHUB,
+            user_events.USER_GITLAB,
+            user_events.USER_BITBUCKET,
+            user_events.USER_AZURE,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -183,3 +193,6 @@ class AuditorUserTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

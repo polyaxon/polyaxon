@@ -8,18 +8,24 @@ import auditor
 
 from db.models.clusters import Cluster
 from event_manager.events import bookmark as bookmarks_events
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorBookmarksTest(BaseTest):
+class AuditorBookmarksTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = bookmarks_events.EVENTS
 
     def setUp(self):
         Cluster.load()
         super().setUp()
+        self.tested_events = {
+            bookmarks_events.BOOKMARK_BUILD_JOBS_VIEWED,
+            bookmarks_events.BOOKMARK_JOBS_VIEWED,
+            bookmarks_events.BOOKMARK_EXPERIMENTS_VIEWED,
+            bookmarks_events.BOOKMARK_EXPERIMENT_GROUPS_VIEWED,
+            bookmarks_events.BOOKMARK_PROJECTS_VIEWED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -115,3 +121,6 @@ class AuditorBookmarksTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

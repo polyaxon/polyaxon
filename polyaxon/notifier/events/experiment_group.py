@@ -4,5 +4,7 @@ from event_manager.events import experiment_group
 
 notifier.subscribe_event(experiment_group.ExperimentGroupStoppedEvent)
 notifier.subscribe_event(experiment_group.ExperimentGroupDoneEvent)
+notifier.subscribe_event(experiment_group.ExperimentGroupSucceededEvent)
+notifier.subscribe_event(experiment_group.ExperimentGroupFailedEvent)
 # notifier.subscribe_event(experiment_group.ExperimentGroupNewStatusEvent)
 # notifier.subscribe_event(experiment_group.ExperimentGroupIterationEvent)

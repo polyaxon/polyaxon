@@ -17,7 +17,11 @@ from event_manager.events import (
     experiment_job,
     job,
     notebook,
+    operation,
+    operation_run,
     permission,
+    pipeline,
+    pipeline_run,
     project,
     repo,
     search,
@@ -33,8 +37,7 @@ from tests.base.case import BaseTest
 
 @pytest.mark.events_mark
 class TestEvents(BaseTest):
-    def test_events_subjects(self):  # pylint:disable=too-many-statements
-        # Cluster
+    def test_events_subjects_clusters(self):
         assert cluster.ClusterCreatedEvent.get_event_subject() == 'cluster'
         assert cluster.ClusterUpdatedEvent.get_event_subject() == 'cluster'
         assert cluster.ClusterNodeCreatedEvent.get_event_subject() == 'cluster_node'
@@ -42,7 +45,7 @@ class TestEvents(BaseTest):
         assert cluster.ClusterNodeDeletedEvent.get_event_subject() == 'cluster_node'
         assert cluster.ClusterNodeGPU.get_event_subject() == 'cluster_node'
 
-        # Experiment
+    def test_events_subjects_experiments(self):
         assert experiment.ExperimentCreatedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentUpdatedEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentDeletedEvent.get_event_subject() == 'experiment'
@@ -73,7 +76,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentRestartedTriggeredEvent.get_event_subject() == 'experiment'
         assert experiment.ExperimentCopiedTriggeredEvent.get_event_subject() == 'experiment'
 
-        # Experiment group
+    def test_events_subjects_groups(self):
         assert (experiment_group.ExperimentGroupCreatedEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupUpdatedEvent.get_event_subject() ==
@@ -93,6 +96,10 @@ class TestEvents(BaseTest):
         assert (experiment_group.ExperimentGroupStoppedEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupResumedEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupSucceededEvent.get_event_subject() ==
+                'experiment_group')
+        assert (experiment_group.ExperimentGroupFailedEvent.get_event_subject() ==
                 'experiment_group')
         assert (experiment_group.ExperimentGroupDoneEvent.get_event_subject() ==
                 'experiment_group')
@@ -119,7 +126,7 @@ class TestEvents(BaseTest):
         assert (experiment_group.ExperimentGroupResumedTriggeredEvent.get_event_subject() ==
                 'experiment_group')
 
-        # Experiment job
+    def test_events_subjects_experiment_jobs(self):
         assert experiment_job.ExperimentJobViewedEvent.get_event_subject() == 'experiment_job'
         assert (experiment_job.ExperimentJobResourcesViewedEvent.get_event_subject() ==
                 'experiment_job')
@@ -129,7 +136,7 @@ class TestEvents(BaseTest):
         assert (experiment_job.ExperimentJobNewStatusEvent.get_event_subject() ==
                 'experiment_job')
 
-        # Notebook
+    def test_events_subjects_notebooks(self):
         assert notebook.NotebookStartedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookStartedTriggeredEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookSoppedEvent.get_event_subject() == 'notebook'
@@ -145,7 +152,7 @@ class TestEvents(BaseTest):
         assert notebook.NotebookArchivedEvent.get_event_subject() == 'notebook'
         assert notebook.NotebookRestoredEvent.get_event_subject() == 'notebook'
 
-        # Job
+    def test_events_subjects_jobs(self):
         assert job.JobCreatedEvent.get_event_subject() == 'job'
         assert job.JobUpdatedEvent.get_event_subject() == 'job'
         assert job.JobStartedEvent.get_event_subject() == 'job'
@@ -170,7 +177,7 @@ class TestEvents(BaseTest):
         assert job.JobStatusesViewedEvent.get_event_subject() == 'job'
         assert job.JobOutputsDownloadedEvent.get_event_subject() == 'job'
 
-        # BuildJob
+    def test_events_subjects_builds(self):
         assert build_job.BuildJobCreatedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobUpdatedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobStartedEvent.get_event_subject() == 'build_job'
@@ -192,29 +199,29 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobLogsViewedEvent.get_event_subject() == 'build_job'
         assert build_job.BuildJobStatusesViewedEvent.get_event_subject() == 'build_job'
 
-        # Bookmarks
+    def test_events_subjects_bookmarks(self):
         assert bookmark.BookmarkBuildJobsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkJobsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkExperimentsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkExperimentGroupsViewedEvent.get_event_subject() == 'bookmark'
         assert bookmark.BookmarkProjectsViewedEvent.get_event_subject() == 'bookmark'
 
-        # Archives
+    def test_events_subjects_archives(self):
         assert archive.ArchiveBuildJobsViewedEvent.get_event_subject() == 'archive'
         assert archive.ArchiveJobsViewedEvent.get_event_subject() == 'archive'
         assert archive.ArchiveExperimentsViewedEvent.get_event_subject() == 'archive'
         assert archive.ArchiveExperimentGroupsViewedEvent.get_event_subject() == 'archive'
         assert archive.ArchiveProjectsViewedEvent.get_event_subject() == 'archive'
 
-        # Searches
+    def test_events_subjects_searches(self):
         assert search.SearchCreatedEvent.get_event_subject() == 'search'
         assert search.SearchDeletedEvent.get_event_subject() == 'search'
 
-        # Chart view
+    def test_events_subjects_chart_views(self):
         assert chart_view.ChartViewCreatedEvent.get_event_subject() == 'chart_view'
         assert chart_view.ChartViewDeletedEvent.get_event_subject() == 'chart_view'
 
-        # Permission
+    def test_events_subjects_permissions(self):
         assert permission.PermissionProjectDeniedEvent.get_event_subject() == 'project'
         assert permission.PermissionRepoDeniedEvent.get_event_subject() == 'repo'
         assert (permission.PermissionExperimentGroupDeniedEvent.get_event_subject() ==
@@ -227,7 +234,7 @@ class TestEvents(BaseTest):
         assert permission.PermissionClusterDeniedEvent.get_event_subject() == 'cluster'
         assert permission.PermissionUserRoleEvent.get_event_subject() == 'superuser'
 
-        # Project
+    def test_events_subjects_projects(self):
         assert project.ProjectCreatedEvent.get_event_subject() == 'project'
         assert project.ProjectUpdatedEvent.get_event_subject() == 'project'
         assert project.ProjectDeletedEvent.get_event_subject() == 'project'
@@ -246,15 +253,15 @@ class TestEvents(BaseTest):
         assert project.ProjectTensorboardsViewedEvent.get_event_subject() == 'project'
         assert project.ProjectNotebooksViewedEvent.get_event_subject() == 'project'
 
-        # Repo
+    def test_events_subjects_repos(self):
         assert repo.RepoCreatedEvent.get_event_subject() == 'repo'
         assert repo.RepoNewCommitEvent.get_event_subject() == 'repo'
 
-        # Superuser
+    def test_events_subjects_superusers(self):
         assert superuser.SuperUserRoleGrantedEvent.get_event_subject() == 'superuser'
         assert superuser.SuperUserRoleRevokedEvent.get_event_subject() == 'superuser'
 
-        # Tensorboard
+    def test_events_subjects_tensorboards(self):
         assert tensorboard.TensorboardStartedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardStartedTriggeredEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardSoppedEvent.get_event_subject() == 'tensorboard'
@@ -273,7 +280,7 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardArchivedEvent.get_event_subject() == 'tensorboard'
         assert tensorboard.TensorboardRestoredEvent.get_event_subject() == 'tensorboard'
 
-        # User
+    def test_events_subjects_users(self):
         assert user.UserRegisteredEvent.get_event_subject() == 'user'
         assert user.UserUpdatedEvent.get_event_subject() == 'user'
         assert user.UserActivatedEvent.get_event_subject() == 'user'
@@ -284,8 +291,79 @@ class TestEvents(BaseTest):
         assert user.UserBITBUCKETEvent.get_event_subject() == 'user'
         assert user.UserAZUREEvent.get_event_subject() == 'user'
 
-    def test_events_actions(self):  # pylint:disable=too-many-statements
-        # Cluster
+    def test_events_subjects_pipelines(self):
+        assert pipeline.PipelineCreatedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineUpdatedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineDeletedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineViewedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineArchivedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineRestoredEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineBookmarkedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineUnbookmarkedEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineDeletedTriggeredEvent.get_event_subject() == 'pipeline'
+        assert pipeline.PipelineCleanedTriggeredEvent.get_event_subject() == 'pipeline'
+
+    def test_events_subjects_operations(self):
+        assert operation.OperationCreatedEvent.get_event_subject() == 'operation'
+        assert operation.OperationUpdatedEvent.get_event_subject() == 'operation'
+        assert operation.OperationDeletedEvent.get_event_subject() == 'operation'
+        assert operation.OperationViewedEvent.get_event_subject() == 'operation'
+        assert operation.OperationArchivedEvent.get_event_subject() == 'operation'
+        assert operation.OperationRestoredEvent.get_event_subject() == 'operation'
+        assert operation.OperationDeletedTriggeredEvent.get_event_subject() == 'operation'
+        assert operation.OperationCleanedTriggeredEvent.get_event_subject() == 'operation'
+
+    def test_events_subjects_pipeline_runs(self):
+        assert pipeline_run.PipelineRunCreatedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunUpdatedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunDeletedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunViewedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunArchivedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunRestoredEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunStoppedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunSkippedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunResumedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunRestartedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunNewStatusEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunSucceededEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunFailedEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunDoneEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunDeletedTriggeredEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunCleanedTriggeredEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunStoppedTriggeredEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunResumedTriggeredEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunRestartedTriggeredEvent.get_event_subject() == 'pipeline_run'
+        assert pipeline_run.PipelineRunSkippedTriggeredEvent.get_event_subject() == 'pipeline_run'
+
+    def test_events_subjects_operation_runs(self):
+        assert operation_run.OperationRunCreatedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunUpdatedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunDeletedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunViewedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunArchivedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunRestoredEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunStoppedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunSkippedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunResumedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunRestartedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunNewStatusEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunSucceededEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunFailedEvent.get_event_subject() == 'operation_run'
+        assert operation_run.OperationRunDoneEvent.get_event_subject() == 'operation_run'
+        assert (operation_run.OperationRunDeletedTriggeredEvent.get_event_subject() ==
+                'operation_run')
+        assert (operation_run.OperationRunCleanedTriggeredEvent.get_event_subject() ==
+                'operation_run')
+        assert (operation_run.OperationRunStoppedTriggeredEvent.get_event_subject() ==
+                'operation_run')
+        assert (operation_run.OperationRunResumedTriggeredEvent.get_event_subject() ==
+                'operation_run')
+        assert (operation_run.OperationRunRestartedTriggeredEvent.get_event_subject() ==
+                'operation_run')
+        assert (operation_run.OperationRunSkippedTriggeredEvent.get_event_subject() ==
+                'operation_run')
+
+    def test_events_actions_clusters(self):
         assert cluster.ClusterCreatedEvent.get_event_action() is None
         assert cluster.ClusterUpdatedEvent.get_event_action() is None
         assert cluster.ClusterNodeCreatedEvent.get_event_action() is None
@@ -293,7 +371,7 @@ class TestEvents(BaseTest):
         assert cluster.ClusterNodeDeletedEvent.get_event_action() is None
         assert cluster.ClusterNodeGPU.get_event_action() is None
 
-        # Experiment
+    def test_events_actions_experiments(self):
         assert experiment.ExperimentCreatedEvent.get_event_action() == 'created'
         assert experiment.ExperimentUpdatedEvent.get_event_action() == 'updated'
         assert experiment.ExperimentDeletedEvent.get_event_action() is None
@@ -325,7 +403,7 @@ class TestEvents(BaseTest):
         assert experiment.ExperimentRestartedTriggeredEvent.get_event_action() == 'restarted'
         assert experiment.ExperimentCopiedTriggeredEvent.get_event_action() == 'copied'
 
-        # Experiment group
+    def test_events_actions_groups(self):
         assert experiment_group.ExperimentGroupCreatedEvent.get_event_action() == 'created'
         assert experiment_group.ExperimentGroupUpdatedEvent.get_event_action() == 'updated'
         assert experiment_group.ExperimentGroupDeletedEvent.get_event_action() is None
@@ -337,6 +415,8 @@ class TestEvents(BaseTest):
                 'unbookmarked')
         assert experiment_group.ExperimentGroupStoppedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupResumedEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupSucceededEvent.get_event_action() is None
+        assert experiment_group.ExperimentGroupFailedEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupDoneEvent.get_event_action() is None
         assert experiment_group.ExperimentGroupNewStatusEvent.get_event_action() is None
         assert (experiment_group.ExperimentGroupExperimentsViewedEvent.get_event_action() ==
@@ -354,7 +434,7 @@ class TestEvents(BaseTest):
         assert experiment_group.ExperimentGroupStoppedTriggeredEvent.get_event_action() == 'stopped'
         assert experiment_group.ExperimentGroupResumedTriggeredEvent.get_event_action() == 'resumed'
 
-        # Experiment job
+    def test_events_actions_experiment_jobs(self):
         assert experiment_job.ExperimentJobViewedEvent.get_event_action() == 'viewed'
         assert (experiment_job.ExperimentJobResourcesViewedEvent.get_event_action() ==
                 'resources_viewed')
@@ -363,7 +443,7 @@ class TestEvents(BaseTest):
                 'statuses_viewed')
         assert experiment_job.ExperimentJobNewStatusEvent.get_event_action() is None
 
-        # Notebook
+    def test_events_actions_notebooks(self):
         assert notebook.NotebookStartedEvent.get_event_action() is None
         assert notebook.NotebookStartedTriggeredEvent.get_event_action() == 'started'
         assert notebook.NotebookSoppedEvent.get_event_action() is None
@@ -380,7 +460,7 @@ class TestEvents(BaseTest):
         assert notebook.NotebookArchivedEvent.get_event_action() == 'archived'
         assert notebook.NotebookRestoredEvent.get_event_action() == 'restored'
 
-        # Job
+    def test_events_actions_jobs(self):
         assert job.JobCreatedEvent.get_event_action() == 'created'
         assert job.JobUpdatedEvent.get_event_action() == 'updated'
         assert job.JobStartedEvent.get_event_action() is None
@@ -403,7 +483,7 @@ class TestEvents(BaseTest):
         assert job.JobStatusesViewedEvent.get_event_action() == 'statuses_viewed'
         assert job.JobOutputsDownloadedEvent.get_event_action() == 'outputs_downloaded'
 
-        # Build job
+    def test_events_actions_builds(self):
         assert build_job.BuildJobCreatedEvent.get_event_action() == 'created'
         assert build_job.BuildJobUpdatedEvent.get_event_action() == 'updated'
         assert build_job.BuildJobStartedEvent.get_event_action() is None
@@ -425,7 +505,7 @@ class TestEvents(BaseTest):
         assert build_job.BuildJobLogsViewedEvent.get_event_action() == 'logs_viewed'
         assert build_job.BuildJobStatusesViewedEvent.get_event_action() == 'statuses_viewed'
 
-        # Bookmarks
+    def test_events_actions_bookmarks(self):
         assert bookmark.BookmarkBuildJobsViewedEvent.get_event_action() == 'builds_viewed'
         assert bookmark.BookmarkJobsViewedEvent.get_event_action() == 'jobs_viewed'
         assert bookmark.BookmarkExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
@@ -433,7 +513,7 @@ class TestEvents(BaseTest):
                 'experiment_groups_viewed')
         assert bookmark.BookmarkProjectsViewedEvent.get_event_action() == 'projects_viewed'
 
-        # Archive
+    def test_events_actions_archive(self):
         assert archive.ArchiveBuildJobsViewedEvent.get_event_action() == 'builds_viewed'
         assert archive.ArchiveJobsViewedEvent.get_event_action() == 'jobs_viewed'
         assert archive.ArchiveExperimentsViewedEvent.get_event_action() == 'experiments_viewed'
@@ -441,15 +521,15 @@ class TestEvents(BaseTest):
                 'experiment_groups_viewed')
         assert archive.ArchiveProjectsViewedEvent.get_event_action() == 'projects_viewed'
 
-        # Searches
+    def test_events_actions_searches(self):
         assert search.SearchCreatedEvent.get_event_action() == 'created'
         assert search.SearchDeletedEvent.get_event_action() == 'deleted'
 
-        # Chart views
+    def test_events_actions_chart_views(self):
         assert chart_view.ChartViewCreatedEvent.get_event_action() == 'created'
         assert chart_view.ChartViewDeletedEvent.get_event_action() == 'deleted'
 
-        # Permission
+    def test_events_actions_permissions(self):
         assert permission.PermissionProjectDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionRepoDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionExperimentGroupDeniedEvent.get_event_action() == 'denied'
@@ -461,7 +541,7 @@ class TestEvents(BaseTest):
         assert permission.PermissionClusterDeniedEvent.get_event_action() == 'denied'
         assert permission.PermissionUserRoleEvent.get_event_action() == 'denied'
 
-        # Project
+    def test_events_actions_projects(self):
         assert project.ProjectCreatedEvent.get_event_action() == 'created'
         assert project.ProjectUpdatedEvent.get_event_action() == 'updated'
         assert project.ProjectDeletedEvent.get_event_action() is None
@@ -481,15 +561,15 @@ class TestEvents(BaseTest):
         assert project.ProjectTensorboardsViewedEvent.get_event_action() == 'tensorboards_viewed'
         assert project.ProjectNotebooksViewedEvent.get_event_action() == 'notebooks_viewed'
 
-        # Repo
+    def test_events_actions_repos(self):
         assert repo.RepoCreatedEvent.get_event_action() == 'created'
         assert repo.RepoNewCommitEvent.get_event_action() == 'new_commit'
 
-        # Superuser
+    def test_events_actions_superuser(self):
         assert superuser.SuperUserRoleGrantedEvent.get_event_action() == 'granted'
         assert superuser.SuperUserRoleRevokedEvent.get_event_action() == 'revoked'
 
-        # Tensorboard
+    def test_events_actions_tensorboards(self):
         assert tensorboard.TensorboardStartedEvent.get_event_action() is None
         assert tensorboard.TensorboardStartedTriggeredEvent.get_event_action() == 'started'
         assert tensorboard.TensorboardSoppedEvent.get_event_action() is None
@@ -508,7 +588,7 @@ class TestEvents(BaseTest):
         assert tensorboard.TensorboardArchivedEvent.get_event_action() == 'archived'
         assert tensorboard.TensorboardRestoredEvent.get_event_action() == 'restored'
 
-        # User
+    def test_events_actions_users(self):
         assert user.UserRegisteredEvent.get_event_action() == 'registered'
         assert user.UserUpdatedEvent.get_event_action() == 'updated'
         assert user.UserActivatedEvent.get_event_action() == 'activated'
@@ -518,6 +598,72 @@ class TestEvents(BaseTest):
         assert user.UserGITLABEvent.get_event_action() == 'auth'
         assert user.UserBITBUCKETEvent.get_event_action() == 'auth'
         assert user.UserAZUREEvent.get_event_action() == 'auth'
+
+    def test_events_actions_pipelines(self):
+        assert pipeline.PipelineCreatedEvent.get_event_action() == 'created'
+        assert pipeline.PipelineUpdatedEvent.get_event_action() == 'updated'
+        assert pipeline.PipelineDeletedEvent.get_event_action() is None
+        assert pipeline.PipelineViewedEvent.get_event_action() == 'viewed'
+        assert pipeline.PipelineArchivedEvent.get_event_action() == 'archived'
+        assert pipeline.PipelineRestoredEvent.get_event_action() == 'restored'
+        assert pipeline.PipelineBookmarkedEvent.get_event_action() == 'bookmarked'
+        assert pipeline.PipelineUnbookmarkedEvent.get_event_action() == 'unbookmarked'
+        assert pipeline.PipelineDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert pipeline.PipelineCleanedTriggeredEvent.get_event_action() is None
+
+    def test_events_actions_operations(self):
+        assert operation.OperationCreatedEvent.get_event_action() is None
+        assert operation.OperationUpdatedEvent.get_event_action() == 'updated'
+        assert operation.OperationDeletedEvent.get_event_action() is None
+        assert operation.OperationViewedEvent.get_event_action() == 'viewed'
+        assert operation.OperationArchivedEvent.get_event_action() == 'archived'
+        assert operation.OperationRestoredEvent.get_event_action() == 'restored'
+        assert operation.OperationDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert operation.OperationCleanedTriggeredEvent.get_event_action()  is None
+
+    def test_events_actions_pipeline_runs(self):
+        assert pipeline_run.PipelineRunCreatedEvent.get_event_action() == 'created'
+        assert pipeline_run.PipelineRunUpdatedEvent.get_event_action() == 'updated'
+        assert pipeline_run.PipelineRunDeletedEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunViewedEvent.get_event_action() == 'viewed'
+        assert pipeline_run.PipelineRunArchivedEvent.get_event_action() == 'archived'
+        assert pipeline_run.PipelineRunRestoredEvent.get_event_action() == 'restored'
+        assert pipeline_run.PipelineRunStoppedEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunSkippedEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunResumedEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunRestartedEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunNewStatusEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunSucceededEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunFailedEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunDoneEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert pipeline_run.PipelineRunCleanedTriggeredEvent.get_event_action() is None
+        assert pipeline_run.PipelineRunStoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert pipeline_run.PipelineRunResumedTriggeredEvent.get_event_action() == 'resumed'
+        assert pipeline_run.PipelineRunRestartedTriggeredEvent.get_event_action() == 'restarted'
+        assert pipeline_run.PipelineRunSkippedTriggeredEvent.get_event_action() == 'skipped'
+
+    def test_events_actions_operation_runs(self):
+        assert operation_run.OperationRunCreatedEvent.get_event_action() == 'created'
+        assert operation_run.OperationRunUpdatedEvent.get_event_action() == 'updated'
+        assert operation_run.OperationRunDeletedEvent.get_event_action() is None
+        assert operation_run.OperationRunViewedEvent.get_event_action() == 'viewed'
+        assert operation_run.OperationRunArchivedEvent.get_event_action() == 'archived'
+        assert operation_run.OperationRunRestoredEvent.get_event_action() == 'restored'
+        assert operation_run.OperationRunStoppedEvent.get_event_action() is None
+        assert operation_run.OperationRunSkippedEvent.get_event_action() is None
+        assert operation_run.OperationRunResumedEvent.get_event_action() is None
+        assert operation_run.OperationRunRestartedEvent.get_event_action() is None
+        assert operation_run.OperationRunNewStatusEvent.get_event_action() is None
+        assert operation_run.OperationRunSucceededEvent.get_event_action() is None
+        assert operation_run.OperationRunFailedEvent.get_event_action() is None
+        assert operation_run.OperationRunDoneEvent.get_event_action() is None
+        assert operation_run.OperationRunDeletedTriggeredEvent.get_event_action() == 'deleted'
+        assert operation_run.OperationRunCleanedTriggeredEvent.get_event_action() is None
+        assert operation_run.OperationRunStoppedTriggeredEvent.get_event_action() == 'stopped'
+        assert operation_run.OperationRunResumedTriggeredEvent.get_event_action() == 'resumed'
+        assert operation_run.OperationRunRestartedTriggeredEvent.get_event_action() == 'restarted'
+        assert operation_run.OperationRunSkippedTriggeredEvent.get_event_action() == 'skipped'
 
     def test_serialize(self):
         class DummyEvent(Event):

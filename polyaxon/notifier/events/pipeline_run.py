@@ -1,0 +1,9 @@
+import notifier
+
+from event_manager.events import pipeline_run
+
+notifier.subscribe_event(pipeline_run.PipelineRunStoppedEvent)
+notifier.subscribe_event(pipeline_run.PipelineRunSkippedEvent)
+notifier.subscribe_event(pipeline_run.PipelineRunSucceededEvent)
+notifier.subscribe_event(pipeline_run.PipelineRunFailedEvent)
+notifier.subscribe_event(pipeline_run.PipelineRunDoneEvent)

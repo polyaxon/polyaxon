@@ -11,6 +11,18 @@ USER_GITLAB = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_a
 USER_BITBUCKET = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_actions.BITBUCKET)
 USER_AZURE = '{}.{}.{}'.format(event_subjects.USER, event_actions.AUTH, event_actions.AZURE)
 
+EVENTS = {
+    USER_REGISTERED,
+    USER_UPDATED,
+    USER_ACTIVATED,
+    USER_DELETED,
+    USER_LDAP,
+    USER_GITHUB,
+    USER_GITLAB,
+    USER_BITBUCKET,
+    USER_AZURE,
+}
+
 
 class UserRegisteredEvent(Event):
     event_type = USER_REGISTERED

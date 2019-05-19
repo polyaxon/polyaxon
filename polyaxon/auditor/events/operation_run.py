@@ -1,0 +1,24 @@
+import auditor
+
+from event_manager.events import operation_run
+
+auditor.subscribe(operation_run.OperationRunCreatedEvent)
+auditor.subscribe(operation_run.OperationRunUpdatedEvent)
+auditor.subscribe(operation_run.OperationRunCleanedTriggeredEvent)
+auditor.subscribe(operation_run.OperationRunViewedEvent)
+auditor.subscribe(operation_run.OperationRunArchivedEvent)
+auditor.subscribe(operation_run.OperationRunRestoredEvent)
+auditor.subscribe(operation_run.OperationRunSkippedEvent)
+auditor.subscribe(operation_run.OperationRunDeletedEvent)
+auditor.subscribe(operation_run.OperationRunDeletedTriggeredEvent)
+auditor.subscribe(operation_run.OperationRunStoppedEvent)
+auditor.subscribe(operation_run.OperationRunStoppedTriggeredEvent)
+auditor.subscribe(operation_run.OperationRunResumedEvent)
+auditor.subscribe(operation_run.OperationRunResumedTriggeredEvent)
+auditor.subscribe(operation_run.OperationRunRestartedEvent)
+auditor.subscribe(operation_run.OperationRunRestartedTriggeredEvent)
+auditor.subscribe(operation_run.OperationRunSkippedTriggeredEvent)
+auditor.subscribe(operation_run.OperationRunNewStatusEvent)
+auditor.subscribe(operation_run.OperationRunSucceededEvent)
+auditor.subscribe(operation_run.OperationRunFailedEvent)
+auditor.subscribe(operation_run.OperationRunDoneEvent)

@@ -38,6 +38,32 @@ JOB_STATUSES_VIEWED = '{}.{}'.format(event_subjects.JOB,
 JOB_RESTARTED = '{}.{}'.format(event_subjects.JOB,
                                event_actions.RESTARTED)
 
+EVENTS = {
+    JOB_STARTED,
+    JOB_STARTED_TRIGGERED,
+    JOB_STOPPED,
+    JOB_STOPPED_TRIGGERED,
+    JOB_CREATED,
+    JOB_VIEWED,
+    JOB_ARCHIVED,
+    JOB_RESTORED,
+    JOB_BOOKMARKED,
+    JOB_UNBOOKMARKED,
+    JOB_UPDATED,
+    JOB_NEW_STATUS,
+    JOB_FAILED,
+    JOB_SUCCEEDED,
+    JOB_DONE,
+    JOB_DELETED,
+    JOB_DELETED_TRIGGERED,
+    JOB_CLEANED_TRIGGERED,
+    JOB_LOGS_VIEWED,
+    JOB_OUTPUTS_DOWNLOADED,
+    JOB_RESTARTED_TRIGGERED,
+    JOB_STATUSES_VIEWED,
+    JOB_RESTARTED,
+}
+
 
 class JobCreatedEvent(Event):
     event_type = JOB_CREATED

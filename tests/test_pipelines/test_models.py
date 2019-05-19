@@ -103,6 +103,9 @@ class TestOperationModel(BaseTest):
 
 @pytest.mark.pipelines_mark
 class TestPipelineRunModel(BaseTest):
+    DISABLE_EXECUTOR = False
+    DISABLE_RUNNER = False
+
     def test_pipeline_run_creation_sets_created_status(self):
         assert PipelineRunStatus.objects.count() == 0
         # Assert `new_pipeline_run_status` task is also called

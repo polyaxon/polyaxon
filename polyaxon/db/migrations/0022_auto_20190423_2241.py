@@ -128,4 +128,11 @@ class Migration(migrations.Migration):
             model_name='operation',
             name='schedule',
         ),
+        migrations.AddField(
+            model_name='pipeline',
+            name='content',
+            field=models.TextField(blank=True,
+                                   help_text='The yaml content of the polyaxonfile/specification.',
+                                   null=True),
+        ),
     ]

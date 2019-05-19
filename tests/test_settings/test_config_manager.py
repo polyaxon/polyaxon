@@ -64,12 +64,21 @@ class TestConfigManager(BaseTest):
              './tests/fixtures_static/configs/non_opt_config_tests.json',
              {'POLYAXON_AMQP_URL': 'foo',
               'POLYAXON_REDIS_CELERY_BROKER_URL': 'foo'}])
+        assert config.get_broker_url() == 'amqp://polyaxon:polyaxon@foo'
+
+        config = ConfigManager.read_configs(
+            [os.environ,
+             './tests/fixtures_static/configs/non_opt_config_tests.json',
+             {'POLYAXON_AMQP_URL': 'foo',
+              'POLYAXON_RABBITMQ_PASSWORD': '',
+              'POLYAXON_REDIS_CELERY_BROKER_URL': 'foo'}])
         assert config.get_broker_url() == 'amqp://foo'
 
         config = ConfigManager.read_configs(
             [os.environ,
              './tests/fixtures_static/configs/non_opt_config_tests.json',
              {'POLYAXON_AMQP_URL': 'foo',
+              'POLYAXON_RABBITMQ_PASSWORD': '',
               'POLYAXON_RABBITMQ_USER': 'user'}])
         assert config.get_broker_url() == 'amqp://foo'
 
@@ -77,6 +86,7 @@ class TestConfigManager(BaseTest):
             [os.environ,
              './tests/fixtures_static/configs/non_opt_config_tests.json',
              {'POLYAXON_AMQP_URL': 'foo',
+              'POLYAXON_RABBITMQ_USER': '',
               'POLYAXON_RABBITMQ_PASSWORD': 'pwd'}])
         assert config.get_broker_url() == 'amqp://foo'
 

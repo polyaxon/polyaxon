@@ -8,18 +8,24 @@ import auditor
 
 from db.models.clusters import Cluster
 from event_manager.events import archive as archives_events
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorArchivesTest(BaseTest):
+class AuditorArchivesTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = archives_events.EVENTS
 
     def setUp(self):
         Cluster.load()
         super().setUp()
+        self.tested_events = {
+            archives_events.ARCHIVE_BUILD_JOBS_VIEWED,
+            archives_events.ARCHIVE_JOBS_VIEWED,
+            archives_events.ARCHIVE_EXPERIMENTS_VIEWED,
+            archives_events.ARCHIVE_EXPERIMENT_GROUPS_VIEWED,
+            archives_events.ARCHIVE_PROJECTS_VIEWED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -115,3 +121,6 @@ class AuditorArchivesTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

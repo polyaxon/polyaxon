@@ -12,6 +12,14 @@ ARCHIVE_EXPERIMENT_GROUPS_VIEWED = '{}.{}'.format(event_subjects.ARCHIVE,
 ARCHIVE_PROJECTS_VIEWED = '{}.{}'.format(event_subjects.ARCHIVE,
                                          event_actions.PROJECTS_VIEWED)
 
+EVENTS = {
+    ARCHIVE_BUILD_JOBS_VIEWED,
+    ARCHIVE_JOBS_VIEWED,
+    ARCHIVE_EXPERIMENTS_VIEWED,
+    ARCHIVE_EXPERIMENT_GROUPS_VIEWED,
+    ARCHIVE_PROJECTS_VIEWED
+}
+
 
 class ArchiveBuildJobsViewedEvent(Event):
     event_type = ARCHIVE_BUILD_JOBS_VIEWED

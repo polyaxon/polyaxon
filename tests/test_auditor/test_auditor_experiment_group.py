@@ -8,18 +8,44 @@ import auditor
 
 from event_manager.events import experiment_group as experiment_group_events
 from factories.factory_experiment_groups import ExperimentGroupFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorExperimentGroupTest(BaseTest):
+class AuditorExperimentGroupTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = experiment_group_events.EVENTS
 
     def setUp(self):
         super().setUp()
         self.experiment_group = ExperimentGroupFactory()
+        self.tested_events = {
+            experiment_group_events.EXPERIMENT_GROUP_CREATED,
+            experiment_group_events.EXPERIMENT_GROUP_UPDATED,
+            experiment_group_events.EXPERIMENT_GROUP_DELETED,
+            experiment_group_events.EXPERIMENT_GROUP_VIEWED,
+            experiment_group_events.EXPERIMENT_GROUP_ARCHIVED,
+            experiment_group_events.EXPERIMENT_GROUP_RESTORED,
+            experiment_group_events.EXPERIMENT_GROUP_BOOKMARKED,
+            experiment_group_events.EXPERIMENT_GROUP_UNBOOKMARKED,
+            experiment_group_events.EXPERIMENT_GROUP_STOPPED,
+            experiment_group_events.EXPERIMENT_GROUP_RESUMED,
+            experiment_group_events.EXPERIMENT_GROUP_DONE,
+            experiment_group_events.EXPERIMENT_GROUP_FAILED,
+            experiment_group_events.EXPERIMENT_GROUP_SUCCEEDED,
+            experiment_group_events.EXPERIMENT_GROUP_NEW_STATUS,
+            experiment_group_events.EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
+            experiment_group_events.EXPERIMENT_GROUP_ITERATION,
+            experiment_group_events.EXPERIMENT_GROUP_RANDOM,
+            experiment_group_events.EXPERIMENT_GROUP_GRID,
+            experiment_group_events.EXPERIMENT_GROUP_HYPERBAND,
+            experiment_group_events.EXPERIMENT_GROUP_BO,
+            experiment_group_events.EXPERIMENT_GROUP_DELETED_TRIGGERED,
+            experiment_group_events.EXPERIMENT_GROUP_STOPPED_TRIGGERED,
+            experiment_group_events.EXPERIMENT_GROUP_RESUMED_TRIGGERED,
+            experiment_group_events.EXPERIMENT_GROUP_STATUSES_VIEWED,
+            experiment_group_events.EXPERIMENT_GROUP_METRICS_VIEWED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -214,6 +240,40 @@ class AuditorExperimentGroupTest(BaseTest):
                                    notifier_record,
                                    executor_record):
         auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_DONE,
+                       instance=self.experiment_group)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+        assert notifier_record.call_count == 1
+        assert executor_record.call_count == 1
+
+    @patch('executor.executor_service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_group_failed(self,
+                                     activitylogs_record,
+                                     tracker_record,
+                                     notifier_record,
+                                     executor_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_FAILED,
+                       instance=self.experiment_group)
+
+        assert tracker_record.call_count == 1
+        assert activitylogs_record.call_count == 0
+        assert notifier_record.call_count == 1
+        assert executor_record.call_count == 1
+
+    @patch('executor.executor_service.ExecutorService.record_event')
+    @patch('notifier.service.NotifierService.record_event')
+    @patch('tracker.service.TrackerService.record_event')
+    @patch('activitylogs.service.ActivityLogService.record_event')
+    def test_experiment_group_succeeded(self,
+                                        activitylogs_record,
+                                        tracker_record,
+                                        notifier_record,
+                                        executor_record):
+        auditor.record(event_type=experiment_group_events.EXPERIMENT_GROUP_SUCCEEDED,
                        instance=self.experiment_group)
 
         assert tracker_record.call_count == 1
@@ -436,3 +496,6 @@ class AuditorExperimentGroupTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

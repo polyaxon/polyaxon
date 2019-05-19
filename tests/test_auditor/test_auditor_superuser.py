@@ -7,14 +7,20 @@ import pytest
 import auditor
 
 from event_manager.events import superuser as superuser_events
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorSuperUserTest(BaseTest):
+class AuditorSuperUserTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = superuser_events.EVENTS
+
+    def setUp(self):
+        super().setUp()
+        self.tested_events = {
+            superuser_events.SUPERUSER_ROLE_GRANTED,
+            superuser_events.SUPERUSER_ROLE_REVOKED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -53,3 +59,6 @@ class AuditorSuperUserTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

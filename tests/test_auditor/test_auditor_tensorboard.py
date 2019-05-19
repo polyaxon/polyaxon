@@ -9,18 +9,36 @@ import auditor
 from event_manager.events import tensorboard as tensorboard_events
 from factories.factory_plugins import TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorTensorboardTest(BaseTest):
+class AuditorTensorboardTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = tensorboard_events.EVENTS
 
     def setUp(self):
         self.tensorboard = TensorboardJobFactory(project=ProjectFactory())
         super().setUp()
+        self.tested_events = {
+            tensorboard_events.TENSORBOARD_STARTED,
+            tensorboard_events.TENSORBOARD_STARTED_TRIGGERED,
+            tensorboard_events.TENSORBOARD_STOPPED,
+            tensorboard_events.TENSORBOARD_STOPPED_TRIGGERED,
+            tensorboard_events.TENSORBOARD_CLEANED_TRIGGERED,
+            tensorboard_events.TENSORBOARD_VIEWED,
+            tensorboard_events.TENSORBOARD_UNBOOKMARKED,
+            tensorboard_events.TENSORBOARD_BOOKMARKED,
+            tensorboard_events.TENSORBOARD_NEW_STATUS,
+            tensorboard_events.TENSORBOARD_FAILED,
+            tensorboard_events.TENSORBOARD_SUCCEEDED,
+            tensorboard_events.TENSORBOARD_STATUSES_VIEWED,
+            tensorboard_events.TENSORBOARD_UPDATED,
+            tensorboard_events.TENSORBOARD_DELETED,
+            tensorboard_events.TENSORBOARD_DELETED_TRIGGERED,
+            tensorboard_events.TENSORBOARD_ARCHIVED,
+            tensorboard_events.TENSORBOARD_RESTORED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -345,3 +363,6 @@ class AuditorTensorboardTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

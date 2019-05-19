@@ -5,6 +5,12 @@ REPO_CREATED = '{}.{}'.format(event_subjects.REPO, event_actions.CREATED)
 REPO_DOWNLOADED = '{}.{}'.format(event_subjects.REPO, event_actions.DOWNLOADED)
 REPO_NEW_COMMIT = '{}.new_commit'.format(event_subjects.REPO)
 
+EVENTS = {
+    REPO_CREATED,
+    REPO_DOWNLOADED,
+    REPO_NEW_COMMIT,
+}
+
 
 class RepoCreatedEvent(Event):
     event_type = REPO_CREATED

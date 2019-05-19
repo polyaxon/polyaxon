@@ -9,6 +9,16 @@ CLUSTER_NODE_UPDATED = '{}.{}'.format(event_subjects.CLUSTER_NODE, event_actions
 CLUSTER_NODE_DELETED = '{}.{}'.format(event_subjects.CLUSTER_NODE, event_actions.DELETED)
 CLUSTER_NODE_GPU = '{}.gpu'.format(event_subjects.CLUSTER_NODE)
 
+EVENTS = {
+    CLUSTER_CREATED,
+    CLUSTER_UPDATED,
+    CLUSTER_RESOURCES_UPDATED,
+    CLUSTER_NODE_CREATED,
+    CLUSTER_NODE_UPDATED,
+    CLUSTER_NODE_DELETED,
+    CLUSTER_NODE_GPU,
+}
+
 
 class ClusterCreatedEvent(Event):
     event_type = CLUSTER_CREATED

@@ -11,6 +11,14 @@ EXPERIMENT_JOB_LOGS_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
 EXPERIMENT_JOB_STATUSES_VIEWED = '{}.{}'.format(event_subjects.EXPERIMENT_JOB,
                                                 event_actions.STATUSES_VIEWED)
 
+EVENTS = {
+    EXPERIMENT_JOB_VIEWED,
+    EXPERIMENT_JOB_NEW_STATUS,
+    EXPERIMENT_JOB_RESOURCES_VIEWED,
+    EXPERIMENT_JOB_LOGS_VIEWED,
+    EXPERIMENT_JOB_STATUSES_VIEWED,
+}
+
 
 class ExperimentJobViewedEvent(Event):
     event_type = EXPERIMENT_JOB_VIEWED

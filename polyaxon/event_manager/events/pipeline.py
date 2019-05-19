@@ -13,12 +13,29 @@ PIPELINE_ARCHIVED = '{}.{}'.format(event_subjects.PIPELINE,
                                    event_actions.ARCHIVED)
 PIPELINE_RESTORED = '{}.{}'.format(event_subjects.PIPELINE,
                                    event_actions.RESTORED)
-PIPELINE_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+PIPELINE_BOOKMARKED = '{}.{}'.format(event_subjects.PIPELINE,
+                                     event_actions.BOOKMARKED)
+PIPELINE_UNBOOKMARKED = '{}.{}'.format(event_subjects.PIPELINE,
+                                       event_actions.UNBOOKMARKED)
+PIPELINE_DELETED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PIPELINE,
                                                event_actions.DELETED,
                                                event_subjects.TRIGGER)
-PIPELINE_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT,
+PIPELINE_CLEANED_TRIGGERED = '{}.{}.{}'.format(event_subjects.PIPELINE,
                                                event_actions.CLEANED,
                                                event_subjects.TRIGGER)
+
+EVENTS = {
+    PIPELINE_CREATED,
+    PIPELINE_UPDATED,
+    PIPELINE_DELETED,
+    PIPELINE_VIEWED,
+    PIPELINE_ARCHIVED,
+    PIPELINE_RESTORED,
+    PIPELINE_BOOKMARKED,
+    PIPELINE_UNBOOKMARKED,
+    PIPELINE_DELETED_TRIGGERED,
+    PIPELINE_CLEANED_TRIGGERED,
+}
 
 
 class PipelineCreatedEvent(Event):
@@ -89,6 +106,32 @@ class PipelineArchivedEvent(Event):
 
 class PipelineRestoredEvent(Event):
     event_type = PIPELINE_RESTORED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
+    )
+
+
+class PipelineBookmarkedEvent(Event):
+    event_type = PIPELINE_BOOKMARKED
+    actor = True
+    attributes = (
+        Attribute('id'),
+        Attribute('user.id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
+    )
+
+
+class PipelineUnbookmarkedEvent(Event):
+    event_type = PIPELINE_UNBOOKMARKED
     actor = True
     attributes = (
         Attribute('id'),

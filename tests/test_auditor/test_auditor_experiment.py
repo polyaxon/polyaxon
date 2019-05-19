@@ -8,18 +8,48 @@ import auditor
 
 from event_manager.events import experiment as experiment_events
 from factories.factory_experiments import ExperimentFactory, ExperimentMetricFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorExperimentTest(BaseTest):
+class AuditorExperimentTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = experiment_events.EVENTS
 
     def setUp(self):
         super().setUp()
         self.experiment = ExperimentFactory()
+        self.tested_events = {
+            experiment_events.EXPERIMENT_CREATED,
+            experiment_events.EXPERIMENT_UPDATED,
+            experiment_events.EXPERIMENT_DELETED,
+            experiment_events.EXPERIMENT_CLEANED_TRIGGERED,
+            experiment_events.EXPERIMENT_VIEWED,
+            experiment_events.EXPERIMENT_ARCHIVED,
+            experiment_events.EXPERIMENT_RESTORED,
+            experiment_events.EXPERIMENT_BOOKMARKED,
+            experiment_events.EXPERIMENT_UNBOOKMARKED,
+            experiment_events.EXPERIMENT_STOPPED,
+            experiment_events.EXPERIMENT_RESUMED,
+            experiment_events.EXPERIMENT_RESTARTED,
+            experiment_events.EXPERIMENT_COPIED,
+            experiment_events.EXPERIMENT_NEW_STATUS,
+            experiment_events.EXPERIMENT_NEW_METRIC,
+            experiment_events.EXPERIMENT_SUCCEEDED,
+            experiment_events.EXPERIMENT_FAILED,
+            experiment_events.EXPERIMENT_DONE,
+            experiment_events.EXPERIMENT_RESOURCES_VIEWED,
+            experiment_events.EXPERIMENT_LOGS_VIEWED,
+            experiment_events.EXPERIMENT_OUTPUTS_DOWNLOADED,
+            experiment_events.EXPERIMENT_STATUSES_VIEWED,
+            experiment_events.EXPERIMENT_JOBS_VIEWED,
+            experiment_events.EXPERIMENT_METRICS_VIEWED,
+            experiment_events.EXPERIMENT_DELETED_TRIGGERED,
+            experiment_events.EXPERIMENT_STOPPED_TRIGGERED,
+            experiment_events.EXPERIMENT_RESUMED_TRIGGERED,
+            experiment_events.EXPERIMENT_RESTARTED_TRIGGERED,
+            experiment_events.EXPERIMENT_COPIED_TRIGGERED,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -553,3 +583,6 @@ class AuditorExperimentTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

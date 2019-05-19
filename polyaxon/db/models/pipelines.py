@@ -128,6 +128,10 @@ class Pipeline(DiffModel,
         null=True,
         blank=True,
         on_delete=models.SET_NULL)
+    content = models.TextField(
+        blank=True,
+        null=True,
+        help_text='The yaml content of the polyaxonfile/specification.')
     concurrency = models.PositiveSmallIntegerField(
         null=True,
         blank=True,
@@ -146,6 +150,10 @@ class Pipeline(DiffModel,
         return PIPELINES_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
             id=self.id)
+
+    @property
+    def has_specification(self) -> bool:
+        return self.content is not None
 
     @property
     def dag(self) -> Tuple[Dict, Dict]:
@@ -245,7 +253,8 @@ class Operation(DiffModel,
         max_length=24,
         blank=True,
         null=True)
-    skip_on_upstream_skip = models.BooleanField(default=False,
+    skip_on_upstream_skip = models.BooleanField(
+        default=False,
         help_text="skip this operation if upstream operations are skipped.")
     queue = models.CharField(
         max_length=128,

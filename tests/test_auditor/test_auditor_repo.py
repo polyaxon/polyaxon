@@ -8,18 +8,22 @@ import auditor
 
 from event_manager.events import repo as repo_events
 from factories.factory_repos import RepoFactory
-from tests.base.case import BaseTest
+from tests.test_auditor.utils import AuditorBaseTest
 
 
 @pytest.mark.auditor_mark
-class AuditorRepoTest(BaseTest):
+class AuditorRepoTest(AuditorBaseTest):
     """Testing subscribed events"""
-    DISABLE_AUDITOR = False
-    DISABLE_EXECUTOR = False
+    EVENTS = repo_events.EVENTS
 
     def setUp(self):
         self.project = RepoFactory()
         super().setUp()
+        self.tested_events = {
+            repo_events.REPO_CREATED,
+            repo_events.REPO_DOWNLOADED,
+            repo_events.REPO_NEW_COMMIT,
+        }
 
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
@@ -78,3 +82,6 @@ class AuditorRepoTest(BaseTest):
         assert activitylogs_record.call_count == 1
         assert notifier_record.call_count == 0
         assert executor_record.call_count == 0
+
+
+del AuditorBaseTest

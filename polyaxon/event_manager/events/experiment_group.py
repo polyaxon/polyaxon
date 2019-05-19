@@ -23,6 +23,8 @@ EXPERIMENT_GROUP_RESUMED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                           event_actions.RESUMED)
 EXPERIMENT_GROUP_FAILED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                          event_actions.FAILED)
+EXPERIMENT_GROUP_SUCCEEDED = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
+                                            event_actions.SUCCEEDED)
 EXPERIMENT_GROUP_DONE = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                        event_actions.DONE)
 EXPERIMENT_GROUP_NEW_STATUS = '{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
@@ -47,6 +49,34 @@ EXPERIMENT_GROUP_STOPPED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT
 EXPERIMENT_GROUP_RESUMED_TRIGGERED = '{}.{}.{}'.format(event_subjects.EXPERIMENT_GROUP,
                                                        event_actions.RESUMED,
                                                        event_subjects.TRIGGER)
+
+EVENTS = {
+    EXPERIMENT_GROUP_CREATED,
+    EXPERIMENT_GROUP_UPDATED,
+    EXPERIMENT_GROUP_DELETED,
+    EXPERIMENT_GROUP_VIEWED,
+    EXPERIMENT_GROUP_ARCHIVED,
+    EXPERIMENT_GROUP_RESTORED,
+    EXPERIMENT_GROUP_BOOKMARKED,
+    EXPERIMENT_GROUP_UNBOOKMARKED,
+    EXPERIMENT_GROUP_STOPPED,
+    EXPERIMENT_GROUP_RESUMED,
+    EXPERIMENT_GROUP_FAILED,
+    EXPERIMENT_GROUP_SUCCEEDED,
+    EXPERIMENT_GROUP_DONE,
+    EXPERIMENT_GROUP_NEW_STATUS,
+    EXPERIMENT_GROUP_EXPERIMENTS_VIEWED,
+    EXPERIMENT_GROUP_ITERATION,
+    EXPERIMENT_GROUP_RANDOM,
+    EXPERIMENT_GROUP_GRID,
+    EXPERIMENT_GROUP_HYPERBAND,
+    EXPERIMENT_GROUP_BO,
+    EXPERIMENT_GROUP_STATUSES_VIEWED,
+    EXPERIMENT_GROUP_METRICS_VIEWED,
+    EXPERIMENT_GROUP_DELETED_TRIGGERED,
+    EXPERIMENT_GROUP_STOPPED_TRIGGERED,
+    EXPERIMENT_GROUP_RESUMED_TRIGGERED,
+}
 
 
 class ExperimentGroupCreatedEvent(Event):
@@ -238,6 +268,25 @@ class ExperimentGroupResumedEvent(Event):
 
 class ExperimentGroupFailedEvent(Event):
     event_type = EXPERIMENT_GROUP_FAILED
+    attributes = (
+        Attribute('id'),
+        Attribute('project.id'),
+        Attribute('project.user.id'),
+        Attribute('user.id'),
+        Attribute('backend', attr_type=bool),
+        Attribute('is_managed', attr_type=bool),
+        Attribute('updated_at', is_datetime=True),
+        Attribute('concurrency', is_required=False),
+        Attribute('search_algorithm', is_required=False),
+        Attribute('has_early_stopping', attr_type=bool, is_required=False),
+        Attribute('has_description', attr_type=bool),
+        Attribute('last_status'),
+        Attribute('previous_status', is_required=False),
+    )
+
+
+class ExperimentGroupSucceededEvent(Event):
+    event_type = EXPERIMENT_GROUP_SUCCEEDED
     attributes = (
         Attribute('id'),
         Attribute('project.id'),

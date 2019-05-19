@@ -4,6 +4,11 @@ from event_manager.event import Attribute, Event
 SEARCH_CREATED = '{}.{}'.format(event_subjects.SEARCH, event_actions.CREATED)
 SEARCH_DELETED = '{}.{}'.format(event_subjects.SEARCH, event_actions.DELETED)
 
+EVENTS = {
+    SEARCH_CREATED,
+    SEARCH_DELETED,
+}
+
 
 class SearchCreatedEvent(Event):
     event_type = SEARCH_CREATED
