@@ -177,7 +177,7 @@ auth:
     enabled: false
     clientId:
     clientSecret:
-    url:
+    url: ""
   bitbucket:
     enabled: false
     clientId:
@@ -537,6 +537,7 @@ docker-registry:
 types:
   core: "polyaxon-core"
   runner: "polyaxon-runner"
+  config: "polyaxon-config"
 
 roles:
   api: "polyaxon-api"
