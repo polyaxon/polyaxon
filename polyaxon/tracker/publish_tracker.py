@@ -26,5 +26,5 @@ class PublishTrackerService(TrackerService):
     def record_event(self, event):
         try:
             self._record_event(event)
-        except:
+        except:  # noqa
             pass

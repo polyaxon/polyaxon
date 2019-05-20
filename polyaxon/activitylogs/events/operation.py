@@ -8,4 +8,3 @@ activitylogs.subscribe(operation.OperationViewedEvent)
 activitylogs.subscribe(operation.OperationArchivedEvent)
 activitylogs.subscribe(operation.OperationRestoredEvent)
 activitylogs.subscribe(operation.OperationDeletedTriggeredEvent)
-

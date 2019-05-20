@@ -44,6 +44,8 @@ class TestConfigManager(BaseTest):
 
     def test_get_broker_url(self):
         os.environ['POLYAXON_ENVIRONMENT'] = 'testing'
+        os.environ.pop('POLYAXON_RABBITMQ_USER', None)
+        os.environ.pop('POLYAXON_RABBITMQ_PASSWORD', None)
         config = ConfigManager.read_configs(
             [os.environ,
              './tests/fixtures_static/configs/non_opt_config_tests.json',
@@ -64,7 +66,7 @@ class TestConfigManager(BaseTest):
              './tests/fixtures_static/configs/non_opt_config_tests.json',
              {'POLYAXON_AMQP_URL': 'foo',
               'POLYAXON_REDIS_CELERY_BROKER_URL': 'foo'}])
-        assert config.get_broker_url() == 'amqp://polyaxon:polyaxon@foo'
+        assert config.get_broker_url() == 'amqp://foo'
 
         config = ConfigManager.read_configs(
             [os.environ,

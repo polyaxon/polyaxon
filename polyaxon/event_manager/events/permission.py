@@ -45,6 +45,7 @@ EVENTS = {
     PERMISSION_USER_ROLE_DENIED,
 }
 
+
 class PermissionProjectDeniedEvent(Event):
     event_type = PERMISSION_PROJECT_DENIED
     actor = True

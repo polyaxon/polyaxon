@@ -10,4 +10,4 @@ class AuditorBaseTest(BaseTest):
     EVENTS = None
 
     def test_num_events(self):
-            assert len(self.EVENTS) == len(self.tested_events)
+        assert len(self.EVENTS) == len(self.tested_events)

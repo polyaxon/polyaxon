@@ -619,7 +619,7 @@ class TestEvents(BaseTest):
         assert operation.OperationArchivedEvent.get_event_action() == 'archived'
         assert operation.OperationRestoredEvent.get_event_action() == 'restored'
         assert operation.OperationDeletedTriggeredEvent.get_event_action() == 'deleted'
-        assert operation.OperationCleanedTriggeredEvent.get_event_action()  is None
+        assert operation.OperationCleanedTriggeredEvent.get_event_action() is None
 
     def test_events_actions_pipeline_runs(self):
         assert pipeline_run.PipelineRunCreatedEvent.get_event_action() == 'created'
