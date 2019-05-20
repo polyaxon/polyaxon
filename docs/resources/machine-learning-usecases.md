@@ -32,16 +32,16 @@ Polyaxon develops a single platform to help companies solve problems in any vert
    * Auto-Correct
    * Question Answering
    * Text Generation
-  * Video
+ * Video
    * Real Time Face Detection
    * Security
    * Gesture and Action Recognition
    * Video Search
-  * Time Series
+ * Time Series
    * Anomaly Detection
    * Future Values Prediction
    * Trends Prediction
-  * Sounds
+ * Sounds
    * Speech Recognition
    * Voice Generation
    * Sentiment Analysis

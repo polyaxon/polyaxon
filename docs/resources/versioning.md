@@ -45,11 +45,11 @@ One major impact of this change will be the change to our release cycle, instead
 
 Although our platform is stable and running in production mode at several organizations (academic and business oriented), 
 we believe that v1.0 has a major impact on several CIOs and technical leads' psychology. 
-With this new versioning mechanism, Polyaxon will have have the chance to reach the v1.0 before the end of this year, 
+With this new versioning mechanism, Polyaxon will have the chance to reach the v1.0 before the end of this year, 
 while providing isolated and semantically contained documentation. This is also a strong message to our users, 
 that Polyaxon is here for the long haul and is serious about providing the best platform and services to help companies with their ML and AI transition.  
 
 ## Other components
 
 In addition to Polyaxon's core functionality, we develop several other aspects and components that we believe have major impact on the productivity of our users. 
-These components will be marked separately with alpha/beta until we believe that they are fully stable.
+These components will be marked separately with alpha/beta until they reach a stable state.

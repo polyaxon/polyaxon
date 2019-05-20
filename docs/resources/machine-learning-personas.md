@@ -31,7 +31,7 @@ We are developing more features to enable better monitoring of the cluster resou
 ### Data engineers and analysts
 
 We have a product called PolyFlow, that enables, not only data scientists but also data engineers to author workflows and DAGs. 
-Our development philosophy is not completely remove the tooling you are using but to enable your teams to do more by integrating with their favorite pipeline engines.
+Our development philosophy is not to completely remove the tools you are using, but to enable your teams to do more by integrating with their favorite pipeline engines.
 
 ### Release Managers
 
