@@ -29,7 +29,8 @@ You will be using Helm to install and manage Polyaxon on your cluster.
 The simplest way to install helm is to run Helm’s installer script at a terminal:
 
 ```bash
-$ curl https://raw.githubusercontent.com/kubernetes/helm/v2.13.1/scripts/get | bash
+$ export DESIRED_VERSION=v2.13.1
+$ curl -L https://git.io/get_helm.sh | bash
 ```
 
 ## Initialize Helm and grant RBAC
