@@ -25,10 +25,11 @@ class ProjectJobSpawner(K8SManager):
 
     @staticmethod
     def _get_proxy_url(namespace, job_name, deployment_name, port):
-        return '/{}/proxy/{}.{}.svc.cluster.local:{}'.format(
+        return '/{}/proxy/{}.{}.svc.{}:{}'.format(
             job_name,
             deployment_name,
             namespace,
+            conf.get('DNS_CUSTOM_CLUSTER'),
             port)
 
     def _get_service_url(self, job_name):

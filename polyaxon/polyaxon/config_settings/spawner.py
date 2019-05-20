@@ -33,6 +33,11 @@ REFS_CONFIG_MAPS = config.get_string('POLYAXON_REFS_CONFIG_MAPS',
 TENSORBOARD_PORT_RANGE = [5700, 6700]
 NOTEBOOK_PORT_RANGE = [6700, 7700]
 
+# DNS Cluster
+DNS_CUSTOM_CLUSTER = config.get_string('POLYAXON_DNS_CUSTOM_CLUSTER',
+                                       is_optional=True,
+                                       default='cluster.local')
+
 # Roles
 ROLE_LABELS_WORKER = config.get_string('POLYAXON_ROLE_LABELS_WORKER')
 ROLE_LABELS_DASHBOARD = config.get_string('POLYAXON_ROLE_LABELS_DASHBOARD')
