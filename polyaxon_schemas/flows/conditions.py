@@ -7,19 +7,19 @@ from polyaxon_schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
 from polyaxon_schemas.flows.trigger_policies import ExpressionTriggerPolicy, StatusTriggerPolicy
 
 
-class StatusCondSchema(BaseSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('status_cond'))
+class StatusConditionSchema(BaseSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal('status'))
     op = fields.Str()
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(StatusTriggerPolicy.VALUES))
 
     @staticmethod
     def schema_config():
-        return StatusCondConfig
+        return StatusConditionConfig
 
 
-class StatusCondConfig(BaseConfig):
-    SCHEMA = StatusCondSchema
-    IDENTIFIER = 'status_cond'
+class StatusConditionConfig(BaseConfig):
+    SCHEMA = StatusConditionSchema
+    IDENTIFIER = 'status'
 
     def __init__(self, op, trigger, kind=None):
         self.op = op
@@ -27,20 +27,20 @@ class StatusCondConfig(BaseConfig):
         self.kind = kind
 
 
-class OutputsCondSchema(BaseSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('outputs_cond'))
+class OutputsConditionSchema(BaseSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal('outputs'))
     op = fields.Str()
     exp = fields.Str(allow_none=True, validate=validate.OneOf(ExpressionTriggerPolicy.VALUES))
     params = env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)))
 
     @staticmethod
     def schema_config():
-        return OutputsCondConfig
+        return OutputsConditionConfig
 
 
-class OutputsCondConfig(BaseConfig):
-    SCHEMA = OutputsCondSchema
-    IDENTIFIER = 'outputs_cond'
+class OutputsConditionConfig(BaseConfig):
+    SCHEMA = OutputsConditionSchema
+    IDENTIFIER = 'outputs'
 
     def __init__(self, op, exp, params, kind=None):
         self.op = op
@@ -49,10 +49,10 @@ class OutputsCondConfig(BaseConfig):
         self.kind = kind
 
 
-class CondSchema(BaseOneOfSchema):
+class ConditionSchema(BaseOneOfSchema):
     TYPE_FIELD = 'kind'
-    TYPE_FIELD_remove = False
+    TYPE_FIELD_REMOVE = False
     SCHEMAS = {
-        StatusCondConfig.IDENTIFIER: StatusCondSchema,
-        OutputsCondConfig.IDENTIFIER: OutputsCondSchema,
+        StatusConditionConfig.IDENTIFIER: StatusConditionSchema,
+        OutputsConditionConfig.IDENTIFIER: OutputsConditionSchema,
     }

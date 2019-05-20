@@ -4,11 +4,11 @@ version: 1
 kind: group
 
 environment:
-  persistence:
-    data: ['data1', 'data2']
-    outputs: 'outputs1'
-  outputs:
-    jobs: [111]  # should raise
+  data_refs: ['data1', 'data2']
+  artifact_refs: ['outputs1']
+  # TODO
+#  outputs:
+#    jobs: [111]  # should raise
 
 hptuning:
   concurrency: 2

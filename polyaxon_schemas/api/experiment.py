@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from hestia.humanize import humanize_timedelta
 from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon_schemas.fields import UUID
 from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
 
@@ -75,8 +75,8 @@ class ExperimentSchema(BaseSchema):
     id = fields.Int(allow_none=True)
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
-    user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
-    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
+    user = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     project = fields.Str(allow_none=True)
     experiment_group = fields.Str(allow_none=True)
     build_job = fields.Str(allow_none=True)
@@ -94,7 +94,7 @@ class ExperimentSchema(BaseSchema):
     has_tensorboard = fields.Bool(allow_none=True)
     content = fields.Str(allow_none=True)
     num_jobs = fields.Int(allow_none=True)
-    declarations = fields.Dict(allow_none=True)
+    params = fields.Dict(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
     run_env = fields.Dict(allow_none=True)
@@ -136,7 +136,7 @@ class ExperimentConfig(BaseConfig):
                  has_tensorboard=False,
                  content=None,
                  num_jobs=0,
-                 declarations=None,
+                 params=None,
                  tags=None,
                  resources=None,
                  is_managed=None,
@@ -165,7 +165,7 @@ class ExperimentConfig(BaseConfig):
         self.has_tensorboard = has_tensorboard
         self.content = content
         self.num_jobs = num_jobs
-        self.declarations = declarations
+        self.params = params
         self.tags = tags
         self.resources = resources
         self.is_managed = is_managed

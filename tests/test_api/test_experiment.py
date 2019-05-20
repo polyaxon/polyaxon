@@ -40,7 +40,7 @@ class TestExperimentConfigs(TestCase):
         }
         config = ExperimentConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
-        config_to_dict.pop('declarations')
+        config_to_dict.pop('params')
         config_to_dict.pop('finished_at')
         config_to_dict.pop('is_clone')
         config_to_dict.pop('jobs')
@@ -103,7 +103,7 @@ class TestExperimentConfigs(TestCase):
         config = ExperimentConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
         assert config_to_dict.pop('total_run') == '0s'
-        config_to_dict.pop('declarations')
+        config_to_dict.pop('params')
         config_to_dict.pop('description')
         config_to_dict.pop('is_clone')
         config_to_dict.pop('last_metric')

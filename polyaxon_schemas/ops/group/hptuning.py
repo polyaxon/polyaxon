@@ -348,10 +348,10 @@ class HPTuningSchema(BaseSchema):
     seed = fields.Int(allow_none=True)
     matrix = fields.Dict(allow_none=True)
     concurrency = fields.Int(allow_none=True)
-    grid_search = fields.Nested(GridSearchSchema, allow_none=None)
-    random_search = fields.Nested(RandomSearchSchema, allow_none=None)
-    hyperband = fields.Nested(HyperbandSchema, allow_none=None)
-    bo = fields.Nested(BOSchema, allow_none=None)
+    grid_search = fields.Nested(GridSearchSchema, allow_none=True)
+    random_search = fields.Nested(RandomSearchSchema, allow_none=True)
+    hyperband = fields.Nested(HyperbandSchema, allow_none=True)
+    bo = fields.Nested(BOSchema, allow_none=True)
     early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
 
     @staticmethod

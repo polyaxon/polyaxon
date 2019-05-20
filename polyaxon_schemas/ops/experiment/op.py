@@ -4,9 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig
-from polyaxon_schemas.ml.eval import EvalSchema
-from polyaxon_schemas.ml.models import ModelSchema
-from polyaxon_schemas.ml.train import TrainSchema
+from polyaxon_schemas.ops.experiment.backends import ExperimentBackend
 from polyaxon_schemas.ops.experiment.environment import (
     ExperimentEnvironmentSchema,
     HorovodConfig,
@@ -15,7 +13,6 @@ from polyaxon_schemas.ops.experiment.environment import (
     PytorchConfig,
     TensorflowConfig
 )
-from polyaxon_schemas.ops.experiment.backends import ExperimentBackend
 from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
 from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema, RunSchema
 
@@ -49,15 +46,11 @@ def validate_replicas(framework, replicas):
 
 
 class ExperimentSchema(BaseRunSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('experiment'))
-    declarations = fields.Raw(allow_none=True)
+    kind = fields.Str(allow_none=True, validate=validate.Equal('experiment'))
     environment = fields.Nested(ExperimentEnvironmentSchema, allow_none=True)
     backend = fields.Str(allow_none=True, validate=validate.OneOf(ExperimentBackend.VALUES))
     framework = fields.Str(allow_none=True)
     run = fields.Nested(RunSchema, allow_none=True)
-    model = fields.Nested(ModelSchema, allow_none=True)
-    train = fields.Nested(TrainSchema, allow_none=True)
-    eval = fields.Nested(EvalSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -79,22 +72,28 @@ class ExperimentSchema(BaseRunSchema):
 class ExperimentConfig(BaseRunConfig):
     SCHEMA = ExperimentSchema
     IDENTIFIER = 'experiment'
-    REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ['backend', 'framework']
+    REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + [
+        'backend',
+        'framework',
+        'run',
+    ]
 
     def __init__(self,
-                 kind=None,
                  version=None,
+                 kind=None,
                  logging=None,
+                 name=None,
+                 description=None,
                  tags=None,
-                 declarations=None,
                  environment=None,
+                 params=None,
+                 declarations=None,
+                 inputs=None,
+                 outputs=None,
                  build=None,
                  backend=None,
                  framework=None,
                  run=None,
-                 model=None,
-                 train=None,
-                 eval=None,  # pylint:disable=redefined-builtin
                  ):
         validate_backend(backend)
         self.replicas = None
@@ -102,19 +101,23 @@ class ExperimentConfig(BaseRunConfig):
             validate_replicas(framework, environment.replicas)
             self.replicas = environment.replicas
 
-        super(ExperimentConfig, self).__init__(kind=kind,
-                                               version=version,
-                                               logging=logging,
-                                               tags=tags,
-                                               environment=environment,
-                                               build=build)
+        super(ExperimentConfig, self).__init__(
+            version=version,
+            kind=kind,
+            logging=logging,
+            name=name,
+            description=description,
+            tags=tags,
+            environment=environment,
+            params=params,
+            declarations=declarations,
+            inputs=inputs,
+            outputs=outputs,
+            build=build
+        )
         self.backend = backend
         self.framework = framework
-        self.declarations = declarations
         self.run = run
-        self.model = model
-        self.train = train
-        self.eval = eval  # pylint:disable=redefined-builtin
         self.tensorflow = self.get_tensorflow()
         self.horovod = self.get_horovod()
         self.mxnet = self.get_mxnet()

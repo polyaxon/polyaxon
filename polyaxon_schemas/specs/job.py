@@ -30,7 +30,7 @@ class JobSpecification(BaseRunSpecification):
     )
 
     POSSIBLE_SECTIONS = BaseRunSpecification.POSSIBLE_SECTIONS + (
-        BaseRunSpecification.DECLARATIONS,
+        BaseRunSpecification.PARAMS,
         BaseRunSpecification.RUN,
     )
 

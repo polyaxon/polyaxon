@@ -9,9 +9,9 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment import ExperimentConfig
+from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.specs import (
     BuildSpecification,
     ExperimentSpecification,
@@ -24,13 +24,33 @@ from polyaxon_schemas.utils import TaskType
 
 
 class TestSpecifications(TestCase):
+    def test_non_yaml_spec(self):
+        config = ',sdf;ldjks'
+        with self.assertRaises(PolyaxonConfigurationError):
+            BuildSpecification.read(config)
+
+        with self.assertRaises(PolyaxonConfigurationError):
+            JobSpecification.read(config)
+
+        with self.assertRaises(PolyaxonConfigurationError):
+            ExperimentSpecification.read(config)
+
+        with self.assertRaises(PolyaxonConfigurationError):
+            GroupSpecification.read(config)
+
+        with self.assertRaises(PolyaxonConfigurationError):
+            NotebookSpecification.read(config)
+
+        with self.assertRaises(PolyaxonConfigurationError):
+            TensorboardSpecification.read(config)
+
     def test_notebook_specification_raises_for_invalid_run_section(self):
         with self.assertRaises(PolyaxonfileError):
             NotebookSpecification.read({'version': 1, 'kind': 'notebook'})
 
         with self.assertRaises(PolyaxonfileError):
             NotebookSpecification.read(os.path.abspath(
-                'tests/fixtures/notebook_run_cmd_simple_file_with_cmd.yml'))
+                'tests/fixtures/plain/notebook_run_cmd_simple_file_with_cmd.yml'))
 
     def test_tensorboard_specification_raises_for_invalid_run_section(self):
         with self.assertRaises(PolyaxonfileError):
@@ -38,17 +58,17 @@ class TestSpecifications(TestCase):
 
         with self.assertRaises(PolyaxonConfigurationError):
             TensorboardSpecification.read(os.path.abspath(
-                'tests/fixtures/tensorboard_run_cmd_simple_file_with_cmd.yml'))
+                'tests/fixtures/plain/tensorboard_run_cmd_simple_file_with_cmd.yml'))
 
     def test_job_specification_raises_for_missing_build_section(self):
         with self.assertRaises(PolyaxonfileError):
             JobSpecification.read(os.path.abspath(
-                'tests/fixtures/job_missing_build.yml'))
+                'tests/fixtures/plain/job_missing_build.yml'))
 
     def test_job_specification_raises_for_missing_run_section(self):
         with self.assertRaises(PolyaxonfileError):
             JobSpecification.read(os.path.abspath(
-                'tests/fixtures/job_missing_run_cmd.yml'))
+                'tests/fixtures/plain/job_missing_run_cmd.yml'))
 
     def test_create_notebook_specification(self):
         build_config = {'image': 'blabla'}
@@ -87,14 +107,14 @@ class TestSpecifications(TestCase):
         assert BuildSpecification.read(config).parsed_data == config
 
         config = BuildSpecification.create_specification(run_config,
-                                                         configmap_refs=None,
+                                                         config_map_refs=None,
                                                          secret_refs=None)
-        assert 'configmap_refs' not in config
+        assert 'config_map_refs' not in config
         assert 'secret_refs' not in config
 
-        config = BuildSpecification.create_specification(run_config, configmap_refs=['foo'])
+        config = BuildSpecification.create_specification(run_config, config_map_refs=['foo'])
         assert BuildSpecification.read(config).parsed_data == config
-        assert config['environment']['configmap_refs'] == ['foo']
+        assert config['environment']['config_map_refs'] == ['foo']
         config = BuildSpecification.create_specification(run_config, secret_refs=['foo'])
         assert BuildSpecification.read(config).parsed_data == config
         assert config['environment']['secret_refs'] == ['foo']
@@ -105,12 +125,12 @@ class TestSpecifications(TestCase):
 
         assert config['image'] == 'blabla'
         spec = BuildSpecification.create_specification(run_config,
-                                                       configmap_refs=['foo'],
+                                                       config_map_refs=['foo'],
                                                        secret_refs=['foo'],
                                                        to_dict=False)
         assert spec.config.image == run_config['image']
         assert spec.environment.secret_refs == ['foo']
-        assert spec.environment.configmap_refs == ['foo']
+        assert spec.environment.config_map_refs == ['foo']
 
     def test_create_job_specification(self):
         build_config = {'image': 'blabla'}
@@ -130,7 +150,7 @@ class TestSpecifications(TestCase):
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(
-            'tests/fixtures/env_without_framework.yml'))
+            'tests/fixtures/plain/env_without_framework.yml'))
         self.assertEqual(spec.cluster_def, ({TaskType.MASTER: 1}, False))
 
     def test_patch_experiment(self):
@@ -142,17 +162,17 @@ class TestSpecifications(TestCase):
         }
         spec = ExperimentSpecification.read(content)
         assert ExperimentSpecification.read(spec.raw_data).parsed_data == content
-        assert spec.declarations is None
+        assert spec.params is None
 
-        # Add declarations
-        declarations = {'declarations': {'lr': 0.1}}
-        spec = spec.patch(values=declarations)
-        assert spec.declarations == declarations['declarations']
+        # Add params
+        params = {'params': {'lr': 0.1}}
+        spec = spec.patch(values=params)
+        assert spec.params == params['params']
 
-        # Update declarations
-        declarations = {'declarations': {'lr': 0.01, 'num_steps': 100}}
-        spec = spec.patch(values=declarations)
-        assert spec.declarations == declarations['declarations']
+        # Update params
+        params = {'params': {'lr': 0.01, 'num_steps': 100}}
+        spec = spec.patch(values=params)
+        assert spec.params == params['params']
 
         # Add env
         assert spec.environment is None
@@ -160,7 +180,7 @@ class TestSpecifications(TestCase):
             'gpu': {'requests': 1, 'limits': 1},
             'tpu': {'requests': 1, 'limits': 1}}}}
         spec = spec.patch(values=env)
-        assert spec.declarations == declarations['declarations']
+        assert spec.params == params['params']
         assert spec.environment.resources.gpu.to_dict() == env['environment']['resources']['gpu']
         assert spec.environment.resources.tpu.to_dict() == env['environment']['resources']['gpu']
 
@@ -255,23 +275,23 @@ class TestSpecifications(TestCase):
         spec = GroupSpecification.read(content)
         assert GroupSpecification.read(spec.raw_data).raw_data == spec.raw_data
         assert spec.environment is None
-        assert spec.configmap_refs is None
+        assert spec.config_map_refs is None
         assert spec.secret_refs is None
 
-        content['environment'] = {'configmap_refs': ['foo', 'boo']}
+        content['environment'] = {'config_map_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.configmap_refs == ['foo', 'boo']
+        assert spec.config_map_refs == ['foo', 'boo']
         assert spec.secret_refs is None
 
         content['environment'] = {'secret_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.configmap_refs is None
+        assert spec.config_map_refs is None
         assert spec.secret_refs == ['foo', 'boo']
 
-        content['environment'] = {'secret_refs': ['foo', 'boo'], 'configmap_refs': ['foo', 'boo']}
+        content['environment'] = {'secret_refs': ['foo', 'boo'], 'config_map_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.configmap_refs == ['foo', 'boo']
+        assert spec.config_map_refs == ['foo', 'boo']
         assert spec.secret_refs == ['foo', 'boo']

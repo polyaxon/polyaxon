@@ -1,58 +1,99 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate
+import re
+import warnings
 
-from polyaxon_schemas.flows.conds import CondSchema
-from polyaxon_schemas.flows.deps import DepSchema
-from polyaxon_schemas.flows.executable import ExecutableConfig, ExecutableSchema
-from polyaxon_schemas.flows.inputs import InputSchema
-from polyaxon_schemas.flows.trigger_policies import TriggerPolicy
+from marshmallow import ValidationError, fields, validate, validates_schema
+
+from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
+from polyaxon_schemas.ops import params as ops_params
+from polyaxon_schemas.ops.environments.pods import EnvironmentSchema
+from polyaxon_schemas.ops.io import IOSchema
+from polyaxon_schemas.ops.logging import LoggingSchema
+
+PARAM_REGEX = re.compile(r'{{\s*([^\s]*)\s*}}')
 
 
-class BaseOpSchema(ExecutableSchema):
-    concurrency = fields.Int(allow_none=True)
-    deps = fields.Nested(DepSchema, allow_none=True, many=True)
-    inputs = fields.Nested(InputSchema, allow_none=True, many=True)
-    trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
-    conds = fields.Nested(CondSchema, allow_none=None)
-    max_retries = fields.Int(allow_none=True)
-    retry_delay = fields.Int(allow_none=True)
-    retry_exponential_backoff = fields.Bool(allow_none=True)
-    max_retry_delay = fields.Int(allow_none=True)
-    skip_on_upstream_skip = fields.Bool(allow_none=True)
+def validate_declarations(values):
+    if values.get('declarations') and values.get('params'):
+        raise ValidationError('You should only use `params`.')
+
+    if values.get('declarations'):
+        warnings.warn(
+            'The `declarations` parameter is deprecated and will be removed in next release, '
+            'please use `params` instead',
+            DeprecationWarning)
+        values['params'] = values.pop('declarations')
+
+    return values
+
+
+class BaseOpSchema(BaseSchema):
+    version = fields.Int(allow_none=True)
+    kind = fields.Str(allow_none=True)
+    logging = fields.Nested(LoggingSchema, allow_none=True)
+    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    description = fields.Str(allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
+    environment = fields.Nested(EnvironmentSchema, allow_none=True)
+    params = fields.Raw(allow_none=True)
+    declarations = fields.Raw(allow_none=True)
+    inputs = fields.Nested(IOSchema, allow_none=True, many=True)
+    outputs = fields.Nested(IOSchema, allow_none=True, many=True)
 
     @staticmethod
     def schema_config():
         return BaseOpConfig
 
+    @validates_schema
+    def validate_declarations(self, values):
+        validate_declarations(values)
 
-class BaseOpConfig(ExecutableConfig):
+    @validates_schema
+    def validate_params(self, values):
+        ops_params.validate_params(params=values.get('params'),
+                                   inputs=values.get('inputs'),
+                                   outputs=values.get('outputs'))
+
+
+class BaseOpConfig(BaseConfig):
     SCHEMA = BaseOpSchema
     IDENTIFIER = 'operation'
-    REDUCED_ATTRIBUTES = []
+    REDUCED_ATTRIBUTES = [
+        'version',
+        'kind',
+        'logging',
+        'name',
+        'description',
+        'tags',
+        'environment',
+        'params',
+        'inputs',
+        'outputs',
+    ]
 
     def __init__(self,
-                 concurrency=None,
-                 deps=None,
+                 version=None,
+                 kind=None,
+                 logging=None,
+                 name=None,
+                 description=None,
+                 tags=None,
+                 environment=None,
+                 params=None,
+                 declarations=None,
                  inputs=None,
-                 trigger=None,
-                 conds=None,
-                 max_retries=None,
-                 retry_delay=None,
-                 retry_exponential_backoff=None,
-                 max_retry_delay=None,
-                 skip_on_upstream_skip=None,
-                 execute_at=None,
-                 timeout=None):
-        super(BaseOpConfig, self).__init__(execute_at=execute_at, timeout=timeout)
-        self.concurrency = concurrency
-        self.deps = deps
+                 outputs=None):
+        self.version = version
+        self.kind = kind
+        self.logging = logging
+        self.name = name
+        self.description = description
+        self.tags = tags
+        self.environment = environment
+        validate_declarations({'params': params, 'declarations': declarations})
+        self.params = params or declarations
+        ops_params.validate_params(params=self.params, inputs=inputs, outputs=outputs)
         self.inputs = inputs
-        self.trigger = trigger
-        self.conds = conds
-        self.max_retries = max_retries
-        self.retry_delay = retry_delay
-        self.retry_exponential_backoff = retry_exponential_backoff
-        self.max_retry_delay = max_retry_delay
-        self.skip_on_upstream_skip = skip_on_upstream_skip
+        self.outputs = outputs

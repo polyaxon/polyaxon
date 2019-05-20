@@ -55,7 +55,7 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
     def create_specification(cls,
                              build_config,
                              secret_refs=None,
-                             configmap_refs=None,
+                             config_map_refs=None,
                              to_dict=True):
         if isinstance(build_config, BuildConfig):
             config = build_config.to_light_dict()
@@ -77,8 +77,8 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         env = {}
         if secret_refs:
             env['secret_refs'] = secret_refs
-        if configmap_refs:
-            env['configmap_refs'] = configmap_refs
+        if config_map_refs:
+            env['config_map_refs'] = config_map_refs
         if env:
             specification[cls.ENVIRONMENT] = env
 

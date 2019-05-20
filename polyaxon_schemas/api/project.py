@@ -5,15 +5,15 @@ from marshmallow import fields, validate
 
 from polyaxon_schemas.api.experiment import ExperimentSchema
 from polyaxon_schemas.api.group import GroupSchema
-from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon_schemas.fields import UUID
 
 
 class ProjectSchema(BaseSchema):
     id = fields.Int(allow_none=True)
-    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'))
-    user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
-    owner = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
+    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX))
+    user = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    owner = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     unique_name = fields.Str(allow_none=True)
     uuid = UUID(allow_none=True)
     description = fields.Str(allow_none=True)

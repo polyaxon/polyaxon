@@ -29,38 +29,38 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def parse(cls, spec, data, matrix_declarations=None):  # pylint:disable=too-many-branches
-        declarations = copy.copy(data.get(spec.DECLARATIONS, {}))
-        matrix_declarations = copy.copy(matrix_declarations)
-        if matrix_declarations:
-            declarations = deep_update(matrix_declarations, declarations)
+    def parse(cls, spec, data, matrix_params=None):  # pylint:disable=too-many-branches
+        params = copy.copy(data.get(spec.PARAMS, {}))
+        matrix_params = copy.copy(matrix_params)
+        if matrix_params:
+            params = deep_update(matrix_params, params)
 
         parsed_data = {
             spec.VERSION: data[spec.VERSION],
             spec.KIND: data[spec.KIND],
         }
 
-        if declarations:
-            declarations = cls.parse_expression(spec, declarations, declarations)
-            parsed_data[spec.DECLARATIONS] = declarations
+        if params:
+            params = cls.parse_expression(spec, params, params)
+            parsed_data[spec.PARAMS] = params
 
         for section in spec.STD_PARSING_SECTIONS:
             if section in data:
-                parsed_data[section] = cls.parse_expression(spec, data[section], declarations)
+                parsed_data[section] = cls.parse_expression(spec, data[section], params)
 
         for section in spec.OP_PARSING_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(
-                    spec, data[section], declarations, True, False)
+                    spec, data[section], params, True, False)
 
         if spec.RUN in data:
             parsed_data[spec.RUN] = cls.parse_expression(
-                spec, data[spec.RUN], declarations, True, False)
+                spec, data[spec.RUN], params, True, False)
 
         for section in spec.GRAPH_SECTIONS:
             if section in data:
                 parsed_data[section] = cls.parse_expression(
-                    spec, data[section], declarations, True, True)
+                    spec, data[section], params, True, True)
 
         return parsed_data
 
@@ -68,7 +68,7 @@ class Parser(object):
     def parse_expression(cls,  # pylint:disable=too-many-branches
                          spec,
                          expression,
-                         declarations,
+                         params,
                          check_operators=False,
                          check_graph=False):
         if isinstance(expression, (int, float, complex, type(None))):
@@ -81,64 +81,64 @@ class Parser(object):
             if len(expression) == 1:
                 old_key, value = list(six.iteritems(expression))[0]
                 # always parse the keys, they must be base object or evaluate to base objects
-                key = cls.parse_expression(spec, old_key, declarations)
+                key = cls.parse_expression(spec, old_key, params)
                 if check_operators and cls.is_operator(spec, key):
-                    return cls._parse_operator(spec, {key: value}, declarations)
+                    return cls._parse_operator(spec, {key: value}, params)
                 if check_graph and key in ['graph', 'encoder', 'decoder']:
-                    return {key: cls._parse_graph(spec, value, declarations)}
+                    return {key: cls._parse_graph(spec, value, params)}
                 if check_graph and key == 'feature_processors':  # noqa, no-else-return
                     return {
                         key: {
-                            cls.parse_expression(spec, f_key, declarations):
-                                cls._parse_graph(spec, f_vlaue, declarations)
+                            cls.parse_expression(spec, f_key, params):
+                                cls._parse_graph(spec, f_vlaue, params)
                             for f_key, f_vlaue in six.iteritems(value)
                         }
                     }
                 else:
                     return {
                         key: cls.parse_expression(
-                            spec, value, declarations, check_operators, check_graph)
+                            spec, value, params, check_operators, check_graph)
                     }
 
             new_expression = {}
             for k, v in six.iteritems(expression):
                 new_expression.update(
-                    cls.parse_expression(spec, {k: v}, declarations, check_operators, check_graph))
+                    cls.parse_expression(spec, {k: v}, params, check_operators, check_graph))
             return new_expression
 
         if isinstance(expression, list):
-            return list(cls.parse_expression(spec, v, declarations, check_operators, check_graph)
+            return list(cls.parse_expression(spec, v, params, check_operators, check_graph)
                         for v in expression)
         if isinstance(expression, tuple):
-            return tuple(cls.parse_expression(spec, v, declarations, check_operators, check_graph)
+            return tuple(cls.parse_expression(spec, v, params, check_operators, check_graph)
                          for v in expression)
         if isinstance(expression, six.string_types):
             return cls._evaluate_expression(
-                spec, expression, declarations, check_operators, check_graph)
+                spec, expression, params, check_operators, check_graph)
 
     @classmethod
-    def _evaluate_expression(cls, spec, expression, declarations, check_operators, check_graph):
-        result = cls.env.from_string(expression).render(**declarations)
+    def _evaluate_expression(cls, spec, expression, params, check_operators, check_graph):
+        result = cls.env.from_string(expression).render(**params)
         if result == expression:
             try:
                 return ast.literal_eval(result)
             except (ValueError, SyntaxError):
                 pass
             return result
-        return cls.parse_expression(spec, result, declarations, check_operators, check_graph)
+        return cls.parse_expression(spec, result, params, check_operators, check_graph)
 
     @classmethod
-    def _parse_operator(cls, spec, expression, declarations):
+    def _parse_operator(cls, spec, expression, params):
         k, v = list(six.iteritems(expression))[0]
         op = spec.OPERATORS[k].from_dict(v)
-        return op.parse(spec=spec, parser=cls, declarations=declarations)
+        return op.parse(spec=spec, parser=cls, params=params)
 
     @staticmethod
     def is_operator(spec, key):
         return key in spec.OPERATORS
 
     @classmethod
-    def _parse_graph(cls, spec, graph, declarations):  # noqa, too-many-branches
+    def _parse_graph(cls, spec, graph, params):  # noqa, too-many-branches
         input_layers = to_list(graph['input_layers'])
         layer_names = set(input_layers)
         tags = {}
@@ -164,13 +164,13 @@ class Parser(object):
 
             return layer_value['name']
 
-        layers_declarations = {}
-        layers_declarations.update(declarations)
+        layers_params = {}
+        layers_params.update(params)
 
         last_layer = None
         first_layer = True
         for layer_expression in graph['layers']:
-            parsed_layer = cls.parse_expression(spec, layer_expression, layers_declarations, True)
+            parsed_layer = cls.parse_expression(spec, layer_expression, layers_params, True)
             # Gather all tags from the layers
             parsed_layer = to_list(parsed_layer)
             for layer in parsed_layer:
@@ -227,8 +227,8 @@ class Parser(object):
                 # Add layer
                 layers.append({layer_type: layer_value})
 
-                # Update layers_declarations
-                layers_declarations['tags'] = tags
+                # Update layers_params
+                layers_params['tags'] = tags
 
                 # Update last_layer
                 last_layer = layer_value

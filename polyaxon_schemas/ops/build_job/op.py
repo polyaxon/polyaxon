@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import six
+
 from marshmallow import ValidationError, fields, validate, validates_schema
 
-from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.build_job.backends import BuildBackend
-from polyaxon_schemas.ops.environments.base import EnvironmentSchema
-from polyaxon_schemas.ops.logging import LoggingSchema
+from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 
 
 def validate_image(image):
@@ -26,26 +26,15 @@ def validate_backend(backend):
         raise ValidationError('Build backend `{}` not supported'.format(backend))
 
 
-def validate_build(image, dockerfile):
-    build_data = [image, dockerfile]
-    if all(build_data):
+def validate_build(**kwargs):
+    if len([i for i in six.itervalues(kwargs) if i is not None and i != '']) != 1:
         raise ValidationError(
-            'Invalid Build, only a dockerfile or image is required not both.'
-            'received: image: `{}` and dockerfile: `{}`'.format(
-                image,
-                dockerfile
-            ))
-    if not any(build_data):
-        raise ValidationError(
-            'Invalid Build, a dockerfile or an image is required, received none.')
+            'Invalid Build, only a a dockerfile, an image, or a reference is required.')
 
 
-class BuildSchema(BaseSchema):
-    version = fields.Int(allow_none=None)
-    kind = fields.Str(allow_none=None, validate=validate.Equal('build'))
-    logging = fields.Nested(LoggingSchema, allow_none=None)
-    tags = fields.List(fields.Str(), allow_none=None)
-    environment = fields.Nested(EnvironmentSchema, allow_none=True)
+class BuildSchema(BaseOpSchema):
+    kind = fields.Str(allow_none=True, validate=validate.Equal('build'))
+    ref = fields.Str(allow_none=True)
     backend = fields.Str(allow_none=True, validate=validate.OneOf(BuildBackend.VALUES))
     dockerfile = fields.Str(allow_none=True)
     context = fields.Str(allow_none=True)
@@ -73,22 +62,20 @@ class BuildSchema(BaseSchema):
 
     @validates_schema
     def validate_config(self, data):
-        validate_build(image=data.get('image'), dockerfile=data.get('dockerfile'))
+        validate_build(ref=data.get('ref'),
+                       image=data.get('image'),
+                       dockerfile=data.get('dockerfile'))
 
 
-class BuildConfig(BaseConfig):
+class BuildConfig(BaseOpConfig):
     SCHEMA = BuildSchema
     IDENTIFIER = 'build'
-    REDUCED_ATTRIBUTES = [
-        'kind',
-        'version',
-        'logging',
-        'tags',
-        'environment',
-        'build_steps',
-        'env_vars',
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + [
+        'ref',
         'nocache',
         'branch',
+        'build_steps',
+        'env_vars',
         'commit',
         'backend',
         'context',
@@ -97,11 +84,17 @@ class BuildConfig(BaseConfig):
     ]
 
     def __init__(self,
-                 kind=None,
                  version=None,
+                 kind=None,
                  logging=None,
+                 name=None,
+                 description=None,
                  tags=None,
                  environment=None,
+                 params=None,
+                 inputs=None,
+                 outputs=None,
+                 ref=None,
                  dockerfile=None,
                  image=None,
                  context=None,
@@ -111,14 +104,22 @@ class BuildConfig(BaseConfig):
                  nocache=None,
                  commit=None,
                  branch=None):
+        super(BuildConfig, self).__init__(
+            version=version,
+            kind=kind,
+            logging=logging,
+            name=name,
+            description=description,
+            tags=tags,
+            environment=environment,
+            params=params,
+            inputs=inputs,
+            outputs=outputs,
+        )
         validate_image(image)
         validate_backend(backend)
-        validate_build(image=image, dockerfile=dockerfile)
-        self.kind = kind
-        self.version = version
-        self.logging = logging
-        self.tags = tags
-        self.environment = environment
+        validate_build(ref=ref, image=image, dockerfile=dockerfile)
+        self.ref = ref
         self.dockerfile = dockerfile
         self.context = context
         self.backend = backend

@@ -1,14 +1,29 @@
 ---
 version: 1
 
-kind: experiment
+kind: group
+
+environment:
+  data_refs: ['data1', 'data2']
+  artifact_refs: ['outputs1']
+
+hptuning:
+  concurrency: 2
+
+  matrix:
+    lr:
+      uniform: [0, 0.01]
+
+    loss:
+      values: [MeanSquaredError, AbsoluteDifference]
 
 model:
   model_type: regressor
   loss:
-    MeanSquaredError:
+    "{{ loss }}":
   optimizer:
     Adam:
+      learning_rate: "{{ lr }}"
   graph:
     input_layers: images
     layers:

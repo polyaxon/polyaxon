@@ -7,11 +7,11 @@ class PolyaxonSchemaError(Exception):
     pass
 
 
-class PolyaxonfileError(Exception):
+class PolyaxonfileError(PolyaxonSchemaError):
     """Exception class to raise if an error is encountered during the parsing of a Polyaxonfile."""
     pass
 
 
-class PolyaxonConfigurationError(Exception):
+class PolyaxonConfigurationError(PolyaxonSchemaError):
     """Exception class to raise if a Configurable object has an issue."""
     pass

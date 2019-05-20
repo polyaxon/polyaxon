@@ -7,8 +7,8 @@ from hestia.cached_property import cached_property
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
-from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.experiment import ExperimentConfig
+from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 from polyaxon_schemas.specs.frameworks import (
@@ -29,35 +29,23 @@ class ExperimentSpecification(BaseRunSpecification):
         LOGGING: defines the logging
         TAGS: defines the tags
         ENVIRONMENT: defines the run environment for experiment.
-        DECLARATIONS: variables/modules that can be reused.
+        PARAMS: variables/modules that can be reused.
         BUILD: defines the build step where the user can set a docker image definition
         RUN: defines the run step where the user can run a command
     """
     _SPEC_KIND = BaseSpecification._EXPERIMENT  # pylint:disable=protected-access
 
-    MODEL = 'model'
-    TRAIN = 'train'
-    EVAL = 'eval'
-
-    SECTIONS = BaseRunSpecification.SECTIONS + (
-        MODEL, TRAIN, EVAL
-    )
+    SECTIONS = BaseRunSpecification.SECTIONS
 
     HEADER_SECTIONS = BaseRunSpecification.HEADER_SECTIONS + (
         BaseRunSpecification.FRAMEWORK,
     )
 
-    GRAPH_SECTIONS = (
-        MODEL, TRAIN, EVAL
-    )
-
     POSSIBLE_SECTIONS = BaseRunSpecification.POSSIBLE_SECTIONS + (
         BaseRunSpecification.FRAMEWORK,
         BaseRunSpecification.DECLARATIONS,
+        BaseRunSpecification.PARAMS,
         BaseRunSpecification.RUN,
-        MODEL,
-        TRAIN,
-        EVAL
     )
 
     ENVIRONMENT_CONFIG = ExperimentEnvironmentConfig
@@ -76,8 +64,8 @@ class ExperimentSpecification(BaseRunSpecification):
         return self.config.eval
 
     @cached_property
-    def declarations(self):
-        return self.parsed_data.get(self.DECLARATIONS, None)
+    def params(self):
+        return self.parsed_data.get(self.PARAMS, None)
 
     @cached_property
     def backend(self):

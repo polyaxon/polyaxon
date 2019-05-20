@@ -7,8 +7,7 @@ from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema, RunSchema
 
 
 class JobSchema(BaseRunSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('job'))
-    declarations = fields.Raw(allow_none=True)
+    kind = fields.Str(allow_none=True, validate=validate.Equal('job'))
     run = fields.Nested(RunSchema, allow_none=True)
     backend = fields.Str(allow_none=True)
     framework = fields.Str(allow_none=True)
@@ -21,26 +20,40 @@ class JobSchema(BaseRunSchema):
 class JobConfig(BaseRunConfig):
     SCHEMA = JobSchema
     IDENTIFIER = 'job'
+    REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ['backend', 'framework', 'run']
 
     def __init__(self,
-                 kind=None,
                  version=None,
+                 kind=None,
                  logging=None,
+                 name=None,
+                 description=None,
                  tags=None,
-                 declarations=None,
                  environment=None,
+                 params=None,
+                 declarations=None,
+                 inputs=None,
+                 outputs=None,
                  build=None,
-                 run=None,
                  backend=None,
-                 framework=None):
-        super(JobConfig, self).__init__(kind=kind,
-                                        version=version,
-                                        logging=logging,
-                                        tags=tags,
-                                        environment=environment,
-                                        build=build)
+                 framework=None,
+                 run=None,
+                 ):
+        super(JobConfig, self).__init__(
+            version=version,
+            kind=kind,
+            logging=logging,
+            name=name,
+            description=description,
+            tags=tags,
+            environment=environment,
+            params=params,
+            declarations=declarations,
+            inputs=inputs,
+            outputs=outputs,
+            build=build
+        )
 
-        self.declarations = declarations
         self.run = run
         self.backend = backend
         self.framework = framework

@@ -8,14 +8,8 @@ from unittest import TestCase
 from flaky import flaky
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.ml.bridges import NoOpBridgeConfig
-from polyaxon_schemas.ml.graph import GraphConfig
-from polyaxon_schemas.ml.losses import MeanSquaredErrorConfig
-from polyaxon_schemas.ml.models import ClassifierConfig, GeneratorConfig, RegressorConfig
-from polyaxon_schemas.ml.optimizers import AdamConfig
-from polyaxon_schemas.ml.processing.pipelines import TFRecordImagePipelineConfig
 from polyaxon_schemas.ops.build_job import BuildConfig
-from polyaxon_schemas.ops.environments.base import EnvironmentConfig
+from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment.backends import ExperimentBackend
 from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
@@ -38,42 +32,33 @@ from polyaxon_schemas.utils import TaskType
 class TestPolyaxonfile(TestCase):
     def test_missing_version_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath('tests/fixtures/missing_version.yml'))
+            PolyaxonFile(os.path.abspath('tests/fixtures/plain/missing_version.yml'))
 
     def test_non_supported_version_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath(
-                'tests/fixtures/non_supported_file.yml.yml'))
+                'tests/fixtures/plain/non_supported_file.yml.yml'))
 
     def test_missing_kind_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath('tests/fixtures/missing_kind.yml'))
+            PolyaxonFile(os.path.abspath('tests/fixtures/plain/missing_kind.yml'))
 
     def test_simple_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
         assert spec.tags is None
-        assert spec.build is None
-        assert spec.run is None
+        assert spec.build.image == 'my_image'
+        assert spec.run.cmd == 'video_prediction_train --model=DNA --num_masks=1'
         assert spec.environment is None
         assert spec.framework is None
         assert spec.is_experiment
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert isinstance(spec.model, RegressorConfig)
-        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(spec.model.optimizer, AdamConfig)
-        assert isinstance(spec.model.graph, GraphConfig)
-        assert len(spec.model.graph.layers) == 4
-        assert spec.model.graph.input_layers == [['images', 0, 0]]
-        last_layer = spec.model.graph.layers[-1].name
-        assert spec.model.graph.output_layers == [[last_layer, 0, 0]]
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert spec.eval is None
+        assert spec.is_experiment is True
 
     def test_simple_file_framework_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_file_framework.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file_framework.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -83,30 +68,10 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is not None
         assert spec.environment.resources.gpu.to_dict() == {'requests': 1, 'limits': 1}
         assert spec.framework is not None
-        assert spec.is_experiment
-
-    def test_simple_generator_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/simple_generator_file.yml'))
-        spec = plxfile.specification
-        assert spec.version == 1
-        assert spec.logging is None
-        assert spec.build is None
-        assert spec.run is None
-        assert spec.environment is None
-        assert spec.framework is None
-        assert spec.is_experiment
-        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert isinstance(spec.model, GeneratorConfig)
-        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(spec.model.optimizer, AdamConfig)
-        assert isinstance(spec.model.encoder, GraphConfig)
-        assert isinstance(spec.model.decoder, GraphConfig)
-        assert isinstance(spec.model.bridge, NoOpBridgeConfig)
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert spec.eval is None
+        assert spec.is_experiment is True
 
     def test_advanced_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/advanced_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/advanced_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
@@ -137,33 +102,19 @@ class TestPolyaxonfile(TestCase):
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
 
-        assert isinstance(spec.model, ClassifierConfig)
-        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(spec.model.optimizer, AdamConfig)
-        assert spec.model.optimizer.learning_rate == 0.21
-        assert isinstance(spec.model.graph, GraphConfig)
-        assert len(spec.model.graph.layers) == 7
-        assert spec.model.graph.input_layers == [['images', 0, 0]]
-        assert len(spec.model.graph.output_layers) == 3
-        assert ['super_dense', 0, 0] in spec.model.graph.output_layers
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert len(spec.train.data_pipeline.feature_processors.feature_processors) == 1
-        assert isinstance(spec.eval.data_pipeline, TFRecordImagePipelineConfig)
-        assert spec.eval.data_pipeline.feature_processors is None
-
     def test_advanced_file_with_custom_configs_and_resources_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/advanced_file_with_custom_configs_and_resources.yml'))
+            'tests/fixtures/plain/advanced_file_with_custom_configs_and_resources.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.persistence.outputs == 'outputs1'
-        assert spec.persistence.data == ['data1', 'data2']
+        assert spec.artifact_refs == ['outputs1']
+        assert spec.data_refs == ['data1', 'data2']
         assert spec.secret_refs == ['secret1', 'secret2']
-        assert spec.configmap_refs == ['configmap1', 'configmap2']
+        assert spec.config_map_refs == ['config_map1', 'config_map2']
         assert spec.config.tensorflow.n_workers == 5
         assert spec.config.tensorflow.n_ps == 10
 
@@ -236,35 +187,19 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 2 * 9, 'limits': 2 + 4 * 9},
             'memory': {'requests': 512, 'limits': 1024},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,
                                      TaskType.PS: 10}, True)
 
-        assert isinstance(spec.model, ClassifierConfig)
-        assert isinstance(spec.model.loss, MeanSquaredErrorConfig)
-        assert isinstance(spec.model.optimizer, AdamConfig)
-        assert spec.model.optimizer.learning_rate == 0.21
-        assert isinstance(spec.model.graph, GraphConfig)
-        assert len(spec.model.graph.layers) == 7
-        assert spec.model.graph.input_layers == [['images', 0, 0]]
-        assert len(spec.model.graph.output_layers) == 3
-        assert ['super_dense', 0, 0] in spec.model.graph.output_layers
-        assert isinstance(spec.train.data_pipeline, TFRecordImagePipelineConfig)
-        assert len(spec.train.data_pipeline.feature_processors.feature_processors) == 1
-        assert isinstance(spec.eval.data_pipeline, TFRecordImagePipelineConfig)
-        assert spec.eval.data_pipeline.feature_processors is None
-
     def test_wrong_grid_matrix_file_passes(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath('tests/fixtures/wrong_grid_matrix_file.yml'))
+            PolyaxonFile(os.path.abspath('tests/fixtures/plain/wrong_grid_matrix_file.yml'))
 
     @flaky(max_runs=3)
     def test_matrix_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -292,18 +227,19 @@ class TestPolyaxonfile(TestCase):
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         assert spec.environment is not None
-        assert spec.persistence.outputs == 'outputs1'
-        assert spec.persistence.data == ['data1', 'data2']
-        assert spec.outputs.jobs == [111]
+        assert spec.artifact_refs == ['outputs1']
+        assert spec.data_refs == ['data1', 'data2']
+        # TODO
+        # assert spec.outputs.jobs == [111]
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
-            **spec.declarations
+            **spec.params
         )
 
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/matrix_file_with_int_float_types.yml'))
+            'tests/fixtures/plain/matrix_file_with_int_float_types.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -332,12 +268,13 @@ class TestPolyaxonfile(TestCase):
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.run.cmd == 'train --param1={param1} --param2={param2}'.format(
-            **spec.declarations
+            **spec.params
         )
 
     @flaky(max_runs=3)
     def test_matrix_early_stopping_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/matrix_file_early_stopping.yml'))
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/plain/matrix_file_early_stopping.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -370,13 +307,13 @@ class TestPolyaxonfile(TestCase):
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
-            **spec.declarations
+            **spec.params
         )
 
     @flaky(max_runs=3)
     def test_matrix_large_n_experiments_ignored_file_passes(self):
         plxfile = PolyaxonFile(
-            os.path.abspath('tests/fixtures/matrix_file_ignored_n_experiments.yml'))
+            os.path.abspath('tests/fixtures/plain/matrix_file_ignored_n_experiments.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -408,12 +345,12 @@ class TestPolyaxonfile(TestCase):
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
-            **spec.declarations
+            **spec.params
         )
 
     @flaky(max_runs=3)
     def test_one_matrix_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/one_matrix_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/one_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -430,10 +367,11 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.run.cmd == 'train --loss="{}"'.format(spec.declarations['loss'])
+        assert spec.run.cmd == 'train --loss="{}"'.format(spec.params['loss'])
 
     def test_run_simple_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_simple_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/plain/run_cmd_simple_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -444,13 +382,13 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
         assert run.cmd == "video_prediction_train --num_masks=2"
 
     def test_run_simple_file_with_cmds_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_simple_file_list_cmds.yml'))
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/plain/run_cmd_simple_file_list_cmds.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -461,14 +399,13 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
         assert run.cmd == ['video_prediction_train --model=DNA --num_masks=1',
                            'video_prediction_train --model=DNA --num_masks=10']
 
     def test_run_simple_file_with_build_env_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_with_build_env.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/run_cmd_with_build_env.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.logging is None
@@ -483,14 +420,13 @@ class TestPolyaxonfile(TestCase):
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
         assert run.cmd == ['video_prediction_train --model=DNA --num_masks=1',
                            'video_prediction_train --model=DNA --num_masks=10']
 
     def test_run_matrix_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_matrix_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/run_cmd_matrix_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -498,29 +434,29 @@ class TestPolyaxonfile(TestCase):
         assert spec.hptuning.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert spec.matrix_space == 3
         assert isinstance(spec.hptuning, HPTuningConfig)
-        declarations = spec.matrix_declaration_test
+        params = spec.matrix_declaration_test
 
         build = spec.build
         assert isinstance(build, BuildConfig)
         assert build.image == 'my_image'
 
-        spec = spec.get_experiment_spec(declarations)
+        spec = spec.get_experiment_spec(params)
         assert spec.environment is None
         assert spec.logging is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
-        # declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-        declarations['num_masks'] = 10
+        # params['num_masks'] = 1 if params['model'] == 'DNA' else 10
+        params['num_masks'] = 10
         assert run.cmd == ('video_prediction_train '
                            '--model="{model}" '
                            '--num_masks={num_masks}').format(
-            **declarations
+            **params
         )
 
     def test_run_matrix_sampling_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/run_cmd_matrix_sampling_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/plain/run_cmd_matrix_sampling_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_group
@@ -535,30 +471,29 @@ class TestPolyaxonfile(TestCase):
             'pvalues': [['relu', 0.1], ['sigmoid', 0.8]]}
         assert spec.hptuning.matrix['model'].to_dict() == {'values': ['CDNA', 'DNA', 'STP']}
         assert isinstance(spec.hptuning, HPTuningConfig)
-        declarations = spec.matrix_declaration_test
+        params = spec.matrix_declaration_test
 
         build = spec.build
         assert isinstance(build, BuildConfig)
         assert build.image == 'my_image'
 
-        spec = spec.get_experiment_spec(declarations)
+        spec = spec.get_experiment_spec(params)
         assert spec.environment is None
         assert spec.logging is not None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.model is None
         run = spec.run
         assert isinstance(run, RunConfig)
-        # declarations['num_masks'] = 1 if declarations['model'] == 'DNA' else 10
-        declarations['num_masks'] = 10
+        # params['num_masks'] = 1 if params['model'] == 'DNA' else 10
+        params['num_masks'] = 10
         assert run.cmd == ('video_prediction_train '
                            '--model="{model}" '
                            '--num_masks={num_masks}').format(
-            **declarations
+            **params
         )
 
     def test_distributed_tensorflow_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_tensorflow_file.yml'))
+            'tests/fixtures/plain/distributed_tensorflow_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
@@ -674,8 +609,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -684,7 +617,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_tensorflow_passes_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_tensorflow_with_node_selectors_file.yml'))
+            'tests/fixtures/plain/distributed_tensorflow_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -754,8 +687,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -793,7 +724,7 @@ class TestPolyaxonfile(TestCase):
             tuple(spec.config.tensorflow.ps_node_selectors[2].items())}
 
     def test_distributed_horovod_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/distributed_horovod_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/distributed_horovod_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -867,8 +798,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -876,7 +805,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_horovod_with_node_selectors_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_horovod_with_node_selectors_file.yml'))
+            'tests/fixtures/plain/distributed_horovod_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -925,8 +854,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -949,7 +876,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_pytorch_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_pytorch_file.yml'))
+            'tests/fixtures/plain/distributed_pytorch_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -1022,8 +949,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1031,7 +956,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_pytorch_with_node_selectors_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_pytorch_with_node_selectors_file.yml'))
+            'tests/fixtures/plain/distributed_pytorch_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -1080,8 +1005,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4, 'limits': 2 + 3 * 4},
             'memory': {'requests': 300 + 256 * 4, 'limits': 300 + 256 * 4},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1104,7 +1027,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_mpi_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_mpi_file.yml'))
+            'tests/fixtures/plain/distributed_mpi_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -1174,14 +1097,13 @@ class TestPolyaxonfile(TestCase):
             'cpu': {'requests': 3 * 8, 'limits': 3 * 8},
             'memory': {'requests': 256 * 8, 'limits': 256 * 8},
             'gpu': {'requests': 4 * 8, 'limits': 4 * 8},
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.WORKER: 8}, True)
 
     def test_distributed_mpi_with_node_selectors_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_mpi_with_node_selectors_file.yml'))
+            'tests/fixtures/plain/distributed_mpi_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -1227,7 +1149,6 @@ class TestPolyaxonfile(TestCase):
             'cpu': {'requests': 3 * 4, 'limits': 3 * 4},
             'memory': {'requests': 256 * 4, 'limits': 256 * 4},
             'gpu': {'requests': 4 * 2, 'limits': 4 * 2},
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.WORKER: 4}, True)
@@ -1246,7 +1167,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_mxnet_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_mxnet_file.yml'))
+            'tests/fixtures/plain/distributed_mxnet_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -1365,8 +1286,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1375,7 +1294,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_distributed_mxnet_with_node_selectors_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/distributed_mxnet_with_node_selectors_file.yml'))
+            'tests/fixtures/plain/distributed_mxnet_with_node_selectors_file.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_experiment
@@ -1449,8 +1368,6 @@ class TestPolyaxonfile(TestCase):
         assert spec.total_resources == {
             'cpu': {'requests': 1 + 3 * 4 + 2 * 9, 'limits': 2 + 3 * 4 + 4 * 9},
             'memory': {'requests': 300 + 256 * 4 + 512, 'limits': 300 + 256 * 4 + 1024},
-            'gpu': None,
-            'tpu': None
         }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
@@ -1489,7 +1406,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_notebook_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/notebook_with_custom_environment.yml'))
+            'tests/fixtures/plain/notebook_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_notebook
@@ -1499,10 +1416,10 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.persistence.outputs == 'outputs1'
-        assert spec.persistence.data == ['data1', 'data2']
+        assert spec.artifact_refs == ['outputs1']
+        assert spec.data_refs == ['data1', 'data2']
         assert spec.secret_refs == ['secret1', 'secret2']
-        assert spec.configmap_refs == ['configmap1', 'configmap2']
+        assert spec.config_map_refs == ['config_map1', 'config_map2']
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.environment.node_selector == node_selector
@@ -1511,8 +1428,6 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None,
-            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1530,7 +1445,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_jupyter_lab_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/jupyterlab_with_custom_environment.yml'))
+            'tests/fixtures/plain/jupyterlab_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_notebook
@@ -1540,10 +1455,10 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.persistence.outputs == 'outputs1'
-        assert spec.persistence.data == ['data1', 'data2']
+        assert spec.artifact_refs == ['outputs1']
+        assert spec.data_refs == ['data1', 'data2']
         assert spec.secret_refs == ['secret1', 'secret2']
-        assert spec.configmap_refs == ['configmap1', 'configmap2']
+        assert spec.config_map_refs == ['config_map1', 'config_map2']
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.environment.node_selector == node_selector
@@ -1552,8 +1467,6 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None,
-            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1571,7 +1484,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_tensorboard_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/tensorboard_with_custom_environment.yml'))
+            'tests/fixtures/plain/tensorboard_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_tensorboard
@@ -1588,8 +1501,6 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None,
-            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1607,7 +1518,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_run_job_with_node_selectors(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/run_with_custom_environment.yml'))
+            'tests/fixtures/plain/run_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_job
@@ -1616,10 +1527,10 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.persistence.outputs == 'outputs1'
-        assert spec.persistence.data == ['data1', 'data2']
+        assert spec.artifact_refs == ['outputs1']
+        assert spec.data_refs == ['data1', 'data2']
         assert spec.secret_refs == ['secret1', 'secret2']
-        assert spec.configmap_refs == ['configmap1', 'configmap2']
+        assert spec.config_map_refs == ['config_map1', 'config_map2']
 
         node_selector = {'polyaxon.com': 'node_for_jobs'}
         assert spec.environment.node_selector == node_selector
@@ -1628,8 +1539,6 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None,
-            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1647,7 +1556,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_build_job_with_custom_environment(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/build_with_custom_environment.yml'))
+            'tests/fixtures/plain/build_with_custom_environment.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_build is True
@@ -1663,8 +1572,6 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None,
-            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources
@@ -1682,7 +1589,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_build_job_with_context_and_dockerfile(self):
         plxfile = PolyaxonFile(os.path.abspath(
-            'tests/fixtures/build_with_context_and_dockerfile.yml'))
+            'tests/fixtures/plain/build_with_context_and_dockerfile.yml'))
         spec = plxfile.specification
         assert spec.version == 1
         assert spec.is_build is True
@@ -1699,8 +1606,6 @@ class TestPolyaxonfile(TestCase):
         resources = {
             'cpu': {'requests': 1, 'limits': 2},
             'memory': {'requests': 200, 'limits': 200},
-            'gpu': None,
-            'tpu': None
         }
         assert spec.environment.resources.to_dict() == resources
         assert spec.resources.to_dict() == resources

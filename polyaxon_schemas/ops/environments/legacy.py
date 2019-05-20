@@ -4,8 +4,8 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.ops.environments.pods import EnvironmentConfig, EnvironmentSchema
 from polyaxon_schemas.ops.experiment.environment import TensorflowClusterSchema
-from polyaxon_schemas.ops.environments.pods import PodEnvironmentConfig, PodEnvironmentSchema
 
 
 class GPUOptionsSchema(BaseSchema):
@@ -99,7 +99,7 @@ class TFRunConfig(BaseConfig):
         self.cluster = cluster
 
 
-class TensorflowPodEnvironmentSchema(PodEnvironmentSchema):
+class TensorflowPodEnvironmentSchema(EnvironmentSchema):
     config = fields.Nested(SessionSchema, allow_none=True)
 
     @staticmethod
@@ -107,10 +107,10 @@ class TensorflowPodEnvironmentSchema(PodEnvironmentSchema):
         return TensorflowPodEnvironmentConfig
 
 
-class TensorflowPodEnvironmentConfig(PodEnvironmentConfig):
+class TensorflowPodEnvironmentConfig(EnvironmentConfig):
     IDENTIFIER = 'pod_environment'
     SCHEMA = TensorflowPodEnvironmentSchema
-    REDUCED_ATTRIBUTES = PodEnvironmentConfig.REDUCED_ATTRIBUTES + ['config']
+    REDUCED_ATTRIBUTES = EnvironmentConfig.REDUCED_ATTRIBUTES + ['config']
 
     def __init__(self,
                  index=None,

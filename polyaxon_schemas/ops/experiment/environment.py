@@ -4,8 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.ops.environments.base import EnvironmentConfig, EnvironmentSchema
-from polyaxon_schemas.ops.environments.pods import PodEnvironmentSchema
+from polyaxon_schemas.ops.environments.pods import EnvironmentConfig, EnvironmentSchema
 
 
 class TensorflowClusterSchema(BaseSchema):
@@ -228,10 +227,10 @@ class TensorflowSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
     delay_workers_by_global_step = fields.Bool(allow_none=True)
-    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    default_ps = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
-    ps = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    default_worker = fields.Nested(EnvironmentSchema, allow_none=True)
+    default_ps = fields.Nested(EnvironmentSchema, allow_none=True)
+    worker = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
+    ps = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -277,8 +276,8 @@ class TensorflowConfig(BaseConfig, FrameworkEnvironmentMixin):
 
 class HorovodSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
-    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    default_worker = fields.Nested(EnvironmentSchema, allow_none=True)
+    worker = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -310,7 +309,7 @@ class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
 
 class MPISchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
-    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
+    default_worker = fields.Nested(EnvironmentSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -339,8 +338,8 @@ class MPIConfig(BaseConfig, FrameworkEnvironmentMixin):
 
 class PytorchSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
-    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    default_worker = fields.Nested(EnvironmentSchema, allow_none=True)
+    worker = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -373,10 +372,10 @@ class PytorchConfig(BaseConfig, FrameworkEnvironmentMixin):
 class MXNetSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
-    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    default_ps = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
-    ps = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    default_worker = fields.Nested(EnvironmentSchema, allow_none=True)
+    default_ps = fields.Nested(EnvironmentSchema, allow_none=True)
+    worker = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
+    ps = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -419,10 +418,10 @@ class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
 class ReplicasSchema(BaseSchema):
     n_workers = fields.Int(allow_none=True)
     n_ps = fields.Int(allow_none=True)
-    default_worker = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    default_ps = fields.Nested(PodEnvironmentSchema, allow_none=True)
-    worker = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
-    ps = fields.Nested(PodEnvironmentSchema, many=True, allow_none=True)
+    default_worker = fields.Nested(EnvironmentSchema, allow_none=True)
+    default_ps = fields.Nested(EnvironmentSchema, allow_none=True)
+    worker = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
+    ps = fields.Nested(EnvironmentSchema, many=True, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -476,40 +475,48 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
     Environment config.
 
     Args:
-        cluster_uuid: `str`. The cluster uuid.
-        persistence: `PersistenceConfig`. The persistence config definition.
-        outputs: `OutputsConfig`. The outputs config definition.
         resources: `PodResourcesConfig`. The resources config definition.
         node_selector: `dict`.
         affinity: `dict`.
         tolerations: `list(dict)`.
-        backend: `str`.
-        framework: `str`.
         replicas: `ReplicasConfig`.
     """
     IDENTIFIER = 'environment'
     SCHEMA = ExperimentEnvironmentSchema
+    REDUCED_ATTRIBUTES = EnvironmentConfig.REDUCED_ATTRIBUTES + ['replicas']
 
     def __init__(self,
-                 cluster_uuid=None,
-                 persistence=None,
-                 outputs=None,
+                 index=None,
                  resources=None,
-                 secret_refs=None,
-                 configmap_refs=None,
                  node_selector=None,
                  affinity=None,
                  tolerations=None,
+                 service_account=None,
+                 image_pull_secrets=None,
+                 max_restarts=None,
+                 secret_refs=None,
+                 config_map_refs=None,
+                 configmap_refs=None,
+                 data_refs=None,
+                 artifact_refs=None,
+                 outputs=None,
+                 persistence=None,
                  replicas=None):
         super(ExperimentEnvironmentConfig, self).__init__(
-            cluster_uuid=cluster_uuid,
-            persistence=persistence,
-            outputs=outputs,
+            index=index,
             resources=resources,
-            secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
+            service_account=service_account,
+            image_pull_secrets=image_pull_secrets,
+            max_restarts=max_restarts,
+            secret_refs=secret_refs,
+            config_map_refs=config_map_refs,
+            configmap_refs=configmap_refs,
+            data_refs=data_refs,
+            artifact_refs=artifact_refs,
+            persistence=persistence,
+            outputs=outputs,
         )
         self.replicas = replicas

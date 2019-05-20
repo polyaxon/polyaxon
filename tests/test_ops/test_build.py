@@ -237,3 +237,10 @@ class TestBuildConfigs(TestCase):
         assert config.to_dict() == config_dict
         assert config.image_tag == '1.3.0'
         assert config.backend == BuildBackend.KANIKO
+
+    def test_build_ref(self):
+        config_dict = {
+            'ref': '12',
+        }
+        config = BuildConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict

@@ -13,7 +13,7 @@ def validate_notebook_backend(backend):
 
 
 class NotebookSchema(BaseRunSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('notebook'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal('notebook'))
     backend = fields.Str(allow_none=True, validate=validate.OneOf(NotebookBackend.VALUES))
 
     @staticmethod
@@ -28,21 +28,36 @@ class NotebookSchema(BaseRunSchema):
 class NotebookConfig(BaseRunConfig):
     IDENTIFIER = 'notebook'
     SCHEMA = NotebookSchema
+    REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ['backend']
 
     def __init__(self,
-                 kind=None,
                  version=None,
+                 kind=None,
                  logging=None,
+                 name=None,
+                 description=None,
                  tags=None,
                  environment=None,
+                 params=None,
+                 declarations=None,
+                 inputs=None,
+                 outputs=None,
                  build=None,
                  backend=None,
                  ):
-        super(NotebookConfig, self).__init__(kind=kind,
-                                             version=version,
-                                             logging=logging,
-                                             tags=tags,
-                                             environment=environment,
-                                             build=build)
+        super(NotebookConfig, self).__init__(
+            version=version,
+            kind=kind,
+            logging=logging,
+            name=name,
+            description=description,
+            tags=tags,
+            environment=environment,
+            params=params,
+            declarations=declarations,
+            inputs=inputs,
+            outputs=outputs,
+            build=build
+        )
         validate_notebook_backend(backend)
         self.backend = backend

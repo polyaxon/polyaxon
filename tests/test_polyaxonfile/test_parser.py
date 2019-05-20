@@ -77,7 +77,7 @@ class TestParser(TestCase):
             ExperimentSpecification, expression, {}, check_graph=True) == expected_expression
 
     def test_parse_graph_with_operators_and_tags(self):
-        declarations = {
+        params = {
             'conv2d':
                 {
                     'filters': [32, 64],
@@ -118,7 +118,7 @@ class TestParser(TestCase):
         result_expression = parser.parse_expression(
             ExperimentSpecification,
             expression,
-            declarations,
+            params,
             check_operators=True,
             check_graph=True)
         expected_result = {'graph': {

@@ -14,7 +14,7 @@ from hestia.list_utils import to_list
 from marshmallow import EXCLUDE, ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.ops.environments.base import EnvironmentConfig
+from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
@@ -45,13 +45,14 @@ class BaseSpecification(object):
     FRAMEWORK = 'framework'
     HP_TUNING = 'hptuning'
     DECLARATIONS = 'declarations'
+    PARAMS = 'params'
     ENVIRONMENT = 'environment'
     RUN = 'run'
     BUILD = 'build'
 
     SECTIONS = (
-        VERSION, KIND, TAGS, BACKEND, FRAMEWORK, ENVIRONMENT, DECLARATIONS, LOGGING, HP_TUNING,
-        BUILD, RUN
+        VERSION, KIND, TAGS, BACKEND, FRAMEWORK, ENVIRONMENT, DECLARATIONS, PARAMS,
+        LOGGING, HP_TUNING, BUILD, RUN
     )
 
     STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS, HP_TUNING)
@@ -256,20 +257,20 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.resources if self.environment else None
 
     @cached_property
-    def persistence(self):
-        return self.environment.persistence if self.environment else None
+    def artifact_refs(self):
+        return self.environment.artifact_refs if self.environment else None
 
     @cached_property
-    def outputs(self):
-        return self.environment.outputs if self.environment else None
+    def data_refs(self):
+        return self.environment.data_refs if self.environment else None
 
     @cached_property
     def secret_refs(self):
         return self.environment.secret_refs if self.environment else None
 
     @cached_property
-    def configmap_refs(self):
-        return self.environment.configmap_refs if self.environment else None
+    def config_map_refs(self):
+        return self.environment.config_map_refs if self.environment else None
 
     @cached_property
     def node_selector(self):

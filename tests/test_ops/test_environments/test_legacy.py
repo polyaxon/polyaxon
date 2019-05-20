@@ -5,8 +5,8 @@ from unittest import TestCase
 
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.experiment.environment import TensorflowClusterConfig
 from polyaxon_schemas.ops.environments.legacy import GPUOptionsConfig, SessionConfig, TFRunConfig
+from polyaxon_schemas.ops.experiment.environment import TensorflowClusterConfig
 from polyaxon_schemas.utils import TaskType
 
 

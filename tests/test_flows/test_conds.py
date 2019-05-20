@@ -5,78 +5,82 @@ from unittest import TestCase
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.flows.conds import CondSchema, OutputsCondConfig, StatusCondConfig
+from polyaxon_schemas.flows.conditions import (
+    ConditionSchema,
+    OutputsConditionConfig,
+    StatusConditionConfig
+)
 
 
 class TestCondsConfigs(TestCase):
     def test_status_cond(self):
         config_dict = {'foo': 'bar', 'op': 'foo', 'trigger': 'done'}
         with self.assertRaises(ValidationError):
-            StatusCondConfig.from_dict(config_dict)
+            StatusConditionConfig.from_dict(config_dict)
 
         config_dict = {'kind': 'foo', 'op': 'foo', 'trigger': 'done'}
         with self.assertRaises(ValidationError):
-            StatusCondConfig.from_dict(config_dict)
+            StatusConditionConfig.from_dict(config_dict)
 
         config_dict = {
             'op': 'foo',
             'trigger': 'done'
         }
-        StatusCondConfig.from_dict(config_dict)
+        StatusConditionConfig.from_dict(config_dict)
 
         config_dict = {
-            'kind': 'status_cond',
+            'kind': 'status',
             'op': 'foo',
             'trigger': 'done'
         }
-        StatusCondConfig.from_dict(config_dict)
+        StatusConditionConfig.from_dict(config_dict)
 
     def test_outputs_cond(self):
         config_dict = {'op': 'foo', 'exp': 'done', 'params': ['op1.done', 'foo']}
         with self.assertRaises(ValidationError):
-            OutputsCondConfig.from_dict(config_dict)
+            OutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {'kind': 'foo',
                        'op': 'foo',
                        'exp': 'eq',
                        'params': [['op1.done', 'foo']]}
         with self.assertRaises(ValidationError):
-            OutputsCondConfig.from_dict(config_dict)
+            OutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {'op': 'foo',
                        'exp': 'eq',
                        'params': ['op1.done', 'foo']}
         with self.assertRaises(ValidationError):
-            OutputsCondConfig.from_dict(config_dict)
+            OutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {
             'op': 'foo',
             'exp': 'eq',
             'params': [['op1.done', 'foo']]
         }
-        OutputsCondConfig.from_dict(config_dict)
+        OutputsConditionConfig.from_dict(config_dict)
 
         config_dict = {
-            'kind': 'outputs_cond',
+            'kind': 'outputs',
             'op': 'foo',
             'exp': 'eq',
             'params': [['op1.done', 'foo']]
         }
-        OutputsCondConfig.from_dict(config_dict)
+        OutputsConditionConfig.from_dict(config_dict)
 
     def test_conds(self):
         configs = [
             {
-                'kind': 'status_cond',
+                'kind': 'status',
                 'op': 'foo',
                 'trigger': 'done'
             },
             {
-                'kind': 'outputs_cond',
+                'kind': 'outputs',
                 'op': 'foo',
                 'exp': 'eq',
                 'params': [['op1.done', 'foo']]
             }
         ]
 
-        CondSchema().load(configs, many=True)
+        ConditionSchema().load(configs, many=True)

@@ -321,3 +321,6 @@ class BaseMultiSchema(Schema):
             return [handle_item(item) for item in original]
 
         return handle_item(original)
+
+
+NAME_REGEX = r'^[-a-zA-Z0-9_]+\Z'

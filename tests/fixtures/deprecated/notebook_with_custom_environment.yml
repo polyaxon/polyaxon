@@ -1,20 +1,18 @@
 ---
 version: 1
 
-kind: job
+kind: notebook
 
 tags: ['foo', 'bar']
 
 environment:
+  node_selector:
+    polyaxon.com: node_for_notebook_jobs
+
   persistence:
     data: ['data1', 'data2']
     outputs: 'outputs1'
-
-  node_selector:
-    polyaxon.com: node_for_jobs
-
-  secret_refs: ['secret1', 'secret2']
-  configmap_refs: ['configmap1', 'configmap2']
+  configmap_refs: ['config_map1', 'config_map2']
 
   resources:
     cpu:
@@ -39,7 +37,4 @@ build:
   env_vars:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
-
-run:
-  cmd: test
 ...

@@ -25,7 +25,7 @@ class GroupSpecification(BaseSpecification):
         TAGS: defines the tags
         HYPER_PARAMS: hyper params tuning and concurrent runs.
         ENVIRONMENT: defines the run environment for experiment.
-        DECLARATIONS: variables/modules that can be reused.
+        PARAMS: variables/modules that can be reused.
         RUN: defines the run step where the user can set a docker image to execute
         MODEL: defines the model to use based on the declarative API.
         TRAIN: defines how to train a model and how to read the data.
@@ -45,8 +45,6 @@ class GroupSpecification(BaseSpecification):
     HEADER_SECTIONS = ExperimentSpecification.HEADER_SECTIONS + (
         BaseSpecification.HP_TUNING,
     )
-
-    GRAPH_SECTIONS = ExperimentSpecification.GRAPH_SECTIONS
 
     REQUIRED_SECTIONS = ExperimentSpecification.REQUIRED_SECTIONS + (
         BaseSpecification.HP_TUNING,
@@ -101,8 +99,8 @@ class GroupSpecification(BaseSpecification):
         return self.environment.get('secret_refs') if self.environment else None
 
     @cached_property
-    def configmap_refs(self):
-        return self.environment.get('configmap_refs') if self.environment else None
+    def config_map_refs(self):
+        return self.environment.get('config_map_refs') if self.environment else None
 
     @cached_property
     def persistence(self):

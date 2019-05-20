@@ -8,7 +8,7 @@ from polyaxon_schemas.ops.group.metrics import Optimization
 
 
 class MedianStoppingPolicySchema(BaseSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('median'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal('median'))
     evaluation_interval = fields.Int()
 
     @staticmethod
@@ -37,7 +37,7 @@ class MedianStoppingPolicyConfig(BaseConfig):
 
 
 class AverageStoppingPolicySchema(BaseSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('average'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal('average'))
     evaluation_interval = fields.Int()
 
     @staticmethod
@@ -66,7 +66,7 @@ class AverageStoppingPolicyConfig(BaseConfig):
 
 
 class TruncationStoppingPolicySchema(BaseSchema):
-    kind = fields.Str(allow_none=None, validate=validate.Equal('truncation'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal('truncation'))
     percent = fields.Int()
     evaluation_interval = fields.Int()
 

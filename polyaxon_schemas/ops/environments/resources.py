@@ -74,6 +74,7 @@ class K8SResourcesConfig(BaseConfig):
     """
     IDENTIFIER = 'resources'
     SCHEMA = K8SResourcesSchema
+    REDUCED_ATTRIBUTES = ['limits', 'requests']
 
     def __init__(self, limits=None, requests=None):
         self.limits = limits
@@ -121,6 +122,7 @@ class PodResourcesConfig(BaseConfig):
     """
     IDENTIFIER = 'pod_resources'
     SCHEMA = PodResourcesSchema
+    REDUCED_ATTRIBUTES = ['cpu', 'memory', 'gpu', 'tpu']
 
     def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu

@@ -5,16 +5,17 @@ kind: notebook
 
 tags: ['foo', 'bar']
 
+backend: lab
+
 environment:
-  persistence:
-    data: ['data1', 'data2']
-    outputs: 'outputs1'
 
   node_selector:
     polyaxon.com: node_for_notebook_jobs
 
+  artifact_refs: ['outputs1']
+  data_refs: ['data1', 'data2']
   secret_refs: ['secret1', 'secret2']
-  configmap_refs: ['configmap1', 'configmap2']
+  config_map_refs: ['config_map1', 'config_map2']
 
   resources:
     cpu:

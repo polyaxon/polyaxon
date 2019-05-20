@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from hestia.humanize import humanize_timedelta
 from marshmallow import fields, validate
 
-from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon_schemas.fields import UUID
 from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
 
@@ -14,8 +14,8 @@ class BaseJobSchema(BaseSchema):
     uuid = UUID(allow_none=True)
     unique_name = fields.Str(allow_none=True)
     pod_id = fields.Str(allow_none=True)
-    name = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
-    user = fields.Str(validate=validate.Regexp(regex=r'^[-a-zA-Z0-9_]+\Z'), allow_none=True)
+    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    user = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     project = fields.Str(allow_none=True)
     build_job = fields.Str(allow_none=True)
     description = fields.Str(allow_none=True)

@@ -8,9 +8,8 @@ hptuning:
     loss:
       values: [MeanSquaredError, AbsoluteDifference]
 
-declarations:
+params:
   lr: 0.1
-
 
 run:
   cmd: train --loss="{{ loss }}"

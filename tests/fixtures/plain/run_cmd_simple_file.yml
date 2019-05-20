@@ -5,7 +5,7 @@ kind: experiment
 
 tags: ['foo', 'bar']
 
-declarations:
+params:
   num_masks: 2
 
 build:

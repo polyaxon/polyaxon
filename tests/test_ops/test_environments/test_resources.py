@@ -128,7 +128,7 @@ class TestResourcesConfigs(TestCase):
         config2 = PodResourcesConfig.from_dict(config_dict2)
 
         config = config1 + config2
-        assert config.cpu.to_dict() == {'requests': 0.8, 'limits': None}
+        assert config.cpu.to_dict() == {'requests': 0.8}
         assert config.memory.to_dict() == {'requests': 500, 'limits': 500}
         assert config.gpu.to_dict() == {'requests': 2, 'limits': 4}
         assert config.tpu.to_dict() == {'requests': 4, 'limits': 4}
