@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='buildjob',
             name='backend',
-            field=models.CharField(blank=True, default='native', max_length=16, null=True),
+            field=models.CharField(blank=True, max_length=16, null=True),
         ),
         migrations.AddField(
             model_name='buildjob',

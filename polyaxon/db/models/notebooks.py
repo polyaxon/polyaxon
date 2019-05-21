@@ -6,16 +6,17 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
+from db.models.abstract.backend import BackendModel
 from db.models.abstract.datarefs import DataReference
 from db.models.abstract.job import AbstractJobStatus, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_notebook_spec_config
-from schemas import NotebookBackend, NotebookSpecification
+from schemas import NotebookSpecification
 
 
-class NotebookJob(PluginJobBase, DataReference, JobMixin):
+class NotebookJob(PluginJobBase, BackendModel, DataReference, JobMixin):
     """A model that represents the configuration for tensorboard job."""
     JOBS_NAME = 'notebooks'
 
@@ -28,11 +29,6 @@ class NotebookJob(PluginJobBase, DataReference, JobMixin):
         blank=True,
         help_text='The yaml content of the polyaxonfile/specification.',
         validators=[validate_notebook_spec_config])
-    backend = models.CharField(
-        max_length=16,
-        blank=True,
-        null=True,
-        default=NotebookBackend.NOTEBOOK)
     status = models.OneToOneField(
         'db.NotebookJobStatus',
         related_name='+',

@@ -63,12 +63,14 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='experiment',
             name='backend',
-            field=models.CharField(blank=True, default='native', max_length=16, null=True),
+            field=models.CharField(blank=True, max_length=16, null=True),
         ),
         migrations.AddField(
             model_name='notebookjob',
             name='backend',
-            field=models.CharField(blank=True, default='notebook', max_length=16, null=True),
+            field=models.CharField(blank=True,
+                                   help_text='The default backend use for running this entity.',
+                                   max_length=16, null=True),
         ),
         migrations.RunPython(migrate_build_backend),
         migrations.RunPython(migrate_experiment_backend),

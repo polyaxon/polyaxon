@@ -39,3 +39,7 @@ this is issue is noticed in Minikube because start the cluster with RBAC disable
 ### Polyaxon cannot be installed with latest helm version
 
 [Github #455](https://github.com/polyaxon/polyaxon/issues/455) -> Fixed
+
+### Default build backend was ignored in some instances
+
+[Github #457](https://github.com/polyaxon/polyaxon/issues/457) -> Fixed

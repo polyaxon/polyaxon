@@ -1,22 +1,32 @@
-from hestia.signal_decorators import ignore_raw, ignore_updates
-
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, pre_save
 from django.dispatch import receiver
 
-from db.models.pipelines import OperationRun, PipelineRun
+from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_pre
+
+from constants.backends import NATIVE_BACKEND
+from db.models.pipelines import OperationRun, PipelineRun, Pipeline
 from lifecycles.pipelines import PipelineLifeCycle
+from signals.backend import set_backend
 
 
-@receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_saved")
+@receiver(pre_save, sender=Pipeline, dispatch_uid="pipeline_pre_save")
+@ignore_updates_pre
+@ignore_raw
+def experiment_group_pre_save(sender, **kwargs):
+    instance = kwargs['instance']
+    set_backend(instance=instance, default_backend=NATIVE_BACKEND)
+
+
+@receiver(post_save, sender=PipelineRun, dispatch_uid="pipeline_run_post_save")
 @ignore_updates
 @ignore_raw
-def new_pipeline_run(sender, **kwargs):
+def pipeline_run_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(PipelineLifeCycle.CREATED)
 
 
-@receiver(pre_delete, sender=OperationRun, dispatch_uid="operation_run_deleted")
+@receiver(pre_delete, sender=OperationRun, dispatch_uid="operation_run_pre_delete")
 @ignore_raw
-def operation_run_deleted(sender, **kwargs):
+def operation_run_pre_delete(sender, **kwargs):
     instance = kwargs['instance']
     instance.entity.delete()
