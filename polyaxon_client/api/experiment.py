@@ -454,6 +454,7 @@ class ExperimentApi(BaseApiHandler):
                           project_name,
                           experiment_id,
                           content=None,
+                          is_managed=True,
                           background=False):
         request_url = self.build_url(self._get_http_url(),
                                      username,
@@ -463,7 +464,10 @@ class ExperimentApi(BaseApiHandler):
                                      'tensorboard',
                                      'start')
 
-        job_config = {'content': self.validate_content(content=content)} if content else {}
+        job_config = {
+            'content': self.validate_content(content=content),
+            'is_managed': is_managed
+        } if content else {}
 
         if background:
             self.transport.async_post(request_url, json_data=job_config)
