@@ -12,6 +12,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.db.models import Q
 from django.dispatch import Signal
+from django.utils.functional import cached_property
 
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.deleted import DeletedModel
@@ -154,6 +155,10 @@ class Pipeline(DiffModel,
     @property
     def has_specification(self) -> bool:
         return self.content is not None
+
+    @cached_property
+    def specification(self) -> 'PipelineSpecification':
+        return None  # TODO
 
     @property
     def dag(self) -> Tuple[Dict, Dict]:

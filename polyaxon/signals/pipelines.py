@@ -12,7 +12,7 @@ from signals.backend import set_backend
 @receiver(pre_save, sender=Pipeline, dispatch_uid="pipeline_pre_save")
 @ignore_updates_pre
 @ignore_raw
-def experiment_group_pre_save(sender, **kwargs):
+def pipeline_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_backend(instance=instance, default_backend=NATIVE_BACKEND)
 
