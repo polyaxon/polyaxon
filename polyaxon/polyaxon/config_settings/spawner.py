@@ -34,6 +34,9 @@ TENSORBOARD_PORT_RANGE = [5700, 6700]
 NOTEBOOK_PORT_RANGE = [6700, 7700]
 
 # DNS Cluster
+DNS_USE_RESOLVER = config.get_boolean('POLYAXON_DNS_USE_RESOLVER',
+                                      is_optional=True,
+                                      default=False)
 DNS_CUSTOM_CLUSTER = config.get_string('POLYAXON_DNS_CUSTOM_CLUSTER',
                                        is_optional=True,
                                        default='cluster.local')
@@ -177,3 +180,7 @@ SECURITY_CONTEXT_USER = config.get_int('POLYAXON_SECURITY_CONTEXT_USER',
                                        is_optional=True)
 SECURITY_CONTEXT_GROUP = config.get_int('POLYAXON_SECURITY_CONTEXT_GROUP',
                                         is_optional=True)
+# Plugins
+PLUGINS = config.get_dict_of_dicts('POLYAXON_PLUGINS',
+                                   is_optional=True,
+                                   default={})

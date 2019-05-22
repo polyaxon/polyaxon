@@ -24,13 +24,18 @@ class ProjectJobSpawner(K8SManager):
                          in_cluster=in_cluster)
 
     @staticmethod
-    def _get_proxy_url(namespace, job_name, deployment_name, port):
-        return '/{}/proxy/{}.{}.svc.{}:{}'.format(
-            job_name,
-            deployment_name,
-            namespace,
-            conf.get('DNS_CUSTOM_CLUSTER'),
-            port)
+    def _get_plugin_port(job_name):
+        return conf.get('PLUGINS').get(job_name, {'port': 5000})['port']
+
+    @staticmethod
+    def _get_proxy_url(namespace, job_name, deployment_name):
+        if conf.get('DNS_USE_RESOLVER'):
+            return '/{}/proxy/{}.{}.svc.{}'.format(
+                job_name,
+                deployment_name,
+                namespace,
+                conf.get('DNS_CUSTOM_CLUSTER'))
+        return '/{}/proxy/{}'.format(job_name, deployment_name)
 
     def _get_service_url(self, job_name):
         deployment_name = JOB_NAME_FORMAT.format(name=job_name, job_uuid=self.job_uuid)
@@ -39,8 +44,7 @@ class ProjectJobSpawner(K8SManager):
             return self._get_proxy_url(
                 namespace=self.namespace,
                 job_name=job_name,
-                deployment_name=deployment_name,
-                port=service.spec.ports[0].port)
+                deployment_name=deployment_name)
         return None
 
     @staticmethod

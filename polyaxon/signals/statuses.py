@@ -54,7 +54,7 @@ from event_manager.events.notebook import (
     NOTEBOOK_STOPPED,
     NOTEBOOK_SUCCEEDED
 )
-from event_manager.events.pipeline_run import PIPELINE_RUN_STOPPED, PIPELINE_RUN_SKIPPED
+from event_manager.events.pipeline_run import PIPELINE_RUN_SKIPPED, PIPELINE_RUN_STOPPED
 from event_manager.events.tensorboard import (
     TENSORBOARD_FAILED,
     TENSORBOARD_NEW_STATUS,

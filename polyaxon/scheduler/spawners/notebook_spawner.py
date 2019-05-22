@@ -31,8 +31,6 @@ from scheduler.spawners.templates.volumes import (
 
 
 class NotebookSpawner(ProjectJobSpawner):
-    PORT = 8888
-
     def __init__(self,
                  project_name,
                  project_uuid,
@@ -75,6 +73,7 @@ class NotebookSpawner(ProjectJobSpawner):
                          k8s_config=k8s_config,
                          namespace=namespace,
                          in_cluster=in_cluster)
+        self.port = self._get_plugin_port(NOTEBOOK_JOB_NAME)
 
     def get_notebook_url(self):
         return self._get_service_url(NOTEBOOK_JOB_NAME)
@@ -94,7 +93,7 @@ class NotebookSpawner(ProjectJobSpawner):
 
     def request_notebook_port(self):
         if not self._use_ingress():
-            return self.PORT
+            return self.port
 
         labels = 'app={},role={}'.format(conf.get('APP_LABELS_NOTEBOOK'),
                                          conf.get('ROLE_LABELS_DASHBOARD'))
@@ -106,7 +105,6 @@ class NotebookSpawner(ProjectJobSpawner):
 
     def get_notebook_args(self,
                           deployment_name,
-                          ports,
                           mount_code_in_notebooks=False,
                           backend=None):
         backend = backend or conf.get('NOTEBOOK_BACKEND')
@@ -114,8 +112,7 @@ class NotebookSpawner(ProjectJobSpawner):
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
             job_name=NOTEBOOK_JOB_NAME,
-            deployment_name=deployment_name,
-            port=ports[0])
+            deployment_name=deployment_name)
 
         if mount_code_in_notebooks:
             notebook_dir = get_project_repos_path(self.project_name)
@@ -134,7 +131,7 @@ class NotebookSpawner(ProjectJobSpawner):
             "--NotebookApp.base_url={base_url} "
             "--NotebookApp.notebook_dir={notebook_dir} ".format(
                 backend=backend,
-                port=self.PORT,
+                port=self.port,
                 token=notebook_token,
                 base_url=notebook_url,
                 notebook_dir=notebook_dir)]
@@ -160,7 +157,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        backend=None,
                        mount_code_in_notebooks=False):
         ports = [self.request_notebook_port()]
-        target_ports = [self.PORT]
+        target_ports = [self.port]
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
@@ -191,7 +188,6 @@ class NotebookSpawner(ProjectJobSpawner):
 
         resource_name = self.resource_manager.get_resource_name()
         args = self.get_notebook_args(deployment_name=resource_name,
-                                      ports=ports,
                                       mount_code_in_notebooks=mount_code_in_notebooks,
                                       backend=backend)
         command = ["/bin/sh", "-c"]

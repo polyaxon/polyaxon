@@ -25,7 +25,6 @@ class TensorboardValidation(Exception):
 
 
 class TensorboardSpawner(ProjectJobSpawner):
-    PORT = 6006
     STORE_SECRET_VOLUME_NAME = 'plx-{}-secret'  # noqa
     STORE_SECRET_MOUNT_PATH = '/tmp'  # noqa
     STORE_SECRET_KEY_MOUNT_PATH = STORE_SECRET_MOUNT_PATH + '/.' + STORE_SECRET_VOLUME_NAME
@@ -72,13 +71,14 @@ class TensorboardSpawner(ProjectJobSpawner):
                          k8s_config=k8s_config,
                          namespace=namespace,
                          in_cluster=in_cluster)
+        self.port = self._get_plugin_port(TENSORBOARD_JOB_NAME)
 
     def get_tensorboard_url(self):
         return self._get_service_url(TENSORBOARD_JOB_NAME)
 
     def request_tensorboard_port(self):
         if not self._use_ingress():
-            return self.PORT
+            return self.port
 
         labels = 'app={},role={}'.format(conf.get('APP_LABELS_TENSORBOARD'),
                                          conf.get('ROLE_LABELS_DASHBOARD'))
@@ -151,7 +151,7 @@ class TensorboardSpawner(ProjectJobSpawner):
                           affinity=None,
                           tolerations=None):
         ports = [self.request_tensorboard_port()]
-        target_ports = [self.PORT]
+        target_ports = [self.port]
         volumes, volume_mounts = get_pod_outputs_volume(persistence_outputs)
         refs_volumes, refs_volume_mounts = get_pod_refs_outputs_volumes(
             outputs_refs=outputs_refs_jobs,
@@ -178,9 +178,20 @@ class TensorboardSpawner(ProjectJobSpawner):
         volume_mounts += secrets_volume_mounts
 
         resource_name = self.resource_manager.get_resource_name()
+        tensorboard_url = self._get_proxy_url(
+            namespace=self.namespace,
+            job_name=TENSORBOARD_JOB_NAME,
+            deployment_name=resource_name)
         # Get persistence outputs secrets auth commands
         command_args = self.get_stores_secrets_command_args(stores_secrets=stores_secrets)
-        command_args.append("tensorboard --logdir={} --port={}".format(outputs_path, self.PORT))
+        command_args.append(
+            "tensorboard "
+            "--logdir={log_dir} "
+            "--port={port} "
+            "--path_prefix={path_prefix}".format(
+                log_dir=outputs_path,
+                port=self.port,
+                path_prefix=tensorboard_url))
         args = [' && '.join(command_args)]
         command = ["/bin/sh", "-c"]
 

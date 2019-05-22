@@ -4,8 +4,8 @@ from executor.handlers.experiment_group import ExperimentGroupHandler
 from executor.handlers.experiment_job import ExperimentJobHandler
 from executor.handlers.job import JobHandler
 from executor.handlers.notebook import NotebookHandler
-from executor.handlers.tensorboard import TensorboardHandler
 from executor.handlers.pipeline_runs import PipelineRunHandler
+from executor.handlers.tensorboard import TensorboardHandler
 from executor.service import BaseExecutorService
 
 
