@@ -205,7 +205,7 @@ class ConfigManager(rhea.Rhea):
 
     @property
     def log_level(self) -> str:
-        if config.is_staging_env:
+        if config.is_staging_env or config.is_local_env:
             return self._log_level
         elif self._log_level == 'DEBUG':
             return 'INFO'

@@ -43,3 +43,7 @@ this is issue is noticed in Minikube because start the cluster with RBAC disable
 ### Default build backend was ignored in some instances
 
 [Github #457](https://github.com/polyaxon/polyaxon/issues/457) -> Fixed
+
+### Support latest version of jupyter lab
+
+[Github #422](https://github.com/polyaxon/polyaxon/issues/422) JupyterLab cannot resolve some paths, namely the css/theme path. -> Fixed
