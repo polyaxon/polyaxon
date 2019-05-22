@@ -605,3 +605,7 @@ intervals:  # in seconds
 
 cleaningIntervals:  # in days
   archived: 7
+
+plugins:
+  notebook: {port: 8888}
+  tensorboard: {port: 6006}

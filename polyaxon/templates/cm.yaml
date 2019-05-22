@@ -216,6 +216,8 @@ data:
   POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner | quote }}
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_BUILD_ALWAYS_PULL_LATEST: {{ default "false" .Values.build_always_pull_latest | quote }}
+  POLYAXON_PLUGINS: {{ toJson .Values.plugins | quote }}
+  POLYAXON_DNS_USE_RESOLVER: "true"
   # Default images for tensorboards
   {{- if .Values.tensorboardDockerImage }}
   POLYAXON_TENSORBOARD_DOCKER_IMAGE: {{ .Values.tensorboardDockerImage | quote }}
