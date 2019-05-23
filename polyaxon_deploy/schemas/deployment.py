@@ -25,8 +25,8 @@ from polyaxon_deploy.schemas.service import (
     HooksSchema,
     PostgresqlSchema,
     RabbitmqSchema,
-    ServiceSchema
-)
+    ServiceSchema,
+    RedisSchema)
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.ssl import SSLSchema
 
@@ -72,7 +72,10 @@ class DeploymentSchema(BaseSchema):
     tablesHook = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
-    rabbitmq = fields.Nested(RabbitmqSchema, allow_none=True)
+    redis = fields.Nested(RedisSchema, allow_none=True)
+    rabbitmq = fields.Nested(RabbitmqSchema,
+                             attribute="rabbitmq-ha",
+                             allow_none=True)
     dockerRegistry = fields.Nested(DockerRegistrySchema,
                                    attribute="docker-registry",
                                    allow_none=True)
@@ -150,6 +153,7 @@ class DeploymentConfig(BaseConfig):
                  tablesHook=None,
                  hooks=None,
                  postgresql=None,
+                 redis=None,
                  rabbitmq=None,
                  dockerRegistry=None,
                  email=None,
@@ -216,6 +220,7 @@ class DeploymentConfig(BaseConfig):
         self.tablesHook = tablesHook
         self.hooks = hooks
         self.postgresql = postgresql
+        self.redis = redis
         self.rabbitmq = rabbitmq
         self.dockerRegistry = dockerRegistry
         self.email = email
