@@ -1488,8 +1488,7 @@ class BaseTestPluginViewV1(BaseViewTest):
         return ProjectJobSpawner._get_proxy_url(  # pylint:disable=protected-access
             namespace='polyaxon',
             job_name=cls.plugin_app,
-            deployment_name=deployment_name,
-            port=12503)
+            deployment_name=deployment_name)
 
     def test_rejects_anonymous_user_and_redirected_to_login_page(self):
         project = ProjectFactory()
