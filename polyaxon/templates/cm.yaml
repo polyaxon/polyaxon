@@ -41,7 +41,6 @@ data:
   {{- end }}
   POLYAXON_K8S_APP_CONFIG_NAME: {{ template "polyaxon.fullname" . }}-config
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
-  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "rabbitmq.fullname" . }}
   {{- if .Values.k8s.host }}
   POLYAXON_K8S_HOST: {{ .Values.k8s.host | quote }}
   {{- end}}
@@ -51,6 +50,16 @@ data:
   {{- if .Values.logLevel }}
   POLYAXON_LOG_LEVEL: {{ .Values.logLevel | quote }}
   {{- end }}
+  {{- if (index .Values "rabbitmq-ha").enabled }}
+  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "rabbitmq.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_RABBITMQ_SECRET_NAME: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
+  {{- end}}
+  {{- if .Values.redis.enabled }}
+  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "redis.fullname" . }}
+  {{- else }}
+  POLYAXON_K8S_REDIS_SECRET_NAME: {{ template "polyaxon.fullname" . }}-redis-secret
+  {{- end}}
   {{- if .Values.postgresql.enabled }}
   POLYAXON_K8S_DB_SECRET_NAME: {{ template "postgresql.fullname" . }}
   {{- else }}
@@ -144,27 +153,23 @@ data:
   # DB
   POLYAXON_DB_USER: {{ default "polyaxon" .Values.postgresql.postgresUser | quote }}
   POLYAXON_DB_NAME: {{ default "polyaxon" .Values.postgresql.postgresDatabase | quote }}
-  POLYAXON_DB_PORT: "5432"
+  POLYAXON_DB_PORT: "{{ template "postgresql.port" . }}"
   POLYAXON_DB_CONN_MAX_AGE: {{ default "60" .Values.postgresql.connMaxAge | quote }}
-  {{- if .Values.postgresql.enabled }}
-  POLYAXON_DB_HOST: {{  template "postgresql.fullname" . }}
-  {{- else }}
-  POLYAXON_DB_HOST: {{ .Values.postgresql.externalPostgresHost | quote }}
-  {{- end }}
+  POLYAXON_DB_HOST: "{{ template "postgresql.host" . }}"
   # AMQP
-  POLYAXON_AMQP_URL: {{ template "rabbitmq.fullname" . }}:5672
+  POLYAXON_AMQP_URL: {{ template "rabbitmq.host" . }}:{{ template "rabbitmq.port" . }}
   POLYAXON_RABBITMQ_USER: {{ default "" (index .Values "rabbitmq-ha").rabbitmqUsername | quote }}
-    # REDIS
-  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.fullname" . }}-master:6379/0
-  POLYAXON_REDIS_JOB_CONTAINERS_URL: {{ template "redis.fullname" . }}-master:6379/3
-  POLYAXON_REDIS_TO_STREAM_URL: {{ template "redis.fullname" . }}-master:6379/4
-  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.fullname" . }}-master:6379/5
-  POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: {{ template "redis.fullname" . }}-master:6379/6
-  POLYAXON_REDIS_TTL_URL: {{ template "redis.fullname" . }}-master:6379/7
-  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.fullname" . }}-master:6379/8
-  POLYAXON_REDIS_GROUP_CHECKS_URL: {{ template "redis.fullname" . }}-master:6379/9
-  POLYAXON_REDIS_HOST: {{ template "redis.fullname" . }}-master
-  POLYAXON_REDIS_PORT: "6379"
+  # REDIS
+  POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
+  POLYAXON_REDIS_JOB_CONTAINERS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/3
+  POLYAXON_REDIS_TO_STREAM_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/4
+  POLYAXON_REDIS_SESSIONS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/5
+  POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/6
+  POLYAXON_REDIS_TTL_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/7
+  POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/8
+  POLYAXON_REDIS_GROUP_CHECKS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/9
+  POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
+  POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
   # Security Context
   {{- if and .Values.securityContext.enabled }}
   POLYAXON_SECURITY_CONTEXT_USER: {{ .Values.securityContext.user | quote }}
@@ -234,16 +239,10 @@ data:
   POLYAXON_MOUNT_CODE_IN_NOTEBOOKS: {{ .Values.mountCodeInNotebooks | quote }}
   {{- end }}
   # Registry
-  {{- if (index .Values "docker-registry").enabled }}
-  POLYAXON_REGISTRY_IN_CLUSTER: "true"
-  POLYAXON_REGISTRY_HOST: {{ template "docker-registry.fullname" . }}
-  POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").service.port | quote }}
+  POLYAXON_REGISTRY_HOST: "{{ template "docker-registry.host" . }}"
+  POLYAXON_REGISTRY_PORT: "{{ template "docker-registry.port" . }}"
+  POLYAXON_REGISTRY_IN_CLUSTER: {{ (index .Values "docker-registry").enabled | quote }}
   POLYAXON_REGISTRY_NODE_PORT: {{ (index .Values "docker-registry").service.nodePort | quote }}
-  {{- else }}
-  POLYAXON_REGISTRY_IN_CLUSTER: "false"
-  POLYAXON_REGISTRY_HOST: {{ (index .Values "docker-registry").external.host }}
-  POLYAXON_REGISTRY_PORT: {{ (index .Values "docker-registry").external.port | quote }} 
-  {{- end }}
   # Versions
   POLYAXON_CLI_MIN_VERSION: "0.4.2"
   POLYAXON_CLI_LATEST_VERSION: "0.4.4"

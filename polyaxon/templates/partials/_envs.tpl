@@ -9,13 +9,21 @@ secrets config
 - name: POLYAXON_RABBITMQ_PASSWORD
   valueFrom:
     secretKeyRef:
+{{- if (index .Values "rabbitmq-ha").enabled }}
       name: {{ template "rabbitmq.fullname" . }}
+{{- else }}
+      name: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
+{{- end }}
       key: rabbitmq-password
 {{- if .Values.redis.usePassword }}
 - name: POLYAXON_REDIS_PASSWORD
   valueFrom:
     secretKeyRef:
+{{- if .Values.redis.enabled }}
       name: {{ template "redis.fullname" . }}
+{{- else }}
+      name: {{ template "polyaxon.fullname" . }}-redis-secret
+{{- end }}
       key: redis-password
 {{- end }}
 {{- if (index .Values "docker-registry").auth.password }}

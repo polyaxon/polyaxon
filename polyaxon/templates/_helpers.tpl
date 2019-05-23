@@ -29,29 +29,3 @@ Return the appropriate apiVersion for networkpolicy.
 "networking.k8s.io/v1"
 {{- end -}}
 {{- end -}}
-
-
-{{/*
-Create a default fully qualified app names.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-
-{{- define "postgresql.fullname" -}}
-{{- $name := "postgresql" -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "docker-registry.fullname" -}}
-{{- $name := "docker-registry" -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "redis.fullname" -}}
-{{- $name := default "redis" -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{- define "rabbitmq.fullname" -}}
-{{- $name := "rabbitmq-ha" -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}

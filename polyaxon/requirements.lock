@@ -11,5 +11,5 @@ dependencies:
 - name: docker-registry
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 1.7.1
-digest: sha256:98bc683027ee918ecafe09dac8a81d4e4fc175652e9c148c07e27f2954fe9a50
-generated: 2019-04-27T20:18:51.835734012+02:00
+digest: sha256:b8fdf0537d95bdbc075db37709856e82446a09651ce8bb16cafd5f40d3b1341f
+generated: 2019-05-23T18:44:39.706081+02:00

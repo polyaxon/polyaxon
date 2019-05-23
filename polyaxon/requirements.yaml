@@ -6,9 +6,11 @@ dependencies:
   - name: rabbitmq-ha
     version: 1.25.0
     repository: https://kubernetes-charts.storage.googleapis.com/
+    condition: rabbitmq-ha.enabled
   - name: redis
     version: 7.0.0
     repository: https://kubernetes-charts.storage.googleapis.com/
+    condition: redis.enabled
   - name: docker-registry
     version: 1.7.1
     repository: https://kubernetes-charts.storage.googleapis.com/

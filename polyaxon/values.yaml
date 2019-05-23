@@ -452,14 +452,23 @@ postgresql:
             topologyKey: "kubernetes.io/hostname"
 
 redis:
+  # Whether to deploy a redis server in-cluster.
+  # To use an external redis instance:
+  #  * set enabled to False, to disable the in-cluster deployment
+  #  * configure external redis required attributes:
+  #     externalRedisHost:
+  #     usePassword:
+  #     password:
+  #     port:
   enabled: true
   usePassword: false
   password:
+  externalRedisHost:
   image:
 #    repository: redis
     tag: 5.0.4
 #  password: polyaxon
-#  port: 6379
+  port: 6379
   master:
     persistence:
       enabled: true
@@ -477,6 +486,15 @@ redis:
             topologyKey: "kubernetes.io/hostname"
 
 rabbitmq-ha:
+  # Whether to deploy a rabbitmq server in-cluster.
+  # To use an external rabbitmq instance:
+  #  * set enabled to False, to disable the in-cluster deployment
+  #  * configure external rabbitmq required attributes:
+  #     externalRabbitmqHost:
+  #     rabbitmqUsername:
+  #     rabbitmqPassword:
+  #     port:
+  enabled: true
   replicaCount: 1
   rabbitmqUsername: polyaxon
   rabbitmqPassword: polyaxon
