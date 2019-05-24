@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import cluster
+from events.registry import cluster
 
 auditor.subscribe(cluster.ClusterCreatedEvent)
 auditor.subscribe(cluster.ClusterUpdatedEvent)

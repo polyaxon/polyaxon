@@ -5,6 +5,11 @@ import pytest
 import conf
 
 from constants.experiment_jobs import get_experiment_job_container_name, get_experiment_job_uuid
+from options.registry.container_names import (
+    CONTAINER_NAME_EXPERIMENT_JOBS,
+    CONTAINER_NAME_PYTORCH_JOBS,
+    CONTAINER_NAME_TF_JOBS
+)
 from schemas import ExperimentBackend, ExperimentFramework
 from tests.base.case import BaseTest
 
@@ -26,37 +31,37 @@ class TestExperimentJobsUtils(BaseTest):
                                            task_index=i) == data[kd]
 
     def test_get_experiment_job_container_name(self):
-        assert conf.get('CONTAINER_NAME_EXPERIMENT_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_EXPERIMENT_JOBS) == get_experiment_job_container_name(
             backend=None,
             framework=None,
         )
 
-        assert conf.get('CONTAINER_NAME_EXPERIMENT_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_EXPERIMENT_JOBS) == get_experiment_job_container_name(
             backend=None,
             framework='foo',
         )
 
-        assert conf.get('CONTAINER_NAME_EXPERIMENT_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_EXPERIMENT_JOBS) == get_experiment_job_container_name(
             backend='foo',
             framework='foo',
         )
 
-        assert conf.get('CONTAINER_NAME_EXPERIMENT_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_EXPERIMENT_JOBS) == get_experiment_job_container_name(
             backend='foo',
             framework=None,
         )
 
-        assert conf.get('CONTAINER_NAME_EXPERIMENT_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_EXPERIMENT_JOBS) == get_experiment_job_container_name(
             backend=ExperimentBackend.KUBEFLOW,
             framework='foo',
         )
 
-        assert conf.get('CONTAINER_NAME_TF_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_TF_JOBS) == get_experiment_job_container_name(
             backend=ExperimentBackend.KUBEFLOW,
             framework=ExperimentFramework.TENSORFLOW,
         )
 
-        assert conf.get('CONTAINER_NAME_PYTORCH_JOB') == get_experiment_job_container_name(
+        assert conf.get(CONTAINER_NAME_PYTORCH_JOBS) == get_experiment_job_container_name(
             backend=ExperimentBackend.KUBEFLOW,
             framework=ExperimentFramework.PYTORCH,
         )

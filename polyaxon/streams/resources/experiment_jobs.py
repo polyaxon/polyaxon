@@ -7,10 +7,11 @@ import conf
 
 from constants.experiment_jobs import get_experiment_job_container_name
 from db.redis.to_stream import RedisToStream
-from event_manager.events.experiment_job import (
+from events.registry.experiment_job import (
     EXPERIMENT_JOB_LOGS_VIEWED,
     EXPERIMENT_JOB_RESOURCES_VIEWED
 )
+from options.registry.k8s import K8S_NAMESPACE
 from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, RESOURCES_CHECK, SOCKET_SLEEP
 from streams.logger import logger
@@ -114,4 +115,4 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
                   job=job,
                   pod_id=pod_id,
                   container=container_job_name,
-                  namespace=conf.get('K8S_NAMESPACE'))
+                  namespace=conf.get(K8S_NAMESPACE))

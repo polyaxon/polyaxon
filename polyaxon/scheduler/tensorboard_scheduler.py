@@ -6,6 +6,7 @@ from kubernetes.client.rest import ApiException
 import conf
 
 from lifecycles.jobs import JobLifeCycle
+from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
@@ -22,8 +23,8 @@ def start_tensorboard(tensorboard):
         project_uuid=tensorboard.project.uuid.hex,
         job_name=tensorboard.unique_name,
         job_uuid=tensorboard.uuid.hex,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         job_docker_image=tensorboard.build_image,
         in_cluster=True)
 
@@ -96,8 +97,8 @@ def stop_tensorboard(project_name,
         project_uuid=project_uuid,
         job_name=tensorboard_job_name,
         job_uuid=tensorboard_job_uuid,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True)
 
     return spawner.stop_tensorboard()
@@ -109,7 +110,7 @@ def get_tensorboard_url(tensorboard):
         project_uuid=tensorboard.project.uuid.hex,
         job_name=tensorboard.unique_name,
         job_uuid=tensorboard.uuid.hex,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True)
     return spawner.get_tensorboard_url()

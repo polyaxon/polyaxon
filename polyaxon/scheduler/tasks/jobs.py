@@ -8,6 +8,10 @@ from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.collectors import logs_collect_job
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler
@@ -43,7 +47,7 @@ def jobs_build(job_id):
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_START,
             kwargs={'job_id': job_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return
 
     if not build_status:
@@ -95,7 +99,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
                 'is_managed': job.is_managed,
                 'message': 'Job is scheduled for deletion.'
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -103,7 +107,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
             kwargs={
                 'job_id': job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)

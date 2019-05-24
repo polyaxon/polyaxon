@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import pipeline
+from events.registry import pipeline
 
 tracker.subscribe(pipeline.PipelineCreatedEvent)
 tracker.subscribe(pipeline.PipelineUpdatedEvent)

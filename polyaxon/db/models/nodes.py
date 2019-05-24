@@ -12,6 +12,7 @@ import conf
 from constants.nodes import NodeLifeCycle, NodeRoles
 from db.models.abstract.diff import DiffModel
 from db.models.abstract.sequence import SequenceModel
+from options.registry.k8s import K8S_GPU_RESOURCE_KEY
 
 
 class NodeParser(object):
@@ -27,7 +28,7 @@ class NodeParser(object):
 
     @staticmethod
     def get_n_gpus(node) -> int:
-        return int(node.status.allocatable.get(conf.get('K8S_GPU_RESOURCE_KEY'), 0))
+        return int(node.status.allocatable.get(conf.get(K8S_GPU_RESOURCE_KEY), 0))
 
     @staticmethod
     def get_cpu(node) -> float:

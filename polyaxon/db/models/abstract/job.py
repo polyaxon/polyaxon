@@ -12,6 +12,7 @@ from django.utils.functional import cached_property
 from db.models.abstract.cache import CachedMixin
 from db.models.abstract.diff import DiffModel
 from db.models.abstract.run import RunTimeModel
+from db.models.abstract.unique_name import UniqueNameMixin
 from db.models.statuses import LastStatusMixin, StatusModel
 from lifecycles.jobs import JobLifeCycle
 from schemas import PodResourcesConfig
@@ -76,14 +77,10 @@ class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
         return False
 
 
-class JobMixin(object):
+class JobMixin(UniqueNameMixin):
 
     def __str__(self) -> str:
         return self.unique_name
-
-    @cached_property
-    def unique_name(self) -> str:
-        pass
 
     @cached_property
     def secret_refs(self) -> Optional[List[str]]:

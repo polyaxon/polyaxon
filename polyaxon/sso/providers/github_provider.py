@@ -3,7 +3,9 @@ import requests
 import conf
 
 from constants.sso_providers import Providers
-from event_manager.events.user import USER_GITHUB
+from events.registry.user import USER_GITHUB
+from options.registry.auth_github import AUTH_GITHUB_CLIENT_ID, AUTH_GITHUB_CLIENT_SECRET
+from options.registry.email import EMAIL_DEFAULT_DOMAIN
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
@@ -14,18 +16,24 @@ class GitHubIdentityProvider(OAuth2Provider):
 
     web_url = 'https://github.com'
     api_url = 'https://api.github.com'
-    oauth_access_token_url = '{}/login/oauth/access_token'.format(web_url)
-    oauth_authorize_url = '{}/login/oauth/authorize'.format(web_url)
     user_url = '{}/user'.format(api_url)
     emails_url = '{}/emails'.format(user_url)
 
     oauth_scopes = ('read:user', 'user:email')
 
+    @property
+    def oauth_authorize_url(self):
+        return '{}/login/oauth/authorize'.format(self.web_url)
+
+    @property
+    def oauth_access_token_url(self):
+        return '{}/login/oauth/access_token'.format(self.web_url)
+
     def get_oauth_client_id(self):
-        return conf.get('OAUTH_GITHUB_CLIENT_ID')
+        return conf.get(AUTH_GITHUB_CLIENT_ID)
 
     def get_oauth_client_secret(self):
-        return conf.get('OAUTH_GITHUB_CLIENT_SECRET')
+        return conf.get(AUTH_GITHUB_CLIENT_SECRET)
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})
@@ -41,7 +49,7 @@ class GitHubIdentityProvider(OAuth2Provider):
         emails = self.get_emails(access_token=access_token)
         email = [e for e in emails if e['primary']]
         return email[0]['email'] if email else '{}@{}'.format(username,
-                                                              conf.get('DEFAULT_EMAIL_DOMAIN'))
+                                                              conf.get(EMAIL_DEFAULT_DOMAIN))
 
     @staticmethod
     def get_first_last_names(username, name):

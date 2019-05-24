@@ -35,7 +35,7 @@ from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
-from event_manager.events.build_job import (
+from events.registry.build_job import (
     BUILD_JOB_ARCHIVED,
     BUILD_JOB_DELETED_TRIGGERED,
     BUILD_JOB_LOGS_VIEWED,
@@ -45,9 +45,10 @@ from event_manager.events.build_job import (
     BUILD_JOB_UPDATED,
     BUILD_JOB_VIEWED
 )
-from event_manager.events.project import PROJECT_BUILDS_VIEWED
+from events.registry.project import PROJECT_BUILDS_VIEWED
 from libs.archive import archive_logs_file
 from logs_handlers.log_queries.build_job import process_logs
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
@@ -101,7 +102,7 @@ class ProjectBuildListView(BookmarkedListMixinView,
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_START,
             kwargs={'build_job_id': instance.id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
@@ -129,7 +130,7 @@ class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEn
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
             kwargs={'build_job_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class BuildArchiveView(BuildEndpoint, CreateEndpoint):
@@ -145,7 +146,7 @@ class BuildArchiveView(BuildEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
             kwargs={'build_job_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -275,7 +276,7 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
                 'collect_logs': True,
                 'is_managed': self.build.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import experiment_group
+from events.registry import experiment_group
 
 executor.subscribe(experiment_group.ExperimentGroupCreatedEvent)
 executor.subscribe(experiment_group.ExperimentGroupDeletedEvent)

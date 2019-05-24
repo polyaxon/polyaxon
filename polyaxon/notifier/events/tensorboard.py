@@ -1,6 +1,6 @@
 import notifier
 
-from event_manager.events import tensorboard
+from events.registry import tensorboard
 
 # notifier.subscribe_event(tensorboard.TensorboardNewStatusEvent)
 notifier.subscribe_event(tensorboard.TensorboardStartedEvent)

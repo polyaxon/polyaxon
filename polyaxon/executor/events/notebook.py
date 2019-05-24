@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import notebook
+from events.registry import notebook
 
 executor.subscribe(notebook.NotebookStartedEvent)
 executor.subscribe(notebook.NotebookSoppedEvent)

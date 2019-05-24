@@ -9,6 +9,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from libs.repos import git
 from libs.repos.git import GitCloneException
+from options.registry.persistence import REPOS_MOUNT_PATH
 from tests.base.case import BaseTest
 
 
@@ -19,7 +20,7 @@ class TestRepoModels(BaseTest):
         self.project = ProjectFactory()
 
     def test_repo_creation_results_in_repo_path_creation_deletion_results_in_path_deletion(self):
-        repo_path = '{}/{}/{}/{}'.format(conf.get('REPOS_MOUNT_PATH'),
+        repo_path = '{}/{}/{}/{}'.format(conf.get(REPOS_MOUNT_PATH),
                                          self.project.user.username,
                                          self.project.name,
                                          self.project.name)

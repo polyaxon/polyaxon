@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import search
+from events.registry import search
 
 auditor.subscribe(search.SearchCreatedEvent)
 auditor.subscribe(search.SearchDeletedEvent)

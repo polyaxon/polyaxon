@@ -6,7 +6,7 @@ from django.dispatch import receiver
 import auditor
 
 from db.models.experiment_groups import ExperimentGroupIteration
-from event_manager.events.experiment_group import EXPERIMENT_GROUP_ITERATION
+from events.registry.experiment_group import EXPERIMENT_GROUP_ITERATION
 
 
 @receiver(post_save,

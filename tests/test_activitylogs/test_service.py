@@ -6,8 +6,8 @@ import pytest
 import activitylogs
 
 from db.models.activitylogs import ActivityLog
-from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
-from event_manager.events.user import USER_ACTIVATED
+from events.registry.experiment import EXPERIMENT_DELETED_TRIGGERED
+from events.registry.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest

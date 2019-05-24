@@ -32,8 +32,10 @@ from api.users.forms import RegistrationForm
 from api.users.utils import login_user, logout_user
 from api.utils.views.post import PostAPIView
 from db.models.tokens import Token
-from event_manager.events.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
-from event_manager.events.user import USER_ACTIVATED, USER_DELETED
+from events.registry.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
+from events.registry.user import USER_ACTIVATED, USER_DELETED
+from options.registry.core import ACCOUNT_ACTIVATION_DAYS
+from options.registry.email import DEFAULT_FROM_EMAIL
 from schemas import UserConfig
 from signals import users as users_signals
 
@@ -197,7 +199,7 @@ class RegistrationView(FormView):
         """
         return {
             'activation_key': activation_key,
-            'expiration_days': conf.get('ACCOUNT_ACTIVATION_DAYS'),
+            'expiration_days': conf.get(ACCOUNT_ACTIVATION_DAYS),
             'site': get_current_site(self.request)
         }
 
@@ -219,7 +221,7 @@ class RegistrationView(FormView):
         subject = ''.join(subject.splitlines())
         message = render_to_string(self.email_body_template,
                                    context)
-        user.email_user(subject, message, conf.get('DEFAULT_FROM_EMAIL'))
+        user.email_user(subject, message, conf.get(DEFAULT_FROM_EMAIL))
 
 
 class SimpleRegistrationView(RegistrationView):
@@ -275,7 +277,7 @@ class ActivationView(TemplateView):
             username = signing.loads(
                 activation_key,
                 salt=self.key_salt,
-                max_age=conf.get('ACCOUNT_ACTIVATION_DAYS') * 86400
+                max_age=conf.get(ACCOUNT_ACTIVATION_DAYS) * 86400
             )
             return username
         # SignatureExpired is a subclass of BadSignature, so this will

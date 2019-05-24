@@ -12,6 +12,10 @@ from db.getters.experiments import get_valid_experiment
 from db.redis.heartbeat import RedisHeartBeat
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers import collectors
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
@@ -63,7 +67,7 @@ def experiments_build(experiment_id):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return
 
     last_status = experiment.last_status
@@ -88,7 +92,7 @@ def experiments_build(experiment_id):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return
 
     if not build_status:
@@ -183,7 +187,7 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
                 'message': 'Experiment is scheduled for deletion.',
                 'is_managed': experiment.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -191,7 +195,7 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
             kwargs={
                 'experiment_id': experiment_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,

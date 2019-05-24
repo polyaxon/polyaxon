@@ -4,6 +4,7 @@ from kubernetes import client
 import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from options.registry.k8s import K8S_RBAC_ENABLED
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
@@ -77,7 +78,7 @@ def get_project_pod_spec(volume_mounts,
         image_pull_policy=image_pull_policy)
     containers = [pod_container]
 
-    if service_account_name and not conf.get('K8S_RBAC_ENABLED'):
+    if service_account_name and not conf.get(K8S_RBAC_ENABLED):
         service_account_name = None
 
     return client.V1PodSpec(restart_policy=restart_policy,

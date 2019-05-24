@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import repo
+from events.registry import repo
 
 tracker.subscribe(repo.RepoCreatedEvent)
 tracker.subscribe(repo.RepoDownloadedEvent)

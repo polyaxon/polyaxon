@@ -5,6 +5,7 @@ from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks import base
 from hpsearch.tasks.logger import logger
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from options.registry.groups import GROUPS_CHUNKS
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 
@@ -33,7 +34,7 @@ def create(experiment_group):
     chunk_suggestions = []
     for suggestion in suggestions:
         chunk_suggestions.append(suggestion)
-        if len(chunk_suggestions) == conf.get('GROUP_CHUNKS'):
+        if len(chunk_suggestions) == conf.get(GROUPS_CHUNKS):
             send_chunk()
             chunk_suggestions = []
 

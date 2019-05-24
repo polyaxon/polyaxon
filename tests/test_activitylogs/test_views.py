@@ -9,9 +9,9 @@ import activitylogs
 from api.activitylogs.serializers import ActivityLogsSerializer
 from constants.urls import API_V1
 from db.models.activitylogs import ActivityLog
-from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED, EXPERIMENT_VIEWED
-from event_manager.events.job import JOB_CREATED, JOB_VIEWED
-from event_manager.events.project import PROJECT_DELETED_TRIGGERED, PROJECT_VIEWED
+from events.registry.experiment import EXPERIMENT_DELETED_TRIGGERED, EXPERIMENT_VIEWED
+from events.registry.job import JOB_CREATED, JOB_VIEWED
+from events.registry.project import PROJECT_DELETED_TRIGGERED, PROJECT_VIEWED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory

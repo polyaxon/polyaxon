@@ -3,11 +3,13 @@ from threading import local
 
 import conf
 
+from options.registry.stats import STATS_DEFAULT_PREFIX
+
 
 class BaseStatsBackend(local):
     def __init__(self, prefix=None):  # pylint:disable=super-init-not-called
         if prefix is None:
-            prefix = conf.get('DEFAULT_STATS_PREFIX')
+            prefix = conf.get(STATS_DEFAULT_PREFIX)
         self.prefix = prefix
 
     def _get_key(self, key):

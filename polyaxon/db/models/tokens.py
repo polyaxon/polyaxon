@@ -8,6 +8,7 @@ from django.utils import timezone
 import conf
 
 from db.models.abstract.diff import DiffModel
+from options.registry.ttl import TTL_TOKEN
 
 
 def generate_token():
@@ -43,7 +44,7 @@ class Token(DiffModel):
 
     @property
     def is_expired(self) -> bool:
-        return self.started_at + timedelta(days=conf.get('TTL_TOKEN')) <= timezone.now()
+        return self.started_at + timedelta(days=conf.get(TTL_TOKEN)) <= timezone.now()
 
     def has_scope(self, scope) -> bool:
         return scope in self.scopes  # pylint:disable=unsupported-membership-test

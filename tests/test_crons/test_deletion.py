@@ -1,5 +1,6 @@
 import pytest
 
+import conf
 from crons.tasks.deletion import (
     delete_archived_build_jobs,
     delete_archived_experiment_groups,
@@ -22,7 +23,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
-from polyaxon.config_settings import CleaningIntervals
+from options.registry.cleaning import CLEANING_INTERVALS_ARCHIVES
 from tests.base.case import BaseTest
 
 
@@ -39,7 +40,7 @@ class TestDeletionCrons(BaseTest):
         assert Project.all.count() == 2
         assert Experiment.all.count() == 2
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_projects()
 
         # Deletes only one project
@@ -57,7 +58,7 @@ class TestDeletionCrons(BaseTest):
 
         assert ExperimentGroup.all.count() == 2
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_experiment_groups()
 
         # Although the other entity is archived it's not deleted because of project1
@@ -76,7 +77,7 @@ class TestDeletionCrons(BaseTest):
 
         assert Experiment.all.count() == 3
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_experiments()
 
         # Although the other experiment is archived it's not deleted because of project1 and group1
@@ -92,7 +93,7 @@ class TestDeletionCrons(BaseTest):
 
         assert Job.all.count() == 2
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_jobs()
 
         # Although the other entity is archived it's not deleted because of project1
@@ -108,7 +109,7 @@ class TestDeletionCrons(BaseTest):
 
         assert BuildJob.all.count() == 2
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_build_jobs()
 
         # Although the other entity is archived it's not deleted because of project1
@@ -124,7 +125,7 @@ class TestDeletionCrons(BaseTest):
 
         assert NotebookJob.all.count() == 2
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_notebook_jobs()
 
         # Although the other entity is archived it's not deleted because of project1
@@ -140,7 +141,7 @@ class TestDeletionCrons(BaseTest):
 
         assert TensorboardJob.all.count() == 2
 
-        CleaningIntervals.ARCHIVED = -10
+        conf.set(CLEANING_INTERVALS_ARCHIVES, -10)
         delete_archived_tensorboard_jobs()
 
         # Although the other entity is archived it's not deleted because of project1

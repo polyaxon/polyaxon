@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import job
+from events.registry import job
 
 executor.subscribe(job.JobCreatedEvent)
 executor.subscribe(job.JobStartedEvent)

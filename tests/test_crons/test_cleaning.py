@@ -4,13 +4,17 @@ from datetime import timedelta
 
 import pytest
 
+import conf
 from crons.tasks.cleaning import clean_activity_logs, clean_notifications
 from db.models.activitylogs import ActivityLog
 from db.models.notification import Notification, NotificationEvent
-from event_manager.events.experiment import EXPERIMENT_SUCCEEDED
+from events.registry.experiment import EXPERIMENT_SUCCEEDED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_users import UserFactory
-from polyaxon.config_settings import CleaningIntervals
+from options.registry.cleaning import (
+    CLEANING_INTERVALS_ACTIVITY_LOGS,
+    CLEANING_INTERVALS_NOTIFICATIONS
+)
 from tests.base.case import BaseTest
 
 
@@ -39,7 +43,7 @@ class TestCleaningCrons(BaseTest):
             actor_id=self.user.id,
             context={},
             created_at=self.experiment.created_at - timedelta(
-                days=CleaningIntervals.ACTIVITY_LOGS + 3),
+                days=conf.get(CLEANING_INTERVALS_ACTIVITY_LOGS) + 3),
             content_object=self.experiment,
             ref=uuid.uuid4()
         )
@@ -60,7 +64,7 @@ class TestCleaningCrons(BaseTest):
             actor_id=self.user.id,
             context={},
             created_at=self.experiment.created_at - timedelta(
-                days=CleaningIntervals.NOTIFICATIONS + 3),
+                days=conf.get(CLEANING_INTERVALS_NOTIFICATIONS) + 3),
             content_object=self.experiment
         )
         Notification.objects.create(

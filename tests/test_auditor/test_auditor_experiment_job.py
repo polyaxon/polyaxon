@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import experiment_job as experiment_job_events
+from events.registry import experiment_job as experiment_job_events
 from factories.factory_experiments import ExperimentJobFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

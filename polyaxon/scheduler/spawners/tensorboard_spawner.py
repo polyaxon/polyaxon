@@ -6,8 +6,11 @@ from kubernetes.config import ConfigException
 import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
-from constants.stores import GCS, S3
+from constants.store_types import StoreTypes
 from libs.unique_urls import get_tensorboard_health_url
+from options.registry.k8s import K8S_INGRESS_ANNOTATIONS
+from options.registry.spawner import APP_LABELS_TENSORBOARD, ROLE_LABELS_DASHBOARD
+from options.registry.tensorboards import TENSORBOARDS_PORT_RANGE
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import ingresses, services
@@ -80,12 +83,13 @@ class TensorboardSpawner(ProjectJobSpawner):
         if not self._use_ingress():
             return self.port
 
-        labels = 'app={},role={}'.format(conf.get('APP_LABELS_TENSORBOARD'),
-                                         conf.get('ROLE_LABELS_DASHBOARD'))
+        labels = 'app={},role={}'.format(conf.get(APP_LABELS_TENSORBOARD),
+                                         conf.get(ROLE_LABELS_DASHBOARD))
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
-        port = random.randint(*conf.get('TENSORBOARD_PORT_RANGE'))
+        port_range = conf.get(TENSORBOARDS_PORT_RANGE)
+        port = random.randint(*port_range)
         while port in ports:
-            port = random.randint(*conf.get('TENSORBOARD_PORT_RANGE'))
+            port = random.randint(*port_range)
         return port
 
     @staticmethod
@@ -95,7 +99,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         for store_secret in stores_secrets:
             if store_secret['store'] in stores:
                 raise TensorboardValidation('Received an invalid store configuration.')
-            elif store_secret['store'] not in {GCS, S3}:
+            elif store_secret['store'] not in {StoreTypes.GCS, StoreTypes.S3}:
                 raise TensorboardValidation('Received an unsupported store configuration.')
             stores.add(store_secret['store'])
 
@@ -106,7 +110,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         volume_mounts = []
         for store_secret in stores_secrets:
             store = store_secret['store']
-            if store in {GCS, S3}:
+            if store in {StoreTypes.GCS, StoreTypes.S3}:
                 secrets_volumes, secrets_volume_mounts = get_volume_from_secret(
                     volume_name=cls.STORE_SECRET_VOLUME_NAME.format(store),
                     mount_path=cls.STORE_SECRET_KEY_MOUNT_PATH.format(store),
@@ -123,12 +127,12 @@ class TensorboardSpawner(ProjectJobSpawner):
         commands = []
         for store_secret in stores_secrets:
             store = store_secret['store']
-            if store == GCS:
+            if store == StoreTypes.GCS:
                 commands.append('export GOOGLE_APPLICATION_CREDENTIALS={}'.format(
                     cls.STORE_SECRET_KEY_MOUNT_PATH.format(store) + '/' +
                     store_secret['persistence_secret_key']
                 ))
-            elif store == S3:
+            elif store == StoreTypes.S3:
                 commands.append(
                     "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {}={}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(  # noqa
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format(store) + '/' +
@@ -226,7 +230,7 @@ class TensorboardSpawner(ProjectJobSpawner):
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
-            annotations = json.loads(conf.get('K8S_INGRESS_ANNOTATIONS'))
+            annotations = json.loads(conf.get(K8S_INGRESS_ANNOTATIONS))
             paths = [{
                 'path': '/tensorboards/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {

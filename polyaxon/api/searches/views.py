@@ -7,7 +7,7 @@ from api.paginator import LargeLimitOffsetPagination
 from api.searches.serializers import SearchSerializer
 from constants import content_types
 from db.models.searches import Search
-from event_manager.events.search import SEARCH_CREATED, SEARCH_DELETED
+from events.registry.search import SEARCH_CREATED, SEARCH_DELETED
 
 
 class SearchListView(ProjectResourceListEndpoint, ListEndpoint, CreateEndpoint):

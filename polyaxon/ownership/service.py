@@ -5,6 +5,7 @@ from hestia.service_interface import Service
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 
+from options.registry.ownership import ALLOW_USER_PROJECTS
 from ownership import OwnershipError
 
 
@@ -30,7 +31,7 @@ class OwnershipService(Service):
     def set_default_owner(self, instance: Any) -> None:
         import conf
 
-        if conf.get('ALLOW_USER_PROJECTS'):
+        if conf.get(ALLOW_USER_PROJECTS):
             try:
                 self.set_owner(instance=instance, owner_obj=instance.user)
             except OwnershipError:

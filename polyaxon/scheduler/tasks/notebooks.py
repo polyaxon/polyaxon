@@ -4,6 +4,10 @@ import conf
 
 from db.getters.notebooks import get_valid_notebook
 from lifecycles.jobs import JobLifeCycle
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, notebook_scheduler
@@ -38,7 +42,7 @@ def projects_notebook_build(notebook_job_id):
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
             kwargs={'notebook_job_id': notebook_job_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return
 
     if not build_status:
@@ -85,7 +89,7 @@ def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
                 'is_managed': notebook_job.is_managed,
                 'message': 'Notebook is scheduled for deletion.'
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -93,7 +97,7 @@ def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
             kwargs={
                 'job_id': notebook_job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,

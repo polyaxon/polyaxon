@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import search
+from events.registry import search
 
 tracker.subscribe(search.SearchCreatedEvent)
 tracker.subscribe(search.SearchDeletedEvent)

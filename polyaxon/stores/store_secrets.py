@@ -1,4 +1,4 @@
-from constants import stores
+from constants.store_types import StoreTypes
 from stores.exceptions import VolumeNotFoundError
 
 
@@ -8,7 +8,7 @@ def get_store_secret_from_definition(definition):
     secret_key = definition.get('secretKey')
 
     if store:
-        if store not in stores.VALUES:
+        if store not in StoreTypes.CLOUD_STORES:
             raise VolumeNotFoundError(
                 'Volume with store class `{}` is not supported.'.format(store))
 

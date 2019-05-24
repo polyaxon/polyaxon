@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import user
+from events.registry import user
 
 auditor.subscribe(user.UserRegisteredEvent)
 auditor.subscribe(user.UserUpdatedEvent)

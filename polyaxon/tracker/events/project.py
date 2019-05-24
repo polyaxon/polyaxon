@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import project
+from events.registry import project
 
 tracker.subscribe(project.ProjectCreatedEvent)
 tracker.subscribe(project.ProjectUpdatedEvent)

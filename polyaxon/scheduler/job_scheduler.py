@@ -7,6 +7,7 @@ import conf
 
 from docker_images.image_info import get_image_info
 from lifecycles.jobs import JobLifeCycle
+from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.job_spawner import JobSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
@@ -34,8 +35,8 @@ def start_job(job):
         job_name=job.unique_name,
         job_uuid=job.uuid.hex,
         spec=job.specification,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         job_docker_image=job_docker_image,
         in_cluster=True,
         use_sidecar=True)
@@ -92,8 +93,8 @@ def stop_job(project_name, project_uuid, job_name, job_uuid):
         project_uuid=project_uuid,
         job_name=job_name,
         job_uuid=job_uuid,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         spec=None,
         in_cluster=True)
 

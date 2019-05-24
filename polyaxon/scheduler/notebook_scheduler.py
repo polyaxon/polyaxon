@@ -7,6 +7,8 @@ import conf
 
 from docker_images.image_info import get_image_info
 from lifecycles.jobs import JobLifeCycle
+from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from options.registry.notebooks import NOTEBOOKS_MOUNT_CODE
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
@@ -33,14 +35,14 @@ def start_notebook(notebook):
         project_uuid=notebook.project.uuid.hex,
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         job_docker_image=job_docker_image,
         in_cluster=True)
 
     error = {}
     try:
-        mount_code_in_notebooks = conf.get('MOUNT_CODE_IN_NOTEBOOKS')
+        mount_code_in_notebooks = conf.get(NOTEBOOKS_MOUNT_CODE)
         results = spawner.start_notebook(persistence_outputs=notebook.persistence_outputs,
                                          persistence_data=notebook.persistence_data,
                                          outputs_refs_jobs=notebook.outputs_refs_jobs,
@@ -98,8 +100,8 @@ def stop_notebook(project_name,
         project_uuid=project_uuid,
         job_name=notebook_job_name,
         job_uuid=notebook_job_uuid,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True)
 
     return spawner.stop_notebook()
@@ -111,8 +113,8 @@ def get_notebook_url(notebook):
         project_uuid=notebook.project.uuid.hex,
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True)
     return spawner.get_notebook_url()
 
@@ -123,7 +125,7 @@ def get_notebook_token(notebook):
         project_uuid=notebook.project.uuid.hex,
         job_name=notebook.unique_name,
         job_uuid=notebook.uuid.hex,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True)
     return spawner.get_notebook_token()

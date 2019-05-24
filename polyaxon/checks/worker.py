@@ -7,6 +7,7 @@ import conf
 from checks.base import Check
 from checks.health_task import health_task
 from checks.results import Result
+from options.registry.core import HEALTH_CHECK_WORKER_TIMEOUT
 from polyaxon.celery_api import celery_app
 
 
@@ -16,7 +17,7 @@ class WorkerCheck(Check):
 
     @classmethod
     def run(cls) -> Dict:
-        timeout = conf.get('HEALTH_CHECK_WORKER_TIMEOUT')
+        timeout = conf.get(HEALTH_CHECK_WORKER_TIMEOUT)
         arg = random.randint(1, 10)
         result = None
         try:

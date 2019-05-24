@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import notebook
+from events.registry import notebook
 
 tracker.subscribe(notebook.NotebookStartedEvent)
 tracker.subscribe(notebook.NotebookStartedTriggeredEvent)

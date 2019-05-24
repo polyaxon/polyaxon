@@ -1,7 +1,7 @@
 import auditor
 
 from db.getters.experiment_groups import get_running_experiment_group
-from event_manager.events.experiment_group import (
+from events.registry.experiment_group import (
     EXPERIMENT_GROUP_BO,
     EXPERIMENT_GROUP_GRID,
     EXPERIMENT_GROUP_HYPERBAND,

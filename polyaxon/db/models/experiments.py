@@ -12,6 +12,7 @@ from django.utils.functional import cached_property
 
 import auditor
 
+from constants.cloning_strategies import CloningStrategy
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.datarefs import DataReference
 from db.models.abstract.deleted import DeletedModel
@@ -26,16 +27,12 @@ from db.models.abstract.readme import ReadmeModel
 from db.models.abstract.run import RunTimeModel
 from db.models.abstract.sub_paths import SubPathModel
 from db.models.abstract.tag import TagModel
+from db.models.abstract.unique_name import UniqueNameMixin
 from db.models.charts import ChartViewModel
-from db.models.cloning_strategies import CloningStrategy
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
-from event_manager.events.experiment import (
-    EXPERIMENT_COPIED,
-    EXPERIMENT_RESTARTED,
-    EXPERIMENT_RESUMED
-)
+from events.registry.experiment import EXPERIMENT_COPIED, EXPERIMENT_RESTARTED, EXPERIMENT_RESUMED
 from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
@@ -56,6 +53,7 @@ class Experiment(DiffModel,
                  ReadmeModel,
                  TagModel,
                  DeletedModel,
+                 UniqueNameMixin,
                  LastStatusMixin,
                  TensorboardJobMixin):
     """A model that represents experiments."""
@@ -138,7 +136,7 @@ class Experiment(DiffModel,
         app_label = 'db'
         unique_together = (('project', 'name'),)
 
-    @property
+    @cached_property
     def unique_name(self) -> str:
         if self.experiment_group:
             parent_name = self.experiment_group.unique_name

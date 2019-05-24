@@ -10,13 +10,15 @@ import conf
 
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
-from event_manager.events.cluster import (
+from events.registry.cluster import (
     CLUSTER_NODE_CREATED,
     CLUSTER_NODE_DELETED,
     CLUSTER_NODE_UPDATED,
     CLUSTER_RESOURCES_UPDATED,
     CLUSTER_UPDATED
 )
+from options.registry.core import CLUSTER_NOTIFICATION_NODES_URL, CLUSTER_NOTIFICATION_URL
+from options.registry.deployments import CHART_IS_UPGRADE, CHART_VERSION
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks
 from polyaxon_k8s.manager import K8SManager
@@ -42,7 +44,7 @@ def update_system_info() -> None:
         cluster.save()
         auditor.record(event_type=CLUSTER_UPDATED,
                        instance=cluster,
-                       is_upgrade=conf.get('CHART_IS_UPGRADE'))
+                       is_upgrade=conf.get(CHART_IS_UPGRADE))
 
 
 @celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
@@ -106,15 +108,15 @@ def update_system_nodes() -> None:
 def cluster_nodes_analytics() -> None:
     cluster = get_cluster_resources()
     notification = uuid.uuid4()
-    notification_url = conf.get('POLYAXON_NOTIFICATION_CLUSTER_NODES_URL').format(
-        url=conf.get('CLUSTER_NOTIFICATION_URL'),
+    notification_url = conf.get(CLUSTER_NOTIFICATION_NODES_URL).format(
+        url=conf.get(CLUSTER_NOTIFICATION_URL),
         cluster_uuid=cluster.uuid.hex,
         n_nodes=cluster.n_nodes,
         n_cpus=cluster.n_cpus,
         memory=to_unit_memory(cluster.memory or 0),
         n_gpus=cluster.n_gpus,
         notification=notification,
-        version=conf.get('CHART_VERSION'))
+        version=conf.get(CHART_VERSION))
     try:
         requests.get(notification_url)
     except requests.RequestException:

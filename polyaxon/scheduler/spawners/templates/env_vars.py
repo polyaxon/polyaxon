@@ -11,6 +11,8 @@ import stores
 from constants.urls import VERSION_V1
 from db.models.outputs import get_paths_from_specs
 from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
+from options.registry.core import HEADERS_INTERNAL
+from options.registry.spawner import REFS_CONFIG_MAPS, REFS_SECRETS
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.stores import (
     get_data_store_secrets,
@@ -56,7 +58,7 @@ def get_internal_env_vars(service_internal_header,
         get_env_var(name=constants.CONFIG_MAP_IS_MANAGED, value=True),
         get_env_var(name=constants.CONFIG_MAP_API_VERSION, value=VERSION_V1),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER,
-                    value=conf.get('HEADERS_INTERNAL').replace('_', '-')),
+                    value=conf.get(HEADERS_INTERNAL).replace('_', '-')),
         get_env_var(name=constants.CONFIG_MAP_INTERNAL_HEADER_SERVICE,
                     value=service_internal_header),
     ]
@@ -216,16 +218,18 @@ class EnvFromRefFoundError(Exception):
 
 
 def validate_secret_refs(secret_refs):
+    # TODO: this shoudl validate based on `K8SSecret` catalog
     for secret_ref in secret_refs or []:
-        if secret_ref not in conf.get('REFS_SECRETS'):
+        if secret_ref not in conf.get(REFS_SECRETS):
             raise EnvFromRefFoundError('secret_ref with name `{}` was defined in specification, '
                                        'but was not found'.format(secret_ref))
     return secret_refs
 
 
 def validate_configmap_refs(configmap_refs):
+    # TODO: this shoudl validate based on `K8SConfigMap` catalog
     for configmap_ref in configmap_refs or []:
-        if configmap_ref not in conf.get('REFS_CONFIG_MAPS'):
+        if configmap_ref not in conf.get(REFS_CONFIG_MAPS):
             raise EnvFromRefFoundError('configmap_ref with name `{}` was defined in specification, '
                                        'but was not found'.format(configmap_ref))
     return configmap_refs

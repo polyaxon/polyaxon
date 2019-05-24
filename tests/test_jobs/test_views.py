@@ -29,6 +29,7 @@ from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import job_spec_parsed_content
 from lifecycles.jobs import JobLifeCycle
+from options.registry.archives import ARCHIVES_ROOT_ARTIFACTS
 from schemas import JobSpecification
 from tests.base.views import BaseEntityCodeReferenceViewTest, BaseFilesViewTest, BaseViewTest
 
@@ -820,7 +821,7 @@ class DownloadJobOutputsViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '{}/{}.tar.gz'.format(conf.get('OUTPUTS_ARCHIVE_ROOT'),
+                         '{}/{}.tar.gz'.format(conf.get(ARCHIVES_ROOT_ARTIFACTS),
                                                self.job.unique_name.replace('.', '_')))
 
 

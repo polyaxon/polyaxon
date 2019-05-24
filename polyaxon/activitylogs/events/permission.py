@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import permission
+from events.registry import permission
 
 activitylogs.subscribe(permission.PermissionProjectDeniedEvent)
 activitylogs.subscribe(permission.PermissionRepoDeniedEvent)

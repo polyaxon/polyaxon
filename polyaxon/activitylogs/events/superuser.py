@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import superuser
+from events.registry import superuser
 
 activitylogs.subscribe(superuser.SuperUserRoleGrantedEvent)
 activitylogs.subscribe(superuser.SuperUserRoleRevokedEvent)

@@ -8,7 +8,7 @@ import auditor
 import ownership
 
 from db.models.tokens import Token
-from event_manager.events.user import USER_REGISTERED, USER_UPDATED
+from events.registry.user import USER_REGISTERED, USER_UPDATED
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL, dispatch_uid="create_auth_token")

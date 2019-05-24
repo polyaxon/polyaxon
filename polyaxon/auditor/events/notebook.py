@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import notebook
+from events.registry import notebook
 
 auditor.subscribe(notebook.NotebookStartedEvent)
 auditor.subscribe(notebook.NotebookStartedTriggeredEvent)

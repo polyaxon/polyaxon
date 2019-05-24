@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import build_job
+from events.registry import build_job
 
 executor.subscribe(build_job.BuildJobCreatedEvent)
 executor.subscribe(build_job.BuildJobSoppedEvent)

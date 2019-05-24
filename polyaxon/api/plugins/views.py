@@ -47,7 +47,7 @@ from db.models.experiments import Experiment
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
 from db.models.tokens import Token
-from event_manager.events.notebook import (
+from events.registry.notebook import (
     NOTEBOOK_ARCHIVED,
     NOTEBOOK_DELETED_TRIGGERED,
     NOTEBOOK_RESTORED,
@@ -57,8 +57,8 @@ from event_manager.events.notebook import (
     NOTEBOOK_UPDATED,
     NOTEBOOK_VIEWED
 )
-from event_manager.events.project import PROJECT_NOTEBOOKS_VIEWED, PROJECT_TENSORBOARDS_VIEWED
-from event_manager.events.tensorboard import (
+from events.registry.project import PROJECT_NOTEBOOKS_VIEWED, PROJECT_TENSORBOARDS_VIEWED
+from events.registry.tensorboard import (
     TENSORBOARD_ARCHIVED,
     TENSORBOARD_DELETED_TRIGGERED,
     TENSORBOARD_RESTORED,
@@ -71,6 +71,13 @@ from event_manager.events.tensorboard import (
 from libs.repos import git
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from options.registry.notebooks import (
+    NOTEBOOKS_BACKEND,
+    NOTEBOOKS_DOCKER_IMAGE,
+    NOTEBOOKS_MOUNT_CODE
+)
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
+from options.registry.tensorboards import TENSORBOARDS_DOCKER_IMAGE
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas import NotebookBackend, NotebookSpecification, TensorboardSpecification
@@ -85,7 +92,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
     @staticmethod
     def _get_default_tensorboard_config():
         specification = TensorboardSpecification.create_specification(
-            {'image': conf.get('TENSORBOARD_DOCKER_IMAGE')}, to_dict=False)
+            {'image': conf.get(TENSORBOARDS_DOCKER_IMAGE)}, to_dict=False)
         return {'content': specification.raw_data}
 
     def _create_tensorboard(self, project, experiment_group=None, experiment=None):
@@ -151,7 +158,7 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
             celery_app.send_task(
                 SchedulerCeleryTasks.TENSORBOARDS_START,
                 kwargs={'tensorboard_job_id': tensorboard.id},
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -176,7 +183,7 @@ class StopTensorboardView(ProjectTensorboardEndpoint, PostEndpoint):
                     'update_status': True,
                     'is_managed': tensorboard.is_managed,
                 },
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=tensorboard,
                            target=get_target(experiment=experiment_id, group=group_id),
@@ -204,7 +211,7 @@ class StopTensorboardJobView(TensorboardEndpoint, PostEndpoint):
                 'update_status': True,
                 'is_managed': tensorboard.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                        instance=tensorboard,
                        target=get_target(experiment=experiment_id, group=group_id),
@@ -247,10 +254,11 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
 
     @staticmethod
     def _get_default_notebook_config():
-        if not conf.get('NOTEBOOK_DOCKER_IMAGE'):
+        docker_image = conf.get(NOTEBOOKS_DOCKER_IMAGE)
+        if not docker_image:
             raise ValidationError('Please provide a polyaxonfile, or set a default notebook image.')
         specification = NotebookSpecification.create_specification(
-            {'image': conf.get('NOTEBOOK_DOCKER_IMAGE')}, to_dict=False)
+            {'image': docker_image}, to_dict=False)
         return {'content': specification.raw_data}
 
     def _create_notebook(self, project):
@@ -278,7 +286,7 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
             celery_app.send_task(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
                 kwargs={'notebook_job_id': notebook.id},
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -288,7 +296,7 @@ class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
     def handle_code(self, request):
         commit = request.data.get('commit')
         commit = to_bool(commit) if commit is not None else True
-        if commit and conf.get('MOUNT_CODE_IN_NOTEBOOKS') and self.project.has_repo:
+        if commit and conf.get(NOTEBOOKS_MOUNT_CODE) and self.project.has_repo:
             # Commit changes
             git.commit(self.project.repo.path, request.user.email, request.user.username)
         else:
@@ -298,7 +306,7 @@ class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
     def post(self, request, *args, **kwargs):
         if self.project.has_notebook:
             try:
-                if conf.get('MOUNT_CODE_IN_NOTEBOOKS') and self.project.has_repo:
+                if conf.get(NOTEBOOKS_MOUNT_CODE) and self.project.has_repo:
                     self.handle_code(request)
             except FileNotFoundError:
                 # Git probably was not found
@@ -313,7 +321,7 @@ class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
                     'update_status': True,
                     'is_managed': self.project.notebook.is_managed,
                 },
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=self.project.notebook,
                            target='project',
@@ -403,7 +411,7 @@ class NotebookView(PluginJobView):
         if instance.has_notebook:
             backend = instance.notebook.backend
         else:
-            backend = conf.get('NOTEBOOK_BACKEND')
+            backend = conf.get(NOTEBOOKS_BACKEND)
         if backend == NotebookBackend.LAB:
             return 'lab'
         return 'tree'
@@ -521,7 +529,7 @@ class TensorboardDetailView(TensorboardEndpoint, RetrieveEndpoint, UpdateEndpoin
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
             kwargs={'tensorboard_job_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class TensorboardArchiveView(TensorboardEndpoint, CreateEndpoint):
@@ -537,7 +545,7 @@ class TensorboardArchiveView(TensorboardEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
             kwargs={'tensorboard_job_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -579,7 +587,7 @@ class NotebookDetailView(NotebookEndpoint, RetrieveEndpoint, UpdateEndpoint, Des
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
             kwargs={'notebook_job_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class NotebookArchiveView(NotebookEndpoint, CreateEndpoint):
@@ -595,7 +603,7 @@ class NotebookArchiveView(NotebookEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
             kwargs={'notebook_job_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

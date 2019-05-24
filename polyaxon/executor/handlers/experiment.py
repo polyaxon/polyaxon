@@ -1,9 +1,10 @@
 import conf
 
 from db.redis.tll import RedisTTL
-from event_manager import event_subjects
-from event_manager.events import experiment
+from events import event_subjects
+from events.registry import experiment
 from executor.handlers.base import BaseHandler
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, LogsCeleryTasks, SchedulerCeleryTasks
 
@@ -21,7 +22,7 @@ class ExperimentHandler(BaseHandler):
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_BUILD,
                 kwargs={'experiment_id': event.data['id']},
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def _handle_experiment_cleaned_triggered(cls, event: 'Event') -> None:
@@ -52,7 +53,7 @@ class ExperimentHandler(BaseHandler):
                     'collect_logs': False,
                     'is_managed': instance.is_managed,
                 },
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         except ExperimentGroup.DoesNotExist:
             # The experiment was already stopped when the group was deleted
             pass

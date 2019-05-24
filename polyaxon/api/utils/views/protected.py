@@ -8,6 +8,8 @@ from django.urls import reverse
 
 import conf
 
+from options.registry.core import DEBUG
+
 
 class ProtectedView(APIView):
     """Base view for to redirect to a file/path by instructing Nginx
@@ -47,7 +49,7 @@ class ProtectedView(APIView):
 
     def redirect(self, path, filename=None):
 
-        if conf.get('DEBUG'):  # pragma: no cover
+        if conf.get(DEBUG):  # pragma: no cover
             # Redirect to the checked-in test data. Works only with development settings.
             return HttpResponseRedirect(path)
 

@@ -5,7 +5,7 @@ class BaseMonitorCommand(BaseCommand):
     help = 'Base events, resource, and errors monitor.'
 
     def add_arguments(self, parser):
-        parser.add_argument('--log_sleep_interval',
+        parser.add_argument('--sleep_interval',
                             type=int,
                             default=1)
         parser.add_argument('--persist',

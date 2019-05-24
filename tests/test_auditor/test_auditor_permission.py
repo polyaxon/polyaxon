@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import permission as permission_events
+from events.registry import permission as permission_events
 from tests.test_auditor.utils import AuditorBaseTest
 
 

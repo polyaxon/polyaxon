@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import tensorboard as tensorboard_events
+from events.registry import tensorboard as tensorboard_events
 from factories.factory_plugins import TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from tests.test_auditor.utils import AuditorBaseTest

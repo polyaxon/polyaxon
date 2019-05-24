@@ -5,6 +5,10 @@ import conf
 from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
@@ -93,7 +97,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
                 'collect_logs': False,
                 'message': 'Experiment Group is scheduled for deletion.'
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -101,7 +105,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
             kwargs={
                 'group_id': experiment_group_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP, ignore_result=True)
@@ -124,7 +128,7 @@ def experiments_group_stop(experiment_group_id,
             'update_status': update_status,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)
@@ -162,7 +166,7 @@ def experiments_group_stop_experiments(experiment_group_id,
                         'collect_logs': collect_logs,
                         'is_managed': experiment.is_managed,
                     },
-                    countdown=conf.get('GLOBAL_COUNTDOWN'))
+                    countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
             else:
                 # Update experiment status to show that its stopped
                 experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)

@@ -1,10 +1,11 @@
 import conf
 
 from db.redis.tll import RedisTTL
-from event_manager import event_subjects
-from event_manager.events import job
-from event_manager.events.job import JOB_FAILED, JOB_SUCCEEDED
+from events import event_subjects
+from events.registry import job
+from events.registry.job import JOB_FAILED, JOB_SUCCEEDED
 from executor.handlers.base import BaseHandler
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -24,7 +25,7 @@ class JobHandler(BaseHandler):
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_BUILD,
             kwargs={'job_id': event.data['id']},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def _handle_job_cleaned_triggered(cls, event: 'Event') -> None:
@@ -43,7 +44,7 @@ class JobHandler(BaseHandler):
                 'collect_logs': False,
                 'is_managed': instance.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def _handle_job_post_run(cls, event: 'Event') -> None:

@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import superuser
+from events.registry import superuser
 
 auditor.subscribe(superuser.SuperUserRoleGrantedEvent)
 auditor.subscribe(superuser.SuperUserRoleRevokedEvent)

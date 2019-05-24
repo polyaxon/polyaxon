@@ -10,6 +10,7 @@ from django.http import HttpRequest
 
 import conf
 
+from options.registry.core import HEADERS_INTERNAL, SECRET_INTERNAL_TOKEN
 from scopes.authentication.base import PolyaxonAuthentication
 
 
@@ -29,7 +30,7 @@ class InternalUser(object):
 
     @property
     def access_token(self) -> str:
-        return conf.get('SECRET_INTERNAL_TOKEN')
+        return conf.get(SECRET_INTERNAL_TOKEN)
 
     def __eq__(self, other: Any) -> bool:
         return isinstance(other, InternalUser) and other.username == self.username
@@ -50,7 +51,7 @@ def get_internal_header(request: HttpRequest) -> str:
     """
     Return request's 'X_POLYAXON_INTERNAL:' header, as a bytestring.
     """
-    return get_header(request=request, header_service=conf.get('HEADERS_INTERNAL'))
+    return get_header(request=request, header_service=conf.get(HEADERS_INTERNAL))
 
 
 class InternalAuthentication(PolyaxonAuthentication):

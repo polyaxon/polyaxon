@@ -12,6 +12,7 @@ from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
 from libs.base_monitor import BaseMonitorCommand
 from monitor_resources import monitor
+from options.registry.k8s import K8S_NODE_NAME
 
 
 class Command(BaseMonitorCommand):
@@ -20,12 +21,12 @@ class Command(BaseMonitorCommand):
     @staticmethod
     def get_node():
         cluster = Cluster.load()
-        node = ClusterNode.objects.filter(cluster=cluster, name=conf.get('K8S_NODE_NAME'))
+        node = ClusterNode.objects.filter(cluster=cluster, name=conf.get(K8S_NODE_NAME))
         if node.exists():
             return node.first()
         return None
 
-    def get_node_or_wait(self, log_sleep_interval):
+    def get_node_or_wait(self, sleep_interval):
         max_trials = 10
         trials = 0
         while trials < max_trials:
@@ -34,16 +35,16 @@ class Command(BaseMonitorCommand):
             except (InterfaceError, ProgrammingError, OperationalError) as e:
                 monitor.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
-                time.sleep(log_sleep_interval * 2)
+                time.sleep(sleep_interval * 2)
         return None
 
     def handle(self, *args, **options):
-        log_sleep_interval = options['log_sleep_interval']
+        sleep_interval = options['sleep_interval']
         persist = to_bool(options['persist'])
-        node = self.get_node_or_wait(log_sleep_interval)
+        node = self.get_node_or_wait(sleep_interval)
         self.stdout.write(
             "Started a new resources monitor with, "
-            "log sleep interval: `{}` and persist: `{}`".format(log_sleep_interval, persist),
+            "log sleep interval: `{}` and persist: `{}`".format(sleep_interval, persist),
             ending='\n')
         containers = {}
         while True:
@@ -55,7 +56,7 @@ class Command(BaseMonitorCommand):
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred %s\n", e)
 
-            time.sleep(log_sleep_interval)
+            time.sleep(sleep_interval)
             try:
                 if node:
                     node.refresh_from_db()

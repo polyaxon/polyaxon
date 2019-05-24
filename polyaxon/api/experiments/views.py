@@ -69,8 +69,8 @@ from db.models.tokens import Token
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
-from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
-from event_manager.events.experiment import (
+from events.registry.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
+from events.registry.experiment import (
     EXPERIMENT_ARCHIVED,
     EXPERIMENT_COPIED_TRIGGERED,
     EXPERIMENT_DELETED_TRIGGERED,
@@ -86,17 +86,15 @@ from event_manager.events.experiment import (
     EXPERIMENT_UPDATED,
     EXPERIMENT_VIEWED
 )
-from event_manager.events.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
-from event_manager.events.experiment_job import (
-    EXPERIMENT_JOB_STATUSES_VIEWED,
-    EXPERIMENT_JOB_VIEWED
-)
-from event_manager.events.project import PROJECT_EXPERIMENTS_VIEWED
+from events.registry.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
+from events.registry.experiment_job import EXPERIMENT_JOB_STATUSES_VIEWED, EXPERIMENT_JOB_VIEWED
+from events.registry.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
 from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
@@ -248,7 +246,7 @@ class ExperimentDetailView(ExperimentEndpoint,
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
             kwargs={'experiment_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
@@ -264,7 +262,7 @@ class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
             kwargs={'experiment_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -529,7 +527,7 @@ class ExperimentMetricListView(ExperimentResourceEndpoint,
                     'experiment_id': self.experiment.id,
                     'data': request.data
                 },
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
             return Response(status=status.HTTP_201_CREATED)
 
         serializer = self.get_serializer(data=request.data)
@@ -803,7 +801,7 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                 'collect_logs': True,
                 'is_managed': obj.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -834,7 +832,7 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                     'collect_logs': True,
                     'is_managed': experiment.is_managed,
                 },
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

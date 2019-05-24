@@ -9,11 +9,12 @@ from django.utils.functional import cached_property
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from db.models.abstract.job import AbstractJob, AbstractJobStatus
 from db.models.abstract.node_scheduling import NodeSchedulingModel
+from db.models.abstract.unique_name import UniqueNameMixin
 from db.models.unique_names import EXPERIMENT_JOB_UNIQUE_NAME_FORMAT
 from schemas import TaskType
 
 
-class ExperimentJob(AbstractJob, NodeSchedulingModel):
+class ExperimentJob(AbstractJob, NodeSchedulingModel, UniqueNameMixin):
     """A model that represents job related to an experiment"""
     experiment = models.ForeignKey(
         'db.Experiment',

@@ -9,8 +9,6 @@ tags:
     - reference
 ---
 
-## Vision
-
 Polyaxon's master plan is to replace disparate tools and applications with a [Single Platform](/resources/one-platform/) 
 pre-configured to work by default across the entire [Machine Learning lifecycle](/resources/machine-learning-lifecycle/).
 

@@ -1,10 +1,11 @@
 import conf
 
 from db.redis.tll import RedisTTL
-from event_manager import event_subjects
-from event_manager.events import build_job
-from event_manager.events.build_job import BUILD_JOB_FAILED, BUILD_JOB_SUCCEEDED
+from events import event_subjects
+from events.registry import build_job
+from events.registry.build_job import BUILD_JOB_FAILED, BUILD_JOB_SUCCEEDED
 from executor.handlers.base import BaseHandler
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -31,7 +32,7 @@ class BuildJobHandler(BaseHandler):
                 'collect_logs': False,
                 'is_managed': instance.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def _handle_build_job_post_run(cls, event: 'Event') -> None:
@@ -63,7 +64,7 @@ class BuildJobHandler(BaseHandler):
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE,
             kwargs={'build_job_id': instance.id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

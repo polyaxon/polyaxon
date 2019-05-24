@@ -4,13 +4,14 @@ from sanic.response import text
 
 import conf
 
+from options.registry.core import LOGGING
 from streams.resources.builds import build_logs_v2
 from streams.resources.experiment_jobs import experiment_job_logs_v2, experiment_job_resources
 from streams.resources.experiments import experiment_logs_v2, experiment_resources
 from streams.resources.health import health
 from streams.resources.jobs import job_logs_v2
 
-app = Sanic(__name__, log_config=conf.get('LOGGING'))
+app = Sanic(__name__, log_config=conf.get(LOGGING))
 
 
 app.add_route(health, '/_health')

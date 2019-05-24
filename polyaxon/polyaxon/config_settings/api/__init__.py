@@ -15,6 +15,5 @@ from polyaxon.config_settings.registration import *
 from polyaxon.config_settings.rest import *
 from polyaxon.config_settings.spawner import *
 from polyaxon.config_settings.stores import *
-from polyaxon.config_settings.repos import *
 
 from .apps import *

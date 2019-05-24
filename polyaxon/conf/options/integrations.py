@@ -1,0 +1,10 @@
+import conf
+
+from options.registry import integrations
+
+conf.subscribe(integrations.IntegrationsWebhooksDiscord)
+conf.subscribe(integrations.IntegrationsWebhooksHipchat)
+conf.subscribe(integrations.IntegrationsWebhooksMattermost)
+conf.subscribe(integrations.IntegrationsWebhooksPagerDuty)
+conf.subscribe(integrations.IntegrationsWebhooksSlack)
+conf.subscribe(integrations.IntegrationsWebhooksGeneric)

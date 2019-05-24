@@ -4,6 +4,10 @@ import conf
 
 from db.getters.tensorboards import get_valid_tensorboard
 from lifecycles.jobs import JobLifeCycle
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import tensorboard_scheduler
@@ -54,7 +58,7 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
                 'is_managed': tensorboard.is_managed,
                 'message': 'Tensorboard is scheduled for deletion.'
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -62,7 +66,7 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
             kwargs={
                 'job_id': tensorboard_job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP,

@@ -2,6 +2,8 @@ from kubernetes import client
 
 import conf
 
+from options.registry.k8s import K8S_GPU_RESOURCE_KEY, K8S_TPU_RESOURCE_KEY
+
 
 def get_resources(resources):  # pylint:disable=too-many-branches
     """Create resources requirements.
@@ -29,14 +31,16 @@ def get_resources(resources):  # pylint:disable=too-many-branches
             requests['memory'] = '{}Mi'.format(resources.memory.requests)
 
     if resources.gpu:
+        resource_key = conf.get(K8S_GPU_RESOURCE_KEY)
         if resources.gpu.limits:
-            limits[conf.get('K8S_GPU_RESOURCE_KEY')] = resources.gpu.limits
+            limits[resource_key] = resources.gpu.limits
         if resources.gpu.requests:
-            requests[conf.get('K8S_GPU_RESOURCE_KEY')] = resources.gpu.requests
+            requests[resource_key] = resources.gpu.requests
 
     if resources.tpu:
+        resource_key = conf.get(K8S_TPU_RESOURCE_KEY)
         if resources.tpu.limits:
-            limits[conf.get('K8S_TPU_RESOURCE_KEY')] = resources.tpu.limits
+            limits[resource_key] = resources.tpu.limits
         if resources.tpu.requests:
-            requests[conf.get('K8S_TPU_RESOURCE_KEY')] = resources.tpu.requests
+            requests[resource_key] = resources.tpu.requests
     return client.V1ResourceRequirements(limits=limits or None, requests=requests or None)

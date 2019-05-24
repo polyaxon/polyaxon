@@ -3,6 +3,7 @@ import pytest
 import conf
 
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
+from options.registry.ttl import TTL_EPHEMERAL_TOKEN
 from tests.base.case import BaseTest
 
 
@@ -22,7 +23,7 @@ class TestRedisEphemeralTokens(BaseTest):
 
         assert token.get_state() is not None
         assert token.salt is not None
-        assert token.ttl == conf.get('TTL_EPHEMERAL_TOKEN')
+        assert token.ttl == conf.get(TTL_EPHEMERAL_TOKEN)
         assert token.scope == token.get_scope(1, 'experiment', 1)
         assert token.check_token('foo') is False
         # Checking delete the token

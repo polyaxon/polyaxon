@@ -5,6 +5,7 @@ import pytest
 import conf
 
 from api.users.ldap_signals import populate_user_handler
+from options.registry.email import EMAIL_DEFAULT_DOMAIN
 from tests.base.case import BaseTest
 
 
@@ -27,4 +28,4 @@ class TestAuthLdap(BaseTest):
         user.username = 'test'
         user.ldap_user.attrs = {}
         populate_user_handler(None, user=user, ldap_user=user.ldap_user)
-        assert user.email == 'test@%s' % conf.get('DEFAULT_EMAIL_DOMAIN')
+        assert user.email == 'test@%s' % conf.get(EMAIL_DEFAULT_DOMAIN)

@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import build_job
+from events.registry import build_job
 
 tracker.subscribe(build_job.BuildJobCreatedEvent)
 tracker.subscribe(build_job.BuildJobUpdatedEvent)

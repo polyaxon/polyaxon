@@ -12,6 +12,7 @@ from db.models.notebooks import NotebookJob
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from k8s_events_handlers.tasks.logger import logger
+from options.registry.spawner import APP_LABELS_NOTEBOOK, APP_LABELS_TENSORBOARD
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, K8SEventsCeleryTasks
 
@@ -114,9 +115,9 @@ def k8s_events_handle_plugin_job_statuses(self: 'celery_app.task', payload: Dict
     logger.debug('handling events status for job %s %s', job_name, app)
 
     try:
-        if app == conf.get('APP_LABELS_TENSORBOARD'):
+        if app == conf.get(APP_LABELS_TENSORBOARD):
             job = TensorboardJob.objects.get(uuid=job_uuid)
-        elif app == conf.get('APP_LABELS_NOTEBOOK'):
+        elif app == conf.get(APP_LABELS_NOTEBOOK):
             job = NotebookJob.objects.get(uuid=job_uuid)
         else:
             logger.info('Plugin job `%s` does not exist', app)

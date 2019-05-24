@@ -10,6 +10,7 @@ from django.test import TestCase
 
 import activitylogs
 import auditor
+import conf
 import executor
 import notifier
 import tracker
@@ -41,15 +42,16 @@ class BaseTest(TestCase):
         settings.UPLOAD_MOUNT_PATH = tempfile.mkdtemp()
         settings.PERSISTENCE_LOGS['mountPath'] = tempfile.mkdtemp()
         settings.PERSISTENCE_OUTPUTS['outputs']['mountPath'] = tempfile.mkdtemp()
-        settings.REPOS_ARCHIVE_ROOT = tempfile.mkdtemp()
-        settings.OUTPUTS_ARCHIVE_ROOT = tempfile.mkdtemp()
-        settings.OUTPUTS_DOWNLOAD_ROOT = tempfile.mkdtemp()
-        settings.LOGS_DOWNLOAD_ROOT = tempfile.mkdtemp()
-        settings.LOGS_ARCHIVE_ROOT = tempfile.mkdtemp()
+        settings.ARCHIVES_ROOT_REPOS = tempfile.mkdtemp()
+        settings.ARCHIVES_ROOT_ARTIFACTS = tempfile.mkdtemp()
+        settings.DOWNLOADS_ROOT_ARTIFACTS = tempfile.mkdtemp()
+        settings.DOWNLOADS_ROOT_LOGS = tempfile.mkdtemp()
+        settings.ARCHIVES_ROOT_LOGS = tempfile.mkdtemp()
         # Flush cache
         cache.clear()
         # Mock celery default sent task
         self.mock_send_task()
+        conf.setup()
 
         if self.DISABLE_RUNNER:
             self.disable_experiment_groups_runner()

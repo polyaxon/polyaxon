@@ -5,8 +5,8 @@ from unittest.mock import patch
 import pytest
 
 from db.models.clusters import Cluster
-from event_manager.events.cluster import CLUSTER_CREATED
-from event_manager.events.user import USER_ACTIVATED
+from events.registry.cluster import CLUSTER_CREATED
+from events.registry.user import USER_ACTIVATED
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 from tracker.publish_tracker import PublishTrackerService

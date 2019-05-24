@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import operation as operation_events
+from events.registry import operation as operation_events
 from factories.factory_pipelines import OperationFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

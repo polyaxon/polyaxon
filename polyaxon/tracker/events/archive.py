@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import archive
+from events.registry import archive
 
 tracker.subscribe(archive.ArchiveBuildJobsViewedEvent)
 tracker.subscribe(archive.ArchiveJobsViewedEvent)

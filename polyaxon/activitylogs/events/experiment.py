@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import experiment
+from events.registry import experiment
 
 activitylogs.subscribe(experiment.ExperimentCreatedEvent)
 activitylogs.subscribe(experiment.ExperimentUpdatedEvent)

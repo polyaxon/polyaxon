@@ -1,6 +1,6 @@
 import notifier
 
-from event_manager.events import build_job
+from events.registry import build_job
 
 # notifier.subscribe_event(build_job.BuildJobStartedEvent)
 # notifier.subscribe_event(build_job.BuildJobNewStatusEvent)

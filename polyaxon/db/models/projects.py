@@ -13,6 +13,7 @@ from db.models.abstract.persistence import PersistenceModel
 from db.models.abstract.readme import ReadmeModel
 from db.models.abstract.sub_paths import SubPathModel
 from db.models.abstract.tag import TagModel
+from db.models.abstract.unique_name import UniqueNameMixin
 from db.models.unique_names import PROJECT_UNIQUE_NAME_FORMAT
 from libs.blacklist import validate_blacklist_name
 from libs.paths.projects import get_project_subpath
@@ -25,6 +26,7 @@ class Project(DiffModel,
               DeletedModel,
               PersistenceModel,
               SubPathModel,
+              UniqueNameMixin,
               TensorboardJobMixin):
     """A model that represents a set of experiments to solve a specific problem."""
     CACHED_PROPERTIES = ['notebook', 'has_notebook', 'tensorboard', 'has_tensorboard']

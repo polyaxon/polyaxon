@@ -1,8 +1,8 @@
 from typing import Dict
 
 from auditor.manager import default_manager
-from event_manager.event import Event
-from event_manager.event_service import EventService
+from events.event import Event
+from events.event_service import EventService
 
 
 class AuditorService(EventService):

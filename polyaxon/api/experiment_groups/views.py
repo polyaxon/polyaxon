@@ -41,8 +41,8 @@ from db.models.experiment_groups import (
     ExperimentGroupStatus
 )
 from db.models.experiments import ExperimentMetric
-from event_manager.events.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
-from event_manager.events.experiment_group import (
+from events.registry.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
+from events.registry.experiment_group import (
     EXPERIMENT_GROUP_ARCHIVED,
     EXPERIMENT_GROUP_DELETED_TRIGGERED,
     EXPERIMENT_GROUP_METRICS_VIEWED,
@@ -52,7 +52,8 @@ from event_manager.events.experiment_group import (
     EXPERIMENT_GROUP_UPDATED,
     EXPERIMENT_GROUP_VIEWED
 )
-from event_manager.events.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
+from events.registry.project import PROJECT_EXPERIMENT_GROUPS_VIEWED
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.permissions.projects import IsItemProjectOwnerOrPublicReadOnly, get_permissible_project
@@ -121,7 +122,7 @@ class ExperimentGroupDetailView(ExperimentGroupEndpoint,
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
             kwargs={'experiment_group_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
@@ -137,7 +138,7 @@ class ExperimentGroupArchiveView(ExperimentGroupEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION,
             kwargs={'experiment_group_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -208,13 +209,13 @@ class ExperimentGroupStopView(CreateAPIView):
                 kwargs={'experiment_group_id': obj.id,
                         'pending': pending,
                         'message': 'User stopped pending experiments'},
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         else:
             celery_app.send_task(
                 SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
                 kwargs={'experiment_group_id': obj.id,
                         'message': 'User stopped experiment group'},
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

@@ -8,6 +8,7 @@ import conf
 
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
+from options.registry.persistence import REPOS_MOUNT_PATH
 from tests.base.case import BaseTest
 
 
@@ -15,7 +16,7 @@ from tests.base.case import BaseTest
 class TestCopyPaths(BaseTest):
     def test_copy_repo_path_to_tmp_dir(self):
         project = ProjectFactory()
-        repo_path = '{}/{}/{}/{}'.format(conf.get('REPOS_MOUNT_PATH'),
+        repo_path = '{}/{}/{}/{}'.format(conf.get(REPOS_MOUNT_PATH),
                                          project.user.username,
                                          project.name,
                                          project.name)

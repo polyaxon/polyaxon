@@ -1,4 +1,4 @@
-from event_manager.event_service import EventService
+from events.event_service import EventService
 from tracker.manager import default_manager
 
 

@@ -5,15 +5,15 @@ import pytest
 
 import notifier
 
-from action_manager.actions.email import EmailAction
-from action_manager.actions.webhooks.discord_webhook import DiscordWebHookAction
-from action_manager.actions.webhooks.hipchat_webhook import HipChatWebHookAction
-from action_manager.actions.webhooks.mattermost_webhook import MattermostWebHookAction
-from action_manager.actions.webhooks.pagerduty_webhook import PagerDutyWebHookAction
-from action_manager.actions.webhooks.slack_webhook import SlackWebHookAction
-from action_manager.actions.webhooks.webhook import WebHookAction
+from actions.registry.email import EmailAction
+from actions.registry.webhooks.discord_webhook import DiscordWebHookAction
+from actions.registry.webhooks.hipchat_webhook import HipChatWebHookAction
+from actions.registry.webhooks.mattermost_webhook import MattermostWebHookAction
+from actions.registry.webhooks.pagerduty_webhook import PagerDutyWebHookAction
+from actions.registry.webhooks.slack_webhook import SlackWebHookAction
+from actions.registry.webhooks.webhook import WebHookAction
 from db.models.notification import Notification, NotificationEvent
-from event_manager.events.experiment import EXPERIMENT_SUCCEEDED, EXPERIMENT_VIEWED
+from events.registry.experiment import EXPERIMENT_SUCCEEDED, EXPERIMENT_VIEWED
 from factories.factory_experiments import ExperimentFactory
 from tests.base.case import BaseTest
 

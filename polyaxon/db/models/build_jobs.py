@@ -24,6 +24,7 @@ from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config
+from options.registry.build_jobs import BUILD_JOBS_ALWAYS_PULL_LATEST
 from schemas import BuildSpecification
 
 
@@ -161,7 +162,7 @@ class BuildJob(AbstractJob,
         # Check if image is not using latest tag, then we can reuse a previous build
         rebuild_cond = (
             nocache or
-            (conf.get('BUILD_ALWAYS_PULL_LATEST') and
+            (conf.get(BUILD_JOBS_ALWAYS_PULL_LATEST) and
              build_spec.config.image_tag == LATEST_IMAGE_TAG)
         )
         if not rebuild_cond:

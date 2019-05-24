@@ -9,6 +9,7 @@ import conf
 
 from checks.base import Check
 from checks.results import Result
+from options.registry.core import CELERY_BROKER_BACKEND, CELERY_BROKER_URL
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +19,11 @@ class RabbitMQCheck(Check):
     @staticmethod
     def check() -> Result:
         """Open and close the broker channel."""
+        if conf.get(CELERY_BROKER_BACKEND) == 'redis':
+            return Result()
         try:
             # Context to release connection
-            with Connection(conf.get('CELERY_BROKER_URL')) as conn:
+            with Connection(conf.get(CELERY_BROKER_URL)) as conn:
                 conn.connect()
         except ConnectionRefusedError:
             return Result(message='Service unable to connect, "Connection was refused".',

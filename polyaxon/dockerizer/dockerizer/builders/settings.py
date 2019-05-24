@@ -3,7 +3,7 @@ import os
 
 import rhea
 
-from rhea import RheaError
+from rhea import RheaError, rhea_parser
 from rhea.specs import UriSpec
 from unipath import Path
 
@@ -56,7 +56,7 @@ def get_external_registries():
             except json.decoder.JSONDecodeError:
                 pass
 
-            registry_spec = config.parse_uri_spec(registry_spec)
+            registry_spec = rhea_parser.parse_uri_spec(registry_spec)
 
         if registry_spec:
             registries.append(registry_spec)

@@ -7,6 +7,18 @@ import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from options.registry.affinities import AFFINITIES_BUILD_JOBS
+from options.registry.build_jobs import BUILD_JOBS_DOCKER_IMAGE, BUILD_JOBS_IMAGE_PULL_POLICY
+from options.registry.container_names import (
+    CONTAINER_NAME_BUILD_JOBS,
+    CONTAINER_NAME_INIT,
+    CONTAINER_NAME_SIDECARS
+)
+from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_BUILDS
+from options.registry.node_selectors import NODE_SELECTORS_BUILD_JOBS
+from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
+from options.registry.spawner import APP_LABELS_DOCKERIZER, ROLE_LABELS_WORKER, TYPE_LABELS_RUNNER
+from options.registry.tolerations import TOLERATIONS_BUILD_JOBS
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var
 from scheduler.spawners.templates.pod_environment import (
@@ -45,22 +57,22 @@ class ResourceManager(BaseResourceManager):
             namespace=namespace,
             project_name=project_name,
             project_uuid=project_uuid,
-            job_container_name=job_container_name or conf.get('CONTAINER_NAME_DOCKERIZER_JOB'),
+            job_container_name=job_container_name or conf.get(CONTAINER_NAME_BUILD_JOBS),
             job_docker_image=job_docker_image,
             job_docker_image_pull_policy=job_docker_image_pull_policy,
-            sidecar_container_name=sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR'),
-            sidecar_docker_image=sidecar_docker_image or conf.get('JOB_SIDECAR_DOCKER_IMAGE'),
+            sidecar_container_name=sidecar_container_name or conf.get(CONTAINER_NAME_SIDECARS),
+            sidecar_docker_image=sidecar_docker_image or conf.get(SIDECARS_DOCKER_IMAGE),
             sidecar_docker_image_pull_policy=(
                 sidecar_docker_image_pull_policy or
-                conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY')),
-            init_container_name=init_container_name or conf.get('CONTAINER_NAME_INIT'),
-            init_docker_image=init_docker_image or conf.get('JOB_DOCKERIZER_IMAGE'),
+                conf.get(SIDECARS_IMAGE_PULL_POLICY)),
+            init_container_name=init_container_name or conf.get(CONTAINER_NAME_INIT),
+            init_docker_image=init_docker_image or conf.get(BUILD_JOBS_DOCKER_IMAGE),
             init_docker_image_pull_policy=(
                 init_docker_image_pull_policy or
-                conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')),
-            role_label=role_label or conf.get('ROLE_LABELS_WORKER'),
-            type_label=type_label or conf.get('TYPE_LABELS_RUNNER'),
-            app_label=app_label or conf.get('APP_LABELS_DOCKERIZER'),
+                conf.get(BUILD_JOBS_IMAGE_PULL_POLICY)),
+            role_label=role_label or conf.get(ROLE_LABELS_WORKER),
+            type_label=type_label or conf.get(TYPE_LABELS_RUNNER),
+            app_label=app_label or conf.get(APP_LABELS_DOCKERIZER),
             health_check_url=health_check_url,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
@@ -133,20 +145,21 @@ class ResourceManager(BaseResourceManager):
     def _get_node_selector(self, node_selector):
         return get_node_selector(
             node_selector=node_selector,
-            default_node_selector=conf.get('NODE_SELECTOR_BUILDS'))
+            default_node_selector=conf.get(NODE_SELECTORS_BUILD_JOBS))
 
     def _get_affinity(self, affinity):
         return get_affinity(
             affinity=affinity,
-            default_affinity=conf.get('AFFINITY_BUILDS'))
+            default_affinity=conf.get(AFFINITIES_BUILD_JOBS))
 
     def _get_tolerations(self, tolerations):
         return get_tolerations(
             tolerations=tolerations,
-            default_tolerations=conf.get('TOLERATIONS_BUILDS'))
+            default_tolerations=conf.get(TOLERATIONS_BUILD_JOBS))
 
     def _get_service_account_name(self):
         service_account_name = None
-        if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_BUILDS'):
-            service_account_name = conf.get('K8S_SERVICE_ACCOUNT_BUILDS')
+        sa = conf.get(K8S_SERVICE_ACCOUNT_BUILDS)
+        if conf.get(K8S_RBAC_ENABLED) and sa:
+            service_account_name = sa
         return service_account_name

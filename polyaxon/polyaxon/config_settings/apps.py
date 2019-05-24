@@ -2,8 +2,9 @@ from polyaxon.config_manager import config
 
 DEFAULT_APPS = (
     'polyaxon',
-    'conf.apps.ConfConfig',
+    'encryptor.apps.EncryptorConfig',
     'db.apps.DBConfig',
+    'conf.apps.ConfConfig',
 )
 
 EXTRA_APPS = config.get_string('POLYAXON_EXTRA_APPS', is_list=True, is_optional=True)

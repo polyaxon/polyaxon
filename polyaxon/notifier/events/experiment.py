@@ -1,6 +1,6 @@
 import notifier
 
-from event_manager.events import experiment
+from events.registry import experiment
 
 # notifier.subscribe_event(experiment.ExperimentNewStatusEvent)
 # notifier.subscribe_event(experiment.ExperimentNewMetricEvent)

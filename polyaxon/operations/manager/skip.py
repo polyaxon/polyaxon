@@ -2,6 +2,7 @@ import conf
 
 from constants import content_types
 from lifecycles.operations import OperationStatuses
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -21,7 +22,7 @@ def skip_experiment(experiment: 'Experiment', message: str = None):
             'is_managed': experiment.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def skip_experiment_group(group: 'ExperimentGroup', message: str = None):
@@ -33,7 +34,7 @@ def skip_experiment_group(group: 'ExperimentGroup', message: str = None):
                 'collect_logs': False,
                 'update_status': False,
                 'message': message},
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def skip_job(job: 'Job', message: str = None):
@@ -50,7 +51,7 @@ def skip_job(job: 'Job', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def skip_build_job(job: 'BuildJob', message: str = None):
@@ -67,7 +68,7 @@ def skip_build_job(job: 'BuildJob', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def skip_notebook_job(job: 'NotebookJob', message: str = None):
@@ -84,7 +85,7 @@ def skip_notebook_job(job: 'NotebookJob', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def skip_tensorboard_job(job: 'TensorboardJob', message: str = None):
@@ -101,7 +102,7 @@ def skip_tensorboard_job(job: 'TensorboardJob', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 ENTITIES = {

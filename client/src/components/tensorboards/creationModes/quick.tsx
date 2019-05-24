@@ -70,7 +70,7 @@ export default class TensorboardCreateQuick extends React.Component<Props, {}> {
               <form onSubmit={props.handleSubmit}>
                 {ErrorsField(this.props.errors)}
                 {this.props.isProjectEntity && ProjectField(this.props.projects)}
-                {DockerImageField(props, this.props.errors, 'POLYAXON_TENSORBOARD_DOCKER_IMAGE')}
+                {DockerImageField(props, this.props.errors, 'TENSORBOARDS:DOCKER_IMAGE')}
                 {NameField(props, this.props.errors)}
                 {DescriptionField(props, this.props.errors)}
                 {TagsField(props, this.props.errors)}

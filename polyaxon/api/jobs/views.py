@@ -40,7 +40,7 @@ from db.models.jobs import Job, JobStatus
 from db.models.tokens import Token
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
-from event_manager.events.job import (
+from events.registry.job import (
     JOB_ARCHIVED,
     JOB_DELETED_TRIGGERED,
     JOB_LOGS_VIEWED,
@@ -52,11 +52,12 @@ from event_manager.events.job import (
     JOB_UPDATED,
     JOB_VIEWED
 )
-from event_manager.events.project import PROJECT_JOBS_VIEWED
+from events.registry.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
 from libs.spec_validation import validate_job_spec_config
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.job import process_logs
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
@@ -129,7 +130,7 @@ class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoi
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
             kwargs={'job_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class JobArchiveView(JobEndpoint, CreateEndpoint):
@@ -145,7 +146,7 @@ class JobArchiveView(JobEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
             kwargs={'job_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 
@@ -329,7 +330,7 @@ class JobStopView(JobEndpoint, PostEndpoint):
                 'collect_logs': True,
                 'is_managed': self.job.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

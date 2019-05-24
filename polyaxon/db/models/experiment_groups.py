@@ -26,6 +26,7 @@ from db.models.abstract.readme import ReadmeModel
 from db.models.abstract.run import RunTimeModel
 from db.models.abstract.sub_paths import SubPathModel
 from db.models.abstract.tag import TagModel
+from db.models.abstract.unique_name import UniqueNameMixin
 from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
@@ -60,6 +61,7 @@ class ExperimentGroup(DiffModel,
                       SubPathModel,
                       TagModel,
                       DeletedModel,
+                      UniqueNameMixin,
                       LastStatusMixin,
                       TensorboardJobMixin):
     """A model that saves Specification/Polyaxonfiles."""
@@ -119,7 +121,7 @@ class ExperimentGroup(DiffModel,
     def __str__(self) -> str:
         return self.unique_name
 
-    @property
+    @cached_property
     def unique_name(self) -> str:
         return GROUP_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,

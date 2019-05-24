@@ -9,7 +9,7 @@ import ownership
 
 from db.models.projects import Project
 from db.models.repos import Repo
-from event_manager.events.project import PROJECT_DELETED
+from events.registry.project import PROJECT_DELETED
 from libs.paths.projects import delete_project_repos
 from signals.bookmarks import remove_bookmarks
 

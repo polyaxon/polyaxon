@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from constants import user_system
 from db.models.activitylogs import ActivityLog
-from event_manager import event_context
+from events import event_context
 
 
 class ActivityLogsSerializer(serializers.ModelSerializer):

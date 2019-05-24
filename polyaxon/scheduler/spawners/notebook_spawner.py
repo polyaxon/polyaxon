@@ -11,6 +11,10 @@ import conf
 from constants.k8s_jobs import NOTEBOOK_JOB_NAME
 from libs.paths.projects import get_project_repos_path
 from libs.unique_urls import get_notebook_health_url
+from options.registry.k8s import K8S_INGRESS_ANNOTATIONS
+from options.registry.notebooks import NOTEBOOKS_BACKEND, NOTEBOOKS_PORT_RANGE
+from options.registry.persistence import REPOS_CLAIM_NAME, REPOS_HOST_PATH, REPOS_MOUNT_PATH
+from options.registry.spawner import APP_LABELS_NOTEBOOK, ROLE_LABELS_DASHBOARD
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
@@ -79,35 +83,36 @@ class NotebookSpawner(ProjectJobSpawner):
         return self._get_service_url(NOTEBOOK_JOB_NAME)
 
     def get_notebook_token(self):
-        return get_hmac(conf.get('APP_LABELS_NOTEBOOK'), self.project_uuid)
+        return get_hmac(conf.get(APP_LABELS_NOTEBOOK), self.project_uuid)
 
     @staticmethod
     def get_notebook_code_volume():
         volume = get_volume(volume=constants.REPOS_VOLUME,
-                            claim_name=conf.get('REPOS_CLAIM_NAME'),
-                            host_path=conf.get('REPOS_HOST_PATH'))
+                            claim_name=conf.get(REPOS_CLAIM_NAME),
+                            host_path=conf.get(REPOS_HOST_PATH))
 
         volume_mount = get_volume_mount(volume=constants.REPOS_VOLUME,
-                                        volume_mount=conf.get('REPOS_MOUNT_PATH'))
+                                        volume_mount=conf.get(REPOS_MOUNT_PATH))
         return volume, volume_mount
 
     def request_notebook_port(self):
         if not self._use_ingress():
             return self.port
 
-        labels = 'app={},role={}'.format(conf.get('APP_LABELS_NOTEBOOK'),
-                                         conf.get('ROLE_LABELS_DASHBOARD'))
+        labels = 'app={},role={}'.format(conf.get(APP_LABELS_NOTEBOOK),
+                                         conf.get(ROLE_LABELS_DASHBOARD))
         ports = [service.spec.ports[0].port for service in self.list_services(labels)]
-        port = random.randint(*conf.get('NOTEBOOK_PORT_RANGE'))
+        port_range = conf.get(NOTEBOOKS_PORT_RANGE)
+        port = random.randint(*port_range)
         while port in ports:
-            port = random.randint(*conf.get('NOTEBOOK_PORT_RANGE'))
+            port = random.randint(*port_range)
         return port
 
     def get_notebook_args(self,
                           deployment_name,
                           mount_code_in_notebooks=False,
                           backend=None):
-        backend = backend or conf.get('NOTEBOOK_BACKEND')
+        backend = backend or conf.get(NOTEBOOKS_BACKEND)
         notebook_token = self.get_notebook_token()
         notebook_url = self._get_proxy_url(
             namespace=self.namespace,
@@ -227,7 +232,7 @@ class NotebookSpawner(ProjectJobSpawner):
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
-            annotations = json.loads(conf.get('K8S_INGRESS_ANNOTATIONS'))
+            annotations = json.loads(conf.get(K8S_INGRESS_ANNOTATIONS))
             paths = [{
                 'path': '/notebooks/{}'.format(self.project_name.replace('.', '/')),
                 'backend': {

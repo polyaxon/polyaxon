@@ -10,6 +10,8 @@ from db.redis.group_check import GroupChecks
 from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks.logger import logger
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
+from options.registry.groups import GROUPS_CHECK_INTERVAL
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -63,7 +65,7 @@ def start_group_experiments(experiment_group):
             kwargs={'experiment_group_id': experiment_group.id,
                     'pending': True,
                     'message': 'Early stopping'},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return
 
     experiment_to_start = experiment_group.n_experiments_to_start
@@ -79,7 +81,7 @@ def start_group_experiments(experiment_group):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_BUILD,
             kwargs={'experiment_id': experiment},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     return (n_pending_experiment - experiment_to_start > 0 or
             not experiment_group.scheduled_all_suggestions())
@@ -89,7 +91,7 @@ def check_group_experiments_done(experiment_group_id, auto_retry=False):
     celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
                          kwargs={'experiment_group_id': experiment_group_id,
                                  'auto_retry': auto_retry},
-                         countdown=conf.get('GLOBAL_COUNTDOWN'))
+                         countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def should_group_start(experiment_group_id, task, auto_retry):
@@ -101,7 +103,7 @@ def should_group_start(experiment_group_id, task, auto_retry):
         celery_app.send_task(
             task,
             kwargs={'experiment_group_id': experiment_group_id, 'auto_retry': auto_retry},
-            countdown=conf.get('GROUP_CHECKS_INTERVAL'))
+            countdown=conf.get(GROUPS_CHECK_INTERVAL))
         return False
 
     group_checks.check()

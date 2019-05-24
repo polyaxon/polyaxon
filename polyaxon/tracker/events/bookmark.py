@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import bookmark
+from events.registry import bookmark
 
 tracker.subscribe(bookmark.BookmarkBuildJobsViewedEvent)
 tracker.subscribe(bookmark.BookmarkJobsViewedEvent)

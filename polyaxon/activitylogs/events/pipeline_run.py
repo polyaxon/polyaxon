@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import pipeline_run
+from events.registry import pipeline_run
 
 activitylogs.subscribe(pipeline_run.PipelineRunCreatedEvent)
 activitylogs.subscribe(pipeline_run.PipelineRunUpdatedEvent)

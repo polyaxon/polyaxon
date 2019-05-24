@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from django.test import override_settings
+import conf
 
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJob, BuildJobStatus
@@ -12,6 +12,7 @@ from factories.factory_experiments import ExperimentFactory
 from factories.factory_plugins import NotebookJobFactory
 from factories.factory_projects import ProjectFactory
 from lifecycles.jobs import JobLifeCycle
+from options.registry.build_jobs import BUILD_JOBS_ALWAYS_PULL_LATEST
 from tests.base.case import BaseTest
 
 
@@ -161,8 +162,8 @@ class TestBuildJobModels(BaseTest):
         assert BuildJob.objects.count() == 1
         assert new_build_job == build_job
 
-    @override_settings(BUILD_ALWAYS_PULL_LATEST=True)
     def test_create_build_with_latest_tag_and_always_pull_latest_creates_new_job(self):
+        conf.set(key=BUILD_JOBS_ALWAYS_PULL_LATEST, value=True)
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
         build_job, rebuild = BuildJob.create(
@@ -212,8 +213,8 @@ class TestBuildJobModels(BaseTest):
         assert BuildJob.objects.count() == 1
         assert new_build_job == build_job
 
-    @override_settings(BUILD_ALWAYS_PULL_LATEST=True)
     def test_create_build_without_tag_and_rebuild_latest_always_results_in_new_job(self):
+        conf.set(key=BUILD_JOBS_ALWAYS_PULL_LATEST, value=True)
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
         build_job, rebuild = BuildJob.create(

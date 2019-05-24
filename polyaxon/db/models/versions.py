@@ -1,7 +1,18 @@
 from django.core.cache import cache
 from django.db import models
 
+import conf
+
 from db.models.abstract.singleton import Singleton
+from options.registry.deployments import (
+    CHART_VERSION,
+    CLI_LATEST_VERSION,
+    CLI_MIN_VERSION,
+    LIB_LATEST_VERSION,
+    LIB_MIN_VERSION,
+    PLATFORM_LATEST_VERSION,
+    PLATFORM_MIN_VERSION
+)
 
 
 class BaseValidationVersion(Singleton):
@@ -58,15 +69,11 @@ class CliVersion(BaseValidationVersion):
 
     @classmethod
     def get_min_version(cls):
-        import conf
-
-        return conf.get('CLI_MIN_VERSION')
+        return conf.get(CLI_MIN_VERSION)
 
     @classmethod
     def get_latest_version(cls):
-        import conf
-
-        return conf.get('CLI_LATEST_VERSION')
+        return conf.get(CLI_LATEST_VERSION)
 
 
 class PlatformVersion(BaseValidationVersion):
@@ -80,15 +87,11 @@ class PlatformVersion(BaseValidationVersion):
 
     @classmethod
     def get_min_version(cls):
-        import conf
-
-        return conf.get('PLATFORM_MIN_VERSION')
+        return conf.get(PLATFORM_MIN_VERSION)
 
     @classmethod
     def get_latest_version(cls):
-        import conf
-
-        return conf.get('PLATFORM_LATEST_VERSION')
+        return conf.get(PLATFORM_LATEST_VERSION)
 
 
 class LibVersion(BaseValidationVersion):
@@ -102,15 +105,11 @@ class LibVersion(BaseValidationVersion):
 
     @classmethod
     def get_min_version(cls):
-        import conf
-
-        return conf.get('LIB_MIN_VERSION')
+        return conf.get(LIB_MIN_VERSION)
 
     @classmethod
     def get_latest_version(cls):
-        import conf
-
-        return conf.get('LIB_LATEST_VERSION')
+        return conf.get(LIB_LATEST_VERSION)
 
 
 class ChartVersion(Singleton):
@@ -125,9 +124,7 @@ class ChartVersion(Singleton):
 
     @staticmethod
     def get_version():
-        import conf
-
-        return conf.get('CHART_VERSION')
+        return conf.get(CHART_VERSION)
 
     @classmethod
     def may_be_update(cls, obj):

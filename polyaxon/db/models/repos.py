@@ -8,12 +8,13 @@ import conf
 
 from constants.urls import API_V1
 from db.models.abstract.diff import DiffModel
+from options.registry.persistence import REPOS_MOUNT_PATH
 
 
 class RepoMixin(object):
     @property
     def user_path(self) -> str:
-        return os.path.join(conf.get('REPOS_MOUNT_PATH'), self.project.user.username)
+        return os.path.join(conf.get(REPOS_MOUNT_PATH), self.project.user.username)
 
     @property
     def project_path(self) -> str:

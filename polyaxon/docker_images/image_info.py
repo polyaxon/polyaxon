@@ -5,6 +5,7 @@ from typing import Any, Tuple
 import conf
 
 from constants.images_tags import LATEST_IMAGE_TAG
+from options.registry.registries import REGISTRY_IN_CLUSTER, REGISTRY_LOCAL_URI, REGISTRY_URI
 
 _logger = logging.getLogger('polyaxon.dockerizer.images')
 
@@ -14,7 +15,7 @@ def get_experiment_image_info(experiment: 'Experiment') -> Tuple[str, str]:
     project_name = experiment.project.name
     repo_name = project_name
 
-    image_name = '{}/{}'.format(conf.get('REGISTRY_URI'), repo_name)
+    image_name = '{}/{}'.format(conf.get(REGISTRY_URI), repo_name)
     image_tag = experiment.code_reference.commit
     return image_name, image_tag
 
@@ -24,7 +25,7 @@ def get_job_image_info(project: 'Project', job: Any) -> Tuple[str, str]:
     project_name = project.name
     repo_name = project_name
 
-    image_name = '{}/{}'.format(conf.get('REGISTRY_URI'), repo_name)
+    image_name = '{}/{}'.format(conf.get(REGISTRY_URI), repo_name)
     try:
         last_commit = project.repo.last_commit
     except ValueError:
@@ -39,10 +40,10 @@ def get_notebook_image_info(project: 'Project', job: Any) -> Tuple[str, str]:
 
 
 def get_image_name(build_job: 'BuildJob', local=True) -> str:
-    if conf.get('REGISTRY_IN_CLUSTER'):
-        registry = conf.get('REGISTRY_LOCAL_URI') if local else conf.get('REGISTRY_URI')
+    if conf.get(REGISTRY_IN_CLUSTER):
+        registry = conf.get(REGISTRY_LOCAL_URI) if local else conf.get(REGISTRY_URI)
     else:
-        registry = conf.get('REGISTRY_URI')
+        registry = conf.get(REGISTRY_URI)
     return '{}/{}_{}'.format(registry,
                              build_job.project.name.lower(),
                              build_job.project.id)

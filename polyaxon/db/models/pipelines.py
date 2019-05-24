@@ -22,6 +22,7 @@ from db.models.abstract.is_managed import IsManagedModel
 from db.models.abstract.nameable import NameableModel
 from db.models.abstract.run import RunModel
 from db.models.abstract.tag import TagModel
+from db.models.abstract.unique_name import UniqueNameMixin
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import OPS_UNIQUE_NAME_FORMAT, PIPELINES_UNIQUE_NAME_FORMAT
 from lifecycles.operations import OperationStatuses
@@ -97,7 +98,8 @@ class Pipeline(DiffModel,
                DescribableModel,
                TagModel,
                ExecutableModel,
-               DeletedModel):
+               DeletedModel,
+               UniqueNameMixin):
     """A model that represents a pipeline (DAG - directed acyclic graph).
 
     A Pipeline is a collection / namespace of operations with directional dependencies.
@@ -146,7 +148,7 @@ class Pipeline(DiffModel,
         app_label = 'db'
         unique_together = (('project', 'name'),)
 
-    @property
+    @cached_property
     def unique_name(self) -> str:
         return PIPELINES_UNIQUE_NAME_FORMAT.format(
             project_name=self.project.unique_name,
@@ -178,7 +180,8 @@ class Operation(DiffModel,
                 DescribableModel,
                 TagModel,
                 ExecutableModel,
-                DeletedModel):
+                DeletedModel,
+                UniqueNameMixin):
     """ Base class for all Operations.
 
     To derive this class, you are expected to override
@@ -272,7 +275,7 @@ class Operation(DiffModel,
         app_label = 'db'
         unique_together = (('pipeline', 'name'),)
 
-    @property
+    @cached_property
     def unique_name(self) -> str:
         return OPS_UNIQUE_NAME_FORMAT.format(
             pipeline_name=self.pipeline.unique_name,

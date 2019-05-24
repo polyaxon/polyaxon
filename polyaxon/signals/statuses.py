@@ -17,7 +17,7 @@ from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
 from db.models.pipelines import PipelineRunStatus
 from db.models.tensorboards import TensorboardJobStatus
-from event_manager.events.build_job import (
+from events.registry.build_job import (
     BUILD_JOB_CREATED,
     BUILD_JOB_DONE,
     BUILD_JOB_FAILED,
@@ -25,7 +25,7 @@ from event_manager.events.build_job import (
     BUILD_JOB_STOPPED,
     BUILD_JOB_SUCCEEDED
 )
-from event_manager.events.experiment import (
+from events.registry.experiment import (
     EXPERIMENT_CREATED,
     EXPERIMENT_DONE,
     EXPERIMENT_FAILED,
@@ -33,14 +33,14 @@ from event_manager.events.experiment import (
     EXPERIMENT_STOPPED,
     EXPERIMENT_SUCCEEDED
 )
-from event_manager.events.experiment_group import (
+from events.registry.experiment_group import (
     EXPERIMENT_GROUP_CREATED,
     EXPERIMENT_GROUP_DONE,
     EXPERIMENT_GROUP_NEW_STATUS,
     EXPERIMENT_GROUP_STOPPED
 )
-from event_manager.events.experiment_job import EXPERIMENT_JOB_NEW_STATUS
-from event_manager.events.job import (
+from events.registry.experiment_job import EXPERIMENT_JOB_NEW_STATUS
+from events.registry.job import (
     JOB_CREATED,
     JOB_DONE,
     JOB_FAILED,
@@ -48,14 +48,14 @@ from event_manager.events.job import (
     JOB_STOPPED,
     JOB_SUCCEEDED
 )
-from event_manager.events.notebook import (
+from events.registry.notebook import (
     NOTEBOOK_FAILED,
     NOTEBOOK_NEW_STATUS,
     NOTEBOOK_STOPPED,
     NOTEBOOK_SUCCEEDED
 )
-from event_manager.events.pipeline_run import PIPELINE_RUN_SKIPPED, PIPELINE_RUN_STOPPED
-from event_manager.events.tensorboard import (
+from events.registry.pipeline_run import PIPELINE_RUN_SKIPPED, PIPELINE_RUN_STOPPED
+from events.registry.tensorboard import (
     TENSORBOARD_FAILED,
     TENSORBOARD_NEW_STATUS,
     TENSORBOARD_STOPPED,

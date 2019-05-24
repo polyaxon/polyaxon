@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import job
+from events.registry import job
 
 tracker.subscribe(job.JobCreatedEvent)
 tracker.subscribe(job.JobUpdatedEvent)

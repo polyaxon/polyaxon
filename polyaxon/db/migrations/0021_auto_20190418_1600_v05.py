@@ -7,6 +7,23 @@ from django.db.models import ExpressionWrapper, F
 import libs.spec_validation
 
 
+def create_cluster_owner(apps, schema_editor):
+    Cluster = apps.get_model('db', 'Cluster')
+    Owner = apps.get_model('db', 'Owner')
+    ContentType = apps.get_model('contenttypes', 'ContentType')
+    cluster_type_id = ContentType.objects.get_for_model(Cluster).id
+    for cluster in Cluster.objects.all():
+        Owner.objects.create(object_id=cluster.id,
+                             content_type_id=cluster_type_id,
+                             name=cluster.uuid)
+
+
+def migrate_experimentgroup_config(apps, schema_editor):
+    ExperimentGroup = apps.get_model('db', 'ExperimentGroup')
+
+    ExperimentGroup.objects.filter(backend__isnull=True).update(backend='native')
+
+
 def migrate_build_jobs_config(apps, schema_editor):
     BuildJob = apps.get_model('db', 'BuildJob')
 
@@ -221,4 +238,6 @@ class Migration(migrations.Migration):
         migrations.RunPython(migrate_jobs_config),
         migrations.RunPython(migrate_notebook_jobs_config),
         migrations.RunPython(migrate_tensorboard_jobs_config),
+        migrations.RunPython(migrate_experimentgroup_config),
+        migrations.RunPython(create_cluster_owner),
     ]

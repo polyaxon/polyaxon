@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import superuser as superuser_events
+from events.registry import superuser as superuser_events
 from tests.test_auditor.utils import AuditorBaseTest
 
 

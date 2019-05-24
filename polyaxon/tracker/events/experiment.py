@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import experiment
+from events.registry import experiment
 
 tracker.subscribe(experiment.ExperimentCreatedEvent)
 tracker.subscribe(experiment.ExperimentUpdatedEvent)

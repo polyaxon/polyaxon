@@ -11,13 +11,14 @@ import conf
 from db.models.clusters import Cluster
 from libs.base_monitor import BaseMonitorCommand
 from monitor_namespace import monitor
+from options.registry.k8s import K8S_NAMESPACE
 from polyaxon_k8s.manager import K8SManager
 
 
 class Command(BaseMonitorCommand):
     help = 'Watch namespace warning and errors events.'
 
-    def get_cluster_or_wait(self, log_sleep_interval: int) -> Optional['Cluster']:
+    def get_cluster_or_wait(self, sleep_interval: int) -> Optional['Cluster']:
         max_trials = 10
         trials = 0
         while trials < max_trials:
@@ -26,17 +27,17 @@ class Command(BaseMonitorCommand):
             except (InterfaceError, ProgrammingError, OperationalError) as e:
                 monitor.logger.exception("Database is not synced yet %s\n", e)
                 trials += 1
-                time.sleep(log_sleep_interval * 2)
+                time.sleep(sleep_interval * 2)
         return None
 
     def handle(self, *args, **options) -> None:
-        log_sleep_interval = options['log_sleep_interval']
+        sleep_interval = options['sleep_interval']
         self.stdout.write(
             "Started a new namespace monitor with, "
-            "log sleep interval: `{}`.".format(log_sleep_interval),
+            "log sleep interval: `{}`.".format(sleep_interval),
             ending='\n')
-        k8s_manager = K8SManager(namespace=conf.get('K8S_NAMESPACE'), in_cluster=True)
-        cluster = self.get_cluster_or_wait(log_sleep_interval)
+        k8s_manager = K8SManager(namespace=conf.get(K8S_NAMESPACE), in_cluster=True)
+        cluster = self.get_cluster_or_wait(sleep_interval)
         if not cluster:
             # End process
             return
@@ -47,7 +48,7 @@ class Command(BaseMonitorCommand):
             except (ApiException, ValueError) as e:
                 monitor.logger.warning(
                     "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
-                time.sleep(log_sleep_interval)
+                time.sleep(sleep_interval)
             except Exception as e:
                 monitor.logger.exception("Unhandled exception occurred: %s\n", e)
-                time.sleep(log_sleep_interval)
+                time.sleep(sleep_interval)

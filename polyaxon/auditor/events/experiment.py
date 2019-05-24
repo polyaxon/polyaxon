@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import experiment
+from events.registry import experiment
 
 auditor.subscribe(experiment.ExperimentCreatedEvent)
 auditor.subscribe(experiment.ExperimentUpdatedEvent)

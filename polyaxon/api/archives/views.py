@@ -20,7 +20,7 @@ from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.jobs import Job
 from db.models.projects import Project
-from event_manager.events.archive import (
+from events.registry.archive import (
     ARCHIVE_BUILD_JOBS_VIEWED,
     ARCHIVE_EXPERIMENT_GROUPS_VIEWED,
     ARCHIVE_EXPERIMENTS_VIEWED,

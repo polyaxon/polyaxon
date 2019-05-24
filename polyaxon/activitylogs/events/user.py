@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import user
+from events.registry import user
 
 activitylogs.subscribe(user.UserRegisteredEvent)
 activitylogs.subscribe(user.UserUpdatedEvent)

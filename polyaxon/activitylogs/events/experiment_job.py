@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import experiment_job
+from events.registry import experiment_job
 
 activitylogs.subscribe(experiment_job.ExperimentJobViewedEvent)
 activitylogs.subscribe(experiment_job.ExperimentJobResourcesViewedEvent)

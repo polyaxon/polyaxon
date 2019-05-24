@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import pipeline_run as pipeline_run_events
+from events.registry import pipeline_run as pipeline_run_events
 from factories.factory_pipelines import PipelineRunFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

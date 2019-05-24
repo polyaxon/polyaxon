@@ -1,7 +1,9 @@
 import auditor
 import conf
 
-from event_manager.events.job import JOB_LOGS_VIEWED
+from events.registry.job import JOB_LOGS_VIEWED
+from options.registry.container_names import CONTAINER_NAME_JOBS
+from options.registry.k8s import K8S_NAMESPACE
 from streams.authentication import authorized
 from streams.resources.logs import log_job
 from streams.resources.utils import get_error_message
@@ -30,5 +32,5 @@ async def job_logs_v2(request, ws, username, project_name, job_id):
                   ws=ws,
                   job=job,
                   pod_id=pod_id,
-                  container=conf.get('CONTAINER_NAME_JOB'),
-                  namespace=conf.get('K8S_NAMESPACE'))
+                  container=conf.get(CONTAINER_NAME_JOBS),
+                  namespace=conf.get(K8S_NAMESPACE))

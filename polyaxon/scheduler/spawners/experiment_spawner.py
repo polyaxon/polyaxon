@@ -9,6 +9,7 @@ import conf
 from constants.experiment_jobs import get_experiment_job_uuid
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.unique_urls import get_experiment_health_url
+from options.registry.container_names import CONTAINER_NAME_EXPERIMENT_JOBS
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
@@ -108,7 +109,7 @@ class ExperimentSpawner(K8SManager):
 
     @staticmethod
     def get_job_container_name(job_container_name):
-        return job_container_name or conf.get('CONTAINER_NAME_EXPERIMENT_JOB')
+        return job_container_name or conf.get(CONTAINER_NAME_EXPERIMENT_JOBS)
 
     def create_job_uuids(self):
         return {

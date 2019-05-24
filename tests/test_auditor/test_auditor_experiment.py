@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import experiment as experiment_events
+from events.registry import experiment as experiment_events
 from factories.factory_experiments import ExperimentFactory, ExperimentMetricFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

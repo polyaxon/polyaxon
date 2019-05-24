@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import pipeline_run
+from events.registry import pipeline_run
 
 executor.subscribe(pipeline_run.PipelineRunCreatedEvent)
 executor.subscribe(pipeline_run.PipelineRunStoppedEvent)

@@ -16,10 +16,12 @@ import conf
 
 from db.models.tokens import Token
 from factories.factory_users import UserFactory
+# Stores the currently valid tokens to check against
+from options.registry.core import SECRET_INTERNAL_TOKEN
 
 # pylint:disable=arguments-differ
 
-# Stores the currently valid tokens to check against
+
 _valid_tokens = dict()
 CONTENT_TYPE_APPLICATION_JSON = 'application/json'
 
@@ -123,7 +125,7 @@ class InternalClient(BaseClient):
         super().__init__(**defaults)
         self.service = service or InternalServices.HELPER
         self.authorization_header = '{} {}'.format(authentication_type,
-                                                   conf.get('SECRET_INTERNAL_TOKEN'))
+                                                   conf.get(SECRET_INTERNAL_TOKEN))
 
     def request(self, **request):
         updated_request = {

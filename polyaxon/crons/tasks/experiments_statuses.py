@@ -4,6 +4,7 @@ import conf
 
 from db.models.experiments import Experiment
 from lifecycles.experiments import ExperimentLifeCycle
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
@@ -17,4 +18,4 @@ def experiments_sync_jobs_statuses() -> None:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS,
             kwargs={'experiment_id': experiment.id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))

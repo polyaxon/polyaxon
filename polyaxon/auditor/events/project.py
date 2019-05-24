@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import project
+from events.registry import project
 
 auditor.subscribe(project.ProjectCreatedEvent)
 auditor.subscribe(project.ProjectUpdatedEvent)

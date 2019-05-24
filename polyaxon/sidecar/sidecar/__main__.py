@@ -20,7 +20,7 @@ if __name__ == '__main__':
         type=str
     )
     parser.add_argument(
-        '--log_sleep_interval',
+        '--sleep_interval',
         default=2,
         type=int
     )
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     container_id = arguments.pop('container_id')
     app_label = arguments.pop('app_label')
-    log_sleep_interval = arguments.pop('log_sleep_interval')
+    sleep_interval = arguments.pop('sleep_interval')
 
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
     client = PolyaxonClient()
@@ -37,9 +37,9 @@ if __name__ == '__main__':
     retry = 0
     is_running = True
     while is_running and retry < 3:
-        time.sleep(log_sleep_interval)
+        time.sleep(sleep_interval)
         try:
             is_running = is_pod_running(k8s_manager, settings.POD_ID, container_id)
         except ApiException:
             retry += 1
-            time.sleep(log_sleep_interval)  # We wait a bit more before try
+            time.sleep(sleep_interval)  # We wait a bit more before try

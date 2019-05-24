@@ -4,6 +4,22 @@ import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from options.registry.affinities import AFFINITIES_TENSORBOARDS
+from options.registry.container_names import (
+    CONTAINER_NAME_INIT,
+    CONTAINER_NAME_PLUGIN_JOBS,
+    CONTAINER_NAME_SIDECARS
+)
+from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
+from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
+from options.registry.node_selectors import NODE_SELECTORS_TENSORBOARDS
+from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
+from options.registry.spawner import (
+    APP_LABELS_TENSORBOARD,
+    ROLE_LABELS_DASHBOARD,
+    TYPE_LABELS_RUNNER
+)
+from options.registry.tolerations import TOLERATIONS_TENSORBOARDS
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
 from scheduler.spawners.templates.pod_environment import (
@@ -42,22 +58,22 @@ class ResourceManager(BaseResourceManager):
             namespace=namespace,
             project_name=project_name,
             project_uuid=project_uuid,
-            job_container_name=job_container_name or conf.get('CONTAINER_NAME_PLUGIN_JOB'),
+            job_container_name=job_container_name or conf.get(CONTAINER_NAME_PLUGIN_JOBS),
             job_docker_image=job_docker_image,
             job_docker_image_pull_policy=job_docker_image_pull_policy,
-            sidecar_container_name=sidecar_container_name or conf.get('CONTAINER_NAME_SIDECAR'),
-            sidecar_docker_image=sidecar_docker_image or conf.get('JOB_SIDECAR_DOCKER_IMAGE'),
+            sidecar_container_name=sidecar_container_name or conf.get(CONTAINER_NAME_SIDECARS),
+            sidecar_docker_image=sidecar_docker_image or conf.get(SIDECARS_DOCKER_IMAGE),
             sidecar_docker_image_pull_policy=(
                 sidecar_docker_image_pull_policy or
-                conf.get('JOB_SIDECAR_DOCKER_IMAGE_PULL_POLICY')),
-            init_container_name=init_container_name or conf.get('CONTAINER_NAME_INIT'),
-            init_docker_image=init_docker_image or conf.get('JOB_INIT_DOCKER_IMAGE'),  # CHANGE
+                conf.get(SIDECARS_IMAGE_PULL_POLICY)),
+            init_container_name=init_container_name or conf.get(CONTAINER_NAME_INIT),
+            init_docker_image=init_docker_image or conf.get(INIT_DOCKER_IMAGE),  # CHANGE
             init_docker_image_pull_policy=(
                 init_docker_image_pull_policy or
-                conf.get('JOB_INIT_DOCKER_IMAGE_PULL_POLICY')),
-            role_label=role_label or conf.get('ROLE_LABELS_DASHBOARD'),
-            type_label=type_label or conf.get('TYPE_LABELS_RUNNER'),
-            app_label=app_label or conf.get('APP_LABELS_TENSORBOARD'),
+                conf.get(INIT_IMAGE_PULL_POLICY)),
+            role_label=role_label or conf.get(ROLE_LABELS_DASHBOARD),
+            type_label=type_label or conf.get(TYPE_LABELS_RUNNER),
+            app_label=app_label or conf.get(APP_LABELS_TENSORBOARD),
             health_check_url=health_check_url,
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
@@ -132,20 +148,21 @@ class ResourceManager(BaseResourceManager):
     def _get_node_selector(self, node_selector):
         return get_node_selector(
             node_selector=node_selector,
-            default_node_selector=conf.get('NODE_SELECTOR_TENSORBOARDS'))
+            default_node_selector=conf.get(NODE_SELECTORS_TENSORBOARDS))
 
     def _get_affinity(self, affinity):
         return get_affinity(
             affinity=affinity,
-            default_affinity=conf.get('AFFINITY_TENSORBOARDS'))
+            default_affinity=conf.get(AFFINITIES_TENSORBOARDS))
 
     def _get_tolerations(self, tolerations):
         return get_tolerations(
             tolerations=tolerations,
-            default_tolerations=conf.get('TOLERATIONS_TENSORBOARDS'))
+            default_tolerations=conf.get(TOLERATIONS_TENSORBOARDS))
 
     def _get_service_account_name(self):
         service_account_name = None
-        if conf.get('K8S_RBAC_ENABLED') and conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS'):
-            service_account_name = conf.get('K8S_SERVICE_ACCOUNT_EXPERIMENTS')
+        sa = conf.get(K8S_SERVICE_ACCOUNT_EXPERIMENTS)
+        if conf.get(K8S_RBAC_ENABLED) and sa:
+            service_account_name = sa
         return service_account_name

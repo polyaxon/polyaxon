@@ -24,21 +24,21 @@ from api.endpoint.public import PublicActivityPermission, PublicResourceActivity
 from api.filters import OrderingFilter
 from constants import content_types
 from db.models.bookmarks import Bookmark
-from event_manager.events.bookmark import (
+from events.registry.bookmark import (
     BOOKMARK_BUILD_JOBS_VIEWED,
     BOOKMARK_EXPERIMENT_GROUPS_VIEWED,
     BOOKMARK_EXPERIMENTS_VIEWED,
     BOOKMARK_JOBS_VIEWED,
     BOOKMARK_PROJECTS_VIEWED
 )
-from event_manager.events.build_job import BUILD_JOB_BOOKMARKED, BUILD_JOB_UNBOOKMARKED
-from event_manager.events.experiment import EXPERIMENT_BOOKMARKED, EXPERIMENT_UNBOOKMARKED
-from event_manager.events.experiment_group import (
+from events.registry.build_job import BUILD_JOB_BOOKMARKED, BUILD_JOB_UNBOOKMARKED
+from events.registry.experiment import EXPERIMENT_BOOKMARKED, EXPERIMENT_UNBOOKMARKED
+from events.registry.experiment_group import (
     EXPERIMENT_GROUP_BOOKMARKED,
     EXPERIMENT_GROUP_UNBOOKMARKED
 )
-from event_manager.events.job import JOB_BOOKMARKED, JOB_UNBOOKMARKED
-from event_manager.events.project import PROJECT_BOOKMARKED, PROJECT_UNBOOKMARKED
+from events.registry.job import JOB_BOOKMARKED, JOB_UNBOOKMARKED
+from events.registry.project import PROJECT_BOOKMARKED, PROJECT_UNBOOKMARKED
 
 
 class BookmarkListView(BaseEndpoint, ListEndpoint):

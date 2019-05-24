@@ -5,6 +5,7 @@ from kubernetes import client
 
 import conf
 
+from options.registry.deployments import CHART_VERSION
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resources_env_vars
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
@@ -71,7 +72,7 @@ class BaseResourceManager(object):
         return {
             'app.kubernetes.io/name': self.app_label,
             'app.kubernetes.io/instance': job_uuid,
-            'app.kubernetes.io/version': conf.get('CHART_VERSION'),
+            'app.kubernetes.io/version': conf.get(CHART_VERSION),
             'app.kubernetes.io/part-of': self.type_label,
             'app.kubernetes.io/component': self.role_label,
             'app.kubernetes.io/managed-by': 'polyaxon'

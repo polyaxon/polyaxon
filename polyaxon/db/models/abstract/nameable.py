@@ -14,3 +14,13 @@ class NameableModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+class RequiredNameableModel(models.Model):
+    name = models.CharField(
+        max_length=256,
+        default=None,
+        validators=[validate_slug, validate_blacklist_name])
+
+    class Meta:
+        abstract = True

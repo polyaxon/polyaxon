@@ -6,11 +6,11 @@ import activitylogs
 
 from api.activitylogs.serializers import ActivityLogsSerializer
 from db.models.activitylogs import ActivityLog
-from event_manager import event_context
-from event_manager.events.experiment import EXPERIMENT_DELETED_TRIGGERED
-from event_manager.events.job import JOB_VIEWED
-from event_manager.events.project import PROJECT_DELETED_TRIGGERED
-from event_manager.events.user import USER_ACTIVATED
+from events import event_context
+from events.registry.experiment import EXPERIMENT_DELETED_TRIGGERED
+from events.registry.job import JOB_VIEWED
+from events.registry.project import PROJECT_DELETED_TRIGGERED
+from events.registry.user import USER_ACTIVATED
 from factories.factory_experiments import ExperimentFactory
 from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory

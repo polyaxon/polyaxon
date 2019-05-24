@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import bookmark
+from events.registry import bookmark
 
 auditor.subscribe(bookmark.BookmarkBuildJobsViewedEvent)
 auditor.subscribe(bookmark.BookmarkJobsViewedEvent)

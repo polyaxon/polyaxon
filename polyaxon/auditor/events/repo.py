@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import repo
+from events.registry import repo
 
 auditor.subscribe(repo.RepoCreatedEvent)
 auditor.subscribe(repo.RepoDownloadedEvent)

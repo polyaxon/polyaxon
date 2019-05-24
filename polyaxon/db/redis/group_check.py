@@ -1,6 +1,7 @@
 import conf
 
 from db.redis.base import BaseRedisDb
+from options.registry.groups import GROUPS_CHECK_INTERVAL
 from polyaxon.settings import RedisPools
 
 
@@ -59,13 +60,13 @@ class GroupChecks(BaseRedisDb):
     def check(self) -> None:
         self._red.setex(name=self.redis_key_checked,
                         value=1,
-                        time=conf.get('GROUP_CHECKS_INTERVAL'))
+                        time=conf.get(GROUPS_CHECK_INTERVAL))
 
     def delay(self) -> None:
         self.check()
         self._red.setex(name=self.redis_key_delayed,
                         value=1,
-                        time=conf.get('GROUP_CHECKS_INTERVAL'))
+                        time=conf.get(GROUPS_CHECK_INTERVAL))
 
     def clear(self) -> None:
         if self.redis_key_checked:

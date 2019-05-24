@@ -8,8 +8,11 @@ import conf
 
 from db.models.build_jobs import BuildJob
 from docker_images.image_info import get_image_name
-from event_manager.events.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
+from events.registry.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from lifecycles.jobs import JobLifeCycle
+from options.registry.build_jobs import BUILD_JOBS_BACKEND
+from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from options.registry.registries import REGISTRY_IN_CLUSTER
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.utils import get_job_definition
@@ -63,9 +66,9 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
 
 
 def get_default_spawner():
-    if conf.get('BUILD_BACKEND') == BuildBackend.NATIVE:
+    if conf.get(BUILD_JOBS_BACKEND) == BuildBackend.NATIVE:
         return DockerizerSpawner
-    elif conf.get('BUILD_BACKEND') == BuildBackend.KANIKO:
+    elif conf.get(BUILD_JOBS_BACKEND) == BuildBackend.KANIKO:
         return KanikoSpawner
     return DockerizerSpawner
 
@@ -101,10 +104,10 @@ def start_dockerizer(build_job):
         build_steps=build_job.build_steps,
         env_vars=build_job.build_env_vars,
         nocache=build_job.build_nocache,
-        in_cluster_registry=conf.get('REGISTRY_IN_CLUSTER'),
+        in_cluster_registry=conf.get(REGISTRY_IN_CLUSTER),
         spec=build_job.specification,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True,
         use_sidecar=True)
 
@@ -159,8 +162,8 @@ def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):
         project_uuid=project_uuid,
         job_name=build_job_name,
         job_uuid=build_job_uuid,
-        k8s_config=conf.get('K8S_CONFIG'),
-        namespace=conf.get('K8S_NAMESPACE'),
+        k8s_config=conf.get(K8S_CONFIG),
+        namespace=conf.get(K8S_NAMESPACE),
         spec=None,
         in_cluster=True)
 

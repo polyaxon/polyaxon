@@ -10,6 +10,7 @@ import conf
 from db.models.build_jobs import BuildJob
 from libs.repos.utils import assign_build_code_reference
 from lifecycles.jobs import JobLifeCycle
+from options.registry.build_jobs import BUILD_JOBS_BACKEND
 from signals.backend import set_backend
 from signals.names import set_name
 from signals.tags import set_tags
@@ -23,7 +24,7 @@ _logger = logging.getLogger('polyaxon.signals.build_jobs')
 def build_job_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     set_tags(instance=instance)
-    set_backend(instance=instance, default_backend=conf.get('BUILD_BACKEND'))
+    set_backend(instance=instance, default_backend=conf.get(BUILD_JOBS_BACKEND))
     assign_build_code_reference(instance)
     set_name(instance=instance, query=BuildJob.all)
 

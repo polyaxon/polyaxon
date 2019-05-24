@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import search
+from events.registry import search
 
 activitylogs.subscribe(search.SearchCreatedEvent)
 activitylogs.subscribe(search.SearchDeletedEvent)

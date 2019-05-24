@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import user as user_events
+from events.registry import user as user_events
 from factories.factory_users import UserFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

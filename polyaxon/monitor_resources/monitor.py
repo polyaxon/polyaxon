@@ -16,6 +16,7 @@ from constants.containers import ContainerStatuses
 from db.models.nodes import ClusterNode, NodeGPU
 from db.redis.containers import RedisJobContainers
 from db.redis.to_stream import RedisToStream
+from options.registry.k8s import K8S_NODE_NAME
 from schemas import ContainerResourcesConfig
 
 logger = logging.getLogger('polyaxon.monitors.resources')
@@ -141,7 +142,7 @@ def get_container_resources(node: 'ClusterNode',
 def update_cluster_node(node_gpus: Dict) -> None:
     if not node_gpus:
         return
-    node = ClusterNode.objects.filter(name=conf.get('K8S_NODE_NAME')).first()
+    node = ClusterNode.objects.filter(name=conf.get(K8S_NODE_NAME)).first()
     for node_gpu_index in node_gpus.keys():
         node_gpu_value = node_gpus[node_gpu_index]
         try:

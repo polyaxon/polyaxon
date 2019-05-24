@@ -5,6 +5,7 @@ from kubernetes import client
 
 import conf
 
+from options.registry.sidecars import SIDECARS_SLEEP_INTERVAL
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
     get_from_field_ref,
@@ -27,7 +28,7 @@ def get_sidecar_env_vars(namespace, job_container_name, internal_health_check_ur
 
 def get_sidecar_args(container_id, app_label):
     return ["--container_id={}".format(container_id),
-            "--log_sleep_interval={}".format(conf.get('JOB_SIDECAR_LOG_SLEEP_INTERVAL')),
+            "--sleep_interval={}".format(conf.get(SIDECARS_SLEEP_INTERVAL)),
             "--app_label={}".format(app_label)]
 
 

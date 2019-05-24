@@ -37,5 +37,4 @@ if __name__ == '__main__':
         image_name=image_name,
         image_tag=image_tag,
         nocache=nocache,
-        internal_registry=settings.INTERNAL_REGISTRY,
         registries=settings.PRIVATE_REGISTRIES)

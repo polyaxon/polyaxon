@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import operation
+from events.registry import operation
 
 auditor.subscribe(operation.OperationCreatedEvent)
 auditor.subscribe(operation.OperationUpdatedEvent)

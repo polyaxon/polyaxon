@@ -12,6 +12,7 @@ from api.index.status import StatusView
 from api.index.views import IndexView, ReactIndexView
 from api.users.views import LogoutView
 from constants.urls import API_V1
+from options.registry.core import ADMIN_VIEW_ENABLED, LOGIN_URL
 from polyaxon.config_manager import config
 
 api_patterns = [
@@ -62,7 +63,7 @@ urlpatterns = [
         ('api.oauth.urls', 'oauth'), namespace='oauth')),
     re_path(r'^_admin/logout/$', LogoutView.as_view(), name='logout'),
     re_path(r'^_admin/login/$',
-            RedirectView.as_view(url=conf.get('LOGIN_URL'), permanent=True, query_string=True),
+            RedirectView.as_view(url=conf.get(LOGIN_URL), permanent=True, query_string=True),
             name='login'),
 
     re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
@@ -84,7 +85,7 @@ handler404 = Handler404View.as_view()
 handler403 = Handler403View.as_view()
 handler500 = _handler500
 
-if conf.get('ADMIN_VIEW_ENABLED'):
+if conf.get(ADMIN_VIEW_ENABLED):
     urlpatterns += [re_path(r'^_admin/', admin.site.urls)]
 
 if config.is_debug_mode and config.is_monolith_service:

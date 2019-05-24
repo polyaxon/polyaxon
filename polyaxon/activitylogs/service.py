@@ -2,8 +2,8 @@ from typing import Dict, Optional
 
 from activitylogs.manager import default_manager
 from constants import user_system
-from event_manager.event import Event
-from event_manager.event_service import EventService
+from events.event import Event
+from events.event_service import EventService
 
 
 class ActivityLogService(EventService):

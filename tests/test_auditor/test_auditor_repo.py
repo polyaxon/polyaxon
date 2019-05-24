@@ -6,7 +6,7 @@ import pytest
 
 import auditor
 
-from event_manager.events import repo as repo_events
+from events.registry import repo as repo_events
 from factories.factory_repos import RepoFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

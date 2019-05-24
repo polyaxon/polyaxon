@@ -26,10 +26,12 @@ from api.repos.tasks import handle_new_files
 from api.utils.views.protected import ProtectedView
 from api.utils.views.upload import UploadView
 from db.models.repos import ExternalRepo, Repo
-from event_manager.events.repo import REPO_CREATED, REPO_DOWNLOADED
+from events.registry.repo import REPO_CREATED, REPO_DOWNLOADED
 from libs.archive import archive_repo
 from libs.repos import git
 from libs.repos.git import GitCloneException
+from options.registry.notebooks import NOTEBOOKS_MOUNT_CODE
+from options.registry.persistence import UPLOAD_MOUNT_PATH
 from scopes.authentication.internal import InternalAuthentication, is_authenticated_internal_user
 from scopes.permissions.internal import IsAuthenticatedOrInternal
 
@@ -174,7 +176,7 @@ class RepoUploadView(ProjectResourceListEndpoint, UploadView):
                 'as main code tracker.'.format(
                     self.project.name))
 
-        if conf.get('MOUNT_CODE_IN_NOTEBOOKS') and self.project.has_notebook:
+        if conf.get(NOTEBOOKS_MOUNT_CODE) and self.project.has_notebook:
             self.permission_denied(
                 self.request,
                 'The Project `{}` is currently running a Notebook. '
@@ -195,7 +197,7 @@ class RepoUploadView(ProjectResourceListEndpoint, UploadView):
     def put(self, request, *args, **kwargs):
         user = request.user
         repo = self.get_object()
-        path = os.path.join(conf.get('UPLOAD_MOUNT_PATH'), user.username)
+        path = os.path.join(conf.get(UPLOAD_MOUNT_PATH), user.username)
         if not os.path.exists(path):
             os.makedirs(path)
         try:

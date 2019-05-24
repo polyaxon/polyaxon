@@ -8,6 +8,7 @@ CELERY_TRACK_STARTED = True
 
 BROKER_POOL_LIMIT = None
 
+CELERY_BROKER_BACKEND = config.broker_backend
 CELERY_BROKER_URL = config.get_broker_url()
 
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
@@ -29,15 +30,9 @@ CELERY_IGNORE_RESULT = True
 CELERY_HARD_TIME_LIMIT_DELAY = config.get_int('POLYAXON_CELERY_HARD_TIME_LIMIT_DELAY',
                                               is_optional=True,
                                               default=180)
-HEALTH_CHECK_WORKER_TIMEOUT = config.get_int('POLYAXON_HEALTH_CHECK_WORKER_TIMEOUT',
-                                             is_optional=True,
-                                             default=4)
 CELERYD_MAX_TASKS_PER_CHILD = config.get_int('POLYAXON_CELERYD_MAX_TASKS_PER_CHILD',
                                              is_optional=True,
                                              default=100)
-GROUP_CHUNKS = config.get_int('POLYAXON_GROUP_CHUNKS',
-                              is_optional=True,
-                              default=50)
 
 
 class Intervals(object):

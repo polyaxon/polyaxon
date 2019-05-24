@@ -1,2 +1,2 @@
-polyaxon-dockerizer==0.0.1
+polyaxon-dockerizer==0.0.3
 polyaxon-client==0.4.4

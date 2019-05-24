@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import bookmark
+from events.registry import bookmark
 
 activitylogs.subscribe(bookmark.BookmarkBuildJobsViewedEvent)
 activitylogs.subscribe(bookmark.BookmarkJobsViewedEvent)

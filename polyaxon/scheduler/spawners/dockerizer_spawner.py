@@ -8,6 +8,15 @@ import conf
 
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME
 from libs.unique_urls import get_build_health_url
+from options.registry.build_jobs import (
+    BUILD_JOBS_DOCKER_IMAGE,
+    BUILD_JOBS_IMAGE_PULL_POLICY,
+    BUILD_JOBS_LANG_ENV,
+    BUILD_JOBS_SET_SECURITY_CONTEXT
+)
+from options.registry.core import SECURITY_CONTEXT_GROUP, SECURITY_CONTEXT_USER
+from options.registry.mount_paths import MOUNT_PATHS_NVIDIA
+from options.registry.registries import REGISTRY_LOCAL_URI, REGISTRY_PASSWORD, REGISTRY_USER
 from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
@@ -91,21 +100,21 @@ class DockerizerSpawner(K8SManager):
 
     @staticmethod
     def get_job_docker_image(job_docker_image):
-        return job_docker_image or conf.get('JOB_DOCKERIZER_IMAGE')
+        return job_docker_image or conf.get(BUILD_JOBS_DOCKER_IMAGE)
 
     @staticmethod
     def get_job_docker_image_pull_policy(job_docker_image_pull_policy):
-        return job_docker_image_pull_policy or conf.get('JOB_DOCKERIZER_IMAGE_PULL_POLICY')
+        return job_docker_image_pull_policy or conf.get(BUILD_JOBS_IMAGE_PULL_POLICY)
 
     def get_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.DOCKERIZER,
                                          namespace=self.namespace,
                                          authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
                                          include_internal_token=True)
-        if conf.get('REGISTRY_PASSWORD') and conf.get('REGISTRY_USER'):
+        if conf.get(REGISTRY_PASSWORD) and conf.get(REGISTRY_USER):
             env_vars += [
-                get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get('REGISTRY_USER')),
-                get_env_var(name='POLYAXON_REGISTRY_URI', value=conf.get('REGISTRY_LOCAL_URI')),
+                get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get(REGISTRY_USER)),
+                get_env_var(name='POLYAXON_REGISTRY_URI', value=conf.get(REGISTRY_LOCAL_URI)),
                 get_from_secret('POLYAXON_REGISTRY_PASSWORD',
                                 'registry-password',
                                 settings.POLYAXON_K8S_REGISTRY_SECRET_NAME),
@@ -115,12 +124,12 @@ class DockerizerSpawner(K8SManager):
             env_vars.append(get_from_secret(key, key))
 
         # Add set env lang
-        get_env_var(name='POLYAXON_JOB_DOCKERIZER_SET_LANG_ENV',
-                    value=conf.get('JOB_DOCKERIZER_SET_LANG_ENV'))
+        get_env_var(name='POLYAXON_LANG_ENV',
+                    value=conf.get(BUILD_JOBS_LANG_ENV))
         # Add security context if set
-        if conf.get('JOB_DOCKERIZER_SET_SECURITY_CONTEXT'):
-            get_env_var('POLYAXON_SECURITY_CONTEXT_USER', value=conf.get('SECURITY_CONTEXT_USER'))
-            get_env_var('POLYAXON_SECURITY_CONTEXT_GROUP', value=conf.get('SECURITY_CONTEXT_GROUP'))
+        if conf.get(BUILD_JOBS_SET_SECURITY_CONTEXT):
+            get_env_var('POLYAXON_SECURITY_CONTEXT_USER', value=conf.get(SECURITY_CONTEXT_USER))
+            get_env_var('POLYAXON_SECURITY_CONTEXT_GROUP', value=conf.get(SECURITY_CONTEXT_GROUP))
 
         return env_vars
 
@@ -133,7 +142,7 @@ class DockerizerSpawner(K8SManager):
         env_vars += [
             get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
             get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
-            get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get('MOUNT_PATHS_NVIDIA')),
+            get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get(MOUNT_PATHS_NVIDIA)),
         ]
         return env_vars
 

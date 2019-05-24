@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import experiment
+from events.registry import experiment
 
 executor.subscribe(experiment.ExperimentCreatedEvent)
 executor.subscribe(experiment.ExperimentStoppedEvent)

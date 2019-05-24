@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import tensorboard
+from events.registry import tensorboard
 
 auditor.subscribe(tensorboard.TensorboardStartedEvent)
 auditor.subscribe(tensorboard.TensorboardStartedTriggeredEvent)

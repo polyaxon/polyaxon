@@ -3,7 +3,13 @@ import requests
 import conf
 
 from constants.sso_providers import Providers
-from event_manager.events.user import USER_GITLAB
+from events.registry.user import USER_GITLAB
+from options.registry.auth_gitlab import (
+    AUTH_GITLAB_CLIENT_ID,
+    AUTH_GITLAB_CLIENT_SECRET,
+    AUTH_GITLAB_URL
+)
+from options.registry.email import EMAIL_DEFAULT_DOMAIN
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
@@ -12,19 +18,33 @@ class GitLabIdentityProvider(OAuth2Provider):
     name = 'Gitlab'
     event_type = USER_GITLAB
 
-    web_url = conf.get('OAUTH_GITLAB_URL') or 'https://gitlab.com'
-    api_url = '{}/api/v3'.format(web_url)
-    oauth_access_token_url = '{}/oauth/token'.format(web_url)
-    oauth_authorize_url = '{}/oauth/authorize'.format(web_url)
-    user_url = '{}/user'.format(api_url)
-
     oauth_scopes = ('read_user',)
 
+    @property
+    def web_url(self):
+        return conf.get(AUTH_GITLAB_URL) or 'https://gitlab.com'
+
+    @property
+    def api_url(self):
+        return '{}/api/v3'.format(self.web_url)
+
+    @property
+    def user_url(self):
+        return '{}/user'.format(self.api_url)
+
+    @property
+    def oauth_authorize_url(self):
+        return '{}/oauth/authorize'.format(self.web_url)
+
+    @property
+    def oauth_access_token_url(self):
+        return '{}/oauth/token'.format(self.web_url)
+
     def get_oauth_client_id(self):
-        return conf.get('OAUTH_GITLAB_CLIENT_ID')
+        return conf.get(AUTH_GITLAB_CLIENT_ID)
 
     def get_oauth_client_secret(self):
-        return conf.get('OAUTH_GITLAB_CLIENT_SECRET')
+        return conf.get(AUTH_GITLAB_CLIENT_SECRET)
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})
@@ -37,7 +57,7 @@ class GitLabIdentityProvider(OAuth2Provider):
         return resp.json()
 
     def get_email(self, email, username):
-        return email if email else '{}@{}'.format(username, conf.get('DEFAULT_EMAIL_DOMAIN'))
+        return email if email else '{}@{}'.format(username, conf.get(EMAIL_DEFAULT_DOMAIN))
 
     @staticmethod
     def get_first_last_names(username, name):

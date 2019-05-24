@@ -11,18 +11,25 @@ class OAuth2Provider(IdentityProvider):
     OAuth scopes are configured through the oauth_scopes class property,
     however may be overriden using the ``config['oauth_scopes']`` object.
     """
-    oauth_access_token_url = ''
-    oauth_authorize_url = ''
+
     refresh_token_url = ''
     resource = ''
 
     oauth_scopes = ()
 
+    @property
+    def oauth_authorize_url(self):
+        raise NotImplementedError()
+
+    @property
+    def oauth_access_token_url(self):
+        raise NotImplementedError()
+
     def get_oauth_client_id(self):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_oauth_client_secret(self):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get_oauth_scopes(self):
         return self.config.get('oauth_scopes', ' '.join(self.oauth_scopes))

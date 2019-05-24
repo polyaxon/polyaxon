@@ -1,11 +1,11 @@
 from marshmallow import ValidationError, fields, validates_schema
 
-from constants import stores
+from constants.store_types import StoreTypes
 from schemas import BaseConfig, BaseSchema
 
 
 def validate_store(store):
-    if store not in stores.VALUES:
+    if store not in StoreTypes.CLOUD_STORES:
         raise ValidationError("Store is not valid.")
 
 

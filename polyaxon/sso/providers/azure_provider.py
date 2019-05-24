@@ -3,7 +3,12 @@ import requests
 import conf
 
 from constants.sso_providers import Providers
-from event_manager.events.user import USER_AZURE
+from events.registry.user import USER_AZURE
+from options.registry.auth_azure import (
+    AUTH_AZURE_CLIENT_ID,
+    AUTH_AZURE_CLIENT_SECRET,
+    AUTH_AZURE_TENANT_ID
+)
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
@@ -12,22 +17,34 @@ class AzureIdentityProvider(OAuth2Provider):
     name = 'Azure'
     event_type = USER_AZURE
 
-    tenant_id = conf.get('OAUTH_AZURE_TENANT_ID')
-    web_url = 'https://login.microsoft.com/{}'.format(tenant_id)
-    oauth_authorize_url = '{}/oauth2/authorize'.format(web_url)
-    oauth_access_token_url = '{}/oauth2/token'.format(web_url)
     api_url = 'https://graph.microsoft.com/v1.0'
     resource = 'https://graph.microsoft.com'
     oauth_scopes = 'openid email profile'
+
+    @property
+    def tenant_id(self):
+        return conf.get(AUTH_AZURE_TENANT_ID)
+
+    @property
+    def web_url(self):
+        return 'https://login.microsoft.com/{}'.format(self.tenant_id)
+
+    @property
+    def oauth_authorize_url(self):
+        return '{}/oauth2/authorize'.format(self.web_url)
+
+    @property
+    def oauth_access_token_url(self):
+        return '{}/oauth2/token'.format(self.web_url)
 
     def get_oauth_scopes(self):
         return self.oauth_scopes
 
     def get_oauth_client_id(self):
-        return conf.get('OAUTH_AZURE_CLIENT_ID')
+        return conf.get(AUTH_AZURE_CLIENT_ID)
 
     def get_oauth_client_secret(self):
-        return conf.get('OAUTH_AZURE_CLIENT_SECRET')
+        return conf.get(AUTH_AZURE_CLIENT_SECRET)
 
     def get_username(self, upn):
         # userPrincipalName format is <alias>@<tenant>.com, we only want the alias

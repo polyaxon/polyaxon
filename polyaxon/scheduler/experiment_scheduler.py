@@ -12,6 +12,7 @@ from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from docker_images.image_info import get_image_info
 from lifecycles.experiments import ExperimentLifeCycle
+from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mpi_job_spawner import MPIJobSpawner
@@ -597,8 +598,8 @@ def start_experiment(experiment):
                                 original_name=experiment.original_unique_name,
                                 cloning_strategy=experiment.cloning_strategy,
                                 spec=experiment.specification,
-                                k8s_config=conf.get('K8S_CONFIG'),
-                                namespace=conf.get('K8S_NAMESPACE'),
+                                k8s_config=conf.get(K8S_CONFIG),
+                                namespace=conf.get(K8S_NAMESPACE),
                                 in_cluster=True,
                                 job_docker_image=job_docker_image,
                                 use_sidecar=True)
@@ -663,7 +664,7 @@ def stop_experiment(project_name,
                             experiment_group_uuid=experiment_group_uuid,
                             experiment_uuid=experiment_uuid,
                             spec=specification,
-                            k8s_config=conf.get('K8S_CONFIG'),
-                            namespace=conf.get('K8S_NAMESPACE'),
+                            k8s_config=conf.get(K8S_CONFIG),
+                            namespace=conf.get(K8S_NAMESPACE),
                             in_cluster=True)
     return spawner.stop_experiment()

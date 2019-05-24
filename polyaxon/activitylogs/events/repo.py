@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import repo
+from events.registry import repo
 
 activitylogs.subscribe(repo.RepoCreatedEvent)
 activitylogs.subscribe(repo.RepoDownloadedEvent)

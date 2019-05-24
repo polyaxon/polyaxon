@@ -1,6 +1,13 @@
 import conf
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
+from options.registry.k8s import K8S_INGRESS_ENABLED
+from options.registry.spawner import (
+    DNS_CUSTOM_CLUSTER,
+    DNS_USE_RESOLVER,
+    PLUGINS,
+    PUBLIC_PLUGIN_JOBS
+)
 from polyaxon_k8s.manager import K8SManager
 
 
@@ -25,16 +32,16 @@ class ProjectJobSpawner(K8SManager):
 
     @staticmethod
     def _get_plugin_port(job_name):
-        return conf.get('PLUGINS').get(job_name, {'port': 5000})['port']
+        return conf.get(PLUGINS).get(job_name, {'port': 5000})['port']
 
     @staticmethod
     def _get_proxy_url(namespace, job_name, deployment_name):
-        if conf.get('DNS_USE_RESOLVER'):
+        if conf.get(DNS_USE_RESOLVER):
             return '/{}/proxy/{}.{}.svc.{}'.format(
                 job_name,
                 deployment_name,
                 namespace,
-                conf.get('DNS_CUSTOM_CLUSTER'))
+                conf.get(DNS_CUSTOM_CLUSTER))
         return '/{}/proxy/{}'.format(job_name, deployment_name)
 
     def _get_service_url(self, job_name):
@@ -49,10 +56,10 @@ class ProjectJobSpawner(K8SManager):
 
     @staticmethod
     def _get_service_type():
-        if conf.get('PUBLIC_PLUGIN_JOBS'):
-            return None if conf.get('K8S_INGRESS_ENABLED') else 'LoadBalancer'
+        if conf.get(PUBLIC_PLUGIN_JOBS):
+            return None if conf.get(K8S_INGRESS_ENABLED) else 'LoadBalancer'
         return None
 
     @staticmethod
     def _use_ingress():
-        return conf.get('K8S_INGRESS_ENABLED') and conf.get('PUBLIC_PLUGIN_JOBS')
+        return conf.get(K8S_INGRESS_ENABLED) and conf.get(PUBLIC_PLUGIN_JOBS)

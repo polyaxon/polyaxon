@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import cluster
+from events.registry import cluster
 
 tracker.subscribe(cluster.ClusterCreatedEvent)
 tracker.subscribe(cluster.ClusterUpdatedEvent)

@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import job
+from events.registry import job
 
 activitylogs.subscribe(job.JobStartedTriggeredEvent)
 activitylogs.subscribe(job.JobSoppedTriggeredEvent)

@@ -11,6 +11,7 @@ import conf
 
 from db.redis.base import BaseRedisDb
 from libs.json_utils import dumps, loads
+from options.registry.ttl import TTL_EPHEMERAL_TOKEN
 from polyaxon.settings import RedisPools
 
 
@@ -66,7 +67,7 @@ class RedisEphemeralTokens(BaseRedisDb):
 
     @classmethod
     def generate(cls, scope: str, ttl: int = None) -> 'RedisEphemeralTokens':
-        ttl = ttl or conf.get('TTL_EPHEMERAL_TOKEN')
+        ttl = ttl or conf.get(TTL_EPHEMERAL_TOKEN)
         token = RedisEphemeralTokens()
         salt = uuid.uuid4().hex
         value = dumps({

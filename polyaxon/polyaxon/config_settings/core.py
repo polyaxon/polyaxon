@@ -5,44 +5,19 @@ POLYAXON_SERVICE = config.service
 POLYAXON_ENVIRONMENT = config.env
 K8S_NAMESPACE = config.namespace
 K8S_NODE_NAME = config.node_name
-K8S_GPU_RESOURCE_KEY = config.get_string('POLYAXON_K8S_GPU_RESOURCE_KEY')
-K8S_TPU_RESOURCE_KEY = config.get_string('POLYAXON_K8S_TPU_RESOURCE_KEY',
-                                         is_optional=True,
-                                         default='cloud-tpus.google.com/v2')
+ENCRYPTION_KEY = config.get_string('POLYAXON_ENCRYPTION_KEY', is_optional=True)
+ENCRYPTION_SECRET = config.get_string('POLYAXON_ENCRYPTION_SECRET', is_optional=True)
+ENCRYPTION_BACKEND = config.get_string('POLYAXON_ENCRYPTION_BACKEND', is_optional=True)
 CONF_BACKEND = config.get_string('POLYAXON_CONF_BACKEND', is_optional=True)
-CLUSTER_ID = config.cluster_id
-REPOS_ARCHIVE_ROOT = '/tmp/archived_repos'
-OUTPUTS_ARCHIVE_ROOT = '/tmp/archived_outputs'
-OUTPUTS_DOWNLOAD_ROOT = '/tmp/download_outputs'
-LOGS_DOWNLOAD_ROOT = '/tmp/download_logs'
-LOGS_ARCHIVE_ROOT = '/tmp/archived_logs'
+ARCHIVES_ROOT_REPOS = '/tmp/archived_repos'
+ARCHIVES_ROOT_ARTIFACTS = '/tmp/archived_outputs'
+ARCHIVES_ROOT_LOGS = '/tmp/archived_logs'
+DOWNLOADS_ROOT_ARTIFACTS = '/tmp/download_outputs'
+DOWNLOADS_ROOT_LOGS = '/tmp/download_logs'
 FILE_UPLOAD_PERMISSIONS = 0o644
 ADMIN_VIEW_ENABLED = config.get_boolean('POLYAXON_ADMIN_VIEW_ENABLED',
                                         is_optional=True,
                                         default=False)
-# Global Async Countdown
-GLOBAL_COUNTDOWN = config.get_int('POLYAXON_GLOBAL_COUNTDOWN',
-                                  is_optional=True,
-                                  default=1)
-GLOBAL_COUNTDOWN_DELAYED = GLOBAL_COUNTDOWN * 3
-# Heartbeat timeout (status -> failed as zombie)
-TTL_HEARTBEAT = config.get_int('POLYAXON_TTL_HEARTBEAT',
-                               is_optional=True,
-                               default=60 * 30)
-# Token time in days
-TTL_TOKEN = config.get_int('POLYAXON_TTL_TOKEN',
-                           is_optional=True,
-                           default=30)
-# Ephemeral token ttl
-TTL_EPHEMERAL_TOKEN = config.get_int('POLYAXON_TTL_EPHEMERAL_TOKEN',
-                                     is_optional=True,
-                                     default=60 * 60 * 3)
-
-# Group checks interval
-GROUP_CHECKS_INTERVAL = config.get_int('POLYAXON_GROUP_CHECKS_INTERVAL',
-                                       is_optional=True,
-                                       default=5)
-
 # Auditor backend
 AUDITOR_BACKEND = config.get_string('POLYAXON_AUDITOR_BACKEND', is_optional=True)
 

@@ -5,6 +5,7 @@ from db.models.experiments import Experiment
 from db.models.jobs import Job
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
@@ -16,7 +17,7 @@ def heartbeat_experiments() -> None:
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_CHECK_HEARTBEAT,
             kwargs={'experiment_id': experiment},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_JOBS, ignore_result=True)
@@ -26,7 +27,7 @@ def heartbeat_jobs() -> None:
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT,
             kwargs={'job_id': job},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 @celery_app.task(name=CronsCeleryTasks.HEARTBEAT_BUILDS, ignore_result=True)
@@ -36,4 +37,4 @@ def heartbeat_builds() -> None:
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT,
             kwargs={'build_job_id': build_job},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))

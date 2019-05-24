@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import project
+from events.registry import project
 
 activitylogs.subscribe(project.ProjectCreatedEvent)
 activitylogs.subscribe(project.ProjectUpdatedEvent)

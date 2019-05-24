@@ -1,6 +1,7 @@
 import conf
 
 from db.redis.base import BaseRedisDb
+from options.registry.ttl import TTL_HEARTBEAT
 from polyaxon.settings import RedisPools
 
 
@@ -50,7 +51,7 @@ class RedisHeartBeat(BaseRedisDb):
         return True
 
     def ping(self) -> None:
-        self._red.setex(name=self.redis_key, value=1, time=conf.get('TTL_HEARTBEAT'))
+        self._red.setex(name=self.redis_key, value=1, time=conf.get(TTL_HEARTBEAT))
 
     @property
     def redis_key(self) -> str:

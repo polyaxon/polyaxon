@@ -3,7 +3,7 @@ import pytest
 from mock import patch
 from rest_framework.exceptions import ValidationError
 
-from django.test import override_settings
+import conf
 
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.experiment_groups import ExperimentGroup
@@ -16,6 +16,7 @@ from factories.factory_jobs import JobFactory
 from factories.factory_plugins import NotebookJobFactory, TensorboardJobFactory
 from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
+from options.registry.ownership import ALLOW_USER_PROJECTS
 from tests.base.case import BaseTest
 
 
@@ -32,8 +33,8 @@ class TestProjectModel(BaseTest):
         project = ProjectFactory()
         self.assertEqual(project.has_owner, True)
 
-    @override_settings(ALLOW_USER_PROJECTS=False)
     def test_cannot_create(self):
+        conf.set(key=ALLOW_USER_PROJECTS, value=False)
         with self.assertRaises(ValidationError):
             ProjectFactory()
 

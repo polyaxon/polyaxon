@@ -13,6 +13,10 @@ from db.redis.heartbeat import RedisHeartBeat
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.collectors import logs_collect_build_job
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
@@ -55,7 +59,7 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
                 'collect_logs': False,
                 'message': 'Build is scheduled for deletion.'
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -63,7 +67,7 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
             kwargs={
                 'job_id': build_job_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,
@@ -179,7 +183,7 @@ def notify_build_job_succeeded(build_job):
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_START,
             kwargs={'job_id': job_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     tensorboard_job_ids = TensorboardJob.objects.filter(
         build_job=build_job).exclude(
@@ -188,7 +192,7 @@ def notify_build_job_succeeded(build_job):
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_START,
             kwargs={'tensorboard_job_id': tensorboard_job_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     notebook_job_ids = NotebookJob.objects.filter(
         build_job=build_job).exclude(
@@ -197,7 +201,7 @@ def notify_build_job_succeeded(build_job):
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
             kwargs={'notebook_job_id': notebook_job_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     experiment_ids = Experiment.objects.filter(
         build_job=build_job).exclude(
@@ -206,7 +210,7 @@ def notify_build_job_succeeded(build_job):
         celery_app.send_task(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 @celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE, ignore_result=True)

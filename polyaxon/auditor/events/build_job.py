@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import build_job
+from events.registry import build_job
 
 auditor.subscribe(build_job.BuildJobCreatedEvent)
 auditor.subscribe(build_job.BuildJobUpdatedEvent)

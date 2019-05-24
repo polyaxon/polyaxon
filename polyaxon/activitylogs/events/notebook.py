@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import notebook
+from events.registry import notebook
 
 activitylogs.subscribe(notebook.NotebookStartedTriggeredEvent)
 activitylogs.subscribe(notebook.NotebookSoppedTriggeredEvent)

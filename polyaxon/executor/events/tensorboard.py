@@ -1,6 +1,6 @@
 import executor
 
-from event_manager.events import tensorboard
+from events.registry import tensorboard
 
 executor.subscribe(tensorboard.TensorboardStartedEvent)
 executor.subscribe(tensorboard.TensorboardSoppedEvent)

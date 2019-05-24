@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import user
+from events.registry import user
 
 tracker.subscribe(user.UserRegisteredEvent)
 tracker.subscribe(user.UserUpdatedEvent)

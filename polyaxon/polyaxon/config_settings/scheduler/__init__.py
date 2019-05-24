@@ -10,7 +10,6 @@ from polyaxon.config_settings.persistence_repos import *
 from polyaxon.config_settings.persistence_upload import *
 from polyaxon.config_settings.registry import *
 from polyaxon.config_settings.spawner import *
-from polyaxon.config_settings.repos import *
 from polyaxon.config_settings.stores import *
 
 from .apps import *

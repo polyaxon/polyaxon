@@ -55,7 +55,7 @@ def init(job: 'Job',  # pylint:disable=too-many-branches
                             build_steps=settings.CONTAINER_BUILD_STEPS,
                             env_vars=settings.CONTAINER_ENV_VARS,
                             nvidia_bin=settings.MOUNT_PATHS_NVIDIA,
-                            set_lang_env=settings.JOB_DOCKERIZER_SET_LANG_ENV,
+                            lang_env=settings.LANG_ENV,
                             gid=settings.SECURITY_CONTEXT_USER,
                             uid=settings.SECURITY_CONTEXT_GROUP), ''
         except Exception:

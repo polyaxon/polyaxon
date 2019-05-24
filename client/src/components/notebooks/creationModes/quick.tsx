@@ -63,7 +63,7 @@ export default class NotebookCreateQuick extends React.Component<Props, {}> {
               <form onSubmit={props.handleSubmit}>
                 {ErrorsField(this.props.errors)}
                 {this.props.isProjectEntity && ProjectField(this.props.projects)}
-                {BuildField(props, this.props.errors, false, 'POLYAXON_NOTEBOOK_DOCKER_IMAGE')}
+                {BuildField(props, this.props.errors, false, 'NOTEBOOKS:DOCKER_IMAGE')}
                 {NameField(props, this.props.errors)}
                 {DescriptionField(props, this.props.errors)}
                 {TagsField(props, this.props.errors)}

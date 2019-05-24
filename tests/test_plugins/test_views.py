@@ -7,7 +7,7 @@ import pytest
 from hestia.internal_services import InternalServices
 from rest_framework import status
 
-from django.test import override_settings
+import conf
 
 from api.plugins.serializers import (
     NotebookJobDetailSerializer,
@@ -20,6 +20,7 @@ from api.plugins.serializers import (
 from api.utils.views.protected import ProtectedView
 from constants.k8s_jobs import NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
 from constants.urls import API_V1
+from db.models.config_options import ConfigOption
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.notebooks import NotebookJob, NotebookJobStatus
@@ -37,6 +38,7 @@ from factories.factory_projects import ProjectFactory
 from factories.factory_repos import RepoFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from lifecycles.jobs import JobLifeCycle
+from options.registry.notebooks import NOTEBOOKS_MOUNT_CODE
 from scheduler import notebook_scheduler
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from tests.base.views import BaseViewTest
@@ -1417,8 +1419,8 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 
-    @override_settings(MOUNT_CODE_IN_NOTEBOOKS=True)
     def test_stop_code_mount(self):
+        conf.set(key=NOTEBOOKS_MOUNT_CODE, value=True)
         data = {}
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async') as mock_fct:
@@ -1444,8 +1446,8 @@ class TestStopNotebookViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
         assert self.queryset.count() == 1
 
-    @override_settings(MOUNT_CODE_IN_NOTEBOOKS=True)
     def test_stop_without_committing_code_mount(self):
+        conf.set(key=NOTEBOOKS_MOUNT_CODE, value=True)
         data = {'commit': False}
         assert self.queryset.count() == 1
         with patch('scheduler.tasks.notebooks.projects_notebook_stop.apply_async') as mock_fct:

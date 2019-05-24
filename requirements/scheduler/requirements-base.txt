@@ -1,8 +1,7 @@
 -r ../requirements-base.txt
 
-docker==3.7.2
 GitPython==2.1.11
-polystores==0.1.7
+polystores==0.1.8
 polyaxon-k8s==0.4.2
 
 azure-storage==0.36.0

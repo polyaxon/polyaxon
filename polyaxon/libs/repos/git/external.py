@@ -1,10 +1,12 @@
 import logging
 
 from hestia.urls_utils import validate_url
+from rhea.specs import AuthSpec
 
 import conf
 
 from libs.repos.git.exceptions import GitCloneException
+from options.registry.repos import REPOS_ACCESS_TOKEN, REPOS_CREDENTIALS
 
 _logger = logging.getLogger('polyaxon.repos.git')
 
@@ -30,10 +32,14 @@ def set_git_repo(repo: 'ExternalRepo') -> str:
 
 def get_private_clone_url(git_url: str) -> str:
     # We make sure that the project has the credentials to use for the private repo
-    access_token = conf.get('REPOS_ACCESS_TOKEN')
-    if not access_token or not validate_url(git_url):
+    access_token = conf.get(REPOS_ACCESS_TOKEN)
+    if not access_token:
+        credentials = conf.get(REPOS_CREDENTIALS)
+    else:
+        credentials = AuthSpec('polyaxon', access_token)
+    if not credentials or not validate_url(git_url):
         raise GitCloneException
 
     # Add user:pass to the git url
     url = git_url.split('https://')[1]
-    return 'https://{}:{}@{}'.format(access_token.user, access_token.password, url)
+    return 'https://{}:{}@{}'.format(credentials.user, credentials.password, url)

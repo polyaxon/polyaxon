@@ -22,8 +22,8 @@ class Singleton(DiffModel):
 
     @classmethod
     def may_be_update(cls, obj):
-        raise NotImplementedError  # noqa
+        raise NotImplementedError()
 
     @classmethod
     def load(cls):
-        raise NotImplementedError  # noqa
+        raise NotImplementedError()

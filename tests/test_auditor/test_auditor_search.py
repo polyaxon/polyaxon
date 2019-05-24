@@ -8,7 +8,7 @@ import auditor
 
 from constants import content_types
 from db.models.searches import Search
-from event_manager.events import search as searches_events
+from events.registry import search as searches_events
 from factories.factory_projects import ProjectFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

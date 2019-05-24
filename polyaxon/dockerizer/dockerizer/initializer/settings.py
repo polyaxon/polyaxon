@@ -34,9 +34,6 @@ CONTAINER_ENV_VARS = config.get_string('POLYAXON_CONTAINER_ENV_VARS', is_optiona
 if CONTAINER_ENV_VARS:
     CONTAINER_ENV_VARS = json.loads(CONTAINER_ENV_VARS)
 
-JOB_DOCKERIZER_SET_LANG_ENV = config.get_boolean(
-    'POLYAXON_JOB_DOCKERIZER_SET_LANG_ENV',
-    is_optional=True,
-    default=False)
+LANG_ENV = config.get_string('POLYAXON_LANG_ENV', is_optional=True)
 SECURITY_CONTEXT_USER = config.get_int('POLYAXON_SECURITY_CONTEXT_USER', is_optional=True)
 SECURITY_CONTEXT_GROUP = config.get_int('POLYAXON_SECURITY_CONTEXT_GROUP', is_optional=True)

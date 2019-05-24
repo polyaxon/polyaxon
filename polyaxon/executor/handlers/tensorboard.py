@@ -1,8 +1,9 @@
 import conf
 
-from event_manager import event_subjects
-from event_manager.events import tensorboard
+from events import event_subjects
+from events.registry import tensorboard
 from executor.handlers.base import BaseHandler
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -29,7 +30,7 @@ class TensorboardHandler(BaseHandler):
                 'collect_logs': False,
                 'is_managed': instance.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def _handle_tensorboard_post_run(cls, event: 'Event') -> None:
@@ -48,7 +49,7 @@ class TensorboardHandler(BaseHandler):
                 'collect_logs': True,
                 'is_managed': instance.is_managed,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

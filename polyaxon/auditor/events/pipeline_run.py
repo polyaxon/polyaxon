@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import pipeline_run
+from events.registry import pipeline_run
 
 auditor.subscribe(pipeline_run.PipelineRunCreatedEvent)
 auditor.subscribe(pipeline_run.PipelineRunUpdatedEvent)

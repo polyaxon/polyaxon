@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import permission
+from events.registry import permission
 
 auditor.subscribe(permission.PermissionProjectDeniedEvent)
 auditor.subscribe(permission.PermissionRepoDeniedEvent)

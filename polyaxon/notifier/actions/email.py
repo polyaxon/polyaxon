@@ -1,5 +1,5 @@
 import notifier
 
-from action_manager.actions.email import EmailAction
+from actions.registry.email import EmailAction
 
 notifier.subscribe_action(EmailAction)

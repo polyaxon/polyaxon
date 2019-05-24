@@ -2,6 +2,11 @@ from typing import Optional
 
 import conf
 
+from options.registry.auth_azure import AUTH_AZURE_VERIFICATION_SCHEDULE
+from options.registry.auth_bitbucket import AUTH_BITBUCKET_VERIFICATION_SCHEDULE
+from options.registry.auth_github import AUTH_GITHUB_VERIFICATION_SCHEDULE
+from options.registry.auth_gitlab import AUTH_GITLAB_VERIFICATION_SCHEDULE
+
 
 class Providers(object):
     GITHUB = 'github'
@@ -22,10 +27,10 @@ class Providers(object):
     def get_verification_schedule(cls, provider: str) -> Optional[int]:
         assert provider in cls.VALUES
         if provider == cls.GITHUB:
-            return conf.get('OAUTH_GITHUB_VERIFICATION_SCHEDULE')
+            return conf.get(AUTH_GITHUB_VERIFICATION_SCHEDULE)
         if provider == cls.BITBUCKET:
-            return conf.get('OAUTH_BITBUCKET_VERIFICATION_SCHEDULE')
+            return conf.get(AUTH_BITBUCKET_VERIFICATION_SCHEDULE)
         if provider == cls.GITLAB:
-            return conf.get('OAUTH_GITLAB_VERIFICATION_SCHEDULE')
+            return conf.get(AUTH_GITLAB_VERIFICATION_SCHEDULE)
         if provider == cls.AZURE:
-            return conf.get('OAUTH_AZURE_VERIFICATION_SCHEDULE')
+            return conf.get(AUTH_AZURE_VERIFICATION_SCHEDULE)

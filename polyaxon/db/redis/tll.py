@@ -3,6 +3,7 @@ from typing import Any, Optional, Union
 import conf
 
 from db.redis.base import BaseRedisDb
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.settings import RedisPools
 
 
@@ -108,7 +109,7 @@ class RedisTTL(BaseRedisDb):
         if ttl_value:
             ttl.clear()
             return ttl_value
-        return conf.get('GLOBAL_COUNTDOWN')
+        return conf.get(SCHEDULER_GLOBAL_COUNTDOWN)
 
     @classmethod
     def get_for_job(cls, job_id: int) -> int:
@@ -117,7 +118,7 @@ class RedisTTL(BaseRedisDb):
         if ttl_value:
             ttl.clear()
             return ttl_value
-        return conf.get('GLOBAL_COUNTDOWN')
+        return conf.get(SCHEDULER_GLOBAL_COUNTDOWN)
 
     @classmethod
     def get_for_build(cls, build_id: int) -> int:
@@ -126,4 +127,4 @@ class RedisTTL(BaseRedisDb):
         if ttl_value:
             ttl.clear()
             return ttl_value
-        return conf.get('GLOBAL_COUNTDOWN')
+        return conf.get(SCHEDULER_GLOBAL_COUNTDOWN)

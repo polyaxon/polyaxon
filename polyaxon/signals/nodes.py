@@ -6,7 +6,7 @@ from django.dispatch import receiver
 import auditor
 
 from db.models.nodes import NodeGPU
-from event_manager.events.cluster import CLUSTER_NODE_GPU
+from events.registry.cluster import CLUSTER_NODE_GPU
 
 
 @receiver(post_save, sender=NodeGPU, dispatch_uid="node_gpu_created")

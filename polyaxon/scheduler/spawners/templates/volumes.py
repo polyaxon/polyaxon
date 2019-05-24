@@ -2,6 +2,7 @@ from kubernetes import client
 
 import conf
 
+from options.registry.persistence import PERSISTENCE_DATA, PERSISTENCE_OUTPUTS
 from scheduler.spawners.templates import constants
 from stores.exceptions import VolumeNotFoundError
 from stores.validators import validate_persistence_data, validate_persistence_outputs
@@ -65,7 +66,7 @@ def get_pod_data_volume(persistence_data):
     for persistence_name in persistence_data:
         persistence_volumes, persistence_volume_mounts = get_volume_from_definition(
             volume_name=persistence_name,
-            volume_settings=conf.get('PERSISTENCE_DATA'))
+            volume_settings=conf.get(PERSISTENCE_DATA))
         volumes += persistence_volumes
         volume_mounts += persistence_volume_mounts
     return volumes, volume_mounts
@@ -74,7 +75,7 @@ def get_pod_data_volume(persistence_data):
 def get_pod_outputs_volume(persistence_outputs):
     persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)
     return get_volume_from_definition(volume_name=persistence_outputs,
-                                      volume_settings=conf.get('PERSISTENCE_OUTPUTS'))
+                                      volume_settings=conf.get(PERSISTENCE_OUTPUTS))
 
 
 def get_pod_refs_outputs_volumes(outputs_refs, persistence_outputs):
@@ -88,7 +89,7 @@ def get_pod_refs_outputs_volumes(outputs_refs, persistence_outputs):
     for persistence in persistences:
         p_volumes, p_volume_mounts = get_volume_from_definition(
             volume_name=persistence,
-            volume_settings=conf.get('PERSISTENCE_OUTPUTS'))
+            volume_settings=conf.get(PERSISTENCE_OUTPUTS))
         volumes += p_volumes
         volume_mounts += p_volume_mounts
 

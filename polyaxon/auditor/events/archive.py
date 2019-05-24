@@ -1,6 +1,6 @@
 import auditor
 
-from event_manager.events import archive
+from events.registry import archive
 
 auditor.subscribe(archive.ArchiveBuildJobsViewedEvent)
 auditor.subscribe(archive.ArchiveJobsViewedEvent)

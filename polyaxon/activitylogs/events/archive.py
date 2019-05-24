@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import archive
+from events.registry import archive
 
 activitylogs.subscribe(archive.ArchiveBuildJobsViewedEvent)
 activitylogs.subscribe(archive.ArchiveJobsViewedEvent)

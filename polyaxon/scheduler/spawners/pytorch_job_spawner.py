@@ -1,6 +1,7 @@
 import conf
 
 from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
+from options.registry.container_names import CONTAINER_NAME_PYTORCH_JOBS
 from scheduler.spawners.kf_experiment_spawner import KFExperimentSpawner
 from scheduler.spawners.pytorch_spawner import PytorchSpawnerMixin
 from scheduler.spawners.templates import kubeflow
@@ -16,7 +17,7 @@ class PytorchJobSpawner(PytorchSpawnerMixin, KFExperimentSpawner):
 
     @staticmethod
     def get_job_container_name(job_container_name):
-        return job_container_name or conf.get('CONTAINER_NAME_PYTORCH_JOB')
+        return job_container_name or conf.get(CONTAINER_NAME_PYTORCH_JOBS)
 
     def start_experiment(self):
         labels = self.resource_manager.experiment_labels

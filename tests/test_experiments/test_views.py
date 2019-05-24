@@ -61,6 +61,8 @@ from factories.fixtures import (
 )
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from options.registry.archives import ARCHIVES_ROOT_ARTIFACTS
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from schemas import ExperimentSpecification
 from tests.base.clients import EphemeralClient
 from tests.base.views import BaseEntityCodeReferenceViewTest, BaseFilesViewTest, BaseViewTest
@@ -364,7 +366,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         xp = Experiment.objects.last()
-        assert RedisTTL.get_for_experiment(xp.id) == conf.get('GLOBAL_COUNTDOWN')
+        assert RedisTTL.get_for_experiment(xp.id) == conf.get(SCHEDULER_GLOBAL_COUNTDOWN)
 
         data = {'ttl': 10, 'is_managed': False}
         resp = self.auth_client.post(self.url, data)
@@ -2263,7 +2265,7 @@ class DownloadExperimentOutputsViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
         self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER],
-                         '{}/{}.tar.gz'.format(conf.get('OUTPUTS_ARCHIVE_ROOT'),
+                         '{}/{}.tar.gz'.format(conf.get(ARCHIVES_ROOT_ARTIFACTS),
                                                self.experiment.unique_name.replace('.', '_')))
 
 

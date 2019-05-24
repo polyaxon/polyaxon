@@ -1,6 +1,7 @@
 import conf
 
 from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
+from options.registry.container_names import CONTAINER_NAME_TF_JOBS
 from scheduler.spawners.kf_experiment_spawner import KFExperimentSpawner
 from scheduler.spawners.templates import kubeflow
 from scheduler.spawners.templates.kubeflow import KUBEFLOW_JOB_GROUP
@@ -16,7 +17,7 @@ class TFJobSpawner(TensorflowSpawnerMixin, KFExperimentSpawner):
 
     @staticmethod
     def get_job_container_name(job_container_name):
-        return job_container_name or conf.get('CONTAINER_NAME_TF_JOB')
+        return job_container_name or conf.get(CONTAINER_NAME_TF_JOBS)
 
     def start_experiment(self):
         labels = self.resource_manager.experiment_labels

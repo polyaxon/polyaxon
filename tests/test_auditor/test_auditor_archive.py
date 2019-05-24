@@ -7,7 +7,7 @@ import pytest
 import auditor
 
 from db.models.clusters import Cluster
-from event_manager.events import archive as archives_events
+from events.registry import archive as archives_events
 from tests.test_auditor.utils import AuditorBaseTest
 
 

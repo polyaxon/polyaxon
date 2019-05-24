@@ -8,6 +8,7 @@ import conf
 from db.models.notebooks import NotebookJob
 from libs.repos.utils import assign_code_reference
 from lifecycles.jobs import JobLifeCycle
+from options.registry.notebooks import NOTEBOOKS_BACKEND
 from signals.backend import set_backend
 from signals.names import set_name
 from signals.outputs import set_outputs, set_outputs_refs
@@ -25,7 +26,7 @@ def notebook_job_pre_save(sender, **kwargs):
     set_outputs(instance=instance)
     set_outputs_refs(instance=instance)
     assign_code_reference(instance)
-    set_backend(instance=instance, default_backend=conf.get('NOTEBOOK_BACKEND'))
+    set_backend(instance=instance, default_backend=conf.get(NOTEBOOKS_BACKEND))
     set_name(instance=instance, query=NotebookJob.all)
 
 

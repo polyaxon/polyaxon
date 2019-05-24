@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import tensorboard
+from events.registry import tensorboard
 
 tracker.subscribe(tensorboard.TensorboardStartedEvent)
 tracker.subscribe(tensorboard.TensorboardStartedTriggeredEvent)

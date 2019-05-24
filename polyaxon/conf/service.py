@@ -2,30 +2,79 @@ from typing import Any
 
 from hestia.service_interface import Service
 
+from conf.conf_manager import conf_cache_manager
 from conf.exceptions import ConfException
+from conf.handlers.settings_handler import SettingsHandler
+from conf.option_manager import option_manager
+from options.option import OptionStores
 
 
 class ConfService(Service):
-    __all__ = ('get', 'set', 'delete',)
+    __all__ = ('get', 'set', 'delete')
+
+    option_manager = option_manager
+    cache_manager = conf_cache_manager
 
     def __init__(self):
-        self._settings = None
+        self.stores = {}
+
+    def get_db_handler(self):
+        return None
+
+    def can_handle(self, key: str) -> bool:
+        return isinstance(key, str) and self.option_manager.knows(key=key)
+
+    def get_option(self, key: str,) -> 'Option':
+        return self.option_manager.get(key=key)
+
+    def get_store(self, option: 'Option') -> Any:
+        if option.store not in self.stores:
+            raise ConfException('Option `{}` has an invalid store.'.format(option.key))
+
+        return self.stores[option.store]
 
     def get(self, key: str) -> Any:
-        if hasattr(self._settings, key):
-            return getattr(self._settings, key)
-        else:
-            raise ConfException(
-                'The configuration option `{}` was not found or not correctly set.'.format(key))
+        if not self.is_setup:
+            return
+        if not self.can_handle(key=key):
+            raise ConfException('Conf service request an unknown key `{}`.'.format(key))
 
-    def set(self, name: str, value: Any) -> None:
-        setattr(self._settings, name, value)
+        value = self.cache_manager.get_from_cache(key=key)
+        if self.cache_manager.is_valid_value(value=value):
+            return value
 
-    def delete(self, name: str) -> None:
-        delattr(self._settings, name)
+        option = self.get_option(key=key)
+        store = self.get_store(option=option)
+        return store.get(option=option)
+
+    def set(self, key: str, value: Any) -> None:
+        if not self.is_setup:
+            return
+        if not self.can_handle(key=key):
+            raise ConfException('Conf service request an unknown key `{}`.'.format(key))
+        if value is None:
+            raise ConfException('Conf service requires a value for key `{}` to set.'.format(key))
+
+        option = self.get_option(key=key)
+        store = self.get_store(option=option)
+        store.set(option=option, value=value)
+
+    def delete(self, key: str) -> None:
+        if not self.is_setup:
+            return
+        if not self.can_handle(key=key):
+            raise ConfException('Conf service request an unknown key `{}`.'.format(key))
+
+        option = self.get_option(key=key)
+        store = self.get_store(option=option)
+        store.delete(option=option)
 
     def setup(self) -> None:
         super().setup()
-        from django.conf import settings
+        # Load default options
+        import conf.options  # noqa
 
-        self._settings = settings
+        self.stores[OptionStores.SETTINGS] = SettingsHandler()
+        db_handler = self.get_db_handler()
+        if db_handler:
+            self.stores[OptionStores.DB] = db_handler

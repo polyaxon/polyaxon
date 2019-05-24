@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import operation
+from events.registry import operation
 
 tracker.subscribe(operation.OperationCreatedEvent)
 tracker.subscribe(operation.OperationUpdatedEvent)

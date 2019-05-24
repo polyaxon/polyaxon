@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import superuser
+from events.registry import superuser
 
 tracker.subscribe(superuser.SuperUserRoleGrantedEvent)
 tracker.subscribe(superuser.SuperUserRoleRevokedEvent)

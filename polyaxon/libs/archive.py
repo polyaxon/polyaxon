@@ -10,6 +10,8 @@ from rest_framework.exceptions import ValidationError
 import conf
 import stores
 
+from options.registry.archives import ARCHIVES_ROOT_ARTIFACTS, ARCHIVES_ROOT_REPOS
+from options.registry.downloads import DOWNLOADS_ROOT_LOGS, DOWNLOADS_ROOT_ARTIFACTS
 from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 
@@ -29,7 +31,7 @@ def get_files_in_path(path: str) -> List[str]:
 
 
 def archive_repo(repo_git: Any, repo_name: str, commit: str = None) -> Tuple[str, str]:
-    archive_root = conf.get('REPOS_ARCHIVE_ROOT')
+    archive_root = conf.get(ARCHIVES_ROOT_REPOS)
     check_or_create_path(archive_root)
     archive_name = '{}-{}.tar.gz'.format(repo_name, commit or 'master')
     with open(os.path.join(archive_root, archive_name), 'wb') as fp:
@@ -39,11 +41,11 @@ def archive_repo(repo_git: Any, repo_name: str, commit: str = None) -> Tuple[str
 
 
 def archive_outputs(outputs_path: str, namepath: str, persistence_outputs: str) -> Tuple[str, str]:
-    archive_root = conf.get('OUTPUTS_ARCHIVE_ROOT')
+    archive_root = conf.get(ARCHIVES_ROOT_ARTIFACTS)
     check_or_create_path(archive_root)
 
-    check_or_create_path(conf.get('OUTPUTS_DOWNLOAD_ROOT'))
-    download_path = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'), namepath.replace('.', '/'))
+    check_or_create_path(conf.get(DOWNLOADS_ROOT_ARTIFACTS))
+    download_path = os.path.join(conf.get(DOWNLOADS_ROOT_ARTIFACTS), namepath.replace('.', '/'))
     download_dir = '/'.join(download_path.split('/'))
     check_or_create_path(download_dir)
 
@@ -66,8 +68,8 @@ def archive_outputs_file(outputs_path: str,
                          namepath: str,
                          filepath: str,
                          persistence_outputs: str) -> str:
-    check_or_create_path(conf.get('OUTPUTS_DOWNLOAD_ROOT'))
-    download_filepath = os.path.join(conf.get('OUTPUTS_DOWNLOAD_ROOT'),
+    check_or_create_path(conf.get(DOWNLOADS_ROOT_ARTIFACTS))
+    download_filepath = os.path.join(conf.get(DOWNLOADS_ROOT_ARTIFACTS),
                                      namepath.replace('.', '/'),
                                      filepath)
     download_dir = '/'.join(download_filepath.split('/')[:-1])
@@ -84,9 +86,9 @@ def archive_outputs_file(outputs_path: str,
 
 
 def archive_logs_file(log_path: str, namepath: str, persistence_logs: str = 'default') -> str:
-    check_or_create_path(conf.get('LOGS_DOWNLOAD_ROOT'))
+    check_or_create_path(conf.get(DOWNLOADS_ROOT_LOGS))
     namepath = namepath.replace('.', '/')
-    download_filepath = os.path.join(conf.get('LOGS_DOWNLOAD_ROOT'), namepath)
+    download_filepath = os.path.join(conf.get(DOWNLOADS_ROOT_LOGS), namepath)
     download_dir = '/'.join(download_filepath.split('/')[:-1])
     check_or_create_path(download_dir)
     try:

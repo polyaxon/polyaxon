@@ -27,7 +27,7 @@ from api.projects.serializers import (
 )
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from db.models.projects import Project
-from event_manager.events.project import (
+from events.registry.project import (
     PROJECT_ARCHIVED,
     PROJECT_CREATED,
     PROJECT_DELETED_TRIGGERED,
@@ -35,6 +35,7 @@ from event_manager.events.project import (
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -101,7 +102,7 @@ class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, Destr
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
             kwargs={'project_id': instance.id, 'immediate': True},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
@@ -117,7 +118,7 @@ class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
             kwargs={'project_id': obj.id, 'immediate': False},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

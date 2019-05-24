@@ -5,7 +5,7 @@ import pytest
 from flaky import flaky
 from rest_framework import status
 
-from django.test import override_settings
+import conf
 
 from api.projects import queries
 from api.projects.serializers import (
@@ -31,6 +31,7 @@ from factories.factory_projects import ProjectFactory
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from options.registry.ownership import ALLOW_USER_PROJECTS
 from tests.base.views import BaseViewTest
 
 
@@ -58,8 +59,8 @@ class TestProjectCreateViewV1(BaseViewTest):
         assert self.model_class.objects.count() == self.num_objects + 1
         assert self.model_class.objects.last().owner.owner == self.auth_client.user
 
-    @override_settings(ALLOW_USER_PROJECTS=False)
     def test_not_allowed_to_create(self):
+        conf.set(key=ALLOW_USER_PROJECTS, value=False)
         data = {'name': 'new_project'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST

@@ -12,11 +12,11 @@ from django.utils import timezone
 
 import stores
 
+from constants.cloning_strategies import CloningStrategy
 from constants.urls import API_V1
 from crons.tasks.experiments_statuses import experiments_sync_jobs_statuses
 from db.managers.deleted import ArchivedManager, LiveManager
 from db.models.build_jobs import BuildJobStatus
-from db.models.cloning_strategies import CloningStrategy
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentStatus
 from db.models.job_resources import JobResources

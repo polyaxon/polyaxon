@@ -6,6 +6,10 @@ from db.getters.projects import get_valid_project
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
+from options.registry.scheduler import (
+    SCHEDULER_GLOBAL_COUNTDOWN,
+    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
+)
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -32,7 +36,7 @@ def projects_schedule_deletion(project_id, immediate=False):
                 'collect_logs': False,
                 'message': message,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     experiments = project.all_experiments.exclude(
         experiment_group__isnull=True,
@@ -54,7 +58,7 @@ def projects_schedule_deletion(project_id, immediate=False):
                     'is_managed': experiment.is_managed,
                     'message': message,
                 },
-                countdown=conf.get('GLOBAL_COUNTDOWN'))
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
         else:
             # Update experiment status to show that its stopped
             experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
@@ -64,14 +68,14 @@ def projects_schedule_deletion(project_id, immediate=False):
         celery_app.send_task(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
             kwargs={'job_id': job},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     builds = project.all_build_jobs.exclude(status__status__in=JobLifeCycle.DONE_STATUS).distinct()
     for build in builds.values_list('id', flat=True):
         celery_app.send_task(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
             kwargs={'build_job_id': build},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     notebooks = project.all_notebook_jobs.exclude(
         status__status__in=JobLifeCycle.DONE_STATUS).distinct()
@@ -79,7 +83,7 @@ def projects_schedule_deletion(project_id, immediate=False):
         celery_app.send_task(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
             kwargs={'notebook_job_id': notebook},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     tensorboards = project.all_tensorboard_jobs.exclude(
         status__status__in=JobLifeCycle.DONE_STATUS).distinct()
@@ -87,7 +91,7 @@ def projects_schedule_deletion(project_id, immediate=False):
         celery_app.send_task(
             SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
             kwargs={'tensorboard_job_id': tensorboard},
-            countdown=conf.get('GLOBAL_COUNTDOWN'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
         celery_app.send_task(
@@ -95,4 +99,4 @@ def projects_schedule_deletion(project_id, immediate=False):
             kwargs={
                 'project_id': project_id,
             },
-            countdown=conf.get('GLOBAL_COUNTDOWN_DELAYED'))
+            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))

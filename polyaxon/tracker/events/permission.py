@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import permission
+from events.registry import permission
 
 tracker.subscribe(permission.PermissionProjectDeniedEvent)
 tracker.subscribe(permission.PermissionRepoDeniedEvent)

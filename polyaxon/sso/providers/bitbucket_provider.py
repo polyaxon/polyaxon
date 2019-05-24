@@ -3,7 +3,9 @@ import requests
 import conf
 
 from constants.sso_providers import Providers
-from event_manager.events.user import USER_BITBUCKET
+from events.registry.user import USER_BITBUCKET
+from options.registry.auth_bitbucket import AUTH_BITBUCKET_CLIENT_ID, AUTH_BITBUCKET_CLIENT_SECRET
+from options.registry.email import EMAIL_DEFAULT_DOMAIN
 from sso.providers.oauth2.provider import OAuth2Provider
 
 
@@ -14,18 +16,24 @@ class BitbucketIdentityProvider(OAuth2Provider):
 
     web_url = 'https://bitbucket.org'
     api_url = 'https://api.bitbucket.org'
-    oauth_access_token_url = '{}/site/oauth2/access_token'.format(web_url)
-    oauth_authorize_url = '{}/site/oauth2/authorize'.format(web_url)
     user_url = '{}/2.0/user'.format(api_url)
     emails_url = '{}/emails'.format(user_url)
 
     oauth_scopes = ()
 
+    @property
+    def oauth_authorize_url(self):
+        return '{}/site/oauth2/authorize'.format(self.web_url)
+
+    @property
+    def oauth_access_token_url(self):
+        return '{}/site/oauth2/access_token'.format(self.web_url)
+
     def get_oauth_client_id(self):
-        return conf.get('OAUTH_BITBUCKET_CLIENT_ID')
+        return conf.get(AUTH_BITBUCKET_CLIENT_ID)
 
     def get_oauth_client_secret(self):
-        return conf.get('OAUTH_BITBUCKET_CLIENT_SECRET')
+        return conf.get(AUTH_BITBUCKET_CLIENT_SECRET)
 
     def get_user(self, access_token):
         resp = requests.get(self.user_url, params={'access_token': access_token})
@@ -42,7 +50,7 @@ class BitbucketIdentityProvider(OAuth2Provider):
         emails = emails['values'] if emails else []
         email = [e for e in emails if e['is_primary']]
         return email[0]['email'] if email else '{}@{}'.format(username,
-                                                              conf.get('DEFAULT_EMAIL_DOMAIN'))
+                                                              conf.get(EMAIL_DEFAULT_DOMAIN))
 
     @staticmethod
     def get_first_last_names(username, name):

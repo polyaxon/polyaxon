@@ -1,6 +1,7 @@
 import conf
 
 from constants import content_types
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
@@ -19,7 +20,7 @@ def stop_experiment(experiment: 'Experiment', message: str = None):
             'is_managed': experiment.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def stop_experiment_group(group: 'ExperimentGroup', message: str = None):
@@ -28,7 +29,7 @@ def stop_experiment_group(group: 'ExperimentGroup', message: str = None):
         kwargs={'experiment_group_id': group.id,
                 'collect_logs': True,
                 'message': message},
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def stop_job(job: 'Job', message: str = None):
@@ -44,7 +45,7 @@ def stop_job(job: 'Job', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def stop_build_job(job: 'BuildJob', message: str = None):
@@ -60,7 +61,7 @@ def stop_build_job(job: 'BuildJob', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def stop_notebook_job(job: 'NotebookJob', message: str = None):
@@ -76,7 +77,7 @@ def stop_notebook_job(job: 'NotebookJob', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 def stop_tensorboard_job(job: 'TensorboardJob', message: str = None):
@@ -92,7 +93,7 @@ def stop_tensorboard_job(job: 'TensorboardJob', message: str = None):
             'is_managed': job.is_managed,
             'message': message
         },
-        countdown=conf.get('GLOBAL_COUNTDOWN'))
+        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
 ENTITIES = {

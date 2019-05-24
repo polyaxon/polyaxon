@@ -1,6 +1,6 @@
 import tracker
 
-from event_manager.events import experiment_job
+from events.registry import experiment_job
 
 tracker.subscribe(experiment_job.ExperimentJobViewedEvent)
 tracker.subscribe(experiment_job.ExperimentJobResourcesViewedEvent)

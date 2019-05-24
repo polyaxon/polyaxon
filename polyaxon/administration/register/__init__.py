@@ -1,15 +1,21 @@
 from django.contrib.admin import site
 
 from administration.register import (
+    artifacts_stores,
     activitylogs,
     bookmarks,
     build_jobs,
     clusters,
+    configs,
+    config_maps,
+    config_options,
+    data_stores,
     experiment_groups,
     experiments,
     groups,
     job_resources,
     jobs,
+    logs_stores,
     nodes,
     notebooks,
     notifications,
@@ -22,8 +28,37 @@ from administration.register import (
     tensorboards,
     tokens,
     users,
-    versions
+    versions,
+    secrets,
 )
+
+REGISTRY = {
+    'artifacts_stores': artifacts_stores,
+    'activitylogs': activitylogs,
+    'bookmarks': bookmarks,
+    'build_jobs': build_jobs,
+    'clusters': clusters,
+    'configs': configs,
+    'config_maps': config_maps,
+    'config_options': config_options,
+    'data_stores': data_stores,
+    'experiment_groups': experiment_groups,
+    'experiments': experiments,
+    'job_resources': job_resources,
+    'jobs': jobs,
+    'logs_stores': logs_stores,
+    'nodes': nodes,
+    'notebooks': notebooks,
+    'notifications': notifications,
+    'owners': owners,
+    'pipelines': pipelines,
+    'repos': repos,
+    'searches': searches,
+    'secrets': secrets,
+    'sso': sso,
+    'tensorboards': tensorboards,
+    'versions': versions,
+}
 
 
 def register(models=None):
@@ -36,39 +71,6 @@ def register(models=None):
     if not models:
         return
 
-    if 'activitylogs' in models:
-        activitylogs.register(admin_register)
-    if 'bookmarks' in models:
-        bookmarks.register(admin_register)
-    if 'build_jobs' in models:
-        build_jobs.register(admin_register)
-    if 'clusters' in models:
-        clusters.register(admin_register)
-    if 'experiment_groups' in models:
-        experiment_groups.register(admin_register)
-    if 'experiments' in models:
-        experiments.register(admin_register)
-    if 'job_resources' in models:
-        job_resources.register(admin_register)
-    if 'jobs' in models:
-        jobs.register(admin_register)
-    if 'nodes' in models:
-        nodes.register(admin_register)
-    if 'notebooks' in models:
-        notebooks.register(admin_register)
-    if 'notifications' in models:
-        notifications.register(admin_register)
-    if 'owners' in models:
-        owners.register(admin_register)
-    if 'pipelines' in models:
-        pipelines.register(admin_register)
-    if 'repos' in models:
-        repos.register(admin_register)
-    if 'searches' in models:
-        searches.register(admin_register)
-    if 'sso' in models:
-        sso.register(admin_register)
-    if 'tensorboards' in models:
-        tensorboards.register(admin_register)
-    if 'versions' in models:
-        versions.register(admin_register)
+    for model in models:
+        if model in REGISTRY:
+            REGISTRY[model].register(admin_register)

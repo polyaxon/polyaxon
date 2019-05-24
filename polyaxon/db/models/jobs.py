@@ -8,6 +8,7 @@ from django.utils.functional import cached_property
 
 import auditor
 
+from constants.cloning_strategies import CloningStrategy
 from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.datarefs import DataReference
@@ -22,10 +23,9 @@ from db.models.abstract.persistence import PersistenceModel
 from db.models.abstract.readme import ReadmeModel
 from db.models.abstract.sub_paths import SubPathModel
 from db.models.abstract.tag import TagModel
-from db.models.cloning_strategies import CloningStrategy
 from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
-from event_manager.events.job import JOB_RESTARTED
+from events.registry.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_job_spec_config
 from schemas import JobSpecification

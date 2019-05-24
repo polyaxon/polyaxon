@@ -1,6 +1,6 @@
 import activitylogs
 
-from event_manager.events import operation_run
+from events.registry import operation_run
 
 activitylogs.subscribe(operation_run.OperationRunCreatedEvent)
 activitylogs.subscribe(operation_run.OperationRunUpdatedEvent)

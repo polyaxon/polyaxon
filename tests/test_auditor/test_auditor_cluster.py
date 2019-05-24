@@ -7,7 +7,7 @@ import pytest
 import auditor
 
 from db.models.clusters import Cluster
-from event_manager.events import cluster as cluster_events
+from events.registry import cluster as cluster_events
 from factories.factory_clusters import ClusterNodeFactory, GPUFactory
 from tests.test_auditor.utils import AuditorBaseTest
 

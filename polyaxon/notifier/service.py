@@ -1,9 +1,9 @@
 from django.core.exceptions import ObjectDoesNotExist
 
-from action_manager.actions.email import EmailAction
+from actions.registry.email import EmailAction
 from constants import user_system
-from event_manager import event_subjects
-from event_manager.event_service import EventService
+from events import event_subjects
+from events.event_service import EventService
 from notifier.managers import default_action_manager, default_event_manager
 from notifier.recipients import get_instance_and_project_recipients, get_project_recipients
 
