@@ -1,4 +1,5 @@
 import os
+
 from unittest import TestCase
 
 from rhea.exceptions import RheaError
@@ -509,9 +510,6 @@ class TestRhea(TestCase):
 
         with self.assertRaises(RheaError):
             self.config.get_dict_of_dicts('dict_dicts_error_key_3')
-
-        with self.assertRaises(RheaError):
-            self.config.get_dict_of_dicts('dict_dicts_error_key_4')
 
         with self.assertRaises(RheaError):
             self.config.get_dict_of_dicts('dict_dicts_error_key_4')

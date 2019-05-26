@@ -1,15 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import json
-import six
-
-from collections import Mapping
-from distutils.util import strtobool  # pylint:disable=import-error
-
-from rhea import reader
-from rhea.exceptions import RheaError
-from rhea.specs import AuthSpec, UriSpec
+from rhea import parser, reader
+from rhea.constants import NO_VALUE_FOUND
 
 
 class Rhea(object):
@@ -83,24 +76,14 @@ class Rhea(object):
         Returns:
              `int`: value corresponding to the key.
         """
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=int,
-                                              type_convert=int,
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-
-        return self._get_typed_value(key=key,
-                                     target_type=int,
-                                     type_convert=int,
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
+        return self._get(key=key,
+                         parser_fct=parser.get_int,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_float(self,
                   key,
@@ -125,24 +108,14 @@ class Rhea(object):
         Returns:
              `float`: value corresponding to the key.
         """
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=float,
-                                              type_convert=float,
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-
-        return self._get_typed_value(key=key,
-                                     target_type=float,
-                                     type_convert=float,
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
+        return self._get(key=key,
+                         parser_fct=parser.get_float,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_boolean(self,
                     key,
@@ -167,24 +140,14 @@ class Rhea(object):
         Returns:
             `bool`: value corresponding to the key.
         """
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=bool,
-                                              type_convert=lambda x: bool(strtobool(x)),
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-
-        return self._get_typed_value(key=key,
-                                     target_type=bool,
-                                     type_convert=lambda x: bool(strtobool(x)),
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
+        return self._get(key=key,
+                         parser_fct=parser.get_boolean,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_string(self,
                    key,
@@ -209,24 +172,14 @@ class Rhea(object):
         Returns:
             `str`: value corresponding to the key.
         """
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=str,
-                                              type_convert=str,
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-
-        return self._get_typed_value(key=key,
-                                     target_type=str,
-                                     type_convert=str,
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
+        return self._get(key=key,
+                         parser_fct=parser.get_string,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_dict(self,
                  key,
@@ -252,37 +205,14 @@ class Rhea(object):
             `str`: value corresponding to the key.
         """
 
-        def convert_to_dict(x):
-            x = json.loads(x)
-            if not isinstance(x, Mapping):
-                raise RheaError("Cannot convert value `{}` (key: `{}`) to `dict`".format(x, key))
-            return x
-
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=Mapping,
-                                              type_convert=convert_to_dict,
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-        value = self._get_typed_value(key=key,
-                                      target_type=Mapping,
-                                      type_convert=convert_to_dict,
-                                      is_optional=is_optional,
-                                      is_secret=is_secret,
-                                      is_local=is_local,
-                                      default=default,
-                                      options=options)
-
-        if not value:
-            return default
-
-        if not isinstance(value, Mapping):
-            raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                            "to `dict`".format(value, key))
-        return value
+        return self._get(key=key,
+                         parser_fct=parser.get_dict,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_dict_of_dicts(self,
                           key,
@@ -307,24 +237,14 @@ class Rhea(object):
         Returns:
             `str`: value corresponding to the key.
         """
-        value = self.get_dict(
-            key=key,
-            is_optional=is_optional,
-            is_secret=is_secret,
-            is_local=is_local,
-            default=default,
-            options=options,
-        )
-        if not value:
-            return default
-
-        for k in value:
-            if not isinstance(value[k], Mapping):
-                raise RheaError(
-                    "`{}` must be an object. "
-                    "Received a non valid configuration for key `{}`.".format(value[k], key))
-
-        return value
+        return self._get(key=key,
+                         parser_fct=parser.get_dict_of_dicts,
+                         is_list=None,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_uri(self,
                 key,
@@ -349,24 +269,14 @@ class Rhea(object):
         Returns:
              `str`: value corresponding to the key.
         """
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=UriSpec,
-                                              type_convert=self.parse_uri_spec,
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-
-        return self._get_typed_value(key=key,
-                                     target_type=UriSpec,
-                                     type_convert=self.parse_uri_spec,
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
+        return self._get(key=key,
+                         parser_fct=parser.get_uri,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_auth(self,
                  key,
@@ -391,24 +301,14 @@ class Rhea(object):
         Returns:
              `str`: value corresponding to the key.
         """
-        if is_list:
-            return self._get_typed_list_value(key=key,
-                                              target_type=AuthSpec,
-                                              type_convert=self.parse_auth_spec,
-                                              is_optional=is_optional,
-                                              is_secret=is_secret,
-                                              is_local=is_local,
-                                              default=default,
-                                              options=options)
-
-        return self._get_typed_value(key=key,
-                                     target_type=AuthSpec,
-                                     type_convert=self.parse_auth_spec,
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
+        return self._get(key=key,
+                         parser_fct=parser.get_auth,
+                         is_list=is_list,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
     def get_list(self,
                  key,
@@ -432,25 +332,16 @@ class Rhea(object):
              `str`: value corresponding to the key.
         """
 
-        def parse_list(v):
-            parts = v.split(',')
-            results = []
-            for part in parts:
-                part = part.strip()
-                if part:
-                    results.append(part)
-            return results
+        return self._get(key=key,
+                         parser_fct=parser.get_list,
+                         is_list=None,
+                         is_optional=is_optional,
+                         is_secret=is_secret,
+                         is_local=is_local,
+                         default=default,
+                         options=options)
 
-        return self._get_typed_value(key=key,
-                                     target_type=list,
-                                     type_convert=parse_list,
-                                     is_optional=is_optional,
-                                     is_secret=is_secret,
-                                     is_local=is_local,
-                                     default=default,
-                                     options=options)
-
-    def _get(self, key):
+    def _get(self, key, parser_fct, is_list, is_optional, is_secret, is_local, default, options):
         """
         Get key from the dictionary made out of the configs passed.
 
@@ -463,7 +354,15 @@ class Rhea(object):
         Raises:
             KeyError
         """
-        return self._data[key]
+        value = self._data.get(key, NO_VALUE_FOUND)
+        parsed_value = parser_fct(key=key,
+                                  value=value,
+                                  is_list=is_list,
+                                  is_optional=is_optional,
+                                  default=default,
+                                  options=options)
+        self._add_key(key, is_secret=is_secret, is_local=is_local)
+        return parsed_value
 
     def _add_key(self, key, is_secret=False, is_local=False):
         self._requested_keys.add(key)
@@ -471,142 +370,3 @@ class Rhea(object):
             self._secret_keys.add(key)
         if is_local:
             self._local_keys.add(key)
-
-    @staticmethod
-    def _check_options(key, value, options):
-        if options and value not in options:
-            raise RheaError(
-                'The value `{}` provided for key `{}` '
-                'is not one of the possible values.'.format(value, key))
-
-    def _get_typed_value(self,
-                         key,
-                         target_type,
-                         type_convert,
-                         is_optional=False,
-                         is_secret=False,
-                         is_local=False,
-                         default=None,
-                         options=None):
-        """
-        Return the value corresponding to the key converted to the given type.
-
-        Args:
-            key: the dict key.
-            target_type: The type we expect the variable or key to be in.
-            type_convert: A lambda expression that converts the key to the desired type.
-            is_optional: To raise an error if key was not found.
-            is_secret: If the key is a secret.
-            is_local: If the key is a local to this service.
-            default: default value if is_optional is True.
-            options: list/tuple if provided, the value must be one of these values.
-
-        Returns:
-            The corresponding value of the key converted.
-        """
-        try:
-            value = self._get(key)
-        except KeyError:
-            if not is_optional:
-                raise RheaError(
-                    'No value was provided for the non optional key `{}`.'.format(key))
-            return default
-
-        if isinstance(value, six.string_types):
-            try:
-                self._add_key(key, is_secret=is_secret, is_local=is_local)
-                self._check_options(key=key, value=value, options=options)
-                return type_convert(value)
-            except ValueError:
-                raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                                "to `{}`".format(value, key, target_type))
-
-        if isinstance(value, target_type):
-            self._add_key(key, is_secret=is_secret, is_local=is_local)
-            self._check_options(key=key, value=value, options=options)
-            return value
-        raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                        "to `{}`".format(value, key, target_type))
-
-    def _get_typed_list_value(self,
-                              key,
-                              target_type,
-                              type_convert,
-                              is_optional=False,
-                              is_secret=False,
-                              is_local=False,
-                              default=None,
-                              options=None):
-        """
-        Return the value corresponding to the key converted first to list
-        than each element to the given type.
-
-        Args:
-            key: the dict key.
-            target_type: The type we expect the variable or key to be in.
-            type_convert: A lambda expression that converts the key to the desired type.
-            is_optional: To raise an error if key was not found.
-            is_secret: If the key is a secret.
-            is_local: If the key is a local to this service.
-            default: default value if is_optional is True.
-            options: list/tuple if provided, the value must be one of these values.
-        """
-
-        value = self._get_typed_value(key=key,
-                                      target_type=list,
-                                      type_convert=json.loads,
-                                      is_optional=is_optional,
-                                      is_secret=is_secret,
-                                      is_local=is_local,
-                                      default=default,
-                                      options=options)
-
-        if not value:
-            return default
-
-        raise_type = 'dict' if target_type == Mapping else target_type
-
-        if not isinstance(value, list):
-            raise RheaError("Cannot convert value `{}` (key: `{}`) "
-                            "to `{}`".format(value, key, raise_type))
-        # If we are here the value must be a list
-        result = []
-        for v in value:
-            if isinstance(v, six.string_types):
-                try:
-                    result.append(type_convert(v))
-                except ValueError:
-                    raise RheaError("Cannot convert value `{}` (found in list key: `{}`) "
-                                    "to `{}`".format(v, key, raise_type))
-            elif isinstance(v, target_type):
-                result.append(v)
-
-            else:
-                raise RheaError("Cannot convert value `{}` (found in list key: `{}`) "
-                                "to `{}`".format(v, key, raise_type))
-        return result
-
-    def parse_uri_spec(self, uri_spec):
-        parts = uri_spec.split('@')
-        if len(parts) != 2:
-            raise RheaError(
-                'Received invalid uri_spec `{}`. '
-                'The uri must be in the format `user:pass@host`'.format(uri_spec))
-
-        user_pass, host = parts
-        user_pass = user_pass.split(':')
-        if len(user_pass) != 2:
-            raise RheaError(
-                'Received invalid uri_spec `{}`. `user:host` is not conform.'
-                'The uri must be in the format `user:pass@host`'.format(uri_spec))
-
-        return UriSpec(user=user_pass[0], password=user_pass[1], host=host)
-
-    def parse_auth_spec(self, auth_spec):
-        user_pass = auth_spec.split(':')
-        if len(user_pass) != 2:
-            raise RheaError(
-                'Received invalid uri_spec `{}`. `user:host` is not conform.'
-                'The uri must be in the format `user:pass`'.format(auth_spec))
-
-        return AuthSpec(user=user_pass[0], password=user_pass[1])
