@@ -58,7 +58,7 @@ class DockerFileGenerator(object):
             return requirements
         return None
 
-    def _get_conda_env_path(self):
+    def _get_conda_env_path(self):  # pylint:disable=too-many-statements
         def get_conda_env(conda_file):
             conda_path = os.path.join(self.repo_path, conda_file)
             if os.path.isfile(conda_path):
