@@ -4,10 +4,10 @@ from __future__ import absolute_import, division, print_function
 POLYAXON_DOCKER_TEMPLATE = """
 FROM {{ from_image }}
 
-{% if set_lang_env -%}
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+{% if lang_env -%}
+ENV LC_ALL {{ lang_env }}
+ENV LANG {{ lang_env }}
+ENV LANGUAGE {{ lang_env }}
 {% endif -%}
 # Use bash as default shell, rather than sh
 ENV SHELL /bin/bash

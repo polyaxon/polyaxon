@@ -26,7 +26,7 @@ generate(repo_path,
          build_steps=None,
          env_vars=None,
          nvidia_bin=None,
-         set_lang_env=True)
+         lang_env='en_US.UTF-8')
 ```
 
 ## Install polyaxon

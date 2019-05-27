@@ -78,6 +78,11 @@ class TestDockerfileGenerator(TestCase):
         assert 'WORKDIR {}'.format(builder.WORKDIR) in dockerfile
         assert 'COPY {}'.format(builder.folder_name) in dockerfile
 
+        # No lang env
+        assert 'LC_ALL' not in dockerfile
+        assert 'LANG' not in dockerfile
+        assert 'LANGUAGE' not in dockerfile
+
         # Add env vars
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox',
@@ -167,6 +172,18 @@ class TestDockerfileGenerator(TestCase):
         assert 'useradd' in dockerfile
         builder.clean()
 
+        # Add lan env
+        builder = DockerFileGenerator(repo_path=repo_path,
+                                      from_image='busybox',
+                                      lang_env='en_US.UTF-8')
+
+        dockerfile = builder.render()
+        assert 'en_US.UTF-8' in dockerfile
+        assert 'LC_ALL' in dockerfile
+        assert 'LANG' in dockerfile
+        assert 'LANGUAGE' in dockerfile
+        builder.clean()
+
 
 class TestGenerate(TestCase):
     def test_generate(self):
@@ -182,7 +199,7 @@ class TestGenerate(TestCase):
             build_steps=[],
             env_vars=[],
             nvidia_bin=None,
-            set_lang_env=False,
+            lang_env=None,
             uid=100,
             gid=100)
         assert os.path.isfile('{}/{}'.format(tmp_path, POLYAXON_DOCKERFILE_NAME))

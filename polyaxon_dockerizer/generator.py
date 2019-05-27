@@ -21,7 +21,7 @@ class DockerFileGenerator(object):
                  env_vars=None,
                  nvidia_bin=None,
                  dockerfile_name=POLYAXON_DOCKERFILE_NAME,
-                 set_lang_env=False,
+                 lang_env=False,
                  uid=None,
                  gid=None):
         self.from_image = from_image
@@ -37,7 +37,7 @@ class DockerFileGenerator(object):
         self.polyaxon_requirements_path = self._get_requirements_path()
         self.polyaxon_conda_env_path = self._get_conda_env_path()
         self.polyaxon_setup_path = self._get_setup_path()
-        self.set_lang_env = set_lang_env
+        self.lang_env = lang_env
         self.uid = uid
         self.gid = gid
         self.is_pushing = False
@@ -120,7 +120,7 @@ class DockerFileGenerator(object):
             workdir=self.WORKDIR,
             nvidia_bin=self.nvidia_bin,
             copy_code=self.copy_code,
-            set_lang_env=self.set_lang_env,
+            lang_env=self.lang_env,
             uid=self.uid,
             gid=self.gid,
         )
@@ -131,7 +131,7 @@ def generate(repo_path,
              build_steps=None,
              env_vars=None,
              nvidia_bin=None,
-             set_lang_env=False,
+             lang_env=False,
              uid=None,
              gid=None):
     # Build the image
@@ -141,7 +141,7 @@ def generate(repo_path,
         build_steps=build_steps,
         env_vars=env_vars,
         nvidia_bin=nvidia_bin,
-        set_lang_env=set_lang_env,
+        lang_env=lang_env,
         uid=uid,
         gid=gid)
 
