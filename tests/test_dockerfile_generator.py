@@ -62,7 +62,7 @@ class TestDockerfileGenerator(TestCase):
         assert builder.polyaxon_setup_path == 'repo/polyaxon_setup.sh'
         builder.clean()
 
-    def test_render_works_as_expected(self):
+    def test_render_works_as_expected(self):  # pylint:disable=too-many-statements
         # Create a repo folder
         repo_path = os.path.join(tempfile.mkdtemp(), 'repo')
         os.mkdir(repo_path)
