@@ -48,9 +48,13 @@ class StoreManager(object):
         return self._path
 
     def ls(self, path):
+        if self._path:  # We assume rel paths
+            path = os.path.join(self._path, path)
         return self.store.ls(path)
 
     def list(self, path):
+        if self._path:  # We assume rel paths
+            path = os.path.join(self._path, path)
         return self.store.list(path)
 
     def delete(self, path):
