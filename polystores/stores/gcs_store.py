@@ -6,7 +6,7 @@ import os
 
 from six.moves import urllib
 
-from google.api_core.exceptions import NotFound, GoogleAPIError
+from google.api_core.exceptions import GoogleAPIError, NotFound
 
 from polystores import settings
 from polystores.clients import gc_client
