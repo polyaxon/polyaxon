@@ -32,12 +32,6 @@ class TestDockerBuilder(TestCase):
             DockerBuilder(build_context='.',
                           image_name='image',
                           image_tag='tag',
-                          internal_registry='foo')
-
-        with self.assertRaises(BuildException):
-            DockerBuilder(build_context='.',
-                          image_name='image',
-                          image_tag='tag',
                           registries='foo')
 
         with self.assertRaises(BuildException):
@@ -49,24 +43,9 @@ class TestDockerBuilder(TestCase):
         builder = DockerBuilder(build_context='.',
                                 image_name='image',
                                 image_tag='tag',
-                                internal_registry=UriSpec('user', 'pwd', 'host'),
                                 registries=[UriSpec('user', 'pwd', 'host')])
 
-        assert builder.internal_registry is not None
         assert builder.registries is not None
-
-    @mock.patch('docker.APIClient.login')
-    def test_log_internal_registry(self, login_mock):
-        builder = DockerBuilder(build_context='.', image_name='image', image_tag='tag')
-        builder.login_internal_registry()
-        assert login_mock.call_count == 0
-
-        builder = DockerBuilder(build_context='.',
-                                image_name='image',
-                                image_tag='tag',
-                                internal_registry=UriSpec('user', 'pwd', 'host'))
-        builder.login_internal_registry()
-        assert login_mock.call_count == 1
 
     @mock.patch('docker.APIClient.login')
     def test_login_registries(self, login_mock):
@@ -104,21 +83,8 @@ class TestBuilder(TestCase):
               image_tag='image_tag',
               image_name='image_name',
               nocache=True,
-              internal_registry=None,
               registries=None)
         assert login_mock.call_count == 0
-        assert build_mock.call_count == 1
-
-    @mock.patch('docker.APIClient.build')
-    @mock.patch('docker.APIClient.login')
-    def test_build_internal_login(self, login_mock, build_mock):
-        build(build_context='.',
-              image_tag='image_tag',
-              image_name='image_name',
-              nocache=True,
-              internal_registry=UriSpec('user', 'pwd', 'host'),
-              registries=None)
-        assert login_mock.call_count == 1
         assert build_mock.call_count == 1
 
     @mock.patch('docker.APIClient.build')
@@ -128,9 +94,8 @@ class TestBuilder(TestCase):
               image_tag='image_tag',
               image_name='image_name',
               nocache=True,
-              internal_registry=UriSpec('user', 'pwd', 'host'),
               registries=[UriSpec('user', 'pwd', 'host'), UriSpec('user', 'pwd', 'host')])
-        assert login_mock.call_count == 3
+        assert login_mock.call_count == 2
         assert build_mock.call_count == 1
 
     @mock.patch('docker.APIClient.push')
@@ -141,8 +106,7 @@ class TestBuilder(TestCase):
                        image_tag='image_tag',
                        image_name='image_name',
                        nocache=True,
-                       internal_registry=UriSpec('user', 'pwd', 'host'),
                        registries=[UriSpec('user', 'pwd', 'host'), UriSpec('user', 'pwd', 'host')])
-        assert login_mock.call_count == 3
+        assert login_mock.call_count == 2
         assert build_mock.call_count == 1
         assert push_mock.call_count == 1

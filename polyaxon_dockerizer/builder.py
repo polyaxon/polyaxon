@@ -23,7 +23,7 @@ class DockerBuilder(object):
                  image_tag,
                  copy_code=True,
                  dockerfile_name='Dockerfile',
-                 internal_registry=None,
+                 credstore_env=None,
                  registries=None):
         self.image_name = image_name
         self.image_tag = image_tag
@@ -31,11 +31,9 @@ class DockerBuilder(object):
 
         self.build_context = build_context
         self.dockerfile_path = os.path.join(self.build_context, dockerfile_name)
-        self._validate_registries(internal_registry)
-        self.internal_registry = internal_registry
         self._validate_registries(registries)
         self.registries = registries
-        self.docker = APIClient(version='auto')
+        self.docker = APIClient(version='auto', credstore_env=credstore_env)
         self.is_pushing = False
 
     @staticmethod
@@ -57,17 +55,6 @@ class DockerBuilder(object):
 
     def clean(self):
         pass
-
-    def login_internal_registry(self):
-        if not self.internal_registry:
-            return
-        try:
-            self.docker.login(username=self.internal_registry.user,
-                              password=self.internal_registry.password,
-                              registry=self.internal_registry.host,
-                              reauth=True)
-        except DockerException as e:
-            _logger.exception('Failed to connect to registry %s\n', e)
 
     def login_private_registries(self):
         if not self.registries:
@@ -157,7 +144,7 @@ def _build(build_context,
            image_tag,
            image_name,
            nocache,
-           internal_registry=None,
+           credstore_env=None,
            registries=None):
     """Build necessary code for a job to run"""
     _logger.info('Starting build ...')
@@ -167,10 +154,9 @@ def _build(build_context,
         build_context=build_context,
         image_name=image_name,
         image_tag=image_tag,
-        internal_registry=internal_registry,
+        credstore_env=credstore_env,
         registries=registries,
     )
-    docker_builder.login_internal_registry()
     docker_builder.login_private_registries()
     if docker_builder.check_image():
         # Image already built
@@ -186,14 +172,14 @@ def build(build_context,
           image_tag,
           image_name,
           nocache,
-          internal_registry=None,
+          credstore_env=None,
           registries=None):
     """Build necessary code for a job to run"""
     docker_builder = _build(build_context=build_context,
                             image_tag=image_tag,
                             image_name=image_name,
                             nocache=nocache,
-                            internal_registry=internal_registry,
+                            credstore_env=credstore_env,
                             registries=registries)
     docker_builder.clean()
 
@@ -202,7 +188,7 @@ def build_and_push(build_context,
                    image_tag,
                    image_name,
                    nocache,
-                   internal_registry=None,
+                   credstore_env=None,
                    registries=None):
     """Build necessary code for a job to run and push it."""
     _logger.info('Starting build ...')
@@ -212,7 +198,7 @@ def build_and_push(build_context,
                             image_tag=image_tag,
                             image_name=image_name,
                             nocache=nocache,
-                            internal_registry=internal_registry,
+                            credstore_env=credstore_env,
                             registries=registries)
     if not docker_builder.push():
         docker_builder.clean()

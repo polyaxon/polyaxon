@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-dockerizer',
-      version='0.0.2',
+      version='0.0.3',
       description='Python dockerizer to generate and build docker images.',
       long_description=read_readme(),
       long_description_content_type="text/markdown",
@@ -49,7 +49,7 @@ setup(name='polyaxon-dockerizer',
           'kubernetes',
       ],
       install_requires=[
-          'docker==3.7.2',
+          'docker==4.0.1',
           'Unipath==1.1',
       ],
       classifiers=[
