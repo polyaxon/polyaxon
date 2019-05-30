@@ -3,7 +3,7 @@ import logging
 import os
 
 from docker import APIClient
-from docker.errors import APIError, BuildError, DockerException
+from docker.errors import APIError, BuildError
 from hestia.logging_utils import LogLevels
 
 from rhea.specs import UriSpec
