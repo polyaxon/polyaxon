@@ -11,7 +11,7 @@ AUTH_GITHUB_VERIFICATION_SCHEDULE = '{}{}{}'.format(option_namespaces.AUTH_GITHU
 AUTH_GITHUB_CLIENT_ID = '{}{}{}'.format(option_namespaces.AUTH_GITHUB,
                                         NAMESPACE_DB_MARKER,
                                         option_subjects.CLIENT_ID)
-AUTH_GITHUB_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_GITHUB,
+AUTH_GITHUB_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_GITHUB,  # noqa
                                             NAMESPACE_DB_MARKER,
                                             option_subjects.CLIENT_SECRET)
 

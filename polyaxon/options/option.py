@@ -30,8 +30,7 @@ class Option(object):
     def get_marker(cls) -> str:
         if cls.store == OptionStores.DB:
             return NAMESPACE_DB_MARKER
-        else:
-            return NAMESPACE_ENV_MARKER
+        return NAMESPACE_ENV_MARKER
 
     @classmethod
     def parse_key(cls) -> Tuple[Optional[str], str]:

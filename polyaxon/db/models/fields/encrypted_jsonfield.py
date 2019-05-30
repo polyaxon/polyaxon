@@ -4,8 +4,8 @@ import encryptor
 
 
 class EncryptedJSONField(JSONField):
-    def get_db_prep_value(self, value, *args, **kwargs):
-        value = super().get_db_prep_value(value, *args, **kwargs)
+    def get_db_prep_value(self, value, connection=None, prepared=False):
+        value = super().get_db_prep_value(value=value, connection=connection, prepared=prepared)
         return encryptor.encrypt(value)
 
     def to_python(self, value):

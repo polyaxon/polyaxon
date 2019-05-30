@@ -14,7 +14,7 @@ AUTH_GITLAB_URL = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
 AUTH_GITLAB_CLIENT_ID = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
                                         NAMESPACE_DB_MARKER,
                                         option_subjects.CLIENT_ID)
-AUTH_GITLAB_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
+AUTH_GITLAB_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,  # noqa
                                             NAMESPACE_DB_MARKER,
                                             option_subjects.CLIENT_SECRET)
 

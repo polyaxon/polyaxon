@@ -14,7 +14,7 @@ AUTH_AZURE_TENANT_ID = '{}{}{}'.format(option_namespaces.AUTH_AZURE,
 AUTH_AZURE_CLIENT_ID = '{}{}{}'.format(option_namespaces.AUTH_AZURE,
                                        NAMESPACE_DB_MARKER,
                                        option_subjects.CLIENT_ID)
-AUTH_AZURE_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_AZURE,
+AUTH_AZURE_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_AZURE,  # noqa
                                            NAMESPACE_DB_MARKER,
                                            option_subjects.CLIENT_SECRET)
 

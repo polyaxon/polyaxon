@@ -11,7 +11,7 @@ AUTH_BITBUCKET_VERIFICATION_SCHEDULE = '{}{}{}'.format(option_namespaces.AUTH_BI
 AUTH_BITBUCKET_CLIENT_ID = '{}{}{}'.format(option_namespaces.AUTH_BITBUCKET,
                                            NAMESPACE_DB_MARKER,
                                            option_subjects.CLIENT_ID)
-AUTH_BITBUCKET_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_BITBUCKET,
+AUTH_BITBUCKET_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_BITBUCKET,  # noqa
                                                NAMESPACE_DB_MARKER,
                                                option_subjects.CLIENT_SECRET)
 

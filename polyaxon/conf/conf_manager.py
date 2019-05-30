@@ -21,7 +21,7 @@ class ConfCacheManager(object):
         self._state = {}
 
     def clear_namespace(self, namespace: str, store: str) -> None:
-        if store not in OptionStores:
+        if store not in OptionStores.VALUES:
             raise ConfException('`{}` is an invalid store.'.format(store))
         marker_namespace = '{}{}'.format(namespace, store)
         for key in self._state:

@@ -1,6 +1,5 @@
 import base64
 import os
-import uuid
 
 from distutils.util import strtobool  # pylint:disable=import-error
 from typing import List, Optional

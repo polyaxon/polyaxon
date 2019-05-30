@@ -4,10 +4,10 @@ import encryptor
 
 
 class EncryptedPickledObjectField(PickledObjectField):
-    def get_db_prep_value(self, value, *args, **kwargs):
+    def get_db_prep_value(self, value, connection=None, prepared=False):
         if isinstance(value, bytes):
             value = value.decode('utf-8')
-        value = super().get_db_prep_value(value, *args, **kwargs)
+        value = super().get_db_prep_value(value=value, connection=connection, prepared=prepared)
         return encryptor.encrypt(value)
 
     def to_python(self, value):
