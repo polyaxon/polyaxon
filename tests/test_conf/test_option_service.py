@@ -77,7 +77,7 @@ class DummyDBOption(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     typing = None
     default = None
     options = None
@@ -89,7 +89,7 @@ class DummyOptionalDefaultDBOption(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     typing = None
     default = 'default_db'
     options = None
@@ -101,7 +101,7 @@ class DummyNonOptionalDBOption(Option):
     is_secret = False
     is_optional = False
     is_list = False
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     typing = None
     default = None
     options = None

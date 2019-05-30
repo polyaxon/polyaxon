@@ -1,21 +1,21 @@
 from options import option_namespaces, option_subjects
-from options.option import NAMESPACE_DB_MARKER, Option, OptionStores
+from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
 AUTH_GITLAB_ENABLED = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
-                                      NAMESPACE_DB_MARKER,
+                                      NAMESPACE_DB_OPTION_MARKER,
                                       option_subjects.ENABLED)
 AUTH_GITLAB_VERIFICATION_SCHEDULE = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
-                                                    NAMESPACE_DB_MARKER,
+                                                    NAMESPACE_DB_OPTION_MARKER,
                                                     option_subjects.VERIFICATION_SCHEDULE)
 AUTH_GITLAB_URL = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
-                                  NAMESPACE_DB_MARKER,
+                                  NAMESPACE_DB_OPTION_MARKER,
                                   option_subjects.URL)
 AUTH_GITLAB_CLIENT_ID = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,
-                                        NAMESPACE_DB_MARKER,
+                                        NAMESPACE_DB_OPTION_MARKER,
                                         option_subjects.CLIENT_ID)
 AUTH_GITLAB_CLIENT_SECRET = '{}{}{}'.format(option_namespaces.AUTH_GITLAB,  # noqa
-                                            NAMESPACE_DB_MARKER,
+                                            NAMESPACE_DB_OPTION_MARKER,
                                             option_subjects.CLIENT_SECRET)
 
 
@@ -26,7 +26,7 @@ class AuthGitlabEnabled(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.BOOL
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = False
     options = None
 
@@ -38,7 +38,7 @@ class AuthGitlabVerificationSchedule(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.INT
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = 0
     options = None
 
@@ -50,7 +50,7 @@ class AuthGitlabUrl(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
 
@@ -62,7 +62,7 @@ class AuthGitlabClientId(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
 
@@ -74,6 +74,6 @@ class AuthGitlabClientSecret(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None

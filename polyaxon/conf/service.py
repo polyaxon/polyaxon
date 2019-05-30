@@ -18,7 +18,7 @@ class ConfService(Service):
     def __init__(self):
         self.stores = {}
 
-    def get_db_handler(self):
+    def get_options_handler(self):
         return None
 
     def can_handle(self, key: str) -> bool:
@@ -75,6 +75,7 @@ class ConfService(Service):
         import conf.options  # noqa
 
         self.stores[OptionStores.SETTINGS] = SettingsHandler()
-        db_handler = self.get_db_handler()
-        if db_handler:
-            self.stores[OptionStores.DB] = db_handler
+
+        options_handler = self.get_options_handler()
+        if options_handler:
+            self.stores[OptionStores.DB_OPTION] = options_handler

@@ -24,8 +24,14 @@ class Config(DiffModel):
         blank=True,
         on_delete=models.SET_NULL,
         default=None)
-    registry = models.ForeignKey(
-        'db.Registry',
+    registry_access = models.ForeignKey(
+        'db.RegistryAccess',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        default=None)
+    git_access = models.ForeignKey(
+        'db.GitAccess',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,

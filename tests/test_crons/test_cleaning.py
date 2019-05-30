@@ -22,6 +22,7 @@ from tests.base.case import BaseTest
 @pytest.mark.crons_mark
 class TestCleaningCrons(BaseTest):
     def setUp(self):
+        super().setUp()
         self.experiment = ExperimentFactory()
         self.user = UserFactory()
 

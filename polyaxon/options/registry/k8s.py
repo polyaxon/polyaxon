@@ -1,5 +1,5 @@
 from options import option_namespaces, option_subjects
-from options.option import NAMESPACE_DB_MARKER, Option, OptionStores
+from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
 K8S_NAMESPACE = 'K8S_NAMESPACE'
@@ -14,13 +14,13 @@ K8S_SERVICE_ACCOUNT_JOBS = 'K8S_SERVICE_ACCOUNT_JOBS'
 K8S_SERVICE_ACCOUNT_BUILDS = 'K8S_SERVICE_ACCOUNT_BUILDS'
 
 K8S_GPU_RESOURCE_KEY = '{}{}{}'.format(option_namespaces.K8S,
-                                       NAMESPACE_DB_MARKER,
+                                       NAMESPACE_DB_OPTION_MARKER,
                                        option_subjects.GPU_RESOURCE_KEY)
 K8S_TPU_TF_VERSION = '{}{}{}'.format(option_namespaces.K8S,
-                                     NAMESPACE_DB_MARKER,
+                                     NAMESPACE_DB_OPTION_MARKER,
                                      option_subjects.TPU_TF_VERSION)
 K8S_TPU_RESOURCE_KEY = '{}{}{}'.format(option_namespaces.K8S,
-                                       NAMESPACE_DB_MARKER,
+                                       NAMESPACE_DB_OPTION_MARKER,
                                        option_subjects.TPU_RESOURCE_KEY)
 
 

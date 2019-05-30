@@ -17,7 +17,6 @@ class AuditorBookmarksTest(AuditorBaseTest):
     EVENTS = bookmarks_events.EVENTS
 
     def setUp(self):
-        Cluster.load()
         super().setUp()
         self.tested_events = {
             bookmarks_events.BOOKMARK_BUILD_JOBS_VIEWED,

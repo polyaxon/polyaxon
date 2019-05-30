@@ -6,7 +6,7 @@ from conf.exceptions import ConfException
 from conf.handler import BaseHandler
 
 
-class ClusterHandler(BaseHandler):
+class ClusterOptionsHandler(BaseHandler):
     def __init__(self):
         self._model = None
         self._owner = None

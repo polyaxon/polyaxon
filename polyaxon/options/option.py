@@ -2,16 +2,19 @@ from typing import Optional, Tuple
 
 from options.exceptions import OptionException
 
-NAMESPACE_DB_MARKER = ':'
+NAMESPACE_DB_OPTION_MARKER = ':'
+NAMESPACE_DB_CONFIG_MARKER = '_'
+NAMESPACE_SETTINGS_MARKER = '__'
 NAMESPACE_ENV_MARKER = '__'
 
 
 class OptionStores(object):
     ENV = 'env'
-    DB = 'db'
+    DB_OPTION = 'db_option'
+    DB_CONFIG = 'db_config'
     SETTINGS = 'settings'
 
-    VALUES = {ENV, DB, SETTINGS}
+    VALUES = {ENV, DB_OPTION, DB_CONFIG, SETTINGS}
 
 
 class Option(object):
@@ -28,8 +31,13 @@ class Option(object):
 
     @classmethod
     def get_marker(cls) -> str:
-        if cls.store == OptionStores.DB:
-            return NAMESPACE_DB_MARKER
+        if cls.store == OptionStores.DB_OPTION:
+            return NAMESPACE_DB_OPTION_MARKER
+        elif cls.store == OptionStores.DB_CONFIG:
+            return NAMESPACE_DB_CONFIG_MARKER
+        elif cls.store == OptionStores.SETTINGS:
+            return NAMESPACE_SETTINGS_MARKER
+
         return NAMESPACE_ENV_MARKER
 
     @classmethod

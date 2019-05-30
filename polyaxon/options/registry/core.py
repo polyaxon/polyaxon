@@ -29,7 +29,7 @@ class PasswordLength(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     typing = CONF_TYPES.INT
     default = 8
     options = None
@@ -173,7 +173,7 @@ class HealthCheckWorkerTimeout(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     typing = CONF_TYPES.INT
     default = 4
     options = None

@@ -18,10 +18,10 @@ class AuditorClusterTest(AuditorBaseTest):
     EVENTS = cluster_events.EVENTS
 
     def setUp(self):
+        super().setUp()
         self.cluster = Cluster.load()
         self.cluster_node = ClusterNodeFactory(cluster=self.cluster)
         self.node_gpu = GPUFactory(cluster_node=self.cluster_node)
-        super().setUp()
         self.tested_events = {
             cluster_events.CLUSTER_CREATED,
             cluster_events.CLUSTER_UPDATED,

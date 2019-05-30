@@ -14,7 +14,7 @@ class AllowUserProjects(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     typing = CONF_TYPES.BOOL
     default = True
     options = None

@@ -43,7 +43,7 @@ class BaseStoreTest(BaseTest):
         self.MODEL.objects.create(owner=owner, name='my_store')
         assert self.MODEL.objects.count() == 2
 
-    def test_same_registry_with_different_name_and_secret(self):
+    def test_same_store_with_different_name_and_secret(self):
         registry = self.MODEL.objects.create(owner=self.owner,
                                              volume_claim='foo',
                                              mount_path='/tmp/foo',

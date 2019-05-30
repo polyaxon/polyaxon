@@ -58,6 +58,8 @@ class BaseTest(TestCase):
             self.disable_experiments_runner()
             self.plugin_jobs_runner()
 
+        super().setUp()
+
         if not self.DISABLE_EXECUTOR or not self.DISABLE_AUDITOR:
             auditor.validate()
             auditor.setup()
@@ -71,8 +73,6 @@ class BaseTest(TestCase):
         if not self.DISABLE_EXECUTOR:
             executor.validate()
             executor.setup()
-
-        return super().setUp()
 
     def mock_send_task(self):
         from celery import current_app

@@ -1,21 +1,21 @@
 from options import option_namespaces, option_subjects
-from options.option import NAMESPACE_DB_MARKER, Option, OptionStores
+from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
 AFFINITIES_BUILD_JOBS = '{}{}{}'.format(option_namespaces.AFFINITIES,
-                                        NAMESPACE_DB_MARKER,
+                                        NAMESPACE_DB_OPTION_MARKER,
                                         option_subjects.BUILD_JOBS)
 AFFINITIES_JOBS = '{}{}{}'.format(option_namespaces.AFFINITIES,
-                                  NAMESPACE_DB_MARKER,
+                                  NAMESPACE_DB_OPTION_MARKER,
                                   option_subjects.JOBS)
 AFFINITIES_EXPERIMENTS = '{}{}{}'.format(option_namespaces.AFFINITIES,
-                                         NAMESPACE_DB_MARKER,
+                                         NAMESPACE_DB_OPTION_MARKER,
                                          option_subjects.EXPERIMENTS)
 AFFINITIES_NOTEBOOKS = '{}{}{}'.format(option_namespaces.AFFINITIES,
-                                       NAMESPACE_DB_MARKER,
+                                       NAMESPACE_DB_OPTION_MARKER,
                                        option_subjects.NOTEBOOKS)
 AFFINITIES_TENSORBOARDS = '{}{}{}'.format(option_namespaces.AFFINITIES,
-                                          NAMESPACE_DB_MARKER,
+                                          NAMESPACE_DB_OPTION_MARKER,
                                           option_subjects.TENSORBOARDS)
 
 
@@ -26,7 +26,7 @@ class AffinitiesBuildJobs(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.DICT
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
     description = 'Affinity configuration for build jobs'
@@ -39,7 +39,7 @@ class AffinitiesJobs(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.DICT
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
     description = 'Affinity configuration for jobs'
@@ -52,7 +52,7 @@ class AffinitiesExperiments(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.DICT
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
     description = 'Affinity configuration for experiments'
@@ -65,7 +65,7 @@ class AffinitiesNotebooks(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.DICT
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
     description = 'Affinity configuration for notebooks'
@@ -78,7 +78,7 @@ class AffinitiesTensorboards(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.DICT
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = None
     options = None
     description = 'Affinity configuration for tensorboards'

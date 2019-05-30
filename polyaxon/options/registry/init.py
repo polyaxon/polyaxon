@@ -1,13 +1,13 @@
 from constants.pull_policies import PullPolicies
 from options import option_namespaces, option_subjects
-from options.option import NAMESPACE_DB_MARKER, Option, OptionStores
+from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
 INIT_DOCKER_IMAGE = '{}{}{}'.format(option_namespaces.INIT,
-                                    NAMESPACE_DB_MARKER,
+                                    NAMESPACE_DB_OPTION_MARKER,
                                     option_subjects.DOCKER_IMAGE)
 INIT_IMAGE_PULL_POLICY = '{}{}{}'.format(option_namespaces.INIT,
-                                         NAMESPACE_DB_MARKER,
+                                         NAMESPACE_DB_OPTION_MARKER,
                                          option_subjects.IMAGE_PULL_POLICY)
 
 
@@ -18,7 +18,7 @@ class InitDockerImage(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = 'polyaxon/polyaxon-init:0.0.4'
     options = None
     description = 'The docker image to use for init container'
@@ -31,7 +31,7 @@ class InitImagePullPolicy(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = PullPolicies.ALWAYS
     options = PullPolicies.VALUES
     description = 'The init container pull policy'

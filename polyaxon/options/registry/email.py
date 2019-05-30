@@ -1,9 +1,9 @@
 from options import option_namespaces, option_subjects
-from options.option import NAMESPACE_DB_MARKER, Option, OptionStores
+from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
 EMAIL_DEFAULT_DOMAIN = '{}{}{}'.format(option_namespaces.EMAIL,
-                                       NAMESPACE_DB_MARKER,
+                                       NAMESPACE_DB_OPTION_MARKER,
                                        option_subjects.DEFAULT_DOMAIN)
 
 DEFAULT_FROM_EMAIL = 'DEFAULT_FROM_EMAIL'
@@ -18,7 +18,7 @@ class EmailDefaultDomain(Option):
     is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.DB
+    store = OptionStores.DB_OPTION
     default = 'local_polyaxon.com'
     options = None
 
