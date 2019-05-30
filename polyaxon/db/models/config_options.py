@@ -1,7 +1,7 @@
-from django.utils.functional import cached_property
 from picklefield import PickledObjectField
 
 from django.db import models
+from django.utils.functional import cached_property
 
 from db.models.abstract.diff import DiffModel
 from db.models.abstract.unique_name import UniqueNameMixin

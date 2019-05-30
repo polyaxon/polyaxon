@@ -1,14 +1,15 @@
 import pytest
+
 from django.conf import settings
 
+from conf.cluster_conf_service import ClusterConfService
 from conf.exceptions import ConfException
+from conf.service import ConfService
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
 from db.models.owner import Owner
 from options.option import Option, OptionStores
 from options.option_manager import OptionManager
-from conf.service import ConfService
-from conf.cluster_conf_service import ClusterConfService
 from tests.base.case import BaseTest
 
 
@@ -68,7 +69,7 @@ class DummyNonOptionalSettingsOption(Option):
     typing = None
     default = None
     options = None
-    
+
 
 class DummyDBOption(Option):
     key = 'FOO_BAR'
@@ -128,7 +129,7 @@ class TestConfService(BaseTest):
         # Subscribe to the event
         self.settings_service.option_manager.subscribe(DummySettingsOption)
         assert self.settings_service.can_handle(key=DummySettingsOption.key) is True
-        
+
     def test_non_optional_settings(self):
         with self.assertRaises(ConfException):
             self.settings_service.get(key=DummyNonOptionalSettingsOption.key)
@@ -169,10 +170,10 @@ class TestConfService(BaseTest):
 
         # Subscribe
         self.settings_service.option_manager.subscribe(DummySettingsOption)
-        
+
         # No entry in settings
         assert self.settings_service.get(key=DummySettingsOption.key) is None
-        
+
         # Update settings
         settings.FOO_BAR = 'foo'
         assert self.settings_service.get(key=DummySettingsOption.key) == 'foo'

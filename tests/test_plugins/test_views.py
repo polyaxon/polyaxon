@@ -20,7 +20,6 @@ from api.plugins.serializers import (
 from api.utils.views.protected import ProtectedView
 from constants.k8s_jobs import NOTEBOOK_JOB_NAME, TENSORBOARD_JOB_NAME
 from constants.urls import API_V1
-from db.models.config_options import ConfigOption
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiments import Experiment
 from db.models.notebooks import NotebookJob, NotebookJobStatus

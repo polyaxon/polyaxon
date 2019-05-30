@@ -11,7 +11,7 @@ import conf
 import stores
 
 from options.registry.archives import ARCHIVES_ROOT_ARTIFACTS, ARCHIVES_ROOT_REPOS
-from options.registry.downloads import DOWNLOADS_ROOT_LOGS, DOWNLOADS_ROOT_ARTIFACTS
+from options.registry.downloads import DOWNLOADS_ROOT_ARTIFACTS, DOWNLOADS_ROOT_LOGS
 from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 

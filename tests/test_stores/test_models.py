@@ -1,4 +1,5 @@
 import pytest
+
 from django.db import IntegrityError
 
 from db.models.artifacts_stores import ArtifactsStore
@@ -86,7 +87,7 @@ class TestArtifactsStoreModels(BaseStoreTest):
 
 
 @pytest.mark.stores_mark
-class TestArtifactsStoreModels(BaseStoreTest):
+class TestLogsStoreModels(BaseStoreTest):
     MODEL = LogsStore
 
 

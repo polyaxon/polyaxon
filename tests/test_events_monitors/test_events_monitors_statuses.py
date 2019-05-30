@@ -94,9 +94,10 @@ class TestEventsBaseJobsStatusesHandling(BaseTest):
 
     def test_handle_k8s_events_job_statuses_for_existing_job_with_known_conditions(self):
         assert self.STATUS_MODEL.objects.count() == 0
+        # pylint:disable=unsubscriptable-object
         job_state = get_job_state(
-            event_type=self.get_event_with_conditions()['type'],  # pylint:disable=unsubscriptable-object
-            event=self.get_event_with_conditions()['object'],  # pylint:disable=unsubscriptable-object
+            event_type=self.get_event_with_conditions()['type'],
+            event=self.get_event_with_conditions()['object'],
             created_at=timezone.now() + datetime.timedelta(days=1),
             job_container_names=(self.get_container_name(),),
             experiment_type_label=conf.get(TYPE_LABELS_RUNNER))

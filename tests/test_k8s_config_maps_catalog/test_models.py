@@ -1,4 +1,5 @@
 import pytest
+
 from django.db import IntegrityError
 
 from db.models.clusters import Cluster

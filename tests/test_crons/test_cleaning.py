@@ -5,6 +5,7 @@ from datetime import timedelta
 import pytest
 
 import conf
+
 from crons.tasks.cleaning import clean_activity_logs, clean_notifications
 from db.models.activitylogs import ActivityLog
 from db.models.notification import Notification, NotificationEvent
