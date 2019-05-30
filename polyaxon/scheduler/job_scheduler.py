@@ -4,8 +4,8 @@ import traceback
 from kubernetes.client.rest import ApiException
 
 import conf
-from containers.exceptions import ContainerRegistryError
 
+from containers.exceptions import ContainerRegistryError
 from containers.image_info import get_image_info
 from containers.registry_context import get_registry_context
 from lifecycles.jobs import JobLifeCycle

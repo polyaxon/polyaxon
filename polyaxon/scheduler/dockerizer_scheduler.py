@@ -5,11 +5,11 @@ from kubernetes.client.rest import ApiException
 
 import auditor
 import conf
-from containers.exceptions import ContainerRegistryError
-from containers.registry_context import get_registry_context
 
-from db.models.build_jobs import BuildJob
+from containers.exceptions import ContainerRegistryError
 from containers.image_info import get_image_name
+from containers.registry_context import get_registry_context
+from db.models.build_jobs import BuildJob
 from events.registry.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from lifecycles.jobs import JobLifeCycle
 from options.registry.build_jobs import BUILD_JOBS_BACKEND

@@ -18,14 +18,11 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
-from scheduler.spawners.templates.env_vars import (
-    get_env_var,
-    get_internal_env_vars
-)
+from scheduler.spawners.templates.env_vars import get_env_var, get_internal_env_vars
 from scheduler.spawners.templates.volumes import (
     get_build_context_volumes,
     get_docker_credentials_volumes,
-    get_docker_volumes,
+    get_docker_volumes
 )
 
 

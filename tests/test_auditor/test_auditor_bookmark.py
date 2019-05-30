@@ -6,7 +6,6 @@ import pytest
 
 import auditor
 
-from db.models.clusters import Cluster
 from events.registry import bookmark as bookmarks_events
 from tests.test_auditor.utils import AuditorBaseTest
 

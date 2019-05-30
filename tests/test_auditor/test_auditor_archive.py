@@ -3,10 +3,10 @@
 from unittest.mock import patch
 
 import pytest
+from flaky import flaky
 
 import auditor
 
-from db.models.clusters import Cluster
 from events.registry import archive as archives_events
 from tests.test_auditor.utils import AuditorBaseTest
 
@@ -17,7 +17,6 @@ class AuditorArchivesTest(AuditorBaseTest):
     EVENTS = archives_events.EVENTS
 
     def setUp(self):
-        Cluster.load()
         super().setUp()
         self.tested_events = {
             archives_events.ARCHIVE_BUILD_JOBS_VIEWED,
@@ -27,6 +26,7 @@ class AuditorArchivesTest(AuditorBaseTest):
             archives_events.ARCHIVE_PROJECTS_VIEWED,
         }
 
+    @flaky(max_runs=3)
     @patch('executor.executor_service.ExecutorService.record_event')
     @patch('notifier.service.NotifierService.record_event')
     @patch('tracker.service.TrackerService.record_event')

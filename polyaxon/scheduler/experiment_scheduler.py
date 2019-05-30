@@ -7,12 +7,12 @@ from kubernetes.client.rest import ApiException
 from django.db import IntegrityError
 
 import conf
-from containers.exceptions import ContainerRegistryError
-from containers.registry_context import get_registry_context
 
+from containers.exceptions import ContainerRegistryError
+from containers.image_info import get_image_info
+from containers.registry_context import get_registry_context
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
-from containers.image_info import get_image_info
 from lifecycles.experiments import ExperimentLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
