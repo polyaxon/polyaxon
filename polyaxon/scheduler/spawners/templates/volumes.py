@@ -1,3 +1,5 @@
+from typing import List
+
 from kubernetes import client
 
 import conf
@@ -27,8 +29,8 @@ def get_volume(volume, claim_name=None, host_path=None, read_only=None):
     return client.V1Volume(name=volume, empty_dir=empty_dir)
 
 
-def get_volume_from_secret(volume_name, mount_path, secret_name):
-    secret = client.V1SecretVolumeSource(secret_name=secret_name)
+def get_volume_from_secret(volume_name, mount_path, secret_name, items=None):
+    secret = client.V1SecretVolumeSource(secret_name=secret_name, items=items)
     volumes = [client.V1Volume(name=volume_name, secret=secret)]
     volume_mounts = [client.V1VolumeMount(name=volume_name,
                                           mount_path=mount_path,
@@ -120,10 +122,19 @@ def get_build_context_volumes():
 
 
 def get_auth_context_volumes():
-    volumes = [get_volume(volume=constants.AUTH_CONTEXT_VOLUME)]
+    volumes = [get_volume(volume=constants.DOCKER_CREDENTIALS)]
     volume_mounts = [get_volume_mount(volume=constants.AUTH_CONTEXT_VOLUME,
                                       volume_mount=constants.AUTH_CONTEXT)]
     return volumes, volume_mounts
+
+
+def get_docker_credentials_volumes(secret_ref: str,
+                                   secret_mount_path: str,
+                                   secret_keys: List[str] = None):
+    return get_volume_from_secret(volume_name=constants.DOCKER_CREDENTIALS,
+                                  mount_path=secret_mount_path,
+                                  secret_name=secret_ref,
+                                  items=secret_keys)
 
 
 def get_shm_volumes():

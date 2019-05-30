@@ -20,6 +20,9 @@ class KanikoSpawner(DockerizerSpawner):
     def get_pod_command_args(self):
         args = ["-c", constants.BUILD_CONTEXT,
                 "-d", "{}:{}".format(self.image_name, self.image_tag)]
-        if self.in_cluster_registry:
+        if self.insecure:
             args.append("--insecure")
         return None, args
+
+    def get_docker_credentials_volumes(self):
+        return self._get_docker_credentials_volumes(secret_mount_path='/kaniko/.docker')

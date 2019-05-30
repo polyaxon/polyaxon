@@ -2,8 +2,6 @@ from hestia.auth import AuthenticationTypes
 from hestia.internal_services import InternalServices
 from kubernetes.config import ConfigException
 
-from django.conf import settings
-
 import conf
 
 from constants.k8s_jobs import DOCKERIZER_JOB_NAME
@@ -16,18 +14,19 @@ from options.registry.build_jobs import (
 )
 from options.registry.core import SECURITY_CONTEXT_GROUP, SECURITY_CONTEXT_USER
 from options.registry.mount_paths import MOUNT_PATHS_NVIDIA
-from options.registry.registries import REGISTRY_LOCAL_URI, REGISTRY_PASSWORD, REGISTRY_USER
-from polyaxon.config_manager import config
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
 from scheduler.spawners.templates.env_vars import (
     get_env_var,
-    get_from_secret,
     get_internal_env_vars
 )
-from scheduler.spawners.templates.volumes import get_build_context_volumes, get_docker_volumes
+from scheduler.spawners.templates.volumes import (
+    get_build_context_volumes,
+    get_docker_credentials_volumes,
+    get_docker_volumes,
+)
 
 
 class DockerizerSpawner(K8SManager):
@@ -46,7 +45,9 @@ class DockerizerSpawner(K8SManager):
                  build_steps=None,
                  env_vars=None,
                  nocache=None,
-                 in_cluster_registry=False,
+                 insecure=False,
+                 creds_secret_ref=None,
+                 creds_secret_keys=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -73,7 +74,9 @@ class DockerizerSpawner(K8SManager):
         self.build_steps = build_steps
         self.env_vars = env_vars
         self.nocache = bool(nocache)
-        self.in_cluster_registry = in_cluster_registry
+        self.insecure = insecure
+        self.creds_secret_ref = creds_secret_ref
+        self.creds_secret_keys = creds_secret_keys
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=DOCKERIZER_JOB_NAME,
@@ -111,18 +114,6 @@ class DockerizerSpawner(K8SManager):
                                          namespace=self.namespace,
                                          authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
                                          include_internal_token=True)
-        if conf.get(REGISTRY_PASSWORD) and conf.get(REGISTRY_USER):
-            env_vars += [
-                get_env_var(name='POLYAXON_REGISTRY_USER', value=conf.get(REGISTRY_USER)),
-                get_env_var(name='POLYAXON_REGISTRY_URI', value=conf.get(REGISTRY_LOCAL_URI)),
-                get_from_secret('POLYAXON_REGISTRY_PASSWORD',
-                                'registry-password',
-                                settings.POLYAXON_K8S_REGISTRY_SECRET_NAME),
-            ]
-        # Add private registries secrets keys
-        for key in config.keys_startswith(settings.PRIVATE_REGISTRIES_PREFIX):
-            env_vars.append(get_from_secret(key, key))
-
         # Add set env lang
         get_env_var(name='POLYAXON_LANG_ENV',
                     value=conf.get(BUILD_JOBS_LANG_ENV))
@@ -162,6 +153,16 @@ class DockerizerSpawner(K8SManager):
                  "--context_path={}".format(self.context_path or ''),
                  "--commit={}".format(self.commit or '')])
 
+    def _get_docker_credentials_volumes(self, secret_mount_path: str):
+        if not self.creds_secret_ref:
+            return [], []
+        return get_docker_credentials_volumes(secret_ref=self.creds_secret_ref,
+                                              secret_mount_path=secret_mount_path,
+                                              secret_keys=self.creds_secret_keys)
+
+    def get_docker_credentials_volumes(self):
+        return self._get_docker_credentials_volumes(secret_mount_path='/root/.docker')
+
     def start_dockerizer(self,
                          resources=None,
                          node_selector=None,
@@ -171,6 +172,9 @@ class DockerizerSpawner(K8SManager):
         context_volumes, context_mounts = get_build_context_volumes()
         volumes += context_volumes
         volume_mounts += context_mounts
+        registry_auth_volumes, registry_auth_mounts = self.get_docker_credentials_volumes()
+        volumes += registry_auth_volumes
+        volume_mounts += registry_auth_mounts
 
         resource_name = self.resource_manager.get_resource_name()
         command, args = self.get_pod_command_args()

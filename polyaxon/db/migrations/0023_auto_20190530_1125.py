@@ -100,6 +100,7 @@ class Migration(migrations.Migration):
                 ('db_secret', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.ConfigOption')),
                 ('k8s_secret', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='db.K8SSecret')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='db.Owner')),
+                ('insecure', models.NullBooleanField(default=False)),
             ],
             options={
                 'unique_together': {('owner', 'name')},

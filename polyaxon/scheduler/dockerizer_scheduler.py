@@ -5,14 +5,15 @@ from kubernetes.client.rest import ApiException
 
 import auditor
 import conf
+from containers.exceptions import ContainerRegistryError
+from containers.registry_context import get_registry_context
 
 from db.models.build_jobs import BuildJob
-from docker_images.image_info import get_image_name
+from containers.image_info import get_image_name
 from events.registry.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from lifecycles.jobs import JobLifeCycle
 from options.registry.build_jobs import BUILD_JOBS_BACKEND
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
-from options.registry.registries import REGISTRY_IN_CLUSTER
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.utils import get_job_definition
@@ -86,7 +87,13 @@ def start_dockerizer(build_job):
     build_job.set_status(JobLifeCycle.SCHEDULED)
     spawner_class = get_spawner_class(build_job.backend)
 
-    local_build = build_job.backend in {BuildBackend.NATIVE, None}
+    try:
+        registry_spec = get_registry_context(build_backend=build_job.backend)
+    except ContainerRegistryError:
+        build_job.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start the dockerizer job, please check your registry configuration.')
+        return
 
     spawner = spawner_class(
         project_name=build_job.project.unique_name,
@@ -99,12 +106,14 @@ def start_dockerizer(build_job):
         context_path=build_job.build_context,
         image_tag=build_job.uuid.hex,
         image_name=get_image_name(
-            build_job,
-            local=local_build),
+            build_job=build_job,
+            registry_host=registry_spec.host),
         build_steps=build_job.build_steps,
         env_vars=build_job.build_env_vars,
         nocache=build_job.build_nocache,
-        in_cluster_registry=conf.get(REGISTRY_IN_CLUSTER),
+        insecure=registry_spec.insecure,
+        creds_secret_ref=registry_spec.secret,
+        creds_secret_keys=registry_spec.secret_keys,
         spec=build_job.specification,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),

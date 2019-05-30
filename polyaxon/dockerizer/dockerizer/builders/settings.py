@@ -25,18 +25,6 @@ if os.path.isfile('{}/local.json'.format(ENV_VARS_DIR)):
 
 config = rhea.Rhea.read_configs(config_values)
 
-REGISTRY_USER = config.get_string('POLYAXON_REGISTRY_USER',
-                                  is_optional=True)
-REGISTRY_PASSWORD = config.get_string('POLYAXON_REGISTRY_PASSWORD',
-                                      is_secret=True,
-                                      is_optional=True)
-REGISTRY_URI = config.get_string('POLYAXON_REGISTRY_URI',
-                                 is_optional=True)
-
-INTERNAL_REGISTRY = None
-if all([REGISTRY_USER, REGISTRY_PASSWORD, REGISTRY_URI]):
-    INTERNAL_REGISTRY = UriSpec(REGISTRY_USER, REGISTRY_PASSWORD, REGISTRY_URI)
-
 # This is duplicated
 PRIVATE_REGISTRIES_PREFIX = 'POLYAXON_PRIVATE_REGISTRY_'
 

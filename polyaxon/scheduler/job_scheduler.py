@@ -4,8 +4,10 @@ import traceback
 from kubernetes.client.rest import ApiException
 
 import conf
+from containers.exceptions import ContainerRegistryError
 
-from docker_images.image_info import get_image_info
+from containers.image_info import get_image_info
+from containers.registry_context import get_registry_context
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.job_spawner import JobSpawner
@@ -20,7 +22,16 @@ def start_job(job):
     job.set_status(JobLifeCycle.SCHEDULED)
 
     try:
-        image_name, image_tag = get_image_info(build_job=job.build_job)
+        registry_spec = get_registry_context(build_backend=None)
+    except ContainerRegistryError:
+        job.set_status(
+            JobLifeCycle.FAILED,
+            message='Could not start the job, please check your registry configuration.')
+        return
+
+    try:
+        image_name, image_tag = get_image_info(build_job=job.build_job,
+                                               registry_host=registry_spec.host)
     except (ValueError, AttributeError):
         _logger.error('Could not start the job.', exc_info=True)
         job.set_status(JobLifeCycle.FAILED,

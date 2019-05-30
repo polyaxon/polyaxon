@@ -7,10 +7,12 @@ from kubernetes.client.rest import ApiException
 from django.db import IntegrityError
 
 import conf
+from containers.exceptions import ContainerRegistryError
+from containers.registry_context import get_registry_context
 
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
-from docker_images.image_info import get_image_info
+from containers.image_info import get_image_info
 from lifecycles.experiments import ExperimentLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
@@ -567,7 +569,15 @@ def start_experiment(experiment):
     job_docker_image = None  # This will force the spawners to use the default docker image
     if experiment.specification.build:
         try:
-            image_name, image_tag = get_image_info(build_job=experiment.build_job)
+            registry_spec = get_registry_context(build_backend=None)
+        except ContainerRegistryError:
+            experiment.set_status(
+                ExperimentLifeCycle.FAILED,
+                message='Could not start the experiment, please check your registry configuration.')
+            return
+        try:
+            image_name, image_tag = get_image_info(build_job=experiment.build_job,
+                                                   registry_host=registry_spec.host)
         except (ValueError, AttributeError):
             _logger.error('Could not start the experiment.', exc_info=True)
             experiment.set_status(ExperimentLifeCycle.FAILED,
