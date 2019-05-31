@@ -148,7 +148,7 @@ class K8SGpuResourceKey(Option):
     key = K8S_GPU_RESOURCE_KEY
     is_global = True
     is_secret = False
-    is_optional = False
+    is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
@@ -160,7 +160,7 @@ class K8STpuTfVersion(Option):
     key = K8S_TPU_TF_VERSION
     is_global = True
     is_secret = False
-    is_optional = False
+    is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
@@ -172,7 +172,7 @@ class K8STpuResourceKey(Option):
     key = K8S_TPU_RESOURCE_KEY
     is_global = True
     is_secret = False
-    is_optional = False
+    is_optional = True
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
