@@ -8,9 +8,9 @@ from django.db import IntegrityError
 
 import conf
 
-from containers.exceptions import ContainerRegistryError
-from containers.image_info import get_image_info
-from containers.registry_context import get_registry_context
+from registry.exceptions import ContainerRegistryError
+from registry.image_info import get_image_info
+from registry.registry_context import get_registry_context
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from lifecycles.experiments import ExperimentLifeCycle

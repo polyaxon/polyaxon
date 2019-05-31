@@ -1,6 +1,6 @@
 import pytest
 
-from containers.image_info import get_image_info, get_image_name
+from registry.image_info import get_image_info, get_image_name
 from factories.factory_build_jobs import BuildJobFactory
 from tests.base.case import BaseTest
 

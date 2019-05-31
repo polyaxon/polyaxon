@@ -2,8 +2,8 @@ from typing import Optional
 
 import conf
 
-from containers.exceptions import ContainerRegistryError
-from containers.spec import RegistryContextSpec
+from registry.exceptions import ContainerRegistryError
+from registry.spec import RegistryContextSpec
 from db.models.configs import Config
 from options.registry.registries import REGISTRY_HOST, REGISTRY_IN_CLUSTER, REGISTRY_LOCALHOST
 from schemas import BuildBackend
