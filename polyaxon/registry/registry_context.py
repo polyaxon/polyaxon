@@ -2,10 +2,10 @@ from typing import Optional
 
 import conf
 
-from registry.exceptions import ContainerRegistryError
-from registry.spec import RegistryContextSpec
 from db.models.configs import Config
 from options.registry.registries import REGISTRY_HOST, REGISTRY_IN_CLUSTER, REGISTRY_LOCALHOST
+from registry.exceptions import ContainerRegistryError
+from registry.spec import RegistryContextSpec
 from schemas import BuildBackend
 
 
@@ -22,13 +22,12 @@ def get_in_cluster_registry_spec(build_backend: Optional[str]) -> RegistryContex
 
 def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSpec:
     return RegistryContextSpec(host=config.host,
-                               secret=config.k8s_secrets.secret_ref,
-                               secret_keys=config.k8s_secrets.keys,
+                               secret=config.k8s_secret.secret_ref,
+                               secret_keys=config.k8s_secret.keys,
                                insecure=config.insecure)
 
 
 def get_registry_context(build_backend: Optional[str]) -> RegistryContextSpec:
-    # TODO: add tests
     config = Config.objects.prefetch_related('registry_access').last()
     if config and config.registry_access:
         registry_config = config.registry_access

@@ -5,11 +5,11 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
+from lifecycles.jobs import JobLifeCycle
+from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from registry.exceptions import ContainerRegistryError
 from registry.image_info import get_image_info
 from registry.registry_context import get_registry_context
-from lifecycles.jobs import JobLifeCycle
-from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.job_spawner import JobSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError

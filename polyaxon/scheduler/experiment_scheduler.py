@@ -8,13 +8,13 @@ from django.db import IntegrityError
 
 import conf
 
-from registry.exceptions import ContainerRegistryError
-from registry.image_info import get_image_info
-from registry.registry_context import get_registry_context
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from lifecycles.experiments import ExperimentLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from registry.exceptions import ContainerRegistryError
+from registry.image_info import get_image_info
+from registry.registry_context import get_registry_context
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.horovod_spawner import HorovodSpawner
 from scheduler.spawners.mpi_job_spawner import MPIJobSpawner

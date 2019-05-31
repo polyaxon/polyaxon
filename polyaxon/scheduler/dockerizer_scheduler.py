@@ -6,14 +6,14 @@ from kubernetes.client.rest import ApiException
 import auditor
 import conf
 
-from registry.exceptions import ContainerRegistryError
-from registry.image_info import get_image_name
-from registry.registry_context import get_registry_context
 from db.models.build_jobs import BuildJob
 from events.registry.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
 from lifecycles.jobs import JobLifeCycle
 from options.registry.build_jobs import BUILD_JOBS_BACKEND
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from registry.exceptions import ContainerRegistryError
+from registry.image_info import get_image_name
+from registry.registry_context import get_registry_context
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.utils import get_job_definition

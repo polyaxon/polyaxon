@@ -5,12 +5,12 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
-from registry.exceptions import ContainerRegistryError
-from registry.image_info import get_image_info
-from registry.registry_context import get_registry_context
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from options.registry.notebooks import NOTEBOOKS_MOUNT_CODE
+from registry.exceptions import ContainerRegistryError
+from registry.image_info import get_image_info
+from registry.registry_context import get_registry_context
 from scheduler.spawners.notebook_spawner import NotebookSpawner
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
