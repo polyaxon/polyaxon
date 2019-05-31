@@ -35,7 +35,7 @@ class KubectlOperator(CmdOperator):
             PATH='{}:{}'.format(
                 polyaxon_user_path(),
                 env.get('PATH', ''),
-            ).encode(),
+            ),
         ))
         return env
 
