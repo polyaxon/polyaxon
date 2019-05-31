@@ -19,11 +19,6 @@ class TestDockerImageInfo(BaseTest):
                                           self.build_job.project.id)
         assert image_name == expected_name
 
-        image_name = get_image_name(build_job=self.build_job, registry_host=None)
-        expected_name = '{}_{}'.format(self.build_job.project.name,
-                                          self.build_job.project.id)
-        assert image_name == expected_name
-
     def test_get_image_image_info(self):
         image_info = get_image_info(build_job=self.build_job, registry_host='some_host')
         assert image_info[0] == get_image_name(build_job=self.build_job, registry_host='some_host')
