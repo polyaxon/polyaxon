@@ -28,8 +28,9 @@ def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSp
 
 
 def get_registry_context(build_backend: Optional[str]) -> RegistryContextSpec:
+    # TODO: add tests
     config = Config.objects.prefetch_related('registry_access').last()
-    if config and config.registry_config:
+    if config and config.registry_access:
         registry_config = config.registry_access
         return get_registry_spec_from_config(registry_config)
 
