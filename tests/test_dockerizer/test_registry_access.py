@@ -1,6 +1,7 @@
 import pytest
 
 from django.conf import settings
+from django.test import override_settings
 
 from db.models.clusters import Cluster
 from db.models.configs import Config
@@ -45,10 +46,9 @@ class TestRegistryContext(BaseTest):
         assert get_in_cluster_registry_host(
             build_backend=BuildBackend.KANIKO) == 'registry_host'
 
+    @override_settings(REGISTRY_LOCALHOST='registry_localhost')
+    @override_settings(REGISTRY_HOST='registry_host')
     def test_get_in_cluster_registry_spec(self):
-        settings.REGISTRY_LOCALHOST = 'registry_localhost'
-        settings.REGISTRY_HOST = 'registry_host'
-
         spec = get_in_cluster_registry_spec(build_backend=None)
         assert spec.host == 'registry_localhost'
         assert spec.secret is None
@@ -82,8 +82,8 @@ class TestRegistryContext(BaseTest):
         assert spec.secret_keys == secret.keys
         assert spec.insecure is False
 
+    @override_settings(REGISTRY_IN_CLUSTER=False)
     def test_get_registry_context_no_config_not_in_cluster(self):
-        settings.REGISTRY_IN_CLUSTER = False
         with self.assertRaises(ContainerRegistryError):
             get_registry_context(build_backend=None)
 
@@ -93,11 +93,10 @@ class TestRegistryContext(BaseTest):
         with self.assertRaises(ContainerRegistryError):
             get_registry_context(build_backend=BuildBackend.KANIKO)
 
+    @override_settings(REGISTRY_LOCALHOST='registry_localhost')
+    @override_settings(REGISTRY_HOST='registry_host')
+    @override_settings(REGISTRY_IN_CLUSTER=True)
     def test_get_registry_context_in_cluster(self):
-        settings.REGISTRY_IN_CLUSTER = True
-        settings.REGISTRY_LOCALHOST = 'registry_localhost'
-        settings.REGISTRY_HOST = 'registry_host'
-
         spec = get_registry_context(build_backend=None)
         assert spec.host == 'registry_localhost'
         assert spec.secret is None
@@ -116,9 +115,8 @@ class TestRegistryContext(BaseTest):
         assert spec.secret_keys is None
         assert spec.insecure is True
 
-    def test_get_registry_context_in_cluster(self):
-        settings.REGISTRY_IN_CLUSTER = False
-
+    @override_settings(REGISTRY_IN_CLUSTER=False)
+    def test_get_external_registry_context(self):
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='my_secret',
                                           secret_ref='my_secret')
