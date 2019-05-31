@@ -1,7 +1,7 @@
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 
-PASSWORD_LENGTH = 'PASSWORD_LENGTH'
+PASSWORD_LENGTH = 'PASSWORD_LENGTH'  # noqa
 ADMIN_VIEW_ENABLED = 'ADMIN_VIEW_ENABLED'
 LOGGING = 'LOGGING'
 DEBUG = 'DEBUG'
