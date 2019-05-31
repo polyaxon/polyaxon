@@ -1,7 +1,7 @@
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 
-PASSWORD_LENGTH = 'PASSWORD_LENGTH'  # noqa
+PASSWORD_LENGTH = 'PASSWORD_LENGTH'
 ADMIN_VIEW_ENABLED = 'ADMIN_VIEW_ENABLED'
 LOGGING = 'LOGGING'
 DEBUG = 'DEBUG'
@@ -29,7 +29,7 @@ class PasswordLength(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.DB_OPTION
+    store = OptionStores.SETTINGS
     typing = CONF_TYPES.INT
     default = 8
     options = None
