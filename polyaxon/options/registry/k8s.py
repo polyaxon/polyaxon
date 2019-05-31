@@ -132,7 +132,7 @@ class K8SServiceAccountJobs(Option):
     options = None
 
 
-class K8SGpuResourceBuilds(Option):
+class K8SServiceAccountBuilds(Option):
     key = K8S_SERVICE_ACCOUNT_BUILDS
     is_global = True
     is_secret = False
@@ -151,7 +151,7 @@ class K8SGpuResourceKey(Option):
     is_optional = False
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.SETTINGS
+    store = OptionStores.DB_OPTION
     default = 'nvidia.com/gpu'
     options = None
 
@@ -163,7 +163,7 @@ class K8STpuTfVersion(Option):
     is_optional = False
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.SETTINGS
+    store = OptionStores.DB_OPTION
     default = '1.12'
     options = None
 
@@ -175,6 +175,6 @@ class K8STpuResourceKey(Option):
     is_optional = False
     is_list = False
     typing = CONF_TYPES.STR
-    store = OptionStores.SETTINGS
+    store = OptionStores.DB_OPTION
     default = 'cloud-tpus.google.com/v2'
     options = {'cloud-tpus.google.com/v2', 'cloud-tpus.google.com/preemptible-v2'}
