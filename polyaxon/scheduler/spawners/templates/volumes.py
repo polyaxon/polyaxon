@@ -122,7 +122,7 @@ def get_build_context_volumes():
 
 
 def get_auth_context_volumes():
-    volumes = [get_volume(volume=constants.DOCKER_CREDENTIALS)]
+    volumes = [get_volume(volume=constants.AUTH_CONTEXT_VOLUME)]
     volume_mounts = [get_volume_mount(volume=constants.AUTH_CONTEXT_VOLUME,
                                       volume_mount=constants.AUTH_CONTEXT)]
     return volumes, volume_mounts
