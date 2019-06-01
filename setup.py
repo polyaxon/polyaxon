@@ -65,6 +65,7 @@ setup(name='polyaxon-deploy',
       tests_require=[
           "pytest",
           "httpretty==0.8.14",
-          "fake-factory==0.7.2"
+          "fake-factory==0.7.2",
+          "mock",
       ],
       cmdclass={'test': PyTest})
