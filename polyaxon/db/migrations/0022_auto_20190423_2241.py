@@ -29,6 +29,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='operation',
+            name='k8s_retry',
+            field=models.NullBooleanField(default=True,
+                                          help_text='Retry by setting the kubernetes retry field.'),
+        ),
+        migrations.AddField(
+            model_name='operation',
             name='skip_on_upstream_skip',
             field=models.BooleanField(default=False,
                                       help_text='skip this operation if upstream operations are skipped.'),

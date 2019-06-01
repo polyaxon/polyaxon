@@ -229,6 +229,11 @@ class Operation(DiffModel,
         null=True,
         blank=True,
         help_text="the number of retries that should be performed before failing the operation.")
+    k8s_retry = models.NullBooleanField(
+        null=True,
+        blank=True,
+        default=True,
+        help_text="Retry by setting the kubernetes retry field.")
     retry_delay = models.PositiveIntegerField(
         null=True,
         blank=True,
