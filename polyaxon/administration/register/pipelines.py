@@ -1,14 +1,9 @@
 from django.contrib import admin
 
 from administration.register.utils import DiffModelAdmin
-from db.models.pipelines import (
-    Operation,
-    OperationRun,
-    Pipeline,
-    PipelineRun,
-    PipelineRunStatus,
-    Schedule
-)
+from db.models.operations import Operation, OperationRun
+from db.models.pipelines import Pipeline, PipelineRun, PipelineRunStatus
+from db.models.schedules import Schedule
 
 
 class PipelineRunStatusAdmin(admin.ModelAdmin):

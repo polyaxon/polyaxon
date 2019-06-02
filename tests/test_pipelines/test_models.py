@@ -8,7 +8,8 @@ from django.conf import settings
 from django.utils import timezone
 
 from db.models.jobs import JobStatus
-from db.models.pipelines import OperationRun, PipelineRunStatus
+from db.models.operations import OperationRun
+from db.models.pipelines import PipelineRunStatus
 from factories.factory_pipelines import (
     OperationFactory,
     OperationRunFactory,

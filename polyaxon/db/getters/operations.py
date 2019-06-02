@@ -1,6 +1,6 @@
 import logging
 
-from db.models.pipelines import OperationRun
+from db.models.operations import OperationRun
 
 _logger = logging.getLogger('polyaxon.db')
 

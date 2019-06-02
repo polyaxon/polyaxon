@@ -1,10 +1,10 @@
 from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_pre
 
-from django.db.models.signals import post_save, pre_delete, pre_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
 from constants.backends import NATIVE_BACKEND
-from db.models.pipelines import OperationRun, Pipeline, PipelineRun
+from db.models.pipelines import Pipeline, PipelineRun
 from lifecycles.pipelines import PipelineLifeCycle
 from signals.backend import set_backend
 
@@ -23,10 +23,3 @@ def pipeline_pre_save(sender, **kwargs):
 def pipeline_run_post_save(sender, **kwargs):
     instance = kwargs['instance']
     instance.set_status(PipelineLifeCycle.CREATED)
-
-
-@receiver(pre_delete, sender=OperationRun, dispatch_uid="operation_run_pre_delete")
-@ignore_raw
-def operation_run_pre_delete(sender, **kwargs):
-    instance = kwargs['instance']
-    instance.entity.delete()

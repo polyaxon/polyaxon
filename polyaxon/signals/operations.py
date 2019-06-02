@@ -1,9 +1,20 @@
-from django.core.exceptions import ObjectDoesNotExist
+from hestia.signal_decorators import ignore_raw
 
-from db.models.pipelines import OperationRun
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
+
+from db.models.operations import OperationRun
 from lifecycles.operations import OperationStatuses
 from polyaxon.celery_api import celery_app
 from polyaxon.settings import PipelinesCeleryTasks
+
+
+@receiver(pre_delete, sender=OperationRun, dispatch_uid="operation_run_pre_delete")
+@ignore_raw
+def operation_run_pre_delete(sender, **kwargs):
+    instance = kwargs['instance']
+    instance.entity.delete()
 
 
 def new_operation_run_status(entity_type, entity, status):
