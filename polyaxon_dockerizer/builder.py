@@ -111,8 +111,8 @@ class DockerBuilder(object):
             if log_lines:
                 self._handle_logs(log_lines)
         except (BuildError, APIError) as e:
-            self._handle_logs('{}: Could not build the image, '
-                              'encountered {}'.format(LogLevels.ERROR, e))
+            self._handle_logs([
+                '{}: Could not build the image, encountered {}'.format(LogLevels.ERROR, e)])
             return False
 
         return status
