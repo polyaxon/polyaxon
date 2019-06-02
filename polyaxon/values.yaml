@@ -357,7 +357,7 @@ eventMonitors:
         cpu: 80m
         memory: 128Mi
     persists: false
-    logSleepInterval: 1
+    sleepInterval: 1
 
   statuses:
     enabled: true
@@ -372,7 +372,7 @@ eventMonitors:
         cpu: 80m
         memory: 128Mi
     persists: false
-    logSleepInterval: 1
+    sleepInterval: 1
 
 resourcesDaemon:
   enabled: true
@@ -387,7 +387,7 @@ resourcesDaemon:
       cpu: 150m
       memory: 200Mi
   persists: false
-  logSleepInterval: 1
+  sleepInterval: 1
 
 sidecar:
   image: polyaxon/polyaxon-sidecar
@@ -574,30 +574,6 @@ email:
   hostUser: ""
   hostPassword: ""
 
-integrations:
-  slack:
-  hipchat:
-  mattermost:
-  discord:
-  pagerduty:
-  webhooks:
-# e.g.
-  # slack:
-  #   - url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
-  #   - url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
-  #     channel: channel12
-
-privateRegistries:
-# e.g.
-  # - user:pass@host:port
-  # - user:pass@host.com
-  # - host: "my.registry.com"
-  #   user: "_json_key"
-  #   password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
-  # - host: "another.registry.com"
-  #   user: "myname"
-  #   password: "mypassword"
-
 # To receive email/notification with correct host
 # hostName: 159.203.150.212 or polyaxon.foo.com
 
@@ -605,12 +581,6 @@ privateRegistries:
 #allowedHosts:
 #  - 127.0.0.1
 #  - 159.203.150.212
-
-ttl:
-  token:  # in days
-  ephemeralToken:  # in seconds
-  heartbeat:  # in seconds
-  watchStatuses: 300  # in seconds
 
 intervals:  # in seconds
   experimentsScheduler: 15
@@ -620,9 +590,6 @@ intervals:  # in seconds
   pipelinesScheduler: 60
   operationsDefaultRetryDelay: 60
   operationsMaxRetryDelay: 3600
-
-cleaningIntervals:  # in days
-  archived: 7
 
 plugins:
   notebook: {port: 8888}

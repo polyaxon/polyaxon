@@ -44,7 +44,7 @@ spec:
       - name: {{ .Chart.Name }}-resources
         image: "{{ .Values.resourcesDaemon.image }}:{{ .Values.resourcesDaemon.imageTag }}"
         imagePullPolicy: {{ .Values.resourcesDaemon.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.resourcesDaemon.logSleepInterval }}", "--persist={{ .Values.resourcesDaemon.persists }}"]
+        args: ["--sleep_interval={{ .Values.resourcesDaemon.sleepInterval }}", "--persist={{ .Values.resourcesDaemon.persists }}"]
         securityContext:
           privileged: true
         envFrom:

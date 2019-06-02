@@ -52,7 +52,7 @@ spec:
       - name: {{ .Chart.Name }}-namespace
         image: "{{ .Values.eventMonitors.namespace.image }}:{{ .Values.eventMonitors.namespace.imageTag }}"
         imagePullPolicy: {{ .Values.eventMonitors.namespace.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.eventMonitors.namespace.logSleepInterval }}", "--persist={{ .Values.eventMonitors.namespace.persists }}"]
+        args: ["--sleep_interval={{ .Values.eventMonitors.namespace.sleepInterval }}", "--persist={{ .Values.eventMonitors.namespace.persists }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
@@ -73,7 +73,7 @@ spec:
       - name: {{ .Chart.Name }}-statuses
         image: "{{ .Values.eventMonitors.statuses.image }}:{{ .Values.eventMonitors.statuses.imageTag }}"
         imagePullPolicy: {{ .Values.eventMonitors.statuses.imagePullPolicy }}
-        args: ["--log_sleep_interval={{ .Values.eventMonitors.statuses.logSleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
+        args: ["--sleep_interval={{ .Values.eventMonitors.statuses.sleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
         envFrom:
         - configMapRef:
             name: {{ template "polyaxon.fullname" . }}-config
