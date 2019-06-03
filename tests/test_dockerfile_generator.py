@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 import tempfile
+
 from unittest import TestCase
 
 from polyaxon_dockerizer.dockerfile import POLYAXON_DOCKERFILE_NAME

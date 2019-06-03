@@ -1,12 +1,13 @@
 import json
 import logging
 import os
+import time
 
 from docker import APIClient
 from docker.errors import APIError, BuildError
 from hestia.logging_utils import LogLevels
-
 from rhea.specs import UriSpec
+from urllib3.exceptions import ReadTimeoutError
 
 from .exceptions import BuildException
 
@@ -173,15 +174,47 @@ def build(build_context,
           image_name,
           nocache,
           credstore_env=None,
-          registries=None):
+          registries=None,
+          max_retries=3,
+          sleep_interval=1):
     """Build necessary code for a job to run"""
-    docker_builder = _build(build_context=build_context,
-                            image_tag=image_tag,
-                            image_name=image_name,
-                            nocache=nocache,
-                            credstore_env=credstore_env,
-                            registries=registries)
+    retry = 0
+    is_done = False
+    while retry < max_retries and not is_done:
+        try:
+            docker_builder = _build(build_context=build_context,
+                                    image_tag=image_tag,
+                                    image_name=image_name,
+                                    nocache=nocache,
+                                    credstore_env=credstore_env,
+                                    registries=registries)
+            is_done = True
+            docker_builder.clean()
+            return docker_builder
+        except ReadTimeoutError:
+            retry += 1
+            time.sleep(sleep_interval)
+    if not is_done:
+        raise BuildException('The docker image could not be built, client timed out.')
+
+
+def push(docker_builder, max_retries=3, sleep_interval=1):
+    retry = 0
+    is_done = False
+    while retry < max_retries and not is_done:
+        try:
+            if not docker_builder.push():
+                docker_builder.clean()
+                raise BuildException('The docker image could not be pushed.')
+            else:
+                is_done = True
+        except ReadTimeoutError:
+            retry += 1
+            time.sleep(sleep_interval)
+
     docker_builder.clean()
+    if not is_done:
+        raise BuildException('The docker image could not be pushed, client timed out.')
 
 
 def build_and_push(build_context,
@@ -189,18 +222,19 @@ def build_and_push(build_context,
                    image_name,
                    nocache,
                    credstore_env=None,
-                   registries=None):
+                   registries=None,
+                   max_retries=3,
+                   sleep_interval=1):
     """Build necessary code for a job to run and push it."""
     _logger.info('Starting build ...')
 
     # Build the image
-    docker_builder = _build(build_context=build_context,
-                            image_tag=image_tag,
-                            image_name=image_name,
-                            nocache=nocache,
-                            credstore_env=credstore_env,
-                            registries=registries)
-    if not docker_builder.push():
-        docker_builder.clean()
-        raise BuildException('The docker image could not be pushed.')
-    docker_builder.clean()
+    docker_builder = build(build_context=build_context,
+                           image_tag=image_tag,
+                           image_name=image_name,
+                           nocache=nocache,
+                           credstore_env=credstore_env,
+                           registries=registries,
+                           max_retries=max_retries,
+                           sleep_interval=sleep_interval)
+    push(docker_builder, max_retries=max_retries, sleep_interval=sleep_interval)

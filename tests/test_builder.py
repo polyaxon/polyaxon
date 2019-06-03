@@ -4,10 +4,11 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import mock
-from rhea.specs import UriSpec
 
 from polyaxon_dockerizer.builder import DockerBuilder, build, build_and_push
 from polyaxon_dockerizer.exceptions import BuildException
+from rhea.specs import UriSpec
+from urllib3.exceptions import ReadTimeoutError
 
 
 class TestDockerBuilder(TestCase):
@@ -110,3 +111,27 @@ class TestBuilder(TestCase):
         assert login_mock.call_count == 2
         assert build_mock.call_count == 1
         assert push_mock.call_count == 1
+
+    @mock.patch('docker.APIClient.build')
+    def test_build_raise_timeout(self, build_mock):
+        build_mock.side_effect = ReadTimeoutError(None, 'foo', 'error')
+        with self.assertRaises(BuildException):
+            build(build_context='.',
+                  image_tag='image_tag',
+                  image_name='image_name',
+                  nocache=True,
+                  max_retries=1,
+                  sleep_interval=0)
+
+    @mock.patch('docker.APIClient.push')
+    @mock.patch('docker.APIClient.build')
+    def test_push_raise_timeout(self, build_mock, push_mock):
+        push_mock.side_effect = ReadTimeoutError(None, 'foo', 'error')
+        with self.assertRaises(BuildException):
+            build_and_push(build_context='.',
+                           image_tag='image_tag',
+                           image_name='image_name',
+                           nocache=True,
+                           max_retries=1,
+                           sleep_interval=0)
+        assert build_mock.call_count == 1
