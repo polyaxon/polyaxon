@@ -22,7 +22,6 @@ services:
       RABBITMQ_DEFAULT_PASS: "polyaxon"
     ports:
       - "5672:5672"
-      - "15672:15672"
 
   redis:
     image: redis:5.0.4-alpine
