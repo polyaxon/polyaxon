@@ -14,12 +14,15 @@ services:
 
   rabbitmq:
     hostname: rabbitmq
-    image: rabbitmq:3.7.12-alpine
+    image: rabbitmq:3.6.12-management-alpine
     networks:
       - polyaxon
     environment:
       RABBITMQ_DEFAULT_USER: "polyaxon"
       RABBITMQ_DEFAULT_PASS: "polyaxon"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
   redis:
     image: redis:5.0.4-alpine
@@ -46,7 +49,6 @@ services:
       - "8888:8888"
       - "8000:80"
       - "9000:443"
-
     environment:
       DJANGO_SETTINGS_MODULE: polyaxon.settings
       DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
@@ -65,14 +67,18 @@ services:
       KUBECONFIG: "/root/.kube/config"
       POLYAXON_PLUGINS: "{\"tensorboard\": {\"port\": 6006}, \"notebook\": {\"port\": 8888}}"
 
-  worker:
-    build:
-      context: .
-      dockerfile: ./DockerfileDev
-    volumes:
-      - .:/polyaxon
-      - ~/.kube:/root/.kube
+  flower:
+    networks:
+      - polyaxon
+    depends_on:
+      - rabbitmq
+      - postgres
+      - redis
+    image: mher/flower
     environment:
+      DJANGO_SETTINGS_MODULE: polyaxon.settings
+      DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
+      MEMCACHE_LOCATION: "memcache:11211"
       POLYAXON_AMQP_URL: "rabbitmq:5672"
       POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis:6379/0"
       POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis:6379/3"
@@ -86,10 +92,41 @@ services:
       POLYAXON_RABBITMQ_PASSWORD: polyaxon
       KUBECONFIG: "/root/.kube/config"
       POLYAXON_PLUGINS: "{\"tensorboard\": {\"port\": 6006}, \"notebook\": {\"port\": 8888}}"
+      CELERY_BROKER_URL: "amqp://polyaxon:polyaxon@rabbitmq:5672"
+      FLOWER_PORT: 8888
+    ports:
+    - 8888:8888
+
+  worker:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     networks:
       - polyaxon
     depends_on:
       - rabbitmq
+      - postgres
+      - redis
+    volumes:
+      - .:/polyaxon
+      - ~/.kube:/root/.kube
+    environment:
+      DJANGO_SETTINGS_MODULE: polyaxon.settings
+      DATABASE_URL: "postgres://polyaxon:polyaxon@postgres:5432/polyaxon"
+      MEMCACHE_LOCATION: "memcache:11211"
+      POLYAXON_AMQP_URL: "rabbitmq:5672"
+      POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL: "redis:6379/0"
+      POLYAXON_REDIS_JOB_CONTAINERS_URL: "redis:6379/3"
+      POLYAXON_REDIS_TO_STREAM_URL: "redis:6379/4"
+      POLYAXON_REDIS_SESSIONS_URL: "redis:6379/5"
+      POLYAXON_REDIS_EPHEMERAL_TOKENS_URL: "redis:6379/6"
+      POLYAXON_REDIS_TTL_URL: "redis:6379/7"
+      POLYAXON_REDIS_HEARTBEAT_URL: "redis:6379/8"
+      POLYAXON_REDIS_GROUP_CHECKS_URL: "redis:6379/9"
+      POLYAXON_RABBITMQ_USER: polyaxon
+      POLYAXON_RABBITMQ_PASSWORD: polyaxon
+      KUBECONFIG: "/root/.kube/config"
+      POLYAXON_PLUGINS: "{\"tensorboard\": {\"port\": 6006}, \"notebook\": {\"port\": 8888}}"
 
 #volumes:
 #  pg_data: {}
