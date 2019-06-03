@@ -1,2 +1,3 @@
-polyaxon-dockerizer==0.0.4
+-r requirements-base.txt
+
 polyaxon-client==0.4.4
