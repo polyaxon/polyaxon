@@ -1,12 +1,10 @@
-import conf
+import workers
 
 from db.redis.tll import RedisTTL
 from events import event_subjects
 from events.registry import job
 from events.registry.job import JOB_FAILED, JOB_SUCCEEDED
 from executor.handlers.base import BaseHandler
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
@@ -22,10 +20,9 @@ class JobHandler(BaseHandler):
             return
 
         # Start building the job and then Schedule it to be picked by the spawners
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_BUILD,
-            kwargs={'job_id': event.data['id']},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': event.data['id']})
 
     @classmethod
     def _handle_job_cleaned_triggered(cls, event: 'Event') -> None:
@@ -33,7 +30,7 @@ class JobHandler(BaseHandler):
         if not instance or not instance.has_specification or not instance.is_stoppable:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,
@@ -43,8 +40,7 @@ class JobHandler(BaseHandler):
                 'update_status': False,
                 'collect_logs': False,
                 'is_managed': instance.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     @classmethod
     def _handle_job_post_run(cls, event: 'Event') -> None:
@@ -52,7 +48,7 @@ class JobHandler(BaseHandler):
         if not instance or not instance.has_specification:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,

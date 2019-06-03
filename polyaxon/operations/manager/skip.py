@@ -1,15 +1,13 @@
-import conf
+import workers
 
 from constants import content_types
 from lifecycles.operations import OperationStatuses
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
 def skip_experiment(experiment: 'Experiment', message: str = None):
     experiment.set_status(OperationStatuses.SKIPPED)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.EXPERIMENTS_STOP,
         kwargs={
             'project_name': experiment.project.unique_name,
@@ -21,25 +19,23 @@ def skip_experiment(experiment: 'Experiment', message: str = None):
             'collect_logs': False,
             'is_managed': experiment.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def skip_experiment_group(group: 'ExperimentGroup', message: str = None):
     group.set_status(OperationStatuses.SKIPPED)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
         kwargs={'experiment_group_id': group.id,
                 'pending': False,
                 'collect_logs': False,
                 'update_status': False,
-                'message': message},
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                'message': message})
 
 
 def skip_job(job: 'Job', message: str = None):
     job.set_status(OperationStatuses.SKIPPED)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.JOBS_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -50,13 +46,12 @@ def skip_job(job: 'Job', message: str = None):
             'collect_logs': False,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def skip_build_job(job: 'BuildJob', message: str = None):
     job.set_status(OperationStatuses.SKIPPED)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.BUILD_JOBS_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -67,13 +62,12 @@ def skip_build_job(job: 'BuildJob', message: str = None):
             'collect_logs': False,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def skip_notebook_job(job: 'NotebookJob', message: str = None):
     job.set_status(OperationStatuses.SKIPPED)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -84,13 +78,12 @@ def skip_notebook_job(job: 'NotebookJob', message: str = None):
             'collect_logs': False,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def skip_tensorboard_job(job: 'TensorboardJob', message: str = None):
     job.set_status(OperationStatuses.SKIPPED)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.TENSORBOARDS_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -101,8 +94,7 @@ def skip_tensorboard_job(job: 'TensorboardJob', message: str = None):
             'collect_logs': False,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 ENTITIES = {

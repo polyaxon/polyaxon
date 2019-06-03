@@ -13,8 +13,8 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
-import conf
 import stores
+import workers
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.endpoint.base import (
@@ -94,8 +94,6 @@ from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
@@ -243,10 +241,9 @@ class ExperimentDetailView(ExperimentEndpoint,
 
     def perform_destroy(self, instance):
         instance.archive()
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
-            kwargs={'experiment_id': instance.id, 'immediate': True},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_id': instance.id, 'immediate': True})
 
 
 class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
@@ -259,10 +256,9 @@ class ExperimentArchiveView(ExperimentEndpoint, CreateEndpoint):
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION,
-            kwargs={'experiment_id': obj.id, 'immediate': False},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_id': obj.id, 'immediate': False})
         return Response(status=status.HTTP_200_OK)
 
 
@@ -412,6 +408,7 @@ class ExperimentOutputsTreeView(ExperimentEndpoint, RetrieveEndpoint):
     get:
         Returns a the outputs directory tree.
     """
+
     def get(self, request, *args, **kwargs):
         try:
             store_manager = stores.get_outputs_store(
@@ -521,13 +518,12 @@ class ExperimentMetricListView(ExperimentResourceEndpoint,
 
     def create(self, request, *args, **kwargs):
         if isinstance(request.data, list):
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS,
                 kwargs={
                     'experiment_id': self.experiment.id,
                     'data': request.data
-                },
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                })
             return Response(status=status.HTTP_201_CREATED)
 
         serializer = self.get_serializer(data=request.data)
@@ -658,7 +654,7 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
             raise ValidationError('Logs handler expects `data` to be a string or list of strings.')
         if isinstance(log_lines, list):
             log_lines = '\n'.join(log_lines)
-        celery_app.send_task(
+        workers.send(
             LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
             kwargs={
                 'experiment_name': self.experiment.unique_name,
@@ -787,7 +783,7 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                        actor_id=request.user.id,
                        actor_name=request.user.username)
         group = obj.experiment_group
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={
                 'project_name': self.project.unique_name,
@@ -800,8 +796,7 @@ class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):
                 'update_status': True,
                 'collect_logs': True,
                 'is_managed': obj.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
         return Response(status=status.HTTP_200_OK)
 
 
@@ -818,7 +813,7 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                            actor_id=request.user.id,
                            actor_name=request.user.username)
             group = experiment.experiment_group
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.EXPERIMENTS_STOP,
                 kwargs={
                     'project_name': self.project.unique_name,
@@ -831,8 +826,7 @@ class ExperimentStopManyView(ProjectResourceListEndpoint, PostEndpoint):
                     'update_status': True,
                     'collect_logs': True,
                     'is_managed': experiment.is_managed,
-                },
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                })
         return Response(status=status.HTTP_200_OK)
 
 

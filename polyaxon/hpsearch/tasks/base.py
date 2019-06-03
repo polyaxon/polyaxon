@@ -4,6 +4,7 @@ from hestia.np_utils import sanitize_np_types
 from rest_framework.exceptions import ValidationError
 
 import conf
+import workers
 
 from db.models.experiments import Experiment
 from db.redis.group_check import GroupChecks
@@ -11,8 +12,6 @@ from hpsearch.exceptions import ExperimentGroupException
 from hpsearch.tasks.logger import logger
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from options.registry.groups import GROUPS_CHECK_INTERVAL
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
@@ -60,12 +59,11 @@ def create_group_experiments(experiment_group, suggestions):
 def start_group_experiments(experiment_group):
     # Check for early stopping before starting new experiments from this group
     if experiment_group.should_stop_early():
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
             kwargs={'experiment_group_id': experiment_group.id,
                     'pending': True,
-                    'message': 'Early stopping'},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                    'message': 'Early stopping'})
         return
 
     experiment_to_start = experiment_group.n_experiments_to_start
@@ -78,20 +76,18 @@ def start_group_experiments(experiment_group):
     n_pending_experiment = experiment_group.pending_experiments.count()
 
     for experiment in pending_experiments:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_BUILD,
-            kwargs={'experiment_id': experiment},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_id': experiment})
 
     return (n_pending_experiment - experiment_to_start > 0 or
             not experiment_group.scheduled_all_suggestions())
 
 
 def check_group_experiments_done(experiment_group_id, auto_retry=False):
-    celery_app.send_task(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
-                         kwargs={'experiment_group_id': experiment_group_id,
-                                 'auto_retry': auto_retry},
-                         countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+    workers.send(SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
+                 kwargs={'experiment_group_id': experiment_group_id,
+                         'auto_retry': auto_retry})
 
 
 def should_group_start(experiment_group_id, task, auto_retry):
@@ -100,7 +96,7 @@ def should_group_start(experiment_group_id, task, auto_retry):
         return False
     if group_checks.is_checked():
         group_checks.delay()
-        celery_app.send_task(
+        workers.send(
             task,
             kwargs={'experiment_group_id': experiment_group_id, 'auto_retry': auto_retry},
             countdown=conf.get(GROUPS_CHECK_INTERVAL))

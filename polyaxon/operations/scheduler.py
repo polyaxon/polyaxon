@@ -1,9 +1,7 @@
-import conf
+import workers
 
 from operations.manager.skip import skip_entity
 from operations.manager.stop import stop_entity
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import OperationsCeleryTasks
 
 
@@ -51,13 +49,10 @@ def start_operation_run(operation_run: 'OperationRun') -> bool:
     if not operation_run.check_concurrency():
         return True
 
-    params = {'countdown': conf.get(SCHEDULER_GLOBAL_COUNTDOWN)}
-
-    params.update(**operation_run.operation.get_run_params())
-    celery_app.send_task(
+    workers.send(
         OperationsCeleryTasks.START_OPERATION,
         kwargs={'operation_run_id': operation_run.id},
-        **params,
+        **operation_run.operation.get_run_params(),
     )
     return False
 

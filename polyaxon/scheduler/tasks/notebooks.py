@@ -1,21 +1,18 @@
 import logging
 
 import conf
+import workers
 
 from db.getters.notebooks import get_valid_notebook
 from lifecycles.jobs import JobLifeCycle
-from options.registry.scheduler import (
-    SCHEDULER_GLOBAL_COUNTDOWN,
-    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
-)
-from polyaxon.celery_api import celery_app
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, notebook_scheduler
 
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD, ignore_result=True)
 def projects_notebook_build(notebook_job_id):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id)
     if not notebook_job:
@@ -39,10 +36,9 @@ def projects_notebook_build(notebook_job_id):
     notebook_job.save(update_fields=['build_job'])
     if image_exists:
         # The image already exists, so we can start the experiment right away
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
-            kwargs={'notebook_job_id': notebook_job_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'notebook_job_id': notebook_job_id})
         return
 
     if not build_status:
@@ -53,7 +49,7 @@ def projects_notebook_build(notebook_job_id):
     notebook_job.set_status(JobLifeCycle.BUILDING, message='Building container')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START, ignore_result=True)
 def projects_notebook_start(notebook_job_id):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id)
     if not notebook_job:
@@ -67,7 +63,7 @@ def projects_notebook_start(notebook_job_id):
     notebook_scheduler.start_notebook(notebook_job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION, ignore_result=True)
 def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
     notebook_job = get_valid_notebook(notebook_job_id=notebook_job_id, include_deleted=True)
     if not notebook_job:
@@ -77,7 +73,7 @@ def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
 
     if notebook_job.is_stoppable:
         project = notebook_job.project
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
             kwargs={
                 'project_name': project.unique_name,
@@ -88,22 +84,19 @@ def projects_notebook_schedule_deletion(notebook_job_id, immediate=False):
                 'collect_logs': False,
                 'is_managed': notebook_job.is_managed,
                 'message': 'Notebook is scheduled for deletion.'
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     if immediate:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB,
-            kwargs={
-                'job_id': notebook_job_id,
-            },
+            kwargs={'job_id': notebook_job_id},
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
 def projects_notebook_stop(self,
                            project_name,
                            project_uuid,

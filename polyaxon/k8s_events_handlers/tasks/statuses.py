@@ -3,6 +3,7 @@ from typing import Any, Dict
 from django.db import IntegrityError
 
 import conf
+import workers
 
 from db.models.build_jobs import BuildJob
 from db.models.experiment_jobs import ExperimentJob
@@ -13,7 +14,6 @@ from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from k8s_events_handlers.tasks.logger import logger
 from options.registry.spawner import APP_LABELS_NOTEBOOK, APP_LABELS_TENSORBOARD
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, K8SEventsCeleryTasks
 
 
@@ -24,11 +24,11 @@ def set_node_scheduling(job: Any, node_name: str) -> None:
     job.save(update_fields=['node_scheduled'])
 
 
-@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
-def k8s_events_handle_experiment_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
+def k8s_events_handle_experiment_job_statuses(self: 'workers.app.task', payload: Dict) -> None:
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -65,11 +65,11 @@ def k8s_events_handle_experiment_job_statuses(self: 'celery_app.task', payload: 
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
-def k8s_events_handle_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
+def k8s_events_handle_job_statuses(self: 'workers.app.task', payload: Dict) -> None:
     """Project jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
@@ -101,11 +101,11 @@ def k8s_events_handle_job_statuses(self: 'celery_app.task', payload: Dict) -> No
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
-def k8s_events_handle_plugin_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
+def k8s_events_handle_plugin_job_statuses(self: 'workers.app.task', payload: Dict) -> None:
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']
@@ -143,11 +143,11 @@ def k8s_events_handle_plugin_job_statuses(self: 'celery_app.task', payload: Dict
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
-@celery_app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
-def k8s_events_handle_build_job_statuses(self: 'celery_app.task', payload: Dict) -> None:
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
+def k8s_events_handle_build_job_statuses(self: 'workers.app.task', payload: Dict) -> None:
     """Project Plugin jobs statuses"""
     details = payload['details']
     app = details['labels']['app']

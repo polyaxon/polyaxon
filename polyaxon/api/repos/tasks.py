@@ -8,17 +8,17 @@ from hestia.paths import delete_path
 from django.contrib.auth import get_user_model
 
 import auditor
+import workers
 
 from db.models.repos import Repo
 from events.registry.repo import REPO_NEW_COMMIT
 from libs.repos import git
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import ReposCeleryTasks
 
 _logger = logging.getLogger('polyaxon.tasks.repos')
 
 
-@celery_app.task(name=ReposCeleryTasks.REPOS_HANDLE_FILE_UPLOAD, ignore_result=True)
+@workers.app.task(name=ReposCeleryTasks.REPOS_HANDLE_FILE_UPLOAD, ignore_result=True)
 def handle_new_files(user_id, repo_id, tar_file_name):
     if not tarfile.is_tarfile(tar_file_name):
         raise ValueError('Received wrong file format.')

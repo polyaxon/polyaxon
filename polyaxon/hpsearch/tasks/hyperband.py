@@ -1,4 +1,5 @@
 import conf
+import workers
 
 from db.getters.experiment_groups import get_running_experiment_group
 from hpsearch.exceptions import ExperimentGroupException
@@ -6,7 +7,6 @@ from hpsearch.tasks import base
 from hpsearch.tasks.logger import logger
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from options.registry.groups import GROUPS_CHUNKS
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 
 
@@ -25,11 +25,10 @@ def create(experiment_group):
         num_suggestions=len(suggestions))
 
     def send_chunk():
-        celery_app.send_task(
+        workers.send(
             HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS,
             kwargs={'experiment_group_id': experiment_group.id,
-                    'suggestions': chunk_suggestions},
-            countdown=1)
+                    'suggestions': chunk_suggestions})
 
     chunk_suggestions = []
     for suggestion in suggestions:
@@ -41,13 +40,12 @@ def create(experiment_group):
     if chunk_suggestions:
         send_chunk()
 
-    celery_app.send_task(
+    workers.send(
         HPCeleryTasks.HP_HYPERBAND_START,
-        kwargs={'experiment_group_id': experiment_group.id, 'auto_retry': True},
-        countdown=1)
+        kwargs={'experiment_group_id': experiment_group.id, 'auto_retry': True})
 
 
-@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS, ignore_result=True)
+@workers.app.task(name=HPCeleryTasks.HP_HYPERBAND_CREATE_EXPERIMENTS, ignore_result=True)
 def hp_hyperband_create_experiments(experiment_group_id, suggestions):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -63,7 +61,7 @@ def hp_hyperband_create_experiments(experiment_group_id, suggestions):
         experiment_ids=[xp.id for xp in experiments])
 
 
-@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_CREATE, ignore_result=True)
+@workers.app.task(name=HPCeleryTasks.HP_HYPERBAND_CREATE, ignore_result=True)
 def hp_hyperband_create(experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -72,10 +70,10 @@ def hp_hyperband_create(experiment_group_id):
     create(experiment_group=experiment_group)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_START,
-                 bind=True,
-                 max_retries=None,
-                 ignore_result=True)
+@workers.app.task(name=HPCeleryTasks.HP_HYPERBAND_START,
+                  bind=True,
+                  max_retries=None,
+                  ignore_result=True)
 def hp_hyperband_start(self, experiment_group_id, auto_retry=False):
     if not base.should_group_start(experiment_group_id=experiment_group_id,
                                    task=HPCeleryTasks.HP_HYPERBAND_START,
@@ -93,16 +91,17 @@ def hp_hyperband_start(self, experiment_group_id, auto_retry=False):
             self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
         return
 
-    celery_app.send_task(
+    workers.send(
         HPCeleryTasks.HP_HYPERBAND_ITERATE,
         kwargs={'experiment_group_id': experiment_group_id,
-                'auto_retry': auto_retry})
+                'auto_retry': auto_retry},
+        countdown=None)
 
 
-@celery_app.task(name=HPCeleryTasks.HP_HYPERBAND_ITERATE,
-                 bind=True,
-                 max_retries=None,
-                 ignore_result=True)
+@workers.app.task(name=HPCeleryTasks.HP_HYPERBAND_ITERATE,
+                  bind=True,
+                  max_retries=None,
+                  ignore_result=True)
 def hp_hyperband_iterate(self, experiment_group_id, auto_retry=False):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -122,9 +121,10 @@ def hp_hyperband_iterate(self, experiment_group_id, auto_retry=False):
 
     if search_manager.should_reschedule(iteration=iteration_config.iteration,
                                         bracket_iteration=iteration_config.bracket_iteration):
-        celery_app.send_task(
+        workers.send(
             HPCeleryTasks.HP_HYPERBAND_CREATE,
-            kwargs={'experiment_group_id': experiment_group_id})
+            kwargs={'experiment_group_id': experiment_group_id},
+            countdown=None)
         return
 
     if search_manager.should_reduce_configs(iteration=iteration_config.iteration,
@@ -135,9 +135,10 @@ def hp_hyperband_iterate(self, experiment_group_id, auto_retry=False):
             experiment_group.set_status(ExperimentGroupLifeCycle.FAILED,
                                         message='Experiment group could not create new iteration.')
             return
-        celery_app.send_task(
+        workers.send(
             HPCeleryTasks.HP_HYPERBAND_START,
-            kwargs={'experiment_group_id': experiment_group_id})
+            kwargs={'experiment_group_id': experiment_group_id},
+            countdown=None)
         return
 
     base.check_group_experiments_done(experiment_group_id, auto_retry=auto_retry)

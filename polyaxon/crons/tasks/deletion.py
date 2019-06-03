@@ -1,4 +1,5 @@
 import conf
+import workers
 
 from crons.tasks.utils import get_date_check
 from db.models.build_jobs import BuildJob
@@ -9,23 +10,20 @@ from db.models.notebooks import NotebookJob
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from options.registry.cleaning import CLEANING_INTERVALS_ARCHIVES
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks, SchedulerCeleryTasks
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_PROJECTS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_PROJECTS, ignore_result=True)
 def delete_archived_projects() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     ids = Project.archived.filter(updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_PROJECT,
-            kwargs={'project_id': _id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'project_id': _id})
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUPS, ignore_result=True)
 def delete_archived_experiment_groups() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     groups = ExperimentGroup.archived.filter(
@@ -33,13 +31,12 @@ def delete_archived_experiment_groups() -> None:
         project__deleted=False,
         updated_at__lte=last_date).values_list('id', flat=True)
     for group in groups:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP,
-            kwargs={'group_id': group},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'group_id': group})
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_EXPERIMENTS, ignore_result=True)
 def delete_archived_experiments() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     ids = Experiment.archived.filter(
@@ -50,13 +47,12 @@ def delete_archived_experiments() -> None:
         experiment_group__deleted=False,
     ).values_list('id', flat=True)
     for _id in ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
-            kwargs={'experiment_id': _id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_id': _id})
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_JOBS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_JOBS, ignore_result=True)
 def delete_archived_jobs() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     ids = Job.archived.filter(
@@ -64,13 +60,12 @@ def delete_archived_jobs() -> None:
         project__deleted=False,
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_JOB,
-            kwargs={'job_id': _id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': _id})
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_BUILD_JOBS, ignore_result=True)
 def delete_archived_build_jobs() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     ids = BuildJob.archived.filter(
@@ -78,13 +73,12 @@ def delete_archived_build_jobs() -> None:
         project__deleted=False,
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
-            kwargs={'job_id': _id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': _id})
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOBS, ignore_result=True)
 def delete_archived_notebook_jobs() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     ids = NotebookJob.archived.filter(
@@ -92,13 +86,12 @@ def delete_archived_notebook_jobs() -> None:
         project__deleted=False,
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_NOTEBOOK_JOB,
-            kwargs={'job_id': _id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': _id})
 
 
-@celery_app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS, ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOBS, ignore_result=True)
 def delete_archived_tensorboard_jobs() -> None:
     last_date = get_date_check(days=conf.get(CLEANING_INTERVALS_ARCHIVES))
     ids = TensorboardJob.archived.filter(
@@ -106,7 +99,6 @@ def delete_archived_tensorboard_jobs() -> None:
         project__deleted=False,
         updated_at__lte=last_date).values_list('id', flat=True)
     for _id in ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB,
-            kwargs={'job_id': _id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': _id})

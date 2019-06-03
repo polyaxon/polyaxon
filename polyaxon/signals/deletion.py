@@ -4,7 +4,7 @@ from django.db.models.signals import post_delete, pre_delete
 from django.dispatch import receiver
 
 import auditor
-import conf
+import workers
 
 from constants.cloning_strategies import CloningStrategy
 from db.models.build_jobs import BuildJob
@@ -21,8 +21,6 @@ from events.registry.job import JOB_CLEANED_TRIGGERED, JOB_DELETED
 from events.registry.notebook import NOTEBOOK_CLEANED_TRIGGERED, NOTEBOOK_DELETED
 from events.registry.tensorboard import TENSORBOARD_CLEANED_TRIGGERED, TENSORBOARD_DELETED
 from libs.paths.projects import delete_project_repos
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from signals.bookmarks import remove_bookmarks
 
@@ -33,13 +31,12 @@ def build_job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
 
     # Delete outputs and logs
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
         kwargs={
             'persistence': job.persistence_logs,
             'subpath': job.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
     auditor.record(event_type=BUILD_JOB_CLEANED_TRIGGERED, instance=job)
 
@@ -62,20 +59,18 @@ def experiment_group_pre_delete(sender, **kwargs):
         return
 
     # Delete outputs and logs
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
         kwargs={
             'persistence': instance.persistence_outputs,
             'subpath': instance.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
-    celery_app.send_task(
+        })
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
         kwargs={
             'persistence': instance.persistence_logs,
             'subpath': instance.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 @receiver(post_delete, sender=ExperimentGroup, dispatch_uid="experiment_group_post_delete")
@@ -94,20 +89,18 @@ def experiment_pre_delete(sender, **kwargs):
 
     # Delete outputs and logs
     if instance.is_independent:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
             kwargs={
                 'persistence': instance.persistence_outputs,
                 'subpath': instance.subpath,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
-        celery_app.send_task(
+            })
+        workers.send(
             SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
             kwargs={
                 'persistence': instance.persistence_logs,
                 'subpath': instance.subpath,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     # Delete clones
     for experiment in instance.clones.filter(cloning_strategy=CloningStrategy.RESUME):
@@ -130,20 +123,18 @@ def job_pre_delete(sender, **kwargs):
     job = kwargs['instance']
 
     # Delete outputs and logs
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
         kwargs={
             'persistence': job.persistence_outputs,
             'subpath': job.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
-    celery_app.send_task(
+        })
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
         kwargs={
             'persistence': job.persistence_logs,
             'subpath': job.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
     auditor.record(event_type=JOB_CLEANED_TRIGGERED, instance=job)
 
@@ -193,17 +184,15 @@ def project_pre_delete(sender, **kwargs):
     # Clean repos
     delete_project_repos(instance.unique_name)
     # Clean outputs and logs
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_OUTPUTS_DELETION,
         kwargs={
             'persistence': instance.persistence_outputs,
             'subpath': instance.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
-    celery_app.send_task(
+        })
+    workers.send(
         SchedulerCeleryTasks.STORES_SCHEDULE_LOGS_DELETION,
         kwargs={
             'persistence': instance.persistence_logs,
             'subpath': instance.subpath,
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })

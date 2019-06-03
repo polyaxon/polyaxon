@@ -3,16 +3,13 @@ import logging
 from polystores.exceptions import PolyaxonStoresException
 
 import conf
+import workers
 
 from db.getters.jobs import get_valid_job
 from db.redis.heartbeat import RedisHeartBeat
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.collectors import logs_collect_job
-from options.registry.scheduler import (
-    SCHEDULER_GLOBAL_COUNTDOWN,
-    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
-)
-from polyaxon.celery_api import celery_app
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, job_scheduler
 from stores.exceptions import VolumeNotFoundError
@@ -20,7 +17,7 @@ from stores.exceptions import VolumeNotFoundError
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_BUILD, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.JOBS_BUILD, ignore_result=True)
 def jobs_build(job_id):
     job = get_valid_job(job_id=job_id)
     if not job:
@@ -44,10 +41,9 @@ def jobs_build(job_id):
     job.save(update_fields=['build_job'])
     if image_exists:
         # The image already exists, so we can start the experiment right away
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_START,
-            kwargs={'job_id': job_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': job_id})
         return
 
     if not build_status:
@@ -58,7 +54,7 @@ def jobs_build(job_id):
     job.set_status(JobLifeCycle.BUILDING, message='Building container')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_START, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.JOBS_START, ignore_result=True)
 def jobs_start(job_id):
     job = get_valid_job(job_id=job_id)
     if not job:
@@ -77,7 +73,7 @@ def jobs_start(job_id):
     job_scheduler.start_job(job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION, ignore_result=True)
 def jobs_schedule_deletion(job_id, immediate=False):
     job = get_valid_job(job_id=job_id, include_deleted=True)
     if not job:
@@ -87,7 +83,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
 
     if job.is_stoppable:
         project = job.project
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_STOP,
             kwargs={
                 'project_name': project.unique_name,
@@ -98,11 +94,10 @@ def jobs_schedule_deletion(job_id, immediate=False):
                 'collect_logs': False,
                 'is_managed': job.is_managed,
                 'message': 'Job is scheduled for deletion.'
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     if immediate:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_JOB,
             kwargs={
                 'job_id': job_id,
@@ -110,7 +105,7 @@ def jobs_schedule_deletion(job_id, immediate=False):
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.JOBS_STOP, bind=True, max_retries=3, ignore_result=True)
 def jobs_stop(self,
               project_name,
               project_uuid,
@@ -151,7 +146,7 @@ def jobs_stop(self,
                    message=message or 'Job was stopped.')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.JOBS_CHECK_HEARTBEAT, ignore_result=True)
 def jobs_check_heartbeat(job_id):
     if RedisHeartBeat.job_is_alive(job_id=job_id):
         return

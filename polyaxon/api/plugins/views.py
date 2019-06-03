@@ -9,6 +9,7 @@ from django.http import Http404
 
 import auditor
 import conf
+import workers
 
 from api.endpoint.base import (
     CreateEndpoint,
@@ -76,9 +77,7 @@ from options.registry.notebooks import (
     NOTEBOOKS_DOCKER_IMAGE,
     NOTEBOOKS_MOUNT_CODE
 )
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from options.registry.tensorboards import TENSORBOARDS_DOCKER_IMAGE
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from schemas import NotebookBackend, NotebookSpecification, TensorboardSpecification
 from scopes.authentication.internal import InternalAuthentication
@@ -155,10 +154,9 @@ class StartTensorboardView(ProjectEndpoint, CreateEndpoint):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         if not tensorboard.is_running:
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.TENSORBOARDS_START,
-                kwargs={'tensorboard_job_id': tensorboard.id},
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                kwargs={'tensorboard_job_id': tensorboard.id})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -173,7 +171,7 @@ class StopTensorboardView(ProjectTensorboardEndpoint, PostEndpoint):
         group_id = self.kwargs.get('group_id')
 
         if has_tensorboard:
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.TENSORBOARDS_STOP,
                 kwargs={
                     'project_name': project.unique_name,
@@ -182,8 +180,7 @@ class StopTensorboardView(ProjectTensorboardEndpoint, PostEndpoint):
                     'tensorboard_job_uuid': tensorboard.uuid.hex,
                     'update_status': True,
                     'is_managed': tensorboard.is_managed,
-                },
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                })
             auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                            instance=tensorboard,
                            target=get_target(experiment=experiment_id, group=group_id),
@@ -201,7 +198,7 @@ class StopTensorboardJobView(TensorboardEndpoint, PostEndpoint):
         experiment_id = self.tensorboard.experiment_id
         group_id = self.tensorboard.experiment_group_id
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_STOP,
             kwargs={
                 'project_name': project.unique_name,
@@ -210,8 +207,7 @@ class StopTensorboardJobView(TensorboardEndpoint, PostEndpoint):
                 'tensorboard_job_uuid': tensorboard.uuid.hex,
                 'update_status': True,
                 'is_managed': tensorboard.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
         auditor.record(event_type=TENSORBOARD_STOPPED_TRIGGERED,
                        instance=tensorboard,
                        target=get_target(experiment=experiment_id, group=group_id),
@@ -283,10 +279,9 @@ class StartNotebookView(ProjectEndpoint, PostEndpoint):
         self.project.clear_cached_properties()
         notebook = self.project.notebook
         if not notebook.is_running:
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_BUILD,
-                kwargs={'notebook_job_id': notebook.id},
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                kwargs={'notebook_job_id': notebook.id})
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
@@ -311,7 +306,7 @@ class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
             except FileNotFoundError:
                 # Git probably was not found
                 pass
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
                 kwargs={
                     'project_name': self.project.unique_name,
@@ -320,8 +315,7 @@ class StopNotebookView(ProjectNotebookEndpoint, PostEndpoint):
                     'notebook_job_uuid': self.project.notebook.uuid.hex,
                     'update_status': True,
                     'is_managed': self.project.notebook.is_managed,
-                },
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                })
             auditor.record(event_type=NOTEBOOK_STOPPED_TRIGGERED,
                            instance=self.project.notebook,
                            target='project',
@@ -526,10 +520,9 @@ class TensorboardDetailView(TensorboardEndpoint, RetrieveEndpoint, UpdateEndpoin
 
     def perform_destroy(self, instance):
         instance.archive()
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
-            kwargs={'tensorboard_job_id': instance.id, 'immediate': True},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'tensorboard_job_id': instance.id, 'immediate': True})
 
 
 class TensorboardArchiveView(TensorboardEndpoint, CreateEndpoint):
@@ -542,10 +535,9 @@ class TensorboardArchiveView(TensorboardEndpoint, CreateEndpoint):
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION,
-            kwargs={'tensorboard_job_id': obj.id, 'immediate': False},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'tensorboard_job_id': obj.id, 'immediate': False})
         return Response(status=status.HTTP_200_OK)
 
 
@@ -584,10 +576,9 @@ class NotebookDetailView(NotebookEndpoint, RetrieveEndpoint, UpdateEndpoint, Des
 
     def perform_destroy(self, instance):
         instance.archive()
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
-            kwargs={'notebook_job_id': instance.id, 'immediate': True},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'notebook_job_id': instance.id, 'immediate': True})
 
 
 class NotebookArchiveView(NotebookEndpoint, CreateEndpoint):
@@ -600,10 +591,9 @@ class NotebookArchiveView(NotebookEndpoint, CreateEndpoint):
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_SCHEDULE_DELETION,
-            kwargs={'notebook_job_id': obj.id, 'immediate': False},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'notebook_job_id': obj.id, 'immediate': False})
         return Response(status=status.HTTP_200_OK)
 
 

@@ -1,4 +1,5 @@
 import auditor
+import workers
 
 from db.getters.experiment_groups import get_running_experiment_group
 from events.registry.experiment_group import (
@@ -8,12 +9,11 @@ from events.registry.experiment_group import (
     EXPERIMENT_GROUP_RANDOM
 )
 from hpsearch.tasks import bo, grid, health, hyperband, random  # noqa
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals
 from schemas import SearchAlgorithms
 
 
-@celery_app.task(name=HPCeleryTasks.HP_CREATE, bind=True, max_retries=None, ignore_result=True)
+@workers.app.task(name=HPCeleryTasks.HP_CREATE, bind=True, max_retries=None, ignore_result=True)
 def hp_create(self, experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group and self.request.retries < 2:
@@ -44,7 +44,7 @@ def create(experiment_group):
     return None
 
 
-@celery_app.task(name=HPCeleryTasks.HP_START, ignore_result=True)
+@workers.app.task(name=HPCeleryTasks.HP_START, ignore_result=True)
 def hp_start(experiment_group_id):
     experiment_group = get_running_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group:
@@ -65,7 +65,4 @@ def start(experiment_group):
         task = HPCeleryTasks.HP_BO_START
 
     if task:
-        celery_app.send_task(
-            task,
-            kwargs={'experiment_group_id': experiment_group.id},
-            countdown=1)
+        workers.send(task, kwargs={'experiment_group_id': experiment_group.id})

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 import auditor
-import conf
+import workers
 
 from api.endpoint.admin import AdminProjectListPermission, AdminResourceEndpoint
 from api.endpoint.base import (
@@ -35,8 +35,6 @@ from events.registry.project import (
     PROJECT_UPDATED,
     PROJECT_VIEWED
 )
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
@@ -99,10 +97,9 @@ class ProjectDetailView(ProjectEndpoint, RetrieveEndpoint, UpdateEndpoint, Destr
 
     def perform_destroy(self, instance):
         instance.archive()
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
-            kwargs={'project_id': instance.id, 'immediate': True},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'project_id': instance.id, 'immediate': True})
 
 
 class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
@@ -115,10 +112,9 @@ class ProjectArchiveView(ProjectEndpoint, CreateEndpoint):
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_SCHEDULE_DELETION,
-            kwargs={'project_id': obj.id, 'immediate': False},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'project_id': obj.id, 'immediate': False})
         return Response(status=status.HTTP_200_OK)
 
 

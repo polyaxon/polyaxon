@@ -1,6 +1,7 @@
 import logging
 
 import conf
+import workers
 
 from db.getters.experiment_groups import get_running_experiment_group, get_valid_experiment_group
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
@@ -9,7 +10,6 @@ from options.registry.scheduler import (
     SCHEDULER_GLOBAL_COUNTDOWN,
     SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 )
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
 
@@ -31,7 +31,7 @@ def _get_group_or_retry(experiment_group_id, task):
     return None
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE, bind=True, max_retries=None)
 def experiments_group_create(self, experiment_group_id):
     experiment_group = _get_group_or_retry(experiment_group_id=experiment_group_id, task=self)
     if not experiment_group:
@@ -46,10 +46,9 @@ def experiments_group_create(self, experiment_group_id):
 
     def hp_create():
         experiment_group.set_status(ExperimentGroupLifeCycle.RUNNING)
-        celery_app.send_task(
+        workers.send(
             HPCeleryTasks.HP_CREATE,
-            kwargs={'experiment_group_id': experiment_group_id},
-            countdown=1)
+            kwargs={'experiment_group_id': experiment_group_id})
 
     # We start first by creating a build if necessary
     # No need to build the image, start the experiment directly
@@ -79,7 +78,7 @@ def experiments_group_create(self, experiment_group_id):
     hp_create()
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_SCHEDULE_DELETION, ignore_result=True)
 def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id,
                                                   include_deleted=True)
@@ -90,7 +89,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
     experiment_group.archive()
 
     if experiment_group.is_stoppable:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
             kwargs={
                 'experiment_group_id': experiment_group_id,
@@ -100,7 +99,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
     if immediate:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT_GROUP,
             kwargs={
                 'group_id': experiment_group_id,
@@ -108,7 +107,7 @@ def experiments_group_schedule_deletion(experiment_group_id, immediate=False):
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP, ignore_result=True)
 def experiments_group_stop(experiment_group_id,
                            collect_logs=True,
                            update_status=True,
@@ -119,7 +118,7 @@ def experiments_group_stop(experiment_group_id,
         return
 
     experiment_group.set_status(ExperimentGroupLifeCycle.STOPPING)
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS,
         kwargs={
             'experiment_group_id': experiment_group_id,
@@ -127,11 +126,10 @@ def experiments_group_stop(experiment_group_id,
             'collect_logs': collect_logs,
             'update_status': update_status,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP_EXPERIMENTS, ignore_result=True)
 def experiments_group_stop_experiments(experiment_group_id,
                                        pending,
                                        collect_logs=True,
@@ -152,7 +150,7 @@ def experiments_group_stop_experiments(experiment_group_id,
             status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct().iterator()
         for experiment in experiments:
             if experiment.is_stoppable:
-                celery_app.send_task(
+                workers.send(
                     SchedulerCeleryTasks.EXPERIMENTS_STOP,
                     kwargs={
                         'project_name': experiment.project.unique_name,
@@ -165,8 +163,7 @@ def experiments_group_stop_experiments(experiment_group_id,
                         'update_status': True,
                         'collect_logs': collect_logs,
                         'is_managed': experiment.is_managed,
-                    },
-                    countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                    })
             else:
                 # Update experiment status to show that its stopped
                 experiment.set_status(status=ExperimentLifeCycle.STOPPED, message=message)
@@ -175,10 +172,10 @@ def experiments_group_stop_experiments(experiment_group_id,
         experiment_group.set_status(ExperimentGroupLifeCycle.STOPPED, message=message)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
-                 bind=True,
-                 max_retries=None,
-                 ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_GROUP_CHECK_DONE,
+                  bind=True,
+                  max_retries=None,
+                  ignore_result=True)
 def experiments_group_check_done(self, experiment_group_id, auto_retry=False):
     experiment_group = get_valid_experiment_group(experiment_group_id=experiment_group_id)
     if not experiment_group or experiment_group.is_done:

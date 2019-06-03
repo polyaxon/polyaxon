@@ -3,6 +3,7 @@ import logging
 from polystores.exceptions import PolyaxonStoresException
 
 import conf
+import workers
 
 from db.getters.build_jobs import get_valid_build_job
 from db.models.experiments import Experiment
@@ -17,7 +18,6 @@ from options.registry.scheduler import (
     SCHEDULER_GLOBAL_COUNTDOWN,
     SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 )
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
 from stores.exceptions import VolumeNotFoundError
@@ -25,7 +25,7 @@ from stores.exceptions import VolumeNotFoundError
 _logger = logging.getLogger('polyaxon.scheduler.build_jobs')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_START, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.BUILD_JOBS_START, ignore_result=True)
 def build_jobs_start(build_job_id):
     build_job = get_valid_build_job(build_job_id=build_job_id)
     if not build_job:
@@ -36,7 +36,7 @@ def build_jobs_start(build_job_id):
     dockerizer_scheduler.start_dockerizer(build_job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION, ignore_result=True)
 def build_jobs_schedule_deletion(build_job_id, immediate=False):
     build_job = get_valid_build_job(build_job_id=build_job_id, include_deleted=True)
     if not build_job:
@@ -48,7 +48,7 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
 
     if build_job.is_stoppable:
         project = build_job.project
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={
                 'project_name': project.unique_name,
@@ -58,11 +58,10 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
                 'update_status': True,
                 'collect_logs': False,
                 'message': 'Build is scheduled for deletion.'
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     if immediate:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_BUILD_JOB,
             kwargs={
                 'job_id': build_job_id,
@@ -70,10 +69,10 @@ def build_jobs_schedule_deletion(build_job_id, immediate=False):
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.BUILD_JOBS_STOP,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
 def build_jobs_stop(self,
                     project_name,
                     project_uuid,
@@ -180,40 +179,37 @@ def notify_build_job_succeeded(build_job):
         build_job=build_job).exclude(
         status__status__in=JobLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for job_id in job_ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_START,
-            kwargs={'job_id': job_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': job_id})
 
     tensorboard_job_ids = TensorboardJob.objects.filter(
         build_job=build_job).exclude(
         status__status__in=JobLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for tensorboard_job_id in tensorboard_job_ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_START,
-            kwargs={'tensorboard_job_id': tensorboard_job_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'tensorboard_job_id': tensorboard_job_id})
 
     notebook_job_ids = NotebookJob.objects.filter(
         build_job=build_job).exclude(
         status__status__in=JobLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for notebook_job_id in notebook_job_ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.PROJECTS_NOTEBOOK_START,
-            kwargs={'notebook_job_id': notebook_job_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'notebook_job_id': notebook_job_id})
 
     experiment_ids = Experiment.objects.filter(
         build_job=build_job).exclude(
         status__status__in=ExperimentLifeCycle.DONE_STATUS).values_list('id', flat=True)
     for experiment_id in experiment_ids:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_START,
             kwargs={'experiment_id': experiment_id},
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE, ignore_result=True)
 def build_jobs_notify_done(build_job_id):
     build_job = get_valid_build_job(build_job_id=build_job_id, include_deleted=True)
     if not build_job:
@@ -237,7 +233,7 @@ def build_jobs_notify_done(build_job_id):
         notify_build_job_succeeded(build_job)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.BUILD_JOBS_SET_DOCKERFILE, ignore_result=True)
 def build_jobs_set_dockerfile(build_job_uuid, dockerfile):
     build_job = get_valid_build_job(build_job_uuid=build_job_uuid)
     if not build_job:
@@ -249,7 +245,7 @@ def build_jobs_set_dockerfile(build_job_uuid, dockerfile):
     build_job.save(update_fields=['dockerfile'])
 
 
-@celery_app.task(name=SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.BUILD_JOBS_CHECK_HEARTBEAT, ignore_result=True)
 def build_jobs_check_heartbeat(build_job_id):
     if RedisHeartBeat.build_is_alive(build_id=build_job_id):
         return

@@ -1,11 +1,12 @@
 from typing import Iterable, Optional, Union
 
+import workers
+
 from logs_handlers.handlers import handle_build_job_logs, handle_experiment_job_log, handle_job_logs
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks
 
 
-@celery_app.task(name=LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB, ignore_result=True)
+@workers.app.task(name=LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB, ignore_result=True)
 def logs_handle_experiment_job(experiment_name: str,
                                experiment_uuid: str,
                                log_lines: Optional[Union[str, Iterable[str]]],
@@ -17,7 +18,7 @@ def logs_handle_experiment_job(experiment_name: str,
                               temp=temp)
 
 
-@celery_app.task(name=LogsCeleryTasks.LOGS_HANDLE_JOB, ignore_result=True)
+@workers.app.task(name=LogsCeleryTasks.LOGS_HANDLE_JOB, ignore_result=True)
 def logs_handle_job(job_uuid: str,
                     job_name: str,
                     log_lines: Optional[Union[str, Iterable[str]]],
@@ -29,7 +30,7 @@ def logs_handle_job(job_uuid: str,
                     temp=temp)
 
 
-@celery_app.task(name=LogsCeleryTasks.LOGS_HANDLE_BUILD_JOB, ignore_result=True)
+@workers.app.task(name=LogsCeleryTasks.LOGS_HANDLE_BUILD_JOB, ignore_result=True)
 def logs_handle_build_job(job_uuid: str,
                           job_name: str,
                           log_lines: Optional[Union[str, Iterable[str]]],

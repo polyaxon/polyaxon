@@ -1,7 +1,8 @@
+import workers
+
 from events import event_subjects
 from events.registry import pipeline_run
 from executor.handlers.base import BaseHandler
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import PipelinesCeleryTasks
 
 
@@ -15,10 +16,11 @@ class PipelineRunHandler(BaseHandler):
             return
 
         # Schedule stop for this experiment because other jobs may be still running
-        celery_app.send_task(
+        workers.send(
             PipelinesCeleryTasks.PIPELINES_STOP_OPERATIONS,
             kwargs={'pipeline_run_id': instance.id,
-                    'message': 'Pipeline run was stopped'})
+                    'message': 'Pipeline run was stopped'},
+            countdown=None)
 
     @classmethod
     def _handle_pipeline_run_skipped(cls, event: 'Event') -> None:
@@ -26,10 +28,11 @@ class PipelineRunHandler(BaseHandler):
         if not instance:
             return
 
-        celery_app.send_task(
+        workers.send(
             PipelinesCeleryTasks.PIPELINES_SKIP_OPERATIONS,
             kwargs={'pipeline_run_id': instance.id,
-                    'message': 'Pipeline run was skipped'})
+                    'message': 'Pipeline run was skipped'},
+            countdown=None)
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

@@ -2,7 +2,7 @@ from billiard.exceptions import SoftTimeLimitExceeded
 from hestia.list_utils import to_list
 
 from db.models.operations import OperationRun
-from polyaxon.celery_api import CeleryTask
+from workers.base import PolyaxonTask
 
 
 class OperationRunDoesNotExist(Exception):
@@ -13,7 +13,7 @@ class OperationRunError(Exception):
     pass
 
 
-class OperationTask(CeleryTask):
+class OperationTask(PolyaxonTask):
     """Base operation celery task with basic logging."""
     _operation_run = None
 

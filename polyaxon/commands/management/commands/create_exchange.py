@@ -2,9 +2,9 @@ from kombu import Exchange
 
 from django.core.management import BaseCommand
 
-from polyaxon.celery_api import celery_app
+import workers
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options) -> None:
-        Exchange('internal', type='topic', channel=celery_app.connection().channel()).declare()
+        Exchange('internal', type='topic', channel=workers.app.connection().channel()).declare()

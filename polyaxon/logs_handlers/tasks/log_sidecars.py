@@ -1,13 +1,13 @@
 from typing import Iterable, Optional, Union
 
 import publisher
+import workers
 
 from logs_handlers.handlers import handle_build_job_logs, handle_experiment_job_log, handle_job_logs
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import LogsCeleryTasks
 
 
-@celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_EXPERIMENTS, ignore_result=True)
+@workers.app.task(name=LogsCeleryTasks.LOGS_SIDECARS_EXPERIMENTS, ignore_result=True)
 def logs_sidecars_experiments(experiment_name: str,
                               experiment_uuid: str,
                               job_uuid: str,
@@ -25,7 +25,7 @@ def logs_sidecars_experiments(experiment_name: str,
     )
 
 
-@celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_JOBS, ignore_result=True)
+@workers.app.task(name=LogsCeleryTasks.LOGS_SIDECARS_JOBS, ignore_result=True)
 def logs_sidecars_jobs(job_uuid: str,
                        job_name: str,
                        log_lines: Optional[Union[str, Iterable[str]]]) -> None:
@@ -41,7 +41,7 @@ def logs_sidecars_jobs(job_uuid: str,
     )
 
 
-@celery_app.task(name=LogsCeleryTasks.LOGS_SIDECARS_BUILDS, ignore_result=True)
+@workers.app.task(name=LogsCeleryTasks.LOGS_SIDECARS_BUILDS, ignore_result=True)
 def logs_sidecars_builds(job_uuid: str,
                          job_name: str,
                          log_lines: Optional[Union[str, Iterable[str]]]) -> None:

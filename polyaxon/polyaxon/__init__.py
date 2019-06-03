@@ -1,1 +1,1 @@
-from polyaxon.celery_api import celery_app
+from polyaxon.celery_api import app

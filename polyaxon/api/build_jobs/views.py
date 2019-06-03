@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
-import conf
 import stores
+import workers
 
 from api.build_jobs import queries
 from api.build_jobs.serializers import (
@@ -48,8 +48,6 @@ from events.registry.build_job import (
 from events.registry.project import PROJECT_BUILDS_VIEWED
 from libs.archive import archive_logs_file
 from logs_handlers.log_queries.build_job import process_logs
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal
@@ -99,10 +97,9 @@ class ProjectBuildListView(BookmarkedListMixinView,
         if ttl:
             RedisTTL.set_for_build(build_id=instance.id, value=ttl)
         # Trigger build scheduling
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_START,
-            kwargs={'build_job_id': instance.id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'build_job_id': instance.id})
 
 
 class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoint):
@@ -127,10 +124,9 @@ class BuildDetailView(BuildEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEn
 
     def perform_destroy(self, instance):
         instance.archive()
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
-            kwargs={'build_job_id': instance.id, 'immediate': True},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'build_job_id': instance.id, 'immediate': True})
 
 
 class BuildArchiveView(BuildEndpoint, CreateEndpoint):
@@ -143,10 +139,9 @@ class BuildArchiveView(BuildEndpoint, CreateEndpoint):
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_SCHEDULE_DELETION,
-            kwargs={'build_job_id': obj.id, 'immediate': False},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'build_job_id': obj.id, 'immediate': False})
         return Response(status=status.HTTP_200_OK)
 
 
@@ -265,7 +260,7 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
                        instance=self.build,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={
                 'project_name': self.project.unique_name,
@@ -275,8 +270,7 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
                 'update_status': True,
                 'collect_logs': True,
                 'is_managed': self.build.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
         return Response(status=status.HTTP_200_OK)
 
 

@@ -1,11 +1,9 @@
-import conf
+import workers
 
 from db.redis.tll import RedisTTL
 from events import event_subjects
 from events.registry import experiment
 from executor.handlers.base import BaseHandler
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import HPCeleryTasks, LogsCeleryTasks, SchedulerCeleryTasks
 
 
@@ -19,10 +17,9 @@ class ExperimentHandler(BaseHandler):
         if event.data['has_specification'] and (event.data['is_independent'] or
                                                 event.data['is_clone']):
             # Start building the experiment and then Schedule it to be picked by the spawners
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.EXPERIMENTS_BUILD,
-                kwargs={'experiment_id': event.data['id']},
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                kwargs={'experiment_id': event.data['id']})
 
     @classmethod
     def _handle_experiment_cleaned_triggered(cls, event: 'Event') -> None:
@@ -39,7 +36,7 @@ class ExperimentHandler(BaseHandler):
 
         try:
             group = instance.experiment_group
-            celery_app.send_task(
+            workers.send(
                 SchedulerCeleryTasks.EXPERIMENTS_STOP,
                 kwargs={
                     'project_name': instance.project.unique_name,
@@ -52,8 +49,7 @@ class ExperimentHandler(BaseHandler):
                     'update_status': False,
                     'collect_logs': False,
                     'is_managed': instance.is_managed,
-                },
-                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                })
         except ExperimentGroup.DoesNotExist:
             # The experiment was already stopped when the group was deleted
             pass
@@ -66,7 +62,7 @@ class ExperimentHandler(BaseHandler):
 
         # Schedule stop for this experiment because other jobs may be still running
         group = instance.experiment_group
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,
@@ -90,21 +86,22 @@ class ExperimentHandler(BaseHandler):
 
         # Check if it's part of an experiment group, and start following tasks
         if not instance.is_independent and not instance.experiment_group.is_stopping:
-            celery_app.send_task(
+            workers.send(
                 HPCeleryTasks.HP_START,
                 kwargs={'experiment_group_id': instance.experiment_group.id},
                 countdown=1)
 
         # Collect tracked remote logs
         if instance.is_managed:
-            celery_app.send_task(
+            workers.send(
                 LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
                 kwargs={
                     'experiment_name': instance.unique_name,
                     'experiment_uuid': instance.uuid.hex,
                     'log_lines': '',
                     'temp': False
-                })
+                },
+                countdown=None)
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

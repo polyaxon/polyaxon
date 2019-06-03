@@ -1,12 +1,10 @@
-import conf
+import workers
 
 from db.redis.tll import RedisTTL
 from events import event_subjects
 from events.registry import build_job
 from events.registry.build_job import BUILD_JOB_FAILED, BUILD_JOB_SUCCEEDED
 from executor.handlers.base import BaseHandler
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
@@ -21,7 +19,7 @@ class BuildJobHandler(BaseHandler):
         if not instance or not instance.has_specification or not instance.is_stoppable:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,
@@ -31,8 +29,7 @@ class BuildJobHandler(BaseHandler):
                 'update_status': False,
                 'collect_logs': False,
                 'is_managed': instance.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     @classmethod
     def _handle_build_job_post_run(cls, event: 'Event') -> None:
@@ -42,7 +39,7 @@ class BuildJobHandler(BaseHandler):
         if not instance or not instance.has_specification:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,
@@ -61,10 +58,9 @@ class BuildJobHandler(BaseHandler):
         if not instance:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.BUILD_JOBS_NOTIFY_DONE,
-            kwargs={'build_job_id': instance.id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'build_job_id': instance.id})
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

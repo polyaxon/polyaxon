@@ -2,7 +2,8 @@ import logging
 
 from kubernetes import watch
 
-from polyaxon.celery_api import celery_app
+import workers
+
 from polyaxon.settings import K8SEventsCeleryTasks
 
 logger = logging.getLogger('polyaxon.monitors.namespace')
@@ -98,6 +99,7 @@ def run(k8s_manager: 'K8SManager', cluster: 'Cluster') -> None:  # pylint:disabl
                 payload['created_at'] = creation_timestamp
 
             logger.debug("Publishing event: %s", data)
-            celery_app.send_task(
+            workers.send(
                 K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_NAMESPACE,
-                kwargs={'cluster_id': cluster.id, 'payload': payload})
+                kwargs={'cluster_id': cluster.id, 'payload': payload},
+                countdown=None)

@@ -1,10 +1,8 @@
-import conf
+import workers
 
 from events import event_subjects
 from events.registry import tensorboard
 from executor.handlers.base import BaseHandler
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
@@ -19,7 +17,7 @@ class TensorboardHandler(BaseHandler):
         if not instance or not instance.has_specification or not instance.is_stoppable:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,
@@ -29,8 +27,7 @@ class TensorboardHandler(BaseHandler):
                 'update_status': False,
                 'collect_logs': False,
                 'is_managed': instance.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     @classmethod
     def _handle_tensorboard_post_run(cls, event: 'Event') -> None:
@@ -38,7 +35,7 @@ class TensorboardHandler(BaseHandler):
         if not instance or not instance.has_specification:
             return
 
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_STOP,
             kwargs={
                 'project_name': instance.project.unique_name,
@@ -48,8 +45,7 @@ class TensorboardHandler(BaseHandler):
                 'update_status': False,
                 'collect_logs': True,
                 'is_managed': instance.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

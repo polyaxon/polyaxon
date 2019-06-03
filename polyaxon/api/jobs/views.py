@@ -10,8 +10,8 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
-import conf
 import stores
+import workers
 
 from api.code_reference.serializers import CodeReferenceSerializer
 from api.endpoint.base import (
@@ -57,8 +57,6 @@ from libs.archive import archive_logs_file, archive_outputs, archive_outputs_fil
 from libs.spec_validation import validate_job_spec_config
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.job import process_logs
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
@@ -127,10 +125,9 @@ class JobDetailView(JobEndpoint, RetrieveEndpoint, UpdateEndpoint, DestroyEndpoi
 
     def perform_destroy(self, instance):
         instance.archive()
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
-            kwargs={'job_id': instance.id, 'immediate': True},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': instance.id, 'immediate': True})
 
 
 class JobArchiveView(JobEndpoint, CreateEndpoint):
@@ -143,10 +140,9 @@ class JobArchiveView(JobEndpoint, CreateEndpoint):
                        instance=obj,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_SCHEDULE_DELETION,
-            kwargs={'job_id': obj.id, 'immediate': False},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'job_id': obj.id, 'immediate': False})
         return Response(status=status.HTTP_200_OK)
 
 
@@ -319,7 +315,7 @@ class JobStopView(JobEndpoint, PostEndpoint):
                        instance=self.job,
                        actor_id=request.user.id,
                        actor_name=request.user.username)
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.JOBS_STOP,
             kwargs={
                 'project_name': self.project.unique_name,
@@ -329,8 +325,7 @@ class JobStopView(JobEndpoint, PostEndpoint):
                 'update_status': True,
                 'collect_logs': True,
                 'is_managed': self.job.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
         return Response(status=status.HTTP_200_OK)
 
 

@@ -1,5 +1,7 @@
 import logging
 
+import workers
+
 from db.getters.operations import get_valid_operation_run
 from db.getters.pipelines import get_valid_pipeline_run
 from lifecycles.operations import OperationStatuses
@@ -10,17 +12,16 @@ from pipelines.scheduler import (
     skip_operation_runs_for_pipeline_run,
     stop_operation_runs_for_pipeline_run
 )
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import Intervals, PipelinesCeleryTasks
 
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START,
-                 bind=True,
-                 max_retries=None,
-                 ignore_result=True)
-def pipelines_start(self: 'celery_app.task', pipeline_run_id: int) -> None:
+@workers.app.task(name=PipelinesCeleryTasks.PIPELINES_START,
+                  bind=True,
+                  max_retries=None,
+                  ignore_result=True)
+def pipelines_start(self: 'workers.app.task', pipeline_run_id: int) -> None:
     pipeline_run = get_valid_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
         _logger.info('Pipeline `%s` does not exist any more.', pipeline_run_id)
@@ -45,7 +46,7 @@ def pipelines_start(self: 'celery_app.task', pipeline_run_id: int) -> None:
         self.retry(countdown=Intervals.PIPELINES_SCHEDULER)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_START_OPERATION, ignore_result=True)
+@workers.app.task(name=PipelinesCeleryTasks.PIPELINES_START_OPERATION, ignore_result=True)
 def pipelines_start_operation(operation_run_id: int) -> None:
     operation_run = get_valid_operation_run(operation_run_id=operation_run_id)
     if not operation_run:
@@ -54,7 +55,7 @@ def pipelines_start_operation(operation_run_id: int) -> None:
     start_operation_run(operation_run)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_STOP_OPERATIONS, ignore_result=True)
+@workers.app.task(name=PipelinesCeleryTasks.PIPELINES_STOP_OPERATIONS, ignore_result=True)
 def pipelines_stop_operations(pipeline_run_id: int, message: str = None) -> None:
     pipeline_run = get_valid_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
@@ -63,7 +64,7 @@ def pipelines_stop_operations(pipeline_run_id: int, message: str = None) -> None
     stop_operation_runs_for_pipeline_run(pipeline_run, message=message)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_SKIP_OPERATIONS, ignore_result=True)
+@workers.app.task(name=PipelinesCeleryTasks.PIPELINES_SKIP_OPERATIONS, ignore_result=True)
 def pipelines_skip_operations(pipeline_run_id: int, message: str = None) -> None:
     pipeline_run = get_valid_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:
@@ -72,7 +73,7 @@ def pipelines_skip_operations(pipeline_run_id: int, message: str = None) -> None
     skip_operation_runs_for_pipeline_run(pipeline_run, message=message)
 
 
-@celery_app.task(name=PipelinesCeleryTasks.PIPELINES_CHECK_STATUSES, ignore_result=True)
+@workers.app.task(name=PipelinesCeleryTasks.PIPELINES_CHECK_STATUSES, ignore_result=True)
 def pipelines_check_statuses(pipeline_run_id: int, status: str, message: str = None) -> None:
     pipeline_run = get_valid_pipeline_run(pipeline_run_id=pipeline_run_id)
     if not pipeline_run:

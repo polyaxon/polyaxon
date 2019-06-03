@@ -1,11 +1,9 @@
-import conf
+import workers
 
 from events import event_subjects
 from events.registry import experiment_group
 from executor.handlers.base import BaseHandler
 from lifecycles.experiments import ExperimentLifeCycle
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
@@ -18,10 +16,9 @@ class ExperimentGroupHandler(BaseHandler):
             return
         if not event.data['has_specification'] or not event.data['is_study']:
             return
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_GROUP_CREATE,
-            kwargs={'experiment_group_id': event.data['id']},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_group_id': event.data['id']})
 
     @classmethod
     def _handle_experiment_group_done(cls, event: 'Event') -> None:
@@ -33,7 +30,7 @@ class ExperimentGroupHandler(BaseHandler):
             status__status__in=ExperimentLifeCycle.DONE_STATUS).distinct()
         for experiment in experiments:
             if experiment.is_stoppable:
-                celery_app.send_task(
+                workers.send(
                     SchedulerCeleryTasks.EXPERIMENTS_STOP,
                     kwargs={
                         'project_name': experiment.project.unique_name,
@@ -46,8 +43,7 @@ class ExperimentGroupHandler(BaseHandler):
                         'update_status': True,
                         'collect_logs': True,
                         'is_managed': experiment.is_managed,
-                    },
-                    countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                    })
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:

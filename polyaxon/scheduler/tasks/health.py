@@ -1,8 +1,9 @@
+import workers
+
 from checks import health_task
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
-@celery_app.task(name=SchedulerCeleryTasks.SCHEDULER_HEALTH, ignore_result=False)
+@workers.app.task(name=SchedulerCeleryTasks.SCHEDULER_HEALTH, ignore_result=False)
 def scheduler_health(x, y):
     return health_task.health_task(x, y)

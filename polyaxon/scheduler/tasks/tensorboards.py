@@ -1,14 +1,11 @@
 import logging
 
 import conf
+import workers
 
 from db.getters.tensorboards import get_valid_tensorboard
 from lifecycles.jobs import JobLifeCycle
-from options.registry.scheduler import (
-    SCHEDULER_GLOBAL_COUNTDOWN,
-    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
-)
-from polyaxon.celery_api import celery_app
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import tensorboard_scheduler
 from stores.exceptions import VolumeNotFoundError
@@ -16,7 +13,7 @@ from stores.exceptions import VolumeNotFoundError
 _logger = logging.getLogger(__name__)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_START, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.TENSORBOARDS_START, ignore_result=True)
 def tensorboards_start(tensorboard_job_id):
     tensorboard = get_valid_tensorboard(tensorboard_job_id=tensorboard_job_id)
     if not tensorboard:
@@ -35,7 +32,7 @@ def tensorboards_start(tensorboard_job_id):
                                        'the outputs volume/storage was not found.')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.TENSORBOARDS_SCHEDULE_DELETION, ignore_result=True)
 def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
     tensorboard = get_valid_tensorboard(tensorboard_job_id=tensorboard_job_id,
                                         include_deleted=True)
@@ -46,7 +43,7 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
 
     if tensorboard.is_stoppable:
         project = tensorboard.project
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.TENSORBOARDS_STOP,
             kwargs={
                 'project_name': project.unique_name,
@@ -57,11 +54,10 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
                 'collect_logs': False,
                 'is_managed': tensorboard.is_managed,
                 'message': 'Tensorboard is scheduled for deletion.'
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     if immediate:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_TENSORBOARD_JOB,
             kwargs={
                 'job_id': tensorboard_job_id,
@@ -69,10 +65,10 @@ def tensorboards_schedule_deletion(tensorboard_job_id, immediate=False):
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.TENSORBOARDS_STOP,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
 def tensorboards_stop(self,
                       project_name,
                       project_uuid,

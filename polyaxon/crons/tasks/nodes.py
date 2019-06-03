@@ -7,6 +7,7 @@ from django.db.models import Count, Sum
 
 import auditor
 import conf
+import workers
 
 from db.models.clusters import Cluster
 from db.models.nodes import ClusterNode
@@ -19,7 +20,6 @@ from events.registry.cluster import (
 )
 from options.registry.core import CLUSTER_NOTIFICATION_NODES_URL, CLUSTER_NOTIFICATION_URL
 from options.registry.deployments import CHART_IS_UPGRADE, CHART_VERSION
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import CronsCeleryTasks
 from polyaxon_k8s.manager import K8SManager
 
@@ -32,9 +32,9 @@ def get_cluster_resources() -> Cluster:
         n_gpus=Sum('nodes__n_gpus')).first()
 
 
-@celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
-                 time_limit=150,
-                 ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_INFO,
+                  time_limit=150,
+                  ignore_result=True)
 def update_system_info() -> None:
     k8s_manager = K8SManager(in_cluster=True)
     version_api = k8s_manager.get_version()
@@ -47,9 +47,9 @@ def update_system_info() -> None:
                        is_upgrade=conf.get(CHART_IS_UPGRADE))
 
 
-@celery_app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
-                 time_limit=150,
-                 ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.CLUSTERS_UPDATE_SYSTEM_NODES,
+                  time_limit=150,
+                  ignore_result=True)
 def update_system_nodes() -> None:
     k8s_manager = K8SManager(in_cluster=True)
     nodes = k8s_manager.list_nodes()
@@ -102,9 +102,9 @@ def update_system_nodes() -> None:
                        n_gpus=cluster.n_gpus)
 
 
-@celery_app.task(name=CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
-                 time_limits=60,
-                 ignore_result=True)
+@workers.app.task(name=CronsCeleryTasks.CLUSTERS_NODES_NOTIFICATION_ALIVE,
+                  time_limits=60,
+                  ignore_result=True)
 def cluster_nodes_analytics() -> None:
     cluster = get_cluster_resources()
     notification = uuid.uuid4()

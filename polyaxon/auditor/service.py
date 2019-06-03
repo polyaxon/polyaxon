@@ -34,7 +34,8 @@ class AuditorService(EventService):
         """
         Record the event async.
         """
-        from polyaxon.celery_api import celery_app
+        import workers
+
         from polyaxon.settings import EventsCeleryTasks
 
         if not event.ref_id:
@@ -43,9 +44,15 @@ class AuditorService(EventService):
                                            include_actor_name=True,
                                            include_instance_info=True)
 
-        celery_app.send_task(EventsCeleryTasks.EVENTS_TRACK, kwargs={'event': serialized_event})
-        celery_app.send_task(EventsCeleryTasks.EVENTS_LOG, kwargs={'event': serialized_event})
-        celery_app.send_task(EventsCeleryTasks.EVENTS_NOTIFY, kwargs={'event': serialized_event})
+        workers.send(EventsCeleryTasks.EVENTS_TRACK,
+                     kwargs={'event': serialized_event},
+                     countdown=None)
+        workers.send(EventsCeleryTasks.EVENTS_LOG,
+                     kwargs={'event': serialized_event},
+                     countdown=None)
+        workers.send(EventsCeleryTasks.EVENTS_NOTIFY,
+                     kwargs={'event': serialized_event},
+                     countdown=None)
         # We include the instance in the serialized event for executor
         serialized_event['instance'] = event.instance
         self.executor.record(event_type=event.event_type, event_data=serialized_event)

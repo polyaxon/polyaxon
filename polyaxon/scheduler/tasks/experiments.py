@@ -6,17 +6,14 @@ from rest_framework.exceptions import ValidationError
 import conf
 import publisher
 import stores
+import workers
 
 from api.experiments.serializers import ExperimentMetricSerializer
 from db.getters.experiments import get_valid_experiment
 from db.redis.heartbeat import RedisHeartBeat
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers import collectors
-from options.registry.scheduler import (
-    SCHEDULER_GLOBAL_COUNTDOWN,
-    SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
-)
-from polyaxon.celery_api import celery_app
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
 from schemas import ExperimentSpecification
@@ -56,7 +53,7 @@ def copy_experiment(experiment):
             experiment.original_experiment.unique_name, experiment.unique_name)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_BUILD, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_BUILD, ignore_result=True)
 def experiments_build(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -64,10 +61,9 @@ def experiments_build(experiment_id):
 
     # No need to build the image, start the experiment directly
     if not (experiment.specification.build and experiment.specification.run):
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_START,
-            kwargs={'experiment_id': experiment_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_id': experiment_id})
         return
 
     last_status = experiment.last_status
@@ -89,10 +85,9 @@ def experiments_build(experiment_id):
     experiment.save(update_fields=['build_job'])
     if image_exists:
         # The image already exists, so we can start the experiment right away
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_START,
-            kwargs={'experiment_id': experiment_id},
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            kwargs={'experiment_id': experiment_id})
         return
 
     if not build_status:
@@ -103,7 +98,7 @@ def experiments_build(experiment_id):
     experiment.set_status(ExperimentLifeCycle.BUILDING)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_STATUS, ignore_result=True)
 def experiments_check_status(experiment_uuid=None, experiment_id=None):
     experiment = get_valid_experiment(experiment_id=experiment_id, experiment_uuid=experiment_uuid)
     if not experiment:
@@ -111,7 +106,7 @@ def experiments_check_status(experiment_uuid=None, experiment_id=None):
     experiment.update_status()
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_HEARTBEAT, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_CHECK_HEARTBEAT, ignore_result=True)
 def experiments_check_heartbeat(experiment_id):
     if RedisHeartBeat.experiment_is_alive(experiment_id=experiment_id):
         return
@@ -125,7 +120,7 @@ def experiments_check_heartbeat(experiment_id):
                           message='Experiment is in zombie state (no heartbeat was reported).')
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SET_METRICS, ignore_result=True)
 def experiments_set_metrics(experiment_id, data):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -143,7 +138,7 @@ def experiments_set_metrics(experiment_id, data):
     serializer.save(experiment=experiment)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
 def experiments_start(experiment_id):
     experiment = get_valid_experiment(experiment_id=experiment_id)
     if not experiment:
@@ -160,7 +155,7 @@ def experiments_start(experiment_id):
     experiment_scheduler.start_experiment(experiment)
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION, ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_SCHEDULE_DELETION, ignore_result=True)
 def experiments_schedule_deletion(experiment_id, immediate=False):
     experiment = get_valid_experiment(experiment_id=experiment_id, include_deleted=True)
     if not experiment:
@@ -172,7 +167,7 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
 
     if experiment.is_stoppable:
         project = experiment.project
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.EXPERIMENTS_STOP,
             kwargs={
                 'project_name': project.unique_name,
@@ -186,11 +181,10 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
                 'collect_logs': False,
                 'message': 'Experiment is scheduled for deletion.',
                 'is_managed': experiment.is_managed,
-            },
-            countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+            })
 
     if immediate:
-        celery_app.send_task(
+        workers.send(
             SchedulerCeleryTasks.DELETE_ARCHIVED_EXPERIMENT,
             kwargs={
                 'experiment_id': experiment_id,
@@ -198,10 +192,10 @@ def experiments_schedule_deletion(experiment_id, immediate=False):
             countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
 
-@celery_app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,
-                 bind=True,
-                 max_retries=3,
-                 ignore_result=True)
+@workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_STOP,
+                  bind=True,
+                  max_retries=3,
+                  ignore_result=True)
 def experiments_stop(self,
                      project_name,
                      project_uuid,

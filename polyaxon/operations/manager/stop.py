@@ -1,13 +1,11 @@
-import conf
+import workers
 
 from constants import content_types
-from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-from polyaxon.celery_api import celery_app
 from polyaxon.settings import SchedulerCeleryTasks
 
 
 def stop_experiment(experiment: 'Experiment', message: str = None):
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.EXPERIMENTS_STOP,
         kwargs={
             'project_name': experiment.project.unique_name,
@@ -19,21 +17,19 @@ def stop_experiment(experiment: 'Experiment', message: str = None):
             'collect_logs': True,
             'is_managed': experiment.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def stop_experiment_group(group: 'ExperimentGroup', message: str = None):
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.EXPERIMENTS_GROUP_STOP,
         kwargs={'experiment_group_id': group.id,
                 'collect_logs': True,
-                'message': message},
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+                'message': message})
 
 
 def stop_job(job: 'Job', message: str = None):
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.JOBS_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -44,12 +40,11 @@ def stop_job(job: 'Job', message: str = None):
             'collect_logs': True,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def stop_build_job(job: 'BuildJob', message: str = None):
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.BUILD_JOBS_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -60,12 +55,11 @@ def stop_build_job(job: 'BuildJob', message: str = None):
             'collect_logs': True,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def stop_notebook_job(job: 'NotebookJob', message: str = None):
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.PROJECTS_NOTEBOOK_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -76,12 +70,11 @@ def stop_notebook_job(job: 'NotebookJob', message: str = None):
             'collect_logs': False,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 def stop_tensorboard_job(job: 'TensorboardJob', message: str = None):
-    celery_app.send_task(
+    workers.send(
         SchedulerCeleryTasks.TENSORBOARDS_STOP,
         kwargs={
             'project_name': job.project.unique_name,
@@ -92,8 +85,7 @@ def stop_tensorboard_job(job: 'TensorboardJob', message: str = None):
             'collect_logs': False,
             'is_managed': job.is_managed,
             'message': message
-        },
-        countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN))
+        })
 
 
 ENTITIES = {
