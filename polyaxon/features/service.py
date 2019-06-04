@@ -13,4 +13,3 @@ class FeaturesService(OptionService):
         options_handler = self.get_options_handler()
         if options_handler:
             self.stores[OptionStores.DB_OPTION] = options_handler
-
