@@ -20,7 +20,7 @@ class PolyaxonLoggingTensorHook(tf.train.LoggingTensorHook):
         self.tensors_dict = tensors_dict.copy()
 
     def _log_tensors(self, tensor_values):
-        super(PolyaxonMetrics, self)._log_tensors(tensor_values)
+        super(PolyaxonLoggingTensorHook, self)._log_tensors(tensor_values)
         if settings.IN_CLUSTER:
             for k in self.tensors_dict.keys():
                 self.tensors_dict[k] = tensor_values[k]
