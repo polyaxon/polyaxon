@@ -14,7 +14,7 @@ class PolyaxonLoggingTensorHook(tf.train.LoggingTensorHook):
     """Hook that logs data to console and Polyaxon"""
 
     def __init__(self, tensors_dict, every_n_iter=None, every_n_secs=None):
-        super(PolyaxonMetrics, self).__init__(tensors_dict,
+        super(PolyaxonLoggingTensorHook, self).__init__(tensors_dict,
                                               every_n_iter=every_n_iter,
                                               every_n_secs=every_n_secs)
         self.tensors_dict = tensors_dict.copy()
