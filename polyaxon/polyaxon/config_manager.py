@@ -238,6 +238,12 @@ class ConfigManager(rhea.Rhea):
         conf.validate()
         conf.setup()
 
+    def setup_features_service(self) -> None:
+        import features
+
+        features.validate()
+        features.setup()
+
     def setup_encryptor_service(self) -> None:
         import encryptor
 

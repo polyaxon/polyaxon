@@ -9,7 +9,7 @@ from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 
 
-@pytest.mark.conf_mark
+@pytest.mark.configs_mark
 class TestConfigOptionModels(BaseTest):
     def setUp(self):
         super().setUp()

@@ -3,7 +3,7 @@ from typing import Optional, Tuple
 from options.exceptions import OptionException
 
 NAMESPACE_DB_OPTION_MARKER = ':'
-NAMESPACE_DB_CONFIG_MARKER = '_'
+NAMESPACE_DB_CONFIG_MARKER = '__'
 NAMESPACE_SETTINGS_MARKER = '__'
 NAMESPACE_ENV_MARKER = '__'
 
@@ -48,7 +48,7 @@ class Option(object):
             raise OptionException('Option declared with multi-namespace key `{}`.'.format(cls.key))
         if len(parts) == 1:
             return None, cls.key
-        return parts[0], marker.join(parts[1:])
+        return parts[0], parts[1]
 
     @classmethod
     def get_namespace(cls) -> Optional[str]:

@@ -5,6 +5,7 @@ DEFAULT_APPS = (
     'encryptor.apps.EncryptorConfig',
     'db.apps.DBConfig',
     'conf.apps.ConfConfig',
+    'features.apps.FeaturesConfig',
 )
 
 EXTRA_APPS = config.get_string('POLYAXON_EXTRA_APPS', is_list=True, is_optional=True)

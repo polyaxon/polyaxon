@@ -9,6 +9,7 @@ ENCRYPTION_KEY = config.get_string('POLYAXON_ENCRYPTION_KEY', is_optional=True)
 ENCRYPTION_SECRET = config.get_string('POLYAXON_ENCRYPTION_SECRET', is_optional=True)
 ENCRYPTION_BACKEND = config.get_string('POLYAXON_ENCRYPTION_BACKEND', is_optional=True)
 CONF_BACKEND = config.get_string('POLYAXON_CONF_BACKEND', is_optional=True)
+FEATURES_BACKEND = config.get_string('POLYAXON_FEATURES_BACKEND', is_optional=True)
 ARCHIVES_ROOT_REPOS = '/tmp/archived_repos'
 ARCHIVES_ROOT_ARTIFACTS = '/tmp/archived_outputs'
 ARCHIVES_ROOT_LOGS = '/tmp/archived_logs'
