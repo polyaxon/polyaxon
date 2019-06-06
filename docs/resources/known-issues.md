@@ -55,3 +55,8 @@ Polyaxon has a new up-to-date version of the stable redis chart, and it supports
 ### Update rabbitmq chart and support using external/managed rabbitmq instance
 
 Polyaxon has a new up-to-date version of the stable rabbitmq-ha chart, and it supports using an external managed rabbitmq instance -> fixed.
+
+### Allow to specify a service account for jobs/experiments
+
+[Github #447](https://github.com/polyaxon/polyaxon/issues/447) The env section will allow to pass in a custom SA, 
+as well as a config to override default SA for experiments/jobs/builds/... A documentation ref will be published with the minimum RBAC access required -> Fixed
