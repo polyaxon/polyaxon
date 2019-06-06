@@ -1,10 +1,7 @@
 import pytest
 
-from django.conf import settings
-
 from conf.cluster_conf_service import ClusterConfService
 from conf.exceptions import ConfException
-from conf.service import ConfService
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
 from db.models.owner import Owner

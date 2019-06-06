@@ -3,6 +3,7 @@ import time
 from kubernetes.client.rest import ApiException
 
 from django.db import InterfaceError, connection
+from urllib3.exceptions import MaxRetryError
 
 import conf
 
@@ -26,7 +27,7 @@ class Command(BaseMonitorCommand):
         while True:
             try:
                 monitor.run(k8s_manager)
-            except ApiException as e:
+            except (ApiException, ValueError, MaxRetryError) as e:
                 monitor.logger.warning(
                     "Exception when calling CoreV1Api->list_namespaced_pod: %s\n", e)
                 time.sleep(sleep_interval)

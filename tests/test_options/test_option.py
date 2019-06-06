@@ -102,6 +102,3 @@ class TestOption(BaseTest):
         DummyOption.store = OptionStores.ENV
         with self.assertRaises(OptionException):
             DummyOption.parse_key()
-
-
-

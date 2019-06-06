@@ -5,6 +5,7 @@ from typing import Optional
 from kubernetes.client.rest import ApiException
 
 from django.db import InterfaceError, OperationalError, ProgrammingError
+from urllib3.exceptions import MaxRetryError
 
 import conf
 
@@ -45,7 +46,7 @@ class Command(BaseMonitorCommand):
         while True:
             try:
                 monitor.run(k8s_manager, cluster)
-            except (ApiException, ValueError) as e:
+            except (ApiException, ValueError, MaxRetryError) as e:
                 monitor.logger.warning(
                     "Exception when calling CoreV1Api->list_event_for_all_namespaces: %s\n", e)
                 time.sleep(sleep_interval)
