@@ -134,7 +134,7 @@ class TensorboardSpawner(ProjectJobSpawner):
                 ))
             elif store == StoreTypes.S3:
                 commands.append(
-                    "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {}={}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(  # noqa
+                    "import json; data = json.loads(open('{}').read()); content = []; [content.append('export {{}}={{}}'.format(k, data[k])) for k in data]; output = open('{}', 'w'); output.write('\n'.join(content)); output.close()".format(  # noqa
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format(store) + '/' +
                         store_secret['persistence_secret_key'],
                         cls.STORE_SECRET_KEY_MOUNT_PATH.format('envs3'),
