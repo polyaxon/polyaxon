@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/projects';
@@ -8,10 +8,12 @@ import ProjectDetail from '../../components/projects/projectDetail';
 import { AppState } from '../../constants/types';
 import { getProjectUniqueName } from '../../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any) {
+interface Props extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: AppState, props: Props) {
   const projectUniqueName = getProjectUniqueName(
-    params.match.params.user,
-    params.match.params.projectName);
+    props.match.params.user,
+    props.match.params.projectName);
   return _.includes(state.projects.uniqueNames, projectUniqueName) ?
     {project: state.projects.byUniqueNames[projectUniqueName]} :
     {project: null};
@@ -28,47 +30,47 @@ export interface DispatchProps {
   unbookmark: () => actions.ProjectAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, props: Props): DispatchProps {
   return {
     onDelete: () => dispatch(
       actions.deleteProject(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName),
+          props.match.params.user,
+          props.match.params.projectName),
         true)),
     onArchive: () => dispatch(
       actions.archiveProject(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName),
+          props.match.params.user,
+          props.match.params.projectName),
         true)),
     onRestore: () => dispatch(
       actions.restoreProject(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName))),
+          props.match.params.user,
+          props.match.params.projectName))),
     stopNotebook: () => dispatch(
       actions.stopNotebook(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName))),
+          props.match.params.user,
+          props.match.params.projectName))),
     stopTensorboard: () => dispatch(
       actions.stopTensorboard(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName))),
+          props.match.params.user,
+          props.match.params.projectName))),
     fetchData: () => dispatch(
       actions.fetchProject(
-        params.match.params.user,
-        params.match.params.projectName)),
+        props.match.params.user,
+        props.match.params.projectName)),
     bookmark: () => dispatch(
       actions.bookmark(getProjectUniqueName(
-        params.match.params.user,
-        params.match.params.projectName))),
+        props.match.params.user,
+        props.match.params.projectName))),
     unbookmark: () => dispatch(
       actions.unbookmark(getProjectUniqueName(
-        params.match.params.user,
-        params.match.params.projectName))),
+        props.match.params.user,
+        props.match.params.projectName))),
   };
 }
 

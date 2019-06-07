@@ -9,7 +9,7 @@ import { isTrue } from '../../constants/utils';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedExperimentJobs } from '../../utils/states';
 
-export function mapStateToProps(state: AppState, params: any) {
+export function mapStateToProps(state: AppState, props: any) {
   const results = getLastFetchedExperimentJobs(state.experimentJobs);
 
   const isLoading = isTrue(state.loadingIndicators.experimentJobs.global.fetch);
@@ -25,7 +25,7 @@ export interface DispatchProps {
   fetchData?: (offset?: number, query?: string, sort?: string) => actions.ExperimentJobAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobAction>, props: any): DispatchProps {
   return {
     fetchData: (offset?: number, query?: string, sort?: string) => {
       const filters: { [key: string]: number | boolean | string } = {};
@@ -39,8 +39,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentJobActio
         filters.offset = offset;
       }
       return dispatch(actions.fetchExperimentJobs(
-        params.experiment.project,
-        params.experiment.id,
+        props.experiment.project,
+        props.experiment.id,
         filters));
     }
   };

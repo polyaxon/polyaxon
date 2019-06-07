@@ -7,7 +7,7 @@ import * as queryString from 'query-string';
 import * as search_actions from '../../actions/search';
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
 import FilterList from '../../containers/filters/filterList';
-import { FilterOption } from '../../interfaces/filterOptions';
+import { ColumnInterface } from '../../interfaces/tableColumns';
 import { SearchModel } from '../../models/search';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import Refresh from '../refresh';
@@ -27,7 +27,7 @@ export interface Props {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
   selectSearch?: (data: SearchModel) => void;
   sortOptions?: string[];
-  filterOptions?: FilterOption[];
+  columnOptions?: ColumnInterface[];
   isLoading: boolean;
   errors: any;
 }
@@ -167,7 +167,7 @@ export default class PaginatedTable extends React.Component<Props, State> {
             sort={this.state.sort}
             handleFilter={(query: string, sort: string) => this.handleFilter(query, sort)}
             sortOptions={this.props.sortOptions || []}
-            filterOptions={this.props.filterOptions || []}
+            columnOptions={this.props.columnOptions || []}
             fetchSearches={this.props.fetchSearches}
             createSearch={this.props.createSearch}
             deleteSearch={this.props.deleteSearch}

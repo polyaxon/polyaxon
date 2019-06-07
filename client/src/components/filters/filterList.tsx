@@ -3,7 +3,7 @@ import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 
 import * as actions from '../../actions/search';
 import FilterCreate from '../../containers/filters/filterCreate';
-import { FilterOption } from '../../interfaces/filterOptions';
+import { ColumnInterface } from '../../interfaces/tableColumns';
 import { SearchModel } from '../../models/search';
 import { DefaultSearches } from './filterDefault';
 
@@ -15,7 +15,7 @@ export interface Props {
   sort?: string;
   handleFilter: (query: string, sort: string) => any;
   sortOptions: string[];
-  filterOptions: FilterOption[];
+  columnOptions: ColumnInterface[];
   defaultSort?: string;
   fetchSearches?: () => actions.SearchAction;
   createSearch?: (data: SearchModel) => actions.SearchAction;
@@ -247,19 +247,19 @@ export default class FilterList extends React.Component<Props, State> {
                       <i className="fas fa-chevron-down icon" aria-hidden="true"/>
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu-large">
-                      {this.props.filterOptions.map(
-                        (filterOption: FilterOption, idx: number) =>
+                      {this.props.columnOptions.map(
+                        (filterOption: ColumnInterface, idx: number) =>
                           <MenuItem
-                            key={idx}
+                            key={`f-${idx}`}
                             className="search-filter"
-                            onClick={() => this.addFilter(filterOption.filter)}
+                            onClick={() => this.addFilter(filterOption.field)}
                           >
-                            <span>
-                              <i
-                                className={filterOption.icon + ' icon'}
-                                aria-hidden="true"
-                              /> {filterOption.filter}
-                            </span>
+                              <span>
+                                <i
+                                  className={filterOption.icon + ' icon'}
+                                  aria-hidden="true"
+                                /> {filterOption.field}
+                              </span>
                             <p className="filter-desc">{filterOption.desc}</p>
                           </MenuItem>
                       )}

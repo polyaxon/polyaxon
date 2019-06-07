@@ -1,5 +1,5 @@
-import * as _ from 'lodash';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import Tensorboards from '../../components/tensorboards/tensorboards';
@@ -15,8 +15,8 @@ import { SearchModel } from '../../models/search';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedTensorboards } from '../../utils/states';
 
-interface OwnProps {
-  user: string;
+interface Props extends RouteComponentProps<any> {
+  user?: string;
   projectName?: string;
   endpointList?: string;
   useFilters?: boolean;
@@ -25,18 +25,18 @@ interface OwnProps {
   fetchData?: () => any;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
+  const cUser = props.user || props.match.params.user;
   const results = getLastFetchedTensorboards(state.tensorboards);
-
   const isLoading = isTrue(state.loadingIndicators.tensorboards.global.fetch);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
+    isCurrentUser: state.auth.user === cUser,
     tensorboards: results.tensorboards,
     count: results.count,
-    useFilters: isTrue(ownProps.useFilters),
-    showBookmarks: isTrue(ownProps.showBookmarks),
-    showDeleted: isTrue(ownProps.showDeleted),
-    endpointList: ownProps.endpointList,
+    useFilters: isTrue(props.useFilters),
+    showBookmarks: isTrue(props.showBookmarks),
+    showDeleted: isTrue(props.showDeleted),
+    endpointList: props.endpointList,
     isLoading,
     errors: getErrorsGlobal(state.alerts.tensorboards.global, isLoading, ACTIONS.FETCH),
   };
@@ -57,7 +57,10 @@ export interface DispatchProps {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>, ownProps: OwnProps): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>, props: Props): DispatchProps {
+  const cUser = props.user || props.match.params.user;
+  const cProjectName = props.projectName || `${cUser}.${props.match.params.projectName}`;
+
   return {
     onDelete: (tensorboardName: string) => dispatch(actions.deleteTensorboard(tensorboardName)),
     onStop: (tensorboardName: string) => dispatch(actions.stopTensorboard(tensorboardName)),
@@ -67,22 +70,22 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>
     unbookmark: (tensorboardName: string) => dispatch(actions.unbookmark(tensorboardName)),
     onUpdate: (tensorboard: TensorboardModel) => dispatch(actions.updateTensorboardSuccessActionCreator(tensorboard)),
     fetchSearches: () => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.fetchTensorboardSearches(ownProps.projectName));
+      if (cProjectName) {
+        return dispatch(search_actions.fetchTensorboardSearches(cProjectName));
       } else {
         throw new Error('Tensorboards container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.createTensorboardSearch(ownProps.projectName, data));
+      if (cProjectName) {
+        return dispatch(search_actions.createTensorboardSearch(cProjectName, data));
       } else {
         throw new Error('Tensorboards container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (ownProps.projectName) {
-        return dispatch(search_actions.deleteTensorboardSearch(ownProps.projectName, searchId));
+      if (cProjectName) {
+        return dispatch(search_actions.deleteTensorboardSearch(cProjectName, searchId));
       } else {
         throw new Error('Tensorboards container does not have project.');
       }
@@ -98,12 +101,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(ownProps.projectName) && ownProps.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedTensorboards(ownProps.user, filters));
-      } else if (_.isNil(ownProps.projectName) && ownProps.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedTensorboards(ownProps.user, filters));
-      } else if (ownProps.projectName) {
-        return dispatch(actions.fetchTensorboards(ownProps.projectName, filters));
+      if (props.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedTensorboards(cUser, filters));
+      } else if (props.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedTensorboards(cUser, filters));
+      } else if (cProjectName) {
+        return dispatch(actions.fetchTensorboards(cProjectName, filters));
       } else {
         throw new Error('Tensorboards container expects either a project name or bookmarks or archives.');
       }
@@ -111,4 +114,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tensorboards);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Tensorboards));

@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import Bookmarks from '../components/bookmarks';
 import { AppState } from '../constants/types';
 
-export function mapStateToProps(state: AppState, params: any) {
-  return {user: params.match.params.user};
+interface Props extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: AppState, props: Props) {
+  return {user: props.match.params.user};
 }
 
 export default withRouter(connect(mapStateToProps, {})(Bookmarks));

@@ -1,6 +1,5 @@
-import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/experiments';
@@ -18,8 +17,8 @@ import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedExperiments } from '../../utils/states';
 import { getSuccessGlobal } from '../../utils/success';
 
-interface OwnProps {
-  user: string;
+interface Props extends RouteComponentProps<any> {
+  user?: string;
   projectName?: string;
   groupId?: number;
   useFilters?: boolean;
@@ -30,21 +29,21 @@ interface OwnProps {
   fetchData?: () => actions.ExperimentAction;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
+  const cUser = props.user || props.match.params.user;
   const results = getLastFetchedExperiments(state.experiments);
-
   const isLoading = isTrue(state.loadingIndicators.experiments.global.fetch);
   const isCreateLoading = isTrue(state.loadingIndicators.experiments.global.create);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
+    isCurrentUser: state.auth.user === cUser,
     experiments: results.experiments,
-    groupId: ownProps.groupId,
+    groupId: props.groupId,
     count: results.count,
-    useFilters: isTrue(ownProps.useFilters),
-    showBookmarks: isTrue(ownProps.showBookmarks),
-    showDeleted: isTrue(ownProps.showDeleted),
-    useCheckbox: isTrue(ownProps.useCheckbox),
-    endpointList: ownProps.endpointList,
+    useFilters: isTrue(props.useFilters),
+    showBookmarks: isTrue(props.showBookmarks),
+    showDeleted: isTrue(props.showDeleted),
+    useCheckbox: isTrue(props.useCheckbox),
+    endpointList: props.endpointList,
     isLoading,
     isCreateLoading,
     errors: getErrorsGlobal(state.alerts.experiments.global, isLoading, ACTIONS.FETCH),
@@ -74,17 +73,20 @@ export interface DispatchProps {
   removeFromSelection: (selectionId: number, items: number[]) => groupsActions.GroupAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>, props: Props): DispatchProps {
+  const cUser = props.user || props.match.params.user;
+  const cProjectName = props.projectName || `${cUser}.${props.match.params.projectName}`;
+
   return {
     onCreate: (experiment: ExperimentModel) => dispatch(actions.createExperiment(
-      params.match.params.user,
-      params.match.params.projectName,
+      props.match.params.user,
+      props.match.params.projectName,
       experiment,
       true)),
     onDelete: (experimentName: string) => dispatch(actions.deleteExperiment(experimentName)),
     onDeleteMany: (experimentIds: number[]) => {
-      if (params.projectName) {
-        return dispatch(actions.deleteExperiments(params.projectName, experimentIds));
+      if (cProjectName) {
+        return dispatch(actions.deleteExperiments(cProjectName, experimentIds));
       } else {
         throw new Error('Experiments container does not have project.');
       }
@@ -94,8 +96,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onRestart: (experimentName: string) => dispatch(actions.restartExperiment(experimentName, true)),
     onRestore: (experimentName: string) => dispatch(actions.restoreExperiment(experimentName)),
     onStopMany: (experimentIds: number[]) => {
-      if (params.projectName) {
-        return dispatch(actions.stopExperiments(params.projectName, experimentIds));
+      if (cProjectName) {
+        return dispatch(actions.stopExperiments(cProjectName, experimentIds));
       } else {
         throw new Error('Experiments container does not have project.');
       }
@@ -104,31 +106,31 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     unbookmark: (experimentName: string) => dispatch(actions.unbookmark(experimentName)),
     onUpdate: (experiment: ExperimentModel) => dispatch(actions.updateExperimentSuccessActionCreator(experiment)),
     fetchSearches: () => {
-      if (params.projectName) {
-        return dispatch(searchActions.fetchExperimentSearches(params.projectName));
+      if (cProjectName) {
+        return dispatch(searchActions.fetchExperimentSearches(cProjectName));
       } else {
         throw new Error('Experiments container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (params.projectName) {
-        return dispatch(searchActions.createExperimentSearch(params.projectName, data));
+      if (cProjectName) {
+        return dispatch(searchActions.createExperimentSearch(cProjectName, data));
       } else {
         throw new Error('Experiments container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (params.projectName) {
-        return dispatch(searchActions.deleteExperimentSearch(params.projectName, searchId));
+      if (cProjectName) {
+        return dispatch(searchActions.deleteExperimentSearch(cProjectName, searchId));
       } else {
         throw new Error('Experiments container does not have project.');
       }
     },
     createSelection: (data: GroupModel) => {
-      if (params.projectName) {
+      if (cProjectName) {
         return dispatch(groupsActions.createGroup(
-          params.match.params.user,
-          params.match.params.projectName,
+          props.match.params.user,
+          props.match.params.projectName,
           data,
           true));
       } else {
@@ -136,18 +138,18 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       }
     },
     addToSelection: (selectionId: number, items: number[]) => {
-      if (params.projectName) {
+      if (cProjectName) {
         const data = {experiment_ids: items, operation: 'add'};
-        const groupName = `${params.projectName}.${selectionId}`;
+        const groupName = `${cProjectName}.${selectionId}`;
         return dispatch(groupsActions.updateSelection(groupName, data));
       } else {
         throw new Error('Experiments container does not have project.');
       }
     },
     removeFromSelection: (selectionId: number, items: number[]) => {
-      if (params.projectName) {
+      if (cProjectName) {
         const data = {experiment_ids: items, operation: 'remove'};
-        const groupName = `${params.projectName}.${selectionId}`;
+        const groupName = `${cProjectName}.${selectionId}`;
         return dispatch(groupsActions.updateSelection(groupName, data));
       } else {
         throw new Error('Experiments container does not have project.');
@@ -158,8 +160,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
                 sort?: string,
                 extraFilters?: { [key: string]: number | boolean | string }) => {
       const filters: { [key: string]: number | boolean | string } = {};
-      if (params.groupId) {
-        filters.group = params.groupId;
+      if (props.groupId) {
+        filters.group = props.groupId;
       }
       if (extraFilters && (extraFilters.metrics === true || extraFilters.metrics === 'true')) {
         filters.metrics = extraFilters.metrics;
@@ -179,12 +181,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(params.projectName) && params.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedExperiments(params.user, filters));
-      } else if (_.isNil(params.projectName) && params.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedExperiments(params.user, filters));
-      } else if (params.projectName) {
-        return dispatch(actions.fetchExperiments(params.projectName, filters));
+      if (props.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedExperiments(cUser, filters));
+      } else if (props.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedExperiments(cUser, filters));
+      } else if (cProjectName) {
+        return dispatch(actions.fetchExperiments(cProjectName, filters));
       } else {
         throw new Error('Experiments container expects either a project name or bookmarks or archives.');
       }

@@ -123,8 +123,8 @@ export function startTensorboard(user: string,
 
     dispatch(startExperimentTensorboardRequestActionCreator(experimentName));
 
-    if (!tensorboard.config) {
-      delete tensorboard.config;
+    if (!tensorboard.content) {
+      delete tensorboard.content;
     }
 
     return fetch(`${BASE_API_URL}${experimentUrl}/tensorboard/start`, {

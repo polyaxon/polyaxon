@@ -5,20 +5,20 @@ import * as actions from '../actions/codeReference';
 import CodeReference from '../components/codeReference';
 import { AppState } from '../constants/types';
 
-export interface Params {
+export interface Props {
   fetchData: () => actions.CodeReferenceAction;
   codeReferenceId: number;
 }
 
-export function mapStateToProps(state: AppState, params: Params) {
-  return _.includes(state.codeReferences.ids, params.codeReferenceId) ?
+export function mapStateToProps(state: AppState, props: Props) {
+  return _.includes(state.codeReferences.ids, props.codeReferenceId) ?
   {
-    codeReference: state.codeReferences.byIds[params.codeReferenceId],
-    fetchData: params.fetchData
+    codeReference: state.codeReferences.byIds[props.codeReferenceId],
+    fetchData: props.fetchData
   } :
   {
     codeReference: null,
-    fetchData: params.fetchData
+    fetchData: props.fetchData
   };
 }
 

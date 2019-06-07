@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Token from '../components/token';
 import { AppState } from '../constants/types';
 
-export function mapStateToProps(state: AppState, ownProps: any)  {
+export function mapStateToProps(state: AppState, props: {})  {
   return {token: state.auth.token};
 }
 

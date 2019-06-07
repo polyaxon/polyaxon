@@ -122,7 +122,7 @@ export default class JobDetail extends React.Component<Props, {}> {
                   relUrl: 'outputs'
                 }, {
                   title: 'Config',
-                  component: <YamlText title="Config" config={job.config}/>,
+                  component: <YamlText title="Config" configText={job.content}/>,
                   relUrl: 'config'
                 }, {
                   title: 'Instructions',

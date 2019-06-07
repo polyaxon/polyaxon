@@ -105,7 +105,7 @@ export default class BuildDetail extends React.Component<Props, {}> {
                   relUrl: 'statuses'
                 }, {
                   title: 'Config',
-                  component: <YamlText title="Config" config={build.config}/>,
+                  component: <YamlText title="Config" configText={build.content}/>,
                   relUrl: 'config'
                 }, {
                   title: 'Instructions',

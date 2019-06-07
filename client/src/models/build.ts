@@ -21,7 +21,7 @@ export class BuildModel {
   public finished_at: string;
   public commit: string;
   public dockerfile: string;
-  public config: { [key: string]: any };
+  public content: string;
   public resources: { [key: string]: any };
   public node_scheduled: string;
   public num_jobs: number;

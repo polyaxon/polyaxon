@@ -1,6 +1,5 @@
-import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import Jobs from '../../components/jobs/jobs';
@@ -16,8 +15,8 @@ import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedJobs } from '../../utils/states';
 
-interface OwnProps {
-  user: string;
+interface Props extends RouteComponentProps<any> {
+  user?: string;
   projectName?: string;
   groupId?: string;
   useFilters?: boolean;
@@ -27,18 +26,18 @@ interface OwnProps {
   fetchData?: () => actions.JobAction;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
+  const cUser = props.user || props.match.params.user;
   const results = getLastFetchedJobs(state.jobs);
-
   const isLoading = isTrue(state.loadingIndicators.jobs.global.fetch);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
+    isCurrentUser: state.auth.user === cUser,
     jobs: results.jobs,
     count: results.count,
-    useFilters: isTrue(ownProps.useFilters),
-    showBookmarks: isTrue(ownProps.showBookmarks),
-    showDeleted: isTrue(ownProps.showDeleted),
-    endpointList: ownProps.endpointList,
+    useFilters: isTrue(props.useFilters),
+    showBookmarks: isTrue(props.showBookmarks),
+    showDeleted: isTrue(props.showDeleted),
+    endpointList: props.endpointList,
     isLoading,
     errors: getErrorsGlobal(state.alerts.jobs.global, isLoading, ACTIONS.FETCH),
   };
@@ -60,11 +59,14 @@ export interface DispatchProps {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, props: Props): DispatchProps {
+  const cUser = props.user || props.match.params.user;
+  const cProjectName = props.projectName || `${cUser}.${props.match.params.projectName}`;
+
   return {
     onCreate: (job: JobModel) => dispatch(actions.createJob(
-      params.match.params.user,
-      params.match.params.projectName,
+      props.match.params.user,
+      props.match.params.projectName,
       job,
       true)),
     onDelete: (jobName: string) => dispatch(actions.deleteJob(jobName)),
@@ -76,22 +78,22 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
     unbookmark: (jobName: string) => dispatch(actions.unbookmark(jobName)),
     onUpdate: (job: JobModel) => dispatch(actions.updateJobSuccessActionCreator(job)),
     fetchSearches: () => {
-      if (params.projectName) {
-        return dispatch(search_actions.fetchJobSearches(params.projectName));
+      if (cProjectName) {
+        return dispatch(search_actions.fetchJobSearches(cProjectName));
       } else {
         throw new Error('Jobs container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (params.projectName) {
-        return dispatch(search_actions.createJobSearch(params.projectName, data));
+      if (cProjectName) {
+        return dispatch(search_actions.createJobSearch(cProjectName, data));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (params.projectName) {
-        return dispatch(search_actions.deleteJobSearch(params.projectName, searchId));
+      if (cProjectName) {
+        return dispatch(search_actions.deleteJobSearch(cProjectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }
@@ -107,12 +109,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.JobAction>, params
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(params.projectName) && params.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedJobs(params.user, filters));
-      } else if (_.isNil(params.projectName) && params.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedJobs(params.user, filters));
-      } else if (params.projectName) {
-        return dispatch(actions.fetchJobs(params.projectName, filters));
+      if (props.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedJobs(cUser, filters));
+      } else if (props.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedJobs(cUser, filters));
+      } else if (cProjectName) {
+        return dispatch(actions.fetchJobs(cProjectName, filters));
       } else {
         throw new Error('Jobs container expects either a project name or bookmarks or archives.');
       }

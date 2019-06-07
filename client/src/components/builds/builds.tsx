@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import * as actions from '../../actions/builds';
 import * as search_actions from '../../actions/search';
-import { BUILD_FILTER_OPTIONS } from '../../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { BuildModel } from '../../models/build';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
@@ -12,7 +10,9 @@ import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
+import { getBuildColumnOptions, getColumnFilters } from '../tables/columns';
 import PaginatedTable from '../tables/paginatedTable';
+import { BASE_SORT_OPTIONS } from '../tables/sorters';
 import Build from './build';
 import BuildHeader from './buildHeader';
 
@@ -102,8 +102,16 @@ export default class Builds extends React.Component<Props, {}> {
         fetchSearches={this.props.fetchSearches}
         createSearch={this.props.createSearch}
         deleteSearch={this.props.deleteSearch}
-        sortOptions={DEFAULT_SORT_OPTIONS}
-        filterOptions={BUILD_FILTER_OPTIONS}
+        sortOptions={BASE_SORT_OPTIONS}
+        columnOptions={getColumnFilters(getBuildColumnOptions({
+          onDelete: this.props.onDelete,
+          onStop: this.props.onStop,
+          onArchive: this.props.onArchive,
+          onRestore: this.props.onRestore,
+          showBookmarks: this.props.showBookmarks,
+          bookmark: this.props.bookmark,
+          unbookmark: this.props.unbookmark
+        }))}
       />
     );
   }

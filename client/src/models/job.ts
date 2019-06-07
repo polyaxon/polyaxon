@@ -24,7 +24,7 @@ export class JobModel {
   public started_at: string;
   public finished_at: string;
   public resources: { [key: string]: any };
-  public config: { [key: string]: any };
+  public content: string;
   public node_scheduled: string;
   public bookmarked: boolean;
 }

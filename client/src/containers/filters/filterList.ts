@@ -4,15 +4,15 @@ import * as actions from '../../actions/search';
 import * as search_actions from '../../actions/search';
 import FilterList from '../../components/filters/filterList';
 import { AppState } from '../../constants/types';
-import { FilterOption } from '../../interfaces/filterOptions';
+import { ColumnInterface } from '../../interfaces/tableColumns';
 import { SearchModel } from '../../models/search';
 
-export interface Params {
+export interface Props {
   query?: string;
   sort?: string;
   handleFilter: (query: string, sort: string) => any;
   sortOptions: string[];
-  filterOptions: FilterOption[];
+  columnOptions: ColumnInterface[];
   defaultSort?: string;
   fetchSearches?: () => actions.SearchAction;
   createSearch?: (data: SearchModel) => search_actions.SearchAction;
@@ -20,7 +20,7 @@ export interface Params {
   selectSearch?: (data: SearchModel) => void;
 }
 
-export function mapStateToProps(state: AppState, params: Params) {
+export function mapStateToProps(state: AppState, props: Props) {
   const searchIds = state.searches.lastFetched.ids;
   const count = state.searches.lastFetched.count;
   const searches: SearchModel[] = [];
@@ -29,15 +29,15 @@ export function mapStateToProps(state: AppState, params: Params) {
       searches.push(state.searches.byIds[searchId]);
     });
   return {
-    query: params.query,
-    sort: params.sort,
-    handleFilter: params.handleFilter,
-    sortOptions: params.sortOptions,
-    filterOptions: params.filterOptions,
-    defaultSort: params.defaultSort,
-    fetchSearches: params.fetchSearches,
-    createSearch: params.createSearch,
-    deleteSearch: params.deleteSearch,
+    query: props.query,
+    sort: props.sort,
+    handleFilter: props.handleFilter,
+    sortOptions: props.sortOptions,
+    columnOptions: props.columnOptions,
+    defaultSort: props.defaultSort,
+    fetchSearches: props.fetchSearches,
+    createSearch: props.createSearch,
+    deleteSearch: props.deleteSearch,
     searches,
     searchesCount: count,
   };

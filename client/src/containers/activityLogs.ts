@@ -10,14 +10,14 @@ import { isTrue } from '../constants/utils';
 import { ActivityLogModel } from '../models/activitylog';
 import { getErrorsGlobal } from '../utils/errors';
 
-interface OwnProps {
+interface Props {
   user?: string;
   projectName?: string;
   history?: boolean;
   fetchData?: () => any;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
   const useLastFetched = () => {
     const activityLogIds = state.activityLogs.lastFetched.ids;
     const count = state.activityLogs.lastFetched.count;
@@ -32,7 +32,7 @@ export function mapStateToProps(state: AppState, ownProps: OwnProps) {
 
   const isLoading = isTrue(state.loadingIndicators.statuses.global.fetch);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
+    isCurrentUser: state.auth.user === props.user,
     activityLogs: results.activityLogs,
     count: results.count,
     isLoading,
@@ -44,19 +44,19 @@ export interface DispatchProps {
   fetchData?: (offset?: number) => actions.ActivityLogAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ActivityLogAction>, ownProps: OwnProps): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ActivityLogAction>, props: Props): DispatchProps {
   return {
     fetchData: (offset?: number) => {
       const filters: { [key: string]: number | boolean | string } = {};
       if (offset) {
         filters.offset = offset;
       }
-      if (ownProps.history) {
+      if (props.history) {
         return dispatch(actions.fetchHistoryLogs(filters));
-      } else if (ownProps.projectName && ownProps.user) {
+      } else if (props.projectName && props.user) {
         return dispatch(actions.fetchProjectActivityLogs(
-          ownProps.user,
-          ownProps.projectName,
+          props.user,
+          props.projectName,
           filters));
       } else {
         return dispatch(actions.fetchActivityLogs(filters));

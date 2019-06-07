@@ -89,7 +89,7 @@ export default class TensorboardDetail extends React.Component<Props, {}> {
                   relUrl: 'statuses'
                 }, {
                   title: 'Config',
-                  component: <YamlText title="Config" config={tensorboard.config}/>,
+                  component: <YamlText title="Config" configText={tensorboard.content}/>,
                   relUrl: 'config'
                 }, {
                   title: 'Instructions',

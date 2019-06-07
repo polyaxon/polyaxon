@@ -5,10 +5,7 @@ import { Modal } from 'react-bootstrap';
 import * as actions from '../../actions/experiments';
 import * as groupsActions from '../../actions/groups';
 import * as searchActions from '../../actions/search';
-import { FILTER_EXAMPLES, JOB_FILTER_OPTIONS } from '../../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { isDone } from '../../constants/statuses';
-import { FilterOption } from '../../interfaces/filterOptions';
 import { ExperimentModel } from '../../models/experiment';
 import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
@@ -20,7 +17,13 @@ import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
+import {
+  getColumnFilters,
+  getExperimentAllColumnOptions,
+  getExperimentColumnOptions,
+} from '../tables/columns';
 import PaginatedTable from '../tables/paginatedTable';
+import { BASE_SORT_OPTIONS } from '../tables/sorters';
 import Experiment from './experiment';
 import ExperimentActions from './experimentActions';
 import SelectionCreate from './selectinCreate';
@@ -277,42 +280,10 @@ export default class Experiments extends React.Component<Props, State> {
   };
 
   public render() {
-    let additionalFilters: FilterOption[] = this.props.groupId ?
-      [] :
-      [{filter: 'independent', type: 'scalar', desc: 'independent: true, default is false', icon: 'fas fa-minus'}];
-    additionalFilters = [
-      ...additionalFilters,
-      ...[{
-        filter: 'declarations.*',
-        type: 'value',
-        desc: 'declarations.activation: sigmoid or declarations.activation: sigmoid|relu',
-        icon: 'fas fa-cog'
-      },
-        {
-          filter: 'metric.*',
-          type: 'scalar',
-          desc: FILTER_EXAMPLES.scalar('metric.loss'),
-          icon: 'fas fa-chart-area',
-        },
-        {
-          filter: 'group.id',
-          type: 'value',
-          desc: FILTER_EXAMPLES.id('group.id'),
-          icon: 'fas fa-cubes',
-        },
-        {
-          filter: 'group.name',
-          type: 'value',
-          desc: FILTER_EXAMPLES.name('group.name'),
-          icon: 'fas fa-cubes',
-        },
-      ]] as FilterOption[];
-    const filterOptions = [
-      ...JOB_FILTER_OPTIONS,
-      ...additionalFilters
-    ] as FilterOption[];
+    const columnOptions = getColumnFilters(
+      this.props.groupId ? getExperimentAllColumnOptions() : getExperimentColumnOptions());
     const sortOptions = [
-      ...DEFAULT_SORT_OPTIONS,
+      ...BASE_SORT_OPTIONS,
       ...this.state.metrics.map((metric) => `metric.${metric}`),
     ];
     const experimentActions = [
@@ -566,7 +537,7 @@ export default class Experiments extends React.Component<Props, State> {
         deleteSearch={this.props.deleteSearch}
         selectSearch={this.selectSearch}
         sortOptions={sortOptions}
-        filterOptions={filterOptions}
+        columnOptions={columnOptions}
       />
     );
   }

@@ -23,7 +23,7 @@ export class TensorboardModel {
   public updated_at: string;
   public started_at: string;
   public finished_at: string;
-  public config: { [key: string]: any };
+  public content: string;
   public resources: { [key: string]: any };
   public node_scheduled: string;
   public bookmarked: boolean;

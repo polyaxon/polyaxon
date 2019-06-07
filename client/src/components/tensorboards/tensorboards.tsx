@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import * as search_actions from '../../actions/search';
 import * as actions from '../../actions/tensorboards';
-import { JOB_FILTER_OPTIONS } from '../../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
 import { SearchModel } from '../../models/search';
 import { TensorboardModel } from '../../models/tensorboard';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
@@ -12,7 +10,9 @@ import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
+import { getColumnFilters, getJobColumnOptions } from '../tables/columns';
 import PaginatedTable from '../tables/paginatedTable';
+import { BASE_SORT_OPTIONS } from '../tables/sorters';
 import Tensorboard from './tensorboard';
 import TensorboardHeader from './tensorboardHeader';
 
@@ -101,8 +101,8 @@ export default class Tensorboards extends React.Component<Props, {}> {
         fetchSearches={this.props.fetchSearches}
         createSearch={this.props.createSearch}
         deleteSearch={this.props.deleteSearch}
-        sortOptions={DEFAULT_SORT_OPTIONS}
-        filterOptions={JOB_FILTER_OPTIONS}
+        sortOptions={BASE_SORT_OPTIONS}
+        columnOptions={getColumnFilters(getJobColumnOptions())}
       />
     );
   }

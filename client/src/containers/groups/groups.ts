@@ -1,5 +1,5 @@
-import * as _ from 'lodash';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import Groups from '../../components/groups/groups';
@@ -15,8 +15,8 @@ import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedGroups } from '../../utils/states';
 
-interface OwnProps {
-  user: string;
+interface Props extends RouteComponentProps<any> {
+  user?: string;
   projectName?: string;
   useFilters?: boolean;
   endpointList?: string;
@@ -26,18 +26,18 @@ interface OwnProps {
   fetchSearches?: () => search_actions.SearchAction;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
+  const cUser = props.user || props.match.params.user;
   const results = getLastFetchedGroups(state.groups);
-
   const isLoading = isTrue(state.loadingIndicators.groups.global.fetch);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
+    isCurrentUser: state.auth.user === cUser,
     groups: results.groups,
     count: results.count,
-    useFilters: isTrue(ownProps.useFilters),
-    showBookmarks: isTrue(ownProps.showBookmarks),
-    showDeleted: isTrue(ownProps.showDeleted),
-    endpointList: ownProps.endpointList,
+    useFilters: isTrue(props.useFilters),
+    showBookmarks: isTrue(props.showBookmarks),
+    showDeleted: isTrue(props.showDeleted),
+    endpointList: props.endpointList,
     isLoading,
     errors: getErrorsGlobal(state.alerts.groups.global, isLoading, ACTIONS.FETCH),
   };
@@ -58,11 +58,14 @@ export interface DispatchProps {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, props: Props): DispatchProps {
+  const cUser = props.user || props.match.params.user;
+  const cProjectName = props.projectName || `${cUser}.${props.match.params.projectName}`;
+
   return {
     onCreate: (group: GroupModel) => dispatch(actions.createGroup(
-      params.match.params.user,
-      params.match.params.projectName,
+      props.match.params.user,
+      props.match.params.projectName,
       group,
       true)),
     onDelete: (groupName: string) => dispatch(actions.deleteGroup(groupName)),
@@ -73,22 +76,22 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
     unbookmark: (groupName: string) => dispatch(actions.unbookmark(groupName)),
     onUpdate: (group: GroupModel) => dispatch(actions.updateGroup(group.unique_name, group)),
     fetchSearches: () => {
-      if (params.projectName) {
-        return dispatch(search_actions.fetchExperimentGroupSearches(params.projectName));
+      if (cProjectName) {
+        return dispatch(search_actions.fetchExperimentGroupSearches(cProjectName));
       } else {
         throw new Error('Groups container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (params.projectName) {
-        return dispatch(search_actions.createExperimentGroupSearch(params.projectName, data));
+      if (cProjectName) {
+        return dispatch(search_actions.createExperimentGroupSearch(cProjectName, data));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (params.projectName) {
-        return dispatch(search_actions.deleteExperimentGroupSearch(params.projectName, searchId));
+      if (cProjectName) {
+        return dispatch(search_actions.deleteExperimentGroupSearch(cProjectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }
@@ -104,12 +107,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(params.projectName) && params.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedGroups(params.user, filters));
-      } else if (_.isNil(params.projectName) && params.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedGroups(params.user, filters));
-      } else if (params.projectName) {
-        return dispatch(actions.fetchGroups(params.projectName, filters));
+      if (props.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedGroups(cUser, filters));
+      } else if (props.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedGroups(cUser, filters));
+      } else if (cProjectName) {
+        return dispatch(actions.fetchGroups(cProjectName, filters));
       } else {
         throw new Error('Groups container expects either a project name or bookmarks or archives.');
       }
@@ -117,4 +120,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.GroupAction>, para
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Groups);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Groups));

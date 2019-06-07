@@ -9,7 +9,7 @@ import { isTrue } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
 import { getErrorsGlobal } from '../../utils/errors';
 
-export function mapStateToProps(state: AppState, ownProps: {}) {
+export function mapStateToProps(state: AppState, props: {}) {
   const isLoading = isTrue(state.loadingIndicators.projects.global.create);
   return {
     user: state.auth.user,
@@ -23,7 +23,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.ProjectAction>, ownProps: {}): DispatchProps {
+  dispatch: Dispatch<actions.ProjectAction>, props: {}): DispatchProps {
   return {
     onCreate: (project: ProjectModel) => dispatch(actions.createProject(project, true)),
   };

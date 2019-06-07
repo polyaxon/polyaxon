@@ -15,7 +15,6 @@ import {
   DescriptionSchema,
   ErrorsField,
   FormButtons,
-  getConfig,
   NameField,
   NameSchema,
   ProjectField,
@@ -49,7 +48,7 @@ export default class TensorboardCreateFull extends React.Component<Props, {}> {
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: getConfig(state.config),
+      content: state.config,
       is_managed: true
     }) as TensorboardModel;
 

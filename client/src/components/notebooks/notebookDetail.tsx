@@ -89,7 +89,7 @@ export default class NotebookDetail extends React.Component<Props, {}> {
                   relUrl: 'statuses'
                 }, {
                   title: 'Config',
-                  component: <YamlText title="Config" config={notebook.config}/>,
+                  component: <YamlText title="Config" configText={notebook.content}/>,
                   relUrl: 'config'
                 }, {
                   title: 'Instructions',

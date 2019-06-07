@@ -164,7 +164,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   relUrl: 'outputs'
                 }, {
                   title: 'Config',
-                  component: <YamlText title="Config" config={experiment.config}/>,
+                  component: <YamlText title="Config" configText={experiment.content}/>,
                   relUrl: 'config'
                 }, {
                   title: 'Instructions',

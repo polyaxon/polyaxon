@@ -13,7 +13,6 @@ import {
   DescriptionSchema,
   ErrorsField,
   FormButtons,
-  getConfig,
   NameField,
   NameSchema,
   ProjectField,

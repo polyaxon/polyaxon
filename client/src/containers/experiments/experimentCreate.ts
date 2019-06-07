@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as experimentsActions from '../../actions/experiments';
@@ -13,14 +13,16 @@ import { ExperimentModel } from '../../models/experiment';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedProjects } from '../../utils/states';
 
-export function mapStateToProps(state: AppState, params: any) {
+interface Props extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: AppState, props: Props) {
   const isLoading = isTrue(state.loadingIndicators.experiments.global.create);
-  const isProjectEntity = _.isNil(params.match.params.user);
+  const isProjectEntity = _.isNil(props.match.params.user);
   const projects = isProjectEntity ? getLastFetchedProjects(state.projects).projects : [];
 
   return {
-    user: params.match.params.user || state.auth.user,
-    projectName: params.match.params.projectName,
+    user: props.match.params.user || state.auth.user,
+    projectName: props.match.params.projectName,
     isProjectEntity,
     isLoading,
     projects,

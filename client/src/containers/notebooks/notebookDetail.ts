@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { AppState } from '../../constants/types';
@@ -9,11 +9,13 @@ import * as actions from '../../actions/notebooks';
 import NotebookDetail from '../../components/notebooks/notebookDetail';
 import { getNotebookUniqueName } from '../../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any) {
+interface Props extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: AppState, props: Props) {
   const notebookUniqueName = getNotebookUniqueName(
-    params.match.params.user,
-    params.match.params.projectName,
-    params.match.params.notebookId);
+    props.match.params.user,
+    props.match.params.projectName,
+    props.match.params.notebookId);
   return _.includes(state.notebooks.uniqueNames, notebookUniqueName) ?
     {notebook: state.notebooks.byUniqueNames[notebookUniqueName]} :
     {notebook: null};
@@ -30,49 +32,49 @@ export interface DispatchProps {
   unbookmark: () => actions.NotebookAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.NotebookAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.NotebookAction>, props: Props): DispatchProps {
   return {
     fetchData: () => dispatch(
       actions.fetchNotebook(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.notebookId)),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.notebookId)),
     onUpdate: (updateDict: { [key: string]: any }) => dispatch(
       actions.updateNotebook(
         getNotebookUniqueName(
-          params.match.params.user,
-          params.match.params.projectName,
-          params.match.params.notebookId),
+          props.match.params.user,
+          props.match.params.projectName,
+          props.match.params.notebookId),
         updateDict)),
     onDelete: () => dispatch(actions.deleteNotebook(
       getNotebookUniqueName(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.notebookId),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.notebookId),
       true)),
     onStop: () => dispatch(actions.stopNotebook(getNotebookUniqueName(
-      params.match.params.user,
-      params.match.params.projectName,
-      params.match.params.notebookId))),
+      props.match.params.user,
+      props.match.params.projectName,
+      props.match.params.notebookId))),
     onArchive: () => dispatch(actions.archiveNotebook(getNotebookUniqueName(
-      params.match.params.user,
-      params.match.params.projectName,
-      params.match.params.notebookId),
+      props.match.params.user,
+      props.match.params.projectName,
+      props.match.params.notebookId),
       true)),
     onRestore: () => dispatch(actions.restoreNotebook(getNotebookUniqueName(
-      params.match.params.user,
-      params.match.params.projectName,
-      params.match.params.notebookId))),
+      props.match.params.user,
+      props.match.params.projectName,
+      props.match.params.notebookId))),
     bookmark: () => dispatch(
       actions.bookmark(getNotebookUniqueName(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.notebookId))),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.notebookId))),
     unbookmark: () => dispatch(
       actions.unbookmark(getNotebookUniqueName(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.notebookId))),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.notebookId))),
   };
 }
 

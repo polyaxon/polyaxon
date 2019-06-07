@@ -12,7 +12,7 @@ export class ExperimentModel {
   public backend: string;
   public framework: string;
   public user: string;
-  public config: { [key: string]: any };
+  public content: string;
   public num_jobs: number;
   public last_status: string;
   public deleted?: boolean;

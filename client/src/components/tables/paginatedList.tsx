@@ -6,7 +6,7 @@ import * as queryString from 'query-string';
 
 import { PAGE_SIZE, paginate, paginateNext, paginatePrevious } from '../../constants/paginate';
 import FilterList from '../../containers/filters/filterList';
-import { FilterOption } from '../../interfaces/filterOptions';
+import { ColumnInterface } from '../../interfaces/tableColumns';
 import { DEFAULT_FILTERS } from '../filters/constants';
 import Refresh from '../refresh';
 import { Errors } from './errors';
@@ -22,7 +22,7 @@ export interface Props {
   filters: boolean | string;
   fetchData: (offset: number, query?: string, sort?: string, extraFilters?: {}) => any;
   sortOptions?: string[];
-  filterOptions?: FilterOption[];
+  columnOptions?: ColumnInterface[];
   isLoading: boolean;
   errors: any;
 }
@@ -137,7 +137,7 @@ export default class PaginatedList extends React.Component<Props, State> {
             sort={this.state.sort}
             handleFilter={(query: string, sort: string) => this.handleFilter(query, sort)}
             sortOptions={this.props.sortOptions || []}
-            filterOptions={this.props.filterOptions || []}
+            columnOptions={this.props.columnOptions || []}
           />);
       } else {
         return (null);

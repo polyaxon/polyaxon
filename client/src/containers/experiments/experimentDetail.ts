@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as codeRefActions from '../../actions/codeReference';
@@ -9,11 +9,13 @@ import ExperimentDetail from '../../components/experiments/experimentDetail';
 import { AppState } from '../../constants/types';
 import { getExperimentUniqueName } from '../../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any) {
+interface Props extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: AppState, props: Props) {
   const experimentUniqueName = getExperimentUniqueName(
-    params.match.params.user,
-    params.match.params.projectName,
-    params.match.params.experimentId);
+    props.match.params.user,
+    props.match.params.projectName,
+    props.match.params.experimentId);
   return _.includes(state.experiments.uniqueNames, experimentUniqueName) ?
     {experiment: state.experiments.byUniqueNames[experimentUniqueName]} :
     {experiment: null};

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import { AppState } from '../../constants/types';
@@ -9,11 +9,13 @@ import * as actions from '../../actions/tensorboards';
 import TensorboardDetail from '../../components/tensorboards/tensorboardDetail';
 import { getTensorboardUniqueName } from '../../constants/utils';
 
-export function mapStateToProps(state: AppState, params: any) {
+interface Props extends RouteComponentProps<any> {}
+
+export function mapStateToProps(state: AppState, props: Props) {
   const tensorboardUniqueName = getTensorboardUniqueName(
-    params.match.params.user,
-    params.match.params.projectName,
-    params.match.params.tensorboardId);
+    props.match.params.user,
+    props.match.params.projectName,
+    props.match.params.tensorboardId);
   return _.includes(state.tensorboards.uniqueNames, tensorboardUniqueName) ?
     {tensorboard: state.tensorboards.byUniqueNames[tensorboardUniqueName]} :
     {tensorboard: null};
@@ -30,49 +32,49 @@ export interface DispatchProps {
   unbookmark: () => actions.TensorboardAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.TensorboardAction>, props: Props): DispatchProps {
   return {
     fetchData: () => dispatch(
       actions.fetchTensorboard(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.tensorboardId)),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.tensorboardId)),
     onUpdate: (updateDict: { [key: string]: any }) => dispatch(
       actions.updateTensorboard(
         getTensorboardUniqueName(
-          params.match.params.user,
-          params.match.params.projectName,
-          params.match.params.tensorboardId),
+          props.match.params.user,
+          props.match.params.projectName,
+          props.match.params.tensorboardId),
         updateDict)),
     onDelete: () => dispatch(actions.deleteTensorboard(
       getTensorboardUniqueName(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.tensorboardId),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.tensorboardId),
       true)),
     onStop: () => dispatch(actions.stopTensorboard(getTensorboardUniqueName(
-      params.match.params.user,
-      params.match.params.projectName,
-      params.match.params.tensorboardId))),
+      props.match.params.user,
+      props.match.params.projectName,
+      props.match.params.tensorboardId))),
     onArchive: () => dispatch(actions.archiveTensorboard(getTensorboardUniqueName(
-      params.match.params.user,
-      params.match.params.projectName,
-      params.match.params.tensorboardId),
+      props.match.params.user,
+      props.match.params.projectName,
+      props.match.params.tensorboardId),
       true)),
     onRestore: () => dispatch(actions.restoreTensorboard(getTensorboardUniqueName(
-      params.match.params.user,
-      params.match.params.projectName,
-      params.match.params.tensorboardId))),
+      props.match.params.user,
+      props.match.params.projectName,
+      props.match.params.tensorboardId))),
     bookmark: () => dispatch(
       actions.bookmark(getTensorboardUniqueName(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.tensorboardId))),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.tensorboardId))),
     unbookmark: () => dispatch(
       actions.unbookmark(getTensorboardUniqueName(
-        params.match.params.user,
-        params.match.params.projectName,
-        params.match.params.tensorboardId))),
+        props.match.params.user,
+        props.match.params.projectName,
+        props.match.params.tensorboardId))),
   };
 }
 

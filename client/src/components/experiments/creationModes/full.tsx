@@ -13,7 +13,6 @@ import {
   DescriptionSchema,
   ErrorsField,
   FormButtons,
-  getConfig,
   NameField,
   NameSchema,
   ProjectField,
@@ -48,7 +47,7 @@ export default class ExperimentCreateFull extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      config: getConfig(state.config),
+      content: state.config,
       is_managed: true
     }) as ExperimentModel;
 

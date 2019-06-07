@@ -4,13 +4,13 @@ import { Dispatch } from 'redux';
 import { AppState } from '../constants/types';
 import { StatusModel } from '../models/status';
 
-import { ACTIONS } from '../constants/actions';
-import { getErrorsGlobal } from '../utils/errors';
 import * as actions from '../actions/statuses';
 import Statuses from '../components/statuses/statuses';
+import { ACTIONS } from '../constants/actions';
 import { isTrue } from '../constants/utils';
+import { getErrorsGlobal } from '../utils/errors';
 
-export function mapStateToProps(state: AppState, params: any) {
+export function mapStateToProps(state: AppState, params: {}) {
   const useLastFetched = () => {
     const statusIds = state.statuses.lastFetched.ids;
     const count = state.statuses.lastFetched.count;

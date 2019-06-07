@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/projects';
@@ -8,20 +8,25 @@ import ProjectOverview from '../../components/projects/projectOverview';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { getProjectUniqueName } from '../../constants/utils';
+import { ProjectModel } from '../../models/project';
 import { getErrorsByIds } from '../../utils/errors';
 import { getIsLoading } from '../../utils/isLoading';
 
-export function mapStateToProps(state: AppState, params: any) {
+interface Props extends RouteComponentProps<any> {
+  project: ProjectModel;
+}
+
+export function mapStateToProps(state: AppState, props: Props) {
   const projectUniqueName = getProjectUniqueName(
-    params.match.params.user,
-    params.match.params.projectName);
+    props.match.params.user,
+    props.match.params.projectName);
 
   const isGetLoading = getIsLoading(state.loadingIndicators.projects.byIds, projectUniqueName, ACTIONS.GET);
   const isUpdateLoading = getIsLoading(state.loadingIndicators.projects.byIds, projectUniqueName, ACTIONS.UPDATE);
   const isSetGitLoading = getIsLoading(state.loadingIndicators.projects.byIds, projectUniqueName, ACTIONS.SET_GIT);
   const UpdateErrors = getErrorsByIds(state.alerts.projects.byIds, isUpdateLoading, projectUniqueName, ACTIONS.UPDATE);
   const setGitErrors = getErrorsByIds(state.alerts.projects.byIds, isUpdateLoading, projectUniqueName, ACTIONS.SET_GIT);
-  const props = {
+  const propsResults = {
     isGetLoading,
     isUpdateLoading,
     isSetGitLoading,
@@ -29,8 +34,8 @@ export function mapStateToProps(state: AppState, params: any) {
     setGitErrors,
   };
   return _.includes(state.projects.uniqueNames, projectUniqueName) ?
-    {...props, project: state.projects.byUniqueNames[projectUniqueName]} :
-    {...props, project: null};
+    {...propsResults, project: state.projects.byUniqueNames[projectUniqueName]} :
+    {...propsResults, project: null};
 }
 
 export interface DispatchProps {
@@ -39,24 +44,24 @@ export interface DispatchProps {
   onFetch: () => actions.ProjectAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.ProjectAction>, props: Props): DispatchProps {
   return {
     onUpdate: (updateDict: { [key: string]: any }) => dispatch(
       actions.updateProject(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName),
+          props.match.params.user,
+          props.match.params.projectName),
         updateDict)),
     onSetGit: (updateDict: { [key: string]: any }) => dispatch(
       actions.setProjectGit(
         getProjectUniqueName(
-          params.match.params.user,
-          params.match.params.projectName),
+          props.match.params.user,
+          props.match.params.projectName),
         updateDict)),
     onFetch: () => dispatch(
       actions.fetchProject(
-        params.match.params.user,
-        params.match.params.projectName)),
+        props.match.params.user,
+        props.match.params.projectName)),
   };
 }
 

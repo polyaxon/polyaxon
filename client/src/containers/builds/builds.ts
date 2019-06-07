@@ -1,6 +1,5 @@
-import * as _ from 'lodash';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
 import Builds from '../../components/builds/builds';
@@ -16,8 +15,8 @@ import { SearchModel } from '../../models/search';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedBuilds } from '../../utils/states';
 
-interface OwnProps {
-  user: string;
+interface Props extends RouteComponentProps<any> {
+  user?: string;
   projectName?: string;
   endpointList?: string;
   useFilters?: boolean;
@@ -26,18 +25,18 @@ interface OwnProps {
   fetchData?: () => any;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
+  const cUser = props.user || props.match.params.user;
   const results = getLastFetchedBuilds(state.builds);
-
   const isLoading = isTrue(state.loadingIndicators.builds.global.fetch);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
+    isCurrentUser: state.auth.user === cUser,
     builds: results.builds,
     count: results.count,
-    useFilters: isTrue(ownProps.useFilters),
-    showBookmarks: isTrue(ownProps.showBookmarks),
-    showDeleted: isTrue(ownProps.showDeleted),
-    endpointList: ownProps.endpointList,
+    useFilters: isTrue(props.useFilters),
+    showBookmarks: isTrue(props.showBookmarks),
+    showDeleted: isTrue(props.showDeleted),
+    endpointList: props.endpointList,
     isLoading,
     errors: getErrorsGlobal(state.alerts.builds.global, isLoading, ACTIONS.FETCH),
   };
@@ -58,11 +57,14 @@ export interface DispatchProps {
   deleteSearch?: (searchId: number) => search_actions.SearchAction;
 }
 
-export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, params: any): DispatchProps {
+export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, props: Props): DispatchProps {
+  const cUser = props.user || props.match.params.user;
+  const cProjectName = props.projectName || `${cUser}.${props.match.params.projectName}`;
+
   return {
     onCreate: (build: BuildModel) => dispatch(actions.createBuild(
-      params.match.params.user,
-      params.match.params.projectName,
+      props.match.params.user,
+      props.match.params.projectName,
       build,
       true)),
     onDelete: (buildName: string) => dispatch(actions.deleteBuild(buildName)),
@@ -73,22 +75,22 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
     unbookmark: (buildName: string) => dispatch(actions.unbookmark(buildName)),
     onUpdate: (buildName: string, build: BuildModel) => dispatch(actions.updateBuild(buildName, build)),
     fetchSearches: () => {
-      if (params.projectName) {
-        return dispatch(search_actions.fetchBuildSearches(params.projectName));
+      if (cProjectName) {
+        return dispatch(search_actions.fetchBuildSearches(cProjectName));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     createSearch: (data: SearchModel) => {
-      if (params.projectName) {
-        return dispatch(search_actions.createBuildSearch(params.projectName, data));
+      if (cProjectName) {
+        return dispatch(search_actions.createBuildSearch(cProjectName, data));
       } else {
         throw new Error('Builds container does not have project.');
       }
     },
     deleteSearch: (searchId: number) => {
-      if (params.projectName) {
-        return dispatch(search_actions.deleteBuildSearch(params.projectName, searchId));
+      if (cProjectName) {
+        return dispatch(search_actions.deleteBuildSearch(cProjectName, searchId));
       } else {
         throw new Error('Builds container does not have project.');
       }
@@ -104,12 +106,12 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.BuildAction>, para
       if (offset) {
         filters.offset = offset;
       }
-      if (_.isNil(params.projectName) && params.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedBuilds(params.user, filters));
-      } else if (_.isNil(params.projectName) && params.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedBuilds(params.user, filters));
-      } else if (params.projectName) {
-        return dispatch(actions.fetchBuilds(params.projectName, filters));
+      if (props.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedBuilds(cUser, filters));
+      } else if (props.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedBuilds(cUser, filters));
+      } else if (cProjectName) {
+        return dispatch(actions.fetchBuilds(cProjectName, filters));
       } else {
         throw new Error('Builds container expects either a project name or bookmarks or archives.');
       }

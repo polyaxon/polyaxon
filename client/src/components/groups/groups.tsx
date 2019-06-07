@@ -2,9 +2,6 @@ import * as React from 'react';
 
 import * as actions from '../../actions/groups';
 import * as search_actions from '../../actions/search';
-import { DEFAULT_FILTER_OPTIONS, FILTER_EXAMPLES } from '../../constants/filtering';
-import { DEFAULT_SORT_OPTIONS } from '../../constants/sorting';
-import { FilterOption } from '../../interfaces/filterOptions';
 import { GroupModel } from '../../models/group';
 import { SearchModel } from '../../models/search';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
@@ -13,7 +10,9 @@ import { EmptyArchives } from '../empty/emptyArchives';
 import { EmptyBookmarks } from '../empty/emptyBookmarks';
 import { EmptyList } from '../empty/emptyList';
 import { DEFAULT_FILTERS } from '../filters/constants';
+import { getColumnFilters, getGroupColumnOptions} from '../tables/columns';
 import PaginatedTable from '../tables/paginatedTable';
+import { BASE_SORT_OPTIONS } from '../tables/sorters';
 import Group from './group';
 import GroupHeader from './groupHeader';
 
@@ -43,21 +42,6 @@ export interface Props {
 
 export default class Groups extends React.Component<Props, {}> {
   public render() {
-    const filterOptions = [
-      ...DEFAULT_FILTER_OPTIONS,
-      {
-        filter: 'search_algorithm',
-        type: 'value',
-        desc: 'search_algorithm: bo or search_algorithm: random|hyperband',
-        icon: 'fas fa-asterisk'
-      },
-      {
-        filter: 'concurrency',
-        type: 'scalar',
-        desc: FILTER_EXAMPLES.int('concurrency'),
-        icon: 'fas fa-grip-lines-vertical'
-      }
-    ] as FilterOption[];
     const filters = this.props.useFilters ? DEFAULT_FILTERS : false;
     const groups = this.props.groups;
     const listGroups = () => {
@@ -117,8 +101,8 @@ export default class Groups extends React.Component<Props, {}> {
         fetchSearches={this.props.fetchSearches}
         createSearch={this.props.createSearch}
         deleteSearch={this.props.deleteSearch}
-        sortOptions={DEFAULT_SORT_OPTIONS}
-        filterOptions={filterOptions}
+        sortOptions={BASE_SORT_OPTIONS}
+        columnOptions={getColumnFilters(getGroupColumnOptions())}
       />
     );
   }

@@ -11,7 +11,7 @@ import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { getErrorsGlobal } from '../../utils/errors';
 import { getLastFetchedProjects } from '../../utils/states';
 
-interface OwnProps {
+interface Props {
   user: string;
   endpointList?: string;
   showBookmarks?: boolean;
@@ -19,18 +19,18 @@ interface OwnProps {
   fetchData?: () => actions.ProjectAction;
 }
 
-export function mapStateToProps(state: AppState, ownProps: OwnProps) {
+export function mapStateToProps(state: AppState, props: Props) {
   const results = getLastFetchedProjects(state.projects);
 
   const isLoading = isTrue(state.loadingIndicators.projects.global.fetch);
   return {
-    isCurrentUser: state.auth.user === ownProps.user,
-    user: ownProps.user,
+    isCurrentUser: state.auth.user === props.user,
+    user: props.user,
     projects: results.projects,
     count: results.count,
-    showBookmarks: isTrue(ownProps.showBookmarks),
-    showDeleted: isTrue(ownProps.showDeleted),
-    endpointList: ownProps.endpointList,
+    showBookmarks: isTrue(props.showBookmarks),
+    showDeleted: isTrue(props.showDeleted),
+    endpointList: props.endpointList,
     isLoading,
     errors: getErrorsGlobal(state.alerts.projects.global, isLoading, ACTIONS.FETCH),
   };
@@ -47,7 +47,7 @@ export interface DispatchProps {
 }
 
 export function mapDispatchToProps(
-  dispatch: Dispatch<actions.ProjectAction>, ownProps: OwnProps): DispatchProps {
+  dispatch: Dispatch<actions.ProjectAction>, props: Props): DispatchProps {
   return {
     onDelete: (projectName: string) => dispatch(actions.deleteProject(projectName)),
     onArchive: (projectName: string) => dispatch(actions.archiveProject(projectName)),
@@ -60,12 +60,12 @@ export function mapDispatchToProps(
       if (offset) {
         filters.offset = offset;
       }
-      if (ownProps.endpointList === BOOKMARKS) {
-        return dispatch(actions.fetchBookmarkedProjects(ownProps.user, filters));
-      } else if (ownProps.endpointList === ARCHIVES) {
-        return dispatch(actions.fetchArchivedProjects(ownProps.user, filters));
-      } else if (ownProps.user) {
-        return dispatch(actions.fetchProjects(ownProps.user, filters));
+      if (props.endpointList === BOOKMARKS) {
+        return dispatch(actions.fetchBookmarkedProjects(props.user, filters));
+      } else if (props.endpointList === ARCHIVES) {
+        return dispatch(actions.fetchArchivedProjects(props.user, filters));
+      } else if (props.user) {
+        return dispatch(actions.fetchProjects(props.user, filters));
       } else {
         throw new Error('Projects container expects either a project name or bookmarks or archives.');
       }
