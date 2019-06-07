@@ -223,6 +223,70 @@ class ValueCondition(EqualityCondition):
         return ~cls._in_operator(name, params)
 
 
+class SearchCondition(ValueCondition):
+    VALUES = ValueCondition.VALUES | {'icontains', 'istartswith', 'iendswith'}
+    REPRESENTATIONS = ValueCondition.REPRESENTATIONS | {'%%', '%_', '_%'}
+    REPRESENTATION_MAPPING = EqualityCondition.REPRESENTATION_MAPPING + (
+        ('%%', 'icontains'),
+        ('_%', 'istartswith'),
+        ('%_', 'iendswith'),
+    )
+
+    @classmethod
+    def _get_operator(cls, op: str, negation: bool = False) -> Any:
+        if op not in cls.VALUES and op not in cls.REPRESENTATIONS:
+            return None
+
+        _op = ValueCondition._get_operator(op, negation)
+        if _op:
+            return _op
+
+        if op == '%%' or op == 'icontains':
+            if negation:
+                return cls._ncontains_operator
+            return cls._contains_operator
+
+        if op == '_%' or op == 'istartswith':
+            if negation:
+                return cls._nstartswith_operator
+            return cls._startswith_operator
+
+        if op == '%_' or op == 'iendswith':
+            if negation:
+                return cls._nendswith_operator
+            return cls._endswith_operator
+
+    @staticmethod
+    def _contains_operator(name: str, params: str) -> Any:
+        assert isinstance(params, str)
+        name = '{}__icontains'.format(name)
+        return Q(**{name: params})
+
+    @classmethod
+    def _ncontains_operator(cls, name: str, params: str) -> Any:
+        return ~cls._contains_operator(name, params)
+
+    @staticmethod
+    def _startswith_operator(name: str, params: str) -> Any:
+        assert isinstance(params, str)
+        name = '{}__istartswith'.format(name)
+        return Q(**{name: params})
+
+    @classmethod
+    def _nstartswith_operator(cls, name: str, params: str) -> Any:
+        return ~cls._startswith_operator(name, params)
+
+    @staticmethod
+    def _endswith_operator(name: str, params: str) -> Any:
+        assert isinstance(params, str)
+        name = '{}__iendswith'.format(name)
+        return Q(**{name: params})
+
+    @classmethod
+    def _nendswith_operator(cls, name: str, params: str) -> Any:
+        return ~cls._endswith_operator(name, params)
+
+
 class ArrayCondition(EqualityCondition):
     VALUES = EqualityCondition.VALUES | {'in', }
     REPRESENTATIONS = EqualityCondition.REPRESENTATIONS | {'|', }

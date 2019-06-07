@@ -8,10 +8,16 @@ from query.builder import (
     CallbackCondition,
     ComparisonCondition,
     DateTimeCondition,
+    SearchCondition,
     ValueCondition
 )
 from query.managers.base import BaseQueryManager
-from query.parser import parse_datetime_operation, parse_scalar_operation, parse_value_operation
+from query.parser import (
+    parse_datetime_operation,
+    parse_scalar_operation,
+    parse_search_operation,
+    parse_value_operation
+)
 
 
 def _indepenent_condition(queryset: Any, params: Union[str, Iterable], negation: bool) -> Any:
@@ -39,7 +45,9 @@ class ExperimentQueryManager(BaseQueryManager):
         'started_at': parse_datetime_operation,
         'finished_at': parse_datetime_operation,
         # Name
-        'name': parse_value_operation,
+        'name': parse_search_operation,
+        # Description
+        'description': parse_search_operation,
         # User
         'user': parse_value_operation,
         # Status
@@ -74,7 +82,9 @@ class ExperimentQueryManager(BaseQueryManager):
         'started_at': DateTimeCondition,
         'finished_at': DateTimeCondition,
         # Name
-        'name': ValueCondition,
+        'name': SearchCondition,
+        # Description
+        'description': SearchCondition,
         # User
         'user': ValueCondition,
         # Status

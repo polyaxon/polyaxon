@@ -10,6 +10,7 @@ from query.builder import (
     ComparisonCondition,
     DateTimeCondition,
     QueryCondSpec,
+    SearchCondition,
     ValueCondition
 )
 from query.exceptions import QueryError
@@ -29,7 +30,8 @@ class TestQueryManager(BaseTest):
         self.query2 = 'metric.loss:<=0.8, status:starting|running'
         self.query3 = 'finished_at:2012-12-12..2042-12-12'
         self.query4 = 'tags:~tag1|tag2,tags:tag3'
-        self.query5 = 'foobar:2012-12-12..2042-12-12'
+        self.query5 = 'name:%foo%,description:~bal%'
+        self.query6 = 'foobar:2012-12-12..2042-12-12'
 
     def test_managers(self):
         assert ExperimentQueryManager.NAME == 'experiment'
@@ -60,8 +62,14 @@ class TestQueryManager(BaseTest):
             'tags': ['~tag1|tag2', 'tag3'],
         }
 
+        tokenized_query = ExperimentQueryManager.tokenize(self.query5)
+        assert tokenized_query == {
+            'name': ['%foo%'],
+            'description': ['~bal%']
+        }
+
         with self.assertRaises(QueryError):
-            ExperimentQueryManager.tokenize(self.query5)
+            ExperimentQueryManager.tokenize(self.query6)
 
     def test_parse(self):
         tokenized_query = ExperimentQueryManager.tokenize(self.query1)
@@ -90,6 +98,13 @@ class TestQueryManager(BaseTest):
         assert parsed_query == {
             'tags': [QueryOpSpec('|', True, params=['tag1', 'tag2']),
                      QueryOpSpec('=', False, params='tag3')],
+        }
+
+        tokenized_query = ExperimentQueryManager.tokenize(self.query5)
+        parsed_query = ExperimentQueryManager.parse(tokenized_query)
+        assert parsed_query == {
+            'name': [QueryOpSpec('%%', False, params='foo')],
+            'description': [QueryOpSpec('_%', True, params='bal')],
         }
 
     def test_build(self):
@@ -133,6 +148,18 @@ class TestQueryManager(BaseTest):
                               params=['tag1', 'tag2']),
                 QueryCondSpec(ArrayCondition(op='=', negation=False),
                               params='tag3')],
+        }
+
+        tokenized_query = ExperimentQueryManager.tokenize(self.query5)
+        parsed_query = ExperimentQueryManager.parse(tokenized_query)
+        built_query = ExperimentQueryManager.build(parsed_query)
+        assert built_query == {
+            'name': [
+                QueryCondSpec(SearchCondition(op='%%', negation=False),
+                              params='foo')],
+            'description': [
+                QueryCondSpec(SearchCondition(op='_%', negation=True),
+                              params='bal')],
         }
 
     def test_handle(self):
@@ -200,5 +227,21 @@ class TestQueryManager(BaseTest):
             ).filter(
                 ~Q(tags__overlap=['tag1', 'tag2'])
             ).query)
+        ]
+        assert str(result_queryset.query) in queries
+
+        result_queryset = ExperimentQueryManager.apply(query_spec=self.query5,
+                                                       queryset=Experiment.objects)
+        queries = [
+            str(Experiment.objects.filter(
+                Q(name__icontains='foo')
+            ).filter(
+                ~Q(description__istartswith='bal')
+            ).query),
+            str(Experiment.objects.filter(
+                ~Q(description__istartswith='bal')
+            ).filter(
+                Q(name__icontains='foo')
+            ).query),
         ]
         assert str(result_queryset.query) in queries

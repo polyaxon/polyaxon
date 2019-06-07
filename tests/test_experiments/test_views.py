@@ -233,7 +233,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert data == self.serializer_class(queryset[limit:], many=True).data
 
     @pytest.mark.filterwarnings('ignore::RuntimeWarning')
-    def test_get_filter(self):
+    def test_get_filter(self):  # pylint:disable=too-many-statements
         # Wrong filter raises
         resp = self.auth_client.get(self.url + '?query=created_at<2010-01-01')
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
@@ -276,6 +276,13 @@ class TestProjectExperimentListViewV1(BaseViewTest):
 
         resp = self.auth_client.get(self.url +
                                     '?query=name:exp_foo')
+        assert resp.status_code == status.HTTP_200_OK
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
+        # Name Regex
+        resp = self.auth_client.get(self.url +
+                                    '?query=name:%foo')
         assert resp.status_code == status.HTTP_200_OK
         assert resp.data['next'] is None
         assert resp.data['count'] == 1

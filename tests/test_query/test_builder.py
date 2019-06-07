@@ -13,7 +13,13 @@ from factories.factory_experiments import (
     ExperimentStatusFactory
 )
 from lifecycles.experiments import ExperimentLifeCycle
-from query.builder import ComparisonCondition, DateTimeCondition, EqualityCondition, ValueCondition
+from query.builder import (
+    ComparisonCondition,
+    DateTimeCondition,
+    EqualityCondition,
+    SearchCondition,
+    ValueCondition
+)
 from query.exceptions import QueryConditionException
 from tests.base.case import BaseTest
 
@@ -508,3 +514,142 @@ class TestValueCondition(BaseTest):
                                   name='declarations__loss',
                                   params=['lll', 'ppp', 'foo', 'bar', 'moo'])
         assert queryset.count() == 0
+
+
+@pytest.mark.query_mark
+class TestSearchCondition(BaseTest):
+    def test_contains_operators(self):
+        op = SearchCondition._contains_operator('field', 'v1')
+        assert op == Q(field__icontains='v1')
+        op = SearchCondition._ncontains_operator('field', 'v1')
+        assert op == ~Q(field__icontains='v1')
+
+    def test_startswith_operators(self):
+        op = SearchCondition._startswith_operator('field', 'v1')
+        assert op == Q(field__istartswith='v1')
+        op = SearchCondition._nstartswith_operator('field', 'v1')
+        assert op == ~Q(field__istartswith='v1')
+
+    def test_endswith_operators(self):
+        op = SearchCondition._endswith_operator('field', 'v1')
+        assert op == Q(field__iendswith='v1')
+        op = SearchCondition._nendswith_operator('field', 'v1')
+        assert op == ~Q(field__iendswith='v1')
+
+    def test_range_apply(self):
+        ExperimentFactory(name='foo_bar')
+        ExperimentFactory(name='foo_moo')
+        ExperimentFactory(name='moo_boo')
+
+        contains_cond = SearchCondition(op='icontains')
+        ncontains_cond = SearchCondition(op='icontains', negation=True)
+        startswith_cond = SearchCondition(op='istartswith')
+        nstartswith_cond = SearchCondition(op='istartswith', negation=True)
+        endswith_cond = SearchCondition(op='iendswith')
+        nendswith_cond = SearchCondition(op='iendswith', negation=True)
+
+        # contains
+        queryset = contains_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='foo')
+        assert queryset.count() == 2
+
+        queryset = contains_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='bar')
+        assert queryset.count() == 1
+
+        queryset = contains_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='boo')
+        assert queryset.count() == 1
+
+        queryset = contains_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='none')
+        assert queryset.count() == 0
+
+        # ncontains
+        queryset = ncontains_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='foo')
+        assert queryset.count() == 1
+
+        queryset = ncontains_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='bar')
+        assert queryset.count() == 2
+
+        queryset = ncontains_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='boo')
+        assert queryset.count() == 2
+
+        queryset = ncontains_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='none')
+        assert queryset.count() == 3
+
+        # startswith
+        queryset = startswith_cond.apply(queryset=Experiment.objects,
+                                         name='name',
+                                         params='foo')
+        assert queryset.count() == 2
+
+        queryset = startswith_cond.apply(queryset=Experiment.objects,
+                                         name='name',
+                                         params='bar')
+        assert queryset.count() == 0
+
+        queryset = startswith_cond.apply(queryset=Experiment.objects,
+                                         name='name',
+                                         params='moo')
+        assert queryset.count() == 1
+
+        # nstartswith
+        queryset = nstartswith_cond.apply(queryset=Experiment.objects,
+                                          name='name',
+                                          params='foo')
+        assert queryset.count() == 1
+
+        queryset = nstartswith_cond.apply(queryset=Experiment.objects,
+                                          name='name',
+                                          params='bar')
+        assert queryset.count() == 3
+
+        queryset = nstartswith_cond.apply(queryset=Experiment.objects,
+                                          name='name',
+                                          params='moo')
+        assert queryset.count() == 2
+
+        # endswith
+        queryset = endswith_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='foo')
+        assert queryset.count() == 0
+
+        queryset = endswith_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='bar')
+        assert queryset.count() == 1
+
+        queryset = endswith_cond.apply(queryset=Experiment.objects,
+                                       name='name',
+                                       params='moo')
+        assert queryset.count() == 1
+
+        # nendswith
+        queryset = nendswith_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='foo')
+        assert queryset.count() == 3
+
+        queryset = nendswith_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='bar')
+        assert queryset.count() == 2
+
+        queryset = nendswith_cond.apply(queryset=Experiment.objects,
+                                        name='name',
+                                        params='moo')
+        assert queryset.count() == 2

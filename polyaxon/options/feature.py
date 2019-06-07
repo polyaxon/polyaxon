@@ -1,7 +1,7 @@
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 from options.exceptions import OptionException
-from options.option import Option, OptionStores, NAMESPACE_DB_OPTION_MARKER
+from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.option_namespaces import FEATURES
 from options.types import CONF_TYPES
 

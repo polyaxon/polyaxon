@@ -2,7 +2,7 @@ import pytest
 
 from options.exceptions import OptionException
 from options.feature import Feature
-from options.option import OptionStores, NAMESPACE_DB_OPTION_MARKER
+from options.option import NAMESPACE_DB_OPTION_MARKER, OptionStores
 from tests.base.case import BaseTest
 
 

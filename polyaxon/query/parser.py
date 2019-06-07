@@ -45,7 +45,7 @@ def parse_comparison_operation(operation: str) -> Tuple[Optional[str], str]:
 def parse_datetime_operation(operation: str) -> 'QueryOpSpec':
     """Parse datetime operations.
 
-    A datetime operation can one of the following:
+    A datetime operation can be one of the following:
 
      * single value: start_date:2014-10-10, start_date:>2014-10-10, start_date:>=2014-10-10
      * negation single value: start_date:~2014-10-10
@@ -91,7 +91,7 @@ def parse_datetime_operation(operation: str) -> 'QueryOpSpec':
 def parse_scalar_operation(operation: str) -> 'QueryOpSpec':
     """Parse scalar operations.
 
-    A scalar operation can one of the following:
+    A scalar operation can be one of the following:
 
      * single value: start_date:12, metric1:>0.9, metric1:>=-0.12
      * negation single value: metric1:~1112, metric1:~<1112 equivalent to metric1:>=1112
@@ -133,7 +133,7 @@ def parse_scalar_operation(operation: str) -> 'QueryOpSpec':
 def parse_value_operation(operation: str) -> 'QueryOpSpec':
     """Parse value operations.
 
-    A value operation can one of the following:
+    A value operation can be one of the following:
 
      * single value: tag1:foo
      * negation single value: tag1:~foo
@@ -168,6 +168,85 @@ def parse_value_operation(operation: str) -> 'QueryOpSpec':
             raise QueryParserException('`{}` is not allowed for value operations, '
                                        'Operation: {}'.format(op, operation))
         return QueryOpSpec(op, negation, params)
+
+    if not _operation:
+        raise QueryParserException('Expression is not valid, it must be formatted as '
+                                   'name:operation, '
+                                   'Operation: {}'.format(operation))
+    # Now the operation must be an equality param param
+    return QueryOpSpec('=', negation, _operation)
+
+
+def parse_search_operation(operation: str) -> 'QueryOpSpec':
+    """Parse search operations.
+
+    A search operation can be one of the following:
+
+     * single value: tag1:foo
+     * negation single value: tag1:~foo
+     * multiple values: tag1:foo|bar|moo
+     * negation multiple values: tag1:~foo|bar|moo
+     * like value: name:%foo or name:foo% or name:%foo%
+     * not like value: name:~%foo or name:~foo% or name:~%foo%
+
+    This parser does not allow `..`, '>', '<', '>=', and '<='.
+    """
+    _operation = operation.strip()
+    if not _operation:
+        raise QueryParserException('Operation is not valid: {}'.format(operation))
+    # Check range not allowed
+    if '..' in _operation:
+        raise QueryParserException('`..` is not allowed for value operations. '
+                                   'Operation: {}'.format(operation))
+
+    # Check negation
+    negation, _operation = parse_negation_operation(_operation)
+
+    # Check comparison not allowed
+    op, _operation = parse_comparison_operation(_operation)
+    if op:
+        raise QueryParserException('`{}` is not allowed for value operations, '
+                                   'Operation: {}'.format(op, operation))
+
+    # Check in operator
+    if '|' in _operation:
+        op = '|'
+        params = _operation.split('|')
+        params = [param.strip() for param in params if param.strip()]
+        if len(params) <= 1:
+            raise QueryParserException('`{}` is not allowed for value operations, '
+                                       'Operation: {}'.format(op, operation))
+        return QueryOpSpec(op, negation, params)
+
+    # Check like operator
+    start_like = _operation.endswith('%')
+    end_like = _operation.startswith('%')
+    if start_like and end_like:
+        op = '%%'
+        params = _operation.split('%')
+        params = [param.strip() for param in params if param.strip()]
+        if len(params) != 1:
+            raise QueryParserException('`{}` is not allowed for value operations, '
+                                       'Operation: {}'.format(op, operation))
+        return QueryOpSpec(op, negation, params[0])
+
+    if start_like:
+        op = '_%'
+        params = _operation.split('%')
+        params = [param.strip() for param in params if param.strip()]
+        if len(params) != 1:
+            raise QueryParserException('`{}` is not allowed for value operations, '
+                                       'Operation: {}'.format(op, operation))
+        return QueryOpSpec(op, negation, params[0])
+
+    if end_like:
+        op = '%_'
+        params = _operation.split('%')
+        params = [param.strip() for param in params if param.strip()]
+        if len(params) != 1:
+            raise QueryParserException('`{}` is not allowed for value operations, '
+                                       'Operation: {}'.format(op, operation))
+        return QueryOpSpec(op, negation, params[0])
 
     if not _operation:
         raise QueryParserException('Expression is not valid, it must be formatted as '

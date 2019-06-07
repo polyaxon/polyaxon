@@ -1,9 +1,9 @@
 import time
 
 from kubernetes.client.rest import ApiException
+from urllib3.exceptions import MaxRetryError
 
 from django.db import InterfaceError, connection
-from urllib3.exceptions import MaxRetryError
 
 import conf
 

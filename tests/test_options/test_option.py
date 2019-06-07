@@ -1,8 +1,14 @@
 import pytest
 
 from options.exceptions import OptionException
-from options.option import Option, OptionStores, NAMESPACE_DB_OPTION_MARKER, \
-    NAMESPACE_DB_CONFIG_MARKER, NAMESPACE_SETTINGS_MARKER, NAMESPACE_ENV_MARKER
+from options.option import (
+    NAMESPACE_DB_CONFIG_MARKER,
+    NAMESPACE_DB_OPTION_MARKER,
+    NAMESPACE_ENV_MARKER,
+    NAMESPACE_SETTINGS_MARKER,
+    Option,
+    OptionStores
+)
 from tests.base.case import BaseTest
 
 
