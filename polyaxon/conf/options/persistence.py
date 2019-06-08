@@ -2,7 +2,7 @@ import conf
 
 from options.registry import persistence
 
-conf.subscribe(persistence.ReposClaimNAme)
+conf.subscribe(persistence.ReposClaimName)
 conf.subscribe(persistence.ReposHostPath)
 conf.subscribe(persistence.ReposMountPath)
 conf.subscribe(persistence.UploadMountPath)

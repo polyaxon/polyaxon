@@ -25,7 +25,8 @@ class WorkerCheck(Check):
                 cls.WORKER_HEALTH_TASK,
                 args=[arg, arg],
                 expires=timeout,
-                countdown=None
+                countdown=None,
+                ignore_result=False
             )
             task_result.get(timeout=timeout)
             if task_result.result != health_task(arg, arg):

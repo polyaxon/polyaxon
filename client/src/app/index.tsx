@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Router } from 'react-router-dom';
 
 import history from '../history';
-import Routes from './routes';
+import Routes from '../routes/base';
 
-import './app.less';
+import './global.less';
 
 function App() {
   return (

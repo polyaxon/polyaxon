@@ -12,7 +12,7 @@ PERSISTENCE_OUTPUTS = 'PERSISTENCE_OUTPUTS'
 PERSISTENCE_LOGS = 'PERSISTENCE_LOGS'
 
 
-class ReposClaimNAme(Option):
+class ReposClaimName(Option):
     key = REPOS_CLAIM_NAME
     is_global = False
     is_secret = False
