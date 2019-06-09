@@ -24,4 +24,4 @@ def has_object_permission(permission: permissions.BasePermission,
         return True
 
     request.access = DEFAULT_ACCESS
-    return False
+    return True

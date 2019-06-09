@@ -56,7 +56,7 @@ class DummySecretDBOption(Option):
     options = None
 
 
-@pytest.mark.conf_mark
+@pytest.mark.configs_mark
 class TestClusterOptionsHandler(BaseTest):
     def setUp(self):
         super().setUp()

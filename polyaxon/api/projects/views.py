@@ -7,7 +7,7 @@ from rest_framework.response import Response
 import auditor
 import workers
 
-from api.endpoint.admin import AdminProjectListPermission, AdminResourceEndpoint
+from api.endpoint.owner import OwnerProjectListPermission, OwnerResourceEndpoint
 from api.endpoint.base import (
     CreateEndpoint,
     DestroyEndpoint,
@@ -53,10 +53,10 @@ class ProjectCreateView(CreateAPIView):
         auditor.record(event_type=PROJECT_CREATED, instance=instance)
 
 
-class ProjectListView(BookmarkedListMixinView, AdminResourceEndpoint, ListEndpoint):
+class ProjectListView(BookmarkedListMixinView, OwnerResourceEndpoint, ListEndpoint):
     """List projects for a user."""
     queryset = queries.projects.order_by('-updated_at')
-    permission_classes = (AdminProjectListPermission,)
+    permission_classes = (OwnerProjectListPermission,)
     serializer_class = BookmarkedProjectSerializer
 
     def filter_queryset(self, queryset):
@@ -65,10 +65,10 @@ class ProjectListView(BookmarkedListMixinView, AdminResourceEndpoint, ListEndpoi
         return super().filter_queryset(queryset=queryset)
 
 
-class ProjectNameListView(AdminResourceEndpoint, ListEndpoint):
+class ProjectNameListView(OwnerResourceEndpoint, ListEndpoint):
     """List projects' names for a user."""
     queryset = queries.projects.order_by('-updated_at')
-    permission_classes = (AdminProjectListPermission,)
+    permission_classes = (OwnerProjectListPermission,)
     serializer_class = ProjectNameSerializer
     pagination_class = LargeLimitOffsetPagination
 

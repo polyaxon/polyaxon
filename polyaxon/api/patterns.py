@@ -51,6 +51,8 @@ api_patterns += [
     re_path(r'', include(
         ('api.ci.urls', 'ci'), namespace='ci')),
     re_path(r'', include(
+        ('api.options.urls', 'options'), namespace='options')),
+    re_path(r'', include(
         ('api.projects.urls', 'projects'), namespace='projects')),
 ]
 

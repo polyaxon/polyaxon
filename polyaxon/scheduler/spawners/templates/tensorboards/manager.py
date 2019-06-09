@@ -12,6 +12,7 @@ from options.registry.container_names import (
 )
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
+from options.registry.service_accounts import SERVICE_ACCOUNTS_TENSORBOARDS
 from options.registry.node_selectors import NODE_SELECTORS_TENSORBOARDS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
 from options.registry.spawner import (
@@ -162,7 +163,9 @@ class ResourceManager(BaseResourceManager):
 
     def _get_service_account_name(self):
         service_account_name = None
-        sa = conf.get(K8S_SERVICE_ACCOUNT_EXPERIMENTS)
+        sa = conf.get(SERVICE_ACCOUNTS_TENSORBOARDS)
+        if sa:
+            sa = conf.get(K8S_SERVICE_ACCOUNT_EXPERIMENTS)
         if conf.get(K8S_RBAC_ENABLED) and sa:
             service_account_name = sa
         return service_account_name

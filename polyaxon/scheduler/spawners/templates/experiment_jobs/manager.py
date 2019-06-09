@@ -12,6 +12,7 @@ from options.registry.affinities import AFFINITIES_EXPERIMENTS
 from options.registry.container_names import CONTAINER_NAME_INIT, CONTAINER_NAME_SIDECARS
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
+from options.registry.service_accounts import SERVICE_ACCOUNTS_EXPERIMENTS
 from options.registry.node_selectors import NODE_SELECTORS_EXPERIMENTS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
 from options.registry.spawner import APP_LABELS_EXPERIMENT, ROLE_LABELS_WORKER, TYPE_LABELS_RUNNER
@@ -234,7 +235,9 @@ class ResourceManager(BaseResourceManager):
 
     def _get_service_account_name(self):
         service_account_name = None
-        sa = conf.get(K8S_SERVICE_ACCOUNT_EXPERIMENTS)
+        sa = conf.get(SERVICE_ACCOUNTS_EXPERIMENTS)
+        if not sa:
+            sa = conf.get(K8S_SERVICE_ACCOUNT_EXPERIMENTS)
         if conf.get(K8S_RBAC_ENABLED) and sa:
             service_account_name = sa
         return service_account_name

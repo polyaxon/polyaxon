@@ -1,5 +1,7 @@
 from typing import Optional, Tuple
 
+from rhea import parser
+
 from options.exceptions import OptionException
 
 NAMESPACE_DB_OPTION_MARKER = ':'
@@ -57,3 +59,23 @@ class Option(object):
     @classmethod
     def get_key_subject(cls):
         return cls.parse_key()[1]
+
+    @classmethod
+    def to_dict(cls, value=None):
+        return {
+            'key': cls.key,
+            'typing': cls.typing,
+            'is_secret': cls.is_secret,
+            'value': value or cls.default,
+            'description': cls.description,
+        }
+
+    @classmethod
+    def parse(cls, value):
+        return parser.TYPE_MAPPING[cls.typing](
+            key=cls.key,
+            value=value,
+            is_list=cls.is_list,
+            is_optional=cls.is_optional,
+            default=cls.default,
+            options=cls.options)

@@ -1,5 +1,6 @@
 class Resources(object):
     ADMIN = 'Admin'
+    OWNER = 'Owner'
     CLUSTER = 'Cluster'
     NODE = 'Node'
     ACTIVITY_LOG = 'ActivityLog'
@@ -8,4 +9,4 @@ class Resources(object):
     PROJECT_SETTINGS = 'ProjectSettings'
     PUBLIC = 'Public'
 
-    VALUES = {ADMIN, CLUSTER, NODE, PROJECT, PROJECT_SETTINGS, PROJECT_RESOURCE, }
+    VALUES = {ADMIN, OWNER, CLUSTER, NODE, PROJECT, PROJECT_SETTINGS, PROJECT_RESOURCE, }

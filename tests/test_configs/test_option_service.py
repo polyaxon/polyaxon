@@ -19,9 +19,9 @@ class DummySettingsService(ConfService):
         self.options = set([])
         super().__init__()
 
-    def get(self, key):
+    def get(self, key, to_dict=False):
         self.options.add(key)
-        return super().get(key)
+        return super().get(key, to_dict=to_dict)
 
 
 class DummyDBService(ClusterConfService):
@@ -30,9 +30,9 @@ class DummyDBService(ClusterConfService):
         self.options = set([])
         super().__init__()
 
-    def get(self, key):
+    def get(self, key, to_dict=False):
         self.options.add(key)
-        return super().get(key)
+        return super().get(key, to_dict=to_dict)
 
 
 class DummySettingsOption(Option):
@@ -107,7 +107,7 @@ class DummyNonOptionalDBOption(Option):
     options = None
 
 
-@pytest.mark.conf_mark
+@pytest.mark.configs_mark
 class TestConfService(BaseTest):
     def setUp(self):
         super().setUp()
@@ -178,6 +178,11 @@ class TestConfService(BaseTest):
         settings.FOO_BAR = 'foo'
         assert self.settings_service.get(key=DummySettingsOption.key) == 'foo'
 
+        # Get as option
+        option_dict = DummySettingsOption.to_dict(value='foo')
+        assert option_dict['value'] == 'foo'
+        assert self.settings_service.get(key=DummySettingsOption.key, to_dict=True) == option_dict
+
         assert len(self.settings_service.options) == 1
         option_key = self.settings_service.options.pop()
         assert option_key == DummySettingsOption.key
@@ -200,6 +205,11 @@ class TestConfService(BaseTest):
         # Update db
         ConfigOption.objects.create(owner=self.owner, key=DummyDBOption.key, value='foo')
         assert self.db_service.get(key=DummyDBOption.key) == 'foo'
+
+        # Get as option
+        option_dict = DummyDBOption.to_dict(value='foo')
+        assert option_dict['value'] == 'foo'
+        assert self.db_service.get(key=DummyDBOption.key, to_dict=True) == option_dict
 
         assert len(self.db_service.options) == 1
         option_key = self.db_service.options.pop()

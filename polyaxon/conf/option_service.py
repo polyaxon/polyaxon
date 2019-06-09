@@ -1,6 +1,7 @@
 from typing import Any
 
 from hestia.service_interface import Service
+from rhea import RheaError
 
 from conf.conf_manager import conf_cache_manager
 from conf.exceptions import ConfException
@@ -32,7 +33,7 @@ class OptionService(Service):
 
         return self.stores[option.store]
 
-    def get(self, key: str) -> Any:
+    def get(self, key: str, to_dict=False) -> Any:
         if not self.is_setup:
             return
         if not self.can_handle(key=key):
@@ -45,7 +46,11 @@ class OptionService(Service):
 
         option = self.get_option(key=key)
         store = self.get_store(option=option)
-        return store.get(option=option)
+        value = store.get(option=option)
+        if not to_dict:
+            return value
+        option_dict = option.to_dict(value=value)
+        return option_dict
 
     def set(self, key: str, value: Any) -> None:
         if not self.is_setup:
@@ -56,8 +61,13 @@ class OptionService(Service):
         if value is None:
             raise ConfException('{} service requires a value for key `{}` to set.'.format(
                 self.service_name, key))
-
         option = self.get_option(key=key)
+        # Convert value
+        try:
+            value = option.parse(value=value)
+        except RheaError as e:
+            raise ConfException(e)
+
         store = self.get_store(option=option)
         store.set(option=option, value=value)
 

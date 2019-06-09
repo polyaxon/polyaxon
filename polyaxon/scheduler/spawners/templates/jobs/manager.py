@@ -15,6 +15,7 @@ from options.registry.container_names import (
 )
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_JOBS
+from options.registry.service_accounts import SERVICE_ACCOUNTS_JOBS
 from options.registry.node_selectors import NODE_SELECTORS_JOBS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
 from options.registry.spawner import APP_LABELS_JOB, ROLE_LABELS_WORKER, TYPE_LABELS_RUNNER
@@ -186,7 +187,9 @@ class ResourceManager(BaseResourceManager):
 
     def _get_service_account_name(self):
         service_account_name = None
-        sa = conf.get(K8S_SERVICE_ACCOUNT_JOBS)
+        sa = conf.get(SERVICE_ACCOUNTS_JOBS)
+        if not sa:
+            sa = conf.get(K8S_SERVICE_ACCOUNT_JOBS)
         if conf.get(K8S_RBAC_ENABLED) and sa:
             service_account_name = sa
         return service_account_name

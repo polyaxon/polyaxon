@@ -4,12 +4,12 @@ from django.shortcuts import get_object_or_404
 import access
 
 from access.resources import Resources
-from api.endpoint.admin import AdminPermission
 from api.endpoint.base import BaseEndpoint
+from api.endpoint.owner import OwnerPermission
 from db.models.projects import Project
 
 
-class ProjectPermission(AdminPermission):
+class ProjectPermission(OwnerPermission):
     SCOPE_MAPPING = access.get_scope_mapping_for(Resources.PROJECT)
 
     def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
