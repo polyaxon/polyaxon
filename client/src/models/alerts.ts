@@ -28,6 +28,7 @@ export class AlertSchema {
   public activityLogs: AlertEntityModel;
   public healthStatus: AlertEntityModel;
   public codeReference: AlertEntityModel;
+  public options: AlertEntityModel;
 }
 
 export const AlertEmptyState = {
@@ -47,6 +48,7 @@ export const AlertEmptyState = {
   activityLogs: AlertEntityEmpty(),
   healthStatus: AlertEntityEmpty(),
   codeReference: AlertEntityEmpty(),
+  options: AlertEntityEmpty(),
 };
 
 export const processErrorById = (state: AlertEntityModel,

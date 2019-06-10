@@ -104,3 +104,10 @@ export const codeReferenceSchema = new schema.Entity(
   {
     idAttribute: 'id'
   });
+
+export const OptionSchema = new schema.Entity(
+  'options',
+  {},
+  {
+    idAttribute: 'key'
+  });

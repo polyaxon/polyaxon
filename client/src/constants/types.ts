@@ -17,6 +17,7 @@ import { LoadingIndicatorEmptyState, LoadingIndicatorSchema } from '../models/lo
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
 import { NotebooksEmptyState, NotebookStateSchema } from '../models/notebook';
+import { OptionsEmptyState, OptionStateSchema } from '../models/option';
 import { OutputsModel } from '../models/outputs';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { SearchesEmptyState, SearchesStateSchema, } from '../models/search';
@@ -40,6 +41,7 @@ export interface AppState {
   healthStatus: HealthStatusStateSchema;
   users: UserStateSchema;
   logs: string;
+  options: OptionStateSchema;
   outputs: OutputsModel;
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
@@ -65,6 +67,7 @@ export const AppEmptyState = {
   healthStatus: HealthStatusEmptyState,
   user: UserEmptyState,
   logs: '',
+  options: OptionsEmptyState,
   statuses: StatusEmptyState,
   metrics: MetricEmptyState,
   activityLogs: ActivityLogsEmptyState,

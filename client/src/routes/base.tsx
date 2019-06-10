@@ -12,6 +12,7 @@ import Token from '../containers/token';
 import User from '../containers/user';
 import NewEntityRoutes from './new';
 import ProjectRoutes from './projects';
+import SettingsRoutes from './settings/base';
 
 const Routes = () => {
   const tokenRoute = '/app/token/';
@@ -19,6 +20,7 @@ const Routes = () => {
   const clusterActivityLogsRoute = '/app/activitylogs/';
   const historyLogsRoute = '/app/historylogs/';
   const newEntity = '/app/new/';
+  const settings = '/app/settings/';
   const bookmarksRoute = '/app/bookmarks/:user/';
   const archivesRoute = '/app/archives/:user/';
   const userRoute = '/app/:user/';
@@ -33,6 +35,7 @@ const Routes = () => {
       <Route path={bookmarksRoute} exact={true} component={Bookmarks}/>
       <Route path={archivesRoute} exact={true} component={Archives}/>
       <Route path={newEntity} component={NewEntityRoutes}/>
+      <Route path={settings} component={SettingsRoutes}/>
       <Route path={projectDetailRoute} exact={true} component={ProjectDetail}/>
       <Route path={projectDetailRoute} component={ProjectRoutes}/>
       <Route path={userRoute} component={User}/>

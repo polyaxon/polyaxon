@@ -25,6 +25,7 @@ export class LoadingIndicatorSchema {
   public activityLogs: LoadingIndicatorEntityModel;
   public healthStatus: LoadingIndicatorEntityModel;
   public codeReference: LoadingIndicatorEntityModel;
+  public options: LoadingIndicatorEntityModel;
 }
 
 export const LoadingIndicatorEmptyState = {
@@ -44,6 +45,7 @@ export const LoadingIndicatorEmptyState = {
   activityLogs: getLoadingIndicatorEntityEmpty(),
   healthStatus: getLoadingIndicatorEntityEmpty(),
   codeReference: getLoadingIndicatorEntityEmpty(),
+  options: getLoadingIndicatorEntityEmpty(),
 };
 
 export const processLoadingIndicatorById = (state: LoadingIndicatorEntityModel,

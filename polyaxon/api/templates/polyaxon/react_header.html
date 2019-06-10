@@ -98,6 +98,7 @@
                 <li><a href="{% url 'react-index' %}">Projects</a></li>
                 <li><a href="{% url 'react-index' %}/token">Personal token</a></li>
                 {% if user.is_superuser and admin_view_enabled %}
+                    <li><a href="{% url 'react-index' %}/settings/scheduling/builds/">Settings</a></li>
                     <li><a href="{% url 'admin:index' %}">Admin dashboard</a></li>
                 {% endif %}
                 <li role="separator" class="divider"></li>

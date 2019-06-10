@@ -23,6 +23,7 @@ import { logsReducer } from './logs';
 import { MetricsReducer } from './metrics';
 import { modalReducer } from './modal';
 import { notebooksReducer } from './notebooks';
+import { optionsReducer } from './options';
 import { outputsReducer } from './outputs';
 import { searchesReducer } from './searches';
 import { StatusesReducer } from './statuses';
@@ -45,6 +46,7 @@ const combinedReducer = combineReducers<AppState>({
   healthStatus: HealthStatusReducer,
   users: userReducer,
   logs: logsReducer,
+  options: optionsReducer,
   outputs: outputsReducer,
   statuses: StatusesReducer,
   metrics: MetricsReducer,
@@ -80,6 +82,7 @@ function SliceReducer(state: AppState, action: Action) {
     healthStatus: state.healthStatus,
     users: UserProjectsReducer(state.users, action),
     logs: state.logs,
+    options: state.options,
     outputs: state.outputs,
     statuses: state.statuses,
     metrics: state.metrics,
