@@ -5,6 +5,7 @@ from conf.handlers.cluster_options_handler import ClusterOptionsHandler
 from db.models.clusters import Cluster
 from db.models.owner import Owner
 from options.option import Option, OptionStores
+from options.types import CONF_TYPES
 from tests.base.case import BaseTest
 
 
@@ -15,7 +16,7 @@ class DummyDBOption(Option):
     is_optional = True
     is_list = False
     store = OptionStores.DB_OPTION
-    typing = None
+    typing = CONF_TYPES.STR
     default = None
     options = None
 
@@ -27,7 +28,7 @@ class DummyOptionalDefaultDBOption(Option):
     is_optional = True
     is_list = False
     store = OptionStores.DB_OPTION
-    typing = None
+    typing = CONF_TYPES.STR
     default = 'default_db'
     options = None
 
@@ -39,7 +40,7 @@ class DummyNonOptionalDBOption(Option):
     is_optional = False
     is_list = False
     store = OptionStores.DB_OPTION
-    typing = None
+    typing = CONF_TYPES.STR
     default = None
     options = None
 
@@ -51,7 +52,7 @@ class DummySecretDBOption(Option):
     is_optional = False
     is_list = False
     store = OptionStores.DB_OPTION
-    typing = None
+    typing = CONF_TYPES.STR
     default = None
     options = None
 

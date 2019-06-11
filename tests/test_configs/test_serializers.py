@@ -67,4 +67,3 @@ class TestConfigOptionSerializer(BaseTest):
         assert len(data) == 4
         for d in data:
             assert set(d.keys()) == self.expected_keys
-

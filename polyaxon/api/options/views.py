@@ -5,13 +5,12 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 
 import conf
+
 from api.endpoint.admin import AdminEndpoint
-from api.endpoint.base import (
-    ListEndpoint,
-    CreateEndpoint)
+from api.endpoint.base import CreateEndpoint, ListEndpoint
 from api.endpoint.owner import OwnerResourceEndpoint
 from api.options.serializers import ConfigOptionSerializer
-from conf.exceptions import ConfException
+from conf.exceptions import ConfException  # pylint:disable=ungrouped-imports
 from db.models.config_options import ConfigOption
 
 _logger = logging.getLogger("polyaxon.views.jobs")

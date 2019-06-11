@@ -10,6 +10,7 @@ from db.models.config_options import ConfigOption
 from db.models.owner import Owner
 from options.option import Option, OptionStores
 from options.option_manager import OptionManager
+from options.types import CONF_TYPES
 from tests.base.case import BaseTest
 
 
@@ -42,7 +43,7 @@ class DummySettingsOption(Option):
     is_optional = True
     is_list = False
     store = OptionStores.SETTINGS
-    typing = None
+    typing = CONF_TYPES.STR
     default = None
     options = None
 
@@ -54,7 +55,7 @@ class DummyOptionalDefaultSettingsOption(Option):
     is_optional = True
     is_list = False
     store = OptionStores.SETTINGS
-    typing = None
+    typing = CONF_TYPES.STR
     default = 'default_settings'
     options = None
 
@@ -66,7 +67,7 @@ class DummyNonOptionalSettingsOption(Option):
     is_optional = False
     is_list = False
     store = OptionStores.SETTINGS
-    typing = None
+    typing = CONF_TYPES.STR
     default = None
     options = None
 

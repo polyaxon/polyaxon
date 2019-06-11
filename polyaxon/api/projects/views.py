@@ -7,7 +7,6 @@ from rest_framework.response import Response
 import auditor
 import workers
 
-from api.endpoint.owner import OwnerProjectListPermission, OwnerResourceEndpoint
 from api.endpoint.base import (
     CreateEndpoint,
     DestroyEndpoint,
@@ -15,6 +14,7 @@ from api.endpoint.base import (
     RetrieveEndpoint,
     UpdateEndpoint
 )
+from api.endpoint.owner import OwnerProjectListPermission, OwnerResourceEndpoint
 from api.endpoint.project import ProjectEndpoint
 from api.paginator import LargeLimitOffsetPagination
 from api.projects import queries
