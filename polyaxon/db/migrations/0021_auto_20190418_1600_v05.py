@@ -3,6 +3,9 @@
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
 from django.db.models import ExpressionWrapper, F
+import django.core.validators
+import libs.blacklist
+import re
 
 import libs.spec_validation
 
@@ -232,6 +235,105 @@ class Migration(migrations.Migration):
                                             ('stopping', 'stopping'), ('skipped', 'skipped'),
                                             ('unknown', 'unknown')], default='created',
                                    max_length=64, null=True),
+        ),
+        migrations.AlterField(
+            model_name='buildjob',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='experiment',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='experimentchartview',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='experimentgroup',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='experimentgroupchartview',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='job',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='notebookjob',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='operation',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='pipeline',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='search',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
+        ),
+        migrations.AlterField(
+            model_name='tensorboardjob',
+            name='name',
+            field=models.CharField(blank=True, default=None, max_length=128, null=True, validators=[
+                django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'),
+                                                      "Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens.",
+                                                      'invalid'),
+                libs.blacklist.validate_blacklist_name]),
         ),
         migrations.RunPython(migrate_build_jobs_config),
         migrations.RunPython(migrate_experiments_config),

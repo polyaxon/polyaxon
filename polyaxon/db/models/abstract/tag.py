@@ -6,8 +6,7 @@ class TagModel(models.Model):
     tags = ArrayField(
         base_field=models.CharField(max_length=64),
         blank=True,
-        null=True,
-        help_text='The parameters used for this experiment.')
+        null=True)
 
     class Meta:
         abstract = True

@@ -7,8 +7,8 @@ from django.utils.functional import cached_property
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
 from db.models.abstract.backend import BackendModel
-from db.models.abstract.datarefs import DataReference
-from db.models.abstract.job import AbstractJobStatus, JobMixin
+from db.models.abstract.datarefs import DataReferenceModel
+from db.models.abstract.job import AbstractJobStatusModel, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
@@ -16,7 +16,7 @@ from libs.spec_validation import validate_notebook_spec_config
 from schemas import NotebookSpecification
 
 
-class NotebookJob(PluginJobBase, BackendModel, DataReference, JobMixin):
+class NotebookJob(PluginJobBase, BackendModel, DataReferenceModel, JobMixin):
     """A model that represents the configuration for tensorboard job."""
     JOBS_NAME = 'notebooks'
 
@@ -77,13 +77,13 @@ class NotebookJob(PluginJobBase, BackendModel, DataReference, JobMixin):
                                 **params)
 
 
-class NotebookJobStatus(AbstractJobStatus):
+class NotebookJobStatus(AbstractJobStatusModel):
     """A model that represents notebook job status at certain time."""
     job = models.ForeignKey(
         'db.NotebookJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(AbstractJobStatus.Meta):
+    class Meta(AbstractJobStatusModel.Meta):
         app_label = 'db'
         verbose_name_plural = 'Notebook Job Statuses'

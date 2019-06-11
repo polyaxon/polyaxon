@@ -6,7 +6,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
-from db.models.abstract.job import AbstractJobStatus, JobMixin
+from db.models.abstract.job import AbstractJobStatusModel, JobMixin
 from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
@@ -173,13 +173,13 @@ class TensorboardJob(PluginJobBase, JobMixin):
         return self._get_project_outputs_paths()
 
 
-class TensorboardJobStatus(AbstractJobStatus):
+class TensorboardJobStatus(AbstractJobStatusModel):
     """A model that represents tensorboard job status at certain time."""
     job = models.ForeignKey(
         'db.TensorboardJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(AbstractJobStatus.Meta):
+    class Meta(AbstractJobStatusModel.Meta):
         app_label = 'db'
         verbose_name_plural = 'Tensorboard Job Statuses'

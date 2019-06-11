@@ -9,6 +9,7 @@ from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
 from db.models.abstract.diff import DiffModel
 from db.models.abstract.job import TensorboardJobMixin
+from db.models.abstract.owner import OwnerMixin
 from db.models.abstract.persistence import PersistenceModel
 from db.models.abstract.readme import ReadmeModel
 from db.models.abstract.sub_paths import SubPathModel
@@ -26,6 +27,7 @@ class Project(DiffModel,
               DeletedModel,
               PersistenceModel,
               SubPathModel,
+              OwnerMixin,
               UniqueNameMixin,
               TensorboardJobMixin):
     """A model that represents a set of experiments to solve a specific problem."""
@@ -158,11 +160,6 @@ class Project(DiffModel,
         from db.models.tensorboards import TensorboardJob
 
         return TensorboardJob.all.filter(project=self)
-
-    @property
-    def has_owner(self) -> bool:
-        """Quick test to check the instance has an owner."""
-        return bool(self.owner_id)
 
     def archive(self) -> bool:
         if not super().archive():

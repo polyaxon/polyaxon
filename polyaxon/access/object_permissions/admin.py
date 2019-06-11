@@ -24,4 +24,11 @@ def has_object_permission(permission: permissions.BasePermission,
         return True
 
     request.access = DEFAULT_ACCESS
+
+    read_only_cond = (hasattr(permission, 'ALLOW_READ') and
+                      permission.ALLOW_READ and
+                      request.method in permissions.SAFE_METHODS)
+    if read_only_cond:
+        return True
+
     return False

@@ -28,6 +28,12 @@ api_patterns += [
     re_path(r'', include(
         ('api.nodes.urls', 'nodes'), namespace='nodes')),
     re_path(r'', include(
+        ('api.k8s_config_maps.urls', 'k8s_config_maps'), namespace='k8s_config_maps')),
+    re_path(r'', include(
+        ('api.k8s_secrets.urls', 'k8s_secrets'), namespace='k8s_secrets')),
+    re_path(r'', include(
+        ('api.data_stores.urls', 'data_stores'), namespace='data_stores')),
+    re_path(r'', include(
         ('api.bookmarks.urls', 'bookmarks'), namespace='bookmarks')),
     re_path(r'', include(
         ('api.archives.urls', 'archives'), namespace='archives')),

@@ -5,19 +5,20 @@ from django.db import IntegrityError
 from db.models.clusters import Cluster
 from db.models.config_maps import K8SConfigMap
 from db.models.owner import Owner
+from factories.factory_k8s_config_maps import K8SConfigMapFactory
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 
 
-@pytest.mark.config_maps_mark
+@pytest.mark.config_maps_catalog_mark
 class TestK8SConfigMapsModels(BaseTest):
     def setUp(self):
         super().setUp()
         self.owner = Owner.objects.get(name=Cluster.load().uuid)
 
-    def test_create_without_owner_raises(self):
-        with self.assertRaises(IntegrityError):
-            K8SConfigMap.objects.create(name='my_config', config_map_ref='my_config')
+    def test_has_owner(self):
+        k8s_config_map = K8SConfigMapFactory()
+        self.assertEqual(k8s_config_map.has_owner, True)
 
     def test_create_name_validation_raises_for_same_name(self):
         assert K8SConfigMap.objects.count() == 0
@@ -26,11 +27,6 @@ class TestK8SConfigMapsModels(BaseTest):
             K8SConfigMap.objects.create(owner=self.owner,
                                         name='my_config',
                                         config_map_ref='my_config')
-
-    def test_create_without_name(self):
-        assert K8SConfigMap.objects.count() == 0
-        K8SConfigMap.objects.create(owner=self.owner, config_map_ref='my_secret')
-        assert K8SConfigMap.objects.count() == 1
 
     def test_create_name_validation_passes_for_different_owner(self):
         assert K8SConfigMap.objects.count() == 0

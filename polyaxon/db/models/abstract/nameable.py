@@ -6,7 +6,7 @@ from libs.blacklist import validate_blacklist_name
 
 class NameableModel(models.Model):
     name = models.CharField(
-        max_length=256,
+        max_length=128,
         blank=True,
         null=True,
         default=None,
@@ -18,8 +18,7 @@ class NameableModel(models.Model):
 
 class RequiredNameableModel(models.Model):
     name = models.CharField(
-        max_length=256,
-        default=None,
+        max_length=128,
         validators=[validate_slug, validate_blacklist_name])
 
     class Meta:

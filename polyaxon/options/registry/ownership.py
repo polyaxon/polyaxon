@@ -1,7 +1,7 @@
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 
-ALLOW_USER_PROJECTS = 'ALLOW_USER_PROJECTS'
+ALLOW_USER_OWNERSHIP = 'ALLOW_USER_OWNERSHIP'
 OWNER_TYPES = 'OWNER_TYPES'
 ROLES = 'ROLES'
 DEFAULT_ROLE = 'DEFAULT_ROLE'
@@ -9,7 +9,7 @@ SCOPE_ROLES = 'SCOPE_ROLES'
 
 
 class AllowUserProjects(Option):
-    key = ALLOW_USER_PROJECTS
+    key = ALLOW_USER_OWNERSHIP
     is_global = True
     is_secret = False
     is_optional = True

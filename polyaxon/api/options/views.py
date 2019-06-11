@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 import conf
 
-from api.endpoint.admin import AdminEndpoint
+from api.endpoint.admin import AdminListEndpoint
 from api.endpoint.base import CreateEndpoint, ListEndpoint
 from api.endpoint.owner import OwnerResourceEndpoint
 from api.options.serializers import ConfigOptionSerializer
@@ -16,7 +16,7 @@ from db.models.config_options import ConfigOption
 _logger = logging.getLogger("polyaxon.views.jobs")
 
 
-class ClusterConfigOptionsViewV1(AdminEndpoint, ListEndpoint, CreateEndpoint):
+class ClusterConfigOptionsViewV1(AdminListEndpoint, ListEndpoint, CreateEndpoint):
     """
     get:
         List options for cluster

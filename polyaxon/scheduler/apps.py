@@ -10,6 +10,7 @@ class SchedulerConfig(AppConfig):
         import signals.experiments  # noqa
         import signals.experiment_groups  # noqa
         import signals.jobs  # noqa
+        import signals.ownership  # noqa
         import signals.projects  # noqa
         import signals.project_notebook_jobs  # noqa
         import signals.project_tensorboard_jobs  # noqa

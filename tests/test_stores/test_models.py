@@ -8,16 +8,24 @@ from db.models.data_stores import DataStore
 from db.models.logs_stores import LogsStore
 from db.models.owner import Owner
 from db.models.secrets import K8SSecret
+from factories.factory_artifacts_stores import ArtifactsStoreFactory
+from factories.factory_data_stores import DataStoreFactory
+from factories.factory_logs_stores import LogsStoreFactory
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 
 
 class BaseStoreTest(BaseTest):
     MODEL = None
+    FACTORY = None
 
     def setUp(self):
         super().setUp()
         self.owner = Owner.objects.get(name=Cluster.load().uuid)
+
+    def test_has_owner(self):
+        obj = self.FACTORY()  # pylint:disable=not-callable
+        self.assertEqual(obj.has_owner, True)
 
     def test_create_key_validation_raises_for_same_name(self):
         assert self.MODEL.objects.count() == 0
@@ -79,16 +87,19 @@ class BaseStoreTest(BaseTest):
 @pytest.mark.stores_mark
 class TestDataStoreModels(BaseStoreTest):
     MODEL = DataStore
+    FACTORY = DataStoreFactory
 
 
 @pytest.mark.stores_mark
 class TestArtifactsStoreModels(BaseStoreTest):
     MODEL = ArtifactsStore
+    FACTORY = ArtifactsStoreFactory
 
 
 @pytest.mark.stores_mark
 class TestLogsStoreModels(BaseStoreTest):
     MODEL = LogsStore
+    FACTORY = LogsStoreFactory
 
 
 del BaseStoreTest

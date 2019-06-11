@@ -14,7 +14,7 @@ import auditor
 
 from constants.cloning_strategies import CloningStrategy
 from db.models.abstract.backend import BackendModel
-from db.models.abstract.datarefs import DataReference
+from db.models.abstract.datarefs import DataReferenceModel
 from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
 from db.models.abstract.diff import DiffModel
@@ -45,7 +45,7 @@ class Experiment(DiffModel,
                  BackendModel,
                  IsManagedModel,
                  NameableModel,
-                 DataReference,
+                 DataReferenceModel,
                  OutputsModel,
                  PersistenceModel,
                  SubPathModel,

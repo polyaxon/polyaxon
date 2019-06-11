@@ -14,7 +14,7 @@ from db.models.abstract.backend import BackendModel
 from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
 from db.models.abstract.is_managed import IsManagedModel
-from db.models.abstract.job import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.abstract.job import AbstractJobModel, AbstractJobStatusModel, JobMixin
 from db.models.abstract.nameable import NameableModel
 from db.models.abstract.node_scheduling import NodeSchedulingModel
 from db.models.abstract.persistence import PersistenceModel
@@ -28,7 +28,7 @@ from options.registry.build_jobs import BUILD_JOBS_ALWAYS_PULL_LATEST
 from schemas import BuildSpecification
 
 
-class BuildJob(AbstractJob,
+class BuildJob(AbstractJobModel,
                BackendModel,
                IsManagedModel,
                NodeSchedulingModel,
@@ -178,13 +178,13 @@ class BuildJob(AbstractJob,
                                        code_reference=code_reference), True
 
 
-class BuildJobStatus(AbstractJobStatus):
+class BuildJobStatus(AbstractJobStatusModel):
     """A model that represents build job status at certain time."""
     job = models.ForeignKey(
         'db.BuildJob',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(AbstractJobStatus.Meta):
+    class Meta(AbstractJobStatusModel.Meta):
         app_label = 'db'
         verbose_name_plural = 'Build Job Statuses'

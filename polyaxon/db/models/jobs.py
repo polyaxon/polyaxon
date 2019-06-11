@@ -11,11 +11,11 @@ import auditor
 from constants.cloning_strategies import CloningStrategy
 from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
 from db.models.abstract.backend import BackendModel
-from db.models.abstract.datarefs import DataReference
+from db.models.abstract.datarefs import DataReferenceModel
 from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
 from db.models.abstract.is_managed import IsManagedModel
-from db.models.abstract.job import AbstractJob, AbstractJobStatus, JobMixin
+from db.models.abstract.job import AbstractJobModel, AbstractJobStatusModel, JobMixin
 from db.models.abstract.nameable import NameableModel
 from db.models.abstract.node_scheduling import NodeSchedulingModel
 from db.models.abstract.outputs import OutputsModel
@@ -31,10 +31,10 @@ from libs.spec_validation import validate_job_spec_config
 from schemas import JobSpecification
 
 
-class Job(AbstractJob,
+class Job(AbstractJobModel,
           BackendModel,
           IsManagedModel,
-          DataReference,
+          DataReferenceModel,
           OutputsModel,
           PersistenceModel,
           SubPathModel,
@@ -189,13 +189,13 @@ class Job(AbstractJob,
                            update_code_reference=update_code_reference)
 
 
-class JobStatus(AbstractJobStatus):
+class JobStatus(AbstractJobStatusModel):
     """A model that represents run job status at certain time."""
     job = models.ForeignKey(
         'db.Job',
         on_delete=models.CASCADE,
         related_name='statuses')
 
-    class Meta(AbstractJobStatus.Meta):
+    class Meta(AbstractJobStatusModel.Meta):
         app_label = 'db'
         verbose_name_plural = 'Job Statuses'

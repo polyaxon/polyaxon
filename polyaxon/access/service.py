@@ -5,7 +5,7 @@ from hestia.service_interface import InvalidService, Service
 from django.conf import settings
 from django.http import HttpRequest
 
-from access.object_permissions import admin, owner, project
+from access.object_permissions import admin, owner, owner_or_read_only
 from access.resources import Resources
 from scopes.manager import ScopeMappingManager
 
@@ -18,8 +18,9 @@ class AccessService(Service):
         Resources.OWNER: owner.has_object_permission,
         Resources.CLUSTER: owner.has_object_permission,
         Resources.NODE: owner.has_object_permission,
-        Resources.PROJECT: project.has_object_permission,
-        Resources.PROJECT_SETTINGS: project.has_object_permission,
+        Resources.CATALOG: owner_or_read_only.has_object_permission,
+        Resources.PROJECT: owner_or_read_only.has_object_permission,
+        Resources.PROJECT_SETTINGS: owner_or_read_only.has_object_permission,
     }
 
     def __init__(self):

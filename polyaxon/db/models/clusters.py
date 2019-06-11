@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import JSONField
 from django.core.cache import cache
 from django.db import models
 
-from db.models.abstract.singleton import Singleton
+from db.models.abstract.singleton import SingletonModel
 from options.registry.deployments import (
     CHART_IS_UPGRADE,
     CHART_VERSION,
@@ -17,7 +17,7 @@ from options.registry.deployments import (
 from options.registry.k8s import K8S_NAMESPACE
 
 
-class Cluster(Singleton):
+class Cluster(SingletonModel):
     """A model that represents the cluster api version."""
     uuid = models.UUIDField(
         default=uuid.uuid4,

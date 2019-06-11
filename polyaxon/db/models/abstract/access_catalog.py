@@ -1,23 +1,37 @@
+import uuid as uuid
+
 from django.db import models
 from django.utils.functional import cached_property
 
+from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
 from db.models.abstract.diff import DiffModel
 from db.models.abstract.nameable import RequiredNameableModel
+from db.models.abstract.owner import OwnerMixin
+from db.models.abstract.readme import ReadmeModel
 from db.models.abstract.secret import SecretModel
+from db.models.abstract.tag import TagModel
 from db.models.abstract.unique_name import UniqueNameMixin
-from db.models.unique_names import ACCESS_UNIQUE_NAME_FORMAT
+from db.models.unique_names import CATALOG_UNIQUE_NAME_FORMAT
 
 
-class AccessCatalog(RequiredNameableModel,
-                    DescribableModel,
-                    SecretModel,
-                    DiffModel,
-                    UniqueNameMixin):
+class Catalog(RequiredNameableModel,
+              DescribableModel,
+              DiffModel,
+              ReadmeModel,
+              TagModel,
+              DeletedModel,
+              OwnerMixin,
+              UniqueNameMixin):
     owner = models.ForeignKey(
         'db.Owner',
         on_delete=models.CASCADE,
         related_name='+')
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        null=False)
 
     class Meta:
         abstract = True
@@ -28,8 +42,14 @@ class AccessCatalog(RequiredNameableModel,
     @cached_property
     def unique_name(self) -> str:
         if self.owner:
-            return ACCESS_UNIQUE_NAME_FORMAT.format(owner=self.owner, name=self.name)
+            return CATALOG_UNIQUE_NAME_FORMAT.format(owner=self.owner, name=self.name)
         return '{}'.format(self.name)
+
+
+class AccessCatalog(Catalog, SecretModel):
+
+    class Meta:
+        abstract = True
 
 
 class HostAccessCatalog(AccessCatalog):

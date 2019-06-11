@@ -20,7 +20,7 @@ from schemas import PodResourcesConfig
 _logger = logging.getLogger('polyaxon.db.jobs')
 
 
-class AbstractJob(DiffModel, RunTimeModel, LastStatusMixin):
+class AbstractJobModel(DiffModel, RunTimeModel, LastStatusMixin):
     """An abstract base class for job, used both by experiment jobs and other jobs."""
     STATUSES = JobLifeCycle
 
@@ -168,7 +168,7 @@ class TensorboardJobMixin(CachedMixin):
         return tensorboard and tensorboard.is_stoppable
 
 
-class AbstractJobStatus(StatusModel):
+class AbstractJobStatusModel(StatusModel):
     """A model that represents job status at certain time."""
     STATUSES = JobLifeCycle
 

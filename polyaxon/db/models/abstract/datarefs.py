@@ -2,7 +2,7 @@ from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 
-class DataReference(models.Model):
+class DataReferenceModel(models.Model):
     data_refs = JSONField(
         null=True,
         blank=True,

@@ -6,6 +6,7 @@ from db.models.clusters import Cluster
 from db.models.owner import Owner
 from db.models.registry_access import RegistryAccess
 from db.models.secrets import K8SSecret
+from factories.factory_registry_access import RegistryAccessFactory
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 
@@ -16,9 +17,9 @@ class TestRegistryAccessModels(BaseTest):
         super().setUp()
         self.owner = Owner.objects.get(name=Cluster.load().uuid)
 
-    def test_create_without_owner_raises(self):
-        with self.assertRaises(IntegrityError):
-            RegistryAccess.objects.create(name='my_registry')
+    def test_has_owner(self):
+        regstry_access = RegistryAccessFactory()
+        self.assertEqual(regstry_access.has_owner, True)
 
     def test_create_key_validation_raises_for_same_name(self):
         assert RegistryAccess.objects.count() == 0

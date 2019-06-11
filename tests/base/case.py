@@ -13,6 +13,7 @@ import auditor
 import conf
 import executor
 import notifier
+import ownership
 import tracker
 
 from polyaxon.settings import RedisPools
@@ -52,6 +53,7 @@ class BaseTest(TestCase):
         # Mock celery default sent task
         self.mock_send_task()
         conf.setup()
+        ownership.setup()
 
         if self.DISABLE_RUNNER:
             self.disable_experiment_groups_runner()

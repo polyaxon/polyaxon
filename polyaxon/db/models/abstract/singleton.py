@@ -3,7 +3,7 @@ from django.core.cache import cache
 from db.models.abstract.diff import DiffModel
 
 
-class Singleton(DiffModel):
+class SingletonModel(DiffModel):
     """A base model to represents a singleton."""
 
     class Meta:

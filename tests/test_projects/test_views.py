@@ -31,7 +31,7 @@ from factories.factory_projects import ProjectFactory
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
-from options.registry.ownership import ALLOW_USER_PROJECTS
+from options.registry.ownership import ALLOW_USER_OWNERSHIP
 from tests.base.views import BaseViewTest
 
 
@@ -60,7 +60,7 @@ class TestProjectCreateViewV1(BaseViewTest):
         assert self.model_class.objects.last().owner.owner == self.auth_client.user
 
     def test_not_allowed_to_create(self):
-        conf.set(key=ALLOW_USER_PROJECTS, value=False)
+        conf.set(key=ALLOW_USER_OWNERSHIP, value=False)
         data = {'name': 'new_project'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST

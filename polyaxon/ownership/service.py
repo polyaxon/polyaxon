@@ -4,8 +4,9 @@ from hestia.service_interface import Service
 
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.db import InterfaceError, OperationalError, ProgrammingError
 
-from options.registry.ownership import ALLOW_USER_PROJECTS
+from options.registry.ownership import ALLOW_USER_OWNERSHIP
 from ownership import OwnershipError
 
 
@@ -21,6 +22,20 @@ class OwnershipService(Service):
     def __init__(self):
         self.content_type_manager = None
         self.owner_manager = None
+        self._cluster_owner = None
+
+    @property
+    def cluster_owner(self) -> 'Owner':
+        if self._cluster_owner:
+            return self._cluster_owner
+
+        from db.models.clusters import Cluster
+
+        try:
+            self._cluster_owner = self.owner_manager.get(name=Cluster.load().uuid)
+        except (Cluster.DoesNotExist, InterfaceError, ProgrammingError, OperationalError):
+            pass
+        return self._cluster_owner
 
     @staticmethod
     def check_owner_type(owner: Any = None, owner_type: str = None) -> None:
@@ -28,18 +43,31 @@ class OwnershipService(Service):
         if not owner_type or owner_type not in settings.OWNER_TYPES:
             raise OwnershipError('Received an invalid owner type `{}`.'.format(owner.owner_type))
 
-    def set_default_owner(self, instance: Any) -> None:
+    def _set_user_owner(self, instance: Any):
         import conf
 
-        if conf.get(ALLOW_USER_PROJECTS):
+        if conf.get(ALLOW_USER_OWNERSHIP):
             try:
                 self.set_owner(instance=instance, owner_obj=instance.user)
             except OwnershipError:
-                raise OwnershipError('You are not allowed to create a project, '
-                                     'please contact your admin.')
+                raise OwnershipError('You are not allowed to create {}, '
+                                     'please contact your admin.'.format(instance))
         else:
-            raise OwnershipError('You are not allowed to create a project, '
-                                 'please contact your admin.')
+            raise OwnershipError('You are not allowed to create {}, '
+                                 'please contact your admin.'.format(instance))
+
+    def _set_cluster_owner(self, instance: Any):
+        try:
+            self.set_owner(instance=instance, owner=self.cluster_owner)
+        except OwnershipError:
+            raise OwnershipError('You are not allowed to create {}, '
+                                 'please contact your admin.'.format(instance))
+
+    def set_default_owner(self, instance: Any, use_cluster_owner=False) -> None:
+        if use_cluster_owner:
+            self._set_cluster_owner(instance=instance)
+        else:
+            self._set_user_owner(instance=instance)
 
     def set_owner(self, instance: Any,
                   owner: Any = None,
@@ -90,3 +118,4 @@ class OwnershipService(Service):
 
         self.owner_manager = Owner.objects
         self.content_type_manager = ContentType.objects
+        self._cluster_owner = None

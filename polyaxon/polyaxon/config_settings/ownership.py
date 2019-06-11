@@ -3,7 +3,7 @@ from polyaxon.config_manager import config
 OWNER_TYPES = config.get_string('POLYAXON_OWNER_TYPES',
                                 is_optional=True,
                                 is_list=True,
-                                default=['user'])
+                                default=['cluster', 'user'])
 ROLES = config.get_dict('POLYAXON_ROLES',
                         is_optional=True,
                         is_list=True,

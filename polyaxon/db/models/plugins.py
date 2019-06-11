@@ -7,7 +7,7 @@ from django.utils.functional import cached_property
 from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
 from db.models.abstract.is_managed import IsManagedModel
-from db.models.abstract.job import AbstractJob
+from db.models.abstract.job import AbstractJobModel
 from db.models.abstract.nameable import NameableModel
 from db.models.abstract.node_scheduling import NodeSchedulingModel
 from db.models.abstract.outputs import OutputsModel
@@ -16,7 +16,7 @@ from db.models.abstract.sub_paths import SubPathModel
 from db.models.abstract.tag import TagModel
 
 
-class PluginJobBase(AbstractJob,
+class PluginJobBase(AbstractJobModel,
                     IsManagedModel,
                     OutputsModel,
                     PersistenceModel,

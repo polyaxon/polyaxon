@@ -3,7 +3,7 @@ from django.db import models
 
 import conf
 
-from db.models.abstract.singleton import Singleton
+from db.models.abstract.singleton import SingletonModel
 from options.registry.deployments import (
     CHART_VERSION,
     CLI_LATEST_VERSION,
@@ -15,7 +15,7 @@ from options.registry.deployments import (
 )
 
 
-class BaseValidationVersion(Singleton):
+class BaseValidationVersion(SingletonModel):
     latest_version = models.CharField(max_length=16)
     min_version = models.CharField(max_length=16)
 
@@ -112,7 +112,7 @@ class LibVersion(BaseValidationVersion):
         return conf.get(LIB_LATEST_VERSION)
 
 
-class ChartVersion(Singleton):
+class ChartVersion(SingletonModel):
     """A model that represents the polyaxon chart version."""
     version = models.CharField(max_length=16)
 

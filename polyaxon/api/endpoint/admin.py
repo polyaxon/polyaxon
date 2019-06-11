@@ -19,6 +19,35 @@ class AdminPermission(SuperuserPermission):
             obj=obj)
 
 
-class AdminEndpoint(BaseEndpoint):
+class AdminOrReadOnlyPermission(AdminPermission):
+    ALLOW_READ = True
+
+    def has_object_permission(self, request: HttpRequest, view, obj) -> bool:
+        return access.has_object_permission(
+            resource=Resources.ADMIN,
+            permission=AdminOrReadOnlyPermission,
+            request=request,
+            view=view,
+            obj=obj)
+
+
+class AdminListEndpoint(BaseEndpoint):
     permission_classes = (AdminPermission,)
     AUDITOR_EVENT_TYPES = None
+
+
+class AdminOrReadOnlyListEndpoint(BaseEndpoint):
+    permission_classes = (AdminOrReadOnlyPermission,)
+    AUDITOR_EVENT_TYPES = None
+
+
+class AdminOrReadOnlyEndpoint(AdminOrReadOnlyListEndpoint):
+    CONTEXT_KEYS = ('uuid',)
+    CONTEXT_OBJECTS = ('entry',)
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'uuid'
+
+    def _initialize_context(self) -> None:
+        #  pylint:disable=attribute-defined-outside-init
+        super()._initialize_context()
+        self.entry = self.get_object()

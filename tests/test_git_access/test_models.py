@@ -6,6 +6,7 @@ from db.models.clusters import Cluster
 from db.models.git_access import GitAccess
 from db.models.owner import Owner
 from db.models.secrets import K8SSecret
+from factories.factory_git_access import GitAccessFactory
 from factories.factory_users import UserFactory
 from tests.base.case import BaseTest
 
@@ -16,9 +17,9 @@ class TestGitAccessModels(BaseTest):
         super().setUp()
         self.owner = Owner.objects.get(name=Cluster.load().uuid)
 
-    def test_create_without_owner_raises(self):
-        with self.assertRaises(IntegrityError):
-            GitAccess.objects.create(name='my_github_access')
+    def test_has_owner(self):
+        git_access = GitAccessFactory()
+        self.assertEqual(git_access.has_owner, True)
 
     def test_create_key_validation_raises_for_same_name(self):
         assert GitAccess.objects.count() == 0
