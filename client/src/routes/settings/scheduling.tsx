@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import GeneralSettings from '../../containers/settings/general';
+import GeneralSettings from '../../containers/settings/configs/general';
 import { BUILD_JOB_KEYS, ClusterSchedulingBuildJobsSettingsURL } from '../../options/build_jobs';
 import { ClusterSchedulingExperimentsSettingsURL, EXPERIMENT_KEYS } from '../../options/experiments';
 import { ClusterSchedulingJobsSettingsURL, JOB_KEYS } from '../../options/jobs';

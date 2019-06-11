@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import GeneralSettings from '../../containers/settings/general';
+import GeneralSettings from '../../containers/settings/configs/general';
 import { INTEGRATIONS_KEYS } from '../../options/integrations';
 
 const AuthSettingsRoutes = () => {

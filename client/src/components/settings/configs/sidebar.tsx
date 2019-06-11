@@ -6,18 +6,18 @@ import {
   ClusterAuthBitbucketSettingsURL,
   ClusterAuthGithubSettingsURL,
   ClusterAuthGitlabSettingsURL
-} from '../../options/auth';
-import { ClusterSchedulingBuildJobsSettingsURL } from '../../options/build_jobs';
-import { ClusterSchedulingExperimentsSettingsURL } from '../../options/experiments';
-import { ClusterMopreSettingsURL } from '../../options/general';
-import { ClusterHardwareSettingsURL } from '../../options/hardware';
-import { ClusterIntegrationsSettingsURL } from '../../options/integrations';
-import { ClusterSchedulingJobsSettingsURL } from '../../options/jobs';
-import { ClusterSchedulingNotebooksSettingsURL } from '../../options/notebooks';
-import { ClusterReposSettingsURL } from '../../options/repos';
-import { ClusterSchedulingTensorboardsSettingsURL } from '../../options/tensorboards';
+} from '../../../options/auth';
+import { ClusterSchedulingBuildJobsSettingsURL } from '../../../options/build_jobs';
+import { ClusterSchedulingExperimentsSettingsURL } from '../../../options/experiments';
+import { ClusterMopreSettingsURL } from '../../../options/general';
+import { ClusterHardwareSettingsURL } from '../../../options/hardware';
+import { ClusterIntegrationsSettingsURL } from '../../../options/integrations';
+import { ClusterSchedulingJobsSettingsURL } from '../../../options/jobs';
+import { ClusterSchedulingNotebooksSettingsURL } from '../../../options/notebooks';
+import { ClusterReposSettingsURL } from '../../../options/repos';
+import { ClusterSchedulingTensorboardsSettingsURL } from '../../../options/tensorboards';
 
-import './sidebar.less';
+import '../sidebar.less';
 
 export default class SettingsSidebar extends React.Component<{}, {}> {
 

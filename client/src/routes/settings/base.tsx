@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import GeneralSettings from '../../containers/settings/general';
-import KeyOption from '../../containers/settings/keyOption';
+import GeneralSettings from '../../containers/settings/configs/general';
+import KeyOption from '../../containers/settings/configs/keyOption';
 import { ClusterMopreSettingsURL } from '../../options/general';
 import { ClusterHardwareSettingsURL, HARDWARE_KEYS } from '../../options/hardware';
 import { ClusterIntegrationsSettingsURL, INTEGRATIONS_KEYS } from '../../options/integrations';

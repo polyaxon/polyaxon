@@ -1,8 +1,8 @@
 import { Field, Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 
-import * as actions from '../../actions/options';
-import { getRequiredClass } from '../../components/forms';
+import * as actions from '../../../actions/options';
+import { getRequiredClass } from '../../../components/forms';
 import SettingsSidebar from './sidebar';
 
 export interface Props {

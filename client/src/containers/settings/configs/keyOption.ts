@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../../actions/options';
-import KeyOption from '../../components/settings/keyOption';
-import { AppState } from '../../constants/types';
+import * as actions from '../../../actions/options';
+import KeyOption from '../../../components/settings/configs/keyOption';
+import { AppState } from '../../../constants/types';
 
 interface Props extends RouteComponentProps<any> {
 }

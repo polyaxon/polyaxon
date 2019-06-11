@@ -1,11 +1,11 @@
 import * as React from 'react';
 
-import * as actions from '../../actions/options';
-import Option from '../../containers/options/option';
-import { OptionModel } from '../../models/option';
+import * as actions from '../../../actions/options';
+import Option from '../../../containers/options/option';
+import { OptionModel } from '../../../models/option';
 import SettingsSidebar from './sidebar';
 
-import './settings.less';
+import '../settings.less';
 
 export interface Props {
   section: string;

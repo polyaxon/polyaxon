@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import * as actions from '../../actions/options';
-import GeneralSettings from '../../components/settings/general';
-import { AppState } from '../../constants/types';
-import { OptionModel } from '../../models/option';
+import * as actions from '../../../actions/options';
+import GeneralSettings from '../../../components/settings/configs/general';
+import { AppState } from '../../../constants/types';
+import { OptionModel } from '../../../models/option';
 
 interface Props extends RouteComponentProps<any> {
   section: string;
