@@ -4,6 +4,7 @@ export class OptionModel {
   public key: string;
   public typing: string;
   public is_secret: boolean;
+  public is_list: boolean;
   public value: any;
   public description: string;
 }

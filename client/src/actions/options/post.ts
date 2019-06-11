@@ -3,7 +3,6 @@ import { Action } from 'redux';
 import { BASE_API_URL } from '../../constants/api';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
-import { fetchOptionsSuccessActionCreator } from './fetch';
 
 export interface PostOptionsRequestAction extends Action {
   type: actionTypes.POST_OPTIONS_REQUEST;
@@ -70,7 +69,8 @@ export function postOptions(section: string, options: { [key: string]: any }): a
         dispatch,
         postOptionsErrorActionCreator,
         'Not found',
-        'Failed to update options'))
+        'Failed to update options',
+        [section]))
       .then((response) => response.json())
       .then((json) => {
         dispatch(postOptionsSuccessActionCreator(section));

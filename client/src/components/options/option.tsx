@@ -1,17 +1,22 @@
-import { Field, Formik, FormikActions, FormikProps } from 'formik';
+import { ErrorMessage, Field, Formik, FormikActions, FormikProps } from 'formik';
 import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/options';
+import { checkServerError } from '../../components/forms';
 import { OptionModel } from '../../models/option';
 
 export interface Props {
   option: OptionModel;
+  isLoading: boolean;
+  errors: any;
+  success: boolean;
   onSave: (option: { [key: string]: any }) => actions.OptionAction;
 }
 
 export interface State {
   value?: any;
+  formValue?: any,
   isEditMode: boolean;
 }
 
@@ -20,15 +25,27 @@ export default class Option extends React.Component<Props, State> {
     super(props);
     this.state = {
       value: this.props.option.value,
+      formValue: this.props.option.value,
       isEditMode: false
     };
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
+    const newState = {...prevState};
+    let updated = false;
+    if (!_.isEqual(this.props.success, prevProps.success) && this.props.success) {
+      newState.isEditMode = false;
+      newState.value = this.parseValue(newState.formValue);
+      updated = true;
+    }
     if (!_.isEqual(this.props.option.value, prevProps.option.value)) {
+      newState.value = this.props.option.value;
+      updated = true;
+    }
+    if (updated) {
       this.setState({
         ...prevState,
-        value: this.props.option.value,
+        ...newState
       });
     }
   }
@@ -66,44 +83,76 @@ export default class Option extends React.Component<Props, State> {
     }
     this.setState((prevState, prevProps) => ({
       ...prevState,
-      value: this.isObj() ? JSON.parse(fValues) : fValues,
+      formValue: fValues
     }));
-    this.onView();
   };
 
-  public isObj = () => ['int', 'float', 'str'].indexOf(this.props.option.typing) === -1;
+  public isObj = () => {
+    return ['int', 'float', 'str'].indexOf(this.props.option.typing) === -1 || this.props.option.is_list;
+  };
+
+  public parseValue = (value: any) => {
+    if (this.isObj() && value) {
+      return JSON.parse(value);
+    }
+    return value;
+  };
+
+  public getValue = (value: any) => {
+    if (this.isObj() && value) {
+      return JSON.stringify(value);
+    }
+    return value;
+  };
 
   public render() {
-
     const isObj = this.isObj();
+
     const getForm = () => (
       <div className="row">
         <Formik
-          initialValues={{option: isObj ? JSON.stringify(this.state.value) : this.state.value}}
+          initialValues={{option: this.getValue(this.state.value) || ''}}
           onSubmit={(fValues: any, fActions: FormikActions<State>) => {
             this.onSave(fValues.option);
           }}
           render={(props: FormikProps<State>) => (
             <form onSubmit={props.handleSubmit}>
-              <div className="col-sm-10">
-                {isObj
-                  ? <Field
-                    name="option"
-                    component="textarea"
-                    type="text"
-                    className="form-control input-sm"
-                  /> : <Field
-                    name="option"
-                    type="text"
-                    className="form-control"
-                  />
+              <div className={`${this.props.errors ? 'has-error' : ''}  col-sm-10`}>
+                {this.props.option.typing === 'bool' &&
+                <Field
+                  name="option"
+                  component="select"
+                  className="form-control input-sm"
+                >
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </Field>
+                }
+                {isObj && this.props.option.typing !== 'bool' &&
+                <Field
+                  name="option"
+                  component="textarea"
+                  type="text"
+                  className="form-control input-sm"
+                />
+                }
+                {!isObj && this.props.option.typing !== 'bool' &&
+                <Field
+                  name="option"
+                  type="text"
+                  className="form-control"
+                />
                 }
                 {this.props.option.description &&
                 <span id="helpBlock" className="help-block">{this.props.option.description}</span>
                 }
+                {this.props.errors && <div className="help-block">{this.props.errors}</div>}
+                <ErrorMessage name="description">
+                  {(errorMessage) => <div className="help-block">{errorMessage}</div>}
+                </ErrorMessage>
               </div>
               <div className="col-md-2 name-buttons">
-                <button type="submit" className="btn btn-sm btn-default">
+                <button type="submit" className="btn btn-sm btn-default" disabled={this.props.isLoading}>
                   Save
                 </button>
                 <button className="btn btn-sm btn-default" onClick={() => this.onView()}>
@@ -117,7 +166,7 @@ export default class Option extends React.Component<Props, State> {
     );
     const getView = () => (
       <div className="col-md-7">
-        {isObj ? JSON.stringify(this.state.value) : this.state.value}
+        {this.getValue(this.state.value)}
         {this.props.option.description &&
         <span id="helpBlock" className="help-block">{this.props.option.description}</span>
         }
@@ -130,8 +179,8 @@ export default class Option extends React.Component<Props, State> {
             <label className="control-label">{this.props.option.key}</label> {
             !this.state.isEditMode &&
             <span className="btn-link btn-link-margin" onClick={this.onEdit}>
-                  <i className="fas fa-pen icon" aria-hidden="true"/>
-                </span>
+              <i className="fas fa-pen icon" aria-hidden="true"/>
+            </span>
           }
           </div>
         </div>

@@ -4,15 +4,22 @@ import { Dispatch } from 'redux';
 
 import * as actions from '../../actions/options';
 import Option from '../../components/options/option';
+import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
 import { OptionModel } from '../../models/option';
+import { getErrorsByIds } from '../../utils/errors';
+import { getIsLoading } from '../../utils/isLoading';
+import { getSuccessByIds } from '../../utils/success';
 
 interface Props extends RouteComponentProps<any> {
   option: OptionModel;
 }
 
 export function mapStateToProps(state: AppState, props: Props) {
-  return {option: props.option};
+  const isLoading = getIsLoading(state.loadingIndicators.options.byIds, props.option.key, ACTIONS.UPDATE);
+  const errors = getErrorsByIds(state.alerts.options.byIds, isLoading, props.option.key, ACTIONS.UPDATE);
+  const success = getSuccessByIds(state.alerts.options.byIds, isLoading, props.option.key, ACTIONS.UPDATE);
+  return {option: props.option, isLoading, errors, success};
 }
 
 export interface DispatchProps {
@@ -21,7 +28,7 @@ export interface DispatchProps {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.OptionAction>, props: Props): DispatchProps {
   return {
-    onSave: (option: { [key: string]: any }) => dispatch(actions.postOptions(option.key, option))
+    onSave: (option: { [key: string]: any }) => dispatch(actions.postOptions(props.option.key, option))
   };
 }
 

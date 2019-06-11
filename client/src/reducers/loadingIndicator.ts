@@ -13,6 +13,7 @@ import { LoadingIndicatorHealthStatusReducer } from './healthStatus';
 import { LoadingIndicatorJobReducer } from './jobs';
 import { LoadingIndicatorMetricReducer } from './metrics';
 import { LoadingIndicatorNotebooksReducer } from './notebooks';
+import { LoadingIndicatorOptionsReducer } from './options';
 import { LoadingIndicatorOutputsReducer } from './outputs';
 import { LoadingIndicatorProjectReducer } from './projects';
 import { LoadingIndicatorSearchesReducer } from './searches';
@@ -40,5 +41,6 @@ export const LoadingIndicatorSliceReducer = (state: AppState, action: Action) =>
   newState = LoadingIndicatorExperimentReducer(newState, action);
   newState = LoadingIndicatorGroupReducer(newState, action);
   newState = LoadingIndicatorJobReducer(newState, action);
+  newState = LoadingIndicatorOptionsReducer(newState, action);
   return LoadingIndicatorProjectReducer(newState , action);
 };
