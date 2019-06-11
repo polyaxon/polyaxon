@@ -65,6 +65,7 @@ class Option(object):
         return {
             'key': cls.key,
             'typing': cls.typing,
+            'is_list': cls.is_list,
             'is_secret': cls.is_secret,
             'value': value or cls.default,
             'description': cls.description,

@@ -28,7 +28,7 @@ class IntegrationsWebhooksDiscord(Option):
     is_secret = True
     is_optional = True
     is_list = True
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.DICT
     store = OptionStores.DB_OPTION
     default = None
     options = None
@@ -41,7 +41,7 @@ class IntegrationsWebhooksHipchat(Option):
     is_secret = True
     is_optional = True
     is_list = True
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.DICT
     store = OptionStores.DB_OPTION
     default = None
     options = None
@@ -54,7 +54,7 @@ class IntegrationsWebhooksMattermost(Option):
     is_secret = True
     is_optional = True
     is_list = True
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.DICT
     store = OptionStores.DB_OPTION
     default = None
     options = None
@@ -67,7 +67,7 @@ class IntegrationsWebhooksPagerDuty(Option):
     is_secret = True
     is_optional = True
     is_list = True
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.DICT
     store = OptionStores.DB_OPTION
     default = None
     options = None
@@ -80,7 +80,7 @@ class IntegrationsWebhooksSlack(Option):
     is_secret = True
     is_optional = True
     is_list = True
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.DICT
     store = OptionStores.DB_OPTION
     default = None
     options = None
@@ -93,7 +93,7 @@ class IntegrationsWebhooksGeneric(Option):
     is_secret = True
     is_optional = True
     is_list = True
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.DICT
     store = OptionStores.DB_OPTION
     default = None
     options = None
