@@ -1,14 +1,14 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
+import history from '../../history';
+import { TensorboardModel } from '../../models/tensorboard';
 import {
   getExperimentUniqueName,
   getExperimentUrl,
   getExperimentUrlFromName,
   getTensorboardApiUrlFromName
-} from '../../constants/utils';
-import history from '../../history';
-import { TensorboardModel } from '../../models/tensorboard';
+} from '../../urls/utils';
 import { getTensorboardSuccessActionCreator } from '../tensorboards';
 import { stdCreateHandleError, stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';

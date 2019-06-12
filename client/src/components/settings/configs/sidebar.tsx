@@ -6,16 +6,19 @@ import {
   ClusterAuthBitbucketSettingsURL,
   ClusterAuthGithubSettingsURL,
   ClusterAuthGitlabSettingsURL
-} from '../../../options/auth';
-import { ClusterSchedulingBuildJobsSettingsURL } from '../../../options/build_jobs';
-import { ClusterSchedulingExperimentsSettingsURL } from '../../../options/experiments';
-import { ClusterMopreSettingsURL } from '../../../options/general';
-import { ClusterHardwareSettingsURL } from '../../../options/hardware';
-import { ClusterIntegrationsSettingsURL } from '../../../options/integrations';
-import { ClusterSchedulingJobsSettingsURL } from '../../../options/jobs';
-import { ClusterSchedulingNotebooksSettingsURL } from '../../../options/notebooks';
-import { ClusterReposSettingsURL } from '../../../options/repos';
-import { ClusterSchedulingTensorboardsSettingsURL } from '../../../options/tensorboards';
+} from '../../../urls/routes/settings/auth';
+import {
+  ClusterIntegrationsSettingsURL,
+  ClusterMoreSettingsURL,
+  ClusterReposSettingsURL } from '../../../urls/routes/settings/base';
+import {
+  ClusterHardwareSettingsURL,
+  ClusterSchedulingBuildJobsSettingsURL,
+  ClusterSchedulingExperimentsSettingsURL,
+  ClusterSchedulingJobsSettingsURL,
+  ClusterSchedulingNotebooksSettingsURL,
+  ClusterSchedulingTensorboardsSettingsURL,
+} from '../../../urls/routes/settings/scheduling';
 
 import '../sidebar.less';
 
@@ -106,8 +109,8 @@ export default class SettingsSidebar extends React.Component<{}, {}> {
             Hardware accelerator settings
           </Link>
           <Link
-            className={currentPath === ClusterMopreSettingsURL ? 'active menu-item' : 'menu-item'}
-            to={ClusterMopreSettingsURL}
+            className={currentPath === ClusterMoreSettingsURL ? 'active menu-item' : 'menu-item'}
+            to={ClusterMoreSettingsURL}
           >
             More options
           </Link>

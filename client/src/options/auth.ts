@@ -20,7 +20,6 @@ export const AUTH_AZURE_KEYS = [
   AUTH_AZURE_CLIENT_ID,
   AUTH_AZURE_CLIENT_SECRET,
 ];
-export const ClusterAuthAzureSettingsURL = '/app/settings/auth/azure/';
 
 export const AUTH_BITBUCKET_ENABLED =
   `${option_namespaces.AUTH_BITBUCKET}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.ENABLED}`;
@@ -37,7 +36,6 @@ export const AUTH_BITBUCKET_KEYS = [
   AUTH_BITBUCKET_CLIENT_ID,
   AUTH_BITBUCKET_CLIENT_SECRET,
 ];
-export const ClusterAuthBitbucketSettingsURL = '/app/settings/auth/bitbucket/';
 
 export const AUTH_GITHUB_ENABLED =
   `${option_namespaces.AUTH_GITHUB}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.ENABLED}`;
@@ -54,7 +52,6 @@ export const AUTH_GITHUB_KEYS = [
   AUTH_GITHUB_CLIENT_ID,
   AUTH_GITHUB_CLIENT_SECRET,
 ];
-export const ClusterAuthGithubSettingsURL = '/app/settings/auth/github/';
 
 export const AUTH_GITLAB_ENABLED =
   `${option_namespaces.AUTH_GITLAB}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.ENABLED}`;
@@ -74,4 +71,3 @@ export const AUTH_GITLAB_KEYS = [
   AUTH_GITLAB_CLIENT_SECRET,
   AUTH_GITLAB_URL,
 ];
-export const ClusterAuthGitlabSettingsURL = '/app/settings/auth/gitlab/';

@@ -3,19 +3,22 @@ import pytest
 from rest_framework import status
 
 from api.k8s_config_maps.serializers import K8SConfigMapSerializer
+from api.k8s_secrets.serializers import K8SSecretSerializer
 from constants.urls import API_V1
 from db.models.clusters import Cluster
 from db.models.config_maps import K8SConfigMap
+from db.models.secrets import K8SSecret
 from factories.factory_k8s_config_maps import K8SConfigMapFactory
+from factories.factory_k8s_secrets import K8SSecretFactory
 from tests.base.clients import AuthorizedClient
 from tests.base.views import BaseViewTest
 
 
-@pytest.mark.config_maps_catalog_mark
-class TestK8SConfigMapListViewV1(BaseViewTest):
-    serializer_class = K8SConfigMapSerializer
-    model_class = K8SConfigMap
-    factory_class = K8SConfigMapFactory
+@pytest.mark.k8s_resource_catalog_mark
+class TestK8SResourceListViewV1(BaseViewTest):
+    serializer_class = None
+    model_class = None
+    factory_class = None
     num_objects = 3
     HAS_AUTH = True
     ADMIN_USER = True
@@ -23,9 +26,13 @@ class TestK8SConfigMapListViewV1(BaseViewTest):
     def setUp(self):
         super().setUp()
         self.normal_client = AuthorizedClient()
-        self.url = '/{}/catalogs/k8s_config_maps/'.format(API_V1)
-        self.objects = [self.factory_class() for _ in range(self.num_objects)]
+        self.url = self.get_url()
+        self.objects = [self.factory_class()  # pylint:disable=not-callable
+                        for _ in range(self.num_objects)]
         self.queryset = self.model_class.objects.filter()
+
+    def get_url(self):
+        return ''
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -84,7 +91,7 @@ class TestK8SConfigMapListViewV1(BaseViewTest):
         data = {
             'name': 'new_config',
             'description': 'some description',
-            'config_map_ref': 'k8s_config1',
+            'k8s_ref': 'k8s_resource',
             'keys': ['key1', 'key2'],
             'tags': ['foo', 'bar']
         }
@@ -95,7 +102,7 @@ class TestK8SConfigMapListViewV1(BaseViewTest):
         assert last_object.owner.owner == Cluster.load()
         assert last_object.name == data['name']
         assert last_object.description == data['description']
-        assert last_object.config_map_ref == data['config_map_ref']
+        assert last_object.k8s_ref == data['k8s_ref']
         assert last_object.keys == data['keys']
         assert last_object.tags == data['tags']
 
@@ -107,7 +114,7 @@ class TestK8SConfigMapListViewV1(BaseViewTest):
         data = {
             'name': 'new_config',
             'description': 'some description',
-            'config_map_ref': 'k8s_config1',
+            'k8s_ref': 'k8s_ref1',
             'keys': ['key1', 'key2'],
             'tags': ['foo', 'bar']
         }
@@ -115,20 +122,23 @@ class TestK8SConfigMapListViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_403_FORBIDDEN
 
 
-@pytest.mark.config_maps_catalog_mark
-class TestK8SConfigMapDetailViewV1(BaseViewTest):
-    serializer_class = K8SConfigMapSerializer
-    model_class = K8SConfigMap
-    factory_class = K8SConfigMapFactory
+@pytest.mark.k8s_resource_catalog_mark
+class TestK8SResourceDetailViewV1(BaseViewTest):
+    serializer_class = None
+    model_class = None
+    factory_class = None
     HAS_AUTH = True
     ADMIN_USER = True
 
     def setUp(self):
         super().setUp()
         self.normal_client = AuthorizedClient()
-        self.object = self.factory_class()
-        self.url = '/{}/catalogs/k8s_config_maps/{}/'.format(API_V1, self.object.uuid.hex)
+        self.object = self.factory_class()  # pylint:disable=not-callable
+        self.url = self.get_url()
         self.queryset = self.model_class.objects.all()
+
+    def get_url(self):
+        return ''
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -145,13 +155,13 @@ class TestK8SConfigMapDetailViewV1(BaseViewTest):
             'name': 'foo',
             'description': 'new description',
             'tags': ['foo', 'bar'],
-            'config_map_ref': 'new_ref',
+            'k8s_ref': 'new_ref',
             'keys': ['key1', 'key2'],
         }
         assert self.object.name != data['name']
         assert self.object.description != data['description']
         assert self.object.tags != data['tags']
-        assert self.object.config_map_ref != data['config_map_ref']
+        assert self.object.k8s_ref != data['k8s_ref']
         assert self.object.keys != data['keys']
 
         resp = self.auth_client.patch(self.url, data=data)
@@ -160,7 +170,7 @@ class TestK8SConfigMapDetailViewV1(BaseViewTest):
         assert new_object.name == data['name']
         assert new_object.description == data['description']
         assert new_object.tags == data['tags']
-        assert new_object.config_map_ref == data['config_map_ref']
+        assert new_object.k8s_ref == data['k8s_ref']
         assert new_object.keys == data['keys']
 
         # Non admin
@@ -176,3 +186,47 @@ class TestK8SConfigMapDetailViewV1(BaseViewTest):
         resp = self.auth_client.delete(self.url)
         assert resp.status_code == status.HTTP_204_NO_CONTENT
         assert self.model_class.objects.count() == 0
+
+
+@pytest.mark.k8s_resource_catalog_mark
+class TestK8SConfigMapListViewV1(TestK8SResourceListViewV1):
+    serializer_class = K8SConfigMapSerializer
+    model_class = K8SConfigMap
+    factory_class = K8SConfigMapFactory
+
+    def get_url(self):
+        return '/{}/catalogs/k8s_config_maps/'.format(API_V1)
+
+
+@pytest.mark.k8s_resource_catalog_mark
+class TestK8SSecretListViewV1(TestK8SResourceListViewV1):
+    serializer_class = K8SSecretSerializer
+    model_class = K8SSecret
+    factory_class = K8SSecretFactory
+
+    def get_url(self):
+        return '/{}/catalogs/k8s_secrets/'.format(API_V1)
+
+
+@pytest.mark.k8s_resource_catalog_mark
+class TestK8SConfigMapDetailViewV1(TestK8SResourceDetailViewV1):
+    serializer_class = K8SConfigMapSerializer
+    model_class = K8SConfigMap
+    factory_class = K8SConfigMapFactory
+
+    def get_url(self):
+        return '/{}/catalogs/k8s_config_maps/{}/'.format(API_V1, self.object.uuid.hex)
+
+
+@pytest.mark.k8s_resource_catalog_mark
+class TestK8SSecretDetailViewV1(TestK8SResourceDetailViewV1):
+    serializer_class = K8SSecretSerializer
+    model_class = K8SSecret
+    factory_class = K8SSecretFactory
+
+    def get_url(self):
+        return '/{}/catalogs/k8s_secrets/{}/'.format(API_V1, self.object.uuid.hex)
+
+
+del TestK8SResourceListViewV1
+del TestK8SResourceDetailViewV1

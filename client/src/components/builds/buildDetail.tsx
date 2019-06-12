@@ -3,11 +3,11 @@ import * as React from 'react';
 
 import * as actions from '../../actions/builds';
 import { isDone } from '../../constants/statuses';
-import { getBuildUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Logs from '../../containers/logs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { BuildModel } from '../../models/build';
+import { getBuildUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import DockerfileText from '../editors/dockerfileText';

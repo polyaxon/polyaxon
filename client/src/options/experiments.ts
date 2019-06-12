@@ -29,5 +29,3 @@ export const EXPERIMENT_KEYS = [
   SERVICE_ACCOUNTS_EXPERIMENTS,
   K8S_RESOURCES_EXPERIMENTS,
 ];
-
-export const ClusterSchedulingExperimentsSettingsURL = '/app/settings/scheduling/experiments/';

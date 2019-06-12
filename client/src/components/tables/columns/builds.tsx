@@ -2,10 +2,10 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import * as actions from '../../../actions/builds';
-import { getBuildUrl, splitUniqueName } from '../../../constants/utils';
 import { BookmarkInterface } from '../../../interfaces/bookmarks';
 import { ColumnInterface } from '../../../interfaces/tableColumns';
 import { BuildModel } from '../../../models/build';
+import { getBuildUrl, splitUniqueName } from '../../../urls/utils';
 import { getBookmark } from '../../../utils/bookmarks';
 import BookmarkStar from '../../bookmarkStar';
 import Description from '../../description';

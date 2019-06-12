@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getJobUrlFromName } from '../../constants/utils';
 import { JobModel } from '../../models/job';
+import { getJobUrlFromName } from '../../urls/utils';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
@@ -77,7 +77,7 @@ export function updateJob(jobName: string, updateDict: { [key: string]: any }): 
         dispatch,
         updateJobErrorActionCreator,
         'Job not found',
-        'Failed to job',
+        'Failed to update job',
         [jobName]))
       .then((response) => response.json())
       .then((json) => dispatch(updateJobSuccessActionCreator(json)))

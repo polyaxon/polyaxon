@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/groups';
-import { getGroupTensorboardUrl } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
+import { getGroupTensorboardUrl } from '../../urls/utils';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
 import MDEditor from '../mdEditor/mdEditor';

@@ -33,5 +33,3 @@ export const TENSORBOARD_KEYS = [
   K8S_RESOURCES_TENSORBOARDS,
   TENSORBOARDS_DOCKER_IMAGE,
 ];
-
-export const ClusterSchedulingTensorboardsSettingsURL = '/app/settings/scheduling/tensorboards/';

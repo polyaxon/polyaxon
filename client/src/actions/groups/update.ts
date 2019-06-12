@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getGroupUrlFromName, getProjectNameFromUniqueName, getSelectionUrlFromName } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
+import { getGroupUrlFromName, getProjectNameFromUniqueName, getSelectionUrlFromName } from '../../urls/utils';
 import { deleteExperimentsSuccessActionCreator } from '../experiments';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
@@ -78,7 +78,7 @@ export function updateGroup(groupName: string, updateDict: { [key: string]: any 
         dispatch,
         updateGroupErrorActionCreator,
         'Group not found',
-        'Failed to group',
+        'Failed to update group',
         [groupName]))
       .then((response) => response.json())
       .then((json) => dispatch(updateGroupSuccessActionCreator(json)))
@@ -115,7 +115,7 @@ export function updateSelection(groupName: string, updateDict: { [key: string]: 
         dispatch,
         updateGroupErrorActionCreator,
         'Group not found',
-        'Failed to group',
+        'Failed to update selection',
         [groupName]))
       .then(() => {
         if ('operation' in updateDict && updateDict.operation === 'remove') {

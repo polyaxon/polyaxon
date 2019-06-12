@@ -7,7 +7,7 @@ import { AppState } from '../../constants/types';
 
 import * as actions from '../../actions/tensorboards';
 import TensorboardDetail from '../../components/tensorboards/tensorboardDetail';
-import { getTensorboardUniqueName } from '../../constants/utils';
+import { getTensorboardUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

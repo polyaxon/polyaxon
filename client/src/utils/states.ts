@@ -1,6 +1,6 @@
 import { getPaginatedSlice } from '../constants/paginate';
 import { AppState } from '../constants/types';
-import { getExperimentIndexName, getGroupName } from '../constants/utils';
+import { getExperimentIndexName } from '../constants/utils';
 import { BuildModel, BuildStateSchema } from '../models/build';
 import { ExperimentModel, ExperimentStateSchema } from '../models/experiment';
 import { ExperimentJobModel, ExperimentJobStateSchema } from '../models/experimentJob';
@@ -9,6 +9,7 @@ import { JobModel, JobStateSchema } from '../models/job';
 import { NotebookModel, NotebookStateSchema } from '../models/notebook';
 import { ProjectModel, ProjectStateSchema } from '../models/project';
 import { TensorboardModel, TensorboardStateSchema } from '../models/tensorboard';
+import { getGroupName } from '../urls/utils';
 
 export const getLastFetchedProjects = (projectsState: ProjectStateSchema) => {
   const projectNames = projectsState.lastFetched.names;
@@ -113,7 +114,7 @@ export const getFilteredExperiments = (state: AppState, projectName: string, gro
     );
     experimentNames = getPaginatedSlice(experimentNames);
     experimentNames.forEach(
-      function (experiment: string, idx: number) {
+      function(experiment: string, idx: number) {
         experiments.push(state.experiments.byUniqueNames[experiment]);
       });
   }

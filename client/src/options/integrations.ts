@@ -23,5 +23,3 @@ export const INTEGRATIONS_KEYS = [
   INTEGRATIONS_WEBHOOKS_SLACK,
   INTEGRATIONS_WEBHOOKS_GENERIC,
 ];
-
-export const ClusterIntegrationsSettingsURL = '/app/settings/integrations/';

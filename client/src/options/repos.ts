@@ -11,5 +11,3 @@ export const REPOS_KEYS = [
   REPOS_ACCESS_TOKEN,
   REPOS_CREDENTIALS,
 ];
-
-export const ClusterReposSettingsURL = '/app/settings/repos/';

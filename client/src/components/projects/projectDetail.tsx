@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/projects';
-import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import ActivityLogs from '../../containers/activityLogs';
 import Builds from '../../containers/builds/builds';
 import Experiments from '../../containers/experiments/experiments';
@@ -13,6 +12,7 @@ import ProjectOverview from '../../containers/projects/projectOverview';
 import Tensorboards from '../../containers/tensorboards/tensorboards';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import { EmptyList } from '../empty/emptyList';

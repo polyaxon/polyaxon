@@ -1,12 +1,8 @@
-from api.utils.serializers.catalog import CatalogSerializer
+from api.utils.serializers.catalog import K8SResourceCatalogSerializer
 from db.models.secrets import K8SSecret
 
 
-class K8SSecretSerializer(CatalogSerializer):
-
+class K8SSecretSerializer(K8SResourceCatalogSerializer):
     class Meta:
         model = K8SSecret
-        fields = CatalogSerializer.Meta.fields + (
-            'keys',
-            'secret_ref',
-        )
+        fields = K8SResourceCatalogSerializer.Meta.fields

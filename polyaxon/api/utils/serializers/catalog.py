@@ -6,6 +6,7 @@ class CatalogSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = (
+            'id',
             'uuid',
             'name',
             'description',
@@ -13,4 +14,12 @@ class CatalogSerializer(serializers.ModelSerializer):
             'tags',
             'created_at',
             'updated_at',
+        )
+
+
+class K8SResourceCatalogSerializer(CatalogSerializer):
+    class Meta:
+        fields = CatalogSerializer.Meta.fields + (
+            'k8s_ref',
+            'keys',
         )

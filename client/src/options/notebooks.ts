@@ -36,5 +36,3 @@ export const NOTEBOOK_KEYS = [
   NOTEBOOKS_BACKEND,
   NOTEBOOKS_DOCKER_IMAGE,
 ];
-
-export const ClusterSchedulingNotebooksSettingsURL = '/app/settings/scheduling/notebooks/';

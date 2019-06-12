@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/tensorboards';
-import { splitUniqueName } from '../../constants/utils';
 import { TensorboardModel } from '../../models/tensorboard';
+import { splitUniqueName } from '../../urls/utils';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';

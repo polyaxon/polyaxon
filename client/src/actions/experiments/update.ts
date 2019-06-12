@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getExperimentUrlFromName } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
+import { getExperimentUrlFromName } from '../../urls/utils';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 
@@ -76,7 +76,7 @@ export function updateExperiment(experimentName: string, updateDict: { [key: str
         dispatch,
         updateExperimentErrorActionCreator,
         'Experiment not found',
-        'Failed to experiment',
+        'Failed to update experiment',
         [experimentName]))
       .then((response) => response.json())
       .then((json) => dispatch(updateExperimentSuccessActionCreator(json)))

@@ -1,5 +1,5 @@
-import { splitUniqueName } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
+import { splitUniqueName } from '../../urls/utils';
 
 export interface BaseState {
   project: string;

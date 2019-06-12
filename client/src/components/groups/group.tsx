@@ -3,9 +3,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as actions from '../../actions/groups';
 import { isDone } from '../../constants/statuses';
-import { getGroupUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { GroupModel } from '../../models/group';
+import { getGroupUrl, splitUniqueName } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';

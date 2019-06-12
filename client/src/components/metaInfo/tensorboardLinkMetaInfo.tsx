@@ -1,7 +1,7 @@
 import * as React from 'react';
 
+import { getExperimentUrl, getGroupUrl, getProjectUrl } from '../../urls/utils';
 import LinkMetaInfo from './linkMetaInfo';
-import { getExperimentUrl, getGroupUrl, getProjectUrl } from '../../constants/utils';
 
 export interface Props {
   username: string;

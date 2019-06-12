@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getJobUrlFromName } from '../../constants/utils';
 import history from '../../history';
+import { getJobUrlFromName } from '../../urls/utils';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 import { getJobSuccessActionCreator } from './get';

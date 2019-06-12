@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import * as experimentsActions from '../../actions/experiments';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import { ExperimentModel } from '../../models/experiment';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import { BaseState } from '../forms';
 import LinkedTab from '../linkedTab';
 import ExperimentCreateFull from './creationModes/full';

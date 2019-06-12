@@ -42,10 +42,10 @@ class AdminOrReadOnlyListEndpoint(BaseEndpoint):
 
 
 class AdminOrReadOnlyEndpoint(AdminOrReadOnlyListEndpoint):
-    CONTEXT_KEYS = ('uuid',)
+    CONTEXT_KEYS = ('name',)
     CONTEXT_OBJECTS = ('entry',)
-    lookup_field = 'uuid'
-    lookup_url_kwarg = 'uuid'
+    lookup_field = 'name'
+    lookup_url_kwarg = 'name'
 
     def _initialize_context(self) -> None:
         #  pylint:disable=attribute-defined-outside-init

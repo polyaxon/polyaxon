@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getTensorboardApiUrl, getTensorboardUniqueName } from '../../constants/utils';
 import { TensorboardModel } from '../../models/tensorboard';
+import { getTensorboardApiUrl, getTensorboardUniqueName } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

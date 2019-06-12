@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getExperimentUrlFromName } from '../../constants/utils';
+import { getExperimentUrlFromName } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

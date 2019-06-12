@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Dropdown, MenuItem } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { getProjectUrl } from '../../constants/utils';
+import { getProjectUrl } from '../../urls/utils';
 
 import '../actions.less';
 

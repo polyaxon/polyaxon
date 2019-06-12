@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import * as jobsActions from '../../actions/jobs';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import { JobModel } from '../../models/job';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import JobCreateFull from './creationModes/full';
 import JobCreateQuick from './creationModes/quick';

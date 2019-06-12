@@ -1,5 +1,6 @@
 import uuid as uuid
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.functional import cached_property
 
@@ -44,6 +45,14 @@ class Catalog(RequiredNameableModel,
         if self.owner:
             return CATALOG_UNIQUE_NAME_FORMAT.format(owner=self.owner, name=self.name)
         return '{}'.format(self.name)
+
+
+class K8SResourceCatalog(Catalog):
+    k8s_ref = models.CharField(max_length=256)
+    keys = ArrayField(models.CharField(max_length=256), default=list, blank=True)
+
+    class Meta:
+        abstract = True
 
 
 class AccessCatalog(Catalog, SecretModel):

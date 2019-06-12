@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/projects';
-import { getNotebookUrl, getProjectTensorboardUrl } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
+import { getNotebookUrl, getProjectTensorboardUrl } from '../../urls/utils';
 import Description from '../description';
 import { EmptyList } from '../empty/emptyList';
 import MDEditor from '../mdEditor/mdEditor';

@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import * as actions from '../../actions/groups';
 import GroupDetail from '../../components/groups/groupDetail';
 import { AppState } from '../../constants/types';
-import { getGroupUniqueName } from '../../constants/utils';
+import { getGroupUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

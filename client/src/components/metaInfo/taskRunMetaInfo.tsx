@@ -1,5 +1,5 @@
-import * as React from 'react';
 import * as moment from 'moment';
+import * as React from 'react';
 
 import { humanizeTimeDelta } from '../../constants/utils';
 import MetaInfo from './metaInfo';

@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getGroupUrlFromName, getProjectUrl } from '../../constants/utils';
 import history from '../../history';
+import { getGroupUrlFromName, getProjectUrl } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

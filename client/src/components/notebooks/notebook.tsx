@@ -4,9 +4,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as actions from '../../actions/notebooks';
 import { isDone } from '../../constants/statuses';
-import { getBuildUrl, getNotebookApiUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { NotebookModel } from '../../models/notebook';
+import { getBuildUrl, getNotebookApiUrl, splitUniqueName } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';

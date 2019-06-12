@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getGroupUniqueName, getGroupUrl } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
+import { getGroupUniqueName, getGroupUrl } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

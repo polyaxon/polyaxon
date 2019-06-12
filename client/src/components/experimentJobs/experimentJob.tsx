@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { getExperimentJobUrl, splitUniqueName } from '../../constants/utils';
 import { ExperimentJobModel } from '../../models/experimentJob';
+import { getExperimentJobUrl, splitUniqueName } from '../../urls/utils';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 import IdMetaInfo from '../metaInfo/idMetaInfo';
 import NodeMetaInfo from '../metaInfo/nodeMetaInfo';

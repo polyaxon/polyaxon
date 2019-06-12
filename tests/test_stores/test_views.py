@@ -135,7 +135,7 @@ class TestDataStoreDetailViewV1(BaseViewTest):
         super().setUp()
         self.normal_client = AuthorizedClient()
         self.object = self.factory_class()
-        self.url = '/{}/catalogs/data_stores/{}/'.format(API_V1, self.object.uuid.hex)
+        self.url = '/{}/catalogs/data_stores/{}/'.format(API_V1, self.object.name)
         self.queryset = self.model_class.objects.all()
 
     def test_get(self):

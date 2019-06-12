@@ -1,11 +1,10 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
 import * as Yup from 'yup';
 
 import * as actions from '../../actions/projects';
-import { getUserUrl } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
+import { getUserUrl } from '../../urls/utils';
 import {
   BaseEmptyState,
   BaseState,

@@ -1,9 +1,9 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getGroupUrlFromName, getProjectUrlFromName } from '../../constants/utils';
 import history from '../../history';
 import { GroupModel } from '../../models/group';
+import { getGroupUrlFromName } from '../../urls/utils';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 import { getGroupSuccessActionCreator } from './get';

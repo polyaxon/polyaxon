@@ -7,7 +7,7 @@ import * as codeRefActions from '../../actions/codeReference';
 import * as actions from '../../actions/experiments';
 import ExperimentDetail from '../../components/experiments/experimentDetail';
 import { AppState } from '../../constants/types';
-import { getExperimentUniqueName } from '../../constants/utils';
+import { getExperimentUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

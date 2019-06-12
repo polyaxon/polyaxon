@@ -2,11 +2,18 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import GeneralSettings from '../../containers/settings/configs/general';
-import { BUILD_JOB_KEYS, ClusterSchedulingBuildJobsSettingsURL } from '../../options/build_jobs';
-import { ClusterSchedulingExperimentsSettingsURL, EXPERIMENT_KEYS } from '../../options/experiments';
-import { ClusterSchedulingJobsSettingsURL, JOB_KEYS } from '../../options/jobs';
-import { ClusterSchedulingNotebooksSettingsURL, NOTEBOOK_KEYS } from '../../options/notebooks';
-import { ClusterSchedulingTensorboardsSettingsURL, TENSORBOARD_KEYS } from '../../options/tensorboards';
+import { BUILD_JOB_KEYS } from '../../options/build_jobs';
+import { EXPERIMENT_KEYS } from '../../options/experiments';
+import { JOB_KEYS } from '../../options/jobs';
+import { NOTEBOOK_KEYS } from '../../options/notebooks';
+import { TENSORBOARD_KEYS } from '../../options/tensorboards';
+import {
+  ClusterSchedulingBuildJobsSettingsURL,
+  ClusterSchedulingExperimentsSettingsURL,
+  ClusterSchedulingJobsSettingsURL,
+  ClusterSchedulingNotebooksSettingsURL,
+  ClusterSchedulingTensorboardsSettingsURL,
+} from '../../urls/routes/settings/scheduling';
 
 const SchedulingSettingsRoutes = () => {
 

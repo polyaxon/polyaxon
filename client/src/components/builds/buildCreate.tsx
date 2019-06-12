@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import * as buildsActions from '../../actions/builds';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import { BuildModel } from '../../models/build';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import BuildCreateFull from './creationModes/full';
 import BuildCreateQuick from './creationModes/quick';

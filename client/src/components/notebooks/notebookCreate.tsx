@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl } from '../../constants/utils';
 import { NotebookModel } from '../../models/notebook';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import NotebookCreateFull from './creationModes/full';
 import NotebookCreateQuick from './creationModes/quick';

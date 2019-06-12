@@ -4,13 +4,13 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as actions from '../../actions/tensorboards';
 import { isDone } from '../../constants/statuses';
+import { BookmarkInterface } from '../../interfaces/bookmarks';
+import { TensorboardModel } from '../../models/tensorboard';
 import {
   getBuildUrl,
   getTensorboardApiUrl,
   splitUniqueName
-} from '../../constants/utils';
-import { BookmarkInterface } from '../../interfaces/bookmarks';
-import { TensorboardModel } from '../../models/tensorboard';
+} from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import BookmarkStar from '../bookmarkStar';
 import Description from '../description';

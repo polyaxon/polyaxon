@@ -4,14 +4,14 @@ import * as React from 'react';
 import { ExperimentJobModel } from '../../models/experimentJob';
 import { EmptyList } from '../empty/emptyList';
 
+import Logs from '../../containers/logs';
+import Statuses from '../../containers/statuses';
 import {
   getExperimentJobUrl, getExperimentUrl,
   getProjectUrl,
   getUserUrl,
   splitUniqueName,
-} from '../../constants/utils';
-import Logs from '../../containers/logs';
-import Statuses from '../../containers/statuses';
+} from '../../urls/utils';
 import Breadcrumb from '../breadcrumb';
 import ExperimentJobInstructions from '../instructions/experimentJobInstructions';
 import LinkedTab from '../linkedTab';

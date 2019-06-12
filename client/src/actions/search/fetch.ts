@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getProjectUrlFromName } from '../../constants/utils';
 import { SearchModel } from '../../models/search';
+import { getProjectUrlFromName } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

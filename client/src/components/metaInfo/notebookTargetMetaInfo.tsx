@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { getNotebookUrl, } from '../../constants/utils';
+import { getNotebookUrl, } from '../../urls/utils';
 import HrefMetaInfo from './hrefMetaInfo';
 
 export interface Props {

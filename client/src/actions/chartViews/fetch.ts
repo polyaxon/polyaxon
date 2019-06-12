@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { urlifyProjectName } from '../../constants/utils';
 import { ChartViewModel } from '../../models/chartView';
+import { urlifyProjectName } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

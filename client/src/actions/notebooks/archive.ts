@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getNotebookApiUrlFromName, getProjectUrl } from '../../constants/utils';
 import history from '../../history';
+import { getNotebookApiUrlFromName, getProjectUrl } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

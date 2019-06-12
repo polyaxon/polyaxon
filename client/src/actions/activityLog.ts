@@ -2,11 +2,9 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { BASE_API_URL } from '../constants/api';
-import {
-  getProjectUrl,
-} from '../constants/utils';
 import history from '../history';
 import { ActivityLogModel } from '../models/activitylog';
+import { getProjectUrl, } from '../urls/utils';
 import { stdHandleError } from './utils';
 
 export enum actionTypes {

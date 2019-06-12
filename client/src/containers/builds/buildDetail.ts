@@ -7,7 +7,7 @@ import { AppState } from '../../constants/types';
 
 import * as actions from '../../actions/builds';
 import BuildDetail from '../../components/builds/buildDetail';
-import { getBuildUniqueName } from '../../constants/utils';
+import { getBuildUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

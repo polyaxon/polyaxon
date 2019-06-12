@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { getLoginUrl } from '../constants/utils';
 import { delay } from '../constants/utils';
+import { getLoginUrl } from '../urls/utils';
 
 export interface Props {
   logout: () => any;

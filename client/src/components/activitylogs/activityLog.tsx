@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import { ActivityLogModel } from '../../models/activitylog';
 import {
   getBuildUrl,
   getExperimentUrl,
@@ -9,8 +10,7 @@ import {
   getUserUrl,
   splitUniqueName,
   urlifyProjectName,
-} from '../../constants/utils';
-import { ActivityLogModel } from '../../models/activitylog';
+} from '../../urls/utils';
 import DatesMetaInfo from '../metaInfo/datesMetaInfo';
 
 export interface Props {

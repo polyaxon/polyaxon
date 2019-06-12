@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getBuildUniqueName, getBuildUrl } from '../../constants/utils';
 import { BuildModel } from '../../models/build';
+import { getBuildUniqueName, getBuildUrl } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

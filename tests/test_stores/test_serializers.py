@@ -6,12 +6,13 @@ from factories.factory_data_stores import DataStoreFactory
 from tests.base.case import BaseTest
 
 
-@pytest.mark.config_maps_catalog_mark
+@pytest.mark.stores_mark
 class TestDataStoresSerializer(BaseTest):
     serializer_class = DataStoreSerializer
     model_class = DataStore
     factory_class = DataStoreFactory
     expected_keys = {
+        'id',
         'uuid',
         'name',
         'description',

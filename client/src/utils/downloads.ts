@@ -1,5 +1,5 @@
 import { BASE_API_URL } from '../constants/api';
-import { urlifyProjectName } from '../constants/utils';
+import { urlifyProjectName } from '../urls/utils';
 
 export function outputsDownloadUrl(projectUniqueName: string,
                                    resources: string,

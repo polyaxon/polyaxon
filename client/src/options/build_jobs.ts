@@ -46,5 +46,3 @@ export const BUILD_JOB_KEYS = [
   KANIKO_DOCKER_IMAGE,
   KANIKO_IMAGE_PULL_POLICY,
 ];
-
-export const ClusterSchedulingBuildJobsSettingsURL = '/app/settings/scheduling/builds/';

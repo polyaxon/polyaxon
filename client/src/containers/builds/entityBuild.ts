@@ -6,7 +6,7 @@ import * as actions from '../../actions/builds';
 import EntityBuild from '../../components/builds/entityBuild';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
-import { splitUniqueName } from '../../constants/utils';
+import { splitUniqueName } from '../../urls/utils';
 import { getErrorsByIds } from '../../utils/errors';
 import { getIsLoading } from '../../utils/isLoading';
 

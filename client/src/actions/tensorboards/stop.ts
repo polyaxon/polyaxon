@@ -1,10 +1,9 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getTensorboardApiUrlFromName } from '../../constants/utils';
+import { getTensorboardApiUrlFromName } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
-
 
 export interface StopTensorboardRequestAction extends Action {
   type: actionTypes.STOP_TENSORBOARD_REQUEST;

@@ -7,7 +7,7 @@ import { AppState } from '../../constants/types';
 
 import * as actions from '../../actions/notebooks';
 import NotebookDetail from '../../components/notebooks/notebookDetail';
-import { getNotebookUniqueName } from '../../constants/utils';
+import { getNotebookUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

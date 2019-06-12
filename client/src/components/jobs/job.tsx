@@ -4,9 +4,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import * as actions from '../../actions/jobs';
 import { isDone } from '../../constants/statuses';
-import { getBuildUrl, getJobUrl, splitUniqueName } from '../../constants/utils';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
+import { getBuildUrl, getJobUrl, splitUniqueName } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import { getJobCloning } from '../../utils/cloning';
 import BookmarkStar from '../bookmarkStar';

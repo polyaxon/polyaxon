@@ -1,14 +1,14 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
+import history from '../../history';
+import { NotebookModel } from '../../models/notebook';
 import {
   getNotebookApiUrlFromName,
   getProjectUniqueName,
   getProjectUrl,
   getProjectUrlFromName
-} from '../../constants/utils';
-import history from '../../history';
-import { NotebookModel } from '../../models/notebook';
+} from '../../urls/utils';
 import { getNotebookSuccessActionCreator } from '../notebooks';
 import { stdCreateHandleError, stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';

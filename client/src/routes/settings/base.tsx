@@ -3,21 +3,24 @@ import { Route, Switch } from 'react-router-dom';
 
 import GeneralSettings from '../../containers/settings/configs/general';
 import KeyOption from '../../containers/settings/configs/keyOption';
-import { ClusterMopreSettingsURL } from '../../options/general';
-import { ClusterHardwareSettingsURL, HARDWARE_KEYS } from '../../options/hardware';
-import { ClusterIntegrationsSettingsURL, INTEGRATIONS_KEYS } from '../../options/integrations';
-import { ClusterReposSettingsURL, REPOS_KEYS } from '../../options/repos';
+import { HARDWARE_KEYS } from '../../options/hardware';
+import { INTEGRATIONS_KEYS } from '../../options/integrations';
+import { REPOS_KEYS } from '../../options/repos';
+import { authSettingsURL, schedulingSettingsURL } from '../../urls/routes/base';
+import {
+  ClusterIntegrationsSettingsURL,
+  ClusterMoreSettingsURL,
+  ClusterReposSettingsURL
+} from '../../urls/routes/settings/base';
+import { ClusterHardwareSettingsURL } from '../../urls/routes/settings/scheduling';
 import AuthSettingsRoutes from './auth';
 import SchedulingSettingsRoutes from './scheduling';
 
 const SettingsRoutes = () => {
-  const ClusterSchedulingSettingsURL = '/app/settings/scheduling/';
-  const ClusterAuthSettingsURL = '/app/settings/auth/';
-
   return (
     <Switch>
-      <Route path={ClusterSchedulingSettingsURL} component={SchedulingSettingsRoutes}/>
-      <Route path={ClusterAuthSettingsURL} component={AuthSettingsRoutes}/>
+      <Route path={schedulingSettingsURL} component={SchedulingSettingsRoutes}/>
+      <Route path={authSettingsURL} component={AuthSettingsRoutes}/>
       <Route
         path={ClusterReposSettingsURL}
         component={() => <GeneralSettings
@@ -40,7 +43,7 @@ const SettingsRoutes = () => {
         />}
       />
       <Route
-        path={ClusterMopreSettingsURL}
+        path={ClusterMoreSettingsURL}
         component={KeyOption}
       />
     </Switch>

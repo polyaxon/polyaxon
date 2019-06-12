@@ -7,11 +7,13 @@ import {
   AUTH_BITBUCKET_KEYS,
   AUTH_GITHUB_KEYS,
   AUTH_GITLAB_KEYS,
+} from '../../options/auth';
+import {
   ClusterAuthAzureSettingsURL,
   ClusterAuthBitbucketSettingsURL,
   ClusterAuthGithubSettingsURL,
   ClusterAuthGitlabSettingsURL
-} from '../../options/auth';
+} from '../../urls/routes/settings/auth';
 
 const AuthSettingsRoutes = () => {
   return (

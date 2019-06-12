@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import { getGroupUrl, splitUniqueName } from '../../../constants/utils';
 import { ColumnInterface } from '../../../interfaces/tableColumns';
 import { GroupModel } from '../../../models/group';
+import { getGroupUrl, splitUniqueName } from '../../../urls/utils';
 import { getBaseGlobalRunColumnOptions, getBaseRunColumnOptions } from './base';
 import { FILTER_EXAMPLES } from './examples';
 

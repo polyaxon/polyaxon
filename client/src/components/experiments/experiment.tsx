@@ -2,12 +2,11 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import { getBuildUrl, getExperimentUrl, getGroupUrl, splitUniqueName } from '../../constants/utils';
-
 import * as actions from '../../actions/experiments';
 import { isDone } from '../../constants/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
+import { getBuildUrl, getExperimentUrl, getGroupUrl, splitUniqueName } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import { getExperimentCloning } from '../../utils/cloning';
 import BookmarkStar from '../bookmarkStar';

@@ -3,18 +3,18 @@ import * as React from 'react';
 
 import * as actions from '../../actions/jobs';
 import { isDone } from '../../constants/statuses';
-import {
-  getJobUrl,
-  getProjectUrl,
-  getUserUrl,
-  splitUniqueName,
-} from '../../constants/utils';
 import EntityBuild from '../../containers/builds/entityBuild';
 import Logs from '../../containers/logs';
 import Outputs from '../../containers/outputs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { JobModel } from '../../models/job';
+import {
+  getJobUrl,
+  getProjectUrl,
+  getUserUrl,
+  splitUniqueName,
+} from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import YamlText from '../editors/yamlText';

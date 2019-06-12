@@ -7,8 +7,8 @@ import * as actions from '../../actions/projects';
 import ProjectOverview from '../../components/projects/projectOverview';
 import { ACTIONS } from '../../constants/actions';
 import { AppState } from '../../constants/types';
-import { getProjectUniqueName } from '../../constants/utils';
 import { ProjectModel } from '../../models/project';
+import { getProjectUniqueName } from '../../urls/utils';
 import { getErrorsByIds } from '../../utils/errors';
 import { getIsLoading } from '../../utils/isLoading';
 

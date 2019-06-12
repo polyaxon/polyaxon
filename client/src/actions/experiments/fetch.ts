@@ -2,10 +2,10 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { BASE_API_URL } from '../../constants/api';
-import { urlifyProjectName } from '../../constants/utils';
 import history from '../../history';
 import { BookmarkModel } from '../../models/bookmark';
 import { ExperimentModel } from '../../models/experiment';
+import { urlifyProjectName } from '../../urls/utils';
 import { ARCHIVES, BOOKMARKS } from '../../utils/endpointList';
 import { stdFetchHandleError } from '../utils';
 import { actionTypes } from './actionTypes';

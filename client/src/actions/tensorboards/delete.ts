@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getProjectUrl, getTensorboardApiUrlFromName } from '../../constants/utils';
 import history from '../../history';
+import { getProjectUrl, getTensorboardApiUrlFromName } from '../../urls/utils';
 import { stdDeleteHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

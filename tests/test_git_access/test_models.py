@@ -25,7 +25,7 @@ class TestGitAccessModels(BaseTest):
         assert GitAccess.objects.count() == 0
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='secret1',
-                                          secret_ref='secret1')
+                                          k8s_ref='secret1')
         GitAccess.objects.create(owner=self.owner,
                                  name='my_github_access',
                                  k8s_secret=secret)
@@ -56,7 +56,7 @@ class TestGitAccessModels(BaseTest):
 
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='secret1',
-                                          secret_ref='secret1')
+                                          k8s_ref='secret1')
         registry = GitAccess.objects.create(owner=self.owner,
                                             name='my_other_gitlab_access',
                                             k8s_secret=secret,

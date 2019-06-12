@@ -70,7 +70,7 @@ class TestRegistryContext(BaseTest):
     def test_get_registry_spec_from_config(self):
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='my_secret',
-                                          secret_ref='my_secret')
+                                          k8s_ref='my_secret')
         config = RegistryAccess.objects.create(owner=self.owner,
                                                host='https://index.docker.io/v1/foo',
                                                k8s_secret=secret,
@@ -78,7 +78,7 @@ class TestRegistryContext(BaseTest):
         spec = get_registry_spec_from_config(config=config)
 
         assert spec.host == 'https://index.docker.io/v1/foo'
-        assert spec.secret == secret.secret_ref
+        assert spec.secret == secret.k8s_ref
         assert spec.secret_keys == secret.keys
         assert spec.insecure is False
 
@@ -119,7 +119,7 @@ class TestRegistryContext(BaseTest):
     def test_get_external_registry_context(self):
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='my_secret',
-                                          secret_ref='my_secret')
+                                          k8s_ref='my_secret')
         registry_access = RegistryAccess.objects.create(owner=self.owner,
                                                         host='https://index.docker.io/v1/foo',
                                                         k8s_secret=secret,
@@ -128,6 +128,6 @@ class TestRegistryContext(BaseTest):
 
         spec = get_registry_context(build_backend=None)
         assert spec.host == 'https://index.docker.io/v1/foo'
-        assert spec.secret == secret.secret_ref
+        assert spec.secret == secret.k8s_ref
         assert spec.secret_keys == secret.keys
         assert spec.insecure is False

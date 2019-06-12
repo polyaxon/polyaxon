@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import * as groupsActions from '../../actions/groups';
 import * as projectsActions from '../../actions/projects';
-import { getProjectUrl, getUserUrl, splitUniqueName } from '../../constants/utils';
 import { GroupModel } from '../../models/group';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrl, getUserUrl, splitUniqueName } from '../../urls/utils';
 import { BaseState, sanitizeForm } from '../forms';
 import LinkedTab from '../linkedTab';
 import GroupCreateFull from './creationModes/full';

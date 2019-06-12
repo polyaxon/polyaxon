@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getJobUniqueName, getJobUrl } from '../../constants/utils';
 import { JobModel } from '../../models/job';
+import { getJobUniqueName, getJobUrl } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

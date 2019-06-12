@@ -4,13 +4,6 @@ import * as React from 'react';
 import * as codeRefActions from '../../actions/codeReference';
 import * as actions from '../../actions/experiments';
 import { isDone } from '../../constants/statuses';
-import {
-  getExperimentUrl,
-  getGroupUrl,
-  getProjectUrl,
-  getUserUrl,
-  splitUniqueName,
-} from '../../constants/utils';
 import EntityBuild from '../../containers/builds/entityBuild';
 import ExperimentJobs from '../../containers/experimentJobs/experimentJobs';
 import Logs from '../../containers/logs';
@@ -19,6 +12,13 @@ import Outputs from '../../containers/outputs';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { ExperimentModel } from '../../models/experiment';
+import {
+  getExperimentUrl,
+  getGroupUrl,
+  getProjectUrl,
+  getUserUrl,
+  splitUniqueName,
+} from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import YamlText from '../editors/yamlText';

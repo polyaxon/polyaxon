@@ -1,9 +1,9 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getProjectUrlFromName } from '../../constants/utils';
 import history from '../../history';
 import { ProjectModel } from '../../models/project';
+import { getProjectUrlFromName } from '../../urls/utils';
 import { stdCreateHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 import { getProjectSuccessActionCreator } from './get';

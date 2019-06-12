@@ -1,5 +1,5 @@
-import { getExperimentUrl, getJobUrl, splitUniqueName } from '../constants/utils';
 import { CloningInterface } from '../interfaces/cloning';
+import { getExperimentUrl, getJobUrl, splitUniqueName } from '../urls/utils';
 
 const CLONING_MAPPING = {
   resume: 'Resumed from',

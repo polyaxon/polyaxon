@@ -25,7 +25,7 @@ class TestRegistryAccessModels(BaseTest):
         assert RegistryAccess.objects.count() == 0
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='secret1',
-                                          secret_ref='secret1')
+                                          k8s_ref='secret1')
         RegistryAccess.objects.create(owner=self.owner,
                                       name='my_registry',
                                       k8s_secret=secret)
@@ -54,7 +54,7 @@ class TestRegistryAccessModels(BaseTest):
 
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='secret1',
-                                          secret_ref='secret1')
+                                          k8s_ref='secret1')
         registry = RegistryAccess.objects.create(owner=self.owner,
                                                  name='my_registry_with_secret_and_host',
                                                  k8s_secret=secret,

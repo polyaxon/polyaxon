@@ -7,7 +7,7 @@ import { AppState } from '../../constants/types';
 
 import * as actions from '../../actions/experimentJobs';
 import ExperimentJobDetail from '../../components/experimentJobs/experimentJobDetail';
-import { getExperimentJobUniqueName } from '../../constants/utils';
+import { getExperimentJobUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

@@ -14,5 +14,3 @@ export const HARDWARE_KEYS = [
   K8S_TPU_TF_VERSION,
   K8S_TPU_RESOURCE_KEY,
 ];
-
-export const ClusterHardwareSettingsURL = '/app/settings/hardware/';

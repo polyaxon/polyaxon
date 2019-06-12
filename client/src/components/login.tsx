@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { getHomeUrl } from '../constants/utils';
+import { getHomeUrl } from '../urls/utils';
 
 import './login.less';
 

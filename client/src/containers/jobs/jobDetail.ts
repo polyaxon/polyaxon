@@ -7,7 +7,7 @@ import { AppState } from '../../constants/types';
 
 import * as actions from '../../actions/jobs';
 import JobDetail from '../../components/jobs/jobDetail';
-import { getJobUniqueName } from '../../constants/utils';
+import { getJobUniqueName } from '../../urls/utils';
 
 interface Props extends RouteComponentProps<any> {}
 

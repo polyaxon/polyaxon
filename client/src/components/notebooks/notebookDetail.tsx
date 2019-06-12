@@ -3,10 +3,10 @@ import * as React from 'react';
 
 import * as actions from '../../actions/notebooks';
 import { isDone } from '../../constants/statuses';
-import { getNotebookApiUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { NotebookModel } from '../../models/notebook';
+import { getNotebookApiUrl, getProjectUrl, getUserUrl, splitUniqueName, } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import YamlText from '../editors/yamlText';

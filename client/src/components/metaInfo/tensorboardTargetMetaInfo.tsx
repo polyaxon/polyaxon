@@ -4,7 +4,7 @@ import {
   getExperimentTensorboardUrl,
   getGroupTensorboardUrl,
   getProjectTensorboardUrl,
-} from '../../constants/utils';
+} from '../../urls/utils';
 import HrefMetaInfo from './hrefMetaInfo';
 
 export interface Props {

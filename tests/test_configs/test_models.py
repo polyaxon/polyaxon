@@ -24,10 +24,10 @@ class TestConfigModel(BaseTest):
 
         k8s_config_map = K8SConfigMap.objects.create(owner=self.owner,
                                                      name='my_config',
-                                                     config_map_ref='my_config')
+                                                     k8s_ref='my_config')
         k8s_secret = K8SSecret.objects.create(owner=self.owner,
                                               name='my_secret',
-                                              secret_ref='my_secret')
+                                              k8s_ref='my_secret')
 
         dataset1 = DataStore.objects.create(owner=self.owner,
                                             name='data1',

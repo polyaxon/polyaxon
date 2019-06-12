@@ -29,5 +29,3 @@ export const JOB_KEYS = [
   SERVICE_ACCOUNTS_JOBS,
   K8S_RESOURCES_JOBS,
 ];
-
-export const ClusterSchedulingJobsSettingsURL = '/app/settings/scheduling/jobs/';

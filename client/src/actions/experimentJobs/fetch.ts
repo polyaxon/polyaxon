@@ -2,9 +2,9 @@ import { Action } from 'redux';
 import * as url from 'url';
 
 import { BASE_API_URL } from '../../constants/api';
-import { urlifyProjectName } from '../../constants/utils';
 import history from '../../history';
 import { ExperimentJobModel } from '../../models/experimentJob';
+import { urlifyProjectName } from '../../urls/utils';
 import { stdHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

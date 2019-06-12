@@ -1,8 +1,8 @@
 import { Action } from 'redux';
 
 import { BASE_API_URL } from '../../constants/api';
-import { getBuildUrlFromName, getProjectUrl } from '../../constants/utils';
 import history from '../../history';
+import { getBuildUrlFromName, getProjectUrl } from '../../urls/utils';
 import { stdDeleteHandleError } from '../utils';
 import { actionTypes } from './actionTypes';
 

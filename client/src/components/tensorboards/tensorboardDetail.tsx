@@ -3,10 +3,10 @@ import * as React from 'react';
 
 import * as actions from '../../actions/tensorboards';
 import { isDone } from '../../constants/statuses';
-import { getProjectUrl, getTensorboardApiUrl, getUserUrl, splitUniqueName, } from '../../constants/utils';
 import Statuses from '../../containers/statuses';
 import { BookmarkInterface } from '../../interfaces/bookmarks';
 import { TensorboardModel } from '../../models/tensorboard';
+import { getProjectUrl, getTensorboardApiUrl, getUserUrl, splitUniqueName, } from '../../urls/utils';
 import { getBookmark } from '../../utils/bookmarks';
 import Breadcrumb from '../breadcrumb';
 import YamlText from '../editors/yamlText';
