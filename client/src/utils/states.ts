@@ -6,6 +6,7 @@ import { ExperimentModel, ExperimentStateSchema } from '../models/experiment';
 import { ExperimentJobModel, ExperimentJobStateSchema } from '../models/experimentJob';
 import { GroupModel, GroupStateSchema } from '../models/group';
 import { JobModel, JobStateSchema } from '../models/job';
+import { K8SResourceModel, K8SResourceStateSchema } from '../models/k8sResource';
 import { NotebookModel, NotebookStateSchema } from '../models/notebook';
 import { ProjectModel, ProjectStateSchema } from '../models/project';
 import { TensorboardModel, TensorboardStateSchema } from '../models/tensorboard';
@@ -91,6 +92,16 @@ export const getLastFetchedExperiments = (experimentsState: ExperimentStateSchem
       experiments.push(experimentsState.byUniqueNames[getExperimentIndexName(experiment)]);
     });
   return {experiments, count};
+};
+export const getLastFetchedK8SResources = (k8sResourcesState: K8SResourceStateSchema) => {
+  const k8sResourcesNames = k8sResourcesState.lastFetched.names;
+  const count = k8sResourcesState.lastFetched.count;
+  const k8sResources: K8SResourceModel[] = [];
+  k8sResourcesNames.forEach(
+    (resource: string, idx: number) => {
+      k8sResources.push(k8sResourcesState.byUniqueNames[resource]);
+    });
+  return {k8sResources, count};
 };
 
 export const getFilteredExperiments = (state: AppState, projectName: string, groupId?: number | string) => {

@@ -13,6 +13,7 @@ import { ExperimentJobsEmptyState, ExperimentJobStateSchema } from '../models/ex
 import { GroupsEmptyState, GroupStateSchema } from '../models/group';
 import { HealthStatusEmptyState, HealthStatusStateSchema } from '../models/healthStatus';
 import { JobsEmptyState, JobStateSchema } from '../models/job';
+import { K8SResourcesEmptyState, K8SResourceStateSchema } from '../models/k8sResource';
 import { LoadingIndicatorEmptyState, LoadingIndicatorSchema } from '../models/loadingIndicator';
 import { MetricEmptyState, MetricStateSchema } from '../models/metric';
 import { ModalStateSchema } from '../models/modal';
@@ -42,6 +43,7 @@ export interface AppState {
   users: UserStateSchema;
   logs: string;
   options: OptionStateSchema;
+  k8sResources: K8SResourceStateSchema;
   outputs: OutputsModel;
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
@@ -68,6 +70,7 @@ export const AppEmptyState = {
   user: UserEmptyState,
   logs: '',
   options: OptionsEmptyState,
+  k8sResources: K8SResourcesEmptyState,
   statuses: StatusEmptyState,
   metrics: MetricEmptyState,
   activityLogs: ActivityLogsEmptyState,

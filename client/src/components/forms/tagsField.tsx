@@ -10,7 +10,7 @@ export const TagsComponent: React.FunctionComponent<FieldProps> = (
     form,
   }) => (
   <TagsEdit
-    tags={[]}
+    tags={form.initialValues.tags.map((tag: { label: string, value: string }) => tag.value)}
     handleChange={(value: Array<{ label: string, value: string }>) => form.setFieldValue(field.name, value)}
   />
 );

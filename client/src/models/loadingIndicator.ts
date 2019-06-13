@@ -26,6 +26,7 @@ export class LoadingIndicatorSchema {
   public healthStatus: LoadingIndicatorEntityModel;
   public codeReference: LoadingIndicatorEntityModel;
   public options: LoadingIndicatorEntityModel;
+  public k8sResources: LoadingIndicatorEntityModel;
 }
 
 export const LoadingIndicatorEmptyState = {
@@ -46,6 +47,7 @@ export const LoadingIndicatorEmptyState = {
   healthStatus: getLoadingIndicatorEntityEmpty(),
   codeReference: getLoadingIndicatorEntityEmpty(),
   options: getLoadingIndicatorEntityEmpty(),
+  k8sResources: getLoadingIndicatorEntityEmpty(),
 };
 
 export const processLoadingIndicatorById = (state: LoadingIndicatorEntityModel,
@@ -68,5 +70,22 @@ export const processLoadingIndicatorGlobal = (state: LoadingIndicatorEntityModel
   return {
     ...state,
     global: {...state.global, ...newState}
+  };
+};
+
+export const initLoadingIndicatorById = (state: LoadingIndicatorEntityModel,
+                                         id: number | string) => {
+  const idState: { [id: string]: any } = {};
+  idState[id.toString()] = {};
+  return {
+    ...state,
+    byIds: {...state.byIds, ...idState}
+  };
+};
+
+export const initLoadingIndicator = (state: LoadingIndicatorEntityModel) => {
+  return {
+    ...state,
+    global: {}
   };
 };

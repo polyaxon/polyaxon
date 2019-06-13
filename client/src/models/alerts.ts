@@ -29,6 +29,7 @@ export class AlertSchema {
   public healthStatus: AlertEntityModel;
   public codeReference: AlertEntityModel;
   public options: AlertEntityModel;
+  public k8sResources: AlertEntityModel;
 }
 
 export const AlertEmptyState = {
@@ -49,6 +50,7 @@ export const AlertEmptyState = {
   healthStatus: AlertEntityEmpty(),
   codeReference: AlertEntityEmpty(),
   options: AlertEntityEmpty(),
+  k8sResources: AlertEntityEmpty(),
 };
 
 export const processErrorById = (state: AlertEntityModel,
@@ -73,5 +75,21 @@ export const processErrorGlobal = (state: AlertEntityModel,
   return {
     ...state,
     global: {...state.global, ...newState}
+  };
+};
+
+export const initErrorById = (state: AlertEntityModel, id: number | string) => {
+  const idState: { [id: string]: any } = {};
+  idState[id.toString()] = {};
+  return {
+    ...state,
+    byIds: {...state.byIds, ...idState}
+  };
+};
+
+export const initErrorGlobal = (state: AlertEntityModel) => {
+  return {
+    ...state,
+    global: {}
   };
 };

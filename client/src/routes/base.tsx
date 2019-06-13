@@ -12,6 +12,7 @@ import User from '../containers/user';
 import {
   archivesURL,
   bookmarksURL,
+  catalogsURL,
   clusterActivityLogsURL,
   historyLogsURL,
   newEntityURL,
@@ -22,6 +23,7 @@ import {
   userURL,
 } from '../urls/routes/base';
 import { getHomeUrl } from '../urls/utils';
+import CatalogsRoutes from './catalogs/base';
 import NewEntityRoutes from './new';
 import ProjectRoutes from './projects';
 import SettingsRoutes from './settings/base';
@@ -37,6 +39,7 @@ const Routes = () => {
       <Route path={archivesURL} exact={true} component={Archives}/>
       <Route path={newEntityURL} component={NewEntityRoutes}/>
       <Route path={settingsURL} component={SettingsRoutes}/>
+      <Route path={catalogsURL} component={CatalogsRoutes}/>
       <Route path={projectURL} exact={true} component={ProjectDetail}/>
       <Route path={projectURL} component={ProjectRoutes}/>
       <Route path={userURL} component={User}/>

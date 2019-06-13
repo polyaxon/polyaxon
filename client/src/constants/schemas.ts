@@ -111,3 +111,10 @@ export const OptionSchema = new schema.Entity(
   {
     idAttribute: 'key'
   });
+
+export const K8SResourceSchema = new schema.Entity(
+  'k8sResources',
+  {},
+  {
+    idAttribute: 'name'
+  });

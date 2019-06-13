@@ -10,6 +10,7 @@ import { AlertExperimentReducer } from './experiments';
 import { AlertGroupReducer } from './groups';
 import { AlertHealthStatusReducer } from './healthStatus';
 import { AlertJobReducer } from './jobs';
+import { AlertK8SResourceReducer } from './k8sResources';
 import { AlertMetricReducer } from './metrics';
 import { AlertNotebooksReducer } from './notebooks';
 import { AlertOptionsReducer } from './options';
@@ -41,5 +42,6 @@ export const AlertSliceReducer = (state: AppState, action: Action) => {
   newState = AlertGroupReducer(newState, action);
   newState = AlertJobReducer(newState, action);
   newState = AlertOptionsReducer(newState, action);
+  newState = AlertK8SResourceReducer(newState, action);
   return AlertProjectReducer(newState , action);
 };

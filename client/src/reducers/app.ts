@@ -18,6 +18,7 @@ import { buildsReducer, ProjectBuildsReducer } from './builds';
 import { chartViewsReducer } from './chartViews';
 import { codeReferencesReducer } from './codeReferences';
 import { HealthStatusReducer } from './healthStatus';
+import { K8SResourcesReducer } from './k8sResources';
 import { LoadingIndicatorReducer, LoadingIndicatorSliceReducer } from './loadingIndicator';
 import { logsReducer } from './logs';
 import { MetricsReducer } from './metrics';
@@ -47,6 +48,7 @@ const combinedReducer = combineReducers<AppState>({
   users: userReducer,
   logs: logsReducer,
   options: optionsReducer,
+  k8sResources: K8SResourcesReducer,
   outputs: outputsReducer,
   statuses: StatusesReducer,
   metrics: MetricsReducer,
@@ -83,6 +85,7 @@ function SliceReducer(state: AppState, action: Action) {
     users: UserProjectsReducer(state.users, action),
     logs: state.logs,
     options: state.options,
+    k8sResources: state.k8sResources,
     outputs: state.outputs,
     statuses: state.statuses,
     metrics: state.metrics,

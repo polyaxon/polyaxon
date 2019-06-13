@@ -11,6 +11,7 @@ import { LoadingIndicatorExperimentReducer } from './experiments';
 import { LoadingIndicatorGroupReducer } from './groups';
 import { LoadingIndicatorHealthStatusReducer } from './healthStatus';
 import { LoadingIndicatorJobReducer } from './jobs';
+import { LoadingIndicatorK8SResourceReducer } from './k8sResources';
 import { LoadingIndicatorMetricReducer } from './metrics';
 import { LoadingIndicatorNotebooksReducer } from './notebooks';
 import { LoadingIndicatorOptionsReducer } from './options';
@@ -42,5 +43,6 @@ export const LoadingIndicatorSliceReducer = (state: AppState, action: Action) =>
   newState = LoadingIndicatorGroupReducer(newState, action);
   newState = LoadingIndicatorJobReducer(newState, action);
   newState = LoadingIndicatorOptionsReducer(newState, action);
+  newState = LoadingIndicatorK8SResourceReducer(newState, action);
   return LoadingIndicatorProjectReducer(newState , action);
 };
