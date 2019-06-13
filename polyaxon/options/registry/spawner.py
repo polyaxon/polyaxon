@@ -23,6 +23,7 @@ DNS_CUSTOM_CLUSTER = 'DNS_CUSTOM_CLUSTER'
 PLUGINS = 'PLUGINS'
 PUBLIC_PLUGIN_JOBS = 'PUBLIC_PLUGIN_JOBS'
 
+RESTRICT_K8S_RESOURCES = 'RESTRICT_K8S_RESOURCES'
 # TODO: Remove this once the validation is using the catalogs
 REFS_CONFIG_MAPS = 'REFS_CONFIG_MAPS'
 REFS_SECRETS = 'REFS_SECRETS'
@@ -253,4 +254,16 @@ class RefsSecrets(Option):
     store = OptionStores.SETTINGS
     typing = CONF_TYPES.STR
     default = None
+    options = None
+
+
+class RestrictK8SResources(Option):
+    key = RESTRICT_K8S_RESOURCES
+    is_global = False
+    is_secret = False
+    is_optional = True
+    is_list = False
+    store = OptionStores.SETTINGS
+    typing = CONF_TYPES.BOOL
+    default = True
     options = None
