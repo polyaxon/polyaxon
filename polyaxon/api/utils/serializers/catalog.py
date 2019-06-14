@@ -1,7 +1,13 @@
 from rest_framework import fields, serializers
+from rest_framework.exceptions import ValidationError
+
+from api.utils.serializers.names import CatalogNamesMixin
+from api.utils.serializers.tags import TagsSerializerMixin
 
 
-class CatalogSerializer(serializers.ModelSerializer):
+class CatalogSerializer(serializers.ModelSerializer, CatalogNamesMixin, TagsSerializerMixin):
+    QUERY = None
+
     uuid = fields.UUIDField(format='hex', read_only=True)
 
     class Meta:
@@ -15,6 +21,24 @@ class CatalogSerializer(serializers.ModelSerializer):
             'created_at',
             'updated_at',
         )
+
+    def update(self, instance, validated_data):
+        validated_data = self.validated_tags(validated_data=validated_data,
+                                             tags=instance.tags)
+        validated_data = self.validated_name(validated_data,
+                                             owner=instance.owner,
+                                             query=self.QUERY)
+
+        return super().update(instance=instance, validated_data=validated_data)
+
+    def create(self, validated_data):
+        validated_data = self.validated_name(validated_data,
+                                             owner=validated_data['owner'],
+                                             query=self.QUERY)
+        try:
+            return super().create(validated_data)
+        except Exception as e:
+            raise ValidationError(e)
 
 
 class K8SResourceCatalogSerializer(CatalogSerializer):

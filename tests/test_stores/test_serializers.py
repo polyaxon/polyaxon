@@ -26,6 +26,7 @@ class TestDataStoresSerializer(BaseTest):
         'volume_claim',
         'bucket',
         'k8s_secret',
+        'read_only'
     }
 
     def setUp(self):

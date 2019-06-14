@@ -1,20 +1,13 @@
 import logging
 
-from api.endpoint.admin import AdminOrReadOnlyEndpoint, AdminOrReadOnlyListEndpoint
-from api.endpoint.base import (
-    CreateEndpoint,
-    DestroyEndpoint,
-    ListEndpoint,
-    RetrieveEndpoint,
-    UpdateEndpoint
-)
 from api.k8s_secrets.serializers import K8SSecretSerializer
+from api.utils.views.catalog import CatalogListViewV1, CatalogDetailViewV1
 from db.models.secrets import K8SSecret
 
 _logger = logging.getLogger("polyaxon.views.k8s_secrets")
 
 
-class ClusterK8SSecretListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, CreateEndpoint):
+class ClusterK8SSecretListViewV1(CatalogListViewV1):
     """
     get:
         List entries of k8s secrets catalog.
@@ -25,10 +18,7 @@ class ClusterK8SSecretListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, Crea
     serializer_class = K8SSecretSerializer
 
 
-class ClusterK8SSecretDetailViewV1(AdminOrReadOnlyEndpoint,
-                                   RetrieveEndpoint,
-                                   UpdateEndpoint,
-                                   DestroyEndpoint):
+class ClusterK8SSecretDetailViewV1(CatalogDetailViewV1):
     """
     get:
         Get an entry in k8s secrets catalog.

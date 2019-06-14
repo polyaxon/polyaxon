@@ -158,6 +158,7 @@ class TestDataStoreDetailViewV1(BaseViewTest):
             'type': StoreTypes.S3,
             'bucket': 'foo',
             'k8s_secret': secret.id,
+            'read_only': True
         }
         assert self.object.name != data['name']
         assert self.object.description != data['description']
@@ -165,16 +166,18 @@ class TestDataStoreDetailViewV1(BaseViewTest):
         assert self.object.type != data['type']
         assert self.object.bucket != data['bucket']
         assert self.object.k8s_secret != data['k8s_secret']
+        assert self.object.read_only is False
 
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.name == data['name']
         assert new_object.description == data['description']
-        assert new_object.tags == data['tags']
+        assert set(new_object.tags) == set(data['tags'])
         assert new_object.type == data['type']
         assert new_object.bucket == data['bucket']
         assert new_object.k8s_secret.id == data['k8s_secret']
+        assert new_object.read_only is True
 
         # Non admin
         resp = self.normal_client.patch(self.url, data=data)

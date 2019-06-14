@@ -63,6 +63,7 @@ class BaseStoreTest(BaseTest):
         assert registry.host_path is None
         assert registry.db_secret is None
         assert registry.k8s_secret is None
+        assert registry.read_only is False
 
         secret = K8SSecret.objects.create(owner=self.owner,
                                           name='my_store',

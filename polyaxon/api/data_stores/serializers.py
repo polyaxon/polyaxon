@@ -3,6 +3,7 @@ from db.models.data_stores import DataStore
 
 
 class DataStoreSerializer(CatalogSerializer):
+    QUERY = DataStore.objects
 
     class Meta:
         model = DataStore
@@ -13,4 +14,5 @@ class DataStoreSerializer(CatalogSerializer):
             'volume_claim',
             'bucket',
             'k8s_secret',
+            'read_only'
         )

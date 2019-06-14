@@ -1,20 +1,13 @@
 import logging
 
 from api.data_stores.serializers import DataStoreSerializer
-from api.endpoint.admin import AdminOrReadOnlyEndpoint, AdminOrReadOnlyListEndpoint
-from api.endpoint.base import (
-    CreateEndpoint,
-    DestroyEndpoint,
-    ListEndpoint,
-    RetrieveEndpoint,
-    UpdateEndpoint
-)
+from api.utils.views.catalog import CatalogDetailViewV1, CatalogListViewV1
 from db.models.data_stores import DataStore
 
 _logger = logging.getLogger("polyaxon.views.k8s_config_maps")
 
 
-class DataStoreListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, CreateEndpoint):
+class DataStoreListViewV1(CatalogListViewV1):
     """
     get:
         List entries of k8s config maps catalog.
@@ -25,10 +18,7 @@ class DataStoreListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, CreateEndpo
     serializer_class = DataStoreSerializer
 
 
-class DataStoreDetailViewV1(AdminOrReadOnlyEndpoint,
-                            RetrieveEndpoint,
-                            UpdateEndpoint,
-                            DestroyEndpoint):
+class DataStoreDetailViewV1(CatalogDetailViewV1):
     """
     get:
         Get an entry in k8s config maps catalog.

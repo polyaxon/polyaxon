@@ -26,6 +26,7 @@ class StoreCatalogModel(AccessCatalog):
         max_length=256,
         blank=True,
         null=True)
+    read_only = models.NullBooleanField(default=False)
 
     class Meta(AccessCatalog.Meta):
         abstract = True

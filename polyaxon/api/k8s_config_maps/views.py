@@ -1,20 +1,13 @@
 import logging
 
-from api.endpoint.admin import AdminOrReadOnlyEndpoint, AdminOrReadOnlyListEndpoint
-from api.endpoint.base import (
-    CreateEndpoint,
-    DestroyEndpoint,
-    ListEndpoint,
-    RetrieveEndpoint,
-    UpdateEndpoint
-)
 from api.k8s_config_maps.serializers import K8SConfigMapSerializer
+from api.utils.views.catalog import CatalogListViewV1, CatalogDetailViewV1
 from db.models.config_maps import K8SConfigMap
 
 _logger = logging.getLogger("polyaxon.views.k8s_config_maps")
 
 
-class ClusterK8SConfigMapListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, CreateEndpoint):
+class ClusterK8SConfigMapListViewV1(CatalogListViewV1):
     """
     get:
         List entries of k8s config maps catalog.
@@ -25,10 +18,7 @@ class ClusterK8SConfigMapListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, C
     serializer_class = K8SConfigMapSerializer
 
 
-class ClusterK8SConfigMapDetailViewV1(AdminOrReadOnlyEndpoint,
-                                      RetrieveEndpoint,
-                                      UpdateEndpoint,
-                                      DestroyEndpoint):
+class ClusterK8SConfigMapDetailViewV1(CatalogDetailViewV1):
     """
     get:
         Get an entry in k8s config maps catalog.

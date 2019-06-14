@@ -109,6 +109,10 @@ class TestK8SResourceListViewV1(BaseViewTest):
         assert last_object.keys == data['keys']
         assert last_object.tags == data['tags']
 
+        # Create with same name and owner should raise
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
         # Non admin
         data = {}
         resp = self.normal_client.post(self.url, data)
@@ -174,7 +178,7 @@ class TestK8SResourceDetailViewV1(BaseViewTest):
         new_object = self.model_class.objects.get(id=self.object.id)
         assert new_object.name == data['name']
         assert new_object.description == data['description']
-        assert new_object.tags == data['tags']
+        assert set(new_object.tags) == set(data['tags'])
         assert new_object.k8s_ref == data['k8s_ref']
         assert new_object.keys == data['keys']
 
