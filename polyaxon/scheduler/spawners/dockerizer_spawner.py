@@ -44,7 +44,7 @@ class DockerizerSpawner(K8SManager):
                  nocache=None,
                  insecure=False,
                  creds_secret_ref=None,
-                 creds_secret_keys=None,
+                 creds_secret_items=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -73,7 +73,7 @@ class DockerizerSpawner(K8SManager):
         self.nocache = bool(nocache)
         self.insecure = insecure
         self.creds_secret_ref = creds_secret_ref
-        self.creds_secret_keys = creds_secret_keys
+        self.creds_secret_items = creds_secret_items
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=DOCKERIZER_JOB_NAME,
@@ -155,7 +155,7 @@ class DockerizerSpawner(K8SManager):
             return [], []
         return get_docker_credentials_volumes(secret_ref=self.creds_secret_ref,
                                               secret_mount_path=secret_mount_path,
-                                              secret_keys=self.creds_secret_keys)
+                                              secret_items=self.creds_secret_items)
 
     def get_docker_credentials_volumes(self):
         return self._get_docker_credentials_volumes(secret_mount_path='/root/.docker')

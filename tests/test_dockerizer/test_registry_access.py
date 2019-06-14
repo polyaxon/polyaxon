@@ -29,11 +29,11 @@ class TestRegistryContext(BaseTest):
     def registry_spec(self):
         spec = RegistryContextSpec(host='https://some_host:5000',
                                    secret='docker-conf',
-                                   secret_keys=None,
+                                   secret_items=None,
                                    insecure=False)
         assert spec.host == 'https://some_host:5000'
         assert spec.secret == 'docker-conf'
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is False
 
     def test_get_in_cluster_registry_host(self):
@@ -52,19 +52,19 @@ class TestRegistryContext(BaseTest):
         spec = get_in_cluster_registry_spec(build_backend=None)
         assert spec.host == 'registry_localhost'
         assert spec.secret is None
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is True
 
         spec = get_in_cluster_registry_spec(build_backend=BuildBackend.NATIVE)
         assert spec.host == 'registry_localhost'
         assert spec.secret is None
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is True
 
         spec = get_in_cluster_registry_spec(build_backend=BuildBackend.KANIKO)
         assert spec.host == 'registry_host'
         assert spec.secret is None
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is True
 
     def test_get_registry_spec_from_config(self):
@@ -79,7 +79,7 @@ class TestRegistryContext(BaseTest):
 
         assert spec.host == 'https://index.docker.io/v1/foo'
         assert spec.secret == secret.k8s_ref
-        assert spec.secret_keys == secret.keys
+        assert spec.secret_items == secret.items
         assert spec.insecure is False
 
     @override_settings(REGISTRY_IN_CLUSTER=False)
@@ -100,19 +100,19 @@ class TestRegistryContext(BaseTest):
         spec = get_registry_context(build_backend=None)
         assert spec.host == 'registry_localhost'
         assert spec.secret is None
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is True
 
         spec = get_registry_context(build_backend=BuildBackend.NATIVE)
         assert spec.host == 'registry_localhost'
         assert spec.secret is None
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is True
 
         spec = get_registry_context(build_backend=BuildBackend.KANIKO)
         assert spec.host == 'registry_host'
         assert spec.secret is None
-        assert spec.secret_keys is None
+        assert spec.secret_items is None
         assert spec.insecure is True
 
     @override_settings(REGISTRY_IN_CLUSTER=False)
@@ -129,5 +129,5 @@ class TestRegistryContext(BaseTest):
         spec = get_registry_context(build_backend=None)
         assert spec.host == 'https://index.docker.io/v1/foo'
         assert spec.secret == secret.k8s_ref
-        assert spec.secret_keys == secret.keys
+        assert spec.secret_items == secret.items
         assert spec.insecure is False

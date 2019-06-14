@@ -113,7 +113,7 @@ def start_dockerizer(build_job):
         nocache=build_job.build_nocache,
         insecure=registry_spec.insecure,
         creds_secret_ref=registry_spec.secret,
-        creds_secret_keys=registry_spec.secret_keys,
+        creds_secret_items=registry_spec.secret_items,
         spec=build_job.specification,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),

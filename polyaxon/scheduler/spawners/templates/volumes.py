@@ -130,11 +130,11 @@ def get_auth_context_volumes():
 
 def get_docker_credentials_volumes(secret_ref: str,
                                    secret_mount_path: str,
-                                   secret_keys: List[str] = None):
+                                   secret_items: List[str] = None):
     return get_volume_from_secret(volume_name=constants.DOCKER_CREDENTIALS,
                                   mount_path=secret_mount_path,
                                   secret_name=secret_ref,
-                                  items=secret_keys)
+                                  items=secret_items)
 
 
 def get_shm_volumes():

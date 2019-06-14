@@ -17,13 +17,13 @@ def get_in_cluster_registry_host(build_backend: Optional[str]) -> str:
 
 def get_in_cluster_registry_spec(build_backend: Optional[str]) -> RegistryContextSpec:
     host = get_in_cluster_registry_host(build_backend)
-    return RegistryContextSpec(host=host, secret=None, secret_keys=None, insecure=True)
+    return RegistryContextSpec(host=host, secret=None, secret_items=None, insecure=True)
 
 
 def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSpec:
     return RegistryContextSpec(host=config.host,
                                secret=config.k8s_secret.k8s_ref,
-                               secret_keys=config.k8s_secret.keys,
+                               secret_items=config.k8s_secret.items,
                                insecure=config.insecure)
 
 

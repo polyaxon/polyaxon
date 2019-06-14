@@ -70,11 +70,11 @@ class TestPodStores(TestCase):
         secrets, _ = get_outputs_store_secrets('outputs1', '/path/to/outputs')
         self.assertEqual(len(secrets), 0)
 
-        secrets, secret_keys = get_outputs_store_secrets('outputs3', '/path/to/outputs')
+        secrets, secret_items = get_outputs_store_secrets('outputs3', '/path/to/outputs')
         assert len(secrets) == 1
-        assert len(secret_keys) == 1
+        assert len(secret_items) == 1
         assert list(secrets)[0] == ('outputs-secret-name', 'outputs-secret-key')
-        assert secret_keys == {
+        assert secret_items == {
             '/path/to/outputs': {'secret_key': 'outputs-secret-key', 'store': 'gcs'}}
 
     def test_get_data_store_secrets(self):
@@ -93,22 +93,22 @@ class TestPodStores(TestCase):
         secrets, _ = get_data_store_secrets(['data1'], {'data1': '/path/to/data'})
         self.assertEqual(len(secrets), 0)
 
-        secrets, secret_keys = get_data_store_secrets(['data3'], {'data3': '/path/to/data3'})
+        secrets, secret_items = get_data_store_secrets(['data3'], {'data3': '/path/to/data3'})
         assert len(secrets) == 1
-        assert len(secret_keys) == 1
+        assert len(secret_items) == 1
         assert list(secrets)[0] == ('data3-secret-name', 'data3-secret-key')
-        assert secret_keys == {
+        assert secret_items == {
             '/path/to/data3': {'secret_key': 'data3-secret-key', 'store': 'gcs'}}
 
-        secrets, secret_keys = get_data_store_secrets(
+        secrets, secret_items = get_data_store_secrets(
             ['data3', 'data4'],
             {'data3': '/path/to/data3', 'data4': '/path/to/data4'})
         assert len(secrets) == 2
-        assert len(secret_keys) == 2
+        assert len(secret_items) == 2
         assert secrets == {
             ('data3-secret-name', 'data3-secret-key'),
             ('data4-secret-name', 'data4-secret-key')}
-        assert secret_keys == {
+        assert secret_items == {
             '/path/to/data3': {'secret_key': 'data3-secret-key', 'store': 'gcs'},
             '/path/to/data4': {'secret_key': 'data4-secret-key', 'store': 'gcs'}
         }
@@ -131,8 +131,8 @@ class TestPodStores(TestCase):
             OutputsRefsSpec(path='/path2', persistence='outputs2')])
         self.assertEqual(len(secrets), 0)
 
-        secrets, secret_keys = get_outputs_refs_store_secrets([
+        secrets, secret_items = get_outputs_refs_store_secrets([
             OutputsRefsSpec(path='/path1', persistence='outputs3'),
             OutputsRefsSpec(path='/path2', persistence='outputs3')])
         assert len(secrets) == 1
-        assert len(secret_keys) == 2
+        assert len(secret_items) == 2

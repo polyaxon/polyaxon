@@ -54,7 +54,7 @@ class Catalog(RequiredNameableModel,
 
 class K8SResourceCatalog(Catalog):
     k8s_ref = models.CharField(max_length=256)
-    keys = ArrayField(models.CharField(max_length=256), default=list, blank=True)
+    items = ArrayField(models.CharField(max_length=256), default=list, blank=True)
 
     class Meta(Catalog.Meta):
         abstract = True

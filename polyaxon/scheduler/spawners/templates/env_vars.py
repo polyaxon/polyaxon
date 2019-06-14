@@ -101,26 +101,26 @@ def get_job_stores_secrets_env_vars(persistence_outputs,
 
     # Stores' secrets
     secrets = set([])
-    secret_keys = {}
-    data_secrets, data_secret_keys = get_data_store_secrets(
+    secret_items = {}
+    data_secrets, data_secret_items = get_data_store_secrets(
         persistence_data=persistence_data, data_paths=data_paths)
     secrets |= data_secrets
-    secret_keys.update(data_secret_keys)
+    secret_items.update(data_secret_items)
 
-    outputs_secrets, outputs_secret_keys = get_outputs_store_secrets(
+    outputs_secrets, outputs_secret_items = get_outputs_store_secrets(
         persistence_outputs=persistence_outputs, outputs_path=outputs_path)
     secrets |= outputs_secrets
-    secret_keys.update(outputs_secret_keys)
+    secret_items.update(outputs_secret_items)
 
-    jobs_refs_secrets, jobs_refs_secret_keys = get_outputs_refs_store_secrets(
+    jobs_refs_secrets, jobs_refs_secret_items = get_outputs_refs_store_secrets(
         specs=outputs_refs_jobs)
     secrets |= jobs_refs_secrets
-    secret_keys.update(jobs_refs_secret_keys)
+    secret_items.update(jobs_refs_secret_items)
 
-    experiments_refs_secrets, experiments_refs_secret_keys = get_outputs_refs_store_secrets(
+    experiments_refs_secrets, experiments_refs_secret_items = get_outputs_refs_store_secrets(
         specs=outputs_refs_experiments)
     secrets |= experiments_refs_secrets
-    secret_keys.update(experiments_refs_secret_keys)
+    secret_items.update(experiments_refs_secret_items)
 
     # Expose secret keys from all secrets
     for (secret, secret_key) in secrets:
@@ -128,9 +128,9 @@ def get_job_stores_secrets_env_vars(persistence_outputs,
                                         secret_key_name=secret_key,
                                         secret_ref_name=secret))
     # Add paths' secret env vars
-    if secret_keys:
+    if secret_items:
         env_vars.append(
-            get_env_var(name=constants.CONFIG_MAP_RUN_STORES_ACCESS_KEYS, value=secret_keys))
+            get_env_var(name=constants.CONFIG_MAP_RUN_STORES_ACCESS_KEYS, value=secret_items))
 
     return env_vars
 

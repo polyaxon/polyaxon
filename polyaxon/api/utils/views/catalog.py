@@ -6,6 +6,7 @@ from api.endpoint.base import (
     RetrieveEndpoint,
     UpdateEndpoint
 )
+from api.paginator import LargeLimitOffsetPagination
 from db.models.clusters import Cluster
 from db.models.owner import Owner
 
@@ -27,3 +28,10 @@ class CatalogDetailViewV1(AdminOrReadOnlyEndpoint,
                           DestroyEndpoint):
     queryset = None
     serializer_class = None
+
+
+class CatalogNameListView(AdminOrReadOnlyListEndpoint, ListEndpoint):
+    """List projects' names for a user."""
+    queryset = None
+    serializer_class = None
+    pagination_class = LargeLimitOffsetPagination

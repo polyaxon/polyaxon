@@ -1,7 +1,7 @@
 import logging
 
-from api.data_stores.serializers import DataStoreSerializer
-from api.utils.views.catalog import CatalogDetailViewV1, CatalogListViewV1
+from api.data_stores.serializers import DataStoreSerializer, DataStoreNameSerializer
+from api.utils.views.catalog import CatalogDetailViewV1, CatalogListViewV1, CatalogNameListView
 from db.models.data_stores import DataStore
 
 _logger = logging.getLogger("polyaxon.views.k8s_config_maps")
@@ -29,3 +29,12 @@ class DataStoreDetailViewV1(CatalogDetailViewV1):
     """
     queryset = DataStore.objects.all()
     serializer_class = DataStoreSerializer
+
+
+class DataStoreNameListView(CatalogNameListView):
+    """
+    get:
+        List entry names of k8s config maps catalog.
+    """
+    queryset = DataStore.objects.all()
+    serializer_class = DataStoreNameSerializer

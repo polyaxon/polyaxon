@@ -38,7 +38,7 @@ class TestGitAccessModels(BaseTest):
         assert GitAccess.objects.count() == 0
         GitAccess.objects.create(owner=self.owner, name='my_gitlab_access')
         assert GitAccess.objects.count() == 1
-        # Using new owner with same keys should work
+        # Using new owner with same items should work
         user = UserFactory()  # Creates a new owner
         owner = Owner.objects.get(name=user.username)
         GitAccess.objects.create(owner=owner, name='my_gitlab_access')

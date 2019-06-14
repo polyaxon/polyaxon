@@ -57,7 +57,7 @@ class Migration(migrations.Migration):
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=64), blank=True, null=True, size=None)),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('k8s_ref', models.CharField(max_length=256)),
-                ('keys', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=256), blank=True, default=list, size=None)),
+                ('items', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=256), blank=True, default=list, size=None)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='db.Owner')),
             ],
             options={
@@ -172,7 +172,7 @@ class Migration(migrations.Migration):
                 ('tags', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=64), blank=True, null=True, size=None)),
                 ('uuid', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
                 ('k8s_ref', models.CharField(max_length=256)),
-                ('keys', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=256), blank=True, default=list, size=None)),
+                ('items', django.contrib.postgres.fields.ArrayField(base_field=models.CharField(max_length=256), blank=True, default=list, size=None)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='db.Owner')),
             ],
             options={

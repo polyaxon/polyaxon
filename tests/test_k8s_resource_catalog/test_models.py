@@ -49,23 +49,23 @@ class TestK8SResourceModels(BaseTest):
                                         k8s_ref='k8s_ref')
         assert self.model_class.objects.count() == 2
 
-    def test_same_ref_with_different_name_and_keys(self):
+    def test_same_ref_with_different_name_and_items(self):
         entity = self.model_class.objects.create(owner=self.owner,
                                                  name='k8s_name',
                                                  k8s_ref='k8s_ref')
         assert entity.owner == self.owner
         assert entity.name == 'k8s_name'
         assert entity.k8s_ref == 'k8s_ref'
-        assert entity.keys == []
+        assert entity.items == []
 
         entity = self.model_class.objects.create(owner=self.owner,
-                                                 name='k8s_name_with_keys',
+                                                 name='k8s_name_with_items',
                                                  k8s_ref='k8s_ref',
-                                                 keys=['key1', 'key2'])
+                                                 items=['key1', 'key2'])
         assert entity.owner == self.owner
-        assert entity.name == 'k8s_name_with_keys'
+        assert entity.name == 'k8s_name_with_items'
         assert entity.k8s_ref == 'k8s_ref'
-        assert entity.keys == ['key1', 'key2']
+        assert entity.items == ['key1', 'key2']
 
 
 @pytest.mark.k8s_resource_catalog_mark

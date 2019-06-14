@@ -1,7 +1,7 @@
 import logging
 
-from api.k8s_config_maps.serializers import K8SConfigMapSerializer
-from api.utils.views.catalog import CatalogListViewV1, CatalogDetailViewV1
+from api.k8s_config_maps.serializers import K8SConfigMapSerializer, K8SConfigMapNameSerializer
+from api.utils.views.catalog import CatalogListViewV1, CatalogDetailViewV1, CatalogNameListView
 from db.models.config_maps import K8SConfigMap
 
 _logger = logging.getLogger("polyaxon.views.k8s_config_maps")
@@ -29,3 +29,12 @@ class ClusterK8SConfigMapDetailViewV1(CatalogDetailViewV1):
     """
     queryset = K8SConfigMap.objects.all()
     serializer_class = K8SConfigMapSerializer
+
+
+class ClusterK8SConfigMapNameListView(CatalogNameListView):
+    """
+    get:
+        List entry names of k8s config maps catalog.
+    """
+    queryset = K8SConfigMap.objects.all()
+    serializer_class = K8SConfigMapNameSerializer

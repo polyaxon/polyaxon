@@ -41,9 +41,15 @@ class CatalogSerializer(serializers.ModelSerializer, CatalogNamesMixin, TagsSeri
             raise ValidationError(e)
 
 
+class CatalogNameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ('id', 'name',)
+
+
 class K8SResourceCatalogSerializer(CatalogSerializer):
     class Meta:
         fields = CatalogSerializer.Meta.fields + (
             'k8s_ref',
-            'keys',
+            'items',
         )

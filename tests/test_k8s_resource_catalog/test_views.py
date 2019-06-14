@@ -95,7 +95,7 @@ class TestK8SResourceListViewV1(BaseViewTest):
             'name': 'new_config',
             'description': 'some description',
             'k8s_ref': 'k8s_resource',
-            'keys': ['key1', 'key2'],
+            'items': ['key1', 'key2'],
             'tags': ['foo', 'bar']
         }
         resp = self.auth_client.post(self.url, data)
@@ -106,7 +106,7 @@ class TestK8SResourceListViewV1(BaseViewTest):
         assert last_object.name == data['name']
         assert last_object.description == data['description']
         assert last_object.k8s_ref == data['k8s_ref']
-        assert last_object.keys == data['keys']
+        assert last_object.items == data['items']
         assert last_object.tags == data['tags']
 
         # Create with same name and owner should raise
@@ -122,7 +122,7 @@ class TestK8SResourceListViewV1(BaseViewTest):
             'name': 'new_config',
             'description': 'some description',
             'k8s_ref': 'k8s_ref1',
-            'keys': ['key1', 'key2'],
+            'items': ['key1', 'key2'],
             'tags': ['foo', 'bar']
         }
         resp = self.normal_client.post(self.url, data)
@@ -165,13 +165,13 @@ class TestK8SResourceDetailViewV1(BaseViewTest):
             'description': 'new description',
             'tags': ['foo', 'bar'],
             'k8s_ref': 'new_ref',
-            'keys': ['key1', 'key2'],
+            'items': ['key1', 'key2'],
         }
         assert self.object.name != data['name']
         assert self.object.description != data['description']
         assert self.object.tags != data['tags']
         assert self.object.k8s_ref != data['k8s_ref']
-        assert self.object.keys != data['keys']
+        assert self.object.items != data['items']
 
         resp = self.auth_client.patch(self.url, data=data)
         assert resp.status_code == status.HTTP_200_OK
@@ -180,7 +180,7 @@ class TestK8SResourceDetailViewV1(BaseViewTest):
         assert new_object.description == data['description']
         assert set(new_object.tags) == set(data['tags'])
         assert new_object.k8s_ref == data['k8s_ref']
-        assert new_object.keys == data['keys']
+        assert new_object.items == data['items']
 
         # Non admin
         resp = self.normal_client.patch(self.url, data=data)

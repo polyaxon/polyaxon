@@ -8,24 +8,24 @@ from stores.validators import validate_persistence_data, validate_persistence_ou
 def get_data_store_secrets(persistence_data, data_paths):
     persistence_data = validate_persistence_data(persistence_data=persistence_data)
     secrets = set([])
-    secret_keys = {}
+    secret_items = {}
     for persistence_name in persistence_data:
         store, persistence_secret, persistence_secret_key = get_store_secret_for_persistence(
             volume_name=persistence_name,
             volume_settings=conf.get(PERSISTENCE_DATA))
         if persistence_secret and persistence_secret_key and persistence_name in data_paths:
             secrets.add((persistence_secret, persistence_secret_key))
-            secret_keys[data_paths[persistence_name]] = {
+            secret_items[data_paths[persistence_name]] = {
                 'store': store,
                 'secret_key': persistence_secret_key
             }
-    return secrets, secret_keys
+    return secrets, secret_items
 
 
 def get_outputs_store_secrets(persistence_outputs, outputs_path):
     persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence_outputs)
     secrets = set([])
-    secret_keys = {}
+    secret_items = {}
 
     store, persistence_secret, persistence_secret_key = get_store_secret_for_persistence(
         volume_name=persistence_outputs,
@@ -33,15 +33,15 @@ def get_outputs_store_secrets(persistence_outputs, outputs_path):
 
     if persistence_secret and persistence_secret_key:
         secrets.add((persistence_secret, persistence_secret_key))
-        secret_keys[outputs_path] = {'store': store, 'secret_key': persistence_secret_key}
-    return secrets, secret_keys
+        secret_items[outputs_path] = {'store': store, 'secret_key': persistence_secret_key}
+    return secrets, secret_items
 
 
 def get_outputs_refs_store_secrets(specs):
     secrets = set([])
-    secret_keys = {}
+    secret_items = {}
     if not specs:
-        return secrets, secret_keys
+        return secrets, secret_items
 
     for spec in specs:
         store, persistence_secret, persistence_secret_key = get_store_secret_for_persistence(
@@ -49,9 +49,9 @@ def get_outputs_refs_store_secrets(specs):
             volume_settings=conf.get(PERSISTENCE_OUTPUTS))
         if persistence_secret and persistence_secret_key:
             secrets.add((persistence_secret, persistence_secret_key))
-            secret_keys[spec.path] = {'store': store, 'secret_key': persistence_secret_key}
+            secret_items[spec.path] = {'store': store, 'secret_key': persistence_secret_key}
 
-    return secrets, secret_keys
+    return secrets, secret_items
 
 
 def get_stores_secrets(specs):
