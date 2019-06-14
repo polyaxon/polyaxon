@@ -31,11 +31,12 @@ export function updateK8SResourceRequestActionCreator(name: string): UpdateK8SRe
   };
 }
 
-export function updateK8SResourceSuccessActionCreator(k8sResource: K8SResourceModel): UpdateK8SResourceSuccessAction {
+export function updateK8SResourceSuccessActionCreator(k8sResource: K8SResourceModel,
+                                                      name: string): UpdateK8SResourceSuccessAction {
   return {
     type: actionTypes.UPDATE_K8S_RESOURCE_SUCCESS,
     k8sResource,
-    name: k8sResource.name
+    name
   };
 }
 
@@ -82,7 +83,7 @@ export function updateK8SResource(resourceType: string,
         `Failed to update ${resourceType} entity`,
         [name]))
       .then((response) => response.json())
-      .then((json) => dispatch(updateK8SResourceSuccessActionCreator(json)))
+      .then((json) => dispatch(updateK8SResourceSuccessActionCreator(json, name)))
       .catch((response) => {
         if (response.status === 400) {
           return response.value.json().then(

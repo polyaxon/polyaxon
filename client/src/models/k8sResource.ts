@@ -10,7 +10,7 @@ export class K8SResourceModel {
   public deleted?: boolean;
   public created_at: string;
   public updated_at: string;
-  public keys: string[];
+  public items: string[];
   public k8s_ref: string;
 }
 

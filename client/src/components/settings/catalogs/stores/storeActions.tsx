@@ -18,7 +18,7 @@ interface State {
   confirmAction?: 'delete' | 'edit';
 }
 
-export default class K8SResourceActions extends React.Component<Props, State> {
+export default class StoreActions extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -37,8 +37,8 @@ export default class K8SResourceActions extends React.Component<Props, State> {
     let confirmText = '';
     if (action === 'delete') {
       confirmText = this.props.isSelection ?
-        'Are you sure you want to delete the selected k8s resource(s)' :
-        'Are you sure you want to delete this k8s resource';
+        'Are you sure you want to delete the selected store(s)' :
+        'Are you sure you want to delete this store';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}

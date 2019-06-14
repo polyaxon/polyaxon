@@ -19,6 +19,7 @@ import { LoadingIndicatorOutputsReducer } from './outputs';
 import { LoadingIndicatorProjectReducer } from './projects';
 import { LoadingIndicatorSearchesReducer } from './searches';
 import { LoadingIndicatorStatusesReducer } from './statuses';
+import { LoadingIndicatorStoreReducer } from './stores';
 import { LoadingIndicatorTensorboardsReducer } from './tensorboards';
 
 export const LoadingIndicatorReducer: Reducer<LoadingIndicatorSchema> =
@@ -44,5 +45,6 @@ export const LoadingIndicatorSliceReducer = (state: AppState, action: Action) =>
   newState = LoadingIndicatorJobReducer(newState, action);
   newState = LoadingIndicatorOptionsReducer(newState, action);
   newState = LoadingIndicatorK8SResourceReducer(newState, action);
+  newState = LoadingIndicatorStoreReducer(newState, action);
   return LoadingIndicatorProjectReducer(newState , action);
 };

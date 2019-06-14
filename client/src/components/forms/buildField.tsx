@@ -2,7 +2,7 @@ import { ErrorMessage, Field, FieldProps, FormikProps } from 'formik';
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import './configField.less';
+import './groupFields.less';
 
 import { getRequiredClass } from './utils';
 import { checkServerError, checkValidationError } from './validation';
@@ -34,7 +34,7 @@ export const BuildComponent: React.FunctionComponent<FieldProps> = (
   }) => (
   <div className="form-horizontal">
     <div className="form-group">
-      <label htmlFor="inputEmail3" className="col-sm-2 control-label">Docker Image</label>
+      <label className="col-sm-2 control-label">Docker Image</label>
       <div className="col-sm-10">
         <input
           type="text"
@@ -44,7 +44,7 @@ export const BuildComponent: React.FunctionComponent<FieldProps> = (
       </div>
     </div>
     <div className="form-group">
-      <label htmlFor="inputPassword3" className="col-sm-2 control-label">Build steps</label>
+      <label className="col-sm-2 control-label">Build steps</label>
       <div className="col-sm-10">
         <textarea
           className="form-control"
@@ -66,7 +66,7 @@ export const BuildField = (props: FormikProps<{}>, errors: any, isRequired: bool
   const hasError = hasServerError || hasValidationError;
 
   return (
-    <div className={`${hasError ? 'has-error' : ''} form-group config-field`}>
+    <div className={`${hasError ? 'has-error' : ''} form-group group-fields`}>
       <label className={`control-label ${getRequiredClass(isRequired)}`}>Config</label>
       <Field
         name="build"

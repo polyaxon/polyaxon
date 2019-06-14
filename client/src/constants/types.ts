@@ -23,6 +23,7 @@ import { OutputsModel } from '../models/outputs';
 import { ProjectsEmptyState, ProjectStateSchema } from '../models/project';
 import { SearchesEmptyState, SearchesStateSchema, } from '../models/search';
 import { StatusEmptyState, StatusStateSchema } from '../models/status';
+import { StoresEmptyState, StoreStateSchema } from '../models/store';
 import { TensorboardsEmptyState, TensorboardStateSchema } from '../models/tensorboard';
 import { TokenEmptyState, TokenStateSchema } from '../models/token';
 import { UserEmptyState, UserStateSchema } from '../models/user';
@@ -44,6 +45,7 @@ export interface AppState {
   logs: string;
   options: OptionStateSchema;
   k8sResources: K8SResourceStateSchema;
+  stores: StoreStateSchema;
   outputs: OutputsModel;
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
@@ -71,6 +73,7 @@ export const AppEmptyState = {
   logs: '',
   options: OptionsEmptyState,
   k8sResources: K8SResourcesEmptyState,
+  stores: StoresEmptyState,
   statuses: StatusEmptyState,
   metrics: MetricEmptyState,
   activityLogs: ActivityLogsEmptyState,

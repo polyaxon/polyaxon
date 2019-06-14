@@ -18,6 +18,7 @@ import { AlertOutputsReducer } from './outputs';
 import { AlertProjectReducer } from './projects';
 import { AlertSearchesReducer } from './searches';
 import { AlertStatusesReducer } from './statuses';
+import { AlertStoreReducer } from './stores';
 import { AlertTensorboardsReducer } from './tensorboards';
 
 export const AlertReducer: Reducer<AlertSchema> =
@@ -43,5 +44,6 @@ export const AlertSliceReducer = (state: AppState, action: Action) => {
   newState = AlertJobReducer(newState, action);
   newState = AlertOptionsReducer(newState, action);
   newState = AlertK8SResourceReducer(newState, action);
+  newState = AlertStoreReducer(newState, action);
   return AlertProjectReducer(newState , action);
 };

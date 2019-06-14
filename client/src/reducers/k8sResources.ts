@@ -16,7 +16,8 @@ import {
 } from '../models/alerts';
 import { K8SResourceModel, K8SResourcesEmptyState, K8SResourceStateSchema } from '../models/k8sResource';
 import {
-  initLoadingIndicator, initLoadingIndicatorById,
+  initLoadingIndicator,
+  initLoadingIndicatorById,
   LoadingIndicatorEmptyState,
   LoadingIndicatorSchema,
   processLoadingIndicatorById,
@@ -60,7 +61,7 @@ export const K8SResourcesReducer: Reducer<K8SResourceStateSchema> =
       case actionTypes.UPDATE_K8S_RESOURCE_SUCCESS:
         return {
           ...state,
-          byUniqueNames: {...state.byUniqueNames, [action.k8sResource.name]: action.k8sResource}
+          byUniqueNames: {...state.byUniqueNames, [action.name]: action.k8sResource}
         };
       case actionTypes.FETCH_K8S_RESOURCES_REQUEST:
         newState.lastFetched = new LastFetchedNames();

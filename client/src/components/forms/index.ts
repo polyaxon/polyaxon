@@ -16,4 +16,5 @@ export * from './utils';
 export * from './validation';
 export * from './visibilityField';
 export * from './k8sRefField';
-export * from './k8sRefKeysField';
+export * from './k8sRefItemsField';
+export * from './storeField';

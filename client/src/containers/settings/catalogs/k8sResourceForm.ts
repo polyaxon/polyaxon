@@ -2,14 +2,14 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 
-import { getIsLoading } from '../../../utils/isLoading';
 import * as actions from '../../../actions/k8sResources';
-import K8sResourceFrom from '../../../components/settings/catalogs/k8sResources/k8sResourceFrom';
+import K8SResourceFrom from '../../../components/settings/catalogs/k8sResources/k8sResourceFrom';
 import { ACTIONS } from '../../../constants/actions';
 import { AppState } from '../../../constants/types';
 import { isTrue } from '../../../constants/utils';
 import { K8SResourceModel } from '../../../models/k8sResource';
 import { getErrorsByIds, getErrorsGlobal } from '../../../utils/errors';
+import { getIsLoading } from '../../../utils/isLoading';
 import { getSuccessByIds, getSuccessGlobal } from '../../../utils/success';
 
 interface Props extends RouteComponentProps<any> {
@@ -57,4 +57,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.K8SResourceAction>
   };
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(K8sResourceFrom));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(K8SResourceFrom));

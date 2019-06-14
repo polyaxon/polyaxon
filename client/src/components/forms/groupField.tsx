@@ -6,7 +6,7 @@ import { RunFieldSchema, validateRun } from './runField';
 import { getRequiredClass } from './utils';
 import { checkServerError, checkValidationError } from './validation';
 
-import './configField.less';
+import './groupFields.less';
 
 export interface GroupFieldSchema extends RunFieldSchema {
   hptuning?: string;
@@ -38,7 +38,7 @@ export const GroupComponent: React.FunctionComponent<FieldProps> = (
   }) => (
   <div className="form-horizontal">
     <div className="form-group">
-      <label htmlFor="inputPassword3" className="col-sm-2 control-label">HPTuning</label>
+      <label className="col-sm-2 control-label">HPTuning</label>
       <div className="col-sm-10">
         <textarea
           className="form-control"
@@ -52,7 +52,7 @@ export const GroupComponent: React.FunctionComponent<FieldProps> = (
       </div>
     </div>
     <div className="form-group">
-      <label htmlFor="inputEmail3" className="col-sm-2 control-label">Docker Image</label>
+      <label className="col-sm-2 control-label">Docker Image</label>
       <div className="col-sm-10">
         <input
           type="text"
@@ -62,7 +62,7 @@ export const GroupComponent: React.FunctionComponent<FieldProps> = (
       </div>
     </div>
     <div className="form-group">
-      <label htmlFor="inputPassword3" className="col-sm-2 control-label">Build steps</label>
+      <label className="col-sm-2 control-label">Build steps</label>
       <div className="col-sm-10">
         <textarea
           className="form-control"
@@ -76,7 +76,7 @@ export const GroupComponent: React.FunctionComponent<FieldProps> = (
       </div>
     </div>
     <div className="form-group">
-      <label htmlFor="inputEmail3" className="col-sm-2 control-label">Command</label>
+      <label className="col-sm-2 control-label">Command</label>
       <div className="col-sm-10">
         <input
           type="text"
@@ -94,7 +94,7 @@ export const GroupField = (props: FormikProps<{}>, errors: any, isRequired: bool
   const hasError = hasServerError || hasValidationError;
 
   return (
-    <div className={`${hasError ? 'has-error' : ''} form-group config-field`}>
+    <div className={`${hasError ? 'has-error' : ''} form-group group-fields`}>
       <label className={`control-label ${getRequiredClass(isRequired)}`}>Config</label>
       <Field
         name="hptuning"

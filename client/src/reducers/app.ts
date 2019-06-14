@@ -28,6 +28,7 @@ import { optionsReducer } from './options';
 import { outputsReducer } from './outputs';
 import { searchesReducer } from './searches';
 import { StatusesReducer } from './statuses';
+import { StoresReducer } from './stores';
 import { tensorboardsReducer } from './tensorboards';
 import { tokenReducer } from './token';
 import { userReducer } from './user';
@@ -49,6 +50,7 @@ const combinedReducer = combineReducers<AppState>({
   logs: logsReducer,
   options: optionsReducer,
   k8sResources: K8SResourcesReducer,
+  stores: StoresReducer,
   outputs: outputsReducer,
   statuses: StatusesReducer,
   metrics: MetricsReducer,
@@ -86,6 +88,7 @@ function SliceReducer(state: AppState, action: Action) {
     logs: state.logs,
     options: state.options,
     k8sResources: state.k8sResources,
+    stores: state.stores,
     outputs: state.outputs,
     statuses: state.statuses,
     metrics: state.metrics,

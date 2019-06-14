@@ -9,7 +9,7 @@ import {
   DescriptionSchema,
   ErrorsField,
   K8SRefField,
-  K8SRefKeysField,
+  K8sRefItemsField,
   K8SRefSchema,
   ModalFormButtons,
   NameField,
@@ -24,17 +24,17 @@ export interface State {
   description: string;
   name: string;
   k8s_ref: string;
-  keys: string[];
+  items: string[];
 }
 
-export const EmptyState = {
+export const getEmptyState = () => ({
   tags: [] as Array<{ label: string, value: string }>,
   readme: '',
   description: '',
   name: '',
   k8s_ref: '',
-  keys: [] as string[]
-};
+  items: [] as string[]
+});
 
 export interface Props {
   resource: string;
@@ -54,12 +54,12 @@ const ValidationSchema = Yup.object().shape({
   description: DescriptionSchema,
 });
 
-export default class K8sResourceFrom extends React.Component<Props, {}> {
+export default class K8SResourceFrom extends React.Component<Props, {}> {
 
   public componentDidMount() {
     this.props.k8sResource ?
-    this.props.initState(this.props.k8sResource.name) :
-    this.props.initState('') ;
+      this.props.initState(this.props.k8sResource.name) :
+      this.props.initState('');
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
@@ -79,21 +79,25 @@ export default class K8sResourceFrom extends React.Component<Props, {}> {
       name: state.name,
       description: state.description,
       k8s_ref: state.k8s_ref,
-      keys: state.keys,
+      items: state.items,
       tags: state.tags.map((v) => v.value),
     }) as K8SResourceModel;
+
+    if (this.props.k8sResource && this.props.k8sResource.name === form.name) {
+      delete form.name;  // To prevent the owner-name validation on backend
+    }
 
     this.onSave(form);
   };
 
   public render() {
-    const emptyState = EmptyState;
+    const emptyState = getEmptyState();
     if (this.props.k8sResource) {
       emptyState.name = this.props.k8sResource.name;
       emptyState.description = this.props.k8sResource.description || '';
       emptyState.readme = this.props.k8sResource.readme || '';
       emptyState.k8s_ref = this.props.k8sResource.k8s_ref;
-      emptyState.keys = this.props.k8sResource.keys || [];
+      emptyState.items = this.props.k8sResource.items || [];
       emptyState.tags = this.props.k8sResource.tags ?
         this.props.k8sResource.tags.map((key: string) => ({label: key, value: key})) :
         [];
@@ -112,7 +116,7 @@ export default class K8sResourceFrom extends React.Component<Props, {}> {
                 {ErrorsField(this.props.errors)}
                 {NameField(props, this.props.errors, true)}
                 {K8SRefField(props, this.props.errors)}
-                {K8SRefKeysField(props, this.props.errors)}
+                {K8sRefItemsField(props, this.props.errors)}
                 {DescriptionField(props, this.props.errors)}
                 {TagsField(props, this.props.errors)}
                 {ModalFormButtons(

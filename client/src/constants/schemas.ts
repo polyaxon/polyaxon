@@ -118,3 +118,10 @@ export const K8SResourceSchema = new schema.Entity(
   {
     idAttribute: 'name'
   });
+
+export const StoreSchema = new schema.Entity(
+  'stores',
+  {},
+  {
+    idAttribute: 'name'
+  });

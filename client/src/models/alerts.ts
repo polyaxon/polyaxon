@@ -30,6 +30,7 @@ export class AlertSchema {
   public codeReference: AlertEntityModel;
   public options: AlertEntityModel;
   public k8sResources: AlertEntityModel;
+  public stores: AlertEntityModel;
 }
 
 export const AlertEmptyState = {
@@ -51,6 +52,7 @@ export const AlertEmptyState = {
   codeReference: AlertEntityEmpty(),
   options: AlertEntityEmpty(),
   k8sResources: AlertEntityEmpty(),
+  stores: AlertEntityEmpty(),
 };
 
 export const processErrorById = (state: AlertEntityModel,

@@ -9,6 +9,7 @@ import { JobModel, JobStateSchema } from '../models/job';
 import { K8SResourceModel, K8SResourceStateSchema } from '../models/k8sResource';
 import { NotebookModel, NotebookStateSchema } from '../models/notebook';
 import { ProjectModel, ProjectStateSchema } from '../models/project';
+import { StoreModel, StoreStateSchema } from '../models/store';
 import { TensorboardModel, TensorboardStateSchema } from '../models/tensorboard';
 import { getGroupName } from '../urls/utils';
 
@@ -92,16 +93,6 @@ export const getLastFetchedExperiments = (experimentsState: ExperimentStateSchem
       experiments.push(experimentsState.byUniqueNames[getExperimentIndexName(experiment)]);
     });
   return {experiments, count};
-};
-export const getLastFetchedK8SResources = (k8sResourcesState: K8SResourceStateSchema) => {
-  const k8sResourcesNames = k8sResourcesState.lastFetched.names;
-  const count = k8sResourcesState.lastFetched.count;
-  const k8sResources: K8SResourceModel[] = [];
-  k8sResourcesNames.forEach(
-    (resource: string, idx: number) => {
-      k8sResources.push(k8sResourcesState.byUniqueNames[resource]);
-    });
-  return {k8sResources, count};
 };
 
 export const getFilteredExperiments = (state: AppState, projectName: string, groupId?: number | string) => {
@@ -208,4 +199,26 @@ export const getLastFetchedTensorboards = (tensorboardsState: TensorboardStateSc
       tensorboards.push(tensorboardsState.byUniqueNames[tensorboard]);
     });
   return {tensorboards, count};
+};
+
+export const getLastFetchedK8SResources = (k8sResourcesState: K8SResourceStateSchema) => {
+  const k8sResourcesNames = k8sResourcesState.lastFetched.names;
+  const count = k8sResourcesState.lastFetched.count;
+  const k8sResources: K8SResourceModel[] = [];
+  k8sResourcesNames.forEach(
+    (resource: string, idx: number) => {
+      k8sResources.push(k8sResourcesState.byUniqueNames[resource]);
+    });
+  return {k8sResources, count};
+};
+
+export const getLastFetchedStores = (storesState: StoreStateSchema) => {
+  const storesNames = storesState.lastFetched.names;
+  const count = storesState.lastFetched.count;
+  const stores: StoreModel[] = [];
+  storesNames.forEach(
+    (resource: string, idx: number) => {
+      stores.push(storesState.byUniqueNames[resource]);
+    });
+  return {stores, count};
 };
