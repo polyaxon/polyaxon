@@ -2,7 +2,9 @@ import { Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 import * as Yup from 'yup';
 
+import * as k8sResourcesActions from '../../../../actions/k8sResources';
 import * as actions from '../../../../actions/stores';
+import { K8SResourceModel } from '../../../../models/k8sResource';
 import { StoreModel } from '../../../../models/store';
 import {
   DescriptionField,
@@ -22,7 +24,7 @@ export interface StoreState {
   host_path: string;
   volume_claim: string;
   bucket: string;
-  k8s_secret: string;
+  k8s_secret: string | number;
   read_only: boolean;
 }
 
@@ -62,6 +64,8 @@ export interface Props {
   onUpdate: (name: string, store: StoreModel) => actions.StoreAction;
   onCreate: (store: StoreModel) => actions.StoreAction;
   initState: (name: string) => actions.StoreAction;
+  fetchSecrets: () => k8sResourcesActions.K8SResourceAction;
+  secrets: K8SResourceModel[];
 }
 
 const ValidationSchema = Yup.object().shape({
@@ -72,6 +76,7 @@ const ValidationSchema = Yup.object().shape({
 export default class StoreFrom extends React.Component<Props, {}> {
 
   public componentDidMount() {
+    this.props.fetchSecrets();
     this.props.cstore ?
       this.props.initState(this.props.cstore.name) :
       this.props.initState('');
@@ -90,7 +95,7 @@ export default class StoreFrom extends React.Component<Props, {}> {
   };
 
   public saveEntity = (state: State) => {
-    const form = sanitizeForm({
+    let form = {
       name: state.name,
       description: state.description,
       tags: state.tags.map((v) => v.value),
@@ -101,10 +106,14 @@ export default class StoreFrom extends React.Component<Props, {}> {
       bucket: state.store.bucket,
       k8s_secret: state.store.k8s_secret,
       read_only: state.store.read_only,
-    }) as StoreModel;
+    } as StoreModel;
 
-    if (this.props.cstore && this.props.cstore.name === form.name) {
-      delete form.name;  // To prevent the owner-name validation on backend
+    if (this.props.cstore) {
+      if (this.props.cstore.name === form.name) {
+        delete form.name;  // To prevent the owner-name validation on backend
+      }
+    } else {
+      form = sanitizeForm(form) as StoreModel;
     }
 
     this.onSave(form);
@@ -140,7 +149,7 @@ export default class StoreFrom extends React.Component<Props, {}> {
               <form onSubmit={props.handleSubmit}>
                 {ErrorsField(this.props.errors)}
                 {NameField(props, this.props.errors, true)}
-                {StoreField(props, this.props.errors)}
+                {StoreField(props, this.props.errors, this.props.secrets)}
                 {DescriptionField(props, this.props.errors)}
                 {TagsField(props, this.props.errors)}
                 {ModalFormButtons(

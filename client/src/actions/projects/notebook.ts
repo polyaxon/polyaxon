@@ -147,7 +147,8 @@ export function startNotebook(user: string,
             (value: any) => dispatch(startProjectNotebookErrorActionCreator(
               response.status, value, projectUniqueName)));
         } else {
-          return response.value;
+          return dispatch(startProjectNotebookErrorActionCreator(
+              response.status, response.value, projectUniqueName));
         }
       });
   };

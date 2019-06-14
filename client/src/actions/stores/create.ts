@@ -86,7 +86,7 @@ export function createStore(resourceType: string,
           return response.value.json().then(
             (value: any) => dispatch(createStoreErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createStoreErrorActionCreator(response.status, response.value));
         }
       });
   };

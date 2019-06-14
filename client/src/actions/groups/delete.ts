@@ -81,6 +81,14 @@ export function deleteGroup(groupName: string, redirect: boolean = false): any {
           history.push(getProjectUrl(values[0], values[1], true) + '#group');
         }
         return dispatched;
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(deleteGroupErrorActionCreator(response.status, value, groupName)));
+        } else {
+          return dispatch(deleteGroupErrorActionCreator(response.status, response.value, groupName));
+        }
       });
   };
 }

@@ -84,7 +84,7 @@ export function createBuild(user: string,
           return response.value.json().then(
             (value: any) => dispatch(createBuildErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createBuildErrorActionCreator(response.status, response.value));
         }
       });
   };

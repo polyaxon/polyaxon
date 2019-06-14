@@ -32,7 +32,7 @@ export const userReducer: Reducer<UserStateSchema> =
           ...state,
           username: '',
           email: '',
-          isSuperuser: false,
+          is_superuser: false,
         };
       default:
         return state;

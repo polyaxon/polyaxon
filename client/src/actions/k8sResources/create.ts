@@ -86,7 +86,7 @@ export function createK8SResource(resourceType: string,
           return response.value.json().then(
             (value: any) => dispatch(createK8SResourceErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createK8SResourceErrorActionCreator(response.status, response.value));
         }
       });
   };

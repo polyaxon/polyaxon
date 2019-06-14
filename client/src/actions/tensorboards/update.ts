@@ -86,7 +86,7 @@ export function updateTensorboard(tensorboardName: string, updateDict: { [key: s
           return response.value.json().then(
             (value: any) => dispatch(updateTensorboardErrorActionCreator(response.status, value, tensorboardName)));
         } else {
-          return response.value;
+          return dispatch(updateTensorboardErrorActionCreator(response.status, response.value, tensorboardName));
         }
       });
   };

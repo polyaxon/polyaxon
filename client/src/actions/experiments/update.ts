@@ -85,7 +85,7 @@ export function updateExperiment(experimentName: string, updateDict: { [key: str
           return response.value.json().then(
             (value: any) => dispatch(updateExperimentErrorActionCreator(response.status, value, experimentName)));
         } else {
-          return response.value;
+          return dispatch(updateExperimentErrorActionCreator(response.status, response.value, experimentName));
         }
       });
   };

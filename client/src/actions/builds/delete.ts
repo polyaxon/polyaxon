@@ -81,6 +81,14 @@ export function deleteBuild(buildName: string, redirect: boolean = false): any {
           history.push(getProjectUrl(values[0], values[1], true) + '#builds');
         }
         return dispatched;
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(deleteBuildErrorActionCreator(response.status, value, buildName)));
+        } else {
+          return dispatch(deleteBuildErrorActionCreator(response.status, response.value, buildName));
+        }
       });
   };
 }

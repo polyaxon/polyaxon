@@ -86,7 +86,7 @@ export function updateBuild(buildName: string, updateDict: { [key: string]: any 
           return response.value.json().then(
             (value: any) => dispatch(updateBuildErrorActionCreator(response.status, value, buildName)));
         } else {
-          return response.value;
+          return dispatch(updateBuildErrorActionCreator(response.status, response.value, buildName));
         }
       });
   };

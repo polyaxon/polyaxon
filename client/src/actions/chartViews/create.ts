@@ -84,7 +84,7 @@ export function createChartView(projectUniqueName: string, resources: string, id
           return response.value.json().then(
             (value: any) => dispatch(createChartViewErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createChartViewErrorActionCreator(response.status, response.value));
         }
       });
   };

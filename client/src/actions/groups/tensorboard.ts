@@ -147,7 +147,7 @@ export function startTensorboard(user: string,
           return response.value.json().then(
             (value: any) => dispatch(startGroupTensorboardErrorActionCreator(response.status, value, groupName)));
         } else {
-          return response.value;
+          return dispatch(startGroupTensorboardErrorActionCreator(response.status, response.value, groupName));
         }
       });
   };

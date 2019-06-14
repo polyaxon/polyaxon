@@ -147,7 +147,8 @@ export function startTensorboard(user: string,
             (value: any) => dispatch(startProjectTensorboardErrorActionCreator(
               response.status, value, projectUniqueName)));
         } else {
-          return response.value;
+          return dispatch(startProjectTensorboardErrorActionCreator(
+              response.status, response.value, projectUniqueName));
         }
       });
   };

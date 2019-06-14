@@ -82,6 +82,14 @@ export function deleteStore(resourceType: string,
           history.push(getCatalogUrl(resourceType, owner, true));
         }
         return dispatched;
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(deleteStoreErrorActionCreator(response.status, value, name)));
+        } else {
+          return dispatch(deleteStoreErrorActionCreator(response.status, response.value, name));
+        }
       });
   };
 }

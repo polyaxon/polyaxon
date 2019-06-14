@@ -157,6 +157,14 @@ export function deleteExperiments(projectName: string, experimentIds: number[]):
         [projectName]))
       .then(() => {
         return dispatch(deleteExperimentsSuccessActionCreator(projectName, experimentIds));
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(deleteExperimentsErrorActionCreator(response.status, value, projectName)));
+        } else {
+          return dispatch(deleteExperimentsErrorActionCreator(response.status, response.value, projectName));
+        }
       });
   };
 }

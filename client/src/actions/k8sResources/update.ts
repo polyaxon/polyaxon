@@ -89,7 +89,7 @@ export function updateK8SResource(resourceType: string,
           return response.value.json().then(
             (value: any) => dispatch(updateK8SResourceErrorActionCreator(response.status, value, name)));
         } else {
-          return response.value;
+          return dispatch(updateK8SResourceErrorActionCreator(response.status, response.value, name));
         }
       });
   };

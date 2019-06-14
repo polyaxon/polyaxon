@@ -2,6 +2,7 @@ import { ErrorMessage, Field, FieldProps, FormikProps } from 'formik';
 import * as _ from 'lodash';
 import * as React from 'react';
 
+import { K8SResourceModel } from '../../models/k8sResource';
 import { getRequiredClass } from './utils';
 import { checkValidationError } from './validation';
 
@@ -13,6 +14,7 @@ export interface StoreFieldSchema {
   volume_claim?: string;
   mount_path?: string;
   bucket?: string;
+  k8s_secret?: string | number;
 }
 
 export function validateStore(value: StoreFieldSchema) {
@@ -39,10 +41,15 @@ export function validateStore(value: StoreFieldSchema) {
   return error;
 }
 
-export const StoreComponent: React.FunctionComponent<FieldProps> = (
+export interface StoreFieldProps extends FieldProps {
+  secrets: K8SResourceModel[];
+}
+
+export const StoreComponent: React.FunctionComponent<StoreFieldProps> = (
   {
     field,
     form,
+    secrets
   }) => (
   <div className="form-horizontal">
     <div className="form-group">
@@ -71,9 +78,6 @@ export const StoreComponent: React.FunctionComponent<FieldProps> = (
           defaultValue={form.initialValues.store.host_path}
           onChange={(event) => form.setFieldValue(field.name, {...field.value, host_path: event.target.value})}
         />
-        <span id="helpBlock" className="help-block">
-        Use new line to make different build steps.
-        </span>
       </div>
     </div>
     }
@@ -87,9 +91,6 @@ export const StoreComponent: React.FunctionComponent<FieldProps> = (
           defaultValue={form.initialValues.store.volume_claim}
           onChange={(event) => form.setFieldValue(field.name, {...field.value, volume_claim: event.target.value})}
         />
-        <span id="helpBlock" className="help-block">
-        Use new line to make different build steps.
-        </span>
       </div>
     </div>
     }
@@ -104,15 +105,13 @@ export const StoreComponent: React.FunctionComponent<FieldProps> = (
             defaultValue={form.initialValues.store.mount_path}
             onChange={(event) => form.setFieldValue(field.name, {...field.value, mount_path: event.target.value})}
           />
-          <span id="helpBlock" className="help-block">
-        Use new line to make different build steps.
-        </span>
         </div>
       </div>
       <div className="form-group">
         <label className="col-sm-2 control-label">Read Only</label>
         <div className="col-sm-10">
           <select
+            name="read_only"
             className="form-control"
             defaultValue={form.initialValues.store.read_only || 'false'}
             onChange={(event) => form.setFieldValue(field.name, {...field.value, read_only: event.target.value})}
@@ -125,20 +124,46 @@ export const StoreComponent: React.FunctionComponent<FieldProps> = (
     </>
     }
     {['s3', 'azure', 'gcs'].indexOf(field.value.type) > -1 &&
-    <div className="form-group">
-      <label className="col-sm-2 control-label">Bucket</label>
-      <div className="col-sm-10">
-        <input
-          type="text"
-          className="form-control"
-          defaultValue={form.initialValues.store.bucket}
-          onChange={(event) => form.setFieldValue(field.name, {...field.value, bucket: event.target.value})}
-        />
-        <span id="helpBlock" className="help-block">
-        Use new line to make different build steps.
-        </span>
+    <>
+      <div className="form-group">
+        <label className="col-sm-2 control-label">Bucket</label>
+        <div className="col-sm-10">
+          <input
+            type="text"
+            className="form-control"
+            name="bucket"
+            defaultValue={form.initialValues.store.bucket}
+            onChange={(event) => form.setFieldValue(field.name, {...field.value, bucket: event.target.value})}
+          />
+        </div>
       </div>
-    </div>
+      <div className="form-group">
+        <label className="col-sm-2 control-label">Secret</label>
+        <div className="col-sm-10">
+          <select
+            name="k8s_secret"
+            className="form-control input-sm"
+            defaultValue={form.initialValues.store.k8s_secret}
+            onChange={(event) => form.setFieldValue(field.name, {...field.value, k8s_secret: event.target.value})}
+          >
+            <option value=""> No secret </option>
+            {secrets.map(
+              (secret: K8SResourceModel) => (
+                <option
+                  key={secret.uuid}
+                  value={secret.id}
+                  selected={form.initialValues.store.k8s_secret === secret.id}
+                >
+                  {secret.name}
+                </option>)
+            )}
+          </select>
+          <span id="helpBlock" className="help-block">
+            If this storage requires access.
+          </span>
+        </div>
+      </div>
+    </>
     }
   </div>
 );
@@ -148,7 +173,7 @@ export const checkStoreServer = (errors: any) => {
   return _.isObject(errors) && fields.filter((field: string) => field in errors).length > 0;
 };
 
-export const StoreField = (props: FormikProps<{}>, errors: any) => {
+export const StoreField = (props: FormikProps<{}>, errors: any, secrets: K8SResourceModel[]) => {
   const hasServerError = checkStoreServer(errors);
   const hasValidationError = checkValidationError(props, 'store');
   const hasError = hasServerError || hasValidationError;
@@ -158,17 +183,19 @@ export const StoreField = (props: FormikProps<{}>, errors: any) => {
       <label className={`control-label ${getRequiredClass(true)}`}>Store</label>
       <Field
         name="store"
+        secrets={secrets}
         component={StoreComponent}
         validate={(value: StoreFieldSchema) => validateStore(value)}
       />
       {hasServerError &&
       <div className="help-block">
-        {'type' in errors.config && <span>{errors.type}</span>}
-        {'bucket' in errors.config && <span>{errors.bucket}</span>}
-        {'host_path' in errors.config && <span>{errors.host_path}</span>}
-        {'volume_claim' in errors.config && <span>{errors.volume_claim}</span>}
-        {'mount_path' in errors.config && <span>{errors.mount_path}</span>}
-        {'read_only' in errors.config && <span>{errors.read_only}</span>}
+        {'type' in errors && <span>{errors.type}</span>}
+        {'bucket' in errors && <span>{errors.bucket}</span>}
+        {'k8s_secret' in errors && <span>{errors.k8s_secret}</span>}
+        {'host_path' in errors && <span>{errors.host_path}</span>}
+        {'volume_claim' in errors && <span>{errors.volume_claim}</span>}
+        {'mount_path' in errors && <span>{errors.mount_path}</span>}
+        {'read_only' in errors && <span>{errors.read_only}</span>}
       </div>
       }
       <ErrorMessage name="store">

@@ -23,7 +23,7 @@ export default class K8SResource extends React.Component<Props, {}> {
     return (
       <tr className="list-item">
         <td className="block">
-          {k8sResource.name}
+          <span className="title">{k8sResource.name}</span>
           <Description description={k8sResource.description}/>
           <div className="meta">
             <IdMetaInfo value={k8sResource.id} inline={true}/>

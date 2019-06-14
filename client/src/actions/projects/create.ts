@@ -82,7 +82,7 @@ export function createProject(project: ProjectModel, redirect: boolean = false):
           return response.value.json().then(
             (value: any) => dispatch(createProjectErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createProjectErrorActionCreator(response.status, response.value));
         }
       });
   };

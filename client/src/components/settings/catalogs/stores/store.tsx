@@ -19,11 +19,89 @@ export interface Props {
 
 export default class Store extends React.Component<Props, {}> {
   public render() {
+    const bucketInfo = (storeDef: StoreModel) => (
+      <>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Bucket"
+            value={storeDef.bucket}
+            inline={true}
+          />
+        </div>
+        {storeDef.k8s_secret &&
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Secret"
+            value={storeDef.k8s_secret}
+            inline={true}
+          />
+        </div>
+        }
+      </>
+    );
+    const hostPathInfo = (storeDef: StoreModel) => (
+      <>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Host Path"
+            value={storeDef.host_path}
+            inline={true}
+          />
+        </div>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Mount Path"
+            value={storeDef.mount_path}
+            inline={true}
+          />
+        </div>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Read Only"
+            value={JSON.stringify(storeDef.read_only)}
+            inline={true}
+          />
+        </div>
+      </>
+    );
+    const mountPathInfo = (storeDef: StoreModel) => (
+      <>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Volume Claim"
+            value={storeDef.volume_claim}
+            inline={true}
+          />
+        </div>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Mount Path"
+            value={storeDef.mount_path}
+            inline={true}
+          />
+        </div>
+        <div className="meta">
+          <MetaInfo
+            icon="fas fa-circle"
+            name="Read Only"
+            value={JSON.stringify(storeDef.read_only)}
+            inline={true}
+          />
+        </div>
+      </>
+    );
     const store = this.props.store;
     return (
       <tr className="list-item">
         <td className="block">
-          {store.name}
+          <span className="title">{store.name}</span>
           <Description description={store.description}/>
           <div className="meta">
             <IdMetaInfo value={store.id} inline={true}/>
@@ -40,19 +118,14 @@ export default class Store extends React.Component<Props, {}> {
           <div className="meta">
             <MetaInfo
               icon="fas fa-circle"
-              name="K8S ref"
-              value={store.mount_path}
+              name="Store type"
+              value={store.type}
               inline={true}
             />
           </div>
-          <div className="meta">
-            <MetaInfo
-              icon="fas fa-circle"
-              name="keys"
-              value={JSON.stringify(store.bucket)}
-              inline={true}
-            />
-          </div>
+          {['s3', 'azure', 'gcs'].indexOf(store.type) > -1 && bucketInfo(store)}
+          {store.type === 'host_path' && hostPathInfo(store)}
+          {store.type === 'mount_path' && mountPathInfo(store)}
         </td>
         <td className="block pull-right">
           <StoreActions

@@ -85,7 +85,7 @@ export function createExperiment(user: string,
           return response.value.json().then(
             (value: any) => dispatch(createExperimentErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createExperimentErrorActionCreator(response.status, response.value));
         }
       });
   };

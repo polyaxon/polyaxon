@@ -63,9 +63,11 @@ export const K8SResourcesReducer: Reducer<K8SResourceStateSchema> =
           ...state,
           byUniqueNames: {...state.byUniqueNames, [action.name]: action.k8sResource}
         };
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_REQUEST:
       case actionTypes.FETCH_K8S_RESOURCES_REQUEST:
         newState.lastFetched = new LastFetchedNames();
         return newState;
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_SUCCESS:
       case actionTypes.FETCH_K8S_RESOURCES_SUCCESS:
         newState.lastFetched = new LastFetchedNames();
         newState.lastFetched.count = action.count;
@@ -122,11 +124,14 @@ export const LoadingIndicatorK8SResourceReducer: Reducer<LoadingIndicatorSchema>
           k8sResources: processLoadingIndicatorById(state.k8sResources, action.name, false, ACTIONS.DELETE)
         };
 
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_REQUEST:
       case actionTypes.FETCH_K8S_RESOURCES_REQUEST:
         return {
           ...state,
           k8sResources: processLoadingIndicatorGlobal(state.k8sResources, true, ACTIONS.FETCH)
         };
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_ERROR:
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_SUCCESS:
       case actionTypes.FETCH_K8S_RESOURCES_ERROR:
       case actionTypes.FETCH_K8S_RESOURCES_SUCCESS:
         return {
@@ -213,16 +218,19 @@ export const AlertK8SResourceReducer: Reducer<AlertSchema> =
           k8sResources: processErrorById(state.k8sResources, action.name, action.error, false, ACTIONS.DELETE)
         };
 
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_REQUEST:
       case actionTypes.FETCH_K8S_RESOURCES_REQUEST:
         return {
           ...state,
           k8sResources: processErrorGlobal(state.k8sResources, null, null, ACTIONS.FETCH)
         };
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_SUCCESS:
       case actionTypes.FETCH_K8S_RESOURCES_SUCCESS:
         return {
           ...state,
           k8sResources: processErrorGlobal(state.k8sResources, null, true, ACTIONS.FETCH)
         };
+      case actionTypes.FETCH_K8S_RESOURCES_NAMES_ERROR:
       case actionTypes.FETCH_K8S_RESOURCES_ERROR:
         return {
           ...state,

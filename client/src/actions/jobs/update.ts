@@ -86,7 +86,7 @@ export function updateJob(jobName: string, updateDict: { [key: string]: any }): 
           return response.value.json().then(
             (value: any) => dispatch(updateJobErrorActionCreator(response.status, value, jobName)));
         } else {
-          return response.value;
+          return dispatch(updateJobErrorActionCreator(response.status, response.value, jobName));
         }
       });
   };

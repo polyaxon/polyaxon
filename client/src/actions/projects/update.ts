@@ -85,7 +85,7 @@ export function updateProject(projectName: string, updateDict: { [key: string]: 
           return response.value.json().then(
             (value: any) => dispatch(updateProjectErrorActionCreator(response.status, value, projectName)));
         } else {
-          return response.value;
+          return dispatch(updateProjectErrorActionCreator(response.status, response.value, projectName));
         }
       });
   };

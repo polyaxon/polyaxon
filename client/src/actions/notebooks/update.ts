@@ -86,7 +86,7 @@ export function updateNotebook(notebookName: string, updateDict: { [key: string]
           return response.value.json().then(
             (value: any) => dispatch(updateNotebookErrorActionCreator(response.status, value, notebookName)));
         } else {
-          return response.value;
+          return dispatch(updateNotebookErrorActionCreator(response.status, response.value, notebookName));
         }
       });
   };

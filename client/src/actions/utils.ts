@@ -33,6 +33,7 @@ export const stdFetchHandleError = (response: Response,
       return Promise.reject({status: response.status, value: response});
     } else if (response.status === 401 || response.status === 403) {
       dispatch(fetchUser());
+      return Promise.reject({status: response.status, value: 'You are not allowed to perform this operation'});
     } else {
       dispatch(errorActionCreator(response.status, defaultError, ...args || []));
     }
@@ -55,6 +56,7 @@ export const stdCreateHandleError = (response: Response,
       return Promise.reject({status: response.status, value: response});
     } else if (response.status === 401 || response.status === 403) {
       dispatch(fetchUser());
+      return Promise.reject({status: response.status, value: 'You are not allowed to perform this operation'});
     } else {
       dispatch(errorActionCreator(response.status, defaultError, ...args || []));
     }
@@ -75,6 +77,7 @@ export const stdDeleteHandleError = (response: Response,
       dispatch(errorActionCreator(response.status, notFoundError, ...args || []));
     } else if (response.status === 401 || response.status === 403) {
       dispatch(fetchUser());
+      return Promise.reject({status: response.status, value: 'You are not allowed to perform this operation'});
     } else {
       dispatch(errorActionCreator(response.status, defaultError, ...args || []));
     }

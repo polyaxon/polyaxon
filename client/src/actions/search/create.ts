@@ -84,7 +84,7 @@ function _createSearch(searchesUrl: string,
         return response.value.json().then(
           (value: any) => dispatch(createSearchErrorActionCreator(response.status, value)));
       } else {
-        return response.value;
+        return dispatch(createSearchErrorActionCreator(response.status, response.value));
       }
     });
 }

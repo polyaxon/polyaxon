@@ -13,8 +13,7 @@ import {
   K8SRefSchema,
   ModalFormButtons,
   NameField,
-  NameSchema,
-  sanitizeForm,
+  NameSchema, sanitizeForm,
   TagsField,
 } from '../../../forms';
 
@@ -75,16 +74,20 @@ export default class K8SResourceFrom extends React.Component<Props, {}> {
   };
 
   public saveEntity = (state: State) => {
-    const form = sanitizeForm({
+    let form = {
       name: state.name,
       description: state.description,
       k8s_ref: state.k8s_ref,
       items: state.items,
       tags: state.tags.map((v) => v.value),
-    }) as K8SResourceModel;
+    } as K8SResourceModel;
 
-    if (this.props.k8sResource && this.props.k8sResource.name === form.name) {
-      delete form.name;  // To prevent the owner-name validation on backend
+    if (this.props.k8sResource) {
+      if (this.props.k8sResource.name === form.name) {
+        delete form.name;  // To prevent the owner-name validation on backend
+      }
+    } else {
+      form = sanitizeForm(form) as K8SResourceModel;
     }
 
     this.onSave(form);

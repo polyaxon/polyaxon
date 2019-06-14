@@ -88,7 +88,7 @@ export function updateStore(resourceType: string,
           return response.value.json().then(
             (value: any) => dispatch(updateStoreErrorActionCreator(response.status, value, name)));
         } else {
-          return response.value;
+          return dispatch(updateStoreErrorActionCreator(response.status, response.value, name));
         }
       });
   };

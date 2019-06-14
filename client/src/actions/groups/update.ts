@@ -129,7 +129,7 @@ export function updateSelection(groupName: string, updateDict: { [key: string]: 
           return response.value.json().then(
             (value: any) => dispatch(updateGroupErrorActionCreator(response.status, value, groupName)));
         } else {
-          return response.value;
+          return dispatch(updateGroupErrorActionCreator(response.status, response.value, groupName));
         }
       });
   };

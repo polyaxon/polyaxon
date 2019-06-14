@@ -86,7 +86,7 @@ export function createGroup(user: string,
           return response.value.json().then(
             (value: any) => dispatch(createGroupErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createGroupErrorActionCreator(response.status, response.value));
         }
       });
   };

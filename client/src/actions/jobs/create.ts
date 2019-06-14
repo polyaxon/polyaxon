@@ -86,7 +86,7 @@ export function createJob(user: string,
           return response.value.json().then(
             (value: any) => dispatch(createJobErrorActionCreator(response.status, value)));
         } else {
-          return response.value;
+          return dispatch(createJobErrorActionCreator(response.status, response.value));
         }
       });
   };

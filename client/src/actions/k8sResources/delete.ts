@@ -82,6 +82,14 @@ export function deleteK8SResource(resourceType: string,
           history.push(getCatalogUrl(resourceType, owner, true));
         }
         return dispatched;
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          return response.value.json().then(
+            (value: any) => dispatch(deleteK8SResourceErrorActionCreator(response.status, value, name)));
+        } else {
+          return dispatch(deleteK8SResourceErrorActionCreator(response.status, response.value, name));
+        }
       });
   };
 }

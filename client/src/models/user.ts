@@ -1,7 +1,7 @@
 export class UserModel {
   public username: string;
   public email: string;
-  public isSuperuser: boolean;
+  public is_superuser: boolean;
   public num_projects: number;
   public projects: string[] = [];
 }

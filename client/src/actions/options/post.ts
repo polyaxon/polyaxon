@@ -81,7 +81,7 @@ export function postOptions(section: string, options: { [key: string]: any }): a
           return response.value.json().then(
             (value: any) => dispatch(postOptionsErrorActionCreator(section, response.status, value)));
         } else {
-          return response.value;
+          return dispatch(postOptionsErrorActionCreator(section, response.status, response.value));
         }
       });
   };
