@@ -36,6 +36,11 @@ class Catalog(RequiredNameableModel,
 
     class Meta:
         abstract = True
+        app_label = 'db'
+        unique_together = (('owner', 'name'),)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self):
         return self.unique_name
@@ -51,18 +56,18 @@ class K8SResourceCatalog(Catalog):
     k8s_ref = models.CharField(max_length=256)
     keys = ArrayField(models.CharField(max_length=256), default=list, blank=True)
 
-    class Meta:
+    class Meta(Catalog.Meta):
         abstract = True
 
 
 class AccessCatalog(Catalog, SecretModel):
 
-    class Meta:
+    class Meta(Catalog.Meta):
         abstract = True
 
 
 class HostAccessCatalog(AccessCatalog):
     host = models.URLField(max_length=256)
 
-    class Meta:
+    class Meta(AccessCatalog.Meta):
         abstract = True

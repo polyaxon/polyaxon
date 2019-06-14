@@ -61,6 +61,9 @@ class Project(DiffModel,
     class Meta:
         app_label = 'db'
         unique_together = (('user', 'name'),)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     @property
     def unique_name(self) -> str:

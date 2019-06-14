@@ -27,5 +27,5 @@ class StoreCatalogModel(AccessCatalog):
         blank=True,
         null=True)
 
-    class Meta:
+    class Meta(AccessCatalog.Meta):
         abstract = True

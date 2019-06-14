@@ -117,6 +117,9 @@ class ExperimentGroup(DiffModel,
     class Meta:
         app_label = 'db'
         unique_together = (('project', 'name'),)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     def __str__(self) -> str:
         return self.unique_name

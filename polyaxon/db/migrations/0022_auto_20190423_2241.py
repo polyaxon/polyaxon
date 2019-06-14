@@ -151,4 +151,45 @@ class Migration(migrations.Migration):
                                    help_text='The yaml content of the polyaxonfile/specification.',
                                    null=True),
         ),
+        # indexes
+        migrations.AddIndex(
+            model_name='buildjob',
+            index=models.Index(fields=['name'], name='db_buildjob_name_918daf_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='experiment',
+            index=models.Index(fields=['name'], name='db_experime_name_b0cc23_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='experimentgroup',
+            index=models.Index(fields=['name'], name='db_experime_name_125a1f_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='experimentjob',
+            index=models.Index(fields=['role'], name='db_experime_role_8ccfe4_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='job',
+            index=models.Index(fields=['name'], name='db_job_name_996047_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='notebookjob',
+            index=models.Index(fields=['name'], name='db_notebook_name_a58b53_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='operation',
+            index=models.Index(fields=['name'], name='db_operatio_name_b5e800_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='pipeline',
+            index=models.Index(fields=['name'], name='db_pipeline_name_5c855f_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='project',
+            index=models.Index(fields=['name'], name='db_project_name_4bfc0e_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='tensorboardjob',
+            index=models.Index(fields=['name'], name='db_tensorbo_name_de5436_idx'),
+        ),
     ]

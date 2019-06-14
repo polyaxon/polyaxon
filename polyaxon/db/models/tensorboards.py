@@ -48,6 +48,9 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     class Meta:
         app_label = 'db'
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     @cached_property
     def unique_name(self) -> str:

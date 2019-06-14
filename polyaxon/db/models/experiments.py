@@ -135,6 +135,9 @@ class Experiment(DiffModel,
     class Meta:
         app_label = 'db'
         unique_together = (('project', 'name'),)
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
     @cached_property
     def unique_name(self) -> str:

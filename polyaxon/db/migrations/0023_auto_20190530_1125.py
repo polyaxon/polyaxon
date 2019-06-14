@@ -36,6 +36,14 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model, db.models.abstract.unique_name.UniqueNameMixin),
         ),
+        migrations.AddIndex(
+            model_name='configoption',
+            index=models.Index(fields=['owner', 'key'], name='db_configop_owner_i_6f7726_idx'),
+        ),
+        migrations.AddIndex(
+            model_name='configoption',
+            index=models.Index(fields=['key'], name='db_configop_key_80b830_idx'),
+        ),
         migrations.CreateModel(
             name='K8SSecret',
             fields=[
@@ -56,6 +64,10 @@ class Migration(migrations.Migration):
                 'unique_together': {('owner', 'name')},
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin, db.models.abstract.unique_name.UniqueNameMixin),
+        ),
+        migrations.AddIndex(
+            model_name='k8ssecret',
+            index=models.Index(fields=['name'], name='db_k8ssecre_name_2377fe_idx'),
         ),
         migrations.CreateModel(
             name='ArtifactsStore',
@@ -84,6 +96,10 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin,db.models.abstract.unique_name.UniqueNameMixin),
         ),
+        migrations.AddIndex(
+            model_name='artifactsstore',
+            index=models.Index(fields=['name'], name='db_artifact_name_f9df42_idx'),
+        ),
         migrations.CreateModel(
             name='RegistryAccess',
             fields=[
@@ -106,6 +122,10 @@ class Migration(migrations.Migration):
                 'unique_together': {('owner', 'name')},
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin, db.models.abstract.unique_name.UniqueNameMixin),
+        ),
+        migrations.AddIndex(
+            model_name='registryaccess',
+            index=models.Index(fields=['name'], name='db_registry_name_b2c46d_idx'),
         ),
         migrations.CreateModel(
             name='LogsStore',
@@ -133,6 +153,10 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin, db.models.abstract.unique_name.UniqueNameMixin),
         ),
+        migrations.AddIndex(
+            model_name='logsstore',
+            index=models.Index(fields=['name'], name='db_logsstor_name_5dec7f_idx'),
+        ),
         migrations.CreateModel(
             name='K8SConfigMap',
             fields=[
@@ -153,6 +177,10 @@ class Migration(migrations.Migration):
                 'unique_together': {('owner', 'name')},
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin, db.models.abstract.unique_name.UniqueNameMixin),
+        ),
+        migrations.AddIndex(
+            model_name='k8sconfigmap',
+            index=models.Index(fields=['name'], name='db_k8sconfi_name_55a24f_idx'),
         ),
         migrations.CreateModel(
             name='GitAccess',
@@ -175,6 +203,10 @@ class Migration(migrations.Migration):
                 'unique_together': {('owner', 'name')},
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin, db.models.abstract.unique_name.UniqueNameMixin),
+        ),
+        migrations.AddIndex(
+            model_name='gitaccess',
+            index=models.Index(fields=['name'], name='db_gitacces_name_63e36d_idx'),
         ),
         migrations.CreateModel(
             name='DataStore',
@@ -201,6 +233,10 @@ class Migration(migrations.Migration):
                 'unique_together': {('owner', 'name')},
             },
             bases=(models.Model, db.models.abstract.owner.OwnerMixin, db.models.abstract.unique_name.UniqueNameMixin),
+        ),
+        migrations.AddIndex(
+            model_name='datastore',
+            index=models.Index(fields=['name'], name='db_datastor_name_7e5ac4_idx'),
         ),
         migrations.CreateModel(
             name='Config',

@@ -44,7 +44,8 @@ class TestK8SResourceListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         for i in data:
-            assert i in self.serializer_class(self.queryset, many=True).data
+            assert i in self.serializer_class(  # pylint:disable=not-callable
+                self.queryset, many=True).data
 
         # Non admin
         resp = self.normal_client.get(self.url)
@@ -56,7 +57,8 @@ class TestK8SResourceListViewV1(BaseViewTest):
         data = resp.data['results']
         assert len(data) == self.queryset.count()
         for i in data:
-            assert i in self.serializer_class(self.queryset, many=True).data
+            assert i in self.serializer_class(  # pylint:disable=not-callable
+                self.queryset, many=True).data
 
     def test_pagination(self):
         limit = self.num_objects - 1
@@ -69,7 +71,8 @@ class TestK8SResourceListViewV1(BaseViewTest):
 
         data = resp.data['results']
         assert len(data) == limit
-        query_data = self.serializer_class(self.queryset, many=True).data
+        query_data = self.serializer_class(  # pylint:disable=not-callable
+            self.queryset, many=True).data
         for i in data:
             assert i in query_data
 
@@ -143,12 +146,14 @@ class TestK8SResourceDetailViewV1(BaseViewTest):
     def test_get(self):
         resp = self.auth_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data == self.serializer_class(  # pylint:disable=not-callable
+            self.object).data
 
         # Non admin can get
         resp = self.normal_client.get(self.url)
         assert resp.status_code == status.HTTP_200_OK
-        assert resp.data == self.serializer_class(self.object).data
+        assert resp.data == self.serializer_class(  # pylint:disable=not-callable
+            self.object).data
 
     def test_patch(self):
         data = {
@@ -215,7 +220,7 @@ class TestK8SConfigMapDetailViewV1(TestK8SResourceDetailViewV1):
     factory_class = K8SConfigMapFactory
 
     def get_url(self):
-        return '/{}/catalogs/k8s_config_maps/{}/'.format(API_V1, self.object.uuid.hex)
+        return '/{}/catalogs/k8s_config_maps/{}/'.format(API_V1, self.object.name)
 
 
 @pytest.mark.k8s_resource_catalog_mark
@@ -225,7 +230,7 @@ class TestK8SSecretDetailViewV1(TestK8SResourceDetailViewV1):
     factory_class = K8SSecretFactory
 
     def get_url(self):
-        return '/{}/catalogs/k8s_secrets/{}/'.format(API_V1, self.object.uuid.hex)
+        return '/{}/catalogs/k8s_secrets/{}/'.format(API_V1, self.object.name)
 
 
 del TestK8SResourceListViewV1

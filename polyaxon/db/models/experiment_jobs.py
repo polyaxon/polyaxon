@@ -48,6 +48,9 @@ class ExperimentJob(AbstractJobModel, NodeSchedulingModel, UniqueNameMixin):
 
     class Meta:
         app_label = 'db'
+        indexes = [
+            models.Index(fields=['role']),
+        ]
 
     @cached_property
     def unique_name(self) -> str:

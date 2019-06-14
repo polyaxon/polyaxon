@@ -10,6 +10,5 @@ class K8SSecret(K8SResourceCatalog):
     N.B. If no keys are specified, the whole secret will be mounted to the requiting jobs.
     """
 
-    class Meta:
+    class Meta(K8SResourceCatalog.Meta):
         app_label = 'db'
-        unique_together = (('owner', 'name'),)

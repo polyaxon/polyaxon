@@ -20,6 +20,10 @@ class ConfigOption(DiffModel, UniqueNameMixin):
     class Meta:
         app_label = 'db'
         unique_together = (('owner', 'key'),)
+        indexes = [
+            models.Index(fields=['owner', 'key']),
+            models.Index(fields=['key']),
+        ]
 
     def __str__(self):
         return self.unique_name
