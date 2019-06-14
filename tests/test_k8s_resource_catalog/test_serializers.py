@@ -68,14 +68,15 @@ class TestK8SResourcesNameSerializer(BaseTest):
         self.obj2 = self.factory_class()  # pylint:disable=not-callable
 
     def test_serialize_one(self):
-        data = self.serializer_class(self.obj1).data
+        data = self.serializer_class(self.obj1).data  # pylint:disable=not-callable
 
         assert set(data.keys()) == self.expected_keys
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
 
     def test_serialize_many(self):
-        data = self.serializer_class(self.model_class.objects.all(), many=True).data
+        data = self.serializer_class(  # pylint:disable=not-callable
+            self.model_class.objects.all(), many=True).data
         assert len(data) == 2
         for d in data:
             assert set(d.keys()) == self.expected_keys
