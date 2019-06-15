@@ -1,6 +1,6 @@
 import logging
 
-from api.data_stores.serializers import DataStoreSerializer, DataStoreNameSerializer
+from api.data_stores.serializers import DataStoreNameSerializer, DataStoreSerializer
 from api.utils.views.catalog import CatalogDetailViewV1, CatalogListViewV1, CatalogNameListView
 from db.models.data_stores import DataStore
 

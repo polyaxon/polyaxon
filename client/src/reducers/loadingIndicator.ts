@@ -2,6 +2,7 @@ import { Action, Reducer } from 'redux';
 
 import { AppState } from '../constants/types';
 import { LoadingIndicatorEmptyState, LoadingIndicatorSchema } from '../models/loadingIndicator';
+import { LoadingIndicatorAccessReducer } from './accesses';
 import { LoadingIndicatorActivityReducer } from './activityLogs';
 import { LoadingIndicatorBuildReducer } from './builds';
 import { LoadingIndicatorChartViewReducer } from './chartViews';
@@ -46,5 +47,6 @@ export const LoadingIndicatorSliceReducer = (state: AppState, action: Action) =>
   newState = LoadingIndicatorOptionsReducer(newState, action);
   newState = LoadingIndicatorK8SResourceReducer(newState, action);
   newState = LoadingIndicatorStoreReducer(newState, action);
+  newState = LoadingIndicatorAccessReducer(newState, action);
   return LoadingIndicatorProjectReducer(newState , action);
 };

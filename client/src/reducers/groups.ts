@@ -135,7 +135,9 @@ export const groupsReducer: Reducer<GroupStateSchema> =
         }
         return newState;
       case actionTypes.GET_GROUP_SUCCESS:
-        return processGroup(action.group);
+        newState = processGroup(action.group);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

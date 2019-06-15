@@ -117,7 +117,9 @@ export const buildsReducer: Reducer<BuildStateSchema> =
         }
         return newState;
       case actionTypes.GET_BUILD_SUCCESS:
-        return processBuild(action.build);
+        newState = processBuild(action.build);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

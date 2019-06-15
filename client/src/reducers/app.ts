@@ -12,6 +12,7 @@ import { jobsReducer, ProjectJobsReducer } from './jobs';
 import { projectsReducer, UserProjectsReducer } from './projects';
 
 import { AppState } from '../constants/types';
+import { AccessesReducer } from './accesses';
 import { activityLogsReducer } from './activityLogs';
 import { AlertReducer, AlertSliceReducer } from './alerts';
 import { buildsReducer, ProjectBuildsReducer } from './builds';
@@ -51,6 +52,7 @@ const combinedReducer = combineReducers<AppState>({
   options: optionsReducer,
   k8sResources: K8SResourcesReducer,
   stores: StoresReducer,
+  accesses: AccessesReducer,
   outputs: outputsReducer,
   statuses: StatusesReducer,
   metrics: MetricsReducer,
@@ -89,6 +91,7 @@ function SliceReducer(state: AppState, action: Action) {
     options: state.options,
     k8sResources: state.k8sResources,
     stores: state.stores,
+    accesses: state.accesses,
     outputs: state.outputs,
     statuses: state.statuses,
     metrics: state.metrics,

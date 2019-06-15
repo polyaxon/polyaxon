@@ -118,7 +118,9 @@ export const jobsReducer: Reducer<JobStateSchema> =
         }
         return newState;
       case actionTypes.GET_JOB_SUCCESS:
-        return processJob(action.job);
+        newState = processJob(action.job);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

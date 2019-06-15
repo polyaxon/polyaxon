@@ -34,6 +34,10 @@ api_patterns += [
     re_path(r'', include(
         ('api.data_stores.urls', 'data_stores'), namespace='data_stores')),
     re_path(r'', include(
+        ('api.registry_access.urls', 'registry_access'), namespace='registry_access')),
+    re_path(r'', include(
+        ('api.git_access.urls', 'git_access'), namespace='git_access')),
+    re_path(r'', include(
         ('api.bookmarks.urls', 'bookmarks'), namespace='bookmarks')),
     re_path(r'', include(
         ('api.archives.urls', 'archives'), namespace='archives')),

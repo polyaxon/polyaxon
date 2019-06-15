@@ -125,3 +125,10 @@ export const StoreSchema = new schema.Entity(
   {
     idAttribute: 'name'
   });
+
+export const AccessSchema = new schema.Entity(
+  'accesses',
+  {},
+  {
+    idAttribute: 'name'
+  });

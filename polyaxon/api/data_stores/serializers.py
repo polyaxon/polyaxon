@@ -1,19 +1,18 @@
-from api.utils.serializers.catalog import CatalogSerializer, CatalogNameSerializer
+from api.utils.serializers.catalog import AccessCatalogSerializer, CatalogNameSerializer
 from db.models.data_stores import DataStore
 
 
-class DataStoreSerializer(CatalogSerializer):
+class DataStoreSerializer(AccessCatalogSerializer):
     QUERY = DataStore.objects
 
     class Meta:
         model = DataStore
-        fields = CatalogSerializer.Meta.fields + (
+        fields = AccessCatalogSerializer.Meta.fields + (
             'type',
             'mount_path',
             'host_path',
             'volume_claim',
             'bucket',
-            'k8s_secret',
             'read_only'
         )
 

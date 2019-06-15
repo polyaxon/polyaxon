@@ -172,7 +172,9 @@ export const experimentsReducer: Reducer<ExperimentStateSchema> =
         newState.lastFetched = new LastFetchedNames();
         return newState;
       case actionTypes.GET_EXPERIMENT_SUCCESS:
-        return processExperiment(action.experiment);
+        newState = processExperiment(action.experiment);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

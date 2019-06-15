@@ -28,6 +28,7 @@ export class LoadingIndicatorSchema {
   public options: LoadingIndicatorEntityModel;
   public k8sResources: LoadingIndicatorEntityModel;
   public stores: LoadingIndicatorEntityModel;
+  public accesses: LoadingIndicatorEntityModel;
 }
 
 export const LoadingIndicatorEmptyState = {
@@ -50,6 +51,7 @@ export const LoadingIndicatorEmptyState = {
   options: getLoadingIndicatorEntityEmpty(),
   k8sResources: getLoadingIndicatorEntityEmpty(),
   stores: getLoadingIndicatorEntityEmpty(),
+  accesses: getLoadingIndicatorEntityEmpty(),
 };
 
 export const processLoadingIndicatorById = (state: LoadingIndicatorEntityModel,

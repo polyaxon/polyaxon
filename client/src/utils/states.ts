@@ -1,6 +1,7 @@
 import { getPaginatedSlice } from '../constants/paginate';
 import { AppState } from '../constants/types';
 import { getExperimentIndexName } from '../constants/utils';
+import { AccessModel, AccessStateSchema } from '../models/access';
 import { BuildModel, BuildStateSchema } from '../models/build';
 import { ExperimentModel, ExperimentStateSchema } from '../models/experiment';
 import { ExperimentJobModel, ExperimentJobStateSchema } from '../models/experimentJob';
@@ -221,4 +222,15 @@ export const getLastFetchedStores = (storesState: StoreStateSchema) => {
       stores.push(storesState.byUniqueNames[resource]);
     });
   return {stores, count};
+};
+
+export const getLastFetchedAccesses = (accessesState: AccessStateSchema) => {
+  const accessesNames = accessesState.lastFetched.names;
+  const count = accessesState.lastFetched.count;
+  const accesses: AccessModel[] = [];
+  accessesNames.forEach(
+    (resource: string, idx: number) => {
+      accesses.push(accessesState.byUniqueNames[resource]);
+    });
+  return {accesses, count};
 };

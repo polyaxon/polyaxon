@@ -116,7 +116,9 @@ export const tensorboardsReducer: Reducer<TensorboardStateSchema> =
         }
         return newState;
       case actionTypes.GET_TENSORBOARD_SUCCESS:
-        return processBuild(action.tensorboard);
+        newState = processBuild(action.tensorboard);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

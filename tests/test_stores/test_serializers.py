@@ -1,6 +1,6 @@
 import pytest
 
-from api.data_stores.serializers import DataStoreSerializer, DataStoreNameSerializer
+from api.data_stores.serializers import DataStoreNameSerializer, DataStoreSerializer
 from db.models.data_stores import DataStore
 from factories.factory_data_stores import DataStoreFactory
 from tests.base.case import BaseTest

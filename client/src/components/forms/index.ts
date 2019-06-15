@@ -18,3 +18,4 @@ export * from './visibilityField';
 export * from './k8sRefField';
 export * from './k8sRefItemsField';
 export * from './storeField';
+export * from './accessField';

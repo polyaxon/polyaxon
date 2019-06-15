@@ -1,7 +1,7 @@
 import logging
 
-from api.k8s_secrets.serializers import K8SSecretSerializer, K8SSecretNameSerializer
-from api.utils.views.catalog import CatalogListViewV1, CatalogDetailViewV1, CatalogNameListView
+from api.k8s_secrets.serializers import K8SSecretNameSerializer, K8SSecretSerializer
+from api.utils.views.catalog import CatalogDetailViewV1, CatalogListViewV1, CatalogNameListView
 from db.models.secrets import K8SSecret
 
 _logger = logging.getLogger("polyaxon.views.k8s_secrets")

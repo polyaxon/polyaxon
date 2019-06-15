@@ -74,7 +74,9 @@ export const StoresReducer: Reducer<StoreStateSchema> =
         }
         return newState;
       case actionTypes.GET_STORE_SUCCESS:
-        return processStore(action.store);
+        newState = processStore(action.store);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

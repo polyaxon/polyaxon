@@ -1,7 +1,7 @@
 import pytest
 
-from api.k8s_config_maps.serializers import K8SConfigMapSerializer, K8SConfigMapNameSerializer
-from api.k8s_secrets.serializers import K8SSecretSerializer, K8SSecretNameSerializer
+from api.k8s_config_maps.serializers import K8SConfigMapNameSerializer, K8SConfigMapSerializer
+from api.k8s_secrets.serializers import K8SSecretNameSerializer, K8SSecretSerializer
 from db.models.config_maps import K8SConfigMap
 from db.models.secrets import K8SSecret
 from factories.factory_k8s_config_maps import K8SConfigMapFactory

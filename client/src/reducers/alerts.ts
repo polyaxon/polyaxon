@@ -2,6 +2,7 @@ import { Action, Reducer } from 'redux';
 
 import { AppState } from '../constants/types';
 import { AlertEmptyState, AlertSchema } from '../models/alerts';
+import { AlertAccessReducer } from './accesses';
 import { AlertBuildReducer } from './builds';
 import { AlertChartViewReducer } from './chartViews';
 import { AlertCodeReferenceReducer } from './codeReferences';
@@ -45,5 +46,6 @@ export const AlertSliceReducer = (state: AppState, action: Action) => {
   newState = AlertOptionsReducer(newState, action);
   newState = AlertK8SResourceReducer(newState, action);
   newState = AlertStoreReducer(newState, action);
+  newState = AlertAccessReducer(newState, action);
   return AlertProjectReducer(newState , action);
 };

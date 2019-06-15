@@ -29,16 +29,6 @@ export default class Store extends React.Component<Props, {}> {
             inline={true}
           />
         </div>
-        {storeDef.k8s_secret &&
-        <div className="meta">
-          <MetaInfo
-            icon="fas fa-circle"
-            name="Secret"
-            value={storeDef.k8s_secret}
-            inline={true}
-          />
-        </div>
-        }
       </>
     );
     const hostPathInfo = (storeDef: StoreModel) => (

@@ -1,4 +1,4 @@
-from api.utils.serializers.catalog import K8SResourceCatalogSerializer, CatalogNameSerializer
+from api.utils.serializers.catalog import CatalogNameSerializer, K8SResourceCatalogSerializer
 from db.models.config_maps import K8SConfigMap
 
 

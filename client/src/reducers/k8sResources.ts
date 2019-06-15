@@ -76,7 +76,9 @@ export const K8SResourcesReducer: Reducer<K8SResourceStateSchema> =
         }
         return newState;
       case actionTypes.GET_K8S_RESOURCE_SUCCESS:
-        return processK8SResource(action.k8sResource);
+        newState = processK8SResource(action.k8sResource);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

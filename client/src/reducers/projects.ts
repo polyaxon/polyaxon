@@ -155,7 +155,9 @@ export const projectsReducer: Reducer<ProjectStateSchema> =
         }
         return newState;
       case actionTypes.GET_PROJECT_SUCCESS:
-        return processProject(action.project);
+        newState = processProject(action.project);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

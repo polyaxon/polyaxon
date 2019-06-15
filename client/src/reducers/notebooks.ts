@@ -116,7 +116,9 @@ export const notebooksReducer: Reducer<NotebookStateSchema> =
         }
         return newState;
       case actionTypes.GET_NOTEBOOK_SUCCESS:
-        return processBuild(action.notebook);
+        newState = processBuild(action.notebook);
+        newState.lastFetched.count += 1;
+        return newState;
       default:
         return state;
     }

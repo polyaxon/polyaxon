@@ -146,7 +146,7 @@ export const StoreComponent: React.FunctionComponent<StoreFieldProps> = (
             defaultValue={form.initialValues.store.k8s_secret}
             onChange={(event) => form.setFieldValue(field.name, {...field.value, k8s_secret: event.target.value})}
           >
-            <option value=""> No secret </option>
+            <option value=""> No secret</option>
             {secrets.map(
               (secret: K8SResourceModel) => (
                 <option

@@ -53,3 +53,17 @@ class K8SResourceCatalogSerializer(CatalogSerializer):
             'k8s_ref',
             'items',
         )
+
+
+class AccessCatalogSerializer(CatalogSerializer):
+    class Meta:
+        fields = CatalogSerializer.Meta.fields + (
+            'k8s_secret',
+        )
+
+
+class HostCatalogSerializer(AccessCatalogSerializer):
+    class Meta:
+        fields = AccessCatalogSerializer.Meta.fields + (
+            'host',
+        )

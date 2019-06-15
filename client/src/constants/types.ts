@@ -1,3 +1,4 @@
+import { AccessesEmptyState, AccessStateSchema } from '../models/access';
 import { ActivityLogsEmptyState, ActivityLogsStateSchema } from '../models/activitylog';
 import { AlertEmptyState, AlertSchema } from '../models/alerts';
 import { BuildsEmptyState, BuildStateSchema } from '../models/build';
@@ -46,6 +47,7 @@ export interface AppState {
   options: OptionStateSchema;
   k8sResources: K8SResourceStateSchema;
   stores: StoreStateSchema;
+  accesses: AccessStateSchema;
   outputs: OutputsModel;
   statuses: StatusStateSchema;
   metrics: MetricStateSchema;
@@ -74,6 +76,7 @@ export const AppEmptyState = {
   options: OptionsEmptyState,
   k8sResources: K8SResourcesEmptyState,
   stores: StoresEmptyState,
+  accesses: AccessesEmptyState,
   statuses: StatusEmptyState,
   metrics: MetricEmptyState,
   activityLogs: ActivityLogsEmptyState,
