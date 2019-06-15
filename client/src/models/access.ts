@@ -12,6 +12,7 @@ export class AccessModel {
   public updated_at: string;
   public host: string;
   public k8s_secret: string;
+  public is_default: boolean;
 }
 
 export class AccessStateSchema {

@@ -71,3 +71,5 @@ export const MOUNT_CODE = 'MOUNT_CODE';
 export const ACTIVITY_LOGS = 'ACTIVITY_LOGS';
 export const NOTIFICATIONS = 'NOTIFICATIONS';
 export const HUB = 'HUB';
+export const GIT = 'GIT';
+export const REGISTRY = 'REGISTRY';

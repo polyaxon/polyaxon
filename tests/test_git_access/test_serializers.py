@@ -21,7 +21,8 @@ class TestGitAccessSerializer(BaseTest):
         'created_at',
         'updated_at',
         'k8s_secret',
-        'host'
+        'host',
+        'is_default'
     }
 
     def setUp(self):
@@ -37,6 +38,7 @@ class TestGitAccessSerializer(BaseTest):
         data.pop('created_at')
         data.pop('updated_at')
         assert data.pop('uuid') == self.obj1.uuid.hex
+        assert data.pop('is_default') is False
 
         for k, v in data.items():
             assert getattr(self.obj1, k) == v

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 
 import * as actions from '../../../../actions/access';
+import * as optionActions from '../../../../actions/options';
 import AccessFrom from '../../../../containers/settings/catalogs/accessForm';
 import { AccessModel } from '../../../../models/access';
 import { isLive } from '../../../../utils/isLive';
@@ -23,6 +24,7 @@ export interface Props {
   showDeleted: boolean;
   onFetch: () => actions.AccessAction;
   onDelete: (name: string) => actions.AccessAction;
+  onMakeDefault: (id: number | string) => optionActions.OptionAction;
 }
 
 export interface State {
@@ -72,6 +74,7 @@ export default class Accesses extends React.Component<Props, State> {
                   resource={this.props.resource}
                   access={access}
                   onDelete={() => this.props.onDelete(access.name)}
+                  onMakeDefault={() => this.props.onMakeDefault(access.id)}
                   onEdit={() => this.handleShow(access)}
                 />)}
           </tbody>

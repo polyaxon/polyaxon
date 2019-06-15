@@ -2,7 +2,8 @@ from typing import Optional
 
 import conf
 
-from db.models.configs import Config
+from db.models.registry_access import RegistryAccess
+from options.registry.access import ACCESS_REGISTRY
 from options.registry.registries import REGISTRY_HOST, REGISTRY_IN_CLUSTER, REGISTRY_LOCALHOST
 from registry.exceptions import ContainerRegistryError
 from registry.spec import RegistryContextSpec
@@ -28,9 +29,9 @@ def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSp
 
 
 def get_registry_context(build_backend: Optional[str]) -> RegistryContextSpec:
-    config = Config.objects.prefetch_related('registry_access').last()
-    if config and config.registry_access:
-        registry_config = config.registry_access
+    registry_config = RegistryAccess.objects.filter(id=conf.get(ACCESS_REGISTRY))
+    if registry_config.exists():
+        registry_config = registry_config.last()
         return get_registry_spec_from_config(registry_config)
 
     if conf.get(REGISTRY_IN_CLUSTER):

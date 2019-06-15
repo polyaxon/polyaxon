@@ -3,11 +3,12 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 
+import conf
 from db.models.clusters import Cluster
-from db.models.configs import Config
 from db.models.owner import Owner
 from db.models.registry_access import RegistryAccess
 from db.models.secrets import K8SSecret
+from options.registry.access import ACCESS_REGISTRY
 from registry.exceptions import ContainerRegistryError
 from registry.registry_context import (
     get_in_cluster_registry_host,
@@ -124,7 +125,7 @@ class TestRegistryContext(BaseTest):
                                                         host='https://index.docker.io/v1/foo',
                                                         k8s_secret=secret,
                                                         name='d-registry')
-        Config.objects.create(owner=self.owner, registry_access=registry_access)
+        conf.set(ACCESS_REGISTRY, registry_access.id)
 
         spec = get_registry_context(build_backend=None)
         assert spec.host == 'https://index.docker.io/v1/foo'

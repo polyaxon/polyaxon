@@ -169,7 +169,7 @@ export const StoreComponent: React.FunctionComponent<StoreFieldProps> = (
 );
 
 export const checkStoreServer = (errors: any) => {
-  const fields = ['type', 'bucket', 'host_path', 'volume_claim', 'mount_path', 'read_only'];
+  const fields = ['type', 'bucket', 'host_path', 'volume_claim', 'mount_path', 'read_only', 'k8s_secret'];
   return _.isObject(errors) && fields.filter((field: string) => field in errors).length > 0;
 };
 

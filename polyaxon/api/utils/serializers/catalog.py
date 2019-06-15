@@ -6,7 +6,7 @@ from api.utils.serializers.tags import TagsSerializerMixin
 
 
 class CatalogSerializer(serializers.ModelSerializer, CatalogNamesMixin, TagsSerializerMixin):
-    QUERY = None
+    query = None
 
     uuid = fields.UUIDField(format='hex', read_only=True)
 
@@ -27,14 +27,14 @@ class CatalogSerializer(serializers.ModelSerializer, CatalogNamesMixin, TagsSeri
                                              tags=instance.tags)
         validated_data = self.validated_name(validated_data,
                                              owner=instance.owner,
-                                             query=self.QUERY)
+                                             query=self.query)
 
         return super().update(instance=instance, validated_data=validated_data)
 
     def create(self, validated_data):
         validated_data = self.validated_name(validated_data,
                                              owner=validated_data['owner'],
-                                             query=self.QUERY)
+                                             query=self.query)
         try:
             return super().create(validated_data)
         except Exception as e:

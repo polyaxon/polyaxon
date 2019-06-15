@@ -31,3 +31,4 @@ export const K8S = 'K8S';
 export const CLEANING_INTERVALS = 'CLEANING_INTERVALS';
 export const POLYFLOW = 'POLYFLOW';
 export const SERVICE_ACCOUNTS = 'SERVICE_ACCOUNTS';
+export const ACCESS = 'ACCESS';

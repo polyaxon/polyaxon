@@ -73,7 +73,7 @@ export const AccessComponent: React.FunctionComponent<AccessFieldProps> = (
 );
 
 export const checkAccessServer = (errors: any) => {
-  const fields = ['type', 'bucket', 'host_path', 'volume_claim', 'mount_path', 'read_only'];
+  const fields = ['host', 'k8s_secret'];
   return _.isObject(errors) && fields.filter((field: string) => field in errors).length > 0;
 };
 

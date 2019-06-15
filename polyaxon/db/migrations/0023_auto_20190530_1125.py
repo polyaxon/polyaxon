@@ -240,21 +240,5 @@ class Migration(migrations.Migration):
         migrations.AddIndex(
             model_name='datastore',
             index=models.Index(fields=['name'], name='db_datastor_name_7e5ac4_idx'),
-        ),
-        migrations.CreateModel(
-            name='Config',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True, db_index=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('artifacts', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='db.ArtifactsStore')),
-                ('datasets', models.ManyToManyField(blank=True, related_name='_config_datasets_+', to='db.DataStore')),
-                ('git_access', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='db.GitAccess')),
-                ('k8s_config_maps', models.ManyToManyField(blank=True, related_name='_config_k8s_config_maps_+', to='db.K8SConfigMap')),
-                ('k8s_secrets', models.ManyToManyField(blank=True, related_name='_config_k8s_secrets_+', to='db.K8SSecret')),
-                ('logs', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='db.LogsStore')),
-                ('owner', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='config', to='db.Owner')),
-                ('registry_access', models.ForeignKey(blank=True, default=None, null=True, on_delete=django.db.models.deletion.SET_NULL, to='db.RegistryAccess')),
-            ],
         )
     ]

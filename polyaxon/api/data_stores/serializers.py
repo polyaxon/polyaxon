@@ -3,7 +3,7 @@ from db.models.data_stores import DataStore
 
 
 class DataStoreSerializer(AccessCatalogSerializer):
-    QUERY = DataStore.objects
+    query = DataStore.objects
 
     class Meta:
         model = DataStore

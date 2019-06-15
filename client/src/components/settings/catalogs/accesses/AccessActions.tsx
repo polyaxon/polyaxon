@@ -7,6 +7,7 @@ import '../../../actions.less';
 
 export interface Props {
   onDelete: () => any;
+  onMakeDefault: () => any;
   onEdit: () => void;
   pullRight: boolean;
   isSelection?: boolean;
@@ -15,7 +16,7 @@ export interface Props {
 interface State {
   confirmShow: boolean;
   confirmText?: string;
-  confirmAction?: 'delete' | 'edit';
+  confirmAction?: 'delete' | 'default';
 }
 
 export default class AccessActions extends React.Component<Props, State> {
@@ -33,12 +34,14 @@ export default class AccessActions extends React.Component<Props, State> {
     }));
   };
 
-  public handleShow = (action: 'delete') => {
+  public handleShow = (action: 'delete' | 'default') => {
     let confirmText = '';
     if (action === 'delete') {
       confirmText = this.props.isSelection ?
         'Are you sure you want to delete the selected access(es)' :
         'Are you sure you want to delete this access';
+    } else if  (action === 'default') {
+      confirmText = 'Are you sure you want to make this access the default';
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
@@ -48,6 +51,8 @@ export default class AccessActions extends React.Component<Props, State> {
   public confirm = () => {
     if (this.state.confirmAction === 'delete') {
       this.props.onDelete();
+    } else if (this.state.confirmAction === 'default') {
+      this.props.onMakeDefault();
     }
   };
 
@@ -67,6 +72,9 @@ export default class AccessActions extends React.Component<Props, State> {
             <i className="fas fa-ellipsis-h icon" aria-hidden="true"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
+          <MenuItem eventKey="2" onClick={() => this.handleShow('default')}>
+            <i className="fas fa-check icon" aria-hidden="true"/> Make default
+          </MenuItem>
           <MenuItem eventKey="3" onClick={() => this.handleShow('delete')}>
             <i className="fas fa-trash icon" aria-hidden="true"/> Delete
           </MenuItem>
