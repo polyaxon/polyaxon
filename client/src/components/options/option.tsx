@@ -1,10 +1,12 @@
 import { ErrorMessage, Field, Formik, FormikActions, FormikProps } from 'formik';
+import * as jsYaml from 'js-yaml';
 import * as _ from 'lodash';
 import * as React from 'react';
 
 import * as actions from '../../actions/options';
-import { checkServerError } from '../../components/forms';
 import { OptionModel } from '../../models/option';
+
+import './option.less';
 
 export interface Props {
   option: OptionModel;
@@ -78,7 +80,11 @@ export default class Option extends React.Component<Props, State> {
   public onSave = (fValues: any) => {
     if (this.props.onSave) {
       const options: { [key: string]: any } = {};
-      options[this.props.option.key] = fValues;
+      if (this.isObj() && fValues) {
+        options[this.props.option.key] =  jsYaml.safeLoad(fValues);
+      } else {
+        options[this.props.option.key] = fValues;
+      }
       this.props.onSave(options);
     }
     this.setState((prevState, prevProps) => ({
@@ -87,13 +93,22 @@ export default class Option extends React.Component<Props, State> {
     }));
   };
 
+  public isDict = () => {
+    return this.props.option.typing === 'dict';
+  };
   public isObj = () => {
     return ['int', 'float', 'str'].indexOf(this.props.option.typing) === -1 || this.props.option.is_list;
   };
 
   public parseValue = (value: any) => {
     if (this.isObj() && value) {
-      return JSON.parse(value);
+      try {
+        return JSON.parse(value);
+      } catch (e) {
+        if (this.isDict()) {
+          return jsYaml.safeLoad(value);
+        }
+      }
     }
     return value;
   };
@@ -168,12 +183,14 @@ export default class Option extends React.Component<Props, State> {
       <div className="col-md-7">
         {this.getValue(this.state.value)}
         {this.props.option.description &&
-        <span id="helpBlock" className="help-block">{this.props.option.description}</span>
+        <span id="helpBlock" className="help-block">
+          <i className="fas fa-info-circle"/> info: {this.props.option.description}
+        </span>
         }
       </div>
     );
     return (
-      <>
+      <div className="option">
         <div className="row">
           <div className="col-md-12">
             <label className="control-label">{this.props.option.key}</label> {
@@ -189,7 +206,7 @@ export default class Option extends React.Component<Props, State> {
             {this.state.isEditMode ? getForm() : getView()}
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
