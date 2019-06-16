@@ -60,3 +60,7 @@ Polyaxon has a new up-to-date version of the stable rabbitmq-ha chart, and it su
 
 [Github #447](https://github.com/polyaxon/polyaxon/issues/447) The env section will allow to pass in a custom SA, 
 as well as a config to override default SA for experiments/jobs/builds/... A documentation ref will be published with the minimum RBAC access required -> Fixed
+
+### Resources for init/sidecar
+[Github #437](https://github.com/polyaxon/polyaxon/issues/437) Clusters with pod security policy requiring 
+that all pods must specify resources did not work because init/sidecar containers did not specify resources -> fixed.

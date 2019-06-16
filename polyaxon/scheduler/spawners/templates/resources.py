@@ -1,7 +1,6 @@
 from kubernetes import client
 
 import conf
-
 from options.registry.k8s import K8S_GPU_RESOURCE_KEY, K8S_TPU_RESOURCE_KEY
 
 
@@ -44,3 +43,13 @@ def get_resources(resources):  # pylint:disable=too-many-branches
         if resources.tpu.requests:
             requests[resource_key] = resources.tpu.requests
     return client.V1ResourceRequirements(limits=limits or None, requests=requests or None)
+
+
+def get_init_resources():
+    return client.V1ResourceRequirements(limits={'cpu': 1, 'memory': '100Mi'},
+                                         requests={'cpu': 0.1, 'memory': '60Mi'})
+
+
+def get_sidecar_resources():
+    return client.V1ResourceRequirements(limits={'cpu': 1, 'memory': '100Mi'},
+                                         requests={'cpu': 0.1, 'memory': '60Mi'})

@@ -29,6 +29,7 @@ from scheduler.spawners.templates.pod_environment import (
     get_tolerations,
     get_pod_resources)
 from scheduler.spawners.templates.resource_manager import BaseResourceManager
+from scheduler.spawners.templates.resources import get_init_resources
 
 
 class ResourceManager(BaseResourceManager):
@@ -142,6 +143,7 @@ class ResourceManager(BaseResourceManager):
             command=init_command,
             env=env_vars,
             args=init_args,
+            resources=get_init_resources(),
             volume_mounts=context_mounts)
 
     def _get_pod_resources(self, resources):

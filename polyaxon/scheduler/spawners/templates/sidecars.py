@@ -11,6 +11,7 @@ from scheduler.spawners.templates.env_vars import (
     get_from_field_ref,
     get_internal_env_vars
 )
+from scheduler.spawners.templates.resources import get_sidecar_resources
 
 
 def get_sidecar_env_vars(namespace, job_container_name, internal_health_check_url):
@@ -59,4 +60,5 @@ def get_sidecar_container(job_container_name,
                               command=get_sidecar_command(),
                               env=env_vars,
                               volume_mounts=volume_mounts,
+                              resources=get_sidecar_resources(),
                               args=sidecar_args)
