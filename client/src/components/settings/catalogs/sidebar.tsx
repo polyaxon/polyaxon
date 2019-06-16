@@ -39,16 +39,16 @@ export default class CatalogsSidebar extends React.Component<{}, {}> {
             Secrets
           </Link>
           <Link
-            className={currentPath === ClusterReposCatalogURL ? 'active menu-item' : 'menu-item'}
-            to={ClusterReposCatalogURL}
-          >
-            Repos
-          </Link>
-          <Link
             className={currentPath === ClusterRegistriesCatalogURL ? 'active menu-item' : 'menu-item'}
             to={ClusterRegistriesCatalogURL}
           >
             Registries
+          </Link>
+          <Link
+            className={currentPath === ClusterReposCatalogURL ? 'active menu-item' : 'menu-item'}
+            to={ClusterReposCatalogURL}
+          >
+            Git
           </Link>
         </nav>
       </div>

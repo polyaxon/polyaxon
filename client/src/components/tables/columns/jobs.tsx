@@ -13,7 +13,7 @@ const getExtraColumns = (): { [key: string]: ColumnInterface } => {
       name: 'Name',
       field: 'name',
       type: 'value',
-      desc: FILTER_EXAMPLES.name('name'),
+      desc: FILTER_EXAMPLES.str('name'),
       sort: true,
       icon: 'fas fa-tasks',
       render: (text: any, experiment: JobModel) => {
@@ -23,6 +23,14 @@ const getExtraColumns = (): { [key: string]: ColumnInterface } => {
             <i className="fas fa-tasks icon" aria-hidden="true"/> {experiment.name || experiment.unique_name}
           </Link>);
       }
+    },
+    description: {
+      name: 'Description',
+      field: 'description',
+      type: 'value',
+      desc: FILTER_EXAMPLES.str('description'),
+      sort: false,
+      icon: 'fas fa-info',
     },
     buildId: {
       field: 'build.id',

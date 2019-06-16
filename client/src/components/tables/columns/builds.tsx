@@ -28,28 +28,13 @@ export interface Props {
   unbookmark: (buildName: string) => actions.BuildAction;
 }
 
-const getExtraColumnOptions = (props: Props): { [key: string]: ColumnInterface } => {
+const getBuildColumnOption = (props: Props): { [key: string]: ColumnInterface } => {
   return {
-    name: {
-      name: 'Name',
-      field: 'name',
-      type: 'value',
-      desc: FILTER_EXAMPLES.name('name'),
-      sort: true,
-      icon: 'fas fa-gavel',
-      render: (text: any, build: BuildModel) => {
-        const values = splitUniqueName(build.project);
-        return (
-          <Link className="title" to={getBuildUrl(values[0], values[1], build.id)}>
-            <i className="fas fa-gavel icon" aria-hidden="true"/>  {build.name || build.unique_name}
-          </Link>);
-      },
-    },
     build: {
       name: 'Build',
       field: 'name',
       type: 'value',
-      desc: FILTER_EXAMPLES.name('name'),
+      desc: FILTER_EXAMPLES.str('name'),
       sort: false,
       icon: 'fas fa-minus',
       render: (text: any, build: BuildModel) => {
@@ -65,10 +50,10 @@ const getExtraColumnOptions = (props: Props): { [key: string]: ColumnInterface }
               <i className="fas fa-gavel icon" aria-hidden="true"/>
               {build.name || build.unique_name}
             </Link>
-            {props.showBookmarks &&
-            <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
-            }
-            <br/>
+              {props.showBookmarks &&
+              <BookmarkStar active={bookmarkStar.active} callback={bookmarkStar.callback}/>
+              }
+              <br/>
             </span>
             <Description description={build.description}/>
             <span className="meta">
@@ -89,6 +74,34 @@ const getExtraColumnOptions = (props: Props): { [key: string]: ColumnInterface }
             <Tags tags={build.tags}/>
           </div>);
       },
+    }
+  };
+};
+
+const getExtraColumnOptions = (props: Props): { [key: string]: ColumnInterface } => {
+  return {
+    name: {
+      name: 'Name',
+      field: 'name',
+      type: 'value',
+      desc: FILTER_EXAMPLES.str('name'),
+      sort: true,
+      icon: 'fas fa-gavel',
+      render: (text: any, build: BuildModel) => {
+        const values = splitUniqueName(build.project);
+        return (
+          <Link className="title" to={getBuildUrl(values[0], values[1], build.id)}>
+            <i className="fas fa-gavel icon" aria-hidden="true"/> {build.name || build.unique_name}
+          </Link>);
+      },
+    },
+    description: {
+      name: 'Description',
+      field: 'description',
+      type: 'value',
+      desc: FILTER_EXAMPLES.str('description'),
+      sort: false,
+      icon: 'fas fa-info',
     },
     commit: {
       name: 'Commit',
@@ -111,8 +124,8 @@ export const getBuildColumnOptions = (props: Props): { [key: string]: ColumnInte
 
 export const getBuildGlobalColumnOptions = (props: Props): { [key: string]: ColumnInterface } => {
   return {
-  ...getBaseGlobalRunColumnOptions(),
-  ...getExtraColumnOptions(props)
+    ...getBaseGlobalRunColumnOptions(),
+    ...getExtraColumnOptions(props)
   };
 };
 

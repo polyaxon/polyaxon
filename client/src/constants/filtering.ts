@@ -49,7 +49,7 @@ export const PROJECT_FILTER_OPTIONS = [
   {
     filter: 'name',
     type: 'value',
-    desc: FILTER_EXAMPLES.name('name'),
+    desc: FILTER_EXAMPLES.str('name'),
     icon: 'fas fa-minus',
   },
   {
@@ -61,7 +61,7 @@ export const PROJECT_FILTER_OPTIONS = [
   {
     filter: 'user.username',
     type: 'value',
-    desc: FILTER_EXAMPLES.name('user.username'),
+    desc: FILTER_EXAMPLES.str('user.username'),
     icon: 'far fa-user',
   }
 ] as FilterOption[];
@@ -78,7 +78,7 @@ export const DEFAULT_FILTER_OPTIONS = [
     // {
     //   filter: 'project.name',
     //   type: 'value',
-    //   desc: FILTER_EXAMPLES.name('project.name'),
+    //   desc: FILTER_EXAMPLES.str('project.name'),
     //   icon: 'fas fa-server',
     // },
     {
@@ -114,7 +114,7 @@ export const JOB_FILTER_OPTIONS = [
     {
       filter: 'build.name',
       type: 'value',
-      desc: FILTER_EXAMPLES.name('build.name'),
+      desc: FILTER_EXAMPLES.str('build.name'),
       icon: 'fas fa-gavel',
     },
   ]

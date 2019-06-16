@@ -110,15 +110,15 @@ export const getBaseRunColumnOptions = (): { [key: string]: ColumnInterface } =>
         icon: 'fas fa-brush',
         dataIndex: 'backend',
       },
-      run: {
-        name: 'Run',
-        field: 'run',
-        type: 'value',
-        desc: '',
-        sort: false,
-        icon: 'far fa-clock',
-        render: (entity: any) => <TaskRunMetaInfo startedAt={entity.started_at} finishedAt={entity.finished_at}/>,
-      }
+      // run: {
+      //   name: 'Run',
+      //   field: 'run',
+      //   type: 'value',
+      //   desc: '',
+      //   sort: false,
+      //   icon: 'far fa-clock',
+      //   render: (entity: any) => <TaskRunMetaInfo startedAt={entity.started_at} finishedAt={entity.finished_at}/>,
+      // }
     }
   };
 };

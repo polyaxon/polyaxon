@@ -26,7 +26,7 @@ export const getMetricColumn = (field: string) => {
     type: 'scalar',
     desc: FILTER_EXAMPLES.scalar('metrics.loss'),
     sort: true,
-    icon: 'fas fa-cog',
+    icon: 'fas fa-chart-area',
     dataIndex: `last_metric.${field}`,
   };
 };
@@ -37,7 +37,7 @@ const getExtraColumnOptions = (): { [key: string]: ColumnInterface } => {
       name: 'Name',
       field: 'name',
       type: 'value',
-      desc: FILTER_EXAMPLES.name('name'),
+      desc: FILTER_EXAMPLES.str('name'),
       sort: true,
       icon: 'fas fa-cube',
       render: (text: any, experiment: ExperimentModel) => {
@@ -47,6 +47,32 @@ const getExtraColumnOptions = (): { [key: string]: ColumnInterface } => {
             <i className="fas fa-cube icon" aria-hidden="true"/> {experiment.name || experiment.unique_name}
           </Link>);
       }
+    },
+    description: {
+      name: 'Description',
+      field: 'description',
+      type: 'value',
+      desc: FILTER_EXAMPLES.str('description'),
+      sort: false,
+      icon: 'fas fa-info',
+    },
+    params: {
+      name: 'Params',
+      field: `params.*`,
+      type: 'scalar',
+      desc: 'params.activation: sigmoid or params.activation: sigmoid|relu',
+      sort: true,
+      icon: 'fas fa-cog',
+      dataIndex: `params.*`,
+    },
+    metrics: {
+      name: 'Metrics',
+      field: `metrics.*`,
+      type: 'scalar',
+      desc: FILTER_EXAMPLES.scalar('metrics.loss'),
+      sort: true,
+      icon: 'fas fa-chart-area',
+      dataIndex: `metrics.*`,
     },
     groupId: {
       field: 'group.id',
