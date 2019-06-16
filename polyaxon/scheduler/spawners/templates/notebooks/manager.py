@@ -7,7 +7,7 @@ import conf
 import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
-from options.registry.affinities import AFFINITIES_EXPERIMENTS
+from options.registry.affinities import AFFINITIES_NOTEBOOKS
 from options.registry.container_names import (
     CONTAINER_NAME_INIT,
     CONTAINER_NAME_PLUGIN_JOBS,
@@ -15,19 +15,20 @@ from options.registry.container_names import (
 )
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
-from options.registry.node_selectors import NODE_SELECTORS_EXPERIMENTS
+from options.registry.k8s_resources import K8S_RESOURCES_NOTEBOOKS
+from options.registry.node_selectors import NODE_SELECTORS_NOTEBOOKS
 from options.registry.service_accounts import SERVICE_ACCOUNTS_NOTEBOOKS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
 from options.registry.spawner import APP_LABELS_NOTEBOOK, ROLE_LABELS_DASHBOARD, TYPE_LABELS_RUNNER
-from options.registry.tolerations import TOLERATIONS_EXPERIMENTS
+from options.registry.tolerations import TOLERATIONS_NOTEBOOKS
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
 from scheduler.spawners.templates.init_containers import get_auth_context_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
-    get_tolerations
-)
+    get_tolerations,
+    get_pod_resources)
 from scheduler.spawners.templates.resource_manager import BaseResourceManager
 
 
@@ -157,20 +158,25 @@ class ResourceManager(BaseResourceManager):
             env=env_vars,
             volume_mounts=volume_mounts)
 
+    def _get_pod_resources(self, resources):
+        return get_pod_resources(
+            resources=resources,
+            default_resources=conf.get(K8S_RESOURCES_NOTEBOOKS))
+
     def _get_node_selector(self, node_selector):
         return get_node_selector(
             node_selector=node_selector,
-            default_node_selector=conf.get(NODE_SELECTORS_EXPERIMENTS))
+            default_node_selector=conf.get(NODE_SELECTORS_NOTEBOOKS))
 
     def _get_affinity(self, affinity):
         return get_affinity(
             affinity=affinity,
-            default_affinity=conf.get(AFFINITIES_EXPERIMENTS))
+            default_affinity=conf.get(AFFINITIES_NOTEBOOKS))
 
     def _get_tolerations(self, tolerations):
         return get_tolerations(
             tolerations=tolerations,
-            default_tolerations=conf.get(TOLERATIONS_EXPERIMENTS))
+            default_tolerations=conf.get(TOLERATIONS_NOTEBOOKS))
 
     def _get_service_account_name(self):
         service_account_name = None

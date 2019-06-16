@@ -12,6 +12,7 @@ from options.registry.container_names import (
 )
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
+from options.registry.k8s_resources import K8S_RESOURCES_TENSORBOARDS
 from options.registry.node_selectors import NODE_SELECTORS_TENSORBOARDS
 from options.registry.service_accounts import SERVICE_ACCOUNTS_TENSORBOARDS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
@@ -26,8 +27,8 @@ from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
-    get_tolerations
-)
+    get_tolerations,
+    get_pod_resources)
 from scheduler.spawners.templates.resource_manager import BaseResourceManager
 
 
@@ -145,6 +146,11 @@ class ResourceManager(BaseResourceManager):
                            persistence_data):
         """Pod init container for setting outputs path."""
         return None
+
+    def _get_pod_resources(self, resources):
+        return get_pod_resources(
+            resources=resources,
+            default_resources=conf.get(K8S_RESOURCES_TENSORBOARDS))
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(

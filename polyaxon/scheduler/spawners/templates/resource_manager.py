@@ -201,6 +201,8 @@ class BaseResourceManager(object):
         volume_mounts = to_list(volume_mounts, check_none=True)
         volumes = to_list(volumes, check_none=True)
 
+        resources = self._get_pod_resources(resources=resources)
+
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
         volumes += gpu_volumes
@@ -250,6 +252,9 @@ class BaseResourceManager(object):
             node_selector=node_selector,
             tolerations=tolerations,
             affinity=affinity)
+
+    def _get_pod_resources(self, resources):
+        raise NotImplementedError()
 
     def _get_node_selector(self, node_selector):
         raise NotImplementedError()

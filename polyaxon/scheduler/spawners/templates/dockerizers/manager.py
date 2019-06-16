@@ -15,6 +15,7 @@ from options.registry.container_names import (
     CONTAINER_NAME_SIDECARS
 )
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_BUILDS
+from options.registry.k8s_resources import K8S_RESOURCES_BUILD_JOBS
 from options.registry.node_selectors import NODE_SELECTORS_BUILD_JOBS
 from options.registry.service_accounts import SERVICE_ACCOUNTS_BUILD_JOBS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
@@ -25,8 +26,8 @@ from scheduler.spawners.templates.env_vars import get_env_var
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
-    get_tolerations
-)
+    get_tolerations,
+    get_pod_resources)
 from scheduler.spawners.templates.resource_manager import BaseResourceManager
 
 
@@ -142,6 +143,11 @@ class ResourceManager(BaseResourceManager):
             env=env_vars,
             args=init_args,
             volume_mounts=context_mounts)
+
+    def _get_pod_resources(self, resources):
+        return get_pod_resources(
+            resources=resources,
+            default_resources=conf.get(K8S_RESOURCES_BUILD_JOBS))
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(
