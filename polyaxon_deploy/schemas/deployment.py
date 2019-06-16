@@ -2,21 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
-from polyaxon_deploy.schemas.auth import AuthSchema
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
 from polyaxon_deploy.schemas.email import EmailSchema
 from polyaxon_deploy.schemas.ingress import IngressSchema
-from polyaxon_deploy.schemas.integrations import IntegrationsSchema
-from polyaxon_deploy.schemas.intervals import CleaningIntervalsSchema, IntervalsSchema, TTLSchema
+from polyaxon_deploy.schemas.intervals import IntervalsSchema
 from polyaxon_deploy.schemas.persistence import PersistenceSchema
 from polyaxon_deploy.schemas.rbac import RBACSchema
 from polyaxon_deploy.schemas.root_user import RootUserSchema
-from polyaxon_deploy.schemas.scheduling import (
-    AffinitySchema,
-    NodeSelectorsSchema,
-    TolerationsSchema
-)
 from polyaxon_deploy.schemas.security_context import SecurityContextSchema
 from polyaxon_deploy.schemas.service import (
     ApiSchema,
@@ -26,11 +19,10 @@ from polyaxon_deploy.schemas.service import (
     PostgresqlSchema,
     RabbitmqSchema,
     ServiceSchema,
-    RedisSchema)
+    RedisSchema,
+    ThirdPartyServiceSchema)
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.ssl import SSLSchema
-
-from polyaxon_schemas.fields import DictOrStr
 
 
 class DeploymentSchema(BaseSchema):
@@ -48,9 +40,9 @@ class DeploymentSchema(BaseSchema):
     environment = fields.Str(allow_none=True)
     ingress = fields.Nested(IngressSchema, allow_none=True)
     user = fields.Nested(RootUserSchema, allow_none=True)
-    nodeSelectors = fields.Nested(NodeSelectorsSchema, allow_none=True)
-    tolerations = fields.Nested(TolerationsSchema, allow_none=True)
-    affinity = fields.Nested(AffinitySchema, allow_none=True)
+    nodeSelector = fields.Dict(allow_none=True)
+    tolerations = fields.List(fields.Dict(allow_none=True), allow_none=True)
+    affinity = fields.Dict(allow_none=True)
     limitResources = fields.Bool(allow_none=True)
     globalReplicas = fields.Int(allow_none=True)
     globalConcurrency = fields.Int(allow_none=True)
@@ -64,11 +56,7 @@ class DeploymentSchema(BaseSchema):
     beat = fields.Nested(ServiceSchema, allow_none=True)
     crons = fields.Nested(ServiceSchema, allow_none=True)
     eventMonitors = fields.Nested(EventMonitorsSchema, allow_none=True)
-    resourcesDaemon = fields.Nested(ServiceSchema, allow_none=True)
-    sidecar = fields.Nested(ServiceSchema, allow_none=True)
-    init = fields.Nested(HooksSchema, allow_none=True)
-    dockerizer = fields.Nested(ServiceSchema, allow_none=True)
-    kaniko = fields.Nested(ServiceSchema, allow_none=True)
+    resourcesDaemon = fields.Nested(ThirdPartyServiceSchema, allow_none=True)
     tablesHook = fields.Nested(ServiceSchema, allow_none=True)
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
@@ -80,28 +68,15 @@ class DeploymentSchema(BaseSchema):
                                    attribute="docker-registry",
                                    allow_none=True)
     email = fields.Nested(EmailSchema, allow_none=True)
-    auth = fields.Nested(AuthSchema, allow_none=True)
-    integrations = fields.Nested(IntegrationsSchema, allow_none=True)
+    ldap = fields.Raw(allow_none=True)
     hostName = fields.Str(allow_none=True)
     allowedHosts = fields.List(fields.Str(), allow_none=True)
-    secretRefs = fields.List(fields.Str(), allow_none=True)
-    configmapRefs = fields.List(fields.Str(), allow_none=True)
     intervals = fields.Nested(IntervalsSchema, allow_none=True)
-    cleaningIntervals = fields.Nested(CleaningIntervalsSchema, allow_none=True)
-    ttl = fields.Nested(TTLSchema, allow_none=True)
-    privateRegistries = fields.List(DictOrStr(allow_none=True), allow_none=True)
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
-    notebookBackend = fields.Str(allow_none=True)
-    notebookDockerImage = fields.Str(allow_none=True)
-    mountCodeInNotebooks = fields.Bool(allow_none=True)
-    tensorboardDockerImage = fields.Str(allow_none=True)
     adminModels = fields.List(fields.Str(allow_none=True), allow_none=True)
     reposAccessToken = fields.Str(allow_none=True)
-    tpuTensorflowVersion = fields.Str(allow_none=True)
-    tpuResourceKey = fields.Str(allow_none=True)
     logLevel = fields.Str(allow_none=True)
     trackerBackend = fields.Str(allow_none=True)
-    buildBackend = fields.Str(allow_none=True)
     dirs = fields.Dict(allow_none=True)
     mountPaths = fields.Dict(allow_none=True)
     securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
@@ -129,7 +104,7 @@ class DeploymentConfig(BaseConfig):
                  environment=None,
                  ingress=None,
                  user=None,
-                 nodeSelectors=None,
+                 nodeSelector=None,
                  tolerations=None,
                  affinity=None,
                  limitResources=None,
@@ -146,10 +121,6 @@ class DeploymentConfig(BaseConfig):
                  crons=None,
                  eventMonitors=None,
                  resourcesDaemon=None,
-                 sidecar=None,
-                 init=None,
-                 dockerizer=None,
-                 kaniko=None,
                  tablesHook=None,
                  hooks=None,
                  postgresql=None,
@@ -157,28 +128,15 @@ class DeploymentConfig(BaseConfig):
                  rabbitmq=None,
                  dockerRegistry=None,
                  email=None,
-                 auth=None,
-                 integrations=None,
+                 ldap=None,
                  hostName=None,
                  allowedHosts=None,
-                 secretRefs=None,
-                 configmapRefs=None,
                  intervals=None,
-                 cleaningIntervals=None,
-                 ttl=None,
-                 privateRegistries=None,
                  persistence=None,
-                 notebookBackend=None,
-                 notebookDockerImage=None,
-                 mountCodeInNotebooks=None,
-                 tensorboardDockerImage=None,
                  adminModels=None,
                  reposAccessToken=None,
-                 tpuTensorflowVersion=None,
-                 tpuResourceKey=None,
                  logLevel=None,
                  trackerBackend=None,
-                 buildBackend=None,
                  dirs=None,
                  mountPaths=None,
                  securityContext=None):
@@ -196,7 +154,7 @@ class DeploymentConfig(BaseConfig):
         self.environment = environment
         self.ingress = ingress
         self.user = user
-        self.nodeSelectors = nodeSelectors
+        self.nodeSelector = nodeSelector
         self.tolerations = tolerations
         self.affinity = affinity
         self.limitResources = limitResources
@@ -213,10 +171,6 @@ class DeploymentConfig(BaseConfig):
         self.crons = crons
         self.eventMonitors = eventMonitors
         self.resourcesDaemon = resourcesDaemon
-        self.sidecar = sidecar
-        self.init = init
-        self.dockerizer = dockerizer
-        self.kaniko = kaniko
         self.tablesHook = tablesHook
         self.hooks = hooks
         self.postgresql = postgresql
@@ -224,28 +178,15 @@ class DeploymentConfig(BaseConfig):
         self.rabbitmq = rabbitmq
         self.dockerRegistry = dockerRegistry
         self.email = email
-        self.auth = auth
-        self.integrations = integrations
+        self.ldap = ldap
         self.hostName = hostName
         self.allowedHosts = allowedHosts
-        self.secretRefs = secretRefs
-        self.configmapRefs = configmapRefs
         self.intervals = intervals
-        self.cleaningIntervals = cleaningIntervals
-        self.ttl = ttl
-        self.privateRegistries = privateRegistries
         self.persistence = persistence
-        self.notebookBackend = notebookBackend
-        self.notebookDockerImage = notebookDockerImage
-        self.mountCodeInNotebooks = mountCodeInNotebooks
-        self.tensorboardDockerImage = tensorboardDockerImage
         self.adminModels = adminModels
         self.reposAccessToken = reposAccessToken
-        self.tpuTensorflowVersion = tpuTensorflowVersion
-        self.tpuResourceKey = tpuResourceKey
         self.logLevel = logLevel
         self.trackerBackend = trackerBackend
-        self.buildBackend = buildBackend
         self.dirs = dirs
         self.mountPaths = mountPaths
         self.securityContext = securityContext

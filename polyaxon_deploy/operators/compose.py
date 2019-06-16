@@ -68,47 +68,6 @@ class ComposeOperator(CmdOperator):
             if config.email.backend:
                 env.append(template.format('POLYAXON_EMAIL_BACKEND', config.email.backend))
 
-        if config.auth:
-            if config.auth.github and config.auth.github.enabled:
-                env.append(template.format('POLYAXON_AUTH_GITHUB', config.auth.github.enabled))
-                env.append(template.format('POLYAXON_AUTH_GITHUB_CLIENT_ID',
-                                           config.auth.github.clientId))
-                env.append(template.format('POLYAXON_AUTH_GITHUB_CLIENT_SECRET',
-                                           config.auth.github.clientSecret))
-            elif config.auth.bitbucket and config.auth.bitbucket.enabled:
-                env.append(template.format('POLYAXON_AUTH_BITBUCKET',
-                                           config.auth.bitbucket.enabled))
-                env.append(template.format('POLYAXON_AUTH_BITBUCKET_CLIENT_ID',
-                                           config.auth.bitbucket.clientId))
-                env.append(template.format('POLYAXON_AUTH_BITBUCKET_CLIENT_SECRET',
-                                           config.auth.bitbucket.clientSecret))
-            elif config.auth.gitlab and config.auth.gitlab.enabled:
-                env.append(template.format('POLYAXON_AUTH_GITLAB', config.auth.gitlab.enabled))
-                env.append(template.format('POLYAXON_AUTH_GITLAB_CLIENT_ID',
-                                           config.auth.gitlab.clientId))
-                env.append(template.format('POLYAXON_AUTH_GITLAB_CLIENT_SECRET',
-                                           config.auth.gitlab.clientSecret))
-                env.append(template.format('POLYAXON_AUTH_GITLAB_URL',
-                                           config.auth.gitlab.url))
-        if config.integrations:
-            if config.integrations.slack:
-                env.append(template.format('POLYAXON_INTEGRATIONS_SLACK_WEBHOOKS',
-                                           config.integrations.slack))
-            elif config.integrations.slack:
-                env.append(template.format('POLYAXON_INTEGRATIONS_HIPCHAT_WEBHOOKS',
-                                           config.integrations.hipchat))
-            elif config.integrations.slack:
-                env.append(template.format('POLYAXON_INTEGRATIONS_MATTERMOST_WEBHOOKS',
-                                           config.integrations.mattermost))
-            elif config.integrations.slack:
-                env.append(template.format('POLYAXON_INTEGRATIONS_DISCORD_WEBHOOKS',
-                                           config.integrations.discord))
-            elif config.integrations.slack:
-                env.append(template.format('POLYAXON_INTEGRATIONS_PAGER_DUTY_WEBHOOKS',
-                                           config.integrations.pagerduty))
-            elif config.integrations.slack:
-                env.append(template.format('POLYAXON_INTEGRATIONS_WEBHOOKS',
-                                           config.integrations.webhooks))
         if config.hostName:
             env.append(template.format('POLYAXON_API_HOST', config.hostName))
         if config.allowedHosts:
@@ -129,22 +88,7 @@ class ComposeOperator(CmdOperator):
                                        config.intervals.operationsDefaultRetryDelay))
             env.append(template.format('POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY',
                                        config.intervals.operationsMaxRetryDelay))
-        if config.cleaningIntervals:
-            env.append(template.format('POLYAXON_CLEANING_INTERVALS_ARCHIVED',
-                                       config.cleaningIntervals.archived))
-        if config.ttl:
-            if config.ttl.heartbeat:
-                env.append(template.format('POLYAXON_TTL_HEARTBEAT',
-                                           config.ttl.heartbeat))
-            if config.ttl.token:
-                env.append(template.format('POLYAXON_TTL_TOKEN',
-                                           config.ttl.token))
-            if config.ttl.ephemeralToken:
-                env.append(template.format('POLYAXON_TTL_EPHEMERAL_TOKEN',
-                                           config.ttl.ephemeralToken))
-            if config.ttl.watchStatuses:
-                env.append(template.format('POLYAXON_TTL_WATCH_STATUSES',
-                                           config.ttl.watchStatuses))
+
         if config.logLevel:
             env.append(template.format('POLYAXON_LOG_LEVEL', config.logLevel))
         if config.trackerBackend:

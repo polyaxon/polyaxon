@@ -22,7 +22,7 @@ class TestDeploymentConfig(TestCase):
         assert config.ingress.enabled is True
         assert config.serviceType == 'ClusterIP'
         assert config.user.to_dict() == {'password': 'root'}
-        assert config.nodeSelectors is None
+        assert config.nodeSelector is None
         assert config.tolerations is None
         assert config.affinity is None
         assert config.limitResources is None
@@ -38,23 +38,16 @@ class TestDeploymentConfig(TestCase):
         assert config.crons is None
         assert config.eventMonitors is None
         assert config.resourcesDaemon is None
-        assert config.sidecar is None
-        assert config.dockerizer is None
         assert config.hooks is None
         assert config.postgresql.enabled is False
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is None
-        assert config.integrations is None
         assert config.hostName is None
         assert config.allowedHosts is None
-        assert config.secretRefs is None
-        assert config.configmapRefs is None
         assert config.intervals is None
-        assert config.cleaningIntervals is None
-        assert config.ttl is None
-        assert config.privateRegistries is None
         assert config.persistence is None
+        assert config.ldap is None
 
     def test_read_deploy_config_values2(self):
         config = reader.read('tests/fixtures/values2.yml')
@@ -68,10 +61,7 @@ class TestDeploymentConfig(TestCase):
         assert config.ingress.enabled is False
         assert config.serviceType == 'NodePort'
         assert config.user.to_dict() == {'password': 'root'}
-        assert config.nodeSelectors.to_dict() == {
-            'core': {'polyaxon': 'core'},
-            'builds': {'polyaxon': 'core'}
-        }
+        assert config.nodeSelector == {'polyaxon': 'core'}
         assert config.tolerations is None
         assert config.affinity is None
         assert config.limitResources is None
@@ -87,23 +77,14 @@ class TestDeploymentConfig(TestCase):
         assert config.crons is None
         assert config.eventMonitors.replicas == 3
         assert config.resourcesDaemon is None
-        assert config.sidecar is None
-        assert config.dockerizer is None
         assert config.hooks is None
         assert config.postgresql.persistence is not None
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is not None
-        assert len(config.integrations.slack) == 2
-        assert len(config.integrations.to_dict()) == 1
         assert config.hostName is None
         assert config.allowedHosts is None
-        assert config.secretRefs is None
-        assert config.configmapRefs is None
         assert config.intervals is None
-        assert config.cleaningIntervals is None
-        assert config.ttl is None
-        assert len(config.privateRegistries) == 3
         assert config.persistence.logs.to_dict() == {
             'mountPath': "/tmp/logs", 'hostPath': "/tmp/logs"}
         assert config.persistence.repos.to_dict() == {
@@ -111,6 +92,7 @@ class TestDeploymentConfig(TestCase):
         assert config.persistence.upload.to_dict() == {'existingClaim': "foo"}
         assert len(config.persistence.data) == 1
         assert len(config.persistence.outputs) == 1
+        assert config.ldap is None
 
     def test_read_deploy_config_values3(self):
         config = reader.read('tests/fixtures/values3.yml')
@@ -124,10 +106,7 @@ class TestDeploymentConfig(TestCase):
         assert config.ingress.enabled is True
         assert config.serviceType == 'ClusterIP'
         assert config.user.to_dict() == {'password': 'root'}
-        assert config.nodeSelectors.to_dict() == {
-            'core': {'polyaxon': 'core'},
-            'builds': {'polyaxon': 'core'}
-        }
+        assert config.nodeSelector == {'polyaxon': 'core'}
         assert config.tolerations is None
         assert config.affinity is None
         assert config.limitResources is None
@@ -143,30 +122,21 @@ class TestDeploymentConfig(TestCase):
         assert config.crons is None
         assert config.eventMonitors.replicas == 3
         assert config.resourcesDaemon is None
-        assert config.sidecar is None
-        assert config.dockerizer is None
         assert config.hooks is None
         assert config.postgresql.enabled is False
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is not None
-        assert len(config.integrations.slack) == 2
-        assert len(config.integrations.to_dict()) == 1
         assert config.hostName == '123.123.123.123'
         assert config.allowedHosts == ['foo.bar.com', '123.123.12.3']
-        assert config.secretRefs == ['foo', 'moo']
-        assert config.configmapRefs == ['foo', 'bar']
         assert config.intervals is None
-        assert config.cleaningIntervals is None
-        assert config.ttl is None
-        assert len(config.privateRegistries) == 3
         assert config.persistence.logs is None
         assert config.persistence.repos is None
         assert config.persistence.upload is None
         assert len(config.persistence.data) == 3
         assert len(config.persistence.outputs) == 3
         assert config.trackerBackend is None
-        assert config.mountCodeInNotebooks is None
+        assert config.ldap is None
 
     def test_read_deploy_config_values4(self):
         config = reader.read('tests/fixtures/values4.yml')
@@ -180,13 +150,7 @@ class TestDeploymentConfig(TestCase):
         assert config.ingress.enabled is True
         assert config.serviceType == 'ClusterIP'
         assert config.user.to_dict() == {'password': 'test'}
-        assert config.nodeSelectors.to_dict() == {
-            'core': {'polyaxon': 'core'},
-            'experiments': {'polyaxon': 'experiments'},
-            'builds': {'polyaxon': 'experiments'},
-            'jobs': {'polyaxon': 'experiments'},
-            'tensorboards': {'polyaxon': 'experiments'},
-        }
+        assert config.nodeSelector == {'polyaxon': 'core'}
         assert config.tolerations is None
         assert config.affinity is None
         assert config.limitResources is None
@@ -202,33 +166,21 @@ class TestDeploymentConfig(TestCase):
         assert config.crons.imageTag == 'latest'
         assert config.eventMonitors.replicas == 1
         assert config.resourcesDaemon.imageTag == 'latest'
-        assert config.sidecar.imageTag == 'latest'
-        assert config.dockerizer.imageTag == 'latest'
         assert config.hooks.imageTag == 'latest'
         assert config.postgresql is None
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is None
-        assert len(config.integrations.slack) == 1
-        assert len(config.integrations.to_dict()) == 1
         assert config.hostName == '19.3.50.12'
         assert config.allowedHosts == ['127.0.0.1', '123.123.12.3']
-        assert config.secretRefs == ['pubsub-key']
-        assert config.configmapRefs is None
         assert config.intervals is None
-        assert config.cleaningIntervals is None
-        assert config.ttl.watchStatuses == 10
-        assert len(config.privateRegistries) == 3
         assert config.persistence.logs is not None
         assert config.persistence.repos is not None
         assert config.persistence.upload is not None
         assert len(config.persistence.data) == 2
         assert len(config.persistence.outputs) == 2
-        assert config.notebookBackend == 'lab'
-        assert config.notebookDockerImage == "jupyter/datascience-notebook"
-        assert config.mountCodeInNotebooks is True
         assert config.trackerBackend is None
-        assert config.buildBackend is None
+        assert config.ldap is not None
 
     def test_read_deploy_config_values5(self):
         config = reader.read('tests/fixtures/values5.yml')
@@ -242,13 +194,7 @@ class TestDeploymentConfig(TestCase):
         assert config.ingress.enabled is True
         assert config.serviceType == 'ClusterIP'
         assert config.user.to_dict() == {'password': 'test'}
-        assert config.nodeSelectors.to_dict() == {
-            'core': {'polyaxon': 'core'},
-            'experiments': {'polyaxon': 'experiments'},
-            'builds': {'polyaxon': 'experiments'},
-            'jobs': {'polyaxon': 'experiments'},
-            'tensorboards': {'polyaxon': 'experiments'},
-        }
+        assert config.nodeSelector == {'polyaxon': 'core'}
         assert config.tolerations is None
         assert config.affinity is None
         assert config.limitResources is None
@@ -264,33 +210,21 @@ class TestDeploymentConfig(TestCase):
         assert config.crons.imageTag == 'latest'
         assert config.eventMonitors.replicas == 1
         assert config.resourcesDaemon.imageTag == 'latest'
-        assert config.sidecar.imageTag == 'latest'
-        assert config.dockerizer.imageTag == 'latest'
         assert config.hooks.imageTag == 'latest'
         assert config.postgresql is None
         assert config.rabbitmq is None
         assert config.dockerRegistry is None
         assert config.email is None
-        assert len(config.integrations.slack) == 1
-        assert len(config.integrations.to_dict()) == 1
         assert config.hostName == '19.3.50.12'
         assert config.allowedHosts == ['127.0.0.1', '123.123.12.3']
-        assert config.secretRefs == ['pubsub-key']
-        assert config.configmapRefs is None
         assert config.intervals is None
-        assert config.cleaningIntervals is None
-        assert config.ttl.watchStatuses == 10
-        assert len(config.privateRegistries) == 3
+        assert config.ldap is None
         assert config.persistence.logs is not None
         assert config.persistence.repos is not None
         assert config.persistence.upload is not None
         assert len(config.persistence.data) == 2
         assert len(config.persistence.outputs) == 2
-        assert config.notebookBackend == 'lab'
-        assert config.notebookDockerImage == "jupyter/datascience-notebook"
-        assert config.mountCodeInNotebooks is None
         assert config.trackerBackend == 'noop'
-        assert config.buildBackend == 'kaniko'
         assert config.dirs == {
             'nvidia': {'lib': '', 'bin': '', 'libcuda': ''}
         }

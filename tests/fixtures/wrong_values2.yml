@@ -11,18 +11,13 @@ environment: staging
 user:
   password: root
 
-
 postgresql:
   persistence:
     enabled: true
     size: 10Gi
 
 nodeSelectors:
-  core:
-    polyaxon: core
-  builds:
-    polyaxon: core
-
+  polyaxon: core
 
 api:
   replicas: foo  # Error
@@ -41,13 +36,6 @@ k8sEventsHandlers:
 
 eventMonitors:
   replicas: 3
-
-auth:
-  github:
-    enabled: false
-    clientId: "593b4e1bfc3f4742cc23"
-    clientSecret: "c20621355af0c9f2032ee4bb20d0c3f12bf0cac6"
-
 
 persistence:
   logs:
@@ -70,26 +58,9 @@ persistence:
       mountPath: "/tmp/outputs"
       hostPath: "/tmp/outputs"
 
-
 email:
   host: "smtp.gmail.com"
   port: 587
   useTls: true
   hostUser: "foo"
   hostPassword: "bar"
-
-integrations:
-  slack:
-    - url: https://hooks.slack.com/services/sdfdfdsfsdf/sdflsdklfj
-    - url: https://hooks.slack.com/services/sdlkfjsdlk/lkjsdlkfjdklsjf2
-
-privateRegistries:
-  - host: "my.registry.com"
-    user: "_json_key"
-    password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
-
-  - host: "another.registry.com"
-    user: "myname"
-    password: "mypassword"
-
-  - "user:password@foo.bar.registry.com"
