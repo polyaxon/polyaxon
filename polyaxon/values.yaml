@@ -152,75 +152,37 @@ defaultPersistence:
       mountPath: "/outputs"
       hostPath: "/tmp/outputs"
 
-auth:
-  ldap:
-    enabled: false
-    serverUri:
-    globalOptions: {}
-    connectionOptions: {}
-    bindDN:
-    bindPassword:
-    userSearchBaseDN:
-    userSearchFilterStr:
-    userDNTemplate:
-    startTLS: false
-    userAttrMap: {}
-    groupSearchBaseDN:
-    groupSearchGroupType:
-    requireGroup:
-    denyGroup:
-  github:
-    enabled: false
-    clientId:
-    clientSecret:
-  gitlab:
-    enabled: false
-    clientId:
-    clientSecret:
-    url: ""
-  bitbucket:
-    enabled: false
-    clientId:
-    clientSecret:
-  azure:
-    enabled: false
-    tenantId:
-    clientId:
-    clientSecret:
+ldap:
+  enabled: false
+  serverUri:
+  globalOptions: {}
+  connectionOptions: {}
+  bindDN:
+  bindPassword:
+  userSearchBaseDN:
+  userSearchFilterStr:
+  userDNTemplate:
+  startTLS: false
+  userAttrMap: {}
+  groupSearchBaseDN:
+  groupSearchGroupType:
+  requireGroup:
+  denyGroup:
 
-
-nodeSelectors:
-  core:
-  experiments:
-  jobs:
-  builds:
-  tensorboards:
-
-tolerations:
-  resourcesDaemon:
-  core:
-  experiments:
-  jobs:
-  builds:
-  tensorboards:
-
+nodeSelector: {}
+tolerations: []
 affinity:
-  experiments:
-  jobs:
-  builds:
-  tensorboards:
-  core:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: type
-                operator: In
-                values:
-                - "polyaxon-core"
-            topologyKey: "kubernetes.io/hostname"
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-core"
+          topologyKey: "kubernetes.io/hostname"
 
 passwordLength: 8
 
@@ -388,26 +350,7 @@ resourcesDaemon:
       memory: 200Mi
   persists: false
   sleepInterval: 1
-
-sidecar:
-  image: polyaxon/polyaxon-sidecar
-  imageTag: 0.4.4
-  imagePullPolicy: Always
-
-init:
-  image: polyaxon/polyaxon-init
-  imageTag: 0.4.4
-  imagePullPolicy: Always
-
-dockerizer:
-  image: polyaxon/polyaxon-dockerizer
-  imageTag: 0.4.4
-  imagePullPolicy: Always
-
-kaniko:
-  image: gcr.io/kaniko-project/executor
-  imageTag: latest
-  imagePullPolicy: IfNotPresent
+  tolerations:
 
 hooks:
   image: polyaxon/polyaxon-manage

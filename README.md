@@ -397,22 +397,9 @@ persistence:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelectors.core`               | Node selector for core pod assignment                        | `{}`
-| `nodeSelectors.experiments`        | Node selector for experiments pod assignment                 | `{}`
-| `nodeSelectors.jobs`               | Node selector for jobs pod assignment                        | `{}`
-| `nodeSelectors.builds`             | Node selector for builds pod assignment                      | `{}`
-| `nodeSelectors.tensorboards`       | Node selector for tensorboards pod assignment                | `{}`
-| `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
-| `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
-| `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
-| `tolerations.builds`               | Tolerations for builds pod assignment                        | `[]`
-| `tolerations.tensorboards`         | Tolerations for tensorboards pod assignment                  | `[]`
-| `tolerations.resourcesDaemon`      | Tolerations for resourcesDaemon pod assignment               | `[]`
-| `affinity.core`                    | Affinity for core                                            | Please check the values
-| `affinity.experiments`             | Affinity for experiments                                     | `{}`
-| `affinity.jobs`                    | Affinity for jobs                                            | `{}`
-| `affinity.builds`                  | Affinity for builds                                          | `{}`
-| `affinity.tensorboards`            | Affinity for tensorboards                                    | `{}`
+| `nodeSelector`                    | Node selector for core pod assignment                        | `{}`
+| `tolerations`                      | Tolerations for core pod assignment                          | `[]`
+| `affinity`                         | Affinity for core                                            | Please check the values
 
 
 Dependent charts can also have values overwritten. Preface values with
@@ -421,6 +408,14 @@ Dependent charts can also have values overwritten. Preface values with
  * `redis.*`
  * `rabbitmq-ha.*`
  * `docker-registry.*`
+
+
+### Resources discovery
+
+| Parameter                          | Description                                                  | Default
+| -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
+| `resourcesDaemon.enabled`          | resourcesDaemon enabled                                      | `true` 
+| `resourcesDaemon.tolerations`      | Tolerations for resourcesDaemon pod assignment               | `[]` 
 
 
 ### Secrets and ConfigMaps

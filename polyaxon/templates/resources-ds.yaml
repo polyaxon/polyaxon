@@ -35,9 +35,9 @@ spec:
         type: {{ .Values.types.core }}
         role: {{ .Values.roles.log }}
     spec:
-      {{- if .Values.tolerations.resourcesDaemon }}
+      {{- if .Values.resourcesDaemon.tolerations }}
       tolerations:
-{{ toYaml .Values.tolerations.resourcesDaemon | indent 8 }}
+{{ toYaml .Values.resourcesDaemon.tolerations | indent 8 }}
       {{- end }}
 {{ include "config.sa" . | indent 6 }}
       containers:

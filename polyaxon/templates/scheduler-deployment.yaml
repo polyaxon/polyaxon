@@ -34,18 +34,7 @@ spec:
         role: {{ .Values.roles.worker }}
     spec:
 {{ include "securityContext" . | indent 6 }}
-      {{- if .Values.nodeSelectors.core }}
-      nodeSelector:
-{{ toYaml .Values.nodeSelectors.core | indent 8 }}
-      {{- end }}
-      {{- if .Values.affinity.core }}
-      affinity:
-{{ toYaml .Values.affinity.core | indent 8 }}
-      {{- end }}
-      {{- if .Values.tolerations.core }}
-      tolerations:
-{{ toYaml .Values.tolerations.core | indent 8 }}
-      {{- end }}
+{{ include "config.scheduling" . | indent 6 }}
 {{ include "config.sa" . | indent 6 }}
       containers:
       - name: {{ .Chart.Name }}-scheduler

@@ -160,14 +160,3 @@ persistence:
       hostPath: "/tmp/outputs"
 
 environment: testing
-
-privateRegistries:
-  - host: "my.registry.com"
-    user: "_json_key"
-    password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj12231\sdfsdfs/sfsdf12323/34r342/asdasd\n-----END PRIVATE KEY-----\n", "client_email": "email@email.com", "client_id": "12345", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/asdajhdvah123712378183"}'
-
-  - host: another.registry.com
-    user: name
-    password: pass
-
-  - "user-foo:tKV9DYsxrwfiY85KYpf9N4GZ@cloud.somewhere.io:5000"
