@@ -2,10 +2,13 @@ import { Field, Formik, FormikActions, FormikProps } from 'formik';
 import * as React from 'react';
 
 import * as actions from '../../../actions/options';
-import { getRequiredClass } from '../../../components/forms';
+import { ErrorsField, getRequiredClass } from '../../../components/forms';
 import SettingsSidebar from './sidebar';
 
 export interface Props {
+  isLoading: boolean;
+  success: boolean;
+  errors: any;
   onSave: (option: { [key: string]: any }) => actions.OptionAction;
 }
 
@@ -36,6 +39,7 @@ export default class KeyOption extends React.Component<Props, State> {
           <form onSubmit={props.handleSubmit}>
             <div className="row">
               <div className="col-sm-12">
+                {ErrorsField(this.props.errors)}
                 <label className={`control-label ${getRequiredClass(true)}`}>Key</label>
                 <Field
                   name="key"
@@ -53,7 +57,7 @@ export default class KeyOption extends React.Component<Props, State> {
             </div>
             <div className="row">
               <div className="col-md-2 name-buttons">
-                <button type="submit" className="btn btn-sm btn-default">
+                <button type="submit" className="btn btn-sm btn-default" disabled={this.props.isLoading}>
                   Save
                 </button>
               </div>
