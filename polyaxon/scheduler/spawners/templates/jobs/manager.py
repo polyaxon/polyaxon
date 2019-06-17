@@ -15,7 +15,9 @@ from options.registry.container_names import (
 )
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_JOBS
+from options.registry.k8s_config_maps import K8S_CONFIG_MAPS_JOBS
 from options.registry.k8s_resources import K8S_RESOURCES_JOBS
+from options.registry.k8s_secrets import K8S_SECRETS_JOBS
 from options.registry.node_selectors import NODE_SELECTORS_JOBS
 from options.registry.service_accounts import SERVICE_ACCOUNTS_JOBS
 from options.registry.sidecars import SIDECARS_DOCKER_IMAGE, SIDECARS_IMAGE_PULL_POLICY
@@ -30,9 +32,12 @@ from scheduler.spawners.templates.init_containers import (
 )
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
+    get_config_map_refs,
     get_node_selector,
-    get_tolerations,
-    get_pod_resources)
+    get_pod_resources,
+    get_secret_refs,
+    get_tolerations
+)
 from scheduler.spawners.templates.resource_manager import BaseResourceManager
 from scheduler.spawners.templates.resources import get_init_resources
 from scheduler.spawners.templates.volumes import get_pod_outputs_volume
@@ -201,3 +206,13 @@ class ResourceManager(BaseResourceManager):
         if conf.get(K8S_RBAC_ENABLED) and sa:
             service_account_name = sa
         return service_account_name
+
+    def _get_secret_refs(self, secret_refs):
+        return get_secret_refs(
+            secret_refs=secret_refs,
+            default_secret_refs=conf.get(K8S_SECRETS_JOBS))
+
+    def _get_config_map_refs(self, config_map_refs):
+        return get_config_map_refs(
+            config_map_refs=config_map_refs,
+            default_config_map_refs=conf.get(K8S_CONFIG_MAPS_JOBS))

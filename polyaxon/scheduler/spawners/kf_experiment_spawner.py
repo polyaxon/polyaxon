@@ -4,7 +4,6 @@ from constants.k8s_jobs import EXPERIMENT_KF_JOB_NAME_FORMAT
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
-from scheduler.spawners.templates.env_vars import validate_configmap_refs, validate_secret_refs
 from scheduler.spawners.templates.kf_jobs import manager
 from scheduler.spawners.templates.kubeflow import KUBEFLOW_JOB_GROUP
 from scheduler.spawners.templates.volumes import (
@@ -67,10 +66,6 @@ class KFExperimentSpawner(ExperimentSpawner):
         volumes += context_volumes
         volume_mounts += context_mounts
 
-        # Validate secret and configmap refs
-        secret_refs = validate_secret_refs(self.spec.secret_refs)
-        configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
-
         pod_template_spec = self.resource_manager.get_pod_template_spec(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
@@ -85,8 +80,8 @@ class KFExperimentSpawner(ExperimentSpawner):
             persistence_data=self.persistence_config.data,
             outputs_refs_jobs=self.outputs_refs_jobs,
             outputs_refs_experiments=self.outputs_refs_experiments,
-            secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            secret_refs=self.spec.secret_refs,
+            config_map_refs=self.spec.configmap_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,

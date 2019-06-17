@@ -27,8 +27,9 @@ from scheduler.spawners.templates.init_containers import get_auth_context_args
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_node_selector,
-    get_tolerations,
-    get_pod_resources)
+    get_pod_resources,
+    get_tolerations
+)
 from scheduler.spawners.templates.resource_manager import BaseResourceManager
 from scheduler.spawners.templates.resources import get_init_resources
 

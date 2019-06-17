@@ -89,7 +89,7 @@ class JobMixin(UniqueNameMixin):
         return self.specification.secret_refs
 
     @cached_property
-    def configmap_refs(self) -> Optional[List[str]]:
+    def config_map_refs(self) -> Optional[List[str]]:
         if not self.specification:
             return None
         return self.specification.configmap_refs

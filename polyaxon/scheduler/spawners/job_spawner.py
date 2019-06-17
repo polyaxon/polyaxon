@@ -6,11 +6,7 @@ from constants.k8s_jobs import JOB_NAME
 from libs.unique_urls import get_job_health_url
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
-from scheduler.spawners.templates.env_vars import (
-    get_internal_env_vars,
-    validate_configmap_refs,
-    validate_secret_refs
-)
+from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.jobs import manager
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
@@ -105,10 +101,6 @@ class JobSpawner(K8SManager):
         volumes += context_volumes
         volume_mounts += context_mounts
 
-        # Validate secret and configmap refs
-        secret_refs = validate_secret_refs(self.spec.secret_refs)
-        configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
-
         command, args = self.get_pod_command_args()
         resource_name = self.resource_manager.get_resource_name()
         pod = self.resource_manager.get_pod(
@@ -124,8 +116,8 @@ class JobSpawner(K8SManager):
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
-            secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            secret_refs=self.spec.secret_refs,
+            config_map_refs=self.spec.config_map_refs,
             resources=resources,
             ephemeral_token=None,
             node_selector=node_selector,

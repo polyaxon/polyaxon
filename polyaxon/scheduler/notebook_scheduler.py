@@ -58,9 +58,9 @@ def start_notebook(notebook):
                                          persistence_data=notebook.persistence_data,
                                          outputs_refs_jobs=notebook.outputs_refs_jobs,
                                          outputs_refs_experiments=notebook.outputs_refs_experiments,
-                                         resources=notebook.resources,  # TODO: resources
+                                         resources=notebook.resources,
                                          secret_refs=notebook.secret_refs,
-                                         configmap_refs=notebook.configmap_refs,
+                                         config_map_refs=notebook.config_map_refs,
                                          node_selector=notebook.node_selector,
                                          affinity=notebook.affinity,
                                          tolerations=notebook.tolerations,

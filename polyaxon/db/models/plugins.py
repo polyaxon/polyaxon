@@ -53,5 +53,5 @@ class PluginJobBase(AbstractJobModel,
         return self.specification.secret_refs
 
     @cached_property
-    def configmap_refs(self) -> Optional[List[str]]:
+    def config_map_refs(self) -> Optional[List[str]]:
         return self.specification.configmap_refs

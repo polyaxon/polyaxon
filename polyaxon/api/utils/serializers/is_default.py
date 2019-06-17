@@ -1,8 +1,8 @@
+from hestia.list_utils import to_list
 from rest_framework import serializers
 
-from hestia.list_utils import to_list
-
 import conf
+
 from scopes.authentication.utils import is_user
 
 

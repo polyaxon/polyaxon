@@ -23,7 +23,7 @@ from stores.exceptions import VolumeNotFoundError
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')
 
 
-def create_build_job(user, project, config, code_reference, configmap_refs=None, secret_refs=None):
+def create_build_job(user, project, config, code_reference, config_map_refs=None, secret_refs=None):
     """Get or Create a build job based on the params.
 
     If a build job already exists, then we check if the build has already an image created.
@@ -37,7 +37,7 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
         project=project,
         config=config,
         code_reference=code_reference,
-        configmap_refs=configmap_refs,
+        config_map_refs=config_map_refs,
         secret_refs=secret_refs)
 
     if build_job.succeeded and not rebuild:
@@ -49,7 +49,7 @@ def create_build_job(user, project, config, code_reference, configmap_refs=None,
             project=project,
             config=config,
             code_reference=code_reference,
-            configmap_refs=configmap_refs,
+            config_map_refs=config_map_refs,
             secret_refs=secret_refs,
             nocache=True)
 

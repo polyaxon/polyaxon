@@ -14,17 +14,6 @@ K8S_RBAC_ENABLED = config.get_boolean('POLYAXON_K8S_RBAC_ENABLED')
 K8S_INGRESS_ENABLED = config.get_boolean('POLYAXON_K8S_INGRESS_ENABLED')
 K8S_INGRESS_ANNOTATIONS = config.get_string('POLYAXON_K8S_INGRESS_ANNOTATIONS', is_optional=True)
 
-# Refs
-REFS_SECRETS = config.get_string('POLYAXON_REFS_SECRETS',
-                                 is_optional=True,
-                                 is_list=True,
-                                 default=())
-REFS_CONFIG_MAPS = config.get_string('POLYAXON_REFS_CONFIG_MAPS',
-                                     is_optional=True,
-                                     is_list=True,
-                                     default=())
-
-
 # DNS Cluster
 DNS_USE_RESOLVER = config.get_boolean('POLYAXON_DNS_USE_RESOLVER',
                                       is_optional=True,

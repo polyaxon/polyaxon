@@ -77,8 +77,8 @@ def experiments_build(experiment_id):
         user=experiment.user,
         project=experiment.project,
         config=experiment.specification.build,
-        configmap_refs=experiment.specification.configmap_refs,
-        secret_refs=experiment.specification.secret_refs,
+        config_map_refs=experiment.config_map_refs,
+        secret_refs=experiment.secret_refs,
         code_reference=experiment.code_reference)
 
     experiment.build_job = build_job

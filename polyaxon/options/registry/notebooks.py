@@ -38,7 +38,7 @@ class NotebooksBackend(Option):
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
     default = 'notebook'
-    options = None
+    options = ['notebook', 'lab']
     description = 'The backend to use for running notebooks'
 
 

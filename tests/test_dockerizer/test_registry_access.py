@@ -4,6 +4,7 @@ from django.conf import settings
 from django.test import override_settings
 
 import conf
+
 from db.models.clusters import Cluster
 from db.models.owner import Owner
 from db.models.registry_access import RegistryAccess

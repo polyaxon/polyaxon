@@ -13,11 +13,7 @@ from options.registry.container_names import CONTAINER_NAME_EXPERIMENT_JOBS
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
-from scheduler.spawners.templates.env_vars import (
-    get_internal_env_vars,
-    validate_configmap_refs,
-    validate_secret_refs
-)
+from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
@@ -190,10 +186,6 @@ class ExperimentSpawner(K8SManager):
         volumes += context_volumes
         volume_mounts += context_mounts
 
-        # Validate secret and configmap refs
-        secret_refs = validate_secret_refs(self.spec.secret_refs)
-        configmap_refs = validate_configmap_refs(self.spec.configmap_refs)
-
         pod = self.resource_manager.get_task_pod(
             task_type=task_type,
             task_idx=task_idx,
@@ -209,8 +201,8 @@ class ExperimentSpawner(K8SManager):
             persistence_data=self.persistence_config.data,
             outputs_refs_jobs=self.outputs_refs_jobs,
             outputs_refs_experiments=self.outputs_refs_experiments,
-            secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            secret_refs=self.spec.secret_refs,
+            config_map_refs=self.spec.configmap_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,

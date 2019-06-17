@@ -54,7 +54,7 @@ class TestBuildJobModels(BaseTest):
             user=experiment.user,
             project=experiment.project,
             config=experiment.specification.build,
-            configmap_refs=experiment.specification.configmap_refs,
+            config_map_refs=experiment.config_map_refs,
             secret_refs=experiment.specification.secret_refs,
             code_reference=self.code_reference)
 
@@ -69,7 +69,7 @@ class TestBuildJobModels(BaseTest):
             user=notebook.user,
             project=notebook.project,
             config=notebook.specification.build,
-            configmap_refs=notebook.specification.configmap_refs,
+            config_map_refs=notebook.config_map_refs,
             secret_refs=notebook.specification.secret_refs,
             code_reference=self.code_reference)
         self.assertEqual(rebuild, True)
@@ -247,7 +247,7 @@ class TestBuildJobModels(BaseTest):
             user=experiment.user,
             project=experiment.project,
             config=experiment.specification.build,
-            configmap_refs=experiment.specification.configmap_refs,
+            config_map_refs=experiment.config_map_refs,
             secret_refs=experiment.specification.secret_refs,
             code_reference=self.code_reference)
 
@@ -271,7 +271,7 @@ class TestBuildJobModels(BaseTest):
             user=experiment.user,
             project=experiment.project,
             config=experiment.specification.build,
-            configmap_refs=experiment.specification.configmap_refs,
+            config_map_refs=experiment.config_map_refs,
             secret_refs=experiment.specification.secret_refs,
             code_reference=self.code_reference)
 

@@ -18,11 +18,7 @@ from options.registry.spawner import APP_LABELS_NOTEBOOK, ROLE_LABELS_DASHBOARD
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
-from scheduler.spawners.templates.env_vars import (
-    get_internal_env_vars,
-    validate_configmap_refs,
-    validate_secret_refs
-)
+from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.notebooks import manager
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
@@ -155,7 +151,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        outputs_refs_experiments=None,
                        resources=None,
                        secret_refs=None,
-                       configmap_refs=None,
+                       config_map_refs=None,
                        node_selector=None,
                        affinity=None,
                        tolerations=None,
@@ -188,9 +184,6 @@ class NotebookSpawner(ProjectJobSpawner):
             volumes.append(code_volume)
             volume_mounts.append(code_volume_mount)
 
-        secret_refs = validate_secret_refs(secret_refs)
-        configmap_refs = validate_configmap_refs(configmap_refs)
-
         resource_name = self.resource_manager.get_resource_name()
         args = self.get_notebook_args(deployment_name=resource_name,
                                       mount_code_in_notebooks=mount_code_in_notebooks,
@@ -210,7 +203,7 @@ class NotebookSpawner(ProjectJobSpawner):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            config_map_refs=config_map_refs,
             resources=resources,
             ephemeral_token=None,
             node_selector=node_selector,

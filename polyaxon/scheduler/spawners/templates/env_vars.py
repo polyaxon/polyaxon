@@ -9,10 +9,11 @@ import conf
 import stores
 
 from constants.urls import VERSION_V1
+from db.models.config_maps import K8SConfigMap
 from db.models.outputs import get_paths_from_specs
+from db.models.secrets import K8SSecret
 from libs.api import API_HTTP_URL, API_WS_HOST, get_settings_http_api_url, get_settings_ws_api_url
 from options.registry.core import HEADERS_INTERNAL
-from options.registry.spawner import REFS_CONFIG_MAPS, REFS_SECRETS
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.stores import (
     get_data_store_secrets,
@@ -36,6 +37,13 @@ def get_from_field_ref(name, field_path):
     field_ref = client.V1ObjectFieldSelector(field_path=field_path)
     value_from = client.V1EnvVarSource(field_ref=field_ref)
     return client.V1EnvVar(name=name, value_from=value_from)
+
+
+def get_from_config_map(key_name, cm_key_name, config_map_ref_name=None):
+    config_map_ref_name = config_map_ref_name or settings.POLYAXON_K8S_APP_CONFIG_NAME
+    config_map_key_ref = client.V1ConfigMapKeySelector(name=config_map_ref_name, key=cm_key_name)
+    value_from = client.V1EnvVarSource(config_map_key_ref=config_map_key_ref)
+    return client.V1EnvVar(name=key_name, value_from=value_from)
 
 
 def get_from_secret(key_name, secret_key_name, secret_ref_name=None):
@@ -217,24 +225,6 @@ class EnvFromRefFoundError(Exception):
     pass
 
 
-def validate_secret_refs(secret_refs):
-    # TODO: this shoudl validate based on `K8SSecret` catalog
-    for secret_ref in secret_refs or []:
-        if secret_ref not in conf.get(REFS_SECRETS):
-            raise EnvFromRefFoundError('secret_ref with name `{}` was defined in specification, '
-                                       'but was not found'.format(secret_ref))
-    return secret_refs
-
-
-def validate_configmap_refs(configmap_refs):
-    # TODO: this shoudl validate based on `K8SConfigMap` catalog
-    for configmap_ref in configmap_refs or []:
-        if configmap_ref not in conf.get(REFS_CONFIG_MAPS):
-            raise EnvFromRefFoundError('configmap_ref with name `{}` was defined in specification, '
-                                       'but was not found'.format(configmap_ref))
-    return configmap_refs
-
-
 def get_env_from(secret_ref=None, config_map_ref=None):
     if not any([secret_ref, config_map_ref]) or all([secret_ref, config_map_ref]):
         raise ValueError('One and only one value is required for get_env_from.')
@@ -244,10 +234,67 @@ def get_env_from(secret_ref=None, config_map_ref=None):
     return client.V1EnvFromSource(config_map_ref={'name': config_map_ref})
 
 
-def get_pod_env_from(secret_refs=None, configmap_refs=None):
-    secret_refs = secret_refs or []
-    configmap_refs = configmap_refs or []
+def get_items_from(items, secret_ref=None, config_map_ref=None):
+    if not any([secret_ref, config_map_ref]) or all([secret_ref, config_map_ref]):
+        raise ValueError('One and only one value is required for get_env_from.')
+
+    items_from = []
+    if secret_ref:
+        for item in items:
+            items_from.append(get_from_secret(key_name=item,
+                                              secret_key_name=item,
+                                              secret_ref_name=secret_ref))
+        return items_from
+    for item in items:
+        items_from.append(get_from_config_map(key_name=item,
+                                              cm_key_name=item,
+                                              config_map_ref_name=config_map_ref))
+
+
+def get_pod_env_from_secrets(secret_refs):
+    if not secret_refs:
+        return []
+    secrets = K8SSecret.objects.filter(name__in=secret_refs)
+    validation = set(secret_refs) - set([secret.name for secret in secrets])
+    if validation:
+        raise EnvFromRefFoundError(
+            'The following secret refs `{}` '
+            'were provided but not defined in the config maps catalog'.format(validation))
+
     env_from = []
-    env_from += [get_env_from(secret_ref=secret_ref) for secret_ref in secret_refs]
-    env_from += [get_env_from(config_map_ref=configmap_ref) for configmap_ref in configmap_refs]
+    for secret in secrets:
+        if secret.items:
+            env_from.append(get_items_from(items=secret.items,
+                                           secret_ref=secret.k8s_ref))
+        else:
+            env_from.append(get_env_from(secret_ref=secret.k8s_ref))
+    return env_from
+
+
+def get_pod_env_from_config_maps(config_map_refs):
+    if not config_map_refs:
+        return []
+    config_maps = K8SConfigMap.objects.filter(name__in=config_map_refs)
+    validation = set(config_map_refs) - set([config_map.name for config_map in config_maps])
+    if validation:
+        raise EnvFromRefFoundError(
+            'The following config map refs `{}` '
+            'were provided but not defined in the config maps catalog'.format(validation))
+
+    env_from = []
+    for config_map in config_maps:
+        if config_map.items:
+            env_from.append(get_items_from(items=config_map.items,
+                                           config_map_ref=config_map.k8s_ref))
+        else:
+            env_from.append(get_env_from(config_map_ref=config_map.k8s_ref))
+    return env_from
+
+
+def get_pod_env_from(secret_refs=None, config_map_refs=None):
+    secret_refs = secret_refs or []
+    config_map_refs = config_map_refs or []
+    env_from = []
+    env_from += get_pod_env_from_secrets(secret_refs=secret_refs)
+    env_from += get_pod_env_from_config_maps(config_map_refs=config_map_refs)
     return env_from

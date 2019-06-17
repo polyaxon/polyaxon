@@ -192,7 +192,7 @@ class DockerizerSpawner(K8SManager):
             outputs_refs_jobs=None,
             outputs_refs_experiments=None,
             secret_refs=None,
-            configmap_refs=None,
+            config_map_refs=None,
             resources=resources,
             ephemeral_token=None,
             node_selector=node_selector,

@@ -105,7 +105,7 @@ class BaseResourceManager(object):
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
                           secret_refs=None,
-                          configmap_refs=None,
+                          config_map_refs=None,
                           env_vars=None,
                           command=None,
                           args=None,
@@ -126,8 +126,8 @@ class BaseResourceManager(object):
         )
         env_vars += get_resources_env_vars(resources=resources)
 
-        # Env from configmap and secret refs
-        env_from = get_pod_env_from(secret_refs=secret_refs, configmap_refs=configmap_refs)
+        # Env from config_map and secret refs
+        env_from = get_pod_env_from(secret_refs=secret_refs, config_map_refs=config_map_refs)
 
         def get_ports():
             _ports = to_list(ports) if ports else []
@@ -187,7 +187,7 @@ class BaseResourceManager(object):
                           resources=None,
                           ports=None,
                           secret_refs=None,
-                          configmap_refs=None,
+                          config_map_refs=None,
                           ephemeral_token=None,
                           node_selector=None,
                           affinity=None,
@@ -202,6 +202,7 @@ class BaseResourceManager(object):
         volumes = to_list(volumes, check_none=True)
 
         resources = self._get_pod_resources(resources=resources)
+        secret_refs = self._get_secret_refs(secret_refs=secret_refs)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
@@ -213,7 +214,7 @@ class BaseResourceManager(object):
                                                outputs_refs_jobs=outputs_refs_jobs,
                                                outputs_refs_experiments=outputs_refs_experiments,
                                                secret_refs=secret_refs,
-                                               configmap_refs=configmap_refs,
+                                               config_map_refs=config_map_refs,
                                                resources=resources,
                                                env_vars=env_vars,
                                                command=command,
@@ -268,6 +269,12 @@ class BaseResourceManager(object):
     def _get_service_account_name(self):
         raise NotImplementedError()
 
+    def _get_secret_refs(self, secret_refs):
+        raise NotImplementedError()
+
+    def _get_config_map_refs(self, config_map_refs):
+        raise NotImplementedError()
+
     def get_pod(self,
                 resource_name,
                 volume_mounts,
@@ -285,7 +292,7 @@ class BaseResourceManager(object):
                 outputs_refs_jobs=None,
                 outputs_refs_experiments=None,
                 secret_refs=None,
-                configmap_refs=None,
+                config_map_refs=None,
                 resources=None,
                 ephemeral_token=None,
                 node_selector=None,
@@ -318,7 +325,7 @@ class BaseResourceManager(object):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            config_map_refs=config_map_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
@@ -349,7 +356,7 @@ class BaseResourceManager(object):
                               outputs_refs_jobs=None,
                               outputs_refs_experiments=None,
                               secret_refs=None,
-                              configmap_refs=None,
+                              config_map_refs=None,
                               resources=None,
                               ephemeral_token=None,
                               node_selector=None,
@@ -382,7 +389,7 @@ class BaseResourceManager(object):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            config_map_refs=config_map_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
@@ -410,7 +417,7 @@ class BaseResourceManager(object):
                        outputs_refs_jobs=None,
                        outputs_refs_experiments=None,
                        secret_refs=None,
-                       configmap_refs=None,
+                       config_map_refs=None,
                        resources=None,
                        ephemeral_token=None,
                        node_selector=None,
@@ -437,7 +444,7 @@ class BaseResourceManager(object):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             secret_refs=secret_refs,
-            configmap_refs=configmap_refs,
+            config_map_refs=config_map_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,

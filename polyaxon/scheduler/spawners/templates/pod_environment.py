@@ -12,3 +12,13 @@ def get_node_selector(node_selector, default_node_selector):
 
 def get_pod_resources(resources, default_resources):
     return resources or default_resources
+
+
+def get_secret_refs(secret_refs, default_secret_refs):
+    # Validate secrets
+    return secret_refs or default_secret_refs
+
+
+def get_config_map_refs(config_map_refs, default_config_map_refs):
+    # Validate config_maps
+    return config_map_refs or default_config_map_refs

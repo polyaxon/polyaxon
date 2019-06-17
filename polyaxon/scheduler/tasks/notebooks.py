@@ -28,8 +28,8 @@ def projects_notebook_build(notebook_job_id):
         user=notebook_job.user,
         project=notebook_job.project,
         config=notebook_job.specification.build,
-        configmap_refs=notebook_job.specification.configmap_refs,
-        secret_refs=notebook_job.specification.secret_refs,
+        config_map_refs=notebook_job.config_map_refs,
+        secret_refs=notebook_job.secret_refs,
         code_reference=notebook_job.code_reference)
 
     notebook_job.build_job = build_job

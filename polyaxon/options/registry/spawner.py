@@ -24,9 +24,6 @@ PLUGINS = 'PLUGINS'
 PUBLIC_PLUGIN_JOBS = 'PUBLIC_PLUGIN_JOBS'
 
 RESTRICT_K8S_RESOURCES = 'RESTRICT_K8S_RESOURCES'
-# TODO: Remove this once the validation is using the catalogs
-REFS_CONFIG_MAPS = 'REFS_CONFIG_MAPS'
-REFS_SECRETS = 'REFS_SECRETS'
 
 
 class RoleLabelsWorker(Option):
@@ -233,37 +230,15 @@ class PublicPluginJobs(Option):
     options = None
 
 
-class RefsConfigMaps(Option):
-    key = REFS_CONFIG_MAPS
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = True
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
-
-
-class RefsSecrets(Option):
-    key = REFS_SECRETS
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = True
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
-
-
 class RestrictK8SResources(Option):
     key = RESTRICT_K8S_RESOURCES
     is_global = False
     is_secret = False
     is_optional = True
     is_list = False
-    store = OptionStores.SETTINGS
+    store = OptionStores.DB_OPTION
     typing = CONF_TYPES.BOOL
     default = True
     options = None
+    description = ("Whether or not to all the user to mount any resource "
+                   "without validating against the resource catalog.")
