@@ -4,12 +4,12 @@ dependencies:
   version: 0.8.7
 - name: rabbitmq-ha
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 1.25.0
+  version: 1.27.1
 - name: redis
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 7.0.0
 - name: docker-registry
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 1.7.1
-digest: sha256:b8fdf0537d95bdbc075db37709856e82446a09651ce8bb16cafd5f40d3b1341f
-generated: 2019-05-23T18:44:39.706081+02:00
+digest: sha256:bde2c0bb664b3f5f355ac88de307eee271d6972b4b88a84752f32316ef8e6b22
+generated: 2019-06-17T10:35:40.396422+02:00
