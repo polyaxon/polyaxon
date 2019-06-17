@@ -84,9 +84,6 @@ data:
   {{- if .Values.tpuResourceKey }}
   POLYAXON_K8S_TPU_RESOURCE_KEY: {{ .Values.tpuResourceKey | quote }}
   {{- end }}
-  # Secrets and ConfigMaps
-  POLYAXON_REFS_SECRETS: {{ toJson .Values.secretRefs | quote }}
-  POLYAXON_REFS_CONFIG_MAPS: {{ toJson .Values.configmapRefs | quote }}
   # Dirs
   POLYAXON_DIRS_NVIDIA: {{ toJson .Values.dirs.nvidia | quote }}
   {{- if and .Values.mountPaths.nvidia.lib .Values.mountPaths.nvidia.bin .Values.mountPaths.nvidia.libcuda }}
