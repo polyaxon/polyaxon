@@ -4,6 +4,7 @@ import * as groupsActions from '../../actions/groups';
 import * as projectsActions from '../../actions/projects';
 import { GroupModel } from '../../models/group';
 import { ProjectModel } from '../../models/project';
+import { newGroupUrl } from '../../urls/routes/new';
 import { getProjectUrl, getUserUrl, splitUniqueName } from '../../urls/utils';
 import { BaseState, sanitizeForm } from '../forms';
 import LinkedTab from '../linkedTab';
@@ -59,7 +60,7 @@ export default class GroupCreate extends React.Component<Props, {}> {
       baseUrl = projectUrl + '/groups/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
-      baseUrl = '/app/groups/new';
+      baseUrl = newGroupUrl;
     }
     return (
       <div className="row form-full-page">

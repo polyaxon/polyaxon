@@ -7,25 +7,26 @@ import JobCreate from '../containers/jobs/jobCreate';
 import NotebookCreate from '../containers/notebooks/notebookCreate';
 import ProjectCreate from '../containers/projects/projectCreate';
 import TensorboardCreate from '../containers/tensorboards/tensorboardCreate';
+import {
+  newBuildUrl,
+  newExperimentUrl,
+  newGroupUrl,
+  newJobUrl,
+  newNotebookUrl,
+  newProjectUrl,
+  newTensorboardUrl
+} from '../urls/routes/new';
 
 const NewEntityRoutes = () => {
-  const newProjectRoute = '/app/new/project/';
-  const newExperimentRoute = '/app/new/experiment/';
-  const newGroupRoute = '/app/new/group/';
-  const newJobRoute = '/app/new/job/';
-  const newBuildRoute = '/app/new/build/';
-  const newNotebookRoute = '/app/new/notebook/';
-  const newTensorboardRoute = '/app/new/tensorboard/';
-
   return (
     <Switch>
-      <Route path={newProjectRoute} component={ProjectCreate}/>
-      <Route path={newExperimentRoute} component={ExperimentCreate}/>
-      <Route path={newGroupRoute} component={GroupCreate}/>
-      <Route path={newJobRoute} component={JobCreate}/>
-      <Route path={newBuildRoute} component={BuildCreate}/>
-      <Route path={newNotebookRoute} component={NotebookCreate}/>
-      <Route path={newTensorboardRoute} component={TensorboardCreate}/>
+      <Route path={newProjectUrl} component={ProjectCreate}/>
+      <Route path={newExperimentUrl} component={ExperimentCreate}/>
+      <Route path={newGroupUrl} component={GroupCreate}/>
+      <Route path={newJobUrl} component={JobCreate}/>
+      <Route path={newBuildUrl} component={BuildCreate}/>
+      <Route path={newNotebookUrl} component={NotebookCreate}/>
+      <Route path={newTensorboardUrl} component={TensorboardCreate}/>
     </Switch>
   );
 };

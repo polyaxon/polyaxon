@@ -4,6 +4,7 @@ import * as buildsActions from '../../actions/builds';
 import * as projectsActions from '../../actions/projects';
 import { BuildModel } from '../../models/build';
 import { ProjectModel } from '../../models/project';
+import { newBuildUrl } from '../../urls/routes/new';
 import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import BuildCreateFull from './creationModes/full';
@@ -38,7 +39,7 @@ export default class BuildCreate extends React.Component<Props, {}> {
       baseUrl = projectUrl + '/builds/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
-      baseUrl = '/app/builds/new';
+      baseUrl = newBuildUrl;
     }
     return (
       <div className="row form-full-page">

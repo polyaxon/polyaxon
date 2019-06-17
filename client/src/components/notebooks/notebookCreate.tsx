@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as projectsActions from '../../actions/projects';
 import { NotebookModel } from '../../models/notebook';
 import { ProjectModel } from '../../models/project';
+import { newNotebookUrl } from '../../urls/routes/new';
 import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import NotebookCreateFull from './creationModes/full';
@@ -37,7 +38,7 @@ export default class NotebookCreate extends React.Component<Props, {}> {
       baseUrl = projectUrl + '/notebooks/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
-      baseUrl = '/app/notebooks/new';
+      baseUrl = newNotebookUrl;
     }
     return (
       <div className="row form-full-page">

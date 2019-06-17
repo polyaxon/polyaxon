@@ -4,6 +4,7 @@ import * as jobsActions from '../../actions/jobs';
 import * as projectsActions from '../../actions/projects';
 import { JobModel } from '../../models/job';
 import { ProjectModel } from '../../models/project';
+import { newJobUrl } from '../../urls/routes/new';
 import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import JobCreateFull from './creationModes/full';
@@ -38,7 +39,7 @@ export default class JobCreate extends React.Component<Props, {}> {
       baseUrl = projectUrl + '/jobs/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
-      baseUrl = '/app/jobs/new';
+      baseUrl = newJobUrl;
     }
     return (
       <div className="row form-full-page">

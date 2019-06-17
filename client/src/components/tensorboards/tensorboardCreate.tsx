@@ -5,6 +5,7 @@ import * as groupsActions from '../../actions/groups';
 import * as projectsActions from '../../actions/projects';
 import { ProjectModel } from '../../models/project';
 import { TensorboardModel } from '../../models/tensorboard';
+import { newTensorboardUrl } from '../../urls/routes/new';
 import { getExperimentUrl, getGroupUrl, getProjectUrl, getUserUrl } from '../../urls/utils';
 import LinkedTab from '../linkedTab';
 import TensorboardCreateFull from './creationModes/full';
@@ -53,7 +54,7 @@ export default class TensorboardCreate extends React.Component<Props, {}> {
       }
     } else {
       cancelUrl = getUserUrl(this.props.user);
-      baseUrl = '/app/tensorboards/new/';
+      baseUrl = newTensorboardUrl;
     }
 
     return (

@@ -4,6 +4,7 @@ import * as experimentsActions from '../../actions/experiments';
 import * as projectsActions from '../../actions/projects';
 import { ExperimentModel } from '../../models/experiment';
 import { ProjectModel } from '../../models/project';
+import { newExperimentUrl } from '../../urls/routes/new';
 import { getProjectUrl, getUserUrl } from '../../urls/utils';
 import { BaseState } from '../forms';
 import LinkedTab from '../linkedTab';
@@ -43,7 +44,7 @@ export default class ExperimentCreate extends React.Component<Props, {}> {
       baseUrl = projectUrl + '/experiments/new';
     } else {
       cancelUrl = getUserUrl(this.props.user);
-      baseUrl = '/app/experiments/new';
+      baseUrl = newExperimentUrl;
     }
     return (
       <div className="row form-full-page">
