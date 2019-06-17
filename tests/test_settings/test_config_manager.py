@@ -56,6 +56,14 @@ class TestConfigManager(BaseTest):
         config = ConfigManager.read_configs(
             [os.environ,
              './tests/fixtures_static/configs/non_opt_config_tests.json',
+             {'POLYAXON_REDIS_PROTOCOL': 'rediss',
+              'POLYAXON_BROKER_BACKEND': 'redis',
+              'POLYAXON_REDIS_CELERY_BROKER_URL': 'foo'}])
+        assert config.get_broker_url() == 'rediss://foo'
+
+        config = ConfigManager.read_configs(
+            [os.environ,
+             './tests/fixtures_static/configs/non_opt_config_tests.json',
              {'POLYAXON_BROKER_BACKEND': 'redis',
               'POLYAXON_REDIS_CELERY_BROKER_URL': 'foo',
               'POLYAXON_REDIS_PASSWORD': 'pass'}])

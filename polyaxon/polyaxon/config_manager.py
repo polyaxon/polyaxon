@@ -68,6 +68,10 @@ class ConfigManager(rhea.Rhea):
             self._node_name = None
         else:
             self._node_name = self.get_string('POLYAXON_K8S_NODE_NAME', is_local=True)
+
+        self._redis_protocol = self.get_string('POLYAXON_REDIS_PROTOCOL',
+                                               is_optional=True,
+                                               default='redis')
         self._broker_backend = self.get_string('POLYAXON_BROKER_BACKEND',
                                                is_optional=True,
                                                default='rabbitmq',
@@ -306,7 +310,7 @@ class ConfigManager(rhea.Rhea):
         redis_url = self.get_string(env_url_name)
         if self._redis_password:
             redis_url = ':{}@{}'.format(self._redis_password, redis_url)
-        return 'redis://{}'.format(redis_url)
+        return '{}://{}'.format(self._redis_protocol, redis_url)
 
     def _get_rabbitmq_broker_url(self) -> str:
         amqp_url = self.get_string('POLYAXON_AMQP_URL')
