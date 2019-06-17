@@ -8,7 +8,9 @@ class BaseRedisDb(object):
 
     @classmethod
     def _get_redis(cls) -> Any:
-        return redis.StrictRedis(connection_pool=cls.REDIS_POOL)
+        return redis.Redis(connection_pool=cls.REDIS_POOL,
+                           retry_on_timeout=True,
+                           socket_keepalive=True)
 
     @classmethod
     def connection(cls) -> Any:
