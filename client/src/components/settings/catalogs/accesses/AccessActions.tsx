@@ -16,6 +16,7 @@ export interface Props {
 interface State {
   confirmShow: boolean;
   confirmText?: string;
+  confirmBtn?: string;
   confirmAction?: 'delete' | 'default';
 }
 
@@ -36,15 +37,17 @@ export default class AccessActions extends React.Component<Props, State> {
 
   public handleShow = (action: 'delete' | 'default') => {
     let confirmText = '';
+    let confirmBtn = '';
     if (action === 'delete') {
       confirmText = this.props.isSelection ?
         'Are you sure you want to delete the selected access(es)' :
         'Are you sure you want to delete this access';
     } else if  (action === 'default') {
       confirmText = 'Are you sure you want to make this access the default';
+      confirmBtn = 'btn-success';
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText, confirmBtn}
     }));
   };
 
@@ -84,6 +87,7 @@ export default class AccessActions extends React.Component<Props, State> {
         </Dropdown.Menu>
       </Dropdown>
       <ConfirmAction
+        btn={this.state.confirmBtn}
         text={this.state.confirmText}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}

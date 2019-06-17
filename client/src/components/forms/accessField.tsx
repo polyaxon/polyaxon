@@ -23,13 +23,15 @@ export function validateAccess(value: AccessFieldSchema) {
 
 export interface AccessFieldProps extends FieldProps {
   secrets: K8SResourceModel[];
+  showInsecure: boolean;
 }
 
 export const AccessComponent: React.FunctionComponent<AccessFieldProps> = (
   {
     field,
     form,
-    secrets
+    secrets,
+    showInsecure
   }) => (
   <div className="form-horizontal">
     <div className="form-group">
@@ -43,6 +45,22 @@ export const AccessComponent: React.FunctionComponent<AccessFieldProps> = (
         />
       </div>
     </div>
+    {showInsecure &&
+    <div className="form-group">
+      <label className="col-sm-2 control-label">Insecure</label>
+      <div className="col-sm-10">
+        <select
+          name="read_only"
+          className="form-control"
+          defaultValue={form.initialValues.access.insecure}
+          onChange={(event) => form.setFieldValue(field.name, {...field.value, insecure: event.target.value})}
+        >
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+    </div>
+    }
     <div className="form-group">
       <label className="col-sm-2 control-label">Secret</label>
       <div className="col-sm-10">
@@ -77,7 +95,10 @@ export const checkAccessServer = (errors: any) => {
   return _.isObject(errors) && fields.filter((field: string) => field in errors).length > 0;
 };
 
-export const AccessField = (props: FormikProps<{}>, errors: any, secrets: K8SResourceModel[]) => {
+export const AccessField = (props: FormikProps<{}>,
+                            errors: any,
+                            secrets: K8SResourceModel[],
+                            showInsecure: boolean) => {
   const hasServerError = checkAccessServer(errors);
   const hasValidationError = checkValidationError(props, 'access');
   const hasError = hasServerError || hasValidationError;
@@ -88,6 +109,7 @@ export const AccessField = (props: FormikProps<{}>, errors: any, secrets: K8SRes
       <Field
         name="access"
         secrets={secrets}
+        showInsecure={showInsecure}
         component={AccessComponent}
         validate={(value: AccessFieldSchema) => validateAccess(value)}
       />

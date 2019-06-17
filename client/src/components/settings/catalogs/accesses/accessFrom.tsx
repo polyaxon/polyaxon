@@ -21,11 +21,13 @@ import {
 export interface AccessState {
   host: string;
   k8s_secret: string | number;
+  insecure: boolean;
 }
 
 export const getAccessEmptyState = () => ({
   host: '',
   k8s_secret: '',
+  insecure: true,
 });
 
 export interface State {
@@ -93,6 +95,10 @@ export default class AccessFrom extends React.Component<Props, {}> {
       k8s_secret: state.access.k8s_secret,
     } as AccessModel;
 
+    if (this.showInsecure()) {
+      form.insecure = state.access.insecure;
+    }
+
     if (this.props.access) {
       if (this.props.access.name === form.name) {
         delete form.name;  // To prevent the owner-name validation on backend
@@ -104,6 +110,10 @@ export default class AccessFrom extends React.Component<Props, {}> {
     this.onSave(form);
   };
 
+  public showInsecure = () => {
+    return this.props.resource === 'registry_access';
+  };
+
   public render() {
     const emptyState = getEmptyState();
     if (this.props.access) {
@@ -112,6 +122,7 @@ export default class AccessFrom extends React.Component<Props, {}> {
       emptyState.readme = this.props.access.readme || '';
       emptyState.access.host = this.props.access.host || '';
       emptyState.access.k8s_secret = this.props.access.k8s_secret || '';
+      emptyState.access.insecure = this.props.access.insecure;
       emptyState.tags = this.props.access.tags ?
         this.props.access.tags.map((key: string) => ({label: key, value: key})) :
         [];
@@ -129,7 +140,7 @@ export default class AccessFrom extends React.Component<Props, {}> {
               <form onSubmit={props.handleSubmit}>
                 {ErrorsField(this.props.errors)}
                 {NameField(props, this.props.errors, true)}
-                {AccessField(props, this.props.errors, this.props.secrets)}
+                {AccessField(props, this.props.errors, this.props.secrets, this.showInsecure())}
                 {DescriptionField(props, this.props.errors)}
                 {TagsField(props, this.props.errors)}
                 {ModalFormButtons(

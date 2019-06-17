@@ -4,6 +4,7 @@ import { Dropdown, MenuItem, Modal } from 'react-bootstrap';
 import '../actions.less';
 
 export interface Props {
+  btn?: string;
   text?: string;
   confirmShow: boolean;
   onConfirm: () => any;
@@ -19,6 +20,7 @@ export default class ConfirmAction extends React.Component<Props, {}> {
   };
 
   public render() {
+    const btn = this.props.btn ? this.props.btn : 'btn-danger';
     return (
       <Modal show={this.props.confirmShow} onHide={this.props.handleClose}>
         <Modal.Header closeButton={true}>
@@ -28,7 +30,7 @@ export default class ConfirmAction extends React.Component<Props, {}> {
           <p>{this.props.text || `This action is irreversible`}</p>
         </Modal.Body>
         <Modal.Footer>
-          <button type="submit" className="btn btn-default btn-danger" onClick={this.confirm}>Confirm</button>
+          <button type="submit" className={`btn btn-default ${btn}`} onClick={this.confirm}>Confirm</button>
         </Modal.Footer>
       </Modal>
     );

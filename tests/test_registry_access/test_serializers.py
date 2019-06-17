@@ -22,6 +22,7 @@ class TestRegistryAccessSerializer(BaseTest):
         'updated_at',
         'k8s_secret',
         'host',
+        'insecure',
         'is_default'
     }
 

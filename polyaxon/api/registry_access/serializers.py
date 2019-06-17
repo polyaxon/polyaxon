@@ -10,7 +10,7 @@ class RegistryAccessSerializer(HostCatalogSerializer, IsDefaultSerializerMixin):
 
     class Meta:
         model = RegistryAccess
-        fields = HostCatalogSerializer.Meta.fields + ('is_default', )
+        fields = HostCatalogSerializer.Meta.fields + ('insecure', 'is_default', )
 
 
 class RegistryAccessNameSerializer(CatalogNameSerializer):

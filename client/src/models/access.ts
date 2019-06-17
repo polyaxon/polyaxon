@@ -13,6 +13,7 @@ export class AccessModel {
   public host: string;
   public k8s_secret: string;
   public is_default: boolean;
+  public insecure: boolean;
 }
 
 export class AccessStateSchema {
