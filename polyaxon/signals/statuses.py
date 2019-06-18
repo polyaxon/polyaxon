@@ -17,6 +17,7 @@ from db.models.jobs import JobStatus
 from db.models.notebooks import NotebookJobStatus
 from db.models.pipelines import PipelineRunStatus
 from db.models.tensorboards import TensorboardJobStatus
+from db.redis.statuses import RedisStatuses
 from events.registry.build_job import (
     BUILD_JOB_CREATED,
     BUILD_JOB_DONE,
@@ -112,6 +113,7 @@ def build_job_status_post_save(sender, **kwargs):
         auditor.record(event_type=BUILD_JOB_DONE,
                        instance=job,
                        previous_status=previous_status)
+        RedisStatuses.delete_status(job.uuid.hex)
     new_operation_run_status(entity_type=content_types.BUILD_JOB,
                              entity=job,
                              status=instance.status)
@@ -151,6 +153,7 @@ def job_status_post_save(sender, **kwargs):
         auditor.record(event_type=JOB_DONE,
                        instance=job,
                        previous_status=previous_status)
+        RedisStatuses.delete_status(job.uuid.hex)
     new_operation_run_status(entity_type=content_types.JOB,
                              entity=job,
                              status=instance.status)
@@ -187,6 +190,8 @@ def notebook_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+    if JobLifeCycle.is_done(instance.status):
+        RedisStatuses.delete_status(job.uuid.hex)
     new_operation_run_status(entity_type=content_types.NOTEBOOK_JOB,
                              entity=job,
                              status=instance.status)
@@ -223,6 +228,8 @@ def tensorboard_job_status_post_save(sender, **kwargs):
                        instance=job,
                        previous_status=previous_status,
                        target='project')
+    if JobLifeCycle.is_done(instance.status):
+        RedisStatuses.delete_status(job.uuid.hex)
     new_operation_run_status(entity_type=content_types.TENSORBOARD_JOB,
                              entity=job,
                              status=instance.status)
@@ -285,6 +292,7 @@ def experiment_job_status_post_save(sender, **kwargs):
         from db.redis.containers import RedisJobContainers
 
         RedisJobContainers.remove_job(job.uuid.hex)
+        RedisStatuses.delete_status(job.uuid.hex)
 
     # Check if we need to change the experiment status
     auditor.record(event_type=EXPERIMENT_JOB_NEW_STATUS, instance=job)

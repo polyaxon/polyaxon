@@ -6,6 +6,10 @@ TTL_WATCH_STATUSES = '{}{}{}'.format(option_namespaces.TTL,
                                      NAMESPACE_DB_OPTION_MARKER,
                                      option_subjects.WATCH_STATUSES)
 
+TTL_KEEP_STATUSES = '{}{}{}'.format(option_namespaces.TTL,
+                                    NAMESPACE_DB_OPTION_MARKER,
+                                    option_subjects.KEEP_STATUSES)
+
 TTL_EPHEMERAL_TOKEN = '{}{}{}'.format(option_namespaces.TTL,
                                       NAMESPACE_DB_OPTION_MARKER,
                                       option_subjects.EPHEMERAL_TOKEN)
@@ -35,6 +39,12 @@ class TTLWatchStatuses(TTLOption):
     key = TTL_WATCH_STATUSES
     default = 60 * 20
     description = 'Watch statuses ttl'
+
+
+class TTLKeepStatuses(TTLOption):
+    key = TTL_KEEP_STATUSES
+    default = 60 * 30
+    description = 'Keep statuses ttl'
 
 
 class TTLEphemeralToken(TTLOption):

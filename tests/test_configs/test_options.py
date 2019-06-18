@@ -1,5 +1,5 @@
 # pylint:disable=too-many-lines
-
+# pylint:disable=too-many-statements
 import pytest
 
 from rest_framework import status

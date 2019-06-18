@@ -59,6 +59,7 @@ services:
       POLYAXON_REDIS_TTL_URL: "redis:6379/7"
       POLYAXON_REDIS_HEARTBEAT_URL: "redis:6379/8"
       POLYAXON_REDIS_GROUP_CHECKS_URL: "redis:6379/9"
+      POLYAXON_REDIS_STATUSES_URL: "redis:6379/10"
       POLYAXON_RABBITMQ_USER: polyaxon
       POLYAXON_RABBITMQ_PASSWORD: polyaxon
       KUBECONFIG: "/root/.kube/config"

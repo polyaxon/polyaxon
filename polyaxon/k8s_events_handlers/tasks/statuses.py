@@ -12,6 +12,7 @@ from db.models.jobs import Job
 from db.models.notebooks import NotebookJob
 from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
+from db.redis.statuses import RedisStatuses
 from k8s_events_handlers.tasks.logger import logger
 from options.registry.spawner import APP_LABELS_NOTEBOOK, APP_LABELS_TENSORBOARD
 from polyaxon.settings import Intervals, K8SEventsCeleryTasks
@@ -52,6 +53,7 @@ def k8s_events_handle_experiment_job_statuses(self: 'workers.app.task', payload:
 
     # Set the new status
     try:
+        RedisStatuses.set_status(job_uuid, payload['status'])
         set_node_scheduling(job, details['node_name'])
         job.set_status(status=payload['status'],
                        message=payload['message'],
@@ -91,6 +93,7 @@ def k8s_events_handle_job_statuses(self: 'workers.app.task', payload: Dict) -> N
 
     # Set the new status
     try:
+        RedisStatuses.set_status(job_uuid, payload['status'])
         set_node_scheduling(job, details['node_name'])
         job.set_status(status=payload['status'],
                        message=payload['message'],
@@ -133,6 +136,7 @@ def k8s_events_handle_plugin_job_statuses(self: 'workers.app.task', payload: Dic
 
     # Set the new status
     try:
+        RedisStatuses.set_status(job_uuid, payload['status'])
         set_node_scheduling(job, details['node_name'])
         job.set_status(status=payload['status'],
                        message=payload['message'],
@@ -169,6 +173,7 @@ def k8s_events_handle_build_job_statuses(self: 'workers.app.task', payload: Dict
 
     # Set the new status
     try:
+        RedisStatuses.set_status(job_uuid, payload['status'])
         set_node_scheduling(build_job, details['node_name'])
         build_job.set_status(status=payload['status'],
                              message=payload['message'],

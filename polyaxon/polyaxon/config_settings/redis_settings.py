@@ -18,3 +18,5 @@ class RedisPools(object):
         config.get_redis_url('POLYAXON_REDIS_HEARTBEAT_URL'))
     GROUP_CHECKS = redis.ConnectionPool.from_url(
         config.get_redis_url('POLYAXON_REDIS_GROUP_CHECKS_URL'))
+    STATUSES = redis.ConnectionPool.from_url(
+        config.get_redis_url('POLYAXON_REDIS_STATUSES_URL'))

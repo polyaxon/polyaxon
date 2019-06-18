@@ -1,6 +1,6 @@
 import logging
 
-from typing import Mapping
+from typing import Mapping, Any
 
 import conf
 import ocular
@@ -8,6 +8,7 @@ import workers
 
 from constants.experiment_jobs import get_experiment_job_uuid
 from db.redis.containers import RedisJobContainers
+from db.redis.statuses import RedisStatuses
 from lifecycles.jobs import JobLifeCycle
 from options.registry.container_names import (
     CONTAINER_NAME_BUILD_JOBS,
@@ -76,14 +77,20 @@ def get_label_selector() -> str:
         conf.get(TYPE_LABELS_RUNNER))
 
 
+def should_handle_job_status(pod_state: Any, status: str) -> bool:
+    job_uuid = pod_state['labels']['job_uuid']
+    return RedisStatuses.get_status_key(job=job_uuid) != status
+
+
 def handle_experiment_job_condition(event_object, pod_state, status, labels, container_name):
     update_job_containers(event_object, status, container_name)
-    logger.debug("Sending state to handler %s, %s", status, labels)
     # Handle experiment job statuses
-    workers.send(
-        K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-        kwargs={'payload': pod_state},
-        countdown=None)
+    if should_handle_job_status(pod_state=pod_state, status=status):
+        logger.debug("Sending state to handler %s, %s", status, labels)
+        workers.send(
+            K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
+            kwargs={'payload': pod_state},
+            countdown=None)
 
 
 def run(k8s_manager: 'K8SManager') -> None:
@@ -204,26 +211,29 @@ def run(k8s_manager: 'K8SManager') -> None:
         elif job_condition:
             update_job_containers(event_object, status, conf.get(CONTAINER_NAME_JOBS))
             logger.debug("Sending state to handler %s, %s", status, labels)
-            # Handle experiment job statuses
-            workers.send(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
-                kwargs={'payload': pod_state},
-                countdown=None)
+            # Handle job statuses
+            if should_handle_job_status(pod_state=pod_state, status=status):
+                workers.send(
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
+                    kwargs={'payload': pod_state},
+                    countdown=None)
 
         elif plugin_job_condition:
             logger.debug("Sending state to handler %s, %s", status, labels)
             # Handle plugin job statuses
-            workers.send(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
-                kwargs={'payload': pod_state},
-                countdown=None)
+            if should_handle_job_status(pod_state=pod_state, status=status):
+                workers.send(
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
+                    kwargs={'payload': pod_state},
+                    countdown=None)
 
         elif dockerizer_job_condition:
             logger.debug("Sending state to handler %s, %s", status, labels)
             # Handle dockerizer job statuses
-            workers.send(
-                K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
-                kwargs={'payload': pod_state},
-                countdown=None)
+            if should_handle_job_status(pod_state=pod_state, status=status):
+                workers.send(
+                    K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
+                    kwargs={'payload': pod_state},
+                    countdown=None)
         else:
             logger.info("Lost state %s, %s", status, pod_state)
