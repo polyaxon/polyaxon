@@ -152,6 +152,7 @@ data:
   POLYAXON_REDIS_TTL_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/7
   POLYAXON_REDIS_HEARTBEAT_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/8
   POLYAXON_REDIS_GROUP_CHECKS_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/9
+  POLYAXON_REDIS_STATUSES_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/10
   POLYAXON_REDIS_HOST: "{{ template "redis.host" . }}"
   POLYAXON_REDIS_PORT: "{{ template "redis.port" . }}"
   # Security Context
