@@ -34,7 +34,7 @@ class AuthBitbucketVerificationSchedule(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.INT
     store = OptionStores.DB_OPTION
     default = 0
     options = None
