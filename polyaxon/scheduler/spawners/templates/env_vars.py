@@ -221,6 +221,17 @@ def get_resources_env_vars(resources):
     return env_vars
 
 
+def get_kv_env_vars(kv_env_vars):
+    env_vars = []
+    if not kv_env_vars:
+        return env_vars
+
+    for kv_env_var in kv_env_vars:
+        env_vars.append(get_env_var(name=kv_env_var[0], value=kv_env_var[1]))
+
+    return env_vars
+
+
 class EnvFromRefFoundError(Exception):
     pass
 

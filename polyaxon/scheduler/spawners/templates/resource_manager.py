@@ -7,7 +7,12 @@ import conf
 
 from options.registry.deployments import CHART_VERSION
 from polyaxon_k8s import constants as k8s_constants
-from scheduler.spawners.templates.env_vars import get_pod_env_from, get_resources_env_vars
+from scheduler.spawners.templates.env_vars import (
+    get_env_var,
+    get_kv_env_vars,
+    get_pod_env_from,
+    get_resources_env_vars
+)
 from scheduler.spawners.templates.gpu_volumes import get_gpu_volumes_def
 from scheduler.spawners.templates.resources import get_resources
 from scheduler.spawners.templates.security_context import get_security_context
@@ -125,6 +130,7 @@ class BaseResourceManager(object):
             ephemeral_token=ephemeral_token
         )
         env_vars += get_resources_env_vars(resources=resources)
+        env_vars += get_kv_env_vars(self._get_kv_env_vars(None))
 
         # Env from config_map and secret refs
         env_from = get_pod_env_from(secret_refs=secret_refs, config_map_refs=config_map_refs)
@@ -273,6 +279,9 @@ class BaseResourceManager(object):
         raise NotImplementedError()
 
     def _get_config_map_refs(self, config_map_refs):
+        raise NotImplementedError()
+
+    def _get_kv_env_vars(self, env_vars):
         raise NotImplementedError()
 
     def get_pod(self,

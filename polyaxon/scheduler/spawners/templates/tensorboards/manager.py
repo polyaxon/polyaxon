@@ -10,6 +10,7 @@ from options.registry.container_names import (
     CONTAINER_NAME_PLUGIN_JOBS,
     CONTAINER_NAME_SIDECARS
 )
+from options.registry.env_vars import ENV_VARS_TENSORBOARDS
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
 from options.registry.k8s_config_maps import K8S_CONFIG_MAPS_TENSORBOARDS
@@ -29,6 +30,7 @@ from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_config_map_refs,
+    get_env_vars,
     get_node_selector,
     get_pod_resources,
     get_secret_refs,
@@ -190,3 +192,8 @@ class ResourceManager(BaseResourceManager):
         return get_config_map_refs(
             config_map_refs=config_map_refs,
             default_config_map_refs=conf.get(K8S_CONFIG_MAPS_TENSORBOARDS))
+
+    def _get_kv_env_vars(self, env_vars):
+        return get_env_vars(
+            env_vars=env_vars,
+            default_env_vars=conf.get(ENV_VARS_TENSORBOARDS))

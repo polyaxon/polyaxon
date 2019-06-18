@@ -10,6 +10,7 @@ from constants.cloning_strategies import CloningStrategy
 from constants.k8s_jobs import EXPERIMENT_JOB_NAME_FORMAT
 from options.registry.affinities import AFFINITIES_EXPERIMENTS
 from options.registry.container_names import CONTAINER_NAME_INIT, CONTAINER_NAME_SIDECARS
+from options.registry.env_vars import ENV_VARS_EXPERIMENTS
 from options.registry.init import INIT_DOCKER_IMAGE, INIT_IMAGE_PULL_POLICY
 from options.registry.k8s import K8S_RBAC_ENABLED, K8S_SERVICE_ACCOUNT_EXPERIMENTS
 from options.registry.k8s_config_maps import K8S_CONFIG_MAPS_EXPERIMENTS
@@ -30,6 +31,7 @@ from scheduler.spawners.templates.init_containers import (
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
     get_config_map_refs,
+    get_env_vars,
     get_node_selector,
     get_pod_resources,
     get_secret_refs,
@@ -264,6 +266,11 @@ class ResourceManager(BaseResourceManager):
         if conf.get(K8S_RBAC_ENABLED) and sa:
             service_account_name = sa
         return service_account_name
+
+    def _get_kv_env_vars(self, env_vars):
+        return get_env_vars(
+            env_vars=env_vars,
+            default_env_vars=conf.get(ENV_VARS_EXPERIMENTS))
 
     def get_task_pod(self,
                      task_type,
