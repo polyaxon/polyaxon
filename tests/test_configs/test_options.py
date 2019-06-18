@@ -1015,9 +1015,9 @@ class TestOptionsSaveLoad(BaseViewTest):
 
     def test_integrations(self):
         data = [
-                {'url': 'https://hooks.com/services/sdfdfdsfsdf/sdflsdklfj'},
-                {'url': ' https://hooks.com/services/sdlkfjsdlk/lkjsdlkfjdklsjf2'}
-            ]
+            {'url': 'https://hooks.com/services/sdfdfdsfsdf/sdflsdklfj'},
+            {'url': ' https://hooks.com/services/sdlkfjsdlk/lkjsdlkfjdklsjf2'}
+        ]
 
         # Discord
         resp = self.auth_client.get(self.url + '?keys={}'.format(
