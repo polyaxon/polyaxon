@@ -7,6 +7,7 @@ import six
 import yaml
 
 from collections import Mapping
+from yaml.parser import ParserError  # noqa
 from yaml.scanner import ScannerError  # noqa
 
 from rhea.exceptions import RheaError
@@ -43,7 +44,7 @@ class ConfigSpec(object):
             # try reading a stream of yaml or json
             try:
                 config_results = _read_from_stream(self.value)
-            except ScannerError:
+            except (ScannerError, ParserError):
                 raise RheaError(
                     'Received non valid yaml stream: `{}`'.format(self.value))
         return config_results
@@ -68,10 +69,14 @@ def _read_from_file(f_path, file_type):
 
 
 def _read_from_yml(f_path, is_stream=False):
-    if is_stream:
-        return yaml.safe_load(f_path)
-    with open(f_path) as f:
-        return yaml.safe_load(f)
+    try:
+        if is_stream:
+            return yaml.safe_load(f_path)
+        with open(f_path) as f:
+            return yaml.safe_load(f)
+    except (ScannerError, ParserError):
+        raise RheaError(
+            'Received non valid yaml: `{}`'.format(f_path))
 
 
 def _read_from_json(f_path, is_stream=False):

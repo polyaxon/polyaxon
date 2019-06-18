@@ -17,10 +17,15 @@ class TestRhea(TestCase):
     def test_get_from_os_env(self):
         assert self.config.get_string('FOO_BAR_KEY') == 'foo_bar'
 
-    def test_reading_invalid_config_raises_error(self):
+    def test_reading_invalid_json_config_raises_error(self):
         with self.assertRaises(RheaError):
             Rhea.read_configs(
                 ['./tests/fixtures/configs/invalid_config_tests.json'])
+
+    def test_reading_invalid_yaml_config_raises_error(self):
+        with self.assertRaises(RheaError):
+            Rhea.read_configs(
+                ['./tests/fixtures/configs/invalid_config_tests.yaml'])
 
     def test_get_boolean(self):
         value = self.config.get_boolean('bool_key_1')

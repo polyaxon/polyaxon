@@ -67,6 +67,11 @@ class TestReader(TestCase):
         config = reader.read(stream)
         assert config == {'x': 'y', 1: 2}
 
+    def test_reads_non_valid_yaml_stream(self):
+        stream = ";sdfsd;sdff"
+        with self.assertRaises(RheaError):
+            reader.read(stream)
+
     def test_reads_json_stream(self):
         stream = """---
         {x: y, 1: 2}
