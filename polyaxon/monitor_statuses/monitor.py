@@ -94,6 +94,7 @@ def handle_experiment_job_condition(event_object, pod_state, status, labels, con
 
 
 def run(k8s_manager: 'K8SManager') -> None:
+    # pylint:disable=too-many-branches
     for (event_object, pod_state) in ocular.monitor(k8s_manager.k8s_api,
                                                     namespace=conf.get(K8S_NAMESPACE),
                                                     container_names=(

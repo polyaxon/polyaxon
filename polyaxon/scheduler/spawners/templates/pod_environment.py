@@ -34,4 +34,4 @@ def get_config_map_refs(config_map_refs, default_config_map_refs):
 
 
 def get_env_vars(env_vars, default_env_vars):
-    return get_env_vars or default_env_vars
+    return env_vars or default_env_vars
