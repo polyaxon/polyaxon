@@ -89,28 +89,33 @@ const ProjectRoutes = () => {
             /* Build */
             <Route
                 exact={true}
-                path={buildDetailURL}
-                component={BuildDetail}
+                path={newProjectBuildURL}
+                component={BuildCreate}
             />
             <Route
                 exact={true}
-                path={newProjectBuildURL}
-                component={BuildCreate}
+                path={buildDetailURL}
+                component={BuildDetail}
             />
 
             /* Notebook */
             <Route
                 exact={true}
-                path={notebookDetailURL}
-                component={NotebookDetail}
-            />
-            <Route
-                exact={true}
                 path={newProjectNotebookURL}
                 component={NotebookCreate}
             />
+            <Route
+                exact={true}
+                path={notebookDetailURL}
+                component={NotebookDetail}
+            />
 
             /* Tensorboards */
+            <Route
+                exact={true}
+                path={newGroupTensorboardURL}
+                component={TensorboardCreate}
+            />
             <Route
                 exact={true}
                 path={tensorboardDetailURL}
@@ -139,11 +144,6 @@ const ProjectRoutes = () => {
                 exact={true}
                 path={groupDetailURL}
                 component={GroupDetail}
-            />
-            <Route
-                exact={true}
-                path={newGroupTensorboardURL}
-                component={TensorboardCreate}
             />
 
             /* Experiments */

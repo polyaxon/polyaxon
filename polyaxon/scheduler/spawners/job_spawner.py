@@ -117,7 +117,7 @@ class JobSpawner(K8SManager):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             secret_refs=self.spec.secret_refs,
-            config_map_refs=self.spec.config_map_refs,
+            config_map_refs=self.spec.configmap_refs,
             resources=resources,
             ephemeral_token=None,
             node_selector=node_selector,

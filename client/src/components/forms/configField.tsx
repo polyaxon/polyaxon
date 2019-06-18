@@ -69,7 +69,7 @@ export const ConfigComponent: React.FunctionComponent<FieldProps> = (
 );
 
 export const ConfigField = (props: FormikProps<{}>, errors: any, isRequired: boolean = false) => {
-  const hasServerError = checkServerError(errors, 'config');
+  const hasServerError = checkServerError(errors, 'content');
   const hasValidationError = checkValidationError(props, 'config');
   const hasError = hasServerError || hasValidationError;
 
@@ -77,7 +77,7 @@ export const ConfigField = (props: FormikProps<{}>, errors: any, isRequired: boo
     <div className={`${hasError ? 'has-error' : ''} form-group`}>
       <label className={`control-label ${getRequiredClass(isRequired)}`}>Config</label>
       <Field name="config" component={ConfigComponent}/>
-      {hasServerError && <div className="help-block">{errors.config}</div>}
+      {hasServerError && <div className="help-block">{errors.content}</div>}
       <ErrorMessage name="config">
         {(errorMessage) => <div className="help-block">{errorMessage}</div>}
       </ErrorMessage>

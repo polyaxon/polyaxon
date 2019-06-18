@@ -201,8 +201,8 @@ class BaseResourceManager(object):
         volume_mounts = to_list(volume_mounts, check_none=True)
         volumes = to_list(volumes, check_none=True)
 
-        resources = self._get_pod_resources(resources=resources)
         secret_refs = self._get_secret_refs(secret_refs=secret_refs)
+        config_map_refs = self._get_config_map_refs(config_map_refs=config_map_refs)
 
         gpu_volume_mounts, gpu_volumes = get_gpu_volumes_def(resources)
         volume_mounts += gpu_volume_mounts
@@ -301,6 +301,7 @@ class BaseResourceManager(object):
                 sidecar_context_mounts=None,
                 init_context_mounts=None,
                 restart_policy=None):
+        resources = self._get_pod_resources(resources=resources)
         annotations = None
         if requests_tpu(resources):
             annotations = get_tpu_annotations()
@@ -365,6 +366,7 @@ class BaseResourceManager(object):
                               restart_policy=None,
                               init_context_mounts=None,
                               sidecar_context_mounts=None):
+        resources = self._get_pod_resources(resources=resources)
         annotations = None
         if requests_tpu(resources):
             annotations = get_tpu_annotations()

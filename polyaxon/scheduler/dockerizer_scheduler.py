@@ -122,7 +122,7 @@ def start_dockerizer(build_job):
 
     error = {}
     try:
-        results = spawner.start_dockerizer(resources=build_job.resources,  # TODO: resources
+        results = spawner.start_dockerizer(resources=build_job.resources,
                                            node_selector=build_job.node_selector,
                                            affinity=build_job.affinity,
                                            tolerations=build_job.tolerations)
