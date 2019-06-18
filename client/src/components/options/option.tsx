@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import * as actions from '../../actions/options';
 import { OptionModel } from '../../models/option';
+import { checkValidationError } from '../forms';
 
 import './option.less';
 
@@ -20,6 +21,17 @@ export interface State {
   value?: any;
   formValue?: any,
   isEditMode: boolean;
+}
+
+export function validateObj(value: string) {
+  let error;
+
+  try {
+    jsYaml.safeLoad(value);
+  } catch {
+    error = 'The value is not a valid Json/Yaml';
+  }
+  return error;
 }
 
 export default class Option extends React.Component<Props, State> {
@@ -81,7 +93,7 @@ export default class Option extends React.Component<Props, State> {
     if (this.props.onSave) {
       const options: { [key: string]: any } = {};
       if (this.isObj() && fValues) {
-        options[this.props.option.key] =  jsYaml.safeLoad(fValues);
+        options[this.props.option.key] = jsYaml.safeLoad(fValues);
       } else {
         options[this.props.option.key] = fValues;
       }
@@ -132,7 +144,12 @@ export default class Option extends React.Component<Props, State> {
           }}
           render={(props: FormikProps<State>) => (
             <form onSubmit={props.handleSubmit}>
-              <div className={`${this.props.errors ? 'has-error' : ''}  col-sm-10`}>
+              <div
+                className={
+                  `${this.props.errors || checkValidationError(props, 'option') ?
+                  'has-error' :
+                  ''}  col-sm-10`}
+              >
                 {this.props.option.typing === 'bool' &&
                 <Field
                   name="option"
@@ -149,6 +166,7 @@ export default class Option extends React.Component<Props, State> {
                   component="textarea"
                   type="text"
                   className="form-control input-sm"
+                  validate={(value: string) => validateObj(value)}
                 />
                 }
                 {!isObj && this.props.option.typing !== 'bool' &&
@@ -162,7 +180,7 @@ export default class Option extends React.Component<Props, State> {
                 <span id="helpBlock" className="help-block">{this.props.option.description}</span>
                 }
                 {this.props.errors && <div className="help-block">{this.props.errors}</div>}
-                <ErrorMessage name="description">
+                <ErrorMessage name="option">
                   {(errorMessage) => <div className="help-block">{errorMessage}</div>}
                 </ErrorMessage>
               </div>

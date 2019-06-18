@@ -78,7 +78,7 @@ def get_label_selector() -> str:
 
 
 def should_handle_job_status(pod_state: Any, status: str) -> bool:
-    job_uuid = pod_state['labels']['job_uuid']
+    job_uuid = pod_state['details']['labels']['job_uuid']
     return RedisStatuses.get_status_key(job=job_uuid) != status
 
 
