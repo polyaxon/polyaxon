@@ -1,4 +1,5 @@
 from faker import Faker
+from flaky import flaky
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -28,11 +29,13 @@ class TestGZip(TestCase):
         self.subclass_view = SubClassTestView.as_view()
         self.factory = RequestFactory()
 
+    @flaky(max_runs=3)
     def test_content_encoding_is_set_correctly(self):
         response = self.view(self.factory.get(''))
         assert 'Content-Encoding' in response
         assert response['Content-Encoding'] == 'gzip'
 
+    @flaky(max_runs=3)
     def test_content_encoding_is_set_correctly_after_subclassing(self):
         response = self.subclass_view(self.factory.get(''))
         assert 'Content-Encoding' not in response

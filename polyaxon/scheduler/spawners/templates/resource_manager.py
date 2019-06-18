@@ -8,7 +8,6 @@ import conf
 from options.registry.deployments import CHART_VERSION
 from polyaxon_k8s import constants as k8s_constants
 from scheduler.spawners.templates.env_vars import (
-    get_env_var,
     get_kv_env_vars,
     get_pod_env_from,
     get_resources_env_vars
