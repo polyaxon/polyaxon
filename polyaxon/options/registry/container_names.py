@@ -34,97 +34,51 @@ CONTAINER_NAME_PLUGIN_JOBS = '{}{}{}'.format(option_namespaces.CONTAINER_NAME,
                                              option_subjects.PLUGIN_JOBS)
 
 
-class ContainerNameBuildJobs(Option):
+class ContainerNameOption(Option):
+    is_global = True
+    is_secret = False
+    is_optional = True
+    is_list = False
+    typing = CONF_TYPES.STR
+    store = OptionStores.DB_OPTION
+    options = None
+
+
+class ContainerNameBuildJobs(ContainerNameOption):
     key = CONTAINER_NAME_BUILD_JOBS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'polyaxon-dockerizer-job'
-    options = None
 
 
-class ContainerNameExperimentJobs(Option):
+class ContainerNameExperimentJobs(ContainerNameOption):
     key = CONTAINER_NAME_EXPERIMENT_JOBS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'polyaxon-experiment-job'
-    options = None
 
 
-class ContainerNameJobs(Option):
+class ContainerNameJobs(ContainerNameOption):
     key = CONTAINER_NAME_JOBS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'polyaxon-job'
-    options = None
 
 
-class ContainerNameTFJobs(Option):
+class ContainerNameTFJobs(ContainerNameOption):
     key = CONTAINER_NAME_TF_JOBS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'tensorflow'
-    options = None
 
 
-class ContainerNamePytorchJobs(Option):
+class ContainerNamePytorchJobs(ContainerNameOption):
     key = CONTAINER_NAME_PYTORCH_JOBS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'pytorch'
-    options = None
 
 
-class ContainerNameSidecars(Option):
+class ContainerNameSidecars(ContainerNameOption):
     key = CONTAINER_NAME_SIDECARS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'polyaxon-sidecar-job'
-    options = None
 
 
-class ContainerNameInit(Option):
+class ContainerNameInit(ContainerNameOption):
     key = CONTAINER_NAME_INIT
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'polyaxon-init-job'
-    options = None
 
 
-class ContainerNamePluginJobs(Option):
+class ContainerNamePluginJobs(ContainerNameOption):
     key = CONTAINER_NAME_PLUGIN_JOBS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
     default = 'polyaxon-plugin-job'
-    options = None

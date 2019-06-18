@@ -1,6 +1,7 @@
 from options import option_namespaces, option_subjects
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
+from schemas import PodResourcesConfig
 
 K8S_RESOURCES_BUILD_JOBS = '{}{}{}'.format(option_namespaces.K8S_RESOURCES,
                                            NAMESPACE_DB_OPTION_MARKER,
@@ -19,8 +20,7 @@ K8S_RESOURCES_TENSORBOARDS = '{}{}{}'.format(option_namespaces.K8S_RESOURCES,
                                              option_subjects.TENSORBOARDS)
 
 
-class K8SResourcesBuildJobs(Option):
-    key = K8S_RESOURCES_BUILD_JOBS
+class K8SResourcesOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +29,34 @@ class K8SResourcesBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+    @classmethod
+    def _extra_processing(cls, value):
+        if not value:
+            return value
+        return PodResourcesConfig.from_dict(value)
+
+
+class K8SResourcesBuildJobs(K8SResourcesOption):
+    key = K8S_RESOURCES_BUILD_JOBS
     description = 'K8S resources configuration for build jobs'
 
 
-class K8SResourcesJobs(Option):
+class K8SResourcesJobs(K8SResourcesOption):
     key = K8S_RESOURCES_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S resources configuration for jobs'
 
 
-class K8SResourcesExperiments(Option):
+class K8SResourcesExperiments(K8SResourcesOption):
     key = K8S_RESOURCES_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S resources configuration for experiments'
 
 
-class K8SResourcesNotebooks(Option):
+class K8SResourcesNotebooks(K8SResourcesOption):
     key = K8S_RESOURCES_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S resources configuration for notebooks'
 
 
-class K8SResourcesTensorboards(Option):
+class K8SResourcesTensorboards(K8SResourcesOption):
     key = K8S_RESOURCES_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S resources configuration for tensorboards'

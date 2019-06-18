@@ -19,8 +19,7 @@ K8S_SECRETS_TENSORBOARDS = '{}{}{}'.format(option_namespaces.K8S_SECRETS,
                                            option_subjects.TENSORBOARDS)
 
 
-class K8SSecretsBuildJobs(Option):
-    key = K8S_SECRETS_BUILD_JOBS
+class K8SSecretsOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +28,28 @@ class K8SSecretsBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class K8SSecretsBuildJobs(K8SSecretsOption):
+    key = K8S_SECRETS_BUILD_JOBS
     description = 'K8S secrets configuration for build jobs'
 
 
-class K8SSecretsJobs(Option):
+class K8SSecretsJobs(K8SSecretsOption):
     key = K8S_SECRETS_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S secrets configuration for jobs'
 
 
-class K8SSecretsExperiments(Option):
+class K8SSecretsExperiments(K8SSecretsOption):
     key = K8S_SECRETS_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S secrets configuration for experiments'
 
 
-class K8SSecretsNotebooks(Option):
+class K8SSecretsNotebooks(K8SSecretsOption):
     key = K8S_SECRETS_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S secrets configuration for notebooks'
 
 
-class K8SSecretsTensorboards(Option):
+class K8SSecretsTensorboards(K8SSecretsOption):
     key = K8S_SECRETS_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'K8S secrets configuration for tensorboards'

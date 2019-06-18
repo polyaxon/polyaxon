@@ -19,8 +19,7 @@ NODE_SELECTORS_TENSORBOARDS = '{}{}{}'.format(option_namespaces.NODE_SELECTORS,
                                               option_subjects.TENSORBOARDS)
 
 
-class NodeSelectorsBuildJobs(Option):
-    key = NODE_SELECTORS_BUILD_JOBS
+class NodeSelectorsOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +28,28 @@ class NodeSelectorsBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class NodeSelectorsBuildJobs(NodeSelectorsOption):
+    key = NODE_SELECTORS_BUILD_JOBS
     description = 'Node selectors configuration for build jobs'
 
 
-class NodeSelectorsJobs(Option):
+class NodeSelectorsJobs(NodeSelectorsOption):
     key = NODE_SELECTORS_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Node selectors configuration for jobs'
 
 
-class NodeSelectorsExperiments(Option):
+class NodeSelectorsExperiments(NodeSelectorsOption):
     key = NODE_SELECTORS_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Node selectors configuration for experiments'
 
 
-class NodeSelectorsNotebooks(Option):
+class NodeSelectorsNotebooks(NodeSelectorsOption):
     key = NODE_SELECTORS_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Node selectors configuration for notebooks'
 
 
-class NodeSelectorsTensorboards(Option):
+class NodeSelectorsTensorboards(NodeSelectorsOption):
     key = NODE_SELECTORS_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Node selectors configuration for tensorboards'

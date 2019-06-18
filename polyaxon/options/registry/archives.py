@@ -10,8 +10,7 @@ ARCHIVES_ROOT_LOGS = '{}_{}'.format(option_namespaces.ARCHIVES_ROOT,
                                     option_subjects.LOGS)
 
 
-class ArchivesRootRepos(Option):
-    key = ARCHIVES_ROOT_REPOS
+class ArchivesOption(Option):
     is_global = True
     is_secret = False
     is_optional = False
@@ -20,30 +19,18 @@ class ArchivesRootRepos(Option):
     store = OptionStores.SETTINGS
     default = None
     options = None
+
+
+class ArchivesRootRepos(ArchivesOption):
+    key = ARCHIVES_ROOT_REPOS
     description = 'Archive root path for repos'
 
 
-class ArchivesRootArtifacts(Option):
+class ArchivesRootArtifacts(ArchivesOption):
     key = ARCHIVES_ROOT_ARTIFACTS
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.SETTINGS
-    default = None
-    options = None
     description = 'Archive root path for artifacts'
 
 
-class ArchivesRootLogs(Option):
+class ArchivesRootLogs(ArchivesOption):
     key = ARCHIVES_ROOT_LOGS
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.SETTINGS
-    default = None
-    options = None
     description = 'Archive root path for logs'

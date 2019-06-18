@@ -8,8 +8,7 @@ DOWNLOADS_ROOT_LOGS = '{}_{}'.format(option_namespaces.DOWNLOADS_ROOT,
                                      option_subjects.LOGS)
 
 
-class DownloadRootArtifacts(Option):
-    key = DOWNLOADS_ROOT_ARTIFACTS
+class DownloadRootOption(Option):
     is_global = True
     is_secret = False
     is_optional = False
@@ -18,17 +17,13 @@ class DownloadRootArtifacts(Option):
     store = OptionStores.SETTINGS
     default = None
     options = None
+
+
+class DownloadRootArtifacts(DownloadRootOption):
+    key = DOWNLOADS_ROOT_ARTIFACTS
     description = 'Downloads root path for artifacts'
 
 
-class DownloadRootLogs(Option):
+class DownloadRootLogs(DownloadRootOption):
     key = DOWNLOADS_ROOT_LOGS
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.SETTINGS
-    default = None
-    options = None
     description = 'Downloads root path for logs'

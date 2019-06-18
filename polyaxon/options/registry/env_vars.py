@@ -19,8 +19,7 @@ ENV_VARS_TENSORBOARDS = '{}{}{}'.format(option_namespaces.ENV_VARS,
                                         option_subjects.TENSORBOARDS)
 
 
-class EnvVarsBuildJobs(Option):
-    key = ENV_VARS_BUILD_JOBS
+class EnvVarsOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +28,28 @@ class EnvVarsBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class EnvVarsBuildJobs(EnvVarsOption):
+    key = ENV_VARS_BUILD_JOBS
     description = 'Env vars configuration for build jobs'
 
 
-class EnvVarsJobs(Option):
+class EnvVarsJobs(EnvVarsOption):
     key = ENV_VARS_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.LIST
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Env vars configuration for jobs'
 
 
-class EnvVarsExperiments(Option):
+class EnvVarsExperiments(EnvVarsOption):
     key = ENV_VARS_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.LIST
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Env vars configuration for experiments'
 
 
-class EnvVarsNotebooks(Option):
+class EnvVarsNotebooks(EnvVarsOption):
     key = ENV_VARS_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.LIST
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Env vars configuration for notebooks'
 
 
-class EnvVarsTensorboards(Option):
+class EnvVarsTensorboards(EnvVarsOption):
     key = ENV_VARS_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.LIST
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Env vars configuration for tensorboards'

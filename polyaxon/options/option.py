@@ -72,11 +72,16 @@ class Option(object):
         }
 
     @classmethod
+    def _extra_processing(cls, value):
+        return value
+
+    @classmethod
     def parse(cls, value):
-        return parser.TYPE_MAPPING[cls.typing](
+        _value = parser.TYPE_MAPPING[cls.typing](
             key=cls.key,
             value=value,
             is_list=cls.is_list,
             is_optional=cls.is_optional,
             default=cls.default,
             options=cls.options)
+        return cls._extra_processing(_value)

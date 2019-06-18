@@ -19,8 +19,7 @@ SERVICE_ACCOUNTS_TENSORBOARDS = '{}{}{}'.format(option_namespaces.SERVICE_ACCOUN
                                                 option_subjects.TENSORBOARDS)
 
 
-class ServiceAccountsBuildJobs(Option):
-    key = SERVICE_ACCOUNTS_BUILD_JOBS
+class ServiceAccountsOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +28,28 @@ class ServiceAccountsBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class ServiceAccountsBuildJobs(ServiceAccountsOption):
+    key = SERVICE_ACCOUNTS_BUILD_JOBS
     description = 'Service account configuration for build jobs'
 
 
-class ServiceAccountsJobs(Option):
+class ServiceAccountsJobs(ServiceAccountsOption):
     key = SERVICE_ACCOUNTS_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Service account configuration for jobs'
 
 
-class ServiceAccountsExperiments(Option):
+class ServiceAccountsExperiments(ServiceAccountsOption):
     key = SERVICE_ACCOUNTS_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Service account configuration for experiments'
 
 
-class ServiceAccountsNotebooks(Option):
+class ServiceAccountsNotebooks(ServiceAccountsOption):
     key = SERVICE_ACCOUNTS_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Service account configuration for notebooks'
 
 
-class ServiceAccountsTensorboards(Option):
+class ServiceAccountsTensorboards(ServiceAccountsOption):
     key = SERVICE_ACCOUNTS_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Service account configuration for tensorboards'

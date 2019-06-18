@@ -14,40 +14,30 @@ CLEANING_INTERVALS_ARCHIVES = '{}{}{}'.format(option_namespaces.CLEANING_INTERVA
                                               option_subjects.ARCHIVES)
 
 
-class CleaningIntervalsActivityLogs(Option):
-    key = CLEANING_INTERVALS_ACTIVITY_LOGS
+class CleaningIntervalsOption(Option):
     is_global = True
     is_secret = False
     is_optional = True
     is_list = False
     typing = CONF_TYPES.INT
     store = OptionStores.DB_OPTION
-    default = 30
     options = None
+
+
+class CleaningIntervalsActivityLogs(CleaningIntervalsOption):
+    key = CLEANING_INTERVALS_ACTIVITY_LOGS
+    default = 30
     description = 'A cleaning interval for activity logs in days'
 
 
-class CleaningIntervalsNotifications(Option):
+class CleaningIntervalsNotifications(CleaningIntervalsOption):
     key = CLEANING_INTERVALS_NOTIFICATIONS
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.INT
-    store = OptionStores.DB_OPTION
     default = 30
-    options = None
     description = 'A cleaning interval for notifications in days'
 
 
-class CleaningIntervalsArchives(Option):
+class CleaningIntervalsArchives(CleaningIntervalsOption):
     key = CLEANING_INTERVALS_ARCHIVES
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.INT
     store = OptionStores.DB_OPTION
     default = 7
-    options = None
     description = 'A cleaning interval for archives in days'

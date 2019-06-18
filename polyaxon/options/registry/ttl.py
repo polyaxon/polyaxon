@@ -21,53 +21,36 @@ TTL_TOKEN = '{}{}{}'.format(option_namespaces.TTL,
                             option_subjects.TOKEN)
 
 
-class TTLWatchStatuses(Option):
-    key = TTL_WATCH_STATUSES
+class TTLOption(Option):
     is_global = True
     is_secret = False
     is_optional = True
     is_list = False
     typing = CONF_TYPES.INT
     store = OptionStores.DB_OPTION
-    default = 60 * 20
     options = None
+
+
+class TTLWatchStatuses(TTLOption):
+    key = TTL_WATCH_STATUSES
+    default = 60 * 20
     description = 'Watch statuses ttl'
 
 
-class TTLEphemeralToken(Option):
+class TTLEphemeralToken(TTLOption):
     key = TTL_EPHEMERAL_TOKEN
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.INT
-    store = OptionStores.DB_OPTION
     default = 60 * 60 * 3
-    options = None
     description = 'Ephemeral token ttl'
 
 
-class TTLToken(Option):
+class TTLToken(TTLOption):
     key = TTL_TOKEN
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.INT
-    store = OptionStores.DB_OPTION
     default = 30
-    options = None
     description = 'Token ttl'
 
 
-class TTLHeartbeat(Option):
+class TTLHeartbeat(TTLOption):
     key = TTL_HEARTBEAT
-    is_global = True
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.INT
     store = OptionStores.DB_OPTION
     default = 60 * 30
-    options = None
     description = 'Heartbeat ttl'

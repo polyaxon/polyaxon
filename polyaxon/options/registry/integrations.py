@@ -22,8 +22,7 @@ INTEGRATIONS_WEBHOOKS_GENERIC = '{}{}{}'.format(option_namespaces.INTEGRATIONS_W
                                                 option_subjects.GENERIC)
 
 
-class IntegrationsWebhooksDiscord(Option):
-    key = INTEGRATIONS_WEBHOOKS_DISCORD
+class IntegrationsWebhooksOption(Option):
     is_global = False
     is_secret = True
     is_optional = True
@@ -32,69 +31,33 @@ class IntegrationsWebhooksDiscord(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class IntegrationsWebhooksDiscord(IntegrationsWebhooksOption):
+    key = INTEGRATIONS_WEBHOOKS_DISCORD
     description = 'Configuration for setting webhooks integration for Discord'
 
 
-class IntegrationsWebhooksHipchat(Option):
+class IntegrationsWebhooksHipchat(IntegrationsWebhooksOption):
     key = INTEGRATIONS_WEBHOOKS_HIPCHAT
-    is_global = False
-    is_secret = True
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Configuration for setting webhooks integration for Hipchat'
 
 
-class IntegrationsWebhooksMattermost(Option):
+class IntegrationsWebhooksMattermost(IntegrationsWebhooksOption):
     key = INTEGRATIONS_WEBHOOKS_MATTERMOST
-    is_global = False
-    is_secret = True
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Configuration for setting webhooks integration for Mattermost'
 
 
-class IntegrationsWebhooksPagerDuty(Option):
+class IntegrationsWebhooksPagerDuty(IntegrationsWebhooksOption):
     key = INTEGRATIONS_WEBHOOKS_PAGER_DUTY
-    is_global = False
-    is_secret = True
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Configuration for setting webhooks integration for PagerDuty'
 
 
-class IntegrationsWebhooksSlack(Option):
+class IntegrationsWebhooksSlack(IntegrationsWebhooksOption):
     key = INTEGRATIONS_WEBHOOKS_SLACK
-    is_global = False
-    is_secret = True
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Configuration for setting webhooks integration for Slack'
 
 
-class IntegrationsWebhooksGeneric(Option):
+class IntegrationsWebhooksGeneric(IntegrationsWebhooksOption):
     key = INTEGRATIONS_WEBHOOKS_GENERIC
-    is_global = False
-    is_secret = True
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Configuration for setting setting a generic webhooks'

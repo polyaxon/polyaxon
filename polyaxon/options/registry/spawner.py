@@ -26,160 +26,67 @@ PUBLIC_PLUGIN_JOBS = 'PUBLIC_PLUGIN_JOBS'
 RESTRICT_K8S_RESOURCES = 'RESTRICT_K8S_RESOURCES'
 
 
-class RoleLabelsWorker(Option):
+class LabelsOption(Option):
+    is_global = True
+    is_secret = False
+    is_optional = False
+    is_list = False
+    store = OptionStores.SETTINGS
+    typing = CONF_TYPES.STR
+    default = None
+    options = None
+
+
+class RoleLabelsWorker(LabelsOption):
     key = ROLE_LABELS_WORKER
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class RoleLabelsDashboard(Option):
+class RoleLabelsDashboard(LabelsOption):
     key = ROLE_LABELS_DASHBOARD
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class RoleLabelsLog(Option):
+class RoleLabelsLog(LabelsOption):
     key = ROLE_LABELS_LOG
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class RoleLabelsApi(Option):
+class RoleLabelsApi(LabelsOption):
     key = ROLE_LABELS_API
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class RoleLabelsConfig(Option):
+class RoleLabelsConfig(LabelsOption):
     key = ROLE_LABELS_CONFIG
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class RoleLabelsHooks(Option):
+class RoleLabelsHooks(LabelsOption):
     key = ROLE_LABELS_HOOKS
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class TypeLabelsCore(Option):
+class TypeLabelsCore(LabelsOption):
     key = TYPE_LABELS_CORE
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class TypeLabelsRunner(Option):
+class TypeLabelsRunner(LabelsOption):
     key = TYPE_LABELS_RUNNER
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class AppLabelsTensorboard(Option):
+class AppLabelsTensorboard(LabelsOption):
     key = APP_LABELS_TENSORBOARD
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class AppLabelsNotebook(Option):
+class AppLabelsNotebook(LabelsOption):
     key = APP_LABELS_NOTEBOOK
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class AppLabelsDockerizer(Option):
+class AppLabelsDockerizer(LabelsOption):
     key = APP_LABELS_DOCKERIZER
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class AppLabelsExperiment(Option):
+class AppLabelsExperiment(LabelsOption):
     key = APP_LABELS_EXPERIMENT
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
-class AppLabelsJob(Option):
+class AppLabelsJob(LabelsOption):
     key = APP_LABELS_JOB
-    is_global = True
-    is_secret = False
-    is_optional = False
-    is_list = False
-    store = OptionStores.SETTINGS
-    typing = CONF_TYPES.STR
-    default = None
-    options = None
 
 
 class DnsUseResolver(Option):

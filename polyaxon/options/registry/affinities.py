@@ -19,8 +19,7 @@ AFFINITIES_TENSORBOARDS = '{}{}{}'.format(option_namespaces.AFFINITIES,
                                           option_subjects.TENSORBOARDS)
 
 
-class AffinitiesBuildJobs(Option):
-    key = AFFINITIES_BUILD_JOBS
+class AffinitiesOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +28,28 @@ class AffinitiesBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class AffinitiesBuildJobs(AffinitiesOption):
+    key = AFFINITIES_BUILD_JOBS
     description = 'Affinity configuration for build jobs'
 
 
-class AffinitiesJobs(Option):
+class AffinitiesJobs(AffinitiesOption):
     key = AFFINITIES_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Affinity configuration for jobs'
 
 
-class AffinitiesExperiments(Option):
+class AffinitiesExperiments(AffinitiesOption):
     key = AFFINITIES_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Affinity configuration for experiments'
 
 
-class AffinitiesNotebooks(Option):
+class AffinitiesNotebooks(AffinitiesOption):
     key = AFFINITIES_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Affinity configuration for notebooks'
 
 
-class AffinitiesTensorboards(Option):
+class AffinitiesTensorboards(AffinitiesOption):
     key = AFFINITIES_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = False
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Affinity configuration for tensorboards'

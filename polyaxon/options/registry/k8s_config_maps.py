@@ -19,61 +19,37 @@ K8S_CONFIG_MAPS_TENSORBOARDS = '{}{}{}'.format(option_namespaces.K8S_CONFIG_MAPS
                                                option_subjects.TENSORBOARDS)
 
 
-class K8SConfigMapsBuildJobs(Option):
+class K8SConfigMapsOption(Option):
+    is_global = False
+    is_secret = False
+    is_optional = True
+    is_list = True
+    typing = CONF_TYPES.STR
+    store = OptionStores.DB_OPTION
+    default = None
+    options = None
+
+
+class K8SConfigMapsBuildJobs(K8SConfigMapsOption):
     key = K8S_CONFIG_MAPS_BUILD_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
+    description = "Config maps to mount for build jobs."
 
 
-class K8SConfigMapsJobs(Option):
+class K8SConfigMapsJobs(K8SConfigMapsOption):
     key = K8S_CONFIG_MAPS_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
+    description = "Config maps to mount for jobs."
 
 
-class K8SConfigMapsExperiments(Option):
+class K8SConfigMapsExperiments(K8SConfigMapsOption):
     key = K8S_CONFIG_MAPS_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
+    description = "Config maps to mount for experiments."
 
 
-class K8SConfigMapsNotebooks(Option):
+class K8SConfigMapsNotebooks(K8SConfigMapsOption):
     key = K8S_CONFIG_MAPS_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
+    description = "Config maps to mount for notebooks."
 
 
-class K8SConfigMapsTensorboards(Option):
+class K8SConfigMapsTensorboards(K8SConfigMapsOption):
     key = K8S_CONFIG_MAPS_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.STR
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
+    description = "Config maps to mount for tensorboards."

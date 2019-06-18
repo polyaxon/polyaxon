@@ -19,8 +19,7 @@ TOLERATIONS_TENSORBOARDS = '{}{}{}'.format(option_namespaces.TOLERATIONS,
                                            option_subjects.TENSORBOARDS)
 
 
-class TolerationsBuildJobs(Option):
-    key = TOLERATIONS_BUILD_JOBS
+class TolerationsOption(Option):
     is_global = False
     is_secret = False
     is_optional = True
@@ -29,56 +28,28 @@ class TolerationsBuildJobs(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+
+
+class TolerationsBuildJobs(TolerationsOption):
+    key = TOLERATIONS_BUILD_JOBS
     description = 'Tolerations configuration for build jobs'
 
 
-class TolerationsJobs(Option):
+class TolerationsJobs(TolerationsOption):
     key = TOLERATIONS_JOBS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Tolerations configuration for jobs'
 
 
-class TolerationsExperiments(Option):
+class TolerationsExperiments(TolerationsOption):
     key = TOLERATIONS_EXPERIMENTS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Tolerations configuration for experiments'
 
 
-class TolerationsNotebooks(Option):
+class TolerationsNotebooks(TolerationsOption):
     key = TOLERATIONS_NOTEBOOKS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Tolerations configuration for notebooks'
 
 
-class TolerationsTensorboards(Option):
+class TolerationsTensorboards(TolerationsOption):
     key = TOLERATIONS_TENSORBOARDS
-    is_global = False
-    is_secret = False
-    is_optional = True
-    is_list = True
-    typing = CONF_TYPES.DICT
-    store = OptionStores.DB_OPTION
-    default = None
-    options = None
     description = 'Tolerations configuration for tensorboards'
