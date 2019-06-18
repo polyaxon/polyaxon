@@ -34,7 +34,8 @@ class K8SResourcesOption(Option):
     def _extra_processing(cls, value):
         if not value:
             return value
-        return PodResourcesConfig.from_dict(value)
+        PodResourcesConfig.from_dict(value)
+        return value
 
 
 class K8SResourcesBuildJobs(K8SResourcesOption):
