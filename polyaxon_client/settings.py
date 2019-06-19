@@ -62,13 +62,14 @@ if not API_HOST:  # Check global config config
 HTTP_PORT = config.get_int('POLYAXON_HTTP_PORT',
                            is_optional=True)
 if not HTTP_PORT:  # Check global config config
-    HTTP_PORT = global_config.get_int('http_port',
+    HTTP_PORT = global_config.get_int('port',
                                       is_optional=True)
 WS_PORT = config.get_int('POLYAXON_WS_PORT',
                          is_optional=True)
 if not WS_PORT:  # Check global config config
     WS_PORT = global_config.get_int('ws_port',
-                                    is_optional=True)
+                                    is_optional=True,
+                                    default=HTTP_PORT)
 USE_HTTPS = config.get_boolean('POLYAXON_USE_HTTPS',
                                is_optional=True)
 if USE_HTTPS is None:  # Check global config config
