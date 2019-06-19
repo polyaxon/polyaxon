@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import click
+import click_completion
 
 from polyaxon_cli.cli.admin import admin
 from polyaxon_cli.cli.auth import login, logout, whoami
@@ -26,6 +27,9 @@ from polyaxon_cli.cli.user import user
 from polyaxon_cli.cli.version import check_cli_version, upgrade, version
 from polyaxon_cli.logger import clean_outputs, configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
+
+
+click_completion.init()
 
 
 @click.group()

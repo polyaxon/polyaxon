@@ -17,21 +17,17 @@ class TestVersion(BaseCommandTestCase):
 
     @patch('polyaxon_client.api.version.VersionApi.get_cli_version')
     @patch('polyaxon_cli.cli.version.dict_tabulate')
-    @patch('polyaxon_cli.cli.version.get_version')
-    def test_version_cli_default(self, dict_tabulate, get_cli_version, get_version):
+    def test_version_cli_default(self, dict_tabulate, get_cli_version):
         self.runner.invoke(version)
         get_cli_version.assert_called_once()
         dict_tabulate.assert_called_once()
-        get_version.assert_called_once()
 
     @patch('polyaxon_client.api.version.VersionApi.get_cli_version')
     @patch('polyaxon_cli.cli.version.dict_tabulate')
-    @patch('polyaxon_cli.cli.version.get_version')
-    def test_version_cli(self, dict_tabulate, get_cli_version, get_version):
+    def test_version_cli(self, dict_tabulate, get_cli_version):
         self.runner.invoke(version, ['--cli'])
         get_cli_version.assert_called_once()
         dict_tabulate.assert_called_once()
-        get_version.assert_called_once()
 
     @patch('polyaxon_client.api.version.VersionApi.get_platform_version')
     @patch('polyaxon_client.api.version.VersionApi.get_chart_version')

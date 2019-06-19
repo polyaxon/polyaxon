@@ -3,13 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import sys
 
-from distutils.version import LooseVersion  # pylint:disable=import-error
-
 import click
-import pkg_resources
 
 from polyaxon_deploy.operators.pip import PipOperator
 
+from polyaxon_cli import pkg
 from polyaxon_cli.client import PolyaxonClient
 from polyaxon_cli.client.exceptions import (
     AuthorizationError,
@@ -39,6 +37,8 @@ def session_expired():
 
 
 def get_version(pkg):
+    import pkg_resources
+
     try:
         return pkg_resources.get_distribution(pkg).version
     except pkg_resources.DistributionNotFound:
@@ -46,7 +46,7 @@ def get_version(pkg):
 
 
 def get_current_version():
-    return pkg_resources.get_distribution(PROJECT_CLI_NAME).version
+    return pkg.VERSION
 
 
 def get_server_version():
@@ -77,6 +77,8 @@ def check_cli_version():
     """Check if the current cli version satisfies the server requirements"""
     if not CliConfigManager.should_check():
         return
+
+    from distutils.version import LooseVersion  # pylint:disable=import-error
 
     server_version = get_server_version()
     current_version = get_current_version()
@@ -129,7 +131,7 @@ def version(cli, platform):
             Printer.print_error('Could not get cli version.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
-        cli_version = get_version(PROJECT_CLI_NAME)
+        cli_version = get_current_version()
         Printer.print_header('Current cli version: {}.'.format(cli_version))
         Printer.print_header('Supported cli versions:')
         dict_tabulate(server_version.to_dict())

@@ -49,6 +49,7 @@ setup(name='polyaxon-cli',
       ],
       install_requires=[
           "click==7.0",
+          "click-completion==0.5.1",
           "pathlib==1.0.1",
           "polyaxon-client==0.4.4",
           "polyaxon-deploy==0.4.4",
