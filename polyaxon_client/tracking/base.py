@@ -167,11 +167,21 @@ class BaseTracker(object):
 
     @check_no_op
     def log_output(self, filename, **kwargs):
-        self.outputs_store.upload_file(filename=filename)
+        """DEPRECATED: use log_succeeded instead"""
+        self.log_artifact(filename)
 
     @check_no_op
     def log_outputs(self, dirname, **kwargs):
-        self.outputs_store.upload_dir(dirname=dirname)
+        """DEPRECATED: use log_succeeded instead"""
+        self.log_artifacts(dirname)
+
+    @check_no_op
+    def log_artifact(self, file_path):
+        self.outputs_store.upload_file(filename=file_path)
+
+    @check_no_op
+    def log_artifacts(self, dir_path):
+        self.outputs_store.upload_dir(dirname=dir_path)
 
     @check_no_op
     def log_build(self, build_id=None):

@@ -215,14 +215,6 @@ class Experiment(BaseTracker):
     def log_framework(self, framework):
         self._update({'framework': framework})
 
-    @check_no_op
-    def log_artifact(self, file_path):
-        self.experiment.outputs_store.upload_file(file_path)
-
-    @check_no_op
-    def log_artifacts(self, dir_path):
-        self.experiment.outputs_store.upload_file(dir_path)
-
     @staticmethod
     def get_cluster_def():
         """Returns cluster definition created by polyaxon.
