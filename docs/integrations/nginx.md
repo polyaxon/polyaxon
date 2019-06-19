@@ -56,6 +56,16 @@ ingress:
 
 ## Annotations
 
+---
+**NOTE**
+Depending on your version of nginx ingress you might need to prepend `nginx.` to the annotations. E.g.: 
+```yaml
+      nginx.ingress.kubernetes.io/proxy-body-size: 4G
+      # instead of 
+      ingress.kubernetes.io/proxy-body-size: 4G    
+```
+---
+
 Polyaxon's ingress resource can be customized by providing annotations, we recommend the following annotations
 
 ```yaml
