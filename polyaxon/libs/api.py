@@ -9,15 +9,11 @@ API_WS_HOST = 'POLYAXON_API_WS_HOST'
 
 
 def get_settings_http_api_url() -> str:
-    return '{}://{}:{}'.format(settings.PROTOCOL,
-                               settings.POLYAXON_K8S_API_HOST,
-                               80)
+    return '{}://{}'.format(settings.PROTOCOL, settings.POLYAXON_K8S_API_HOST)
 
 
 def get_settings_ws_api_url() -> str:
-    return '{}://{}:{}'.format(settings.PROTOCOL,
-                               settings.POLYAXON_K8S_API_HOST,
-                               1337)
+    return '{}://{}'.format(settings.WS_PROTOCOL, settings.POLYAXON_K8S_API_HOST)
 
 
 def get_settings_external_http_api_url() -> str:
