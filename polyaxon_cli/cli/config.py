@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import sys
+
 import click
 
 from polyaxon_cli.logger import clean_outputs
@@ -38,7 +40,7 @@ def get(keys):
 
     \b
     ```bash
-    $ polyaxon config get host http_port
+    $ polyaxon config get host port
     ```
     """
     _config = GlobalConfigManager.get_config_or_default()
@@ -59,8 +61,7 @@ def get(keys):
 @config.command()
 @click.option('--verbose', type=bool, help='To set the verbosity of the client.')
 @click.option('--host', type=str, help='To set the server endpoint.')
-@click.option('--http_port', type=int, help='To set the http port.')
-@click.option('--ws_port', type=int, help='To set the stream port.')
+@click.option('--port', type=int, help='To set the http port.')
 @click.option('--use_https', type=bool, help='To set whether or not to use https.')
 @click.option('--verify_ssl', type=bool,
               help='To set whether or not to verify the SSL certificate.')
@@ -72,10 +73,16 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
     \b
     ```bash
-    $ polyaxon config set --hots=localhost http_port=80
+    $ polyaxon config set --host=localhost --port=80
     ```
     """
-    _config = GlobalConfigManager.get_config_or_default()
+    try:
+        _config = GlobalConfigManager.get_config_or_default()
+    except Exception as e:
+        Printer.print_error('Polyaxon load configuration.')
+        Printer.print_error('Error message `{}`.'.format(e))
+        Printer.print_header('You can reset your config by running: polyaxon config purge')
+        sys.exit(1)
 
     for key, value in kwargs.items():
         if value is not None:
@@ -83,5 +90,21 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
 
     GlobalConfigManager.set_config(_config)
     Printer.print_success('Config was updated.')
+    # Reset cli config
+    CliConfigManager.purge()
+
+
+@config.command()
+@click.option('--verbose', type=bool, help='To set the verbosity of the client.')
+@click.option('--host', type=str, help='To set the server endpoint.')
+@click.option('--port', type=int, help='To set the http port.')
+@click.option('--use_https', type=bool, help='To set whether or not to use https.')
+@click.option('--verify_ssl', type=bool,
+              help='To set whether or not to verify the SSL certificate.')
+@clean_outputs
+def purge(**kwargs):  # pylint:disable=redefined-builtin
+    """Purge the global config values."""
+    GlobalConfigManager.purge()
+    Printer.print_success('Config was removed.')
     # Reset cli config
     CliConfigManager.purge()

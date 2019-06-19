@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 import click
-from polyaxon_deploy.operators.cmd_operator import CmdOperator
+
 from polyaxon_deploy.operators.conda import CondaOperator
 
 from polyaxon_cli.client.exceptions import (
@@ -14,9 +14,7 @@ from polyaxon_cli.client.exceptions import (
     PolyaxonHTTPError,
     PolyaxonShouldExitError
 )
-from polyaxon_cli.client.tracking import (
-    hash_value
-)
+from polyaxon_cli.client.tracking import hash_value
 from polyaxon_cli.exceptions import PolyaxonConfigurationError
 from polyaxon_cli.utils.formatting import Printer
 

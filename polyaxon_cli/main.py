@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import click
 import click_completion
 
+from marshmallow import ValidationError
+
 from polyaxon_cli.cli.admin import admin
 from polyaxon_cli.cli.auth import login, logout, whoami
 from polyaxon_cli.cli.bookmark import bookmark
@@ -28,7 +30,6 @@ from polyaxon_cli.cli.version import check_cli_version, upgrade, version
 from polyaxon_cli.logger import clean_outputs, configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
 
-
 click_completion.init()
 
 
@@ -47,7 +48,11 @@ def cli(context, verbose):
 
     Check the help available for each command listed below.
     """
-    configure_logger(verbose or GlobalConfigManager.get_value('verbose'))
+
+    try:
+        configure_logger(verbose or GlobalConfigManager.get_value('verbose'))
+    except ValidationError:
+        GlobalConfigManager.purge()
     non_check_cmds = ['config', 'version', 'login', 'logout', 'deploy', 'admin', 'teardown']
     if context.invoked_subcommand not in non_check_cmds:
         check_cli_version()

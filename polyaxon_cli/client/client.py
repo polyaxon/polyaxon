@@ -15,15 +15,14 @@ class PolyaxonClient(BasePolyaxonClient):
         if not host:
             Printer.print_error('Received an invalid config, you need to provide a valid host.')
             sys.exit(1)
-        http_port = GlobalConfigManager.get_value('http_port')
-        ws_port = GlobalConfigManager.get_value('ws_port')
+        port = GlobalConfigManager.get_value('port')
         use_https = GlobalConfigManager.get_value('use_https')
         verify_ssl = GlobalConfigManager.get_value('verify_ssl')
         token = AuthConfigManager.get_value('token')
         super(PolyaxonClient, self).__init__(
             host=host,
-            http_port=http_port,
-            ws_port=ws_port,
+            http_port=port,
+            ws_port=port,
             use_https=use_https,
             verify_ssl=verify_ssl,
             token=token,

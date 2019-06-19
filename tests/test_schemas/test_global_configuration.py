@@ -10,8 +10,7 @@ class TestGlobalConfigs(TestCase):
     def test_global_config(self):
         config_dict = {'verbose': True,
                        'host': 'localhost',
-                       'http_port': '80',
-                       'ws_port': '1338',
+                       'port': '80',
                        'verify_ssl': True,
                        'use_https': False}
         config = GlobalConfigurationConfig.from_dict(config_dict)

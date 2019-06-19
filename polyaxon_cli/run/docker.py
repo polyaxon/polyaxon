@@ -18,11 +18,11 @@ from polyaxon_cli.client.exceptions import (
     PolyaxonShouldExitError
 )
 from polyaxon_cli.client.tracking import (
+    POLYAXON_NO_OP_KEY,
+    TMP_POLYAXON_PATH,
     BuildJob,
     Experiment,
-    hash_value,
-    POLYAXON_NO_OP_KEY,
-    TMP_POLYAXON_PATH
+    hash_value
 )
 from polyaxon_cli.exceptions import PolyaxonConfigurationError
 from polyaxon_cli.schemas import BuildSpecification

@@ -171,7 +171,7 @@ class DeployManager(object):
         self.compose.execute(['-f', path + '/docker-compose.yml', 'up', '-d'])
         Printer.print_success('Deployment is running in the background.')
         Printer.print_success('You can configure your CLI by running: '
-                              'polyaxon config set --host=localhost --http_port=8000.')
+                              'polyaxon config set --host=localhost --port=8000.')
 
     def install_on_docker(self):
         pass
