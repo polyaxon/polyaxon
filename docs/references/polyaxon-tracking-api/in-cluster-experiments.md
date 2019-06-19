@@ -45,8 +45,8 @@ experiment.log_data_ref(data=y, data_name='dataset_y')
 experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)
 ...
 # If you are using a cloud storage
-experiment.log_artifact(file_path)
-experiment.log_artifacts(dir_path)
+experiment.log_output(file_path)
+experiment.log_outputs(dir_path)
 ``` 
 
 ## Data references
@@ -85,8 +85,8 @@ please refer to the reference [set_params](/references/polyaxon-tracking-api/exp
 
 You can save your outputs and artifacts by:
  * saving them on the outputs path exposed by Polyaxon `get_outputs_path`
- * or if you are using a cloud storage by using [log_artifact](/references/polyaxon-tracking-api/experiments/log_artifact/) 
-   and [log_artifacts](/references/polyaxon-tracking-api/experiments/log_artifacts/).
+ * or if you are using a cloud storage by using [log_output](/references/polyaxon-tracking-api/experiments#log_output) 
+   and [log_outputs](/references/polyaxon-tracking-api/experiments#log_outputs).
 
 ## Get log level: 
 
