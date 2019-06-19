@@ -26,12 +26,6 @@ def get_settings_external_http_api_url() -> str:
                                settings.POLYAXON_K8S_API_HTTP_PORT)
 
 
-def get_settings_external_ws_api_url() -> str:
-    return '{}://{}:{}'.format(settings.PROTOCOL,
-                               settings.POLYAXON_K8S_API_HOST,
-                               settings.POLYAXON_K8S_API_WS_PORT)
-
-
 def get_http_api_url() -> Optional[str]:
     return config.get_string(API_HTTP_URL, is_optional=True)
 
