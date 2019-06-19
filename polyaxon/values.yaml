@@ -214,12 +214,9 @@ streams:
     requests:
       cpu: 100m
       memory: 128Mi
-
-  service:  # service type is the same as api
+  service:
     name: streams
-    externalPort: 1337
     internalPort: 1337
-    nodePort: 31812
 
 scheduler:
   image: polyaxon/polyaxon-scheduler

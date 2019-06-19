@@ -34,10 +34,8 @@ data:
   POLYAXON_K8S_API_HOST: {{ template "polyaxon.fullname" . }}-api
   {{- if contains "NodePort" .Values.serviceType }}
   POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.nodePort | quote }}
-  POLYAXON_K8S_API_WS_PORT: {{ .Values.streams.service.nodePort | quote }}
   {{- else }}
   POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.externalPort | quote }}
-  POLYAXON_K8S_API_WS_PORT: {{ .Values.streams.service.externalPort | quote }}
   {{- end }}
   POLYAXON_K8S_APP_CONFIG_NAME: {{ template "polyaxon.fullname" . }}-config
   POLYAXON_K8S_APP_SECRET_NAME: {{ template "polyaxon.fullname" . }}-secret
@@ -181,6 +179,7 @@ data:
   POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
   POLYAXON_PLUGINS: {{ toJson .Values.plugins | quote }}
   POLYAXON_DNS_USE_RESOLVER: "true"
+  POLYAXON_WS_PORT: {{ .Values.streams.service.internalPort | quote }}
   # Registry
   POLYAXON_REGISTRY_HOST: "{{ template "docker-registry.host" . }}:{{ template "docker-registry.port" . }}"
   POLYAXON_REGISTRY_LOCALHOST: "127.0.0.1:{{ (index .Values "docker-registry").service.nodePort}}"

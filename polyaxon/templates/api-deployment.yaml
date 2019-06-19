@@ -87,8 +87,8 @@ spec:
             scheme: HTTP
             {{- if .Values.allowedHosts }}
             httpHeaders:
-                - name: Host
-                  value: {{ template "polyaxon.fullname" . }}-api
+              - name: Host
+                value: {{ template "polyaxon.fullname" . }}-api
             {{- end }}
           initialDelaySeconds: 150
           periodSeconds: 30

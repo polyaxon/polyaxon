@@ -31,10 +31,6 @@ spec:
         backend:
           serviceName: {{ $fullName }}-api
           servicePort: {{ $.Values.api.service.externalPort }}
-      - path: /ws
-        backend:
-          serviceName: {{ $fullName }}-api
-          servicePort: {{ $.Values.streams.service.externalPort }}
   {{- if (not (empty .Values.ingress.tls)) }}
   tls:
     {{ toYaml .Values.ingress.tls | nindent 4 }}
