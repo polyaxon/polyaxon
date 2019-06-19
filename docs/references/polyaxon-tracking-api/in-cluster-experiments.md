@@ -53,14 +53,14 @@ experiment.log_outputs(dir_path)
 
 You can always register a hash for every dataset you will use in your experiment.
 
-please refer to the reference [set_params](/references/polyaxon-tracking-api/experiments/log_data_ref/).
+please refer to the reference [log_params](/references/polyaxon-tracking-api/experiments/#log_data_ref).
 
 ## Hyperparams
 
 Since hyperparams are defined in the `declarations` section of the Polyaxonfile, 
 you generally don't need to set them manually. But you can always add or reset these params once your code starts running:
 
-please refer to the reference [set_params](/references/polyaxon-tracking-api/experiments/log_params/).
+please refer to the reference [log_params](/references/polyaxon-tracking-api/experiments/#log_params).
 
 You can also get the hyperparams that the experiment has:
 
@@ -79,14 +79,14 @@ You can log as many metrics as you want, Polyaxon will keep track of the history
 experiment.log_metrics(step=1000, loss=0.01, accuracy=0.97)
 ```  
 
-please refer to the reference [set_params](/references/polyaxon-tracking-api/experiments/log_params/)
+please refer to the reference [log_metrics](/references/polyaxon-tracking-api/experiments/#log_metrics)
 
 ## Artifacts
 
 You can save your outputs and artifacts by:
  * saving them on the outputs path exposed by Polyaxon `get_outputs_path`
- * or if you are using a cloud storage by using [log_output](/references/polyaxon-tracking-api/experiments#log_output) 
-   and [log_outputs](/references/polyaxon-tracking-api/experiments#log_outputs).
+ * or if you are using a cloud storage by using [log_output](/references/polyaxon-tracking-api/experiments/#log_output) 
+   and [log_outputs](/references/polyaxon-tracking-api/experiments/#log_outputs).
 
 ## Get log level: 
 

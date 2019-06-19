@@ -70,7 +70,7 @@ experiment.create()
 
 You can update the information later if you want.
 
-### `set_name`
+### set_name
 
 > Not required for in-cluster experiments
 
@@ -78,7 +78,7 @@ You can update the information later if you want.
 experiment.set_name('new_name')
 ```
 
-### `set_description`
+### set_description
 
 > Not required for in-cluster experiments
 
@@ -86,7 +86,7 @@ experiment.set_name('new_name')
 experiment.set_description('New description ...')
 ```
 
-### `log_tags`
+### log_tags
 
 > Not required for in-cluster experiments
 
@@ -103,7 +103,7 @@ experiment.log_tags('tag3', reset=True)
 This will merge the new tags with the previous ones if you had tags before, 
 otherwise you can reset the tags of the experiment.
 
-### `log_framework`
+### log_framework
 
 > Not required for in-cluster experiments
 
@@ -111,7 +111,7 @@ otherwise you can reset the tags of the experiment.
 experiment.log_framework('tensorflow')
 ```
 
-### `log_backend`
+### log_backend
 
 > Not required for in-cluster experiments
 
@@ -119,7 +119,7 @@ experiment.log_framework('tensorflow')
 experiment.log_backend('spark')
 ```
 
-### `log_run_env`
+### log\_run\_env
 
 > Not required for in-cluster experiments
 
@@ -129,7 +129,7 @@ experiment.log_run_env()
 
 This step is done automatically when creating an instance with `track_env=True`
 
-### `log_code_ref`
+### log\_code\_ref
 
 > Not required for in-cluster experiments
 
@@ -140,7 +140,7 @@ experiment.log_code_ref()
 This step is done automatically when creating an instance with `track_git=True`
 
 
-### `log_status`
+### log_status
 
 > Not required for in-cluster experiments
  
@@ -154,7 +154,7 @@ experiment.log_status('starting')
 This step is done automatically so this is in general is not needed, because the tracking API will take care of tracking 
 the status of your experiment both in-cluster and on other environments.
 
-### `log_stopped`
+### log_stopped
 
 > Not required for in-cluster experiments
 
@@ -164,7 +164,7 @@ experiment.log_stopped()
 
 This is just an easy way to set a `stopped` status.
 
-### `log_succeeded`
+### log_succeeded
 
 > Not required for in-cluster experiments
 
@@ -177,7 +177,7 @@ End of script will trigger succeeded status automatically,
 unless you running a loop and creating a new experiment, 
 you need to set the `done` status manually.
 
-### `log_failed`
+### log_failed
 
 > Not required for in-cluster experiments
 
@@ -187,7 +187,7 @@ experiment.log_failed()
 
 This is just an easy way to set a `failed` status. Exception will trigger failed status automatically.
 
-### `log_metrics`
+### log_metrics
 
 ```python
 experiment.log_metrics(step=123, loss=0.023, accuracy=0.91)
@@ -202,7 +202,7 @@ and use the steps in x-axis instead of timestamps.
     experiments ran sequentially, since the x-axis will use by default timestamps, 
     if your experiments report steps as well you can switch the series to use steps instead of timestamps.
 
-### `log_params`
+### log_params
 
 > Not required for in-cluster experiments
 
@@ -220,7 +220,7 @@ experiment.log_params(activation='sigmoid', learning_rate=0.001, reset=True)
 Logging params for experiments in-cluster is generally handled through the `polyaxonfile` with the declaration section. 
 But often times, users might need to update or add more params during the experiment run.
 
-### `log_data_ref`
+### log\_data\_ref
 
 ```python
 # Example logging multiple datasets used for the experiment
@@ -231,7 +231,7 @@ experiment.log_data_ref(data=dataset2, data_name='my_dataset2')
 experiment.log_data_ref(data=dataset3, data_name='my_dataset3', reset=True)
 ```
 
-### `log_output`
+### log_output
 
 Logs a local file as an artifact and optionally upload it to the registered cloud storage.
 
@@ -239,7 +239,7 @@ Logs a local file as an artifact and optionally upload it to the registered clou
 experiment.log_output(file_path)
 ```
 
-### `log_outputs`
+### log_outputs
 
 Logs a local directory as artifacts and optionally upload it to the registered cloud storage.
 
@@ -247,10 +247,10 @@ Logs a local directory as artifacts and optionally upload it to the registered c
 experiment.log_outputs(dir_path)
 ```
 
-### `get_log_level`
+### get\_log\_level
 
 Returns the log level defined on the polyaxonfile
 
-### `get_outputs_path`
+### get\_outputs\_path
 
 Returns the path generated fot this experiment.
