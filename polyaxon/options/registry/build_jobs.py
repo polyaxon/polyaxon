@@ -101,7 +101,7 @@ class BuildJobsSetSecurityContext(Option):
     is_secret = False
     is_optional = True
     is_list = False
-    typing = CONF_TYPES.STR
+    typing = CONF_TYPES.BOOL
     store = OptionStores.DB_OPTION
     default = True
     options = None
