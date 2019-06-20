@@ -12,6 +12,7 @@ def validate_security_context(user, group):
 
 
 class SecurityContextSchema(BaseSchema):
+    enabled = fields.Bool(allow_none=True)
     user = fields.Int(allow_none=True)
     group = fields.Int(allow_none=True)
 
@@ -26,9 +27,10 @@ class SecurityContextSchema(BaseSchema):
 
 class SecurityContextConfig(BaseConfig):
     SCHEMA = SecurityContextSchema
-    REDUCED_ATTRIBUTES = ['user', 'group']
+    REDUCED_ATTRIBUTES = ['enabled', 'user', 'group']
 
-    def __init__(self, user=None, group=None):
+    def __init__(self, enabled=None, user=None, group=None):
         validate_security_context(user, group)
+        self.enabled = enabled
         self.user = user
         self.group = group
