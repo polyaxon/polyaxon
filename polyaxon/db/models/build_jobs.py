@@ -63,6 +63,7 @@ class BuildJob(AbstractJobModel,
         blank=True,
         null=True,
         help_text='The dockerfile used to create the image with this job.')
+    valid = models.NullBooleanField(default=True)
     status = models.OneToOneField(
         'db.BuildJobStatus',
         related_name='+',
@@ -171,7 +172,8 @@ class BuildJob(AbstractJobModel,
         if not rebuild_cond:
             job = BuildJob.objects.filter(project=project,
                                           content=build_spec.raw_data,
-                                          code_reference=code_reference).last()
+                                          code_reference=code_reference,
+                                          valid=True).last()
             if job:
                 return job, False
 

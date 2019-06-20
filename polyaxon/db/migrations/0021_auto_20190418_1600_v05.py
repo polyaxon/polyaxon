@@ -335,6 +335,11 @@ class Migration(migrations.Migration):
                                                       'invalid'),
                 libs.blacklist.validate_blacklist_name]),
         ),
+        migrations.AddField(
+            model_name='buildjob',
+            name='valid',
+            field=models.NullBooleanField(default=True),
+        ),
         migrations.RunPython(migrate_build_jobs_config),
         migrations.RunPython(migrate_experiments_config),
         migrations.RunPython(migrate_jobs_config),

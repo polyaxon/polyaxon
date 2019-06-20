@@ -1,6 +1,6 @@
 import logging
 
-from typing import Mapping, Any
+from typing import Any, Mapping
 
 import conf
 import ocular

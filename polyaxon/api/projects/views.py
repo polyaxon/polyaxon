@@ -131,3 +131,12 @@ class ProjectRestoreView(ProjectEndpoint, CreateEndpoint):
                        actor_name=request.user.username)
         obj.restore()
         return Response(status=status.HTTP_200_OK)
+
+
+class ProjectBuildsInvalidateView(ProjectEndpoint, CreateEndpoint):
+    """Invalidate a build."""
+    serializer_class = ProjectSerializer
+
+    def post(self, request, *args, **kwargs):
+        self.project.all_build_jobs.update(valid=False)
+        return Response(status=status.HTTP_200_OK)

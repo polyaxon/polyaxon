@@ -32,6 +32,8 @@ projects_urlpatterns = [
             jobs_views.ProjectJobListView.as_view()),
     re_path(r'^{}/{}/builds/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             builds_views.ProjectBuildListView.as_view()),
+    re_path(r'^{}/{}/builds/invalidate/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
+            views.ProjectBuildsInvalidateView.as_view()),
     re_path(r'^{}/{}/tensorboards/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),
             plugins_views.ProjectTensorboardListView.as_view()),
     re_path(r'^{}/{}/notebooks/?$'.format(OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN),

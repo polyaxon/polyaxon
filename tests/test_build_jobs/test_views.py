@@ -645,6 +645,31 @@ class TestStopBuildViewV1(BaseViewTest):
 
 
 @pytest.mark.build_jobs_mark
+class TestInvalidateBuildViewV1(BaseViewTest):
+    model_class = BuildJob
+    factory_class = BuildJobFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.object = self.factory_class(project=project)
+        self.url = '/{}/{}/{}/builds/{}/invalidate'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.object.id)
+        self.queryset = self.model_class.objects.all()
+
+    def test_invalidate(self):
+        data = {}
+        assert self.queryset.last().valid is True
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert self.queryset.last().valid is False
+
+
+@pytest.mark.build_jobs_mark
 class TestBuildLogsViewV1(BaseViewTest):
     num_log_lines = 10
     HAS_AUTH = True

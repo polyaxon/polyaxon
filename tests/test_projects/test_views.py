@@ -603,3 +603,31 @@ class TestProjectDetailViewV1(BaseViewTest):
         assert NotebookJob.objects.count() == 0
         assert TensorboardJob.all.count() == 1
         assert NotebookJob.all.count() == 1
+
+
+@pytest.mark.projects_mark
+class TestProjectBuildsInvalidateViewV1(BaseViewTest):
+    model_class = BuildJob
+    factory_class = BuildJobFactory
+    HAS_AUTH = True
+
+    def setUp(self):
+        super().setUp()
+        self.project = ProjectFactory(user=self.auth_client.user)
+        self.objects = [self.factory_class(project=self.project) for _ in range(3)]
+        self.another_object = self.factory_class()
+        self.url = '/{}/{}/{}/builds/invalidate'.format(
+            API_V1,
+            self.project.user.username,
+            self.project.name)
+        self.queryset = self.model_class.objects.filter(project=self.project)
+
+    def test_invalidate(self):
+        data = {}
+        assert list(self.queryset.values_list('valid', flat=True)) == [True, True, True]
+        assert self.another_object.valid is True
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_200_OK
+        assert list(self.queryset.values_list('valid', flat=True)) == [False, False, False]
+        self.another_object.refresh_from_db()
+        assert self.another_object.valid is True

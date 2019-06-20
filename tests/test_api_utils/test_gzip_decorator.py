@@ -1,6 +1,6 @@
 from faker import Faker
-from flaky import flaky
 
+from flaky import flaky
 from rest_framework.response import Response
 from rest_framework.views import APIView
 

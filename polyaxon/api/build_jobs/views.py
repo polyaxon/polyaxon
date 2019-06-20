@@ -274,6 +274,16 @@ class BuildStopView(BuildEndpoint, CreateEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
+class BuildInvalidateView(BuildEndpoint, CreateEndpoint):
+    """Invalidate a build."""
+    serializer_class = BuildJobSerializer
+
+    def post(self, request, *args, **kwargs):
+        self.build.valid = False
+        self.build.save(update_fields=['valid'])
+        return Response(status=status.HTTP_200_OK)
+
+
 class BuildHeartBeatView(BuildEndpoint, PostEndpoint):
     """
     post:

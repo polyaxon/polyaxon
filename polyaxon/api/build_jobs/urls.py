@@ -31,6 +31,9 @@ build_jobs_urlpatterns = [
     re_path(r'^{}/{}/builds/{}/stop/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildStopView.as_view()),
+    re_path(r'^{}/{}/builds/{}/invalidate/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
+        views.BuildInvalidateView.as_view()),
     re_path(r'^{}/{}/builds/{}/_heartbeat/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildHeartBeatView.as_view()),

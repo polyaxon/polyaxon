@@ -137,6 +137,43 @@ class TestBuildJobModels(BaseTest):
         assert BuildJob.objects.count() == 2
         assert new_build_job == new_build_job_v2
 
+    def test_create_build_with_same_config_and_invalid_create_new_build_job(self):
+        assert BuildJobStatus.objects.count() == 0
+        assert BuildJob.objects.count() == 0
+        build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:test'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
+        assert build_job.last_status == JobLifeCycle.CREATED
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+
+        # Building with same config does not create a new build job
+        new_build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:test'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, False)
+        assert BuildJobStatus.objects.count() == 1
+        assert BuildJob.objects.count() == 1
+        assert build_job == new_build_job
+
+        # Invalidating the build results in creating a new build
+        build_job.valid = False
+        build_job.save()
+        new_build_job, rebuild = BuildJob.create(
+            user=self.project.user,
+            project=self.project,
+            config={'image': 'my_image:test'},
+            code_reference=self.code_reference)
+        self.assertEqual(rebuild, True)
+        assert BuildJobStatus.objects.count() == 2
+        assert BuildJob.objects.count() == 2
+        assert build_job != new_build_job
+
     def test_create_build_with_latest_tag_does_not_results_in_new_job(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
@@ -188,7 +225,7 @@ class TestBuildJobModels(BaseTest):
         assert BuildJob.objects.count() == 2
         assert new_build_job != build_job
 
-    def test_create_build_without_tag_always_doesn_not_create_new_job(self):
+    def test_create_build_without_tag_does_not_create_new_job(self):
         assert BuildJobStatus.objects.count() == 0
         assert BuildJob.objects.count() == 0
         build_job, rebuild = BuildJob.create(
