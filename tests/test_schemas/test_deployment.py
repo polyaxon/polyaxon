@@ -124,8 +124,9 @@ class TestDeploymentConfig(TestCase):
         assert config.resourcesDaemon is None
         assert config.hooks is None
         assert config.postgresql.enabled is False
-        assert config.rabbitmq is None
-        assert config.dockerRegistry is None
+        assert config.rabbitmq.enabled is False
+        assert config.redis.enabled is False
+        assert config.dockerRegistry.enabled is False
         assert config.email is not None
         assert config.hostName == '123.123.123.123'
         assert config.allowedHosts == ['foo.bar.com', '123.123.12.3']

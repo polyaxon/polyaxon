@@ -72,3 +72,12 @@ hostName: 123.123.123.123
 allowedHosts:
   - foo.bar.com
   - 123.123.12.3
+
+rabbitmq-ha:
+  enabled: false
+
+docker-registry:
+  enabled: false
+
+redis:
+  enabled: false

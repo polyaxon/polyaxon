@@ -62,10 +62,10 @@ class DeploymentSchema(BaseSchema):
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
     redis = fields.Nested(RedisSchema, allow_none=True)
     rabbitmq = fields.Nested(RabbitmqSchema,
-                             attribute="rabbitmq-ha",
+                             data_key="rabbitmq-ha",
                              allow_none=True)
     dockerRegistry = fields.Nested(DockerRegistrySchema,
-                                   attribute="docker-registry",
+                                   data_key="docker-registry",
                                    allow_none=True)
     email = fields.Nested(EmailSchema, allow_none=True)
     ldap = fields.Raw(allow_none=True)
