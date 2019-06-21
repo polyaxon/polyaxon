@@ -26,7 +26,22 @@ Polyaxon supports multiple backend options to build container images used for ru
 
 The native builder is a lightweight container builder, and it's the default backend used in Polyaxon deployment, it has been tested and works smoothly.
 
-If you have changed the default build backend, and you need to use the native builder for some use cases you can follow one of the following options.  
+If you have changed the default build backend, and you need to use the native builder for some use cases you can follow one of the following options.
+
+> If your builds fail in EKS clusters it could be due to DNS resolution, please see this [issue](https://github.com/awslabs/amazon-eks-ami/issues/183). 
+> The builds are failing because the latest versions of the AWS EKS-optimized AMI disables the docker bridge network by default. 
+> To enable it, add the `bootstrap_extra_args` parameter to your worker group template.
+
+> ```
+> locals {
+>   worker_groups = [
+>     {
+>       # Other parameters omitted for brevity
+>       bootstrap_extra_args = "--enable-docker-bridge true"
+>     }
+>   ]
+> }
+> ```
 
 ## Using the native builder per job/experiment
 
