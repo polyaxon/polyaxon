@@ -3,7 +3,7 @@ from unittest import TestCase
 from rhea import rhea_parser
 from rhea.constants import NO_VALUE_FOUND
 from rhea.exceptions import RheaError
-from rhea.specs import AuthSpec, UriSpec
+from rhea.specs import AuthSpec, GCSSpec, S3Spec, UriSpec, WasbsSpec
 
 
 class TestRheaParser(TestCase):
@@ -745,3 +745,55 @@ class TestRheaParser(TestCase):
         self.assertEqual(rhea_parser.get_dict_of_dicts(key='dict_dicts_non_existing_key',
                                                        value=None,
                                                        is_optional=True, default={}), {})
+
+    def test_get_wasbs_url(self):
+        # Correct url
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net/path'
+        parsed_url = rhea_parser.parse_wasbs_url(wasbs_url)
+        assert parsed_url == WasbsSpec('container', 'user', 'path')
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net/'
+        parsed_url = rhea_parser.parse_wasbs_url(wasbs_url)
+        assert parsed_url == WasbsSpec('container', 'user', '')
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net'
+        parsed_url = rhea_parser.parse_wasbs_url(wasbs_url)
+        assert parsed_url == WasbsSpec('container', 'user', '')
+        wasbs_url = 'wasbs://container@user.blob.core.windows.net/path/to/file'
+        parsed_url = rhea_parser.parse_wasbs_url(wasbs_url)
+        assert parsed_url == WasbsSpec('container', 'user', 'path/to/file')
+
+        # Wrong url
+        wasbs_url = 'wasbs://container@user.foo.bar.windows.net/path/to/file'
+        with self.assertRaises(RheaError):
+            rhea_parser.parse_wasbs_url(wasbs_url)
+
+        wasbs_url = 'wasbs://container@user.blob.core.foo.net/path/to/file'
+        with self.assertRaises(RheaError):
+            rhea_parser.parse_wasbs_url(wasbs_url)
+
+        wasbs_url = 'wasbs://container@user.blob.windows.net/path/to/file'
+        with self.assertRaises(RheaError):
+            rhea_parser.parse_wasbs_url(wasbs_url)
+
+    def test_parse_gcs_url(self):
+        # Correct url
+        gcs_url = 'gs://bucket/path/to/blob'
+        parsed_url = rhea_parser.parse_gcs_url(gcs_url)
+        assert parsed_url == GCSSpec('bucket', 'path/to/blob')
+
+        # Wrong url
+        gcs_url = 'gs:/bucket/path/to/blob'
+        with self.assertRaises(RheaError):
+            rhea_parser.parse_gcs_url(gcs_url)
+
+        # Trailing slash
+        gcs_url = 'gs://bucket/path/to/blob/'
+        assert rhea_parser.parse_gcs_url(gcs_url) == GCSSpec('bucket', 'path/to/blob/')
+
+        # Bucket only
+        gcs_url = 'gs://bucket/'
+        assert rhea_parser.parse_gcs_url(gcs_url) == GCSSpec('bucket', '')
+
+    def test_parse_s3_url(self):
+        s3_url = 's3://test/this/is/bad/key.txt'
+        parsed_url = rhea_parser.parse_s3_url(s3_url)
+        assert parsed_url == S3Spec('test', 'this/is/bad/key.txt')

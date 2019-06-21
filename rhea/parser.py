@@ -2,15 +2,17 @@
 from __future__ import absolute_import, division, print_function
 
 import json
+import re
 import six
 
 from collections import Mapping
 from distutils.util import strtobool  # pylint:disable=import-error
+from six.moves import urllib
 
 from rhea import types
 from rhea.constants import NO_VALUE_FOUND
 from rhea.exceptions import RheaError
-from rhea.specs import AuthSpec, UriSpec
+from rhea.specs import AuthSpec, GCSSpec, S3Spec, UriSpec, WasbsSpec
 
 
 def get_int(key,
@@ -503,6 +505,53 @@ def parse_auth_spec(auth_spec):
     return AuthSpec(user=user_pass[0], password=user_pass[1])
 
 
+def parse_wasbs_url(wasbs_url):
+    parsed_url = urllib.parse.urlparse(wasbs_url)
+    match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
+    if match is None:
+        raise RheaError(
+            'wasbs url must be of the form <container>@<account>.blob.core.windows.net')
+
+    container = match.group(1)
+    storage_account = match.group(2)
+    path = parsed_url.path
+    if path.startswith('/'):
+        path = path[1:]
+    return WasbsSpec(container, storage_account, path)
+
+
+def parse_gcs_url(gcs_url):
+    """
+    Parses and validates a google cloud storage url.
+
+    Returns:
+        tuple(bucket_name, blob).
+    """
+    parsed_url = urllib.parse.urlparse(gcs_url)
+    if not parsed_url.netloc:
+        raise RheaError('Received an invalid GCS url `{}`'.format(gcs_url))
+    if parsed_url.scheme != 'gs':
+        raise RheaError('Received an invalid url GCS `{}`'.format(gcs_url))
+    blob = parsed_url.path.lstrip('/')
+    return GCSSpec(parsed_url.netloc, blob)
+
+
+def parse_s3_url(s3_url):
+    """
+    Parses and validates an S3 url.
+
+    Returns:
+         tuple(bucket_name, key).
+    """
+    parsed_url = urllib.parse.urlparse(s3_url)
+    if not parsed_url.netloc:
+        raise RheaError('Received an invalid S3 url `{}`'.format(s3_url))
+    else:
+        bucket_name = parsed_url.netloc
+        key = parsed_url.path.strip('/')
+        return S3Spec(bucket_name, key)
+
+
 TYPE_MAPPING = {
     types.INT: get_int,
     types.FLOAT: get_float,
@@ -513,4 +562,8 @@ TYPE_MAPPING = {
     types.URI: get_uri,
     types.AUTH: get_auth,
     types.LIST: get_list,
+    types.GCS_PATH: parse_gcs_url,
+    types.S3_PATH: parse_s3_url,
+    types.AZURE_PATH: parse_wasbs_url,
+    types.PATH: get_string
 }
