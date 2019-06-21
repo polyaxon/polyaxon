@@ -7,7 +7,7 @@ import six
 
 from collections import Mapping
 from distutils.util import strtobool  # pylint:disable=import-error
-from six.moves import urllib
+from six.moves import urllib  # pylint:disable=ungrouped-imports
 
 from rhea import types
 from rhea.constants import NO_VALUE_FOUND
