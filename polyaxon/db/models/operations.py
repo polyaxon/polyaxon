@@ -67,15 +67,7 @@ class Operation(DiffModel,
     """
     pipeline = models.ForeignKey(
         'db.Pipeline',
-        null=True,
-        blank=True,
         on_delete=models.CASCADE,
-        related_name='operations')
-    project = models.ForeignKey(
-        'db.Project',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         related_name='operations')
     schedule = models.OneToOneField(
         'db.Schedule',

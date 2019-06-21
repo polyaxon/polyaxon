@@ -93,20 +93,6 @@ class Migration(migrations.Migration):
             field=django.contrib.postgres.fields.jsonb.JSONField(blank=True, help_text='security context to impersonate while running the operation.', max_length=64, null=True),
         ),
         migrations.AddField(
-            model_name='operation',
-            name='project',
-            field=models.ForeignKey(blank=True, null=True,
-                                    on_delete=django.db.models.deletion.CASCADE,
-                                    related_name='operations', to='db.Project'),
-        ),
-        migrations.AlterField(
-            model_name='operation',
-            name='pipeline',
-            field=models.ForeignKey(blank=True, null=True,
-                                    on_delete=django.db.models.deletion.CASCADE,
-                                    related_name='operations', to='db.Pipeline'),
-        ),
-        migrations.AddField(
             model_name='operationrun',
             name='entity_content_type',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='contenttypes.ContentType'),
