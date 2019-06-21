@@ -185,7 +185,7 @@ def get_dict(key,
         options: list/tuple if provided, the value must be one of these values.
 
     Returns:
-        `str`: value corresponding to the key.
+        `dict`: value corresponding to the key.
     """
 
     def convert_to_dict(x):
@@ -238,7 +238,7 @@ def get_dict_of_dicts(key,
         options: list/tuple if provided, the value must be one of these values.
 
     Returns:
-        `str`: value corresponding to the key.
+        `dict or dict`: value corresponding to the key.
     """
     value = get_dict(
         key=key,
@@ -277,7 +277,7 @@ def get_uri(key,
         options: list/tuple if provided, the value must be one of these values.
 
     Returns:
-         `str`: value corresponding to the key.
+         `UriSpec`: value corresponding to the key.
     """
     if is_list:
         return _get_typed_list_value(key=key,
@@ -315,7 +315,7 @@ def get_auth(key,
         options: list/tuple if provided, the value must be one of these values.
 
     Returns:
-         `str`: value corresponding to the key.
+         `AuthSpec`: value corresponding to the key.
     """
     if is_list:
         return _get_typed_list_value(key=key,
@@ -352,7 +352,7 @@ def get_list(key,
         options: list/tuple if provided, the value must be one of these values.
 
     Returns:
-         `str`: value corresponding to the key.
+         `list`: value corresponding to the key.
     """
 
     def parse_list(v):
@@ -368,6 +368,120 @@ def get_list(key,
                             value=value,
                             target_type=list,
                             type_convert=parse_list,
+                            is_optional=is_optional,
+                            default=default,
+                            options=options)
+
+
+def get_wasbs_path(key,
+                   value,
+                   is_list=False,
+                   is_optional=False,
+                   default=None,
+                   options=None):
+    """
+    Get a the value corresponding to the key and converts it to `WasbsSpec`.
+
+    Args
+        key: the dict key.
+        value: the value to parse.
+        is_list: If this is one element or a list of elements.
+        is_optional: To raise an error if key was not found.
+        default: default value if is_optional is True.
+        options: list/tuple if provided, the value must be one of these values.
+
+    Returns:
+         `WasbsSpec`: value corresponding to the key.
+    """
+    if is_list:
+        return _get_typed_list_value(key=key,
+                                     value=value,
+                                     target_type=WasbsSpec,
+                                     type_convert=parse_wasbs_path,
+                                     is_optional=is_optional,
+                                     default=default,
+                                     options=options)
+
+    return _get_typed_value(key=key,
+                            value=value,
+                            target_type=WasbsSpec,
+                            type_convert=parse_wasbs_path,
+                            is_optional=is_optional,
+                            default=default,
+                            options=options)
+
+
+def get_gcs_path(key,
+                 value,
+                 is_list=False,
+                 is_optional=False,
+                 default=None,
+                 options=None):
+    """
+    Get a the value corresponding to the key and converts it to `GCSSpec`.
+
+    Args
+        key: the dict key.
+        value: the value to parse.
+        is_list: If this is one element or a list of elements.
+        is_optional: To raise an error if key was not found.
+        default: default value if is_optional is True.
+        options: list/tuple if provided, the value must be one of these values.
+
+    Returns:
+         `GCSSpec`: value corresponding to the key.
+    """
+    if is_list:
+        return _get_typed_list_value(key=key,
+                                     value=value,
+                                     target_type=GCSSpec,
+                                     type_convert=parse_gcs_path,
+                                     is_optional=is_optional,
+                                     default=default,
+                                     options=options)
+
+    return _get_typed_value(key=key,
+                            value=value,
+                            target_type=GCSSpec,
+                            type_convert=parse_gcs_path,
+                            is_optional=is_optional,
+                            default=default,
+                            options=options)
+
+
+def get_s3_path(key,
+                value,
+                is_list=False,
+                is_optional=False,
+                default=None,
+                options=None):
+    """
+    Get a the value corresponding to the key and converts it to `S3Spec`.
+
+    Args
+        key: the dict key.
+        value: the value to parse.
+        is_list: If this is one element or a list of elements.
+        is_optional: To raise an error if key was not found.
+        default: default value if is_optional is True.
+        options: list/tuple if provided, the value must be one of these values.
+
+    Returns:
+         `S3Spec`: value corresponding to the key.
+    """
+    if is_list:
+        return _get_typed_list_value(key=key,
+                                     value=value,
+                                     target_type=S3Spec,
+                                     type_convert=parse_s3_path,
+                                     is_optional=is_optional,
+                                     default=default,
+                                     options=options)
+
+    return _get_typed_value(key=key,
+                            value=value,
+                            target_type=S3Spec,
+                            type_convert=parse_s3_path,
                             is_optional=is_optional,
                             default=default,
                             options=options)
@@ -505,8 +619,8 @@ def parse_auth_spec(auth_spec):
     return AuthSpec(user=user_pass[0], password=user_pass[1])
 
 
-def parse_wasbs_url(wasbs_url):
-    parsed_url = urllib.parse.urlparse(wasbs_url)
+def parse_wasbs_path(wasbs_path):
+    parsed_url = urllib.parse.urlparse(wasbs_path)
     match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
     if match is None:
         raise RheaError(
@@ -520,32 +634,32 @@ def parse_wasbs_url(wasbs_url):
     return WasbsSpec(container, storage_account, path)
 
 
-def parse_gcs_url(gcs_url):
+def parse_gcs_path(gcs_path):
     """
     Parses and validates a google cloud storage url.
 
     Returns:
         tuple(bucket_name, blob).
     """
-    parsed_url = urllib.parse.urlparse(gcs_url)
+    parsed_url = urllib.parse.urlparse(gcs_path)
     if not parsed_url.netloc:
-        raise RheaError('Received an invalid GCS url `{}`'.format(gcs_url))
+        raise RheaError('Received an invalid GCS url `{}`'.format(gcs_path))
     if parsed_url.scheme != 'gs':
-        raise RheaError('Received an invalid url GCS `{}`'.format(gcs_url))
+        raise RheaError('Received an invalid url GCS `{}`'.format(gcs_path))
     blob = parsed_url.path.lstrip('/')
     return GCSSpec(parsed_url.netloc, blob)
 
 
-def parse_s3_url(s3_url):
+def parse_s3_path(s3_path):
     """
     Parses and validates an S3 url.
 
     Returns:
          tuple(bucket_name, key).
     """
-    parsed_url = urllib.parse.urlparse(s3_url)
+    parsed_url = urllib.parse.urlparse(s3_path)
     if not parsed_url.netloc:
-        raise RheaError('Received an invalid S3 url `{}`'.format(s3_url))
+        raise RheaError('Received an invalid S3 url `{}`'.format(s3_path))
     else:
         bucket_name = parsed_url.netloc
         key = parsed_url.path.strip('/')
@@ -562,8 +676,8 @@ TYPE_MAPPING = {
     types.URI: get_uri,
     types.AUTH: get_auth,
     types.LIST: get_list,
-    types.GCS_PATH: parse_gcs_url,
-    types.S3_PATH: parse_s3_url,
-    types.AZURE_PATH: parse_wasbs_url,
+    types.GCS_PATH: get_gcs_path,
+    types.S3_PATH: get_s3_path,
+    types.AZURE_PATH: get_wasbs_path,
     types.PATH: get_string
 }
