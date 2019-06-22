@@ -27,12 +27,12 @@ export function mapStateToProps(state: AppState, params: any) {
     const experimentParams: { [id: number]: { [key: string]: any } } = {};
     experimentNames.forEach(
       (experimentName: string, idx: number) => {
-        const declarations = state.experimentsParams.byUniqueNames[experimentName].declarations;
+        const params = state.experimentsParams.byUniqueNames[experimentName].params;
         const id = state.experimentsParams.byUniqueNames[experimentName].id;
-        experimentParams[id] = declarations;
+        experimentParams[id] = params;
       });
     if (!count && params.experiment) {
-      experimentParams[params.experiment.id] = params.experiment.declarations;
+      experimentParams[params.experiment.id] = params.experiment.params;
       count = 1;
     }
     return {experimentParams, count};
@@ -81,7 +81,7 @@ export function mapDispatchToProps(dispatch: Dispatch<metricsActions.MetricsActi
       if (params.resource === 'groups') {
         const filters = {
           group: params.id,
-          declarations: true,
+          params: true,
           all: true
         };
         return dispatch(experimentsActions.fetchExperiments(params.project, filters, false));

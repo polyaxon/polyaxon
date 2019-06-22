@@ -64,8 +64,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'framework': parse_value_operation,
         # Commit
         'commit': parse_value_operation,
-        # Declarations
-        'declarations': parse_value_operation,
+        # Params
+        'params': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
         # Metrics
@@ -101,8 +101,8 @@ class ExperimentQueryManager(BaseQueryManager):
         'framework': ValueCondition,
         # Commit
         'commit': ValueCondition,
-        # Declarations
-        'declarations': ValueCondition,
+        # Params
+        'params': ValueCondition,
         # Tags
         'tags': ArrayCondition,
         # Metrics

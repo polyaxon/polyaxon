@@ -69,7 +69,7 @@ class ResourceManager(BaseResourceManager):
                  use_sidecar=False,
                  sidecar_config=None,
                  log_level=None,
-                 declarations=None):
+                 params=None):
         super().__init__(
             namespace=namespace,
             project_name=project_name,
@@ -102,7 +102,7 @@ class ResourceManager(BaseResourceManager):
         self.experiment_uuid = experiment_uuid
         self.original_name = original_name
         self.cloning_strategy = cloning_strategy
-        self.declarations = declarations
+        self.params = params
         self.experiment_labels = self.get_experiment_labels()
         self.cluster_def = None
 
@@ -178,8 +178,8 @@ class ResourceManager(BaseResourceManager):
         return env_vars + [
             get_env_var(name=constants.CONFIG_MAP_CLUSTER_KEY_NAME,
                         value=json.dumps(self.cluster_def)),
-            get_env_var(name=constants.CONFIG_MAP_DECLARATIONS_KEY_NAME,
-                        value=self.declarations),
+            get_env_var(name=constants.CONFIG_MAP_PARAMS_KEY_NAME,
+                        value=self.params),
             get_env_var(name=constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME,
                         value=json.dumps(self.experiment_labels)),
         ]

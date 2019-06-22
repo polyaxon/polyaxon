@@ -166,8 +166,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
       if (extraFilters && (extraFilters.metrics === true || extraFilters.metrics === 'true')) {
         filters.metrics = extraFilters.metrics;
       }
-      if (extraFilters && (extraFilters.declarations === true || extraFilters.declarations === 'true')) {
-        filters.declarations = extraFilters.declarations;
+      if (extraFilters && (extraFilters.params === true || extraFilters.params === 'true')) {
+        filters.params = extraFilters.params;
       }
       if (extraFilters && (extraFilters.independent === true || extraFilters.independent === 'true')) {
         filters.independent = extraFilters.independent;

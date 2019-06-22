@@ -76,7 +76,7 @@ class TestExperimentDeclarationsSerializer(BaseTest):
         'uuid',
         'name',
         'unique_name',
-        'declarations',
+        'params',
     }
 
     def setUp(self):
@@ -131,7 +131,7 @@ class TestExperimentSerializer(BaseTest):
         'experiment_group',
         'build_job',
         'last_metric',
-        'declarations',
+        'params',
     }
 
     def setUp(self):
@@ -254,7 +254,7 @@ class TestExperimentDetailSerializer(BaseTest):
         'original',
         'cloning_strategy',
         'num_jobs',
-        'declarations',
+        'params',
         'resources',
         'data_refs',
         'run_env',

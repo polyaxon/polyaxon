@@ -68,7 +68,7 @@ export interface Props {
 
 interface State {
   metrics: string[];
-  declarations: string[];
+  params: string[];
   selectedValues: string[];
   items: number[];
   allItems: boolean;
@@ -83,7 +83,7 @@ export default class Experiments extends React.Component<Props, State> {
     super(props);
     this.state = {
       metrics: [],
-      declarations: [],
+      params: [],
       selectedValues: [],
       items: [],
       allItems: false,
@@ -137,14 +137,14 @@ export default class Experiments extends React.Component<Props, State> {
 
   public addColumn = (column: string) => {
     const metrics: string[] = [];
-    const declarations: string[] = [];
+    const params: string[] = [];
     const selectedValues = [...this.state.selectedValues, column];
     for (const value of selectedValues) {
       const columnValues = _.trim(value).split(':');
       if (columnValues.length > 1 && columnValues[0] === 'metric') {
         metrics.push(columnValues[1]);
       } else if (columnValues.length > 1 && columnValues[0] === 'param') {
-        declarations.push(columnValues[1]);
+        params.push(columnValues[1]);
       }
     }
 
@@ -152,7 +152,7 @@ export default class Experiments extends React.Component<Props, State> {
       ...prevState,
       ...{
         metrics,
-        declarations,
+        params,
         selectedValues
       }
     }));
@@ -161,7 +161,7 @@ export default class Experiments extends React.Component<Props, State> {
   public removeColumn = (value: string, type: string) => {
     const metrics = this.state.metrics.filter((
       item: string) => item !== value);
-    const declarations = this.state.declarations.filter((
+    const params = this.state.params.filter((
       item: string) => item !== value);
     const selectedValues = this.state.selectedValues.filter((
       item: string) => item !== `${type}:${value}`);
@@ -169,7 +169,7 @@ export default class Experiments extends React.Component<Props, State> {
       ...prevState,
       ...{
         metrics,
-        declarations,
+        params,
         selectedValues
       }
     }));
@@ -185,8 +185,8 @@ export default class Experiments extends React.Component<Props, State> {
             this.state.selectedValues.indexOf(`metric:${key}`) === -1)
           .map((key: string) => possibleColumns.push(`metric:${key}`));
       }
-      if (!_.isNil(experiment.declarations)) {
-        Object.keys(experiment.declarations)
+      if (!_.isNil(experiment.params)) {
+        Object.keys(experiment.params)
           .filter((key: string) =>
             possibleColumns.indexOf(`param:${key}`) === -1 &&
             this.state.selectedValues.indexOf(`param:${key}`) === -1)
@@ -199,20 +199,20 @@ export default class Experiments extends React.Component<Props, State> {
   public selectSearch = (search: SearchModel) => {
     const selectedValues = (_.isNil(search.meta) || _.isNil(search.meta.columns)) ? [] : search.meta.columns;
     const metrics: string[] = [];
-    const declarations: string[] = [];
+    const params: string[] = [];
     for (const value of selectedValues) {
       const columnValues = _.trim(value).split(':');
       if (columnValues.length > 1 && columnValues[0] === 'metric') {
         metrics.push(columnValues[1]);
       } else if (columnValues.length > 1 && columnValues[0] === 'param') {
-        declarations.push(columnValues[1]);
+        params.push(columnValues[1]);
       }
     }
     this.setState((prevState, prevProps) => ({
       ...prevState,
       ...{
         metrics,
-        declarations,
+        params,
         selectedValues
       }
     }));
@@ -310,7 +310,7 @@ export default class Experiments extends React.Component<Props, State> {
       return (
         <div>
           <form className="form-horizontal form-columns">
-            {this.state.declarations.map(
+            {this.state.params.map(
               (value: string, idx: number) =>
                 <AutocompleteLabel
                   key={idx}
@@ -340,17 +340,17 @@ export default class Experiments extends React.Component<Props, State> {
             <colgroup span={1}/>
             <colgroup span={1}/>
             {this.state.metrics.length > 0 && <colgroup span={this.state.metrics.length}/>}
-            {this.state.declarations.length > 0 && <colgroup span={this.state.declarations.length}/>}
+            {this.state.params.length > 0 && <colgroup span={this.state.params.length}/>}
             <colgroup span={1}/>
             <tbody>
-            {(this.state.metrics.length > 0 || this.state.declarations.length > 0) &&
+            {(this.state.metrics.length > 0 || this.state.params.length > 0) &&
             <tr className="list-header">
               <th className="top-header block" scope="colgroup" colSpan={5}/>
-              {this.state.declarations.length > 0 &&
+              {this.state.params.length > 0 &&
               <th
                 className="top-header border-left border-right block"
                 scope="colgroup"
-                colSpan={this.state.declarations.length}
+                colSpan={this.state.params.length}
               > Params
               </th>}
               {this.state.metrics.length > 0 &&
@@ -380,13 +380,13 @@ export default class Experiments extends React.Component<Props, State> {
               <th className="block">
                 Run
               </th>
-              {this.state.declarations.map((declaration: string, idx: number) =>
+              {this.state.params.map((declaration: string, idx: number) =>
                 <th
                   key={idx}
                   className={
                     'block ' +
                     (idx === 0 ? 'border-left ' : ' ') +
-                    (idx === this.state.declarations.length - 1 ? 'border-right ' : ' ')}
+                    (idx === this.state.params.length - 1 ? 'border-right ' : ' ')}
                 >
                   {declaration}
                 </th>
@@ -430,7 +430,7 @@ export default class Experiments extends React.Component<Props, State> {
                   <Experiment
                     key={xp.unique_name}
                     experiment={xp}
-                    declarations={this.state.declarations}
+                    params={this.state.params}
                     metrics={this.state.metrics}
                     onDelete={() => this.props.onDelete(xp.unique_name)}
                     onStop={() => this.props.onStop(xp.unique_name)}
@@ -443,7 +443,7 @@ export default class Experiments extends React.Component<Props, State> {
                     unbookmark={() => this.props.unbookmark(xp.unique_name)}
                     selectHandler={() => this.selectHandler(xp.id)}
                     selected={this.state.items.indexOf(xp.id) > -1}
-                    reducedForm={(this.state.metrics.length + this.state.declarations.length) > 4}
+                    reducedForm={(this.state.metrics.length + this.state.params.length) > 4}
                     removeFromSelection={
                       this.props.groupId && this.props.isSelection
                         ? () => this.removeFromSelection([xp.id])

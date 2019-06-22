@@ -39,7 +39,7 @@ def get_config_map(namespace,
                    cluster_def,
                    persistence_outputs,
                    persistence_data,
-                   declarations,
+                   params,
                    log_level):
     name = constants.CONFIG_MAP_NAME.format(uuid=experiment_uuid)
     labels = get_map_labels(project_name,
@@ -59,7 +59,7 @@ def get_config_map(namespace,
         temp=False)
     data = {
         constants.CONFIG_MAP_CLUSTER_KEY_NAME: json.dumps(cluster_def),
-        constants.CONFIG_MAP_DECLARATIONS_KEY_NAME: json.dumps(declarations) or '{}',
+        constants.CONFIG_MAP_PARAMS_KEY_NAME: json.dumps(params) or '{}',
         constants.CONFIG_MAP_EXPERIMENT_INFO_KEY_NAME: json.dumps(labels),
         constants.CONFIG_MAP_LOG_LEVEL_KEY_NAME: log_level,
         constants.CONFIG_MAP_RUN_OUTPUTS_PATH_KEY_NAME: experiment_outputs_path,

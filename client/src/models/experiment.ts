@@ -25,7 +25,7 @@ export class ExperimentModel {
   public updated_at: string;
   public started_at: string;
   public finished_at: string;
-  public declarations: { [key: string]: any };
+  public params: { [key: string]: any };
   public tags: string[] = [];
   public last_metric: { [metric: string]: number };
   public data_refs: { [key: string]: string };

@@ -368,8 +368,8 @@ class ExperimentGroup(DiffModel,
             experiment_ids=experiment_ids)
         return query.values_list('id', metric)
 
-    def get_experiments_declarations(self, experiment_ids: List[int] = None):
-        return self.experiments.filter(id__in=experiment_ids).values_list('id', 'declarations')
+    def get_experiments_params(self, experiment_ids: List[int] = None):
+        return self.experiments.filter(id__in=experiment_ids).values_list('id', 'params')
 
     @cached_property
     def search_manager(self) -> 'BaseSearchAlgorithmManager':

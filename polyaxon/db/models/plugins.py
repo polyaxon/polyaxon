@@ -54,4 +54,4 @@ class PluginJobBase(AbstractJobModel,
 
     @cached_property
     def config_map_refs(self) -> Optional[List[str]]:
-        return self.specification.configmap_refs
+        return self.specification.config_map_refs

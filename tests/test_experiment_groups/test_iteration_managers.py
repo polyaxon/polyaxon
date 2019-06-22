@@ -191,13 +191,13 @@ class TestBOIterationManagers(BaseTest):
         self.experiment_group = ExperimentGroupFactory(
             content=experiment_group_spec_content_bo)
         self.experiments_iter1 = [
-            ExperimentFactory(experiment_group=self.experiment_group, declarations={'i': i})
+            ExperimentFactory(experiment_group=self.experiment_group, params={'i': i})
             for i in range(2)]
         self.experiments_iter2 = [
-            ExperimentFactory(experiment_group=self.experiment_group, declarations={'i': i})
+            ExperimentFactory(experiment_group=self.experiment_group, params={'i': i})
             for i in range(2)]
         self.experiments_iter3 = [
-            ExperimentFactory(experiment_group=self.experiment_group, declarations={'i': i})
+            ExperimentFactory(experiment_group=self.experiment_group, params={'i': i})
             for i in range(2)]
         self.iteration_manager = BOIterationManager(experiment_group=self.experiment_group)
 
@@ -221,7 +221,7 @@ class TestBOIterationManagers(BaseTest):
         assert ExperimentGroupIteration.objects.count() == 0
         assert self.experiment_group.current_iteration == 0
         experiment_iter1_ids = [experiment.id for experiment in self.experiments_iter1]
-        experiments_iter1_configs = [[experiment.id, experiment.declarations]
+        experiments_iter1_configs = [[experiment.id, experiment.params]
                                      for experiment in reversed(self.experiments_iter1)]
         iteration = self.iteration_manager.create_iteration(num_suggestions=2)
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_iter1_ids)
@@ -254,7 +254,7 @@ class TestBOIterationManagers(BaseTest):
 
         # Creating a new iteration uses data from previous iteration
         experiment_iter2_ids = [experiment.id for experiment in self.experiments_iter2]
-        experiments_iter2_configs = [[experiment.id, experiment.declarations]
+        experiments_iter2_configs = [[experiment.id, experiment.params]
                                      for experiment in reversed(self.experiments_iter2)]
         iteration = self.iteration_manager.create_iteration(num_suggestions=2)
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_iter2_ids)
@@ -286,7 +286,7 @@ class TestBOIterationManagers(BaseTest):
 
         # Creating a new iteration uses data from previous iteration
         experiment_iter3_ids = [experiment.id for experiment in self.experiments_iter3]
-        experiments_iter3_configs = [[experiment.id, experiment.declarations]
+        experiments_iter3_configs = [[experiment.id, experiment.params]
                                      for experiment in reversed(self.experiments_iter3)]
         iteration = self.iteration_manager.create_iteration(num_suggestions=2)
         self.iteration_manager.add_iteration_experiments(experiment_ids=experiment_iter3_ids)

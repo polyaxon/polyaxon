@@ -136,7 +136,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
             />
             <div className="row">
               <div className="col-md-12">
-                <div className="meta meta-header meta-declarations">
+                <div className="meta meta-header meta-params">
                   <span
                     className="meta-info"
                     onClick={() => this.setState({ openDeclarations: !this.state.openDeclarations })}
@@ -150,7 +150,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
             <Collapse in={this.state.openDeclarations}>
               <div className="row">
                 <div className="col-md-12">
-                  <VerticalTable values={experiment.declarations || {}}/>
+                  <VerticalTable values={experiment.params || {}}/>
                 </div>
               </div>
             </Collapse>

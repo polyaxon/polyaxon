@@ -106,8 +106,8 @@ class TestComparisonCondition(BaseTest):
         ExperimentMetricFactory(values={'loss': 0.1, 'step': 1})
         ExperimentMetricFactory(values={'loss': 0.3, 'step': 10})
         ExperimentMetricFactory(values={'loss': 0.9, 'step': 100})
-        ExperimentFactory(declarations={'rate': 1, 'loss': 'foo'})
-        ExperimentFactory(declarations={'rate': -1, 'loss': 'bar'})
+        ExperimentFactory(params={'rate': 1, 'loss': 'foo'})
+        ExperimentFactory(params={'rate': -1, 'loss': 'bar'})
 
         eq_cond = ComparisonCondition(op='eq')
         neq_cond = ComparisonCondition(op='eq', negation=True)
@@ -134,27 +134,27 @@ class TestComparisonCondition(BaseTest):
 
         # neq must use the table directly
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__rate',
+                                  name='params__rate',
                                   params=1)
         assert queryset.count() == 4
 
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__rate',
+                                  name='params__rate',
                                   params=-1)
         assert queryset.count() == 4
 
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__rate',
+                                  name='params__rate',
                                   params=-12)
         assert queryset.count() == 5
 
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__loss',
+                                  name='params__loss',
                                   params='foo')
         assert queryset.count() == 4
 
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__loss',
+                                  name='params__loss',
                                   params='moo')
         assert queryset.count() == 5
 
@@ -432,9 +432,9 @@ class TestValueCondition(BaseTest):
         assert op == ~Q(field__in=['v1', 'v2'])
 
     def test_range_apply(self):
-        ExperimentFactory(declarations={'rate': 1, 'loss': 'foo'})
-        ExperimentFactory(declarations={'rate': -1, 'loss': 'bar'})
-        ExperimentFactory(declarations={'rate': 11.1, 'loss': 'moo'})
+        ExperimentFactory(params={'rate': 1, 'loss': 'foo'})
+        ExperimentFactory(params={'rate': -1, 'loss': 'bar'})
+        ExperimentFactory(params={'rate': 11.1, 'loss': 'moo'})
 
         eq_cond = ValueCondition(op='eq')
         neq_cond = ValueCondition(op='eq', negation=True)
@@ -443,75 +443,75 @@ class TestValueCondition(BaseTest):
 
         # eq
         queryset = eq_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__loss',
+                                 name='params__loss',
                                  params='foo')
         assert queryset.count() == 1
 
         queryset = eq_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__rate',
+                                 name='params__rate',
                                  params=0.2)
         assert queryset.count() == 0
 
         queryset = eq_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__rate',
+                                 name='params__rate',
                                  params=11.1)
         assert queryset.count() == 1
 
         # neq
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__loss',
+                                  name='params__loss',
                                   params='foo')
         assert queryset.count() == 2
 
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__rate',
+                                  name='params__rate',
                                   params=0.2)
         assert queryset.count() == 3
 
         queryset = neq_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__rate',
+                                  name='params__rate',
                                   params=11.1)
         assert queryset.count() == 2
 
         # in
         queryset = in_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__loss',
+                                 name='params__loss',
                                  params=['foo', 'bar'])
         assert queryset.count() == 2
 
         queryset = in_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__rate',
+                                 name='params__rate',
                                  params=[0.2, 11.1])
         assert queryset.count() == 1
 
         queryset = in_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__loss',
+                                 name='params__loss',
                                  params=['lll', 'ppp'])
         assert queryset.count() == 0
 
         queryset = in_cond.apply(queryset=Experiment.objects,
-                                 name='declarations__loss',
+                                 name='params__loss',
                                  params=['lll', 'ppp', 'foo', 'bar', 'moo'])
         assert queryset.count() == 3
 
         # in
         queryset = nin_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__loss',
+                                  name='params__loss',
                                   params=['foo', 'bar'])
         assert queryset.count() == 1
 
         queryset = nin_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__rate',
+                                  name='params__rate',
                                   params=[0.2, 11.1])
         assert queryset.count() == 2
 
         queryset = nin_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__loss',
+                                  name='params__loss',
                                   params=['lll', 'ppp'])
         assert queryset.count() == 3
 
         queryset = nin_cond.apply(queryset=Experiment.objects,
-                                  name='declarations__loss',
+                                  name='params__loss',
                                   params=['lll', 'ppp', 'foo', 'bar', 'moo'])
         assert queryset.count() == 0
 

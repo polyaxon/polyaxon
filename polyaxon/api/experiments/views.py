@@ -126,7 +126,7 @@ class ProjectExperimentListView(BookmarkedListMixinView,
     queryset = queries.experiments
     serializer_class = BookmarkedExperimentSerializer
     metrics_serializer_class = ExperimentLastMetricSerializer
-    declarations_serializer_class = ExperimentDeclarationsSerializer
+    params_serializer_class = ExperimentDeclarationsSerializer
     create_serializer_class = ExperimentCreateSerializer
     filter_backends = (QueryFilter, OrderingFilter,)
     query_manager = 'experiment'
@@ -144,11 +144,11 @@ class ProjectExperimentListView(BookmarkedListMixinView,
         if metrics_only:
             return self.metrics_serializer_class
 
-        declarations_only = to_bool(self.request.query_params.get('declarations', None),
-                                    handle_none=True,
-                                    exception=ValidationError)
-        if declarations_only:
-            return self.declarations_serializer_class
+        params_only = to_bool(self.request.query_params.get('params', None),
+                              handle_none=True,
+                              exception=ValidationError)
+        if params_only:
+            return self.params_serializer_class
 
         return self.serializer_class
 
@@ -281,7 +281,7 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
     serializer_class = ExperimentSerializer
     event_type = None
 
-    def clone(self, obj, content, declarations, update_code_reference, description):
+    def clone(self, obj, content, params, update_code_reference, description):
         pass
 
     def post(self, request, *args, **kwargs):
@@ -300,13 +300,13 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
 
         description = None
         content = None
-        declarations = None
+        params = None
         update_code_reference = False
         if 'content' in request.data:
             spec = validate_experiment_spec_config(
                 [obj.specification.raw_data, request.data['content']], raise_for_rest=True)
             content = spec.raw_data
-            declarations = spec.declarations
+            params = spec.params
         if 'update_code' in request.data:
             update_code_reference = to_bool(request.data['update_code'],
                                             handle_none=True,
@@ -315,7 +315,7 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
             description = request.data['description']
         new_obj = self.clone(obj=obj,
                              content=content,
-                             declarations=declarations,
+                             params=params,
                              update_code_reference=update_code_reference,
                              description=description)
         if ttl:
@@ -329,10 +329,10 @@ class ExperimentRestartView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     event_type = EXPERIMENT_RESTARTED_TRIGGERED
 
-    def clone(self, obj, content, declarations, update_code_reference, description):
+    def clone(self, obj, content, params, update_code_reference, description):
         return obj.restart(user=self.request.user,
                            content=content,
-                           declarations=declarations,
+                           params=params,
                            update_code_reference=update_code_reference,
                            description=description)
 
@@ -342,10 +342,10 @@ class ExperimentResumeView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     event_type = EXPERIMENT_RESUMED_TRIGGERED
 
-    def clone(self, obj, content, declarations, update_code_reference, description):
+    def clone(self, obj, content, params, update_code_reference, description):
         return obj.resume(user=self.request.user,
                           content=content,
-                          declarations=declarations,
+                          params=params,
                           update_code_reference=update_code_reference,
                           description=description)
 
@@ -355,10 +355,10 @@ class ExperimentCopyView(ExperimentCloneView):
     serializer_class = ExperimentSerializer
     event_type = EXPERIMENT_COPIED_TRIGGERED
 
-    def clone(self, obj, content, declarations, update_code_reference, description):
+    def clone(self, obj, content, params, update_code_reference, description):
         return obj.copy(user=self.request.user,
                         content=content,
-                        declarations=declarations,
+                        params=params,
                         update_code_reference=update_code_reference,
                         description=description)
 

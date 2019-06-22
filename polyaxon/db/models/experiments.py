@@ -89,7 +89,7 @@ class Experiment(DiffModel,
         null=True,
         related_name='experiments',
         help_text='The experiment group that generate this experiment.')
-    declarations = JSONField(
+    params = JSONField(
         blank=True,
         null=True,
         help_text='The parameters used for this experiment.')
@@ -181,7 +181,7 @@ class Experiment(DiffModel,
     def config_map_refs(self) -> Optional[List[str]]:
         if not self.specification:
             return None
-        return self.specification.configmap_refs
+        return self.specification.config_map_refs
 
     @cached_property
     def resources(self) -> Optional[PodResourcesConfig]:
@@ -287,7 +287,7 @@ class Experiment(DiffModel,
                user=None,
                description: str = None,
                content=None,
-               declarations: dict = None,
+               params: dict = None,
                code_reference=None,
                update_code_reference: bool = False,
                experiment_group=None) -> 'Experiment':
@@ -299,7 +299,7 @@ class Experiment(DiffModel,
             experiment_group=experiment_group,
             description=description or self.description,
             content=content or self.content,
-            declarations=declarations or self.declarations,
+            params=params or self.params,
             original_experiment=self,
             cloning_strategy=cloning_strategy,
             code_reference=code_reference)
@@ -310,7 +310,7 @@ class Experiment(DiffModel,
                user=None,
                description: str = None,
                content=None,
-               declarations: Dict = None,
+               params: Dict = None,
                code_reference=None,
                update_code_reference: bool = False,
                experiment_group=None) -> 'Experiment':
@@ -322,7 +322,7 @@ class Experiment(DiffModel,
                 user=user,
                 description=description,
                 content=content,
-                declarations=declarations,
+                params=params,
                 code_reference=code_reference,
                 update_code_reference=update_code_reference,
                 experiment_group=experiment_group or self.experiment_group)
@@ -333,7 +333,7 @@ class Experiment(DiffModel,
                            user=user,
                            description=description,
                            content=content,
-                           declarations=declarations,
+                           params=params,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference,
                            experiment_group=experiment_group or self.experiment_group)
@@ -342,7 +342,7 @@ class Experiment(DiffModel,
                 user=None,
                 description: str = None,
                 content=None,
-                declarations: Dict = None,
+                params: Dict = None,
                 code_reference=None,
                 update_code_reference: bool = False,
                 experiment_group=None) -> 'Experiment':
@@ -351,7 +351,7 @@ class Experiment(DiffModel,
                            user=user,
                            description=description,
                            content=content,
-                           declarations=declarations,
+                           params=params,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference,
                            experiment_group=experiment_group)
@@ -360,7 +360,7 @@ class Experiment(DiffModel,
              user=None,
              description: str = None,
              content=None,
-             declarations: Dict = None,
+             params: Dict = None,
              code_reference=None,
              update_code_reference: bool = False,
              experiment_group=None) -> 'Experiment':
@@ -369,7 +369,7 @@ class Experiment(DiffModel,
                            user=user,
                            description=description,
                            content=content,
-                           declarations=declarations,
+                           params=params,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference,
                            experiment_group=experiment_group)

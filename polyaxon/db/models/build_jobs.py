@@ -157,7 +157,7 @@ class BuildJob(AbstractJobModel,
                secret_refs=None,
                nocache=False) -> Tuple['BuildJob', bool]:
         build_spec = BuildSpecification.create_specification(config,
-                                                             configmap_refs=config_map_refs,
+                                                             config_map_refs=config_map_refs,
                                                              secret_refs=secret_refs,
                                                              to_dict=False)
         if not nocache and build_spec.config.nocache is not None:

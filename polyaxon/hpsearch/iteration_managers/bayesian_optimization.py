@@ -46,7 +46,7 @@ class BOIterationManager(BaseIterationManager):
             experiment_ids=iteration_config.experiment_ids,
             metric=self.get_metric_name()
         )
-        experiments_configs = self.experiment_group.get_experiments_declarations(
+        experiments_configs = self.experiment_group.get_experiments_params(
             experiment_ids=iteration_config.experiment_ids
         )
         iteration_config.experiments_configs = list(experiments_configs)

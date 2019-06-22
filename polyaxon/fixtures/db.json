@@ -14596,7 +14596,7 @@
         "build_job": 1,
         "framework": null,
         "experiment_group": null,
-        "declarations": null,
+        "params": null,
         "content": "{\"run\": {\"cmd\": \"python3 model.py\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1}",
         "run_env": {
             "in_cluster": true
@@ -14640,7 +14640,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": null,
-        "declarations": null,
+        "params": null,
         "content": "{\"run\": {\"cmd\": \"python3 model.py\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1}",
         "run_env": {
             "in_cluster": true
@@ -14684,7 +14684,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": null,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "relu",
@@ -14692,7 +14692,7 @@
             "num_epochs": 1,
             "learning_rate": 0.001
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\ --num_steps=500 \\\\ --learning_rate=0.001 \\\\ --dropout=0.25 \\\\ --num_epochs=1 \\\\ --activation=relu \\\\ --num_iterations=40\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.001}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\ --num_steps=500 \\\\ --learning_rate=0.001 \\\\ --dropout=0.25 \\\\ --num_epochs=1 \\\\ --activation=relu \\\\ --num_iterations=40\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.001}}",
         "run_env": {
             "in_cluster": true
         },
@@ -14735,7 +14735,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "sigmoid",
@@ -14743,7 +14743,7 @@
             "num_epochs": 1,
             "learning_rate": 0.07525000000000001
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.07525000000000001 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.07525000000000001}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.07525000000000001 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.07525000000000001}}",
         "run_env": {
             "in_cluster": true
         },
@@ -14786,7 +14786,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.3,
             "num_steps": 500,
             "activation": "sigmoid",
@@ -14794,7 +14794,7 @@
             "num_epochs": 1,
             "learning_rate": 0.025750000000000002
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.025750000000000002 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.025750000000000002}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.025750000000000002 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.025750000000000002}}",
         "run_env": {
             "in_cluster": true
         },
@@ -14837,7 +14837,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "relu",
@@ -14845,7 +14845,7 @@
             "num_epochs": 1,
             "learning_rate": 0.1
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.1 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.1}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.1 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.1}}",
         "run_env": {
             "in_cluster": true
         },
@@ -14888,7 +14888,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.3,
             "num_steps": 500,
             "activation": "sigmoid",
@@ -14896,7 +14896,7 @@
             "num_epochs": 1,
             "learning_rate": 0.07525000000000001
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.07525000000000001 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.07525000000000001}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.07525000000000001 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.07525000000000001}}",
         "run_env": {
             "in_cluster": true
         },
@@ -14939,7 +14939,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.3,
             "num_steps": 500,
             "activation": "relu",
@@ -14947,7 +14947,7 @@
             "num_epochs": 1,
             "learning_rate": 0.0505
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.0505 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.0505}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.0505 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.0505}}",
         "run_env": {
             "in_cluster": true
         },
@@ -14990,7 +14990,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.3,
             "num_steps": 500,
             "activation": "relu",
@@ -14998,7 +14998,7 @@
             "num_epochs": 1,
             "learning_rate": 0.025750000000000002
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.025750000000000002 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.025750000000000002}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.025750000000000002 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.025750000000000002}}",
         "run_env": {
             "in_cluster": true
         },
@@ -15041,7 +15041,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "relu",
@@ -15049,7 +15049,7 @@
             "num_epochs": 1,
             "learning_rate": 0.001
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.001 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.001}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.001 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.001}}",
         "run_env": {
             "in_cluster": true
         },
@@ -15092,7 +15092,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "sigmoid",
@@ -15100,7 +15100,7 @@
             "num_epochs": 1,
             "learning_rate": 0.0505
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.0505 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.0505}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.0505 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.0505}}",
         "run_env": {
             "in_cluster": true
         },
@@ -15143,7 +15143,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.3,
             "num_steps": 500,
             "activation": "sigmoid",
@@ -15151,7 +15151,7 @@
             "num_epochs": 1,
             "learning_rate": 0.1
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.1 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.1}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.1 \\\\\\\\ --dropout=0.3 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=sigmoid\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.3, \"num_steps\": 500, \"activation\": \"sigmoid\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.1}}",
         "run_env": {
             "in_cluster": true
         },
@@ -15194,7 +15194,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": 2,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "relu",
@@ -15202,7 +15202,7 @@
             "num_epochs": 1,
             "learning_rate": 0.025750000000000002
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.025750000000000002 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.025750000000000002}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\\\\\ --num_steps=500 \\\\\\\\ --learning_rate=0.025750000000000002 \\\\\\\\ --dropout=0.25 \\\\\\\\ --num_epochs=1 \\\\\\\\ --activation=relu\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.025750000000000002}}",
         "run_env": {
             "in_cluster": true
         },
@@ -15245,7 +15245,7 @@
         "build_job": 2,
         "framework": null,
         "experiment_group": null,
-        "declarations": {
+        "params": {
             "dropout": 0.25,
             "num_steps": 500,
             "activation": "relu",
@@ -15253,7 +15253,7 @@
             "num_epochs": 1,
             "learning_rate": 0.001
         },
-        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\ --num_steps=500 \\\\ --learning_rate=0.001 \\\\ --dropout=0.25 \\\\ --num_epochs=1 \\\\ --activation=relu \\\\ --num_iterations=40\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"declarations\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.001}}",
+        "content": "{\"run\": {\"cmd\": \"python3 model.py --batch_size=128 \\\\ --num_steps=500 \\\\ --learning_rate=0.001 \\\\ --dropout=0.25 \\\\ --num_epochs=1 \\\\ --activation=relu \\\\ --num_iterations=40\"}, \"kind\": \"experiment\", \"build\": {\"image\": \"tensorflow/tensorflow:1.4.1-py3\", \"build_steps\": [\"pip3 install --no-cache-dir -U polyaxon-helper\"]}, \"version\": 1, \"params\": {\"dropout\": 0.25, \"num_steps\": 500, \"activation\": \"relu\", \"batch_size\": 128, \"num_epochs\": 1, \"learning_rate\": 0.001}}",
         "run_env": {
             "in_cluster": true
         },
@@ -15291,7 +15291,7 @@
         ],
         "project": 5,
         "group_type": "study",
-        "content": "{'version': 1, 'kind': 'group', 'hptuning': {'concurrency': 5, 'random_search': {'n_experiments': 10}, 'matrix': {'learning_rate': {'linspace': '0.001:0.1:5'}, 'dropout': {'values': [0.25, 0.3]}, 'activation': {'values': ['relu', 'sigmoid']}}}, 'declarations': {'batch_size': 128, 'num_steps': 500, 'num_epochs': 1}, 'build': {'image': 'tensorflow/tensorflow:1.4.1-py3', 'build_steps': ['pip3 install --no-cache-dir -U polyaxon-helper']}, 'run': {'cmd': 'python3 model.py --batch_size={{ batch_size }} \\\\ --num_steps={{ num_steps }} \\\\ --learning_rate={{ learning_rate }} \\\\ --dropout={{ dropout }} \\\\ --num_epochs={{ num_epochs }} \\\\ --activation={{ activation }}'}}",
+        "content": "{'version': 1, 'kind': 'group', 'hptuning': {'concurrency': 5, 'random_search': {'n_experiments': 10}, 'matrix': {'learning_rate': {'linspace': '0.001:0.1:5'}, 'dropout': {'values': [0.25, 0.3]}, 'activation': {'values': ['relu', 'sigmoid']}}}, 'params': {'batch_size': 128, 'num_steps': 500, 'num_epochs': 1}, 'build': {'image': 'tensorflow/tensorflow:1.4.1-py3', 'build_steps': ['pip3 install --no-cache-dir -U polyaxon-helper']}, 'run': {'cmd': 'python3 model.py --batch_size={{ batch_size }} \\\\ --num_steps={{ num_steps }} \\\\ --learning_rate={{ learning_rate }} \\\\ --dropout={{ dropout }} \\\\ --num_epochs={{ num_epochs }} \\\\ --activation={{ activation }}'}}",
         "hptuning": {
             "seed": null,
             "matrix": {

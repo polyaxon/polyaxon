@@ -340,6 +340,11 @@ class Migration(migrations.Migration):
             name='valid',
             field=models.NullBooleanField(default=True),
         ),
+        migrations.RenameField(
+            model_name='experiment',
+            old_name='declarations',
+            new_name='params',
+        ),
         migrations.RunPython(migrate_build_jobs_config),
         migrations.RunPython(migrate_experiments_config),
         migrations.RunPython(migrate_jobs_config),

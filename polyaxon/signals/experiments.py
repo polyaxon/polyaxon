@@ -30,8 +30,8 @@ _logger = logging.getLogger('polyaxon.signals.experiments')
 def experiment_pre_save(sender, **kwargs):
     instance = kwargs['instance']
     # Check if declarations need to be set
-    if not instance.declarations and instance.specification:
-        instance.declarations = instance.specification.declarations
+    if not instance.params and instance.specification:
+        instance.params = instance.specification.params
     set_tags(instance=instance)
     set_persistence(instance=instance)
     set_outputs(instance=instance)

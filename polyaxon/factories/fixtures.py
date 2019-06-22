@@ -219,47 +219,6 @@ experiment_group_spec_content_bo = """---
       cmd: video_prediction_train --model=DNA --num_masks=1
 """
 
-experiment_spec_content = """---
-    version: 1
-    
-    kind: experiment
-    
-    tags: [fixtures]
-
-    model:
-      model_type: regressor
-      loss:
-        MeanSquaredError:
-      optimizer:
-        Adam:
-          learning_rate: 0.7
-      graph:
-        input_layers: images
-        layers:
-          - Conv2D:
-              filters: 64
-              kernel_size: [3, 3]
-              strides: [1, 1]
-              activation: relu
-          - MaxPooling2D:
-              kernels: 2
-          - Flatten:
-          - Dense:
-              units: 10
-              activation: softmax
-
-    train:
-      data_pipeline:
-        TFRecordImagePipeline:
-          batch_size: 64
-          num_epochs: 1
-          shuffle: true
-          dynamic_pad: false
-          data_files: ["../data/mnist/mnist_train.tfrecord"]
-          meta_data_file: "../data/mnist/meta_data.json"
-"""
-experiment_spec_parsed_content = ExperimentSpecification.read(experiment_spec_content)
-
 exec_experiment_spec_content = """---
     version: 1
     
@@ -320,7 +279,7 @@ exec_experiment_resources_content = """---
     
     framework: tensorflow
 
-    declarations:
+    params:
       lr: 0.1
       dropout: 0.5
     
@@ -357,37 +316,11 @@ exec_experiment_resources_content = """---
               requests: 100
               limits: 200
 
-    model:
-      model_type: regressor
-      loss:
-        MeanSquaredError:
-      optimizer:
-        Adam:
-          learning_rate: 0.7
-      graph:
-        input_layers: images
-        layers:
-          - Conv2D:
-              filters: 64
-              kernel_size: [3, 3]
-              strides: [1, 1]
-              activation: relu
-          - MaxPooling2D:
-              kernels: 2
-          - Flatten:
-          - Dense:
-              units: 10
-              activation: softmax
+    build:
+      image: my_image
 
-    train:
-      data_pipeline:
-        TFRecordImagePipeline:
-          batch_size: 64
-          num_epochs: 1
-          shuffle: true
-          dynamic_pad: false
-          data_files: ["../data/mnist/mnist_train.tfrecord"]
-          meta_data_file: "../data/mnist/meta_data.json"
+    run:
+      cmd: video_prediction_train --model=DNA --num_masks=1
 """
 exec_experiment_resources_parsed_content = ExperimentSpecification.read(
     exec_experiment_resources_content)

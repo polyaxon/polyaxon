@@ -86,7 +86,7 @@ class ExperimentSpawner(K8SManager):
             log_level=self.spec.log_level if self.spec else None,
             original_name=self.original_name,
             cloning_strategy=self.cloning_strategy,
-            declarations=self.spec.declarations if self.spec else None,
+            params=self.spec.params if self.spec else None,
             health_check_url=get_experiment_health_url(self.experiment_name))
         self.token_scope = token_scope
         self.ports = self.get_ports(ports=ports)
@@ -202,7 +202,7 @@ class ExperimentSpawner(K8SManager):
             outputs_refs_jobs=self.outputs_refs_jobs,
             outputs_refs_experiments=self.outputs_refs_experiments,
             secret_refs=self.spec.secret_refs,
-            config_map_refs=self.spec.configmap_refs,
+            config_map_refs=self.spec.config_map_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
@@ -303,7 +303,7 @@ class ExperimentSpawner(K8SManager):
             cloning_strategy=self.cloning_strategy,
             cluster_def=self.get_cluster(),
             persistence_outputs=self.persistence_config.outputs,
-            declarations=self.spec.declarations,
+            params=self.spec.params,
             log_level=self.spec.log_level,
             persistence_data=self.persistence_config.data,
         )

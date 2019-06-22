@@ -92,7 +92,7 @@ class JobMixin(UniqueNameMixin):
     def config_map_refs(self) -> Optional[List[str]]:
         if not self.specification:
             return None
-        return self.specification.configmap_refs
+        return self.specification.config_map_refs
 
     @cached_property
     def resources(self) -> Optional[PodResourcesConfig]:

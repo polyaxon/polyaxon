@@ -81,7 +81,7 @@ class KFExperimentSpawner(ExperimentSpawner):
             outputs_refs_jobs=self.outputs_refs_jobs,
             outputs_refs_experiments=self.outputs_refs_experiments,
             secret_refs=self.spec.secret_refs,
-            config_map_refs=self.spec.configmap_refs,
+            config_map_refs=self.spec.config_map_refs,
             resources=resources,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,

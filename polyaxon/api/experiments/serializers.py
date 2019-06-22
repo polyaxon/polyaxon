@@ -114,7 +114,7 @@ class ExperimentDeclarationsSerializer(serializers.ModelSerializer):
             'uuid',
             'name',
             'unique_name',
-            'declarations',
+            'params',
         )
 
 
@@ -152,7 +152,7 @@ class ExperimentSerializer(serializers.ModelSerializer, BuildMixin, ProjectMixin
             'framework',
             'tags',
             'last_metric',
-            'declarations',
+            'params',
         )
         extra_kwargs = {
             'original_experiment': {'write_only': True},
@@ -216,14 +216,14 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
         # TODO: Add type handling for experiments
         return {k: round(v, 7) for k, v in obj.last_metric.items()} if obj.last_metric else None
 
-    def validated_declarations(self, validated_data, declarations):
-        new_declarations = validated_data.get('declarations')
-        if not validated_data.get('merge') or not declarations or not new_declarations:
+    def validated_params(self, validated_data, params):
+        new_params = validated_data.get('params')
+        if not validated_data.get('merge') or not params or not new_params:
             # This is the default behavior
             return validated_data
 
-        declarations.update(new_declarations)
-        validated_data['declarations'] = declarations
+        params.update(new_params)
+        validated_data['params'] = params
         return validated_data
 
     def update(self, instance, validated_data):
@@ -231,8 +231,8 @@ class ExperimentDetailSerializer(BookmarkedExperimentSerializer,
                                              tags=instance.tags)
         validated_data = self.validated_data_refs(validated_data=validated_data,
                                                   data_refs=instance.data_refs)
-        validated_data = self.validated_declarations(validated_data=validated_data,
-                                                     declarations=instance.declarations)
+        validated_data = self.validated_params(validated_data=validated_data,
+                                               params=instance.params)
         validated_data = self.validated_name(validated_data,
                                              project=instance.project,
                                              query=Experiment.all)
@@ -262,7 +262,7 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'experiment_group',
             'build_job',
             'content',
-            'declarations',
+            'params',
             'backend',
             'framework',
             'is_managed',

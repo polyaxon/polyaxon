@@ -93,21 +93,21 @@ class HyperbandIterationManager(BaseIterationManager):
 
         # Check if we need to resume or restart the experiments
         for experiment in experiments:
-            declarations = experiment.declarations
-            declarations[resource_name] = resource_value
-            declarations_spec = {'declarations': declarations}
-            specification = experiment.specification.patch(declarations_spec)
+            params = experiment.params
+            params[resource_name] = resource_value
+            params_spec = {'params': params}
+            specification = experiment.specification.patch(params_spec)
             status_message = 'Hyperband iteration: {}, bracket iteration: {}'.format(
                 iteration_config.iteration,
                 iteration_config.bracket_iteration)
 
             if hptuning_config.hyperband.resume:
                 experiment.resume(
-                    declarations=declarations,
+                    params=params,
                     content=specification.raw_data,
                     message=status_message)
             else:
                 experiment.restart(
                     experiment_group=self.experiment_group,
-                    declarations=declarations,
+                    params=params,
                     content=specification.raw_data)

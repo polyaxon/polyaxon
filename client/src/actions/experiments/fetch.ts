@@ -103,7 +103,7 @@ function _fetchExperiments(experimentsUrl: string,
   }
 
   const dispatchActionCreator = (results: any, count: number) => {
-    if (filters && filters.declarations) {
+    if (filters && filters.params) {
       return dispatch(fetchExperimentsParamsSuccessActionCreator(results, count));
     }
     if (endpointList === BOOKMARKS) {

@@ -27,7 +27,7 @@ import ExperimentActions from './experimentActions';
 export interface Props {
   experiment: ExperimentModel;
   metrics: string[];
-  declarations: string[];
+  params: string[];
   onDelete: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
   onRestart: () => actions.ExperimentAction;
@@ -46,7 +46,7 @@ export interface Props {
 function Experiment({
                       experiment,
                       metrics,
-                      declarations,
+                      params,
                       onDelete,
                       onStop,
                       onRestart,
@@ -147,9 +147,9 @@ function Experiment({
       <td className="block">
         <TaskRunMetaInfo startedAt={experiment.started_at} finishedAt={experiment.finished_at}/>
       </td>
-      {declarations.length > 0 && declarations.map((declaration: string, idx: number) =>
+      {params.length > 0 && params.map((param: string, idx: number) =>
         <td className="block" key={idx}>
-          {experiment.declarations ? JSON.stringify(experiment.declarations[declaration]) : ''}
+          {experiment.params ? JSON.stringify(experiment.params[param]) : ''}
         </td>)
       }
       {metrics.length > 0 && metrics.map((metric: string, idx: number) =>

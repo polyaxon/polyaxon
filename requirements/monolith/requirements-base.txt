@@ -10,7 +10,7 @@ polyaxon-dockerizer==0.0.4
 polyaxon-k8s==0.4.2
 polyaxon-gpustat==0.3.4
 polyaxon-nginx==0.5.0
-polystores==0.1.8
+polystores==0.1.9
 scikit-learn==0.20.0
 scipy==1.1.0
 uWSGI==2.0.18
