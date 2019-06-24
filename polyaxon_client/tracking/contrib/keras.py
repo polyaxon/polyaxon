@@ -9,7 +9,7 @@ try:
     from keras.callbacks import Callback
 except ImportError:
     try:
-        from tensorflow.python.keras.callbacks import Callback
+        from tensorflow.keras.callbacks import Callback
     except ImportError:
         raise PolyaxonClientException('Keras is required to use PolyaxonKeras')
 
