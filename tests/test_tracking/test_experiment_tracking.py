@@ -37,24 +37,24 @@ class TestExperimentTracking(TestEnvVarsCase):
         }
         self.check_valid_dict_value('POLYAXON_CLUSTER', Experiment.get_cluster_def, cluster_def)
 
-    def test_declarations_checks_is_managed(self):
+    def test_params_checks_is_managed(self):
         settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
-            Experiment.get_declarations()
+            Experiment.get_params()
 
-    def test_empty_declarations(self):
-        self.check_empty_value('POLYAXON_DECLARATIONS', Experiment.get_declarations)
+    def test_empty_params(self):
+        self.check_empty_value('POLYAXON_PARAMS', Experiment.get_params)
 
-    def test_non_dict_declarations(self):
-        self.check_non_dict_value('POLYAXON_DECLARATIONS', Experiment.get_declarations)
+    def test_non_dict_params(self):
+        self.check_non_dict_value('POLYAXON_PARAMS', Experiment.get_params)
 
-    def test_dict_declarations(self):
-        declarations = {
+    def test_dict_params(self):
+        params = {
             "foo": "bar"
         }
-        self.check_valid_dict_value('POLYAXON_DECLARATIONS',
-                                    Experiment.get_declarations,
-                                    declarations)
+        self.check_valid_dict_value('POLYAXON_PARAMS',
+                                    Experiment.get_params,
+                                    params)
 
     def test_experiment_info_checks_is_managed(self):
         settings.IS_MANAGED = False

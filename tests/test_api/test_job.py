@@ -384,7 +384,7 @@ class TestJobApi(TestBaseApi):
     @httpretty.activate
     def test_copy_job_with_config(self):
         job = JobConfig().to_dict()
-        config = {'config': {'declarations': {'lr': 0.1}}}
+        config = {'config': {'params': {'lr': 0.1}}}
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(

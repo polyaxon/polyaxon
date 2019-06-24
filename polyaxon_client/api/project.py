@@ -259,7 +259,7 @@ class ProjectApi(BaseApiHandler):
                          independent=None,
                          group=None,
                          metrics=None,
-                         declarations=None,
+                         params=None,
                          query=None,
                          sort=None,
                          page=1):
@@ -267,20 +267,20 @@ class ProjectApi(BaseApiHandler):
         request_url = self.build_url(self._get_http_url(), username, project_name, 'experiments')
 
         try:
-            params = self.get_page(page=page)
+            request_params = self.get_page(page=page)
             if independent:
-                params['independent'] = independent
+                request_params['independent'] = independent
             if group:
-                params['group'] = group
+                request_params['group'] = group
             if metrics:
-                params['metrics'] = metrics
-            if declarations:
-                params['declarations'] = declarations
+                request_params['metrics'] = metrics
+            if params:
+                request_params['params'] = params
             if query:
-                params['query'] = query
+                request_params['query'] = query
             if sort:
-                params['sort'] = sort
-            response = self.transport.get(request_url, params=params)
+                request_params['sort'] = sort
+            response = self.transport.get(request_url, params=request_params)
             return self.prepare_list_results(response.json(), page, ExperimentConfig)
         except PolyaxonClientException as e:
             self.transport.handle_exception(e=e, log_message='Error while retrieving experiments.')

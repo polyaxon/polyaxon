@@ -437,10 +437,10 @@ class TestProjectApi(TestBaseApi):
         assert len(response['results']) == 10
         assert isinstance(response['results'][0], Mapping)
 
-        # Metrics & Declarations
+        # Metrics & params
         for xp in xps:
             xp['last_metric'] = {'loss': 0.1}
-            xp['declarations'] = {'foo': 'bar'}
+            xp['params'] = {'foo': 'bar'}
 
         httpretty.register_uri(
             httpretty.GET,
@@ -464,12 +464,12 @@ class TestProjectApi(TestBaseApi):
                 '/',
                 'user',
                 'project',
-                'experiments') + '?declarations=true',
+                'experiments') + '?params=true',
             body=json.dumps({'results': xps, 'count': 10, 'next': None}),
             content_type='application/json',
             status=200)
 
-        response = self.api_handler.list_experiments('user', 'project', declarations=True, page=2)
+        response = self.api_handler.list_experiments('user', 'project', params=True, page=2)
         assert len(response['results']) == 10
 
         # Query, Sort

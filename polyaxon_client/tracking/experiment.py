@@ -216,6 +216,7 @@ class Experiment(BaseTracker):
         self._update({'framework': framework})
 
     @staticmethod
+    @check_no_op
     def get_cluster_def():
         """Returns cluster definition created by polyaxon.
         {
@@ -226,9 +227,6 @@ class Experiment(BaseTracker):
         }
         :return: dict
         """
-        if settings.NO_OP:
-            return None
-
         ensure_is_managed()
 
         cluster = os.getenv('POLYAXON_CLUSTER', None)
@@ -240,11 +238,9 @@ class Experiment(BaseTracker):
             return None
 
     @staticmethod
+    @check_no_op
     def get_task_info():
         """Returns the task info: {"type": str, "index": int}."""
-        if settings.NO_OP:
-            return None
-
         ensure_is_managed()
 
         info = os.getenv('POLYAXON_TASK_INFO', None)
@@ -281,6 +277,7 @@ class Experiment(BaseTracker):
         return tf_config
 
     @staticmethod
+    @check_no_op
     def get_experiment_info():
         """
         Returns information about the experiment:
@@ -291,9 +288,6 @@ class Experiment(BaseTracker):
             * experiment_group_uuid
             * experiment_uuid
         """
-        if settings.NO_OP:
-            return None
-
         ensure_is_managed()
 
         info = os.getenv('POLYAXON_EXPERIMENT_INFO', None)
@@ -304,34 +298,30 @@ class Experiment(BaseTracker):
                   'please make sure this is running inside a polyaxon job.')
             return None
 
+    @classmethod
+    def get_declarations(cls):
+        """Deprecated, please use get_params"""
+        return cls.get_params()
+
     @staticmethod
-    def get_declarations():
+    @check_no_op
+    def get_params():
         """
-        Returns all the experiment declarations based on both:
-            * declarations section
+        Returns all the experiment params based on both:
+            * params section
+            * optional inputs
+            * optional outputs
             * matrix section
         """
-        if settings.NO_OP:
-            return None
-
         ensure_is_managed()
 
-        declarations = os.getenv('POLYAXON_DECLARATIONS', None)
+        params = os.getenv('POLYAXON_PARAMS', None)
         try:
-            return json.loads(declarations) if declarations else None
+            return json.loads(params) if params else None
         except (ValueError, TypeError):
-            print('Could get declarations, '
+            print('Could get params, '
                   'please make sure this is running inside a polyaxon job.')
             return None
-
-    @check_no_op
-    def get_params(self):
-        """
-        Returns all the experiment declarations based on both:
-            * declarations section
-            * matrix section
-        """
-        return self.get_declarations()
 
     @check_no_op
     def get_outputs_path(self):

@@ -205,7 +205,7 @@ class BaseTracker(object):
 
     @check_no_op
     def log_params(self, reset=False, **params):
-        patch_dict = {'declarations': params}
+        patch_dict = {'params': params}
         if reset is False:
             patch_dict['merge'] = True
         self._update(patch_dict)
