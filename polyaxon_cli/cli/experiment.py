@@ -40,9 +40,9 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
     if experiment.resources:
         get_resources(experiment.resources.to_dict(), header="Experiment resources:")
 
-    if experiment.declarations:
-        Printer.print_header("Experiment declarations:")
-        dict_tabulate(experiment.declarations)
+    if experiment.params:
+        Printer.print_header("Experiment params:")
+        dict_tabulate(experiment.params)
 
     if experiment.last_metric:
         Printer.print_header("Experiment last metrics:")
@@ -52,7 +52,7 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
         humanize_values=True,
         exclude_attrs=[
             'uuid', 'config', 'project', 'experiments', 'description',
-            'declarations', 'last_metric', 'resources', 'jobs', 'run_env'
+            'params', 'last_metric', 'resources', 'jobs', 'run_env'
         ])
 
     Printer.print_header("Experiment info:")

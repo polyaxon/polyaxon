@@ -22,7 +22,7 @@ from polyaxon_cli.schemas import ProjectConfig
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
-    get_experiments_with_declarations,
+    get_experiments_with_params,
     get_experiments_with_metrics,
     get_meta_response,
     list_dicts_to_tabulate
@@ -411,8 +411,8 @@ def jobs(ctx, query, sort, page):
 
 @project.command()
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
-@click.option('--declarations', '-d', is_flag=True,
-              help='List experiments with their declarations/params.')
+@click.option('--params', '-p', is_flag=True,
+              help='List experiments with their params.')
 @click.option('--independent', '-i', is_flag=True, help='To return only independent experiments.')
 @click.option('--group', '-g', type=int, help='To filter experiments for a specific group.')
 @click.option('--query', '-q', type=str,
@@ -422,7 +422,7 @@ def jobs(ctx, query, sort, page):
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def experiments(ctx, metrics, declarations, independent, group, query, sort, page):
+def experiments(ctx, metrics, params, independent, group, query, sort, page):
     """List experiments for this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -437,14 +437,14 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
     ```
 
     Get all experiments with with status {created or running}, and
-    creation date between 2018-01-01 and 2018-01-02, and declarations activation equal to sigmoid
+    creation date between 2018-01-01 and 2018-01-02, and params activation equal to sigmoid
     and metric loss less or equal to 0.2
 
     \b
     ```bash
     $ polyaxon project experiments \
       -q "status:created|running, started_at:2018-01-01..2018-01-02, \
-          declarations.activation:sigmoid, metric.loss:<=0.2"
+          params.activation:sigmoid, metric.loss:<=0.2"
     ```
 
     Get all experiments sorted by update date
@@ -463,7 +463,7 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
                                                              independent=independent,
                                                              group=group,
                                                              metrics=metrics,
-                                                             declarations=declarations,
+                                                             params=params,
                                                              query=query,
                                                              sort=sort,
                                                              page=page)
@@ -482,8 +482,8 @@ def experiments(ctx, metrics, declarations, independent, group, query, sort, pag
 
     if metrics:
         objects = get_experiments_with_metrics(response)
-    elif declarations:
-        objects = get_experiments_with_declarations(response)
+    elif params:
+        objects = get_experiments_with_params(response)
     else:
         objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
                    for o in response['results']]

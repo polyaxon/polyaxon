@@ -169,7 +169,7 @@ class Printer(object):
         sys.stdout.flush()
 
 
-def get_experiments_with_params(response, params_key, extra_attrs=None):
+def get_experiments_with_keys(response, params_key, extra_attrs=None):
     if not extra_attrs:
         extra_attrs = [params_key]
     extra_attrs.append(params_key)
@@ -196,13 +196,13 @@ def get_experiments_with_params(response, params_key, extra_attrs=None):
 
 
 def get_experiments_with_metrics(response):
-    return get_experiments_with_params(response=response,
-                                       params_key='last_metric',
-                                       extra_attrs=['total_run'])
+    return get_experiments_with_keys(response=response,
+                                     params_key='last_metric',
+                                     extra_attrs=['total_run'])
 
 
-def get_experiments_with_declarations(response):
-    return get_experiments_with_params(response=response, params_key='declarations')
+def get_experiments_with_params(response):
+    return get_experiments_with_keys(response=response, params_key='params')
 
 
 def get_resources(resources, header=None):

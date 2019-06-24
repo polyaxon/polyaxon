@@ -14,7 +14,7 @@ from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
-    get_experiments_with_declarations,
+    get_experiments_with_params,
     get_experiments_with_metrics,
     get_meta_response,
     list_dicts_to_tabulate
@@ -162,15 +162,15 @@ def update(ctx, name, description, tags):
 
 @group.command()
 @click.option('--metrics', '-m', is_flag=True, help='List experiments with their metrics.')
-@click.option('--declarations', '-d', is_flag=True,
-              help='List experiments with their declarations/params.')
+@click.option('--params', '-p', is_flag=True,
+              help='List experiments with their params.')
 @click.option('--query', '-q', type=str,
               help='To filter the experiments based on this query spec.')
 @click.option('--sort', '-s', type=str, help='To change order by of the experiments.')
 @click.option('--page', type=int, help='To paginate through the list of experiments.')
 @click.pass_context
 @clean_outputs
-def experiments(ctx, metrics, declarations, query, sort, page):
+def experiments(ctx, metrics, params, query, sort, page):
     """List experiments for this experiment group
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -183,7 +183,7 @@ def experiments(ctx, metrics, declarations, query, sort, page):
                                                                       project_name=project_name,
                                                                       group_id=_group,
                                                                       metrics=metrics,
-                                                                      declarations=declarations,
+                                                                      params=params,
                                                                       query=query,
                                                                       sort=sort,
                                                                       page=page)
@@ -202,8 +202,8 @@ def experiments(ctx, metrics, declarations, query, sort, page):
 
     if metrics:
         objects = get_experiments_with_metrics(response)
-    elif declarations:
-        objects = get_experiments_with_declarations(response)
+    elif params:
+        objects = get_experiments_with_params(response)
     else:
         objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
                    for o in response['results']]
