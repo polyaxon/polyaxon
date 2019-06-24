@@ -204,7 +204,8 @@ class S3Store(BaseStore):
         return self.resource.Bucket(bucket_name)
 
     def ls(self, path):
-        results = self.list(bucket_name=path)
+        (bucket_name, key) = self.parse_s3_url(path)
+        results = self.list(bucket_name=bucket_name, prefix=key)
         return {'files': results['keys'], 'dirs': results['prefixes']}
 
     def list(self,

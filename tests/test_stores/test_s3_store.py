@@ -84,6 +84,25 @@ class TestAwsStore(TestCase):
         assert store.list_keys(bucket_name='bucket', prefix='dir/') == [('b', 1)]
 
     @mock_s3
+    def test_ls(self):
+        store = S3Store()
+        b = store.get_bucket('bucket')
+        b.create()
+        b.put_object(Key='a', Body=b'a')
+        b.put_object(Key='dir/b', Body=b'b')
+
+        full_response = {'dirs': [], 'files': [('a', 1), ('dir/b', 1)]}
+        empty_response = {'dirs': [], 'files': []}
+        dir_response = {'dirs': [], 'files': [('/b', 1)]}
+
+        assert store.ls('s3://bucket') == full_response
+        assert store.ls('s3://bucket/') == full_response
+        assert store.ls('s3://bucket/non-existent') == empty_response
+        assert store.ls('s3://bucket/non-existent/') == empty_response
+        assert store.ls('s3://bucket/dir') == dir_response
+        assert store.ls('s3://bucket/dir/') == dir_response
+
+    @mock_s3
     def test_delete(self):
         store = S3Store()
         b = store.get_bucket('bucket')
