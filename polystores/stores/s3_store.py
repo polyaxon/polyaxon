@@ -204,16 +204,7 @@ class S3Store(BaseStore):
         return self.resource.Bucket(bucket_name)
 
     def ls(self, path):
-        # Strip out any unnecessary characters
-        stripped = path.replace('s3://', '').rstrip('/')
-        try:
-            # If a prefix is part of the path, extract it
-            bucket, prefix = stripped.split("/", 2)
-        except ValueError:
-            # The path was only a bucket name so we'll just use that
-            bucket = stripped
-            prefix = ''
-
+        (bucket, prefix) = self.parse_s3_url(path)
         results = self.list(bucket_name=bucket, prefix=prefix)
         return {'files': results['keys'], 'dirs': results['prefixes']}
 

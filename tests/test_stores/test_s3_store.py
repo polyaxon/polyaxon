@@ -95,16 +95,10 @@ class TestAwsStore(TestCase):
         empty_response = {'dirs': [], 'files': []}
         dir_response = {'dirs': [], 'files': [('/b', 1)]}
 
-        assert store.ls('bucket') == full_response
-        assert store.ls('bucket/') == full_response
         assert store.ls('s3://bucket') == full_response
         assert store.ls('s3://bucket/') == full_response
-        assert store.ls('bucket/non-existent') == empty_response
-        assert store.ls('bucket/non-existent/') == empty_response
         assert store.ls('s3://bucket/non-existent') == empty_response
         assert store.ls('s3://bucket/non-existent/') == empty_response
-        assert store.ls('bucket/dir') == dir_response
-        assert store.ls('bucket/dir/') == dir_response
         assert store.ls('s3://bucket/dir') == dir_response
         assert store.ls('s3://bucket/dir/') == dir_response
 
