@@ -9,12 +9,12 @@ from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
+from polyaxon_schemas.ops import params as ops_params
+from polyaxon_schemas.ops.logging import LoggingSchema
 from polyaxon_schemas.polyflow.executable import ExecutableConfig, ExecutableSchema
 from polyaxon_schemas.polyflow.ops import OpSchema
 from polyaxon_schemas.polyflow.schedule import ScheduleSchema
 from polyaxon_schemas.polyflow.template import TemplateSchema
-from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.logging import LoggingSchema
 
 
 class DagOpSpec(namedtuple("DagOpSpec", "op upstream downstream")):

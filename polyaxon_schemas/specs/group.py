@@ -35,6 +35,10 @@ class GroupSpecification(BaseSpecification):
         BaseSpecification.HP_TUNING,
     )
 
+    STD_PARSING_SECTIONS = ExperimentSpecification.STD_PARSING_SECTIONS + (
+        BaseSpecification.HP_TUNING,
+    )
+
     HEADER_SECTIONS = ExperimentSpecification.HEADER_SECTIONS + (
         BaseSpecification.HP_TUNING,
     )
@@ -57,6 +61,7 @@ class GroupSpecification(BaseSpecification):
         params = self._config_data.get_params(context=context)
         parsed_data = Parser.parse(self, self._config_data, params, self.matrix_declaration_test)
         validator.validate(spec=self, data=parsed_data)
+        self._config = self._config_data
         return parsed_data
 
     def get_experiment_spec(self, matrix_declaration):

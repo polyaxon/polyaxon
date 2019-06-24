@@ -63,7 +63,7 @@ class BaseSpecification(object):
         HP_TUNING, BUILD, RUN
     )
 
-    STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS, HP_TUNING)
+    STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS)
     OP_PARSING_SECTIONS = (BUILD, RUN, )
 
     HEADER_SECTIONS = (
@@ -224,6 +224,10 @@ class BaseSpecification(object):
     @cached_property
     def is_build(self):
         return self.kind == self._BUILD
+
+    @cached_property
+    def is_pipeline(self):
+        return self.kind == self._PIPELINE
 
     @property
     def values(self):

@@ -4,12 +4,12 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
-from polyaxon_schemas.polyflow.conditions import ConditionSchema
-from polyaxon_schemas.polyflow.template_ref import TemplateRefSchema
-from polyaxon_schemas.polyflow.trigger_policies import TriggerPolicy
 from polyaxon_schemas.ops.build_job import BuildSchema
 from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentSchema
 from polyaxon_schemas.ops.logging import LoggingSchema
+from polyaxon_schemas.polyflow.conditions import ConditionSchema
+from polyaxon_schemas.polyflow.template_ref import TemplateRefSchema
+from polyaxon_schemas.polyflow.trigger_policies import TriggerPolicy
 
 
 class OpSchema(BaseSchema):

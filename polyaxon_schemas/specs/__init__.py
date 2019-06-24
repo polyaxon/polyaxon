@@ -6,6 +6,7 @@ from polyaxon_schemas.specs.experiment import ExperimentSpecification
 from polyaxon_schemas.specs.group import GroupSpecification
 from polyaxon_schemas.specs.job import JobSpecification
 from polyaxon_schemas.specs.notebook import NotebookSpecification
+from polyaxon_schemas.specs.pipelines import PipelineSpecification
 from polyaxon_schemas.specs.tensorboard import TensorboardSpecification
 
 SPECIFICATION_BY_KIND = {
@@ -15,4 +16,5 @@ SPECIFICATION_BY_KIND = {
     JobSpecification._SPEC_KIND: JobSpecification,
     NotebookSpecification._SPEC_KIND: NotebookSpecification,
     TensorboardSpecification._SPEC_KIND: TensorboardSpecification,
+    PipelineSpecification._SPEC_KIND: PipelineSpecification,
 }
