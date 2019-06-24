@@ -7,9 +7,9 @@ from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
-from polyaxon_schemas.flows.ops import OpConfig
-from polyaxon_schemas.flows.pipeline import PipelineConfig
-from polyaxon_schemas.flows.template_ref import TemplateRefConfig
+from polyaxon_schemas.polyflow.ops import OpConfig
+from polyaxon_schemas.polyflow.pipeline import PipelineConfig
+from polyaxon_schemas.polyflow.template_ref import TemplateRefConfig
 from polyaxon_schemas.ops.io import IOTypes
 
 

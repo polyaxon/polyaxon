@@ -9,10 +9,10 @@ from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
-from polyaxon_schemas.flows.executable import ExecutableConfig, ExecutableSchema
-from polyaxon_schemas.flows.ops import OpSchema
-from polyaxon_schemas.flows.schedule import ScheduleSchema
-from polyaxon_schemas.flows.template import TemplateSchema
+from polyaxon_schemas.polyflow.executable import ExecutableConfig, ExecutableSchema
+from polyaxon_schemas.polyflow.ops import OpSchema
+from polyaxon_schemas.polyflow.schedule import ScheduleSchema
+from polyaxon_schemas.polyflow.template import TemplateSchema
 from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.logging import LoggingSchema
 

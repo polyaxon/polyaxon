@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.flows.ops import OpConfig
+from polyaxon_schemas.polyflow.ops import OpConfig
 
 
 class TestOpConfigs(TestCase):
