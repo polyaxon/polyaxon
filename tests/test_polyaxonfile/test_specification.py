@@ -5,6 +5,7 @@ import os
 
 from unittest import TestCase
 
+from flaky import flaky
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
@@ -294,6 +295,7 @@ class TestSpecifications(TestCase):
         with self.assertRaises(ValidationError):
             ExperimentConfig.from_dict(experiment_config)
 
+    @flaky(max_runs=3)
     def test_group_environment(self):
         content = {
             'version': 1,
