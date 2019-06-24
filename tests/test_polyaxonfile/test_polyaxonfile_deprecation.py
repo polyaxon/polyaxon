@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+
 from unittest import TestCase
 
 from polyaxon_schemas.ops.build_job import BuildConfig
@@ -14,11 +15,12 @@ from polyaxon_schemas.specs.frameworks import TensorflowSpecification
 from polyaxon_schemas.utils import TaskType
 
 
-class TestPolyaxonfileDeperecation(TestCase):
+class TestPolyaxonfileDeprecation(TestCase):
 
     def test_simple_file_framework_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/deprecated/simple_file_framework.yml'))
         spec = plxfile.specification
+        spec.parse_data()
         assert spec.version == 1
         assert spec.logging is None
         assert spec.tags is None
@@ -32,6 +34,7 @@ class TestPolyaxonfileDeperecation(TestCase):
     def test_deprecated_advanced_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/deprecated/advanced_file.yml'))
         spec = plxfile.specification
+        spec.parse_data()
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
@@ -65,6 +68,7 @@ class TestPolyaxonfileDeperecation(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/deprecated/notebook_with_custom_environment.yml'))
         spec = plxfile.specification
+        spec.parse_data()
         assert spec.version == 1
         assert spec.is_notebook
         assert spec.is_notebook is True
@@ -103,6 +107,7 @@ class TestPolyaxonfileDeperecation(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/deprecated/advanced_file_with_custom_configs_and_resources.yml'))
         spec = plxfile.specification
+        spec.parse_data()
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment

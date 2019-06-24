@@ -49,7 +49,7 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
 
     @cached_property
     def backend(self):
-        return self.config.backend
+        return self.raw_config.backend
 
     @classmethod
     def create_specification(cls,

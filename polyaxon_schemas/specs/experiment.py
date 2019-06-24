@@ -52,18 +52,6 @@ class ExperimentSpecification(BaseRunSpecification):
     CONFIG = ExperimentConfig
 
     @cached_property
-    def model(self):
-        return self.config.model
-
-    @cached_property
-    def train(self):
-        return self.config.train
-
-    @cached_property
-    def eval(self):
-        return self.config.eval
-
-    @cached_property
     def params(self):
         return self.parsed_data.get(self.PARAMS, None)
 

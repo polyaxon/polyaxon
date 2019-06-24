@@ -30,7 +30,8 @@ class BaseSpecification(object):
     _NOTEBOOK = 'notebook'
     _TENSORBOARD = 'tensorboard'
     _BUILD = 'build'
-    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _NOTEBOOK, _TENSORBOARD, _BUILD}
+    _PIPELINE = 'pipeline'
+    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _NOTEBOOK, _TENSORBOARD, _BUILD, _PIPELINE}
 
     _SPEC_KIND = None
 
@@ -40,7 +41,11 @@ class BaseSpecification(object):
     VERSION = 'version'
     KIND = 'kind'
     LOGGING = 'logging'
+    NAME = 'name'
+    DESCRIPTION = 'description'
     TAGS = 'tags'
+    INPUTS = 'inputs'
+    OUTPUTS = 'outputs'
     BACKEND = 'backend'
     FRAMEWORK = 'framework'
     HP_TUNING = 'hptuning'
@@ -51,15 +56,17 @@ class BaseSpecification(object):
     BUILD = 'build'
 
     SECTIONS = (
-        VERSION, KIND, TAGS, BACKEND, FRAMEWORK, ENVIRONMENT, DECLARATIONS, PARAMS,
-        LOGGING, HP_TUNING, BUILD, RUN
+        VERSION, KIND, NAME, DESCRIPTION, LOGGING, TAGS,
+        INPUTS, OUTPUTS, DECLARATIONS, PARAMS,
+        BACKEND, FRAMEWORK, ENVIRONMENT,
+        HP_TUNING, BUILD, RUN
     )
 
     STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS, HP_TUNING)
     OP_PARSING_SECTIONS = (BUILD, RUN, )
 
     HEADER_SECTIONS = (
-        VERSION, KIND, LOGGING, TAGS
+        VERSION, KIND, NAME, DESCRIPTION, LOGGING, TAGS,
     )
 
     GRAPH_SECTIONS = []
@@ -69,7 +76,7 @@ class BaseSpecification(object):
     )
 
     POSSIBLE_SECTIONS = (
-        VERSION, KIND, LOGGING, TAGS
+        VERSION, KIND, LOGGING, TAGS, NAME, DESCRIPTION, INPUTS, OUTPUTS
     )
 
     OPERATORS = {
@@ -87,6 +94,10 @@ class BaseSpecification(object):
             self._data = rhea.read(self._values)
         except rhea.RheaError as e:
             raise PolyaxonConfigurationError(e)
+        try:
+            self._config_data = self._get_config(self._data)
+        except ValidationError as e:
+            raise PolyaxonfileError(e)
         self.check_data()
         headers = Parser.get_headers(spec=self, data=self._data)
         try:
@@ -96,7 +107,6 @@ class BaseSpecification(object):
         self._parsed_data = None
         self._validated_data = None
         self._config = None
-        self._set_parsed_data()
         self._extra_validation()
 
     def _extra_validation(self):
@@ -106,15 +116,16 @@ class BaseSpecification(object):
     def config(self):
         return self._config
 
-    def _set_config(self, data):
-        self._config = self.CONFIG.from_dict(copy.deepcopy(data))
+    @cached_property
+    def raw_config(self):
+        return self._config_data
 
-    def _set_parsed_data(self):
+    def _get_config(self, data):
+        return self.CONFIG.from_dict(copy.deepcopy(data))
+
+    def parse_data(self, context=None):
         parsed_data = Parser.parse(self, self._data, None)
-        if self.CONFIG:
-            self._set_config(parsed_data)
-        else:
-            self._validated_data = validator.validate(spec=self, data=parsed_data)
+        self._config = self._get_config(parsed_data)
         self._parsed_data = parsed_data
 
     @classmethod
@@ -165,7 +176,9 @@ class BaseSpecification(object):
 
     def patch(self, values):
         values = [self._parsed_data] + to_list(values)
-        return self.read(values=values)
+        spec = self.read(values=values)
+        spec.parse_data()
+        return spec
 
     @classmethod
     def get_kind(cls, data):
@@ -250,7 +263,7 @@ class EnvironmentSpecificationMixin(object):
 
     @cached_property
     def environment(self):
-        return self._config.environment
+        return self._config_data.environment
 
     @cached_property
     def resources(self):

@@ -182,7 +182,7 @@ class TestOperationsConfigs(TestCase):
                 'param1': 1,
                 'param2': 2,
             },
-            'ouputs': [
+            'outputs': [
                 {'name': 'param1', 'type': IOTypes.INT},
             ]
         }

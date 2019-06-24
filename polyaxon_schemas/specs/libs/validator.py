@@ -4,9 +4,6 @@ from __future__ import absolute_import, division, print_function
 import copy
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.ml.eval import EvalConfig
-from polyaxon_schemas.ml.models import ModelConfig
-from polyaxon_schemas.ml.train import TrainConfig
 from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.ops.group.hptuning import HPTuningConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
@@ -40,9 +37,6 @@ def validate(spec, data):
     validated_data = {}
 
     def validate_keys(section, config, section_data):
-        if not isinstance(section_data, dict) or section == spec.MODEL:
-            return
-
         extra_args = [key for key in section_data.keys() if key not in config.SCHEMA().fields]
         if extra_args:
             raise PolyaxonfileError('Extra arguments passed for `{}`: {}'.format(
@@ -57,8 +51,5 @@ def validate(spec, data):
     add_validated_section(spec.ENVIRONMENT, spec.ENVIRONMENT_CONFIG)
     add_validated_section(spec.BUILD, BuildConfig)
     add_validated_section(spec.RUN, RunConfig)
-    add_validated_section(spec.MODEL, ModelConfig)
-    add_validated_section(spec.TRAIN, TrainConfig)
-    add_validated_section(spec.EVAL, EvalConfig)
 
     return validated_data

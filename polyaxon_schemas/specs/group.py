@@ -27,16 +27,9 @@ class GroupSpecification(BaseSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         PARAMS: variables/modules that can be reused.
         RUN: defines the run step where the user can set a docker image to execute
-        MODEL: defines the model to use based on the declarative API.
-        TRAIN: defines how to train a model and how to read the data.
-        EVAL: defines how to evaluate a model and how to read the data.
     """
 
     _SPEC_KIND = BaseSpecification._GROUP
-
-    MODEL = 'model'
-    TRAIN = 'train'
-    EVAL = 'eval'
 
     SECTIONS = ExperimentSpecification.SECTIONS + (
         BaseSpecification.HP_TUNING,
@@ -55,16 +48,12 @@ class GroupSpecification(BaseSpecification):
     )
     CONFIG = GroupConfig
 
-    def __init__(self, values):
-        super(GroupSpecification, self).__init__(values)
-        self._set_config(self._data)
-
     def _extra_validation(self):
         if not self.matrix:
             raise PolyaxonConfigurationError(
                 'A matrix definition is required for group specification.')
 
-    def _set_parsed_data(self):
+    def parse_data(self, context=None):
         # We need to validate that the data is correct
         # For that we just use a matrix declaration test
         parsed_data = Parser.parse(self, self._data, self.matrix_declaration_test)
