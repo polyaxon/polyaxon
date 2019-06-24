@@ -50,7 +50,8 @@ class StoreManager(object):
     def ls(self, path):
         if self._path:  # We assume rel paths
             path = os.path.join(self._path, path)
-        return self.store.ls(path)
+        results = self.store.ls(path)
+        return {'files': sorted(results['files']), 'dirs': sorted(results['dirs'])}
 
     def list(self, path):
         if self._path:  # We assume rel paths
