@@ -11,6 +11,9 @@ hptuning:
 params:
   lr: 0.1
 
+build:
+  ref: 1
+
 run:
   cmd: train --loss="{{ loss }}"
 ...

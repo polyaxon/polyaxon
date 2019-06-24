@@ -14,6 +14,7 @@ from hestia.list_utils import to_list
 from marshmallow import EXCLUDE, ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs.libs import validator
@@ -121,12 +122,21 @@ class BaseSpecification(object):
         return self._config_data
 
     def _get_config(self, data):
-        return self.CONFIG.from_dict(copy.deepcopy(data))
+        config = self.CONFIG.from_dict(copy.deepcopy(data))
+        ops_params.validate_params(params=config.params,
+                                   inputs=config.inputs,
+                                   outputs=config.outputs,
+                                   is_template=False,
+                                   is_run=True)
+        return config
 
     def parse_data(self, context=None):
-        parsed_data = Parser.parse(self, self._data, None)
+        context = context or {}
+        params = self._config_data.get_params(context=context)
+        parsed_data = Parser.parse(self, self._config_data, params, None)
         self._config = self._get_config(parsed_data)
         self._parsed_data = parsed_data
+        return parsed_data
 
     @classmethod
     def check_version(cls, data):

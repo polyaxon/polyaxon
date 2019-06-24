@@ -373,8 +373,7 @@ class TestPolyaxonfile(TestCase):
                                                                      'AbsoluteDifference']}
         assert spec.matrix_space == 2
 
-        build = spec.build
-        assert build is None
+        assert spec.build.ref == 1
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         spec.parse_data()

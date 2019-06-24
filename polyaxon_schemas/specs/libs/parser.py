@@ -28,16 +28,25 @@ class Parser(object):
         }
         return parsed_data
 
+    @staticmethod
+    def _get_section(config, section):
+        if not hasattr(config, section):
+            return None
+        section_data = getattr(config, section)
+        if hasattr(section_data, 'to_dict'):
+            return section_data.to_dict()
+        return section_data
+
     @classmethod
-    def parse(cls, spec, data, matrix_params=None):  # pylint:disable=too-many-branches
-        params = copy.copy(data.get(spec.PARAMS, {}))
+    def parse(cls, spec, config, params, matrix_params=None):  # pylint:disable=too-many-branches
+        params = params or {}
         matrix_params = copy.copy(matrix_params)
         if matrix_params:
             params = deep_update(matrix_params, params)
 
         parsed_data = {
-            spec.VERSION: data[spec.VERSION],
-            spec.KIND: data[spec.KIND],
+            spec.VERSION: config.version,
+            spec.KIND: config.kind,
         }
 
         if params:
@@ -45,22 +54,25 @@ class Parser(object):
             parsed_data[spec.PARAMS] = params
 
         for section in spec.STD_PARSING_SECTIONS:
-            if section in data:
-                parsed_data[section] = cls.parse_expression(spec, data[section], params)
+            config_section = cls._get_section(config, section)
+            if config_section:
+                parsed_data[section] = cls.parse_expression(spec, config_section, params)
 
         for section in spec.OP_PARSING_SECTIONS:
-            if section in data:
+            config_section = cls._get_section(config, section)
+            if config_section:
                 parsed_data[section] = cls.parse_expression(
-                    spec, data[section], params, True, False)
+                    spec, config_section, params, True, False)
 
-        if spec.RUN in data:
-            parsed_data[spec.RUN] = cls.parse_expression(
-                spec, data[spec.RUN], params, True, False)
+        config_section = cls._get_section(config, spec.RUN)
+        if config_section:
+            parsed_data[spec.RUN] = cls.parse_expression(spec, config_section, params, True, False)
 
         for section in spec.GRAPH_SECTIONS:
-            if section in data:
+            config_section = cls._get_section(config, section)
+            if config_section:
                 parsed_data[section] = cls.parse_expression(
-                    spec, data[section], params, True, True)
+                    spec, config_section, params, True, True)
 
         return parsed_data
 

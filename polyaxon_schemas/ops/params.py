@@ -29,11 +29,11 @@ def get_param(name, value, iotype):
     raises: ValidationError
     """
     if not isinstance(value, six.string_types):
-        return None
+        return ParamSpec(name=name, iotype=iotype, value=value, entity=None, entity_ref=None)
 
     param = REGEX.search(value)
     if not param:
-        return None
+        return ParamSpec(name=name, iotype=iotype, value=value, entity=None, entity_ref=None)
 
     param = param.group(1)
     param_parts = param.split('.')
@@ -85,7 +85,7 @@ def validate_param(param, context):
             ))
 
 
-def validate_params(params, inputs, outputs, context=None, is_template=True):
+def validate_params(params, inputs, outputs, context=None, is_template=True, is_run=True):
     """
     Validates Params given inputs, and an optional context.
 
@@ -95,39 +95,56 @@ def validate_params(params, inputs, outputs, context=None, is_template=True):
      * ops reference: in that case a context must be provided to validate that the reference exists.
         and types are correct.
     """
-    if is_template and (not params or (not inputs and not outputs)):
+    if is_run and not inputs and not outputs:
         return
 
     params = params or {}
     inputs = inputs or []
     outputs = outputs or []
 
+    processed_params = []
     validated_params = []
 
     for inp in inputs:
         if inp.name in params:
             param_value = params[inp.name]
             param = get_param(name=inp.name, value=param_value, iotype=inp.iotype)
-            if param:
+            if param.entity_ref:
                 validate_param(param, context)
             else:  # Plain value
                 inp.validate_value(param_value)
-            validated_params.append(inp.name)
-        elif not inp.is_optional:
+            validated_params.append(param)
+            processed_params.append(inp.name)
+        elif not inp.is_optional and not is_template:
             raise ValidationError('Input {} is required, no param was passed.'.format(inp.name))
+        else:
+            validated_params.append(ParamSpec(name=inp.name,
+                                              value=inp.default,
+                                              iotype=inp.iotype,
+                                              entity=None,
+                                              entity_ref=None))
 
     for out in outputs:
         if out.name in params:
             param_value = params[out.name]
             param = get_param(name=out.name, value=param_value, iotype=out.iotype)
-            if param:
+            validated_params.append(param)
+            if param.entity_ref:
                 validate_param(param, None)
             else:  # Plain value
                 out.validate_value(param_value)
-            validated_params.append(out.name)
-        elif not out.is_optional:
+            validated_params.append(param)
+            processed_params.append(out.name)
+        elif not out.is_optional and not is_template:
             raise ValidationError('Input {} is required, no param was passed.'.format(out.name))
-
-    extra_params = set(six.iterkeys(params)) - set(validated_params)
+        else:
+            validated_params.append(ParamSpec(name=out.name,
+                                              value=out.default,
+                                              iotype=out.iotype,
+                                              entity=None,
+                                              entity_ref=None))
+    extra_params = set(six.iterkeys(params)) - set(processed_params)
     if extra_params:
         raise ValidationError('Received unexpected params `{}`.'.format(extra_params))
+
+    return validated_params

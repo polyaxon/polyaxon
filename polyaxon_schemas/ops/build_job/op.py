@@ -5,6 +5,7 @@ import six
 
 from marshmallow import ValidationError, fields, validate, validates_schema
 
+from polyaxon_schemas.fields import IntOrStr
 from polyaxon_schemas.ops.build_job.backends import BuildBackend
 from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 
@@ -34,7 +35,7 @@ def validate_build(**kwargs):
 
 class BuildSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal('build'))
-    ref = fields.Str(allow_none=True)
+    ref = IntOrStr(allow_none=True)
     backend = fields.Str(allow_none=True, validate=validate.OneOf(BuildBackend.VALUES))
     dockerfile = fields.Str(allow_none=True)
     context = fields.Str(allow_none=True)

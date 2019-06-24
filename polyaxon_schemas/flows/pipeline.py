@@ -248,4 +248,5 @@ class PipelineConfig(ExecutableConfig):
                                        inputs=template.inputs,
                                        outputs=template.outputs,
                                        context=self._context,
-                                       is_template=False)
+                                       is_template=False,
+                                       is_run=False)

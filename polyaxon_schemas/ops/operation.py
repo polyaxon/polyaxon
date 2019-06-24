@@ -54,7 +54,9 @@ class BaseOpSchema(BaseSchema):
     def validate_params(self, values):
         ops_params.validate_params(params=values.get('params'),
                                    inputs=values.get('inputs'),
-                                   outputs=values.get('outputs'))
+                                   outputs=values.get('outputs'),
+                                   is_template=True,
+                                   is_run=True)
 
 
 class BaseOpConfig(BaseConfig):
@@ -94,6 +96,27 @@ class BaseOpConfig(BaseConfig):
         self.environment = environment
         validate_declarations({'params': params, 'declarations': declarations})
         self.params = params or declarations
-        ops_params.validate_params(params=self.params, inputs=inputs, outputs=outputs)
+        self._validated_params = ops_params.validate_params(params=self.params,
+                                                            inputs=inputs,
+                                                            outputs=outputs,
+                                                            is_template=True,
+                                                            is_run=True)
         self.inputs = inputs
         self.outputs = outputs
+
+    def get_params(self, context):
+        """Return all params: Merge params if passed, if not default values."""
+        if not self._validated_params:
+            return self.params
+
+        params = {}
+        for param in self._validated_params:
+            if not param.entity_ref:
+                params[param.name] = param.value
+            else:
+                params[param.name] = context[param.value.replace('.', '__')]
+
+        return params
+
+    def required_references(self):
+        return [param for param in self._validated_params if param.entity_ref]

@@ -54,16 +54,15 @@ class GroupSpecification(BaseSpecification):
                 'A matrix definition is required for group specification.')
 
     def parse_data(self, context=None):
-        # We need to validate that the data is correct
-        # For that we just use a matrix declaration test
-        parsed_data = Parser.parse(self, self._data, self.matrix_declaration_test)
+        params = self._config_data.get_params(context=context)
+        parsed_data = Parser.parse(self, self._config_data, params, self.matrix_declaration_test)
         validator.validate(spec=self, data=parsed_data)
+        return parsed_data
 
     def get_experiment_spec(self, matrix_declaration):
         """Returns an experiment spec for this group spec and the given matrix declaration."""
-        parsed_data = Parser.parse(self, self._data, matrix_declaration)
+        parsed_data = self.parse_data(matrix_declaration)
         del parsed_data[self.HP_TUNING]
-        validator.validate(spec=self, data=parsed_data)
         return ExperimentSpecification(values=[parsed_data, {'kind': self._EXPERIMENT}])
 
     def get_build_spec(self):
@@ -80,7 +79,7 @@ class GroupSpecification(BaseSpecification):
     @cached_property
     def environment(self):
         # This is a hack, in the future we need to gather the paths of the experiments
-        parsed_data = Parser.parse(self, self._data, self.matrix_declaration_test)
+        parsed_data = self.parse_data(context=self.matrix_declaration_test)
         return parsed_data.get(self.ENVIRONMENT, None)
 
     @cached_property

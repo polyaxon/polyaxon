@@ -5,6 +5,7 @@ from unittest import TestCase
 
 from marshmallow import ValidationError
 
+from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.io import IOTypes
 from polyaxon_schemas.ops.operation import BaseOpConfig
 
@@ -95,7 +96,7 @@ class TestOperationsConfigs(TestCase):
         op = BaseOpConfig.from_dict(config_dict)
         assert op.params == config_dict['params']
 
-    def test_required_input_no_param(self):
+    def test_required_input_no_param_only_validated_on_run(self):
         # Inputs
         config_dict = {
             'params': {
@@ -106,8 +107,13 @@ class TestOperationsConfigs(TestCase):
                 {'name': 'param10', 'type': IOTypes.PATH},
             ]
         }
+        config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
-            BaseOpConfig.from_dict(config_dict)
+            ops_params.validate_params(params=config.params,
+                                       inputs=config.inputs,
+                                       outputs=config.outputs,
+                                       is_template=False,
+                                       is_run=True)
 
         # Outputs
         config_dict = {
@@ -119,8 +125,13 @@ class TestOperationsConfigs(TestCase):
                 {'name': 'param10', 'type': IOTypes.PATH},
             ]
         }
+        config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
-            BaseOpConfig.from_dict(config_dict)
+            ops_params.validate_params(params=config.params,
+                                       inputs=config.inputs,
+                                       outputs=config.outputs,
+                                       is_template=False,
+                                       is_run=True)
 
         # IO
         config_dict = {
@@ -134,8 +145,13 @@ class TestOperationsConfigs(TestCase):
                 {'name': 'param10', 'type': IOTypes.PATH},
             ]
         }
+        config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
-            BaseOpConfig.from_dict(config_dict)
+            ops_params.validate_params(params=config.params,
+                                       inputs=config.inputs,
+                                       outputs=config.outputs,
+                                       is_template=False,
+                                       is_run=True)
 
     def test_incomplete_params(self):
         config_dict = {
@@ -147,8 +163,13 @@ class TestOperationsConfigs(TestCase):
                 {'name': 'param2', 'type': IOTypes.INT},
             ]
         }
+        config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
-            BaseOpConfig.from_dict(config_dict)
+            ops_params.validate_params(params=config.params,
+                                       inputs=config.inputs,
+                                       outputs=config.outputs,
+                                       is_template=False,
+                                       is_run=True)
 
         config_dict = {
             'params': {
@@ -159,8 +180,13 @@ class TestOperationsConfigs(TestCase):
                 {'name': 'param2', 'type': IOTypes.INT},
             ]
         }
+        config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
-            BaseOpConfig.from_dict(config_dict)
+            ops_params.validate_params(params=config.params,
+                                       inputs=config.inputs,
+                                       outputs=config.outputs,
+                                       is_template=False,
+                                       is_run=True)
 
     def test_extra_params(self):
         # inputs
