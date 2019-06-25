@@ -78,7 +78,11 @@ class TestOperationsConfigs(TestCase):
                 'param7': 'gs://bucket/path/to/blob/',
                 'param8': 's3://test/this/is/bad/key.txt',
                 'param9': 'wasbs://container@user.blob.core.windows.net/',
-                'param10': '/foo/bar'
+                'param10': '/foo/bar',
+                'param11': 124.4,
+                'param12': {'foo': 124.4},
+                'param13': {'foo': 'bar'},
+                'param14': {'foo': ['foo', 124.4]},
             },
             'outputs': [
                 {'name': 'param1', 'type': IOTypes.STR},
@@ -91,6 +95,10 @@ class TestOperationsConfigs(TestCase):
                 {'name': 'param8', 'type': IOTypes.S3_PATH},
                 {'name': 'param9', 'type': IOTypes.AZURE_PATH},
                 {'name': 'param10', 'type': IOTypes.PATH},
+                {'name': 'param11', 'type': IOTypes.METRIC},
+                {'name': 'param12', 'type': IOTypes.METADATA},
+                {'name': 'param13', 'type': IOTypes.METADATA},
+                {'name': 'param14', 'type': IOTypes.METADATA},
             ]
         }
         op = BaseOpConfig.from_dict(config_dict)
@@ -415,18 +423,42 @@ class TestOperationsConfigs(TestCase):
         with self.assertRaises(ValidationError):
             BaseOpConfig.from_dict(config_dict)
 
+        config_dict = {
+            'params': {
+                'param12': 'wasbs://container@user.blob.core.windows.net/',
+            },
+            'outputs': [
+                {'name': 'param12', 'type': IOTypes.METADATA},
+            ]
+        }
+        with self.assertRaises(ValidationError):
+            BaseOpConfig.from_dict(config_dict)
+
+        config_dict = {
+            'params': {
+                'param9': 'wasbs://container@user.blob.core.windows.net/',
+            },
+            'outputs': [
+                {'name': 'param9', 'type': IOTypes.METRIC},
+            ]
+        }
+        with self.assertRaises(ValidationError):
+            BaseOpConfig.from_dict(config_dict)
+
     def test_experiment_and_job_refs_params(self):
         config_dict = {
             'params': {
                 'param1': '{{ experiments.1.outputs.foo }}',
                 'param2': '{{ jobs.1.outputs.foo }}',
                 'param9': 'wasbs://container@user.blob.core.windows.net/',
+                'param11': '{{ experiments.1.outputs.accuracy }}',
             },
             'inputs': [
                 {'name': 'param1', 'type': IOTypes.INT},
                 {'name': 'param2', 'type': IOTypes.FLOAT},
                 {'name': 'param9', 'type': IOTypes.AZURE_PATH},
-            ]
+                {'name': 'param11', 'type': IOTypes.METRIC},
+            ],
         }
         op = BaseOpConfig.from_dict(config_dict)
         assert op.params == config_dict['params']

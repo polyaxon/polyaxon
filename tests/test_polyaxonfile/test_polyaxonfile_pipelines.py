@@ -78,6 +78,25 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert spec.config.concurrency is None
         assert spec.config.schedule is None
 
+    def test_parallel_pipeline(self):
+        plx_file = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/pipelines/simple_parallel_pipeline.yml'))
+        spec = plx_file.specification
+        spec.parse_data()
+        assert len(spec.config.ops) == 4
+        assert spec.config.ops[0].name == 'job1'
+        assert spec.config.ops[0].dependencies is None
+        assert spec.config.ops[1].name == 'job2'
+        assert spec.config.ops[1].dependencies is None
+        assert spec.config.ops[2].name == 'experiment1'
+        assert spec.config.ops[2].dependencies is None
+        assert spec.config.ops[3].name == 'experiment2'
+        assert spec.config.ops[3].dependencies is None
+        assert set(spec.config.sort_topologically(spec.config.dag)[0]) == {
+            'job1', 'job2', 'experiment1', 'experiment2'}
+        assert spec.config.concurrency == 2
+        assert spec.config.schedule is None
+
     def test_dag_pipeline(self):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/simple_dag_pipeline.yml'))
