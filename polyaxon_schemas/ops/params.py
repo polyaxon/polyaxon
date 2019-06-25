@@ -96,7 +96,7 @@ def validate_params(params, inputs, outputs, context=None, is_template=True, is_
         and types are correct.
     """
     if is_run and not inputs and not outputs:
-        return
+        return []
 
     params = params or {}
     inputs = inputs or []
