@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon_schemas.ops.tensorboard import TensorboardConfig
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 
 
@@ -15,7 +16,7 @@ class TensorboardSpecification(BaseRunSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
-    _SPEC_KIND = BaseSpecification._TENSORBOARD  # pylint:disable=protected-access
+    _SPEC_KIND = kinds.TENSORBOARD
 
     REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (
         BaseSpecification.BUILD,

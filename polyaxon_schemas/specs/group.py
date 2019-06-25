@@ -10,6 +10,7 @@ from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.ops.environments.persistence import PersistenceConfig
 from polyaxon_schemas.ops.group import GroupConfig
 from polyaxon_schemas.ops.group.hptuning import SearchAlgorithms
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification
 from polyaxon_schemas.specs.experiment import ExperimentSpecification
 from polyaxon_schemas.specs.libs import validator
@@ -29,7 +30,7 @@ class GroupSpecification(BaseSpecification):
         RUN: defines the run step where the user can set a docker image to execute
     """
 
-    _SPEC_KIND = BaseSpecification._GROUP
+    _SPEC_KIND = kinds.GROUP
 
     SECTIONS = ExperimentSpecification.SECTIONS + (
         BaseSpecification.HP_TUNING,
@@ -68,7 +69,7 @@ class GroupSpecification(BaseSpecification):
         """Returns an experiment spec for this group spec and the given matrix declaration."""
         parsed_data = self.parse_data(matrix_declaration)
         del parsed_data[self.HP_TUNING]
-        return ExperimentSpecification(values=[parsed_data, {'kind': self._EXPERIMENT}])
+        return ExperimentSpecification(values=[parsed_data, {'kind': kinds.EXPERIMENT}])
 
     def get_build_spec(self):
         """Returns a build spec for this group spec."""

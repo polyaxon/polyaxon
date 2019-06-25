@@ -17,6 +17,7 @@ from polyaxon_schemas.exceptions import PolyaxonConfigurationError, Polyaxonfile
 from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
 
@@ -24,15 +25,6 @@ from polyaxon_schemas.specs.libs.parser import Parser
 @six.add_metaclass(abc.ABCMeta)
 class BaseSpecification(object):
     """Base abstract specification for plyaxonfiles and configurations."""
-
-    _EXPERIMENT = 'experiment'
-    _GROUP = 'group'
-    _JOB = 'job'
-    _NOTEBOOK = 'notebook'
-    _TENSORBOARD = 'tensorboard'
-    _BUILD = 'build'
-    _PIPELINE = 'pipeline'
-    _KINDS = {_EXPERIMENT, _GROUP, _JOB, _NOTEBOOK, _TENSORBOARD, _BUILD, _PIPELINE}
 
     _SPEC_KIND = None
 
@@ -155,7 +147,7 @@ class BaseSpecification(object):
         if cls.KIND not in data:
             raise PolyaxonfileError("The Polyaxonfile `kind` must be specified.")
 
-        if data[cls.KIND] not in cls._KINDS:
+        if data[cls.KIND] not in kinds.KINDS:
             raise PolyaxonfileError(
                 "The Polyaxonfile with kind `{}` is not a supported value.".format(data[cls.KIND]))
 
@@ -203,31 +195,31 @@ class BaseSpecification(object):
 
     @cached_property
     def is_experiment(self):
-        return self.kind == self._EXPERIMENT
+        return self.kind == kinds.EXPERIMENT
 
     @cached_property
     def is_group(self):
-        return self.kind == self._GROUP
+        return self.kind == kinds.GROUP
 
     @cached_property
     def is_job(self):
-        return self.kind == self._JOB
+        return self.kind == kinds.JOB
 
     @cached_property
     def is_notebook(self):
-        return self.kind == self._NOTEBOOK
+        return self.kind == kinds.NOTEBOOK
 
     @cached_property
     def is_tensorboard(self):
-        return self.kind == self._TENSORBOARD
+        return self.kind == kinds.TENSORBOARD
 
     @cached_property
     def is_build(self):
-        return self.kind == self._BUILD
+        return self.kind == kinds.BUILD
 
     @cached_property
     def is_pipeline(self):
-        return self.kind == self._PIPELINE
+        return self.kind == kinds.PIPELINE
 
     @property
     def values(self):
@@ -322,7 +314,7 @@ class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
-    _SPEC_KIND = BaseSpecification._BUILD
+    _SPEC_KIND = kinds.BUILD
 
     HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND, )
 

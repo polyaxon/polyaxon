@@ -8,6 +8,7 @@ from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.build_job import BuildConfig
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification, EnvironmentSpecificationMixin
 
 
@@ -21,7 +22,7 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
-    _SPEC_KIND = BaseSpecification._BUILD
+    _SPEC_KIND = kinds.BUILD
 
     BUILD_STEPS = 'build_steps'
     ENV_VARS = 'env_vars'

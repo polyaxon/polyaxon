@@ -6,6 +6,7 @@ import copy
 from hestia.cached_property import cached_property
 
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification
 
 
@@ -19,7 +20,7 @@ class PipelineSpecification(BaseSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
-    _SPEC_KIND = BaseSpecification._PIPELINE
+    _SPEC_KIND = kinds.PIPELINE
 
     TEMPLATES = 'templates'
     OPS = 'ops'

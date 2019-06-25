@@ -9,6 +9,7 @@ from marshmallow import EXCLUDE
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.job import JobConfig
 from polyaxon_schemas.ops.run import RunConfig
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 
 
@@ -23,7 +24,7 @@ class JobSpecification(BaseRunSpecification):
         BUILD: defines the build step where the user can set a docker image definition
         RUN: defines the run step where the user can run a command
     """
-    _SPEC_KIND = BaseSpecification._JOB  # pylint:disable=protected-access
+    _SPEC_KIND = kinds.JOB
 
     REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (
         BaseSpecification.BUILD, BaseSpecification.RUN,

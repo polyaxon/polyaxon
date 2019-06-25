@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from hestia.cached_property import cached_property
 
 from polyaxon_schemas.ops.notebook import NotebookConfig
+from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
 
 
@@ -17,7 +18,7 @@ class NotebookSpecification(BaseRunSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
-    _SPEC_KIND = BaseSpecification._NOTEBOOK  # pylint:disable=protected-access
+    _SPEC_KIND = kinds.NOTEBOOK
 
     REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (
         BaseSpecification.BUILD,
