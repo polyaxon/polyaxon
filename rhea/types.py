@@ -11,6 +11,8 @@ GCS_PATH = 'gcs_path'
 S3_PATH = 's3_path'
 AZURE_PATH = 'azure_path'
 PATH = 'path'
+METRIC = 'metric'
+METADATA = 'metadata'
 
 VALUES = {
     INT,
@@ -25,5 +27,7 @@ VALUES = {
     GCS_PATH,
     S3_PATH,
     AZURE_PATH,
-    PATH
+    PATH,
+    METRIC,
+    METADATA
 }

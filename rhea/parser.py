@@ -679,5 +679,7 @@ TYPE_MAPPING = {
     types.GCS_PATH: get_gcs_path,
     types.S3_PATH: get_s3_path,
     types.AZURE_PATH: get_wasbs_path,
-    types.PATH: get_string
+    types.PATH: get_string,
+    types.METRIC: get_float,
+    types.METADATA: get_dict
 }
