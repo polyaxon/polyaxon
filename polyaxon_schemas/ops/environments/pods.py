@@ -65,10 +65,10 @@ class EnvironmentSchema(BaseSchema):
     max_restarts = fields.Int(allow_none=True)
     secret_refs = fields.List(fields.Str(), allow_none=True)
     config_map_refs = fields.List(fields.Str(), allow_none=True)
-    configmap_refs = fields.List(fields.Str(), allow_none=True)
+    configmap_refs = fields.List(fields.Str(), allow_none=True)  # Deprecated
     data_refs = fields.List(fields.Str(), allow_none=True)
     artifact_refs = fields.List(fields.Str(), allow_none=True)
-    outputs = fields.Nested(OutputsSchema, allow_none=True)
+    outputs = fields.Nested(OutputsSchema, allow_none=True)  # Deprecated
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
 
     @staticmethod

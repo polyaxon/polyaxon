@@ -79,7 +79,7 @@ class TestPolyaxonfileWithTypes(TestCase):
             **spec.params
         )
 
-    def test_run_simple_file_passes_Sdf(self):
+    def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/typing/run_cmd_simple_file.yml'))
         spec = plxfile.specification
@@ -101,7 +101,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/typing/run_with_refs.yml'))
         spec = plxfile.specification
-        required_refs = spec.raw_config.required_references()
+        required_refs = spec.raw_config.get_params_with_refs()
         assert len(required_refs) == 1
         assert required_refs[0].name == 'model_path'
         assert required_refs[0].value == 'jobs.1.outputs.doo'

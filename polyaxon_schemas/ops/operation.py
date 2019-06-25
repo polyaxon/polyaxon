@@ -118,5 +118,5 @@ class BaseOpConfig(BaseConfig):
 
         return params
 
-    def required_references(self):
+    def get_params_with_refs(self):
         return [param for param in self._validated_params if param.entity_ref]
