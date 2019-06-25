@@ -8,6 +8,7 @@ PROJECT_APPS = AUDITOR_APPS + (
     'ownership.apps.OwnershipConfig',
     'access.apps.AccessConfig',
     'stores.apps.StoresConfig',
+    'compiler.apps.CompilerConfig',
     'api.apps.APIConfig',
     'publisher.apps.PublisherConfig',
     'query.apps.QueryConfig',

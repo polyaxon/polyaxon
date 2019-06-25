@@ -7,6 +7,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 import auditor
+import compiler
 
 from constants.cloning_strategies import CloningStrategy
 from constants.k8s_jobs import JOB_NAME, JOB_NAME_FORMAT
@@ -28,7 +29,7 @@ from db.redis.heartbeat import RedisHeartBeat
 from events.registry.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_job_spec_config
-from schemas import JobSpecification
+from schemas import kinds
 
 
 class Job(AbstractJobModel,
@@ -113,8 +114,8 @@ class Job(AbstractJobModel,
         return JOB_NAME_FORMAT.format(name=JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self) -> 'JobSpecification':
-        return JobSpecification(values=self.content) if self.content else None
+    def specification(self) -> Optional['JobSpecification']:
+        return compiler.compile(kind=kinds.JOB, content=self.content)
 
     @property
     def has_specification(self) -> bool:

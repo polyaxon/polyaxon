@@ -14,6 +14,8 @@ from django.db import models
 from django.db.models import Q
 from django.utils.functional import cached_property
 
+import compiler
+
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
@@ -34,7 +36,7 @@ from libs.paths.experiment_groups import get_experiment_group_subpath
 from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
-from schemas import GroupSpecification, HPTuningConfig, Optimization
+from schemas import HPTuningConfig, Optimization, kinds
 
 _logger = logging.getLogger('polyaxon.db.experiment_groups')
 
@@ -202,7 +204,7 @@ class ExperimentGroup(DiffModel,
 
     @cached_property
     def specification(self) -> Optional['GroupSpecification']:
-        return GroupSpecification.read(self.content) if self.content else None
+        return compiler.compile(kind=kinds.GROUP, content=self.content)
 
     @property
     def has_specification(self) -> bool:

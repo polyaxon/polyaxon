@@ -272,6 +272,12 @@ class ConfigManager(rhea.Rhea):
         query.validate()
         query.setup()
 
+    def setup_compiler_service(self) -> None:
+        import compiler
+
+        compiler.validate()
+        compiler.setup()
+
     def setup_ownership_service(self) -> None:
         import ownership
 

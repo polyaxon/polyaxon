@@ -1,3 +1,4 @@
+import compiler
 import os
 
 from unittest.mock import patch
@@ -34,13 +35,12 @@ from factories.fixtures import (
     exec_experiment_ext_repo_spec_content,
     exec_experiment_resources_content,
     exec_experiment_resources_parsed_content,
-    exec_experiment_spec_content,
-    experiment_spec_content
+    exec_experiment_spec_content
 )
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
 from scheduler.tasks.experiments import copy_experiment, experiments_build, experiments_set_metrics
-from schemas import ExperimentSpecification, TaskType
+from schemas import ExperimentSpecification, TaskType, kinds
 from tests.base.case import BaseTest
 from tests.base.views import BaseViewTest
 from tests.fixtures import start_experiment_value
@@ -51,19 +51,19 @@ class TestExperimentModel(BaseTest):
     DISABLE_EXECUTOR = False
     DISABLE_RUNNER = False
 
-    def test_create_experiment_with_no_spec_or_declarations(self):
-        experiment = ExperimentFactory(declarations=None, content=None)
-        assert experiment.declarations is None
+    def test_create_experiment_with_no_spec_or_params(self):
+        experiment = ExperimentFactory(params=None, content=None)
+        assert experiment.params is None
         assert experiment.specification is None
 
-    def test_create_experiment_with_no_spec_and_declarations(self):
-        experiment = ExperimentFactory(declarations={'lr': 0.1, 'dropout': 0.5}, content=None)
-        assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
+    def test_create_experiment_with_no_spec_and_params(self):
+        experiment = ExperimentFactory(params={'lr': 0.1, 'dropout': 0.5}, content=None)
+        assert experiment.params == {'lr': 0.1, 'dropout': 0.5}
         assert experiment.specification is None
 
-    def test_create_experiment_with_spec_trigger_declarations_creation(self):
+    def test_create_experiment_with_spec_trigger_params_creation(self):
         experiment = ExperimentFactory(content=exec_experiment_resources_parsed_content.raw_data)
-        assert experiment.declarations == {'lr': 0.1, 'dropout': 0.5}
+        assert experiment.params == {'lr': 0.1, 'dropout': 0.5}
         assert isinstance(experiment.specification, ExperimentSpecification)
 
     def test_experiment_creation_triggers_status_creation_mocks(self):
@@ -104,21 +104,21 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.user == experiment.user
         assert new_experiment.description == experiment.description
         assert new_experiment.content == experiment.content
-        assert new_experiment.declarations == experiment.declarations
+        assert new_experiment.params == experiment.params
         assert new_experiment.code_reference == experiment.code_reference
 
-        # Restart with different declarations and description
-        declarations = {
+        # Restart with different params and description
+        params = {
             'lr': 0.1,
             'dropout': 0.5
         }
         description = 'new description'
-        new_experiment = experiment.restart(declarations=declarations, description=description)
+        new_experiment = experiment.restart(params=params, description=description)
         assert new_experiment.project == experiment.project
         assert new_experiment.user == experiment.user
         assert new_experiment.description == description
         assert new_experiment.content == experiment.content
-        assert new_experiment.declarations == declarations
+        assert new_experiment.params == params
         assert new_experiment.code_reference == experiment.code_reference
 
     def test_copy(self):
@@ -128,21 +128,21 @@ class TestExperimentModel(BaseTest):
         assert new_experiment.user == experiment.user
         assert new_experiment.description == experiment.description
         assert new_experiment.content == experiment.content
-        assert new_experiment.declarations == experiment.declarations
+        assert new_experiment.params == experiment.params
         assert new_experiment.code_reference == experiment.code_reference
 
-        # Restart with different declarations and description
-        declarations = {
+        # Restart with different params and description
+        params = {
             'lr': 0.1,
             'dropout': 0.5
         }
         description = 'new description'
-        new_experiment = experiment.copy(declarations=declarations, description=description)
+        new_experiment = experiment.copy(params=params, description=description)
         assert new_experiment.project == experiment.project
         assert new_experiment.user == experiment.user
         assert new_experiment.description == description
         assert new_experiment.content == experiment.content
-        assert new_experiment.declarations == declarations
+        assert new_experiment.params == params
         assert new_experiment.code_reference == experiment.code_reference
 
     def test_resume(self):
@@ -152,7 +152,7 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
 
         content = experiment.content
-        declarations = experiment.declarations
+        params = experiment.params
 
         # Resume with same config
         experiment.resume()
@@ -161,23 +161,23 @@ class TestExperimentModel(BaseTest):
         last_resumed_experiment = experiment.clones.filter(
             cloning_strategy=CloningStrategy.RESUME).last()
         assert last_resumed_experiment.content == content
-        assert last_resumed_experiment.declarations == declarations
+        assert last_resumed_experiment.params == params
         assert Experiment.objects.count() == count_experiment + 1
         assert experiment.clones.count() == 1
 
         # Resume with different config
-        new_declarations = {
+        new_params = {
             'lr': 0.1,
             'dropout': 0.5
         }
-        new_experiment = experiment.resume(declarations=new_declarations)
+        new_experiment = experiment.resume(params=new_params)
         experiment.refresh_from_db()
         assert experiment.last_status == ExperimentLifeCycle.STOPPED
         last_resumed_experiment = experiment.clones.filter(
             cloning_strategy=CloningStrategy.RESUME).last()
         assert last_resumed_experiment.content == content
-        assert last_resumed_experiment.declarations != declarations
-        assert last_resumed_experiment.declarations == new_declarations
+        assert last_resumed_experiment.params != params
+        assert last_resumed_experiment.params == new_params
         assert Experiment.objects.count() == count_experiment + 2
         assert experiment.clones.count() == 2
 
@@ -193,8 +193,8 @@ class TestExperimentModel(BaseTest):
         assert (last_resumed_experiment_new.original_experiment.pk ==
                 last_resumed_experiment.original_experiment.pk)
         assert last_resumed_experiment.content == content
-        assert last_resumed_experiment.declarations != declarations
-        assert last_resumed_experiment.declarations == new_declarations
+        assert last_resumed_experiment.params != params
+        assert last_resumed_experiment.params == new_params
         assert Experiment.objects.count() == count_experiment + 3
         assert experiment.clones.count() == 3
 
@@ -253,8 +253,10 @@ class TestExperimentModel(BaseTest):
         assert experiment.last_status == ExperimentLifeCycle.CREATED
 
     def test_independent_experiment_creation_triggers_experiment_scheduling(self):
-        content = ExperimentSpecification.read(experiment_spec_content)
-        experiment = ExperimentFactory(content=content.raw_data)
+        content = ExperimentSpecification.read(exec_experiment_spec_content)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            mock_start.return_value = BuildJobFactory(), True, True
+            experiment = ExperimentFactory(content=content.raw_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -325,7 +327,7 @@ class TestExperimentModel(BaseTest):
 
     @mock.patch('scheduler.experiment_scheduler.ExperimentSpawner')
     def test_create_experiment_with_valid_spec(self, spawner_mock):
-        config = ExperimentSpecification.read(experiment_spec_content)
+        config = ExperimentSpecification.read(exec_experiment_spec_content)
 
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
@@ -334,7 +336,9 @@ class TestExperimentModel(BaseTest):
                                    'ps': ['59e3601232b85a3d8be2511f23a62945']}
         mock_instance.spec = config
 
-        experiment = ExperimentFactory(content=config.raw_data)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            mock_start.return_value = BuildJobFactory(), True, True
+            experiment = ExperimentFactory(content=config.raw_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -359,15 +363,17 @@ class TestExperimentModel(BaseTest):
 
     @mock.patch('scheduler.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
-        config = ExperimentSpecification.read(exec_experiment_resources_content)
+        spec = compiler.compile(kind=kinds.EXPERIMENT, content=exec_experiment_resources_content)
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
         mock_instance.job_uuids = {'master': ['fa6203c189a855dd977019854a7ffcc3'],
                                    'worker': ['3a9c9b0bd56b5e9fbdbd1a3d43d57960'],
                                    'ps': ['59e3601232b85a3d8be2511f23a62945']}
-        mock_instance.spec = config
+        mock_instance.spec = spec
 
-        experiment = ExperimentFactory(content=config.raw_data)
+        with patch('scheduler.dockerizer_scheduler.create_build_job') as mock_start:
+            mock_start.return_value = BuildJobFactory(), True, True
+            experiment = ExperimentFactory(content=spec.raw_data)
         assert experiment.is_independent is True
 
         assert ExperimentStatus.objects.filter(experiment=experiment).count() == 3
@@ -424,7 +430,7 @@ class TestExperimentModel(BaseTest):
         assert mock_fct.call_count == 1
 
     def test_set_metrics(self):
-        config = ExperimentSpecification.read(experiment_spec_content)
+        config = ExperimentSpecification.read(exec_experiment_spec_content)
         experiment = ExperimentFactory(content=config.raw_data)
         assert experiment.metrics.count() == 0
 
@@ -633,10 +639,6 @@ class TestExperimentCommit(BaseViewTest):
         )
 
         assert clone_experiment.code_reference == experiment.code_reference
-
-        # Model experiments should not get a commit
-        model_experiment = self.create_experiment(experiment_spec_content)
-        assert model_experiment.code_reference is None
 
     def test_experiment_is_saved_without_code(self):
         # Check experiment is created with commit

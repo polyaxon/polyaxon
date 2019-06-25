@@ -6,6 +6,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.functional import cached_property
 
+import compiler
 import conf
 
 from constants.images_tags import LATEST_IMAGE_TAG
@@ -25,7 +26,7 @@ from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_build_spec_config
 from options.registry.build_jobs import BUILD_JOBS_ALWAYS_PULL_LATEST
-from schemas import BuildSpecification
+from schemas import BuildSpecification, kinds
 
 
 class BuildJob(AbstractJobModel,
@@ -124,8 +125,8 @@ class BuildJob(AbstractJobModel,
         return JOB_NAME_FORMAT.format(name=DOCKERIZER_JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self) -> 'BuildSpecification':
-        return BuildSpecification(values=self.content) if self.content else None
+    def specification(self) -> Optional['BuildSpecification']:
+        return compiler.compile(kind=kinds.BUILD, content=self.content)
 
     @property
     def has_specification(self) -> bool:
@@ -160,6 +161,7 @@ class BuildJob(AbstractJobModel,
                                                              config_map_refs=config_map_refs,
                                                              secret_refs=secret_refs,
                                                              to_dict=False)
+        build_spec.parse_data()
         if not nocache and build_spec.config.nocache is not None:
             # Set the config's nocache rebuild
             nocache = build_spec.config.nocache

@@ -11,6 +11,8 @@ from django.db.models import Q
 from django.dispatch import Signal
 from django.utils.functional import cached_property
 
+import compiler
+
 from db.models.abstract.backend import BackendModel
 from db.models.abstract.deleted import DeletedModel
 from db.models.abstract.describable import DescribableModel
@@ -25,6 +27,7 @@ from db.models.statuses import StatusModel
 from db.models.unique_names import PIPELINES_UNIQUE_NAME_FORMAT
 from lifecycles.operations import OperationStatuses
 from lifecycles.pipelines import PipelineLifeCycle
+from schemas import kinds
 
 _logger = logging.getLogger('db.pipelines')
 
@@ -102,8 +105,8 @@ class Pipeline(DiffModel,
         return self.content is not None
 
     @cached_property
-    def specification(self) -> 'PipelineSpecification':
-        return None  # TODO
+    def specification(self) -> Optional['PipelineSpecification']:
+        return compiler.compile(kind=kinds.PIPELINE, content=self.content)
 
     @property
     def dag(self) -> Tuple[Dict, Dict]:

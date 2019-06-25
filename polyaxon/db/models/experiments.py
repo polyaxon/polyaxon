@@ -11,6 +11,7 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 
 import auditor
+import compiler
 
 from constants.cloning_strategies import CloningStrategy
 from db.models.abstract.backend import BackendModel
@@ -37,7 +38,7 @@ from libs.paths.experiments import get_experiment_subpath
 from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
-from schemas import ExperimentSpecification, PodResourcesConfig, TaskType
+from schemas import PodResourcesConfig, TaskType, kinds
 
 
 class Experiment(DiffModel,
@@ -152,8 +153,8 @@ class Experiment(DiffModel,
         return get_experiment_subpath(experiment_name=self.unique_name)
 
     @cached_property
-    def specification(self) -> 'ExperimentSpecification':
-        return ExperimentSpecification(values=self.content) if self.content else None
+    def specification(self) -> Optional['ExperimentSpecification']:
+        return compiler.compile(kind=kinds.EXPERIMENT, content=self.content)
 
     @property
     def has_specification(self) -> bool:

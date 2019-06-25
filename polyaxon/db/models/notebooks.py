@@ -1,9 +1,11 @@
-from typing import Dict
+from typing import Dict, Optional
 
 from hestia.datetime_typing import AwareDT
 
 from django.db import models
 from django.utils.functional import cached_property
+
+import compiler
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, NOTEBOOK_JOB_NAME
 from db.models.abstract.backend import BackendModel
@@ -13,7 +15,7 @@ from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_notebook_spec_config
-from schemas import NotebookSpecification
+from schemas import kinds
 
 
 class NotebookJob(PluginJobBase, BackendModel, DataReferenceModel, JobMixin):
@@ -58,8 +60,8 @@ class NotebookJob(PluginJobBase, BackendModel, DataReferenceModel, JobMixin):
         return JOB_NAME_FORMAT.format(name=NOTEBOOK_JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self) -> 'NotebookSpecification':
-        return NotebookSpecification(values=self.content) if self.content else None
+    def specification(self) -> Optional['NotebookSpecification']:
+        return compiler.compile(kind=kinds.NOTEBOOK, content=self.content)
 
     @property
     def has_specification(self) -> bool:

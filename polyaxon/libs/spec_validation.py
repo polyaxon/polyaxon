@@ -21,6 +21,7 @@ from schemas import (
 def validate_experiment_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = ExperimentSpecification.read(config)
+        spec.parse_data()  # TODO
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
         message_error = 'Received non valid specification config. %s' % e
         if raise_for_rest:
@@ -34,6 +35,7 @@ def validate_experiment_spec_config(config, raise_for_rest: bool = False):
 def validate_group_spec_content(content, raise_for_rest: bool = False):
     try:
         spec = GroupSpecification.read(content)
+        spec.parse_data()
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
         message_error = 'Received non valid specification content. %s' % e
         if raise_for_rest:
@@ -57,6 +59,7 @@ def validate_group_hptuning_config(config, raise_for_rest: bool = False):
 def validate_notebook_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = NotebookSpecification.read(config)
+        spec.parse_data()
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
         message_error = 'Received non valid notebook specification config. %s' % e
         if raise_for_rest:
@@ -70,6 +73,7 @@ def validate_notebook_spec_config(config, raise_for_rest: bool = False):
 def validate_tensorboard_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = TensorboardSpecification.read(config)
+        spec.parse_data()
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
         message_error = 'Received non valid tensorboard specification config. %s' % e
         if raise_for_rest:
@@ -83,6 +87,7 @@ def validate_tensorboard_spec_config(config, raise_for_rest: bool = False):
 def validate_build_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = BuildSpecification.read(config)
+        spec.parse_data()
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
         message_error = 'Received non valid build specification config. %s' % e
         if raise_for_rest:
@@ -96,6 +101,7 @@ def validate_build_spec_config(config, raise_for_rest: bool = False):
 def validate_job_spec_config(config, raise_for_rest: bool = False):
     try:
         spec = JobSpecification.read(config)
+        spec.parse_data()
     except (MarshmallowValidationError, PolyaxonfileError, PolyaxonConfigurationError) as e:
         message_error = 'Received non valid job specification config. %s' % e
         if raise_for_rest:

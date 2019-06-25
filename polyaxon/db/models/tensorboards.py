@@ -1,9 +1,11 @@
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 from hestia.datetime_typing import AwareDT
 
 from django.db import models
 from django.utils.functional import cached_property
+
+import compiler
 
 from constants.k8s_jobs import JOB_NAME_FORMAT, TENSORBOARD_JOB_NAME
 from db.models.abstract.job import AbstractJobStatusModel, JobMixin
@@ -12,7 +14,7 @@ from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
 from libs.spec_validation import validate_tensorboard_spec_config
-from schemas import TensorboardSpecification
+from schemas import kinds
 
 
 class TensorboardJob(PluginJobBase, JobMixin):
@@ -67,8 +69,8 @@ class TensorboardJob(PluginJobBase, JobMixin):
         return JOB_NAME_FORMAT.format(name=TENSORBOARD_JOB_NAME, job_uuid=self.uuid.hex)
 
     @cached_property
-    def specification(self) -> 'TensorboardSpecification':
-        return TensorboardSpecification(values=self.content) if self.content else None
+    def specification(self) -> Optional['TensorboardSpecification']:
+        return compiler.compile(kind=kinds.TENSORBOARD, content=self.content)
 
     @property
     def has_specification(self) -> bool:
