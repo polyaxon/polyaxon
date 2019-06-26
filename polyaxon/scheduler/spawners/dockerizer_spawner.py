@@ -32,7 +32,6 @@ class DockerizerSpawner(K8SManager):
                  project_uuid,
                  job_name,
                  job_uuid,
-                 spec,
                  commit=None,
                  from_image=None,
                  dockerfile_path=None,
@@ -56,8 +55,8 @@ class DockerizerSpawner(K8SManager):
                  role_label=None,
                  type_label=None,
                  use_sidecar=False,
-                 sidecar_config=None):
-        self.spec = spec
+                 sidecar_config=None,
+                 log_level=None):
         self.project_name = project_name
         self.project_uuid = project_uuid
         self.job_name = job_name
@@ -92,7 +91,7 @@ class DockerizerSpawner(K8SManager):
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
             health_check_url=get_build_health_url(job_name),
-            log_level=self.spec.log_level if self.spec else None)
+            log_level=log_level)
 
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,
@@ -164,6 +163,8 @@ class DockerizerSpawner(K8SManager):
         return self._get_docker_credentials_volumes(secret_mount_path='/root/.docker')
 
     def start_dockerizer(self,
+                         secret_refs=None,
+                         config_map_refs=None,
                          resources=None,
                          node_selector=None,
                          affinity=None,
@@ -195,8 +196,8 @@ class DockerizerSpawner(K8SManager):
             persistence_data=None,
             outputs_refs_jobs=None,
             outputs_refs_experiments=None,
-            secret_refs=None,
-            config_map_refs=None,
+            secret_refs=secret_refs,
+            config_map_refs=config_map_refs,
             resources=resources,
             ephemeral_token=None,
             node_selector=node_selector,

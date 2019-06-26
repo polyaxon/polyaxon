@@ -115,15 +115,17 @@ def start_dockerizer(build_job):
         insecure=registry_spec.insecure,
         creds_secret_ref=registry_spec.secret,
         creds_secret_items=registry_spec.secret_items,
-        spec=build_job.specification,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
         in_cluster=True,
-        use_sidecar=True)
+        use_sidecar=True,
+        log_level=build_job.specification.log_level)
 
     error = {}
     try:
         results = spawner.start_dockerizer(
+            secret_refs=build_job.specification.secret_refs,
+            config_map_refs=build_job.specification.config_map_refs,
             resources=build_job.resources,
             node_selector=build_job.node_selector,
             affinity=build_job.affinity,
@@ -176,7 +178,6 @@ def stop_dockerizer(project_name, project_uuid, build_job_name, build_job_uuid):
         job_uuid=build_job_uuid,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
-        spec=None,
         in_cluster=True)
 
     return spawner.stop_dockerizer()

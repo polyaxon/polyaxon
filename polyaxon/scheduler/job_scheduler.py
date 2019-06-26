@@ -46,19 +46,22 @@ def start_job(job):
         project_uuid=job.project.uuid.hex,
         job_name=job.unique_name,
         job_uuid=job.uuid.hex,
-        spec=job.specification,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
         job_docker_image=job_docker_image,
         in_cluster=True,
-        use_sidecar=True)
+        use_sidecar=True,
+        log_level=job.specification.log_level)
 
     error = {}
     try:
-        results = spawner.start_job(persistence_data=job.persistence_data,
+        results = spawner.start_job(container_cmd_callback=job.specification.run.get_container_cmd,
+                                    persistence_data=job.persistence_data,
                                     persistence_outputs=job.persistence_outputs,
                                     outputs_refs_jobs=job.outputs_refs_jobs,
                                     outputs_refs_experiments=job.outputs_refs_experiments,
+                                    secret_refs=job.specification.secret_refs,
+                                    config_map_refs=job.specification.config_map_refs,
                                     resources=job.resources,
                                     node_selector=job.node_selector,
                                     affinity=job.affinity,
@@ -108,7 +111,6 @@ def stop_job(project_name, project_uuid, job_name, job_uuid):
         job_uuid=job_uuid,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
-        spec=None,
         in_cluster=True)
 
     return spawner.stop_job()

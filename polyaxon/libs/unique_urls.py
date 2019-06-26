@@ -24,7 +24,7 @@ def get_experiment_health_url(unique_name: str) -> str:
 
 def get_experiment_reconcile_url(unique_name: str, job_uuid: str) -> str:
     experiment_url = get_experiment_url(unique_name=unique_name)
-    return '{}//_reconcile'.format(experiment_url)
+    return '{}/jobs/{}/_reconcile'.format(experiment_url, job_uuid)
 
 
 def get_experiment_group_url(unique_name: str) -> str:

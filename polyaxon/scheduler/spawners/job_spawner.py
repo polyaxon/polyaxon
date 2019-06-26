@@ -22,7 +22,6 @@ class JobSpawner(K8SManager):
                  project_uuid,
                  job_name,
                  job_uuid,
-                 spec,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -33,8 +32,8 @@ class JobSpawner(K8SManager):
                  role_label=None,
                  type_label=None,
                  use_sidecar=False,
-                 sidecar_config=None):
-        self.spec = spec
+                 sidecar_config=None,
+                 log_level=None):
         self.project_name = project_name
         self.project_uuid = project_uuid
         self.job_name = job_name
@@ -55,14 +54,11 @@ class JobSpawner(K8SManager):
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
             health_check_url=get_job_health_url(job_name),
-            log_level=self.spec.log_level if self.spec else None)
+            log_level=log_level)
 
         super().__init__(k8s_config=k8s_config,
                          namespace=namespace,
                          in_cluster=in_cluster)
-
-    def get_pod_command_args(self):
-        return self.spec.run.get_container_cmd()
 
     def get_init_env_vars(self):
         env_vars = get_internal_env_vars(service_internal_header=InternalServices.INITIALIZER,
@@ -72,10 +68,13 @@ class JobSpawner(K8SManager):
         return env_vars
 
     def start_job(self,
+                  container_cmd_callback,
                   persistence_outputs=None,
                   persistence_data=None,
                   outputs_refs_jobs=None,
                   outputs_refs_experiments=None,
+                  secret_refs=None,
+                  config_map_refs=None,
                   resources=None,
                   node_selector=None,
                   affinity=None,
@@ -102,7 +101,7 @@ class JobSpawner(K8SManager):
         volumes += context_volumes
         volume_mounts += context_mounts
 
-        command, args = self.get_pod_command_args()
+        command, args = container_cmd_callback()
         resource_name = self.resource_manager.get_resource_name()
         pod = self.resource_manager.get_pod(
             resource_name=resource_name,
@@ -117,8 +116,8 @@ class JobSpawner(K8SManager):
             persistence_data=persistence_data,
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
-            secret_refs=self.spec.secret_refs,
-            config_map_refs=self.spec.config_map_refs,
+            secret_refs=secret_refs,
+            config_map_refs=config_map_refs,
             resources=resources,
             ephemeral_token=None,
             node_selector=node_selector,

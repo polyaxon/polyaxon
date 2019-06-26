@@ -37,7 +37,6 @@ class TensorboardSpawner(ProjectJobSpawner):
                  project_uuid,
                  job_name,
                  job_uuid,
-                 spec=None,
                  k8s_config=None,
                  namespace='default',
                  in_cluster=False,
@@ -48,8 +47,8 @@ class TensorboardSpawner(ProjectJobSpawner):
                  role_label=None,
                  type_label=None,
                  use_sidecar=False,
-                 sidecar_config=None):
-        self.spec = spec
+                 sidecar_config=None,
+                 log_level=None):
         self.resource_manager = manager.ResourceManager(
             namespace=namespace,
             name=TENSORBOARD_JOB_NAME,
@@ -66,7 +65,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             use_sidecar=use_sidecar,
             sidecar_config=sidecar_config,
             health_check_url=get_tensorboard_health_url(job_name),
-            log_level=self.spec.log_level if self.spec else None)
+            log_level=log_level)
         super().__init__(project_name=project_name,
                          project_uuid=project_uuid,
                          job_name=job_name,
