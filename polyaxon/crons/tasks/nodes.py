@@ -60,7 +60,7 @@ def update_system_nodes() -> None:
     for node in cluster.nodes.all():
         if node.name in nodes_to_create:
             nodes_to_update[node.name] = (node, nodes_to_create.pop(node.name))
-        else:
+        elif node.is_current:
             deprecated_nodes.append(node)
 
     cluster_updated = False
