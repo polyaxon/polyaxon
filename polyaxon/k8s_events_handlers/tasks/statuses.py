@@ -150,9 +150,7 @@ def get_plugin_job(app, job_uuid=None, job_id=None):
             return TensorboardJob.objects.get(**kwargs)
         elif app == conf.get(APP_LABELS_NOTEBOOK):
             return NotebookJob.objects.get(**kwargs)
-        else:
-            logger.info('Plugin job `%s` does not exist', app)
-            return
+        logger.info('Plugin job `%s` does not exist', app)
     except (NotebookJob.DoesNotExist, TensorboardJob.DoesNotExist):
         return
 

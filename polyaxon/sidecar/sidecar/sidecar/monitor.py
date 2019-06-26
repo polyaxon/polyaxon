@@ -20,6 +20,7 @@ def is_pod_running(k8s_manager, pod_id, container_id):
     elif event.status.phase == PodLifeCycle.FAILED:
         status = 'failed'
 
+    print('status')
     return (
         event.status.phase in {PodLifeCycle.RUNNING,
                                PodLifeCycle.PENDING,

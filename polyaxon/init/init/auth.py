@@ -1,7 +1,7 @@
 import argparse
 import time
 
-from requests.exceptions import ConnectionError
+import requests
 
 from polyaxon_client.client import PolyaxonClient
 
@@ -51,7 +51,10 @@ def create_auth_context():
     while not done and retry < 3:
         try:
             done = _create_auth_context()
-        except ConnectionError:
+        except (requests.exceptions.ConnectionError,
+                requests.exceptions.RequestException,
+                requests.exceptions.Timeout,
+                requests.exceptions.HTTPError):
             retry += 1
             print('Could not establish connection, retrying ...')
             time.sleep(sleep_interval)
