@@ -69,7 +69,7 @@ spec:
           httpGet:
             path: /_health/
             port: {{ .Values.api.service.internalPort }}
-            scheme: HTTP
+            scheme: {{ .Values.api.service.scheme | default "HTTP" }}
             {{- if .Values.allowedHosts }}
             httpHeaders:
               - name: Host
@@ -84,7 +84,7 @@ spec:
           httpGet:
             path: /_health/
             port: {{ .Values.api.service.internalPort }}
-            scheme: HTTP
+            scheme: {{ .Values.api.service.scheme | default "HTTP" }}
             {{- if .Values.allowedHosts }}
             httpHeaders:
               - name: Host
@@ -118,7 +118,7 @@ spec:
           httpGet:
             path: /_health/
             port: {{ .Values.streams.service.internalPort }}
-            scheme: HTTP
+            scheme: {{ .Values.api.service.scheme | default "HTTP" }}
           initialDelaySeconds: 100
           periodSeconds: 30
           successThreshold: 1
@@ -128,7 +128,7 @@ spec:
           httpGet:
             path: /_health/
             port: {{ .Values.streams.service.internalPort }}
-            scheme: HTTP
+            scheme: {{ .Values.api.service.scheme | default "HTTP" }}
           initialDelaySeconds: 150
           periodSeconds: 30
           successThreshold: 1
