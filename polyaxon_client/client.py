@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from datetime import datetime
+
+from hestia.tz_utils import utc
+
 from polyaxon_client import settings
 from polyaxon_client.api.auth import AuthApi
 from polyaxon_client.api.bookmark import BookmarkApi
@@ -167,6 +171,12 @@ class PolyaxonClient(object):
         if settings.INTERNAL_HEALTH_CHECK_URL:
             self.set_health_check(
                 self.auth.build_url(self.api_config.base_url, settings.INTERNAL_HEALTH_CHECK_URL))
+
+    def reconcile(self, status):
+        if settings.INTERNAL_RECONCILE_URL:
+            self.transport.post(
+                url=self.auth.build_url(self.api_config.base_url, settings.INTERNAL_RECONCILE_URL),
+                json_data={'status': status, 'created_at': str(utc.localize(datetime.utcnow()))})
 
     @property
     def transport(self):
