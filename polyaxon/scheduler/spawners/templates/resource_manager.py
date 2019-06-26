@@ -151,7 +151,7 @@ class BaseResourceManager(object):
     def get_sidecar_volume_mounts(self, context_mounts, persistence_outputs, persistence_data):
         return context_mounts
 
-    def get_sidecar_container(self, volume_mounts):
+    def get_sidecar_container(self, volume_mounts, reconcile_url):
         """Pod sidecar container for task logs."""
         return get_sidecar_container(
             job_container_name=self.job_container_name,
@@ -163,6 +163,7 @@ class BaseResourceManager(object):
             sidecar_args=get_sidecar_args(container_id=self.job_container_name,
                                           app_label=self.app_label),
             internal_health_check_url=self.health_check_url,
+            internal_reconcile_url=reconcile_url,
             volume_mounts=volume_mounts)
 
     def get_init_container(self,
@@ -199,6 +200,7 @@ class BaseResourceManager(object):
                           tolerations=None,
                           sidecar_context_mounts=None,
                           init_context_mounts=None,
+                          reconcile_url=None,
                           restart_policy=None):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
         sidecar_context_mounts = to_list(sidecar_context_mounts, check_none=True)
@@ -233,7 +235,8 @@ class BaseResourceManager(object):
                 persistence_outputs=persistence_outputs,
                 persistence_data=persistence_data,
                 context_mounts=sidecar_context_mounts)
-            sidecar_container = self.get_sidecar_container(volume_mounts=sidecar_volume_mounts)
+            sidecar_container = self.get_sidecar_container(volume_mounts=sidecar_volume_mounts,
+                                                           reconcile_url=reconcile_url)
             containers.append(sidecar_container)
 
         init_container = self.get_init_container(init_command=init_command,
@@ -308,6 +311,7 @@ class BaseResourceManager(object):
                 tolerations=None,
                 sidecar_context_mounts=None,
                 init_context_mounts=None,
+                reconcile_url=None,
                 restart_policy=None):
         resources = self._get_pod_resources(resources=resources)
         annotations = None
@@ -342,6 +346,7 @@ class BaseResourceManager(object):
             tolerations=tolerations,
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
+            reconcile_url=reconcile_url,
             restart_policy=restart_policy)
         return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                             kind=k8s_constants.K8S_POD_KIND,
@@ -372,6 +377,7 @@ class BaseResourceManager(object):
                               affinity=None,
                               tolerations=None,
                               restart_policy=None,
+                              reconcile_url=None,
                               init_context_mounts=None,
                               sidecar_context_mounts=None):
         resources = self._get_pod_resources(resources=resources)
@@ -407,6 +413,7 @@ class BaseResourceManager(object):
             tolerations=tolerations,
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
+            reconcile_url=reconcile_url,
             restart_policy=restart_policy)
         return client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
 
@@ -434,6 +441,7 @@ class BaseResourceManager(object):
                        affinity=None,
                        tolerations=None,
                        restart_policy=None,
+                       reconcile_url=None,
                        init_context_mounts=None,
                        sidecar_context_mounts=None,
                        replicas=1):
@@ -461,6 +469,7 @@ class BaseResourceManager(object):
             affinity=affinity,
             tolerations=tolerations,
             restart_policy=restart_policy,
+            reconcile_url=reconcile_url,
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
         )

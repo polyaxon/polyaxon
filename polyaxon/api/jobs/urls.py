@@ -43,6 +43,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/outputs/files/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobOutputsFilesView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/_reconcile/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
+        views.JobReconcileView.as_view()),
     re_path(r'^{}/{}/jobs/{}/_heartbeat/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobHeartBeatView.as_view()),

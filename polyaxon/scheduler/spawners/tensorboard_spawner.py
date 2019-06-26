@@ -153,7 +153,8 @@ class TensorboardSpawner(ProjectJobSpawner):
                           resources=None,
                           node_selector=None,
                           affinity=None,
-                          tolerations=None):
+                          tolerations=None,
+                          reconcile_url=None):
         ports = [self.request_tensorboard_port()]
         target_ports = [self.port]
         volumes, volume_mounts = get_pod_outputs_volume(persistence_outputs)
@@ -216,6 +217,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             affinity=affinity,
             tolerations=tolerations,
             ports=target_ports,
+            reconcile_url=reconcile_url,
             restart_policy=None)
 
         dep_resp, _ = self.create_or_update_deployment(name=resource_name, data=deployment)

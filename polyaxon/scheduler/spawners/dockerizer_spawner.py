@@ -167,7 +167,8 @@ class DockerizerSpawner(K8SManager):
                          resources=None,
                          node_selector=None,
                          affinity=None,
-                         tolerations=None):
+                         tolerations=None,
+                         reconcile_url=None):
         volumes, volume_mounts = get_docker_volumes()
         context_volumes, context_mounts = get_build_context_volumes()
         volumes += context_volumes
@@ -202,6 +203,7 @@ class DockerizerSpawner(K8SManager):
             affinity=affinity,
             tolerations=tolerations,
             init_context_mounts=context_mounts,
+            reconcile_url=reconcile_url,
             restart_policy='Never')
 
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)

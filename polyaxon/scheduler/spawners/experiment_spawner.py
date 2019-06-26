@@ -8,7 +8,7 @@ import conf
 
 from constants.experiment_jobs import get_experiment_job_uuid
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
-from libs.unique_urls import get_experiment_health_url
+from libs.unique_urls import get_experiment_health_url, get_experiment_reconcile_url
 from options.registry.container_names import CONTAINER_NAME_EXPERIMENT_JOBS
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
@@ -160,6 +160,7 @@ class ExperimentSpawner(K8SManager):
         resource_name = self.resource_manager.get_resource_name(task_type=task_type,
                                                                 task_idx=task_idx)
         job_uuid = self.get_job_uuids(task_type=task_type, task_idx=task_idx)
+        reconcile_url = get_experiment_reconcile_url(self.experiment_name, job_uuid)
         labels = self.resource_manager.get_labels(task_type=task_type,
                                                   task_idx=task_idx,
                                                   job_uuid=job_uuid)
@@ -209,6 +210,7 @@ class ExperimentSpawner(K8SManager):
             affinity=affinity,
             tolerations=tolerations,
             init_context_mounts=context_mounts,
+            reconcile_url=reconcile_url,
             restart_policy=restart_policy)
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
         results = {'pod': pod_resp.to_dict()}

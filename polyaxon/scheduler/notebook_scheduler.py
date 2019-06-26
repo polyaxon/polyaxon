@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
+from libs.unique_urls import get_notebook_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from options.registry.notebooks import NOTEBOOKS_MOUNT_CODE
@@ -54,18 +55,20 @@ def start_notebook(notebook):
     error = {}
     try:
         mount_code_in_notebooks = conf.get(NOTEBOOKS_MOUNT_CODE)
-        results = spawner.start_notebook(persistence_outputs=notebook.persistence_outputs,
-                                         persistence_data=notebook.persistence_data,
-                                         outputs_refs_jobs=notebook.outputs_refs_jobs,
-                                         outputs_refs_experiments=notebook.outputs_refs_experiments,
-                                         resources=notebook.resources,
-                                         secret_refs=notebook.secret_refs,
-                                         config_map_refs=notebook.config_map_refs,
-                                         node_selector=notebook.node_selector,
-                                         affinity=notebook.affinity,
-                                         tolerations=notebook.tolerations,
-                                         backend=notebook.backend,
-                                         mount_code_in_notebooks=mount_code_in_notebooks)
+        results = spawner.start_notebook(
+            persistence_outputs=notebook.persistence_outputs,
+            persistence_data=notebook.persistence_data,
+            outputs_refs_jobs=notebook.outputs_refs_jobs,
+            outputs_refs_experiments=notebook.outputs_refs_experiments,
+            resources=notebook.resources,
+            secret_refs=notebook.secret_refs,
+            config_map_refs=notebook.config_map_refs,
+            node_selector=notebook.node_selector,
+            affinity=notebook.affinity,
+            tolerations=notebook.tolerations,
+            backend=notebook.backend,
+            reconcile_url=get_notebook_reconcile_url(notebook.unique_name),
+            mount_code_in_notebooks=mount_code_in_notebooks)
         notebook.definition = get_job_definition(results)
         notebook.save(update_fields=['definition'])
         return

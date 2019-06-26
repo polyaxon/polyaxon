@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
+from libs.unique_urls import get_tensorboard_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
@@ -40,7 +41,8 @@ def start_tensorboard(tensorboard):
             resources=tensorboard.resources,
             node_selector=tensorboard.node_selector,
             affinity=tensorboard.affinity,
-            tolerations=tensorboard.tolerations)
+            tolerations=tensorboard.tolerations,
+            reconcile_url=get_tensorboard_reconcile_url(tensorboard.unique_name))
         tensorboard.definition = get_job_definition(results)
         tensorboard.save(update_fields=['definition'])
         return

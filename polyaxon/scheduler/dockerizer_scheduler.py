@@ -8,6 +8,7 @@ import conf
 
 from db.models.build_jobs import BuildJob
 from events.registry.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGGERED
+from libs.unique_urls import get_build_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.build_jobs import BUILD_JOBS_BACKEND
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
@@ -122,10 +123,12 @@ def start_dockerizer(build_job):
 
     error = {}
     try:
-        results = spawner.start_dockerizer(resources=build_job.resources,
-                                           node_selector=build_job.node_selector,
-                                           affinity=build_job.affinity,
-                                           tolerations=build_job.tolerations)
+        results = spawner.start_dockerizer(
+            resources=build_job.resources,
+            node_selector=build_job.node_selector,
+            affinity=build_job.affinity,
+            tolerations=build_job.tolerations,
+            reconcile_url=get_build_reconcile_url(build_job.unique_name))
         auditor.record(event_type=BUILD_JOB_STARTED,
                        instance=build_job)
         build_job.definition = get_job_definition(results)

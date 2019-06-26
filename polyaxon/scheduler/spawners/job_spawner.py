@@ -79,7 +79,8 @@ class JobSpawner(K8SManager):
                   resources=None,
                   node_selector=None,
                   affinity=None,
-                  tolerations=None):
+                  tolerations=None,
+                  reconcile_url=None):
         # Set and validate volumes
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
@@ -124,6 +125,7 @@ class JobSpawner(K8SManager):
             affinity=affinity,
             tolerations=tolerations,
             init_context_mounts=context_mounts,
+            reconcile_url=reconcile_url,
             restart_policy='Never')
         pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
 

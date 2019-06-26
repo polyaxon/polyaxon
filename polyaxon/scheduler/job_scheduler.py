@@ -5,6 +5,7 @@ from kubernetes.client.rest import ApiException
 
 import conf
 
+from libs.unique_urls import get_job_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from registry.exceptions import ContainerRegistryError
@@ -61,7 +62,8 @@ def start_job(job):
                                     resources=job.resources,
                                     node_selector=job.node_selector,
                                     affinity=job.affinity,
-                                    tolerations=job.tolerations)
+                                    tolerations=job.tolerations,
+                                    reconcile_url=get_job_reconcile_url(job.unique_name))
         job.definition = get_job_definition(results)
         job.save(update_fields=['definition'])
         return

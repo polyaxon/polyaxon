@@ -2505,4 +2505,50 @@ class TestExperimentHeartBeatViewV1(BaseViewTest):
         self.assertEqual(RedisHeartBeat.experiment_is_alive(self.experiment.id), True)
 
 
+@pytest.mark.experiments_mark
+class TestExperimentJobReconcileViewV1(BaseViewTest):
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.experiment = ExperimentFactory(project=project)
+        self.object = ExperimentJobFactory(experiment=self.experiment)
+        self.url = '/{}/{}/{}/experiments/{}/jobs/{}/_reconcile/'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id,
+            self.object.uuid.hex)
+
+    def _reconcile(self, client):
+        with patch('k8s_events_handlers.tasks.'
+                   'k8s_events_reconcile_experiment_job_statuses.apply_async') as mock_fct:
+            resp = client.post(self.url, data={'status': 'succeeded'})
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 1
+
+    def _reconcile_done(self, client):
+        ExperimentJobStatusFactory(job=self.object, status='failed')
+        with patch('k8s_events_handlers.tasks.'
+                   'k8s_events_reconcile_experiment_job_statuses.apply_async') as mock_fct:
+            resp = client.post(self.url, data={'status': 'succeeded'})
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+
+    def test_reconcile(self):
+        self._reconcile(self.auth_client)
+
+    def test_reconcile_done(self):
+        self._reconcile(self.auth_client)
+
+    def test_reconcile_internal(self):
+        self._reconcile(self.internal_client)
+
+    def test_reconcile_done_internal(self):
+        self._reconcile(self.internal_client)
+
+
 del BaseEntityCodeReferenceViewTest

@@ -190,6 +190,10 @@ class K8SEventsCeleryTasks(object):
     K8S_EVENTS_HANDLE_JOB_STATUSES = 'k8s_events_handle_job_statuses'
     K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES = 'k8s_events_handle_plugin_job_statuses'
     K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES = 'k8s_events_handle_build_job_statuses'
+    K8S_EVENTS_RECONCILE_EXPERIMENT_JOB_STATUSES = 'k8s_events_reconcile_experiment_job_statuses'
+    K8S_EVENTS_RECONCILE_JOB_STATUSES = 'k8s_events_reconcile_job_statuses'
+    K8S_EVENTS_RECONCILE_PLUGIN_JOB_STATUSES = 'k8s_events_reconcile_plugin_job_statuses'
+    K8S_EVENTS_RECONCILE_BUILD_JOB_STATUSES = 'k8s_events_reconcile_build_job_statuses'
 
 
 class EventsCeleryTasks(object):
@@ -691,6 +695,14 @@ CELERY_TASK_ROUTES = {
     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES:
         {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
     K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_EXPERIMENT_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_PLUGIN_JOB_STATUSES:
+        {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
+    K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_BUILD_JOB_STATUSES:
         {'queue': CeleryQueues.K8S_EVENTS_JOB_STATUSES},
 
     # Logs health

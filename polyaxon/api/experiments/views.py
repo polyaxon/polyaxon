@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
+import conf
 import stores
 import workers
 
@@ -94,7 +95,8 @@ from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
-from polyaxon.settings import LogsCeleryTasks, SchedulerCeleryTasks
+from options.registry.scheduler import SCHEDULER_RECONCILE_COUNTDOWN
+from polyaxon.settings import K8SEventsCeleryTasks, LogsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.ephemeral import EphemeralAuthentication
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
@@ -588,6 +590,32 @@ class ExperimentJobDetailView(ExperimentJobEndpoint,
     serializer_class = ExperimentJobDetailSerializer
     lookup_field = 'id'
     AUDITOR_EVENT_TYPES = {'GET': EXPERIMENT_JOB_VIEWED}
+
+
+class ExperimentJobReconcileView(ExperimentJobEndpoint, PostEndpoint):
+    """
+    post:
+        Send a status to reconcile experiment job status.
+    """
+    permission_classes = ExperimentJobEndpoint.permission_classes + (IsAuthenticatedOrInternal,)
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
+    CONTEXT_KEYS = ExperimentResourceEndpoint.CONTEXT_KEYS + ('job_uuid',)
+    lookup_field = 'uuid'
+    lookup_url_kwarg = 'job_uuid'
+
+    def post(self, request, *args, **kwargs):
+        if not self.job.is_done:
+            workers.send(
+                K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_EXPERIMENT_JOB_STATUSES,
+                kwargs={
+                    'job_id': self.job.id,
+                    'status': request.data.get('status'),
+                    'created_at': request.data.get('created_at'),
+                },
+                countdown=conf.get(SCHEDULER_RECONCILE_COUNTDOWN))
+        return Response(status=status.HTTP_200_OK)
 
 
 def get_experiment_logs_path(experiment: Experiment) -> Optional[str]:

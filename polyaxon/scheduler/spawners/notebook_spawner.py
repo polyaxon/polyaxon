@@ -156,6 +156,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        affinity=None,
                        tolerations=None,
                        backend=None,
+                       reconcile_url=None,
                        mount_code_in_notebooks=False):
         ports = [self.request_notebook_port()]
         target_ports = [self.port]
@@ -211,6 +212,7 @@ class NotebookSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             ports=target_ports,
             init_context_mounts=context_mounts,
+            reconcile_url=reconcile_url,
             restart_policy=None)
         dep_resp, _ = self.create_or_update_deployment(name=resource_name,
                                                        data=deployment)

@@ -855,6 +855,50 @@ class TestJobHeartBeatViewV1(BaseViewTest):
 
 
 @pytest.mark.jobs_mark
+class TestJobReconcileViewV1(BaseViewTest):
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.job = JobFactory(project=project)
+        self.url = '/{}/{}/{}/jobs/{}/_reconcile'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.job.id)
+
+    def _reconcile(self, client):
+        with patch('k8s_events_handlers.tasks.'
+                   'k8s_events_reconcile_job_statuses.apply_async') as mock_fct:
+            resp = client.post(self.url, data={'status': 'succeeded'})
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 1
+
+    def _reconcile_done(self, client):
+        JobStatusFactory(job=self.job, status='failed')
+        with patch('k8s_events_handlers.tasks.'
+                   'k8s_events_reconcile_job_statuses.apply_async') as mock_fct:
+            resp = client.post(self.url, data={'status': 'succeeded'})
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+
+    def test_reconcile(self):
+        self._reconcile(self.auth_client)
+
+    def test_reconcile_done(self):
+        self._reconcile(self.auth_client)
+
+    def test_reconcile_internal(self):
+        self._reconcile(self.internal_client)
+
+    def test_reconcile_done_internal(self):
+        self._reconcile(self.internal_client)
+
+
+@pytest.mark.jobs_mark
 class TestJobOutputsTreeViewV1(BaseFilesViewTest):
     num_log_lines = 10
     HAS_AUTH = True

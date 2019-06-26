@@ -67,6 +67,23 @@ def k8s_events_handle_experiment_job_statuses(self: 'workers.app.task', payload:
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_EXPERIMENT_JOB_STATUSES,
+                  ignore_result=True)
+def k8s_events_reconcile_experiment_job_statuses(job_id, status, created_at) -> None:
+    try:
+        job = ExperimentJob.objects.get(id=job_id)
+    except ExperimentJob.DoesNotExist:
+        logger.debug('Job `%s` does not exist', job_id)
+        return
+
+    if job.is_done:
+        return
+
+    job.set_status(status=status,
+                   message='Status was reconciled.',
+                   created_at=created_at)
+
+
 @workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
                   bind=True,
                   max_retries=3,
@@ -104,6 +121,42 @@ def k8s_events_handle_job_statuses(self: 'workers.app.task', payload: Dict) -> N
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
 
 
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_JOB_STATUSES,
+                  ignore_result=True)
+def k8s_events_reconcile_job_statuses(job_id, status, created_at) -> None:
+    try:
+        job = Job.objects.get(id=job_id)
+    except ExperimentJob.DoesNotExist:
+        logger.debug('Job `%s` does not exist', job_id)
+        return
+
+    if job.is_done:
+        return
+
+    job.set_status(status=status,
+                   message='Status was reconciled.',
+                   created_at=created_at)
+
+
+def get_plugin_job(app, job_uuid=None, job_id=None):
+    kwargs = {}
+    if job_uuid:
+        kwargs['uuid'] = job_uuid
+    if job_id:
+        kwargs['job_id'] = job_id
+
+    try:
+        if app == conf.get(APP_LABELS_TENSORBOARD):
+            return TensorboardJob.objects.get(**kwargs)
+        elif app == conf.get(APP_LABELS_NOTEBOOK):
+            return NotebookJob.objects.get(**kwargs)
+        else:
+            logger.info('Plugin job `%s` does not exist', app)
+            return
+    except (NotebookJob.DoesNotExist, TensorboardJob.DoesNotExist):
+        return
+
+
 @workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                   bind=True,
                   max_retries=3,
@@ -117,15 +170,9 @@ def k8s_events_handle_plugin_job_statuses(self: 'workers.app.task', payload: Dic
     project_name = details['labels'].get('project_name')
     logger.debug('handling events status for job %s %s', job_name, app)
 
-    try:
-        if app == conf.get(APP_LABELS_TENSORBOARD):
-            job = TensorboardJob.objects.get(uuid=job_uuid)
-        elif app == conf.get(APP_LABELS_NOTEBOOK):
-            job = NotebookJob.objects.get(uuid=job_uuid)
-        else:
-            logger.info('Plugin job `%s` does not exist', app)
-            return
-    except (NotebookJob.DoesNotExist, TensorboardJob.DoesNotExist):
+    job = get_plugin_job(app=app, job_uuid=job_uuid)
+
+    if not job:
         logger.debug('`%s - %s` does not exist', app, job_name)
         return
 
@@ -145,6 +192,23 @@ def k8s_events_handle_plugin_job_statuses(self: 'workers.app.task', payload: Dic
     except IntegrityError:
         # Due to concurrency this could happen, we just retry it
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_PLUGIN_JOB_STATUSES,
+                  ignore_result=True)
+def k8s_events_reconcile_plugin_job_statuses(job_id, app, status, created_at) -> None:
+    job = get_plugin_job(app=app, job_uuid=job_id)
+
+    if not job:
+        logger.debug('Job `%s` does not exist', job_id)
+        return
+
+    if job.is_done:
+        return
+
+    job.set_status(status=status,
+                   message='Status was reconciled.',
+                   created_at=created_at)
 
 
 @workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_BUILD_JOB_STATUSES,
@@ -182,3 +246,20 @@ def k8s_events_handle_build_job_statuses(self: 'workers.app.task', payload: Dict
     except IntegrityError:
         # Due to concurrency this could happen, we just retry it
         self.retry(countdown=Intervals.EXPERIMENTS_SCHEDULER)
+
+
+@workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_BUILD_JOB_STATUSES,
+                  ignore_result=True)
+def k8s_events_reconcile_build_job_statuses(job_id, status, created_at) -> None:
+    try:
+        job = BuildJob.objects.get(id=job_id)
+    except ExperimentJob.DoesNotExist:
+        logger.debug('Job `%s` does not exist', job_id)
+        return
+
+    if job.is_done:
+        return
+
+    job.set_status(status=status,
+                   message='Status was reconciled.',
+                   created_at=created_at)

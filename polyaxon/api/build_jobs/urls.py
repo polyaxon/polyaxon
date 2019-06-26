@@ -37,6 +37,9 @@ build_jobs_urlpatterns = [
     re_path(r'^{}/{}/builds/{}/_heartbeat/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildHeartBeatView.as_view()),
+    re_path(r'^{}/{}/builds/{}/_reconcile/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
+        views.BuildReconcileView.as_view()),
     re_path(r'^{}/{}/builds/{}/bookmark/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         bookmark_views.BuildJobBookmarkCreateView.as_view()),

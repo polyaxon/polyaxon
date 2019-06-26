@@ -8,6 +8,7 @@ from constants.urls import (
     EXPERIMENT_ID_PATTERN,
     ID_PATTERN,
     JOB_ID_PATTERN,
+    JOB_UUID_PATTERN,
     OWNER_NAME_PATTERN,
     PROJECT_NAME_PATTERN,
     UUID_PATTERN
@@ -101,6 +102,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
         views.ExperimentJobStatusListView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/_reconcile/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_UUID_PATTERN),
+        views.ExperimentJobReconcileView.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/{}/logs/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
         views.ExperimentJobLogsView.as_view()),

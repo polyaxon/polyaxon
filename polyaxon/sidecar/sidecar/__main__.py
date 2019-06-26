@@ -36,10 +36,14 @@ if __name__ == '__main__':
     client.set_internal_health_check()
     retry = 0
     is_running = True
+    status = None
     while is_running and retry < 3:
         time.sleep(sleep_interval)
         try:
-            is_running = is_pod_running(k8s_manager, settings.POD_ID, container_id)
+            is_running, status = is_pod_running(k8s_manager, settings.POD_ID, container_id)
         except ApiException:
             retry += 1
             time.sleep(sleep_interval)  # We wait a bit more before try
+
+    if status:
+        client.reconcile(status=status)

@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
+import conf
 import stores
 import workers
 
@@ -57,7 +58,8 @@ from libs.archive import archive_logs_file, archive_outputs, archive_outputs_fil
 from libs.spec_validation import validate_job_spec_config
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.job import process_logs
-from polyaxon.settings import SchedulerCeleryTasks
+from options.registry.scheduler import SCHEDULER_RECONCILE_COUNTDOWN
+from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
@@ -413,6 +415,29 @@ class JobHeartBeatView(JobEndpoint, PostEndpoint):
 
     def post(self, request, *args, **kwargs):
         RedisHeartBeat.job_ping(job_id=self.job.id)
+        return Response(status=status.HTTP_200_OK)
+
+
+class JobReconcileView(JobEndpoint, PostEndpoint):
+    """
+    post:
+        Send a status to reconcile job status.
+    """
+    permission_classes = JobEndpoint.permission_classes + (IsAuthenticatedOrInternal,)
+    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES + [
+        InternalAuthentication,
+    ]
+
+    def post(self, request, *args, **kwargs):
+        if not self.job.is_done:
+            workers.send(
+                K8SEventsCeleryTasks.K8S_EVENTS_RECONCILE_JOB_STATUSES,
+                kwargs={
+                    'job_id': self.job.id,
+                    'status': request.data.get('status'),
+                    'created_at': request.data.get('created_at'),
+                },
+                countdown=conf.get(SCHEDULER_RECONCILE_COUNTDOWN))
         return Response(status=status.HTTP_200_OK)
 
 

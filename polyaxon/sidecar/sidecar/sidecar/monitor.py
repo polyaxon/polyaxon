@@ -14,9 +14,15 @@ def is_container_terminated(event, container_id):
 def is_pod_running(k8s_manager, pod_id, container_id):
     event = k8s_manager.k8s_api.read_namespaced_pod_status(pod_id, k8s_manager.namespace)
     is_terminated = is_container_terminated(event=event, container_id=container_id)
+    status = None
+    if event.status.phase == PodLifeCycle.SUCCEEDED:
+        status = 'succeeded'
+    elif event.status.phase == PodLifeCycle.FAILED:
+        status = 'failed'
+
     return (
         event.status.phase in {PodLifeCycle.RUNNING,
                                PodLifeCycle.PENDING,
                                PodLifeCycle.CONTAINER_CREATING} and
         not is_terminated
-    )
+    ), status

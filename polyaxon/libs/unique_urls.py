@@ -22,6 +22,11 @@ def get_experiment_health_url(unique_name: str) -> str:
     return '{}/_heartbeat'.format(experiment_url)
 
 
+def get_experiment_reconcile_url(unique_name: str, job_uuid: str) -> str:
+    experiment_url = get_experiment_url(unique_name=unique_name)
+    return '{}//_reconcile'.format(experiment_url)
+
+
 def get_experiment_group_url(unique_name: str) -> str:
     values = unique_name.split('.')
     project_url = get_user_project_url(username=values[0], project_name=values[1])
@@ -39,6 +44,11 @@ def get_job_health_url(unique_name: str) -> str:
     return '{}/_heartbeat'.format(job_url)
 
 
+def get_job_reconcile_url(unique_name: str) -> str:
+    job_url = get_job_url(unique_name=unique_name)
+    return '{}/_reconcile'.format(job_url)
+
+
 def get_build_url(unique_name: str) -> str:
     values = unique_name.split('.')
     project_url = get_user_project_url(username=values[0], project_name=values[1])
@@ -48,6 +58,11 @@ def get_build_url(unique_name: str) -> str:
 def get_build_health_url(unique_name: str) -> str:
     job_url = get_build_url(unique_name=unique_name)
     return '{}/_heartbeat'.format(job_url)
+
+
+def get_build_reconcile_url(unique_name: str) -> str:
+    job_url = get_build_url(unique_name=unique_name)
+    return '{}/_reconcile'.format(job_url)
 
 
 def get_notebook_url(unique_name: str) -> str:
@@ -62,6 +77,12 @@ def get_notebook_health_url(unique_name: str) -> str:
     return '{}/_heartbeat'.format(job_url)
 
 
+def get_notebook_reconcile_url(unique_name: str) -> str:
+    # TODO
+    job_url = get_notebook_url(unique_name=unique_name)
+    return '{}/_reconcile'.format(job_url)
+
+
 def get_tensorboard_url(unique_name: str) -> str:
     values = unique_name.split('.')
     project_url = get_user_project_url(username=values[0], project_name=values[1])
@@ -72,3 +93,9 @@ def get_tensorboard_health_url(unique_name: str) -> str:
     # TODO
     job_url = get_tensorboard_url(unique_name=unique_name)
     return '{}/_heartbeat'.format(job_url)
+
+
+def get_tensorboard_reconcile_url(unique_name: str) -> str:
+    # TODO
+    job_url = get_tensorboard_url(unique_name=unique_name)
+    return '{}/_reconcile'.format(job_url)

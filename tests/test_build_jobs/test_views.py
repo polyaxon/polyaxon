@@ -767,4 +767,48 @@ class TestBuildHeartBeatViewV1(BaseViewTest):
         self.assertEqual(RedisHeartBeat.build_is_alive(self.build.id), True)
 
 
+@pytest.mark.build_jobs_mark
+class TestBuildReconcileViewV1(BaseViewTest):
+    HAS_AUTH = True
+    HAS_INTERNAL = True
+    INTERNAL_SERVICE = InternalServices.SIDECAR
+
+    def setUp(self):
+        super().setUp()
+        project = ProjectFactory(user=self.auth_client.user)
+        self.build = BuildJobFactory(project=project)
+        self.url = '/{}/{}/{}/builds/{}/_reconcile'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.build.id)
+
+    def _reconcile(self, client):
+        with patch('k8s_events_handlers.tasks.'
+                   'k8s_events_reconcile_build_job_statuses.apply_async') as mock_fct:
+            resp = client.post(self.url, data={'status': 'succeeded'})
+        assert resp.status_code == status.HTTP_200_OK
+        assert mock_fct.call_count == 1
+
+    def _reconcile_done(self, client):
+        BuildJobStatusFactory(job=self.build, status='failed')
+        with patch('k8s_events_handlers.tasks.'
+                   'k8s_events_reconcile_build_job_statuses.apply_async') as mock_fct:
+            resp = client.post(self.url, data={'status': 'succeeded'})
+        assert mock_fct.call_count == 0
+        assert resp.status_code == status.HTTP_200_OK
+
+    def test_reconcile(self):
+        self._reconcile(self.auth_client)
+
+    def test_reconcile_done(self):
+        self._reconcile(self.auth_client)
+
+    def test_reconcile_internal(self):
+        self._reconcile(self.internal_client)
+
+    def test_reconcile_done_internal(self):
+        self._reconcile(self.internal_client)
+
+
 del BaseEntityCodeReferenceViewTest
