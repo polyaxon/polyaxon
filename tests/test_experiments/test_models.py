@@ -1,4 +1,3 @@
-import compiler
 import os
 
 from unittest.mock import patch
@@ -11,6 +10,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
 
+import compiler
 import stores
 
 from constants.cloning_strategies import CloningStrategy

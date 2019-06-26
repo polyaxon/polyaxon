@@ -6,13 +6,13 @@ from db.getters.operations import get_valid_operation_run
 from db.getters.pipelines import get_valid_pipeline_run
 from lifecycles.operations import OperationStatuses
 from lifecycles.pipelines import PipelineLifeCycle
-from operations.scheduler import start_operation_run
-from pipelines import dags
-from pipelines.scheduler import (
+from polyaxon.settings import Intervals, PipelinesCeleryTasks
+from polyflow import dags
+from polyflow.scheduler.ops import start_operation_run
+from polyflow.scheduler.pipelines import (
     skip_operation_runs_for_pipeline_run,
     stop_operation_runs_for_pipeline_run
 )
-from polyaxon.settings import Intervals, PipelinesCeleryTasks
 
 _logger = logging.getLogger(__name__)
 

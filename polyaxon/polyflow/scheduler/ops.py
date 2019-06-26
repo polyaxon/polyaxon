@@ -1,8 +1,8 @@
 import workers
 
-from operations.manager.skip import skip_entity
-from operations.manager.stop import stop_entity
 from polyaxon.settings import OperationsCeleryTasks
+from polyflow.scheduler.manager.skip import skip_entity
+from polyflow.scheduler.manager.stop import stop_entity
 
 
 def start_operation_run(operation_run: 'OperationRun') -> bool:

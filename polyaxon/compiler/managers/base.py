@@ -18,12 +18,12 @@ class BaseCompileManager(object):
     @staticmethod
     def create_context_for_spec(spec: 'BaseSpecification'):
         context = {}
-        required_refs = spec.raw_config.get_params_with_refs()
+        required_refs = spec.raw_config.get_params_with_refs()  # noqa
         return context
 
     @classmethod
     def compile(cls, content) -> 'BaseSpecification':
-        spec = cls.SPECIFICATION(values=content)
+        spec = cls.SPECIFICATION(values=content)  # pylint:disable=not-callable
         context = cls.create_context_for_spec(spec=spec)
         spec.parse_data(context=context)
         return spec

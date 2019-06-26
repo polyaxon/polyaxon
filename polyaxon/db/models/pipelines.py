@@ -111,7 +111,7 @@ class Pipeline(DiffModel,
     @property
     def dag(self) -> Tuple[Dict, Dict]:
         """Construct the DAG of this pipeline based on the its operations and their downstream."""
-        from pipelines import dags
+        from polyflow import dags
 
         operations = self.operations.all().prefetch_related('downstream_operations')
 
@@ -179,7 +179,7 @@ class PipelineRun(RunModel):
         """Construct the DAG of this pipeline run
         based on the its operation runs and their downstream.
         """
-        from pipelines import dags
+        from polyflow import dags
 
         operation_runs = self.operation_runs.all().prefetch_related('downstream_runs')
 

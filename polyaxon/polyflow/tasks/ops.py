@@ -2,8 +2,8 @@ import workers
 
 from db.getters.operations import get_valid_operation_run
 from lifecycles.operations import OperationStatuses
-from operations.manager import create_entity
 from polyaxon.settings import OperationsCeleryTasks
+from polyflow.scheduler.manager import create_entity
 
 
 @workers.app.task(name=OperationsCeleryTasks.START_OPERATION, ignore_result=True)

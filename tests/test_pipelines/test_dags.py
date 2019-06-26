@@ -1,7 +1,7 @@
 import pytest
 
 from factories.factory_pipelines import OperationFactory
-from pipelines import dags
+from polyflow import dags
 from tests.base.case import BaseTest
 
 

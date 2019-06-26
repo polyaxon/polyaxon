@@ -18,7 +18,7 @@ from factories.factory_pipelines import (
 )
 from lifecycles.operations import OperationStatuses
 from lifecycles.pipelines import PipelineLifeCycle, TriggerPolicy
-from operations.scheduler import skip_operation_run, start_operation_run, stop_operation_run
+from polyflow.scheduler.ops import skip_operation_run, start_operation_run, stop_operation_run
 from tests.base.case import BaseTest
 
 
@@ -791,7 +791,7 @@ class TestOperationRunModel(BaseTest):
         assert start_operation_run(upstream_run1) is False
         upstream_run1.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
+        with patch('polyflow.tasks.pipelines_start_operation.apply_async') as mock_fct:
             upstream_run1.set_status(OperationStatuses.FAILED)
 
         assert mock_fct.call_count == 1
@@ -814,7 +814,7 @@ class TestOperationRunModel(BaseTest):
         assert start_operation_run(upstream_run1) is False
         upstream_run1.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1])
-        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
+        with patch('polyflow.tasks.pipelines_start_operation.apply_async') as mock_fct:
             upstream_run1.set_status(OperationStatuses.FAILED)
 
         assert mock_fct.call_count == 1
@@ -858,7 +858,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run1.refresh_from_db()
         upstream_run2.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
+        with patch('polyflow.tasks.pipelines_start_operation.apply_async') as mock_fct:
             upstream_run1.set_status(OperationStatuses.FAILED)
 
         assert mock_fct.call_count == 1
@@ -867,7 +867,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run2.refresh_from_db()
         assert upstream_run2.last_status is None  # Should be started but e mocked the process
 
-        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
+        with patch('polyflow.tasks.pipelines_start_operation.apply_async') as mock_fct:
             assert start_operation_run(upstream_run2) is False
             upstream_run2.refresh_from_db()
             upstream_run2.set_status(OperationStatuses.RUNNING)
@@ -900,7 +900,7 @@ class TestOperationRunModel(BaseTest):
         upstream_run1.refresh_from_db()
         upstream_run2.refresh_from_db()
         operation_run.upstream_runs.set([upstream_run1, upstream_run2])
-        with patch('pipelines.tasks.pipelines_start_operation.apply_async') as mock_fct:
+        with patch('polyflow.tasks.pipelines_start_operation.apply_async') as mock_fct:
             upstream_run1.set_status(OperationStatuses.FAILED)
             upstream_run2.set_status(OperationStatuses.RUNNING)
 

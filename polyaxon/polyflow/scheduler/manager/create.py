@@ -1,4 +1,4 @@
-from operations.manager.models import ENTITY_MODELS
+from polyflow.scheduler.manager.models import ENTITY_MODELS
 
 
 def create_entity(user_id, project_id, entity_type, content):
