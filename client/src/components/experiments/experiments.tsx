@@ -284,7 +284,7 @@ export default class Experiments extends React.Component<Props, State> {
       this.props.groupId ? getExperimentAllColumnOptions() : getExperimentColumnOptions());
     const sortOptions = [
       ...BASE_SORT_OPTIONS,
-      ...this.state.metrics.map((metric) => `metric.${metric}`),
+      ...this.state.metrics.map((metric) => `metrics.${metric}`),
     ];
     const experimentActions = [
       {

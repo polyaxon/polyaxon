@@ -31,6 +31,7 @@ class ExperimentQueryManager(BaseQueryManager):
     NAME = 'experiment'
     FIELDS_PROXY = {
         'metric': 'last_metric',
+        'metrics': 'last_metric',
         'status': 'status__status',
         'group': 'experiment_group',
         'build': 'build_job',
@@ -70,6 +71,7 @@ class ExperimentQueryManager(BaseQueryManager):
         'tags': parse_value_operation,
         # Metrics
         'metric': parse_scalar_operation,
+        'metrics': parse_scalar_operation,
         # Idependent
         'independent': parse_value_operation,
     }
@@ -107,6 +109,7 @@ class ExperimentQueryManager(BaseQueryManager):
         'tags': ArrayCondition,
         # Metrics
         'metric': ComparisonCondition,
+        'metrics': ComparisonCondition,
         # Independent
         'independent': CallbackCondition(_indepenent_condition),
     }

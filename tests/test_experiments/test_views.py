@@ -310,6 +310,17 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.data['next'] is None
         assert resp.data['count'] == 1
 
+         # Test that metrics works as well
+        resp = self.auth_client.get(
+            self.url + '?query=created_at:>=2010-01-01,'
+                       'params.optimizer:sgd,'
+                       'metrics.loss:>=0.2,'
+                       'tags:tag1')
+        assert resp.status_code == status.HTTP_200_OK
+
+        assert resp.data['next'] is None
+        assert resp.data['count'] == 1
+
         resp = self.auth_client.get(
             self.url + '?query=created_at:>=2010-01-01,'
                        'params.optimizer:sgd|adam,'
