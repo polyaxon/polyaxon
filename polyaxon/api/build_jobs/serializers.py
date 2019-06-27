@@ -12,7 +12,6 @@ from api.utils.serializers.user import UserMixin
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.models.experiments import Experiment
 from db.models.jobs import Job
-from libs.spec_validation import validate_build_spec_config
 
 
 class BuildJobStatusSerializer(serializers.ModelSerializer):
@@ -130,19 +129,6 @@ class BuildJobCreateSerializer(serializers.ModelSerializer,
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
-
-    def validate_content(self, content):
-        """We only validate the content if passed.
-
-        Also we use the BuildSpecification to check if this content was
-        intended as an experiment.
-        """
-        # content is optional
-        if not content:
-            return content
-
-        validate_build_spec_config(content)
-        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs, entity_name='Build')

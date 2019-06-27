@@ -13,6 +13,7 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
+import compiler
 import conf
 import stores
 import workers
@@ -91,7 +92,6 @@ from events.registry.experiment_group import EXPERIMENT_GROUP_EXPERIMENTS_VIEWED
 from events.registry.experiment_job import EXPERIMENT_JOB_STATUSES_VIEWED, EXPERIMENT_JOB_VIEWED
 from events.registry.project import PROJECT_EXPERIMENTS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
-from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers.log_queries.experiment import process_logs
 from logs_handlers.log_queries.experiment_job import process_logs as process_experiment_job_logs
@@ -103,6 +103,7 @@ from scopes.permissions.ephemeral import IsEphemeral
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
 from stores.exceptions import VolumeNotFoundError  # noqa
+from schemas import kinds
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 
@@ -305,8 +306,9 @@ class ExperimentCloneView(ExperimentEndpoint, CreateEndpoint):
         params = None
         update_code_reference = False
         if 'content' in request.data:
-            spec = validate_experiment_spec_config(
-                [obj.specification.raw_data, request.data['content']], raise_for_rest=True)
+            spec = compiler.compile(
+                kind=kinds.EXPERIMENT,
+                values=[obj.specification.raw_data, request.data['content']])
             content = spec.raw_data
             params = spec.params
         if 'update_code' in request.data:

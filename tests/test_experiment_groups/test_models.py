@@ -80,6 +80,11 @@ class TestExperimentGroupModel(BaseTest):
         experiment_group.refresh_from_db()
         assert updated_at < experiment_group.updated_at
 
+    def test_creation_with_bad_config(self):
+        from rest_framework.exceptions import ValidationError
+        with self.assertRaises(ValidationError):
+            ExperimentGroupFactory(content='foo')
+
     @patch('scheduler.tasks.experiment_groups.experiments_group_create.apply_async')
     @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
     @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')

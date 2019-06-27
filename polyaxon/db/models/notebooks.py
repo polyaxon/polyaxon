@@ -14,7 +14,6 @@ from db.models.abstract.job import AbstractJobStatusModel, JobMixin
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import NOTEBOOK_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
-from libs.spec_validation import validate_notebook_spec_config
 from schemas import kinds
 
 
@@ -29,8 +28,7 @@ class NotebookJob(PluginJobBase, BackendModel, DataReferenceModel, JobMixin):
     content = models.TextField(
         null=True,
         blank=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_notebook_spec_config])
+        help_text='The yaml content of the polyaxonfile/specification.')
     status = models.OneToOneField(
         'db.NotebookJobStatus',
         related_name='+',
@@ -61,7 +59,7 @@ class NotebookJob(PluginJobBase, BackendModel, DataReferenceModel, JobMixin):
 
     @cached_property
     def specification(self) -> Optional['NotebookSpecification']:
-        return compiler.compile(kind=kinds.NOTEBOOK, content=self.content)
+        return compiler.compile(kind=kinds.NOTEBOOK, values=self.content)
 
     @property
     def has_specification(self) -> bool:

@@ -28,7 +28,6 @@ from db.models.unique_names import JOB_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
 from events.registry.job import JOB_RESTARTED
 from libs.paths.jobs import get_job_subpath
-from libs.spec_validation import validate_job_spec_config
 from schemas import kinds
 
 
@@ -58,8 +57,7 @@ class Job(AbstractJobModel,
     content = models.TextField(
         null=True,
         blank=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_job_spec_config])
+        help_text='The yaml content of the polyaxonfile/specification.')
     code_reference = models.ForeignKey(
         'db.CodeReference',
         on_delete=models.SET_NULL,
@@ -115,7 +113,7 @@ class Job(AbstractJobModel,
 
     @cached_property
     def specification(self) -> Optional['JobSpecification']:
-        return compiler.compile(kind=kinds.JOB, content=self.content)
+        return compiler.compile(kind=kinds.JOB, values=self.content)
 
     @property
     def has_specification(self) -> bool:

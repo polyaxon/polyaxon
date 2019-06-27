@@ -106,7 +106,7 @@ class Pipeline(DiffModel,
 
     @cached_property
     def specification(self) -> Optional['PipelineSpecification']:
-        return compiler.compile(kind=kinds.PIPELINE, content=self.content)
+        return compiler.compile(kind=kinds.PIPELINE, values=self.content)
 
     @property
     def dag(self) -> Tuple[Dict, Dict]:

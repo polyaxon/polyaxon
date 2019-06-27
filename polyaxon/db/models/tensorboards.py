@@ -13,7 +13,6 @@ from db.models.outputs import OutputsRefsSpec
 from db.models.plugins import PluginJobBase
 from db.models.unique_names import TENSORBOARD_UNIQUE_NAME_FORMAT
 from libs.paths.jobs import get_job_subpath
-from libs.spec_validation import validate_tensorboard_spec_config
 from schemas import kinds
 
 
@@ -26,8 +25,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
     content = models.TextField(
         null=True,
         blank=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_tensorboard_spec_config])
+        help_text='The yaml content of the polyaxonfile/specification.')
     experiment_group = models.ForeignKey(
         'db.ExperimentGroup',
         on_delete=models.CASCADE,
@@ -70,7 +68,7 @@ class TensorboardJob(PluginJobBase, JobMixin):
 
     @cached_property
     def specification(self) -> Optional['TensorboardSpecification']:
-        return compiler.compile(kind=kinds.TENSORBOARD, content=self.content)
+        return compiler.compile(kind=kinds.TENSORBOARD, values=self.content)
 
     @property
     def has_specification(self) -> bool:

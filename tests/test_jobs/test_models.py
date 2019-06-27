@@ -6,6 +6,7 @@ import pytest
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
+from rest_framework.exceptions import ValidationError
 
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager
@@ -55,6 +56,10 @@ class TestJobModel(BaseTest):
         job.set_status(JobLifeCycle.RUNNING)
         job.refresh_from_db()
         assert updated_at < job.updated_at
+
+    def test_creation_with_bad_config(self):
+        with self.assertRaises(ValidationError):
+            JobFactory(content='foo')
 
     def test_job_created_status_triggers_scheduling(self):
         with patch('scheduler.tasks.jobs.jobs_build.apply_async') as mock_fct:

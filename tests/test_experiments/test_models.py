@@ -9,6 +9,7 @@ from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
+from rest_framework.exceptions import ValidationError
 
 import compiler
 import stores
@@ -70,6 +71,10 @@ class TestExperimentModel(BaseTest):
         with patch.object(Experiment, 'set_status') as mock_fct2:
             ExperimentFactory()
         assert mock_fct2.call_count == 1
+
+    def test_creation_with_bad_config(self):
+        with self.assertRaises(ValidationError):
+            ExperimentFactory(content='foo')
 
     def test_status_update_results_in_new_updated_at_datetime_experiment(self):
         experiment = ExperimentFactory()
@@ -363,7 +368,7 @@ class TestExperimentModel(BaseTest):
 
     @mock.patch('scheduler.experiment_scheduler.TensorflowSpawner')
     def test_create_experiment_with_resources_spec(self, spawner_mock):
-        spec = compiler.compile(kind=kinds.EXPERIMENT, content=exec_experiment_resources_content)
+        spec = compiler.compile(kind=kinds.EXPERIMENT, values=exec_experiment_resources_content)
         mock_instance = spawner_mock.return_value
         mock_instance.start_experiment.return_value = start_experiment_value
         mock_instance.job_uuids = {'master': ['fa6203c189a855dd977019854a7ffcc3'],

@@ -35,7 +35,6 @@ from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
 from events.registry.experiment import EXPERIMENT_COPIED, EXPERIMENT_RESTARTED, EXPERIMENT_RESUMED
 from libs.paths.experiments import get_experiment_subpath
-from libs.spec_validation import validate_experiment_spec_config
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
 from schemas import PodResourcesConfig, TaskType, kinds
@@ -97,8 +96,7 @@ class Experiment(DiffModel,
     content = models.TextField(
         null=True,
         blank=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_experiment_spec_config])
+        help_text='The yaml content of the polyaxonfile/specification.')
     run_env = JSONField(
         blank=True,
         null=True,
@@ -154,7 +152,7 @@ class Experiment(DiffModel,
 
     @cached_property
     def specification(self) -> Optional['ExperimentSpecification']:
-        return compiler.compile(kind=kinds.EXPERIMENT, content=self.content)
+        return compiler.compile(kind=kinds.EXPERIMENT, values=self.content)
 
     @property
     def has_specification(self) -> bool:

@@ -33,7 +33,7 @@ from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import GROUP_UNIQUE_NAME_FORMAT
 from libs.paths.experiment_groups import get_experiment_group_subpath
-from libs.spec_validation import validate_group_hptuning_config, validate_group_spec_content
+from libs.spec_validation import validate_group_hptuning_config
 from lifecycles.experiment_groups import ExperimentGroupLifeCycle
 from lifecycles.experiments import ExperimentLifeCycle
 from schemas import HPTuningConfig, Optimization, kinds
@@ -95,8 +95,7 @@ class ExperimentGroup(DiffModel,
     content = models.TextField(
         null=True,
         blank=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_group_spec_content])
+        help_text='The yaml content of the polyaxonfile/specification.')
     hptuning = JSONField(
         help_text='The experiment group hptuning params config.',
         null=True,
@@ -204,7 +203,7 @@ class ExperimentGroup(DiffModel,
 
     @cached_property
     def specification(self) -> Optional['GroupSpecification']:
-        return compiler.compile(kind=kinds.GROUP, content=self.content)
+        return compiler.compile(kind=kinds.GROUP, values=self.content)
 
     @property
     def has_specification(self) -> bool:

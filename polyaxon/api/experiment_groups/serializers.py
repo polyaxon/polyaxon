@@ -13,7 +13,6 @@ from db.models.experiment_groups import (
     ExperimentGroupChartView,
     ExperimentGroupStatus
 )
-from libs.spec_validation import validate_group_spec_content
 
 
 class ExperimentGroupStatusSerializer(serializers.ModelSerializer):
@@ -143,13 +142,6 @@ class ExperimentGroupCreateSerializer(ExperimentGroupSerializer,
             'content',
         )
         extra_kwargs = {'unique_name': {'read_only': True}, 'group_type': {'read_only': True}}
-
-    def validate_content(self, content):
-        # This is optional
-        if not content:
-            return content
-        validate_group_spec_content(content)
-        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs,

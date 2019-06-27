@@ -14,6 +14,7 @@ from tests.base.case import BaseTest
 
 @pytest.mark.build_jobs_mark
 class TestBuildJobStatuses(BaseTest):
+    DISABLE_EXECUTOR = False
 
     def setUp(self):
         super().setUp()

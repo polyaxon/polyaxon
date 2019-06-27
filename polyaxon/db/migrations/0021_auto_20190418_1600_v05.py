@@ -7,8 +7,6 @@ import django.core.validators
 import libs.blacklist
 import re
 
-import libs.spec_validation
-
 
 def create_cluster_owner(apps, schema_editor):
     Cluster = apps.get_model('db', 'Cluster')
@@ -171,8 +169,7 @@ class Migration(migrations.Migration):
             field=django.contrib.postgres.fields.jsonb.JSONField(
                 blank=True,
                 help_text='The compiled polyaxonfile for the build job.',
-                null=True, validators=[
-                    libs.spec_validation.validate_build_spec_config]),
+                null=True),
         ),
         migrations.AlterField(
             model_name='job',
@@ -180,48 +177,42 @@ class Migration(migrations.Migration):
             field=django.contrib.postgres.fields.jsonb.JSONField(
                 blank=True,
                 help_text='The compiled polyaxonfile for the run job.',
-                null=True, validators=[
-                    libs.spec_validation.validate_job_spec_config]),
+                null=True),
         ),
         migrations.AddField(
             model_name='buildjob',
             name='content',
             field=models.TextField(blank=True,
                                    help_text='The yaml content of the polyaxonfile/specification.',
-                                   null=True,
-                                   validators=[libs.spec_validation.validate_build_spec_config]),
+                                   null=True),
         ),
         migrations.AddField(
             model_name='experiment',
             name='content',
             field=models.TextField(blank=True,
                                    help_text='The yaml content of the polyaxonfile/specification.',
-                                   null=True, validators=[
-                    libs.spec_validation.validate_experiment_spec_config]),
+                                   null=True),
         ),
         migrations.AddField(
             model_name='job',
             name='content',
             field=models.TextField(blank=True,
                                    help_text='The yaml content of the polyaxonfile/specification.',
-                                   null=True,
-                                   validators=[libs.spec_validation.validate_job_spec_config]),
+                                   null=True),
         ),
         migrations.AddField(
             model_name='notebookjob',
             name='content',
             field=models.TextField(blank=True,
                                    help_text='The yaml content of the polyaxonfile/specification.',
-                                   null=True,
-                                   validators=[libs.spec_validation.validate_notebook_spec_config]),
+                                   null=True),
         ),
         migrations.AddField(
             model_name='tensorboardjob',
             name='content',
             field=models.TextField(blank=True,
                                    help_text='The yaml content of the polyaxonfile/specification.',
-                                   null=True, validators=[
-                    libs.spec_validation.validate_tensorboard_spec_config]),
+                                   null=True),
         ),
         migrations.AlterField(
             model_name='pipelinerunstatus',

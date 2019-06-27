@@ -5,6 +5,7 @@ from mock import patch
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
+from rest_framework.exceptions import ValidationError
 
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager
@@ -29,6 +30,13 @@ class TestPluginsModel(BaseTest):
             with patch('scheduler.notebook_scheduler.stop_notebook') as _:  # noqa
                 project.delete()
         assert TensorboardJob.objects.count() == 0
+
+    def test_creation_with_bad_config(self):
+        with self.assertRaises(ValidationError):
+            NotebookJobFactory(content='foo')
+
+        with self.assertRaises(ValidationError):
+            TensorboardJobFactory(content='foo')
 
     def test_project_deletion_cascade_to_notebook_job(self):
         assert NotebookJob.objects.count() == 0

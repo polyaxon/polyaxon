@@ -10,10 +10,10 @@ class CompilerService(Service):
     __all__ = ('compile',)
 
     @classmethod
-    def compile(cls, kind: str, content: str) -> Optional['BaseSpecification']:
-        if not content:
+    def compile(cls, kind: str, values: any) -> Optional['BaseSpecification']:
+        if not values:
             return None
 
         if kind not in managers.MAPPING:
             raise CompilerError('Specification with Kind `{}` was not configured'.format(kind))
-        return managers.MAPPING[kind].compile(content=content)
+        return managers.MAPPING[kind].compile(values=values)

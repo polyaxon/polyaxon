@@ -302,6 +302,11 @@ run:
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
         assert self.queryset.count() == self.num_objects
 
+    def test_create_with_invalid_config(self):
+        data = {'content': 'bar'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
     def test_create_with_valid_group(self):
         resp = self.auth_client.post(self.url)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST

@@ -310,7 +310,7 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         assert resp.data['next'] is None
         assert resp.data['count'] == 1
 
-         # Test that metrics works as well
+        # Test that metrics works as well
         resp = self.auth_client.get(
             self.url + '?query=created_at:>=2010-01-01,'
                        'params.optimizer:sgd,'
@@ -408,6 +408,11 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         xp = Experiment.objects.last()
         assert xp.is_managed is False
         assert xp.run_env == {'foo': 'bar'}
+
+    def test_create_with_invalid_config(self):
+        data = {'content': 'bar'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_create(self):
         resp = self.auth_client.post(self.url)

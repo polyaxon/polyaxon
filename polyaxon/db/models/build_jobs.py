@@ -24,7 +24,6 @@ from db.models.abstract.tag import TagModel
 from db.models.unique_names import BUILD_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
 from libs.paths.jobs import get_job_subpath
-from libs.spec_validation import validate_build_spec_config
 from options.registry.build_jobs import BUILD_JOBS_ALWAYS_PULL_LATEST
 from schemas import BuildSpecification, kinds
 
@@ -52,8 +51,7 @@ class BuildJob(AbstractJobModel,
     content = models.TextField(
         null=True,
         blank=True,
-        help_text='The yaml content of the polyaxonfile/specification.',
-        validators=[validate_build_spec_config])
+        help_text='The yaml content of the polyaxonfile/specification.')
     code_reference = models.ForeignKey(
         'db.CodeReference',
         on_delete=models.SET_NULL,
@@ -126,7 +124,7 @@ class BuildJob(AbstractJobModel,
 
     @cached_property
     def specification(self) -> Optional['BuildSpecification']:
-        return compiler.compile(kind=kinds.BUILD, content=self.content)
+        return compiler.compile(kind=kinds.BUILD, values=self.content)
 
     @property
     def has_specification(self) -> bool:

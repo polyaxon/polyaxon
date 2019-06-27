@@ -888,6 +888,11 @@ class TestStartProjectTensorboardViewV1(BaseViewTest):
             self.auth_client.post(self.url)
         assert start_mock.call_count == 0
 
+    def test_create_with_invalid_config(self):
+        data = {'content': 'bar'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
     def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
@@ -1006,6 +1011,11 @@ class TestStartExperimentTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         assert start_mock.call_count == 0
+
+    def test_create_with_invalid_config(self):
+        data = {'content': 'bar'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
@@ -1128,6 +1138,11 @@ class TestStartExperimentGroupTensorboardViewV1(BaseViewTest):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
             self.auth_client.post(self.url)
         assert start_mock.call_count == 0
+
+    def test_create_with_invalid_config(self):
+        data = {'content': 'bar'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_starting_stopping_tensorboard_creating_new_one_create_new_job(self):
         with patch('scheduler.tasks.tensorboards.tensorboards_start.apply_async') as start_mock:
@@ -1364,6 +1379,11 @@ class TestStartNotebookViewV1(BaseViewTest):
 
         assert resp.status_code == status.HTTP_200_OK
         assert start_mock.call_count == 0
+
+    def test_create_with_invalid_config(self):
+        data = {'content': 'bar'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
 
     def test_starting_stopping_notebook_creating_new_one_create_new_job(self):
         data = {'content': notebook_spec_parsed_content.raw_data}

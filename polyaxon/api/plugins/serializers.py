@@ -9,7 +9,6 @@ from api.utils.serializers.tags import TagsSerializerMixin
 from api.utils.serializers.user import UserMixin
 from db.models.notebooks import NotebookJob, NotebookJobStatus
 from db.models.tensorboards import TensorboardJob, TensorboardJobStatus
-from libs.spec_validation import validate_notebook_spec_config, validate_tensorboard_spec_config
 
 
 class PluginJobBaseSerializer(serializers.ModelSerializer,
@@ -36,23 +35,8 @@ class PluginJobBaseSerializer(serializers.ModelSerializer,
             'tags',  # Need to implement TagsSerializerMixin
         )
 
-    def _validate_spec(self, content):
-        pass
-
-    def validate_content(self, content):
-        # content is optional
-        if not content:
-            return content
-
-        self._validate_spec(content)
-        # Resume normal creation
-        return content
-
 
 class TensorboardJobSerializer(PluginJobBaseSerializer):
-    def _validate_spec(self, content):
-        validate_tensorboard_spec_config(content)
-
     class Meta(PluginJobBaseSerializer.Meta):
         model = TensorboardJob
 
@@ -67,9 +51,6 @@ class TensorboardJobSerializer(PluginJobBaseSerializer):
 
 
 class NotebookJobSerializer(PluginJobBaseSerializer):
-    def _validate_spec(self, content):
-        validate_notebook_spec_config(content)
-
     class Meta(PluginJobBaseSerializer.Meta):
         model = NotebookJob
         fields = PluginJobBaseSerializer.Meta.fields + ('data_refs',)

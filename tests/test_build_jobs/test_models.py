@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+from rest_framework.exceptions import ValidationError
 
 import conf
 
@@ -32,6 +33,10 @@ class TestBuildJobModels(BaseTest):
         job = BuildJobFactory()
         assert BuildJobStatus.objects.filter(job=job).count() == 1
         assert job.last_status == JobLifeCycle.CREATED
+
+    def test_creation_with_bad_config(self):
+        with self.assertRaises(ValidationError):
+            BuildJobFactory(content='foo')
 
     def test_status_update_results_in_new_updated_at_datetime(self):
         job = BuildJobFactory()

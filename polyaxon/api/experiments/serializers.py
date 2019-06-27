@@ -18,7 +18,6 @@ from db.models.experiments import (
     ExperimentMetric,
     ExperimentStatus
 )
-from libs.spec_validation import validate_experiment_spec_config
 
 
 class ExperimentJobStatusSerializer(serializers.ModelSerializer):
@@ -271,19 +270,6 @@ class ExperimentCreateSerializer(serializers.ModelSerializer,
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
-
-    def validate_content(self, content):
-        """We only validate the content if passed.
-
-        Also we use the ExperimentSpecification to check if this content was
-        intended as an experiment.
-        """
-        # content is optional
-        if not content:
-            return content
-
-        validate_experiment_spec_config(content)
-        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs, entity_name='Experiment')

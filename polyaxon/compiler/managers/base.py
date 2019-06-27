@@ -1,3 +1,7 @@
+from rest_framework.exceptions import ValidationError
+
+from schemas import PolyaxonSchemaError
+
 from schemas import ops_params
 
 
@@ -22,8 +26,17 @@ class BaseCompileManager(object):
         return context
 
     @classmethod
-    def compile(cls, content) -> 'BaseSpecification':
-        spec = cls.SPECIFICATION(values=content)  # pylint:disable=not-callable
-        context = cls.create_context_for_spec(spec=spec)
-        spec.parse_data(context=context)
+    def validate_spec(cls, values: any):
+        try:
+            spec = cls.SPECIFICATION(values=values)  # pylint:disable=not-callable
+            context = cls.create_context_for_spec(spec=spec)
+            spec.parse_data(context=context)
+            return spec
+        except PolyaxonSchemaError as e:
+            message_error = 'Received non valid specification config. %s' % e
+            raise ValidationError(message_error)
+
+    @classmethod
+    def compile(cls, values: any) -> 'BaseSpecification':
+        spec = cls.validate_spec(values=values)
         return spec

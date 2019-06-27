@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 import auditor
+import compiler
 import conf
 import stores
 import workers
@@ -55,7 +56,6 @@ from events.registry.job import (
 )
 from events.registry.project import PROJECT_JOBS_VIEWED
 from libs.archive import archive_logs_file, archive_outputs, archive_outputs_file
-from libs.spec_validation import validate_job_spec_config
 from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.job import process_logs
 from options.registry.scheduler import SCHEDULER_RECONCILE_COUNTDOWN
@@ -64,6 +64,7 @@ from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
 from stores.exceptions import VolumeNotFoundError  # noqa
+from schemas import kinds
 
 _logger = logging.getLogger("polyaxon.views.jobs")
 
@@ -187,8 +188,9 @@ class JobCloneView(JobEndpoint, CreateEndpoint):
         content = None
         update_code_reference = False
         if 'content' in request.data:
-            spec = validate_job_spec_config(
-                [self.job.specification.raw_data, request.data['content']], raise_for_rest=True)
+            spec = compiler.compile(
+                kind=kinds.JOB,
+                values=[self.job.specification.raw_data, request.data['content']])
             content = spec.raw_data
         if 'update_code' in request.data:
             try:

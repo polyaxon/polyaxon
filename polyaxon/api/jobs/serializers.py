@@ -10,7 +10,6 @@ from api.utils.serializers.project import ProjectMixin
 from api.utils.serializers.tags import TagsSerializerMixin
 from api.utils.serializers.user import UserMixin
 from db.models.jobs import Job, JobStatus
-from libs.spec_validation import validate_job_spec_config
 
 
 class JobStatusSerializer(serializers.ModelSerializer):
@@ -130,19 +129,6 @@ class JobCreateSerializer(serializers.ModelSerializer,
             'tags',
         )
         extra_kwargs = {'unique_name': {'read_only': True}}
-
-    def validate_content(self, content):
-        """We only validate the content if passed.
-
-        Also we use the JobSpecification to check if this content was
-        intended as job.
-        """
-        # content is optional
-        if not content:
-            return content
-
-        validate_job_spec_config(content)
-        return content
 
     def validate(self, attrs):
         self.check_if_entity_is_managed(attrs=attrs, entity_name='Job')
