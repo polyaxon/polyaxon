@@ -73,14 +73,4 @@ def experiment_job_post_save(sender, **kwargs):
 def experiment_metric_post_save(sender, **kwargs):
     instance = kwargs['instance']
     experiment = instance.experiment
-
-    # update experiment last_metric
-    def update_metric(last_metrics, metrics):
-        last_metrics.update(metrics)
-        return last_metrics
-
-    experiment.last_metric = update_metric(last_metrics=experiment.last_metric,
-                                           metrics=instance.values)
-    experiment.save(update_fields=['last_metric'])
-    auditor.record(event_type=EXPERIMENT_NEW_METRIC,
-                   instance=experiment)
+    experiment.set_metric(metric=instance.values)

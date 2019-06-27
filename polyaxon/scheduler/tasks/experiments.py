@@ -3,6 +3,7 @@ import logging
 from polystores.exceptions import PolyaxonStoresException
 from rest_framework.exceptions import ValidationError
 
+import compiler
 import conf
 import publisher
 import stores
@@ -10,13 +11,14 @@ import workers
 
 from api.experiments.serializers import ExperimentMetricSerializer
 from db.getters.experiments import get_valid_experiment
+from db.models.experiments import ExperimentMetric
 from db.redis.heartbeat import RedisHeartBeat
 from lifecycles.experiments import ExperimentLifeCycle
 from logs_handlers import collectors
 from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler, experiment_scheduler
-from schemas import ExperimentSpecification
+from schemas import kinds
 from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
 
 _logger = logging.getLogger('polyaxon.scheduler.experiments')
@@ -127,7 +129,8 @@ def experiments_set_metrics(experiment_id, data):
         return
 
     kwargs = {}
-    if isinstance(data, list):
+    is_list = isinstance(data, list)
+    if is_list:
         kwargs['many'] = True
     serializer = ExperimentMetricSerializer(data=data, **kwargs)
     try:
@@ -135,7 +138,13 @@ def experiments_set_metrics(experiment_id, data):
     except ValidationError:
         _logger.error('Could not create metrics, a validation error was raised.')
 
-    serializer.save(experiment=experiment)
+    if is_list:
+        ExperimentMetric.objects.bulk_create(
+            [ExperimentMetric(experiment=experiment, **metric_data) for metric_data in
+             serializer.data])
+        experiment.set_metric(ExperimentMetric.objects.last().values)
+    else:
+        serializer.save(experiment=experiment)
 
 
 @workers.app.task(name=SchedulerCeleryTasks.EXPERIMENTS_START, ignore_result=True)
@@ -215,7 +224,7 @@ def experiments_stop(self,
             _logger.warning('Scheduler could not collect '
                             'the logs for experiment `%s`.', experiment_name)
     if specification and is_managed:
-        specification = ExperimentSpecification.read(specification)
+        specification = compiler.compile(kind=kinds.EXPERIMENT, values=specification)
         deleted = experiment_scheduler.stop_experiment(
             project_name=project_name,
             project_uuid=project_uuid,

@@ -33,7 +33,12 @@ from db.models.charts import ChartViewModel
 from db.models.statuses import LastStatusMixin, StatusModel
 from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
-from events.registry.experiment import EXPERIMENT_COPIED, EXPERIMENT_RESTARTED, EXPERIMENT_RESUMED
+from events.registry.experiment import (
+    EXPERIMENT_COPIED,
+    EXPERIMENT_RESTARTED,
+    EXPERIMENT_RESUMED,
+    EXPERIMENT_NEW_METRIC
+)
 from libs.paths.experiments import get_experiment_subpath
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
@@ -279,6 +284,13 @@ class Experiment(DiffModel,
                                             message=message,
                                             traceback=traceback,
                                             **params)
+
+    def set_metric(self, metric):
+        last_metric = self.last_metric
+        last_metric.update(metric)
+        self.last_metric = last_metric
+        self.save(update_fields=['last_metric'])
+        auditor.record(event_type=EXPERIMENT_NEW_METRIC, instance=self)
 
     def _clone(self,
                cloning_strategy: str,
