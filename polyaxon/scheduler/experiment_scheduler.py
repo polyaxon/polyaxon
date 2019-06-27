@@ -6,6 +6,7 @@ from kubernetes.client.rest import ApiException
 
 from django.db import IntegrityError
 
+import compiler
 import conf
 
 from db.models.experiment_jobs import ExperimentJob
@@ -34,6 +35,7 @@ from schemas import (
     TaskType,
     TensorflowSpecification
 )
+from schemas import kinds
 from stores.exceptions import VolumeNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.experiment')
@@ -665,6 +667,7 @@ def stop_experiment(project_name,
                     specification,
                     experiment_group_name=None,
                     experiment_group_uuid=None):
+    specification = compiler.compile(kind=kinds.EXPERIMENT, values=specification)
     spawner_class = get_spawner_class(specification=specification)
 
     spawner = spawner_class(project_name=project_name,

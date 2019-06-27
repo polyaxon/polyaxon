@@ -61,8 +61,8 @@ def get_valid_outputs(instance, outputs, model, entity):
 def set_outputs(instance):
     if instance.outputs:
         outputs_config = instance.outputs_config
-    # elif instance.specification and instance.specification.outputs: TODO
-    #     outputs_config = instance.specification.outputs
+    elif instance.specification and instance.specification.outputs:
+        outputs_config = instance.specification.outputs
     else:
         return
 

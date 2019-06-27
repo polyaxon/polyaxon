@@ -52,11 +52,12 @@ from factories.factory_experiments import (
     ExperimentMetricFactory,
     ExperimentStatusFactory
 )
+from factories.factory_jobs import JobFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import (
     exec_experiment_resources_parsed_content,
-    exec_experiment_spec_parsed_content
-)
+    exec_experiment_spec_parsed_content,
+    exec_experiment_outputs_refs_parsed_content)
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
 from options.registry.archives import ARCHIVES_ROOT_ARTIFACTS
@@ -444,26 +445,26 @@ class TestProjectExperimentListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.other_url, data)
         assert resp.status_code in (status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN)
 
-    # def test_create_with_outputs_refs(self):  TODO
-    #     data = {'content': exec_experiment_outputs_refs_parsed_content.raw_data}
-    #     resp = self.auth_client.post(self.url, data)
-    #     # No job refs
-    #     assert resp.status_code == status.HTTP_400_BAD_REQUEST
-    #
-    #     # Creating the job should pass
-    #     JobFactory(project=self.project, name='foo')  # noqa
-    #     with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
-    #         resp = self.auth_client.post(self.url, data)
-    #
-    #     assert resp.status_code == status.HTTP_201_CREATED
-    #     assert mock_fct.call_count == 1
-    #     assert self.queryset.count() == self.num_objects + 1
-    #     experiment = self.queryset.order_by('created_at').last()
-    #     assert experiment.outputs_refs is not None
-    #     assert len(experiment.outputs_refs_jobs) == 1
-    #     assert experiment.outputs_refs_experiments is None
-    #     assert len(experiment.outputs_jobs) == 1
-    #     assert experiment.outputs_experiments is None
+    def test_create_with_outputs_refs(self):
+        data = {'content': exec_experiment_outputs_refs_parsed_content.raw_data}
+        resp = self.auth_client.post(self.url, data)
+        # No job refs
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        # Creating the job should pass
+        JobFactory(project=self.project, name='foo')  # noqa
+        with patch('scheduler.tasks.experiments.experiments_build.apply_async') as mock_fct:
+            resp = self.auth_client.post(self.url, data)
+
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert mock_fct.call_count == 1
+        assert self.queryset.count() == self.num_objects + 1
+        experiment = self.queryset.order_by('created_at').last()
+        assert experiment.outputs_refs is not None
+        assert len(experiment.outputs_refs_jobs) == 1
+        assert experiment.outputs_refs_experiments is None
+        assert len(experiment.outputs_jobs) == 1
+        assert experiment.outputs_experiments is None
 
     def test_create_without_config_passes_if_no_spec_validation_requested(self):
         data = {'is_managed': False}
