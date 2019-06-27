@@ -1,2 +1,2 @@
-PyYAML==5.1
+PyYAML>=5.1
 six==1.12.0
