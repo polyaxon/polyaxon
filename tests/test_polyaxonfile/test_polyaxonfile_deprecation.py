@@ -28,6 +28,7 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert spec.run.cmd == 'video_prediction_train --model=DNA --num_masks=1'
         assert spec.environment is not None
         assert spec.environment.resources.gpu.to_dict() == {'requests': 1, 'limits': 1}
+        assert spec.environment.outputs.to_dict() == {'jobs': [111], 'experiments': None}
         assert spec.framework is not None
         assert spec.is_experiment is True
 

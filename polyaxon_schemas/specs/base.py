@@ -303,6 +303,10 @@ class EnvironmentSpecificationMixin(object):
     def tolerations(self):
         return self.environment.tolerations if self.environment else None
 
+    @cached_property
+    def outputs(self):
+        return self.environment.outputs if self.environment else None
+
 
 class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
     """The polyaxonfile specification for build jobs.

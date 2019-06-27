@@ -82,10 +82,10 @@ class EnvironmentSchema(BaseSchema):
     @validates_schema
     def validate_persistence(self, values):
         validate_persistence(values, is_schema=True)
-
-    @validates_schema
-    def validate_outputs(self, values):
-        validate_outputs(values, is_schema=True)
+    #
+    # @validates_schema
+    # def validate_outputs(self, values):
+    #     validate_outputs(values, is_schema=True)
 
 
 class EnvironmentConfig(BaseConfig):
@@ -112,7 +112,8 @@ class EnvironmentConfig(BaseConfig):
                           'secret_refs',
                           'config_map_refs',
                           'data_refs',
-                          'artifact_refs']
+                          'artifact_refs',
+                          'outputs']
 
     def __init__(self,
                  index=None,
@@ -148,4 +149,5 @@ class EnvironmentConfig(BaseConfig):
                               'artifact_refs': artifact_refs})
         self.data_refs = data_refs
         self.artifact_refs = artifact_refs
-        validate_outputs({'outputs': outputs})
+        # validate_outputs({'outputs': outputs})
+        self.outputs = outputs
