@@ -18,6 +18,8 @@ export const SERVICE_ACCOUNTS_NOTEBOOKS =
   `${option_namespaces.SERVICE_ACCOUNTS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.NOTEBOOKS}`;
 export const K8S_RESOURCES_NOTEBOOKS =
   `${option_namespaces.K8S_RESOURCES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.NOTEBOOKS}`;
+export const MAX_RESTARTS_NOTEBOOKS =
+  `${option_namespaces.MAX_RESTARTS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.NOTEBOOKS}`;
 
 export const NOTEBOOKS_BACKEND =
   `${option_namespaces.NOTEBOOKS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.BACKEND}`;
@@ -33,6 +35,7 @@ export const NOTEBOOK_KEYS = [
   K8S_SECRETS_NOTEBOOKS,
   SERVICE_ACCOUNTS_NOTEBOOKS,
   K8S_RESOURCES_NOTEBOOKS,
+  MAX_RESTARTS_NOTEBOOKS,
   NOTEBOOKS_BACKEND,
   NOTEBOOKS_DOCKER_IMAGE,
 ];

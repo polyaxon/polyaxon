@@ -3,12 +3,13 @@
 import asyncio
 import logging
 
-from django.conf import settings
-
 import pika
 
 from pika import adapters
 from pika.exceptions import AMQPConnectionError
+
+from django.conf import settings
+
 from streams.socket_manager import SocketManager
 
 _logger = logging.getLogger("polyaxon.streams.events")

@@ -9,7 +9,7 @@ tags:
     - reference
 ---
 
-> Please note that the roadmap is intended to provide high-level visibility into the short-term (v0.5 and v0.6) direction of the product. This can change at any time. Several of these aspects are either in alpha phase, private beta, beta, or under heavy development.
+> Please note that the roadmap is intended to provide high-level visibility into the short-term direction of the product. This can change at any time. Several of these aspects are either in alpha phase, private beta, beta, or under heavy development.
 
 ## Product Roadmap
 

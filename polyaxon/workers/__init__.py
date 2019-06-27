@@ -1,10 +1,8 @@
 import conf
 
 from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
-
 from polyaxon.celery_api import app
 from workers.base import PolyaxonTask
-
 
 app.Task = PolyaxonTask  # Custom base class for logging
 

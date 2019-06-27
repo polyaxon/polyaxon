@@ -3,16 +3,15 @@ import os
 import shlex
 
 from subprocess import PIPE
-
-from typing import Tuple, Any, List, Optional, Union
+from typing import Any, List, Optional, Tuple, Union
 
 from git import InvalidGitRepositoryError
 from git import Repo as GitRepo
 from hestia.paths import create_path, delete_path
 from psutil import Popen
 
+from libs.repos.git import external, internal  # noqa
 from libs.repos.git.exceptions import GitCloneException
-from libs.repos.git import internal, external  # noqa
 
 _logger = logging.getLogger('polyaxon.repos.git')
 
@@ -158,4 +157,3 @@ def set_remote(repo_path: str, git_url: str) -> None:
                 data=None,
                 location=repo_path,
                 chw=True)
-

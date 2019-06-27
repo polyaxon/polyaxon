@@ -3,10 +3,11 @@ from unittest.mock import patch
 import mock
 import pytest
 
+from rest_framework.exceptions import ValidationError
+
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
-from rest_framework.exceptions import ValidationError
 
 from constants.urls import API_V1
 from db.managers.deleted import ArchivedManager, LiveManager

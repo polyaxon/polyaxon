@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 import pytest
+
 from rest_framework.exceptions import ValidationError
 
 import conf

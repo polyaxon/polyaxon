@@ -1,5 +1,6 @@
-from django.conf import settings
 from hestia.service_interface import LazyServiceWrapper
+
+from django.conf import settings
 
 from auditor.manager import default_manager
 from auditor.service import AuditorService

@@ -12,11 +12,13 @@ from libs.unique_urls import get_build_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.build_jobs import BUILD_JOBS_BACKEND
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from options.registry.restarts import MAX_RESTARTS_BUILD_JOBS
 from registry.exceptions import ContainerRegistryError
 from registry.image_info import get_image_name
 from registry.registry_context import get_registry_context
 from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
 from scheduler.spawners.kaniko_spawner import KanikoSpawner
+from scheduler.spawners.templates.restart_policy import get_max_restart
 from scheduler.spawners.utils import get_job_definition
 from schemas import BuildBackend
 from stores.exceptions import VolumeNotFoundError
@@ -124,12 +126,13 @@ def start_dockerizer(build_job):
     error = {}
     try:
         results = spawner.start_dockerizer(
-            secret_refs=build_job.specification.secret_refs,
-            config_map_refs=build_job.specification.config_map_refs,
+            secret_refs=build_job.secret_refs,
+            config_map_refs=build_job.config_map_refs,
             resources=build_job.resources,
             node_selector=build_job.node_selector,
             affinity=build_job.affinity,
             tolerations=build_job.tolerations,
+            max_restarts=get_max_restart(build_job.max_restarts, conf.get(MAX_RESTARTS_BUILD_JOBS)),
             reconcile_url=get_build_reconcile_url(build_job.unique_name))
         auditor.record(event_type=BUILD_JOB_STARTED,
                        instance=build_job)

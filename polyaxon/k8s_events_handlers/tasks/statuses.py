@@ -14,6 +14,14 @@ from db.models.projects import Project
 from db.models.tensorboards import TensorboardJob
 from db.redis.statuses import RedisStatuses
 from k8s_events_handlers.tasks.logger import logger
+from lifecycles.jobs import JobLifeCycle
+from options.registry.restarts import (
+    MAX_RESTARTS_BUILD_JOBS,
+    MAX_RESTARTS_EXPERIMENTS,
+    MAX_RESTARTS_JOBS,
+    MAX_RESTARTS_NOTEBOOKS,
+    MAX_RESTARTS_TENSORBOARDS
+)
 from options.registry.spawner import APP_LABELS_NOTEBOOK, APP_LABELS_TENSORBOARD
 from polyaxon.settings import Intervals, K8SEventsCeleryTasks
 
@@ -33,6 +41,7 @@ def k8s_events_handle_experiment_job_statuses(self: 'workers.app.task', payload:
     """Experiment jobs statuses"""
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
+    restart_count = payload.get('restart_count', 0)
     logger.debug('handling events status for job_uuid: %s, status: %s',
                  job_uuid, payload['status'])
 
@@ -43,13 +52,17 @@ def k8s_events_handle_experiment_job_statuses(self: 'workers.app.task', payload:
         return
 
     try:
-        job.experiment
+        experiment = job.experiment
     except Experiment.DoesNotExist:
         logger.debug('Experiment for job `%s` does not exist anymore', job_uuid)
         return
 
     if job.last_status is None and self.request.retries < 2:
         self.retry(countdown=1)
+
+    max_restarts = experiment.max_restarts or conf.get(MAX_RESTARTS_EXPERIMENTS)
+    if JobLifeCycle.failed(payload['status']) and restart_count < max_restarts:
+        return
 
     # Set the new status
     try:
@@ -93,6 +106,7 @@ def k8s_events_handle_job_statuses(self: 'workers.app.task', payload: Dict) -> N
     details = payload['details']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
+    restart_count = payload.get('restart_count', 0)
     project_name = details['labels'].get('project_name')
     logger.debug('handling events status for job %s', job_name)
 
@@ -106,6 +120,10 @@ def k8s_events_handle_job_statuses(self: 'workers.app.task', payload: Dict) -> N
         job.project
     except Project.DoesNotExist:
         logger.debug('Project for job `%s` does not exist', project_name)
+        return
+
+    max_restarts = job.max_restarts or conf.get(MAX_RESTARTS_JOBS)
+    if JobLifeCycle.failed(payload['status']) and restart_count < max_restarts:
         return
 
     # Set the new status
@@ -155,6 +173,15 @@ def get_plugin_job(app, job_uuid=None, job_id=None):
         return
 
 
+def get_plugin_max_restarts(app, job):
+    max_restarts = job.max_restarts or 0
+    if not max_restarts:
+        return conf.get(MAX_RESTARTS_TENSORBOARDS)
+    elif app == conf.get(APP_LABELS_NOTEBOOK):
+        return conf.get(MAX_RESTARTS_NOTEBOOKS)
+    return max_restarts
+
+
 @workers.app.task(name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_PLUGIN_JOB_STATUSES,
                   bind=True,
                   max_retries=3,
@@ -165,6 +192,7 @@ def k8s_events_handle_plugin_job_statuses(self: 'workers.app.task', payload: Dic
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
+    restart_count = payload.get('restart_count', 0)
     project_name = details['labels'].get('project_name')
     logger.debug('handling events status for job %s %s', job_name, app)
 
@@ -178,6 +206,10 @@ def k8s_events_handle_plugin_job_statuses(self: 'workers.app.task', payload: Dic
         job.project
     except Project.DoesNotExist:
         logger.debug('`%s` does not exist anymore', project_name)
+
+    max_restarts = get_plugin_max_restarts(app, job)
+    if JobLifeCycle.failed(payload['status']) and restart_count < max_restarts:
+        return
 
     # Set the new status
     try:
@@ -219,6 +251,7 @@ def k8s_events_handle_build_job_statuses(self: 'workers.app.task', payload: Dict
     app = details['labels']['app']
     job_uuid = details['labels']['job_uuid']
     job_name = details['labels']['job_name']
+    restart_count = payload.get('restart_count', 0)
     project_name = details['labels'].get('project_name')
     logger.debug('handling events status for build jon %s %s', job_name, app)
 
@@ -232,6 +265,10 @@ def k8s_events_handle_build_job_statuses(self: 'workers.app.task', payload: Dict
         build_job.project
     except Project.DoesNotExist:
         logger.debug('`%s` does not exist anymore', project_name)
+
+    max_restarts = build_job.max_restarts or conf.get(MAX_RESTARTS_BUILD_JOBS)
+    if JobLifeCycle.failed(payload['status']) and restart_count < max_restarts:
+        return
 
     # Set the new status
     try:

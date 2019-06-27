@@ -2,7 +2,7 @@
 
 GitPython==2.1.11
 polystores==0.1.9
-polyaxon-k8s==0.4.2
+polyaxon-k8s==0.4.7
 
 azure-storage==0.36.0
 boto3==1.7.73

@@ -18,6 +18,8 @@ export const SERVICE_ACCOUNTS_JOBS =
   `${option_namespaces.SERVICE_ACCOUNTS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.JOBS}`;
 export const K8S_RESOURCES_JOBS =
   `${option_namespaces.K8S_RESOURCES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.JOBS}`;
+export const MAX_RESTARTS_JOBS =
+  `${option_namespaces.MAX_RESTARTS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.JOBS}`;
 
 export const JOB_KEYS = [
   AFFINITIES_JOBS,
@@ -28,4 +30,5 @@ export const JOB_KEYS = [
   K8S_SECRETS_JOBS,
   SERVICE_ACCOUNTS_JOBS,
   K8S_RESOURCES_JOBS,
+  MAX_RESTARTS_JOBS
 ];

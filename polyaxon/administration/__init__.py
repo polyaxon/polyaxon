@@ -1,6 +1,6 @@
-from django.conf import settings
-
 from hestia.service_interface import LazyServiceWrapper
+
+from django.conf import settings
 
 from administration.service import AdminService
 

@@ -24,12 +24,18 @@ if __name__ == '__main__':
         default=2,
         type=int
     )
+    parser.add_argument(
+        '--max_restarts',
+        default=0,
+        type=int
+    )
     args = parser.parse_args()
     arguments = args.__dict__
 
     container_id = arguments.pop('container_id')
     app_label = arguments.pop('app_label')
     sleep_interval = arguments.pop('sleep_interval')
+    max_restarts = arguments.pop('max_restarts')
 
     k8s_manager = K8SManager(namespace=settings.K8S_NAMESPACE, in_cluster=True)
     client = PolyaxonClient()
@@ -40,10 +46,11 @@ if __name__ == '__main__':
     while is_running and retry < 3:
         time.sleep(sleep_interval)
         try:
-            is_running, status = is_pod_running(k8s_manager, settings.POD_ID, container_id)
+            is_running, status = is_pod_running(k8s_manager,
+                                                settings.POD_ID,
+                                                container_id,
+                                                max_restarts)
+            print(is_running, status)
         except ApiException:
             retry += 1
             time.sleep(sleep_interval)  # We wait a bit more before try
-
-    if status:
-        client.reconcile(status=status)

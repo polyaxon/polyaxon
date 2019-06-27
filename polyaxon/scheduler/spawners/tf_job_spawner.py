@@ -39,5 +39,6 @@ class TFJobSpawner(TensorflowSpawnerMixin, KFExperimentSpawner):
                                             group=KUBEFLOW_JOB_GROUP,
                                             version=self.VERSION,
                                             plural=self.PLURAL,
-                                            data=custom_object)
+                                            body=custom_object,
+                                            reraise=True)
         return custom_object

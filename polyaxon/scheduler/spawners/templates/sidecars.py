@@ -27,14 +27,15 @@ def get_sidecar_env_vars(namespace,
         get_env_var(name='POLYAXON_CONTAINER_ID', value=job_container_name),
         get_env_var(name='POLYAXON_INTERNAL_HEALTH_CHECK_URL', value=internal_health_check_url),
         get_env_var(name='POLYAXON_INTERNAL_RECONCILE_URL', value=internal_reconcile_url),
-        get_from_field_ref(name='POLYAXON_POD_ID', field_path='metadata.name')
+        get_from_field_ref(name='POLYAXON_POD_ID', field_path='metadata.name'),
     ]
 
 
-def get_sidecar_args(container_id, app_label):
+def get_sidecar_args(container_id, app_label, max_restarts):
     return ["--container_id={}".format(container_id),
             "--sleep_interval={}".format(conf.get(SIDECARS_SLEEP_INTERVAL)),
-            "--app_label={}".format(app_label)]
+            "--app_label={}".format(app_label),
+            "--max_restarts={}".format(max_restarts or 0)]
 
 
 def get_sidecar_command():

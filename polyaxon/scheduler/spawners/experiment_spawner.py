@@ -10,11 +10,13 @@ from constants.experiment_jobs import get_experiment_job_uuid
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from libs.unique_urls import get_experiment_health_url, get_experiment_reconcile_url
 from options.registry.container_names import CONTAINER_NAME_EXPERIMENT_JOBS
+from options.registry.restarts import MAX_RESTARTS_EXPERIMENTS
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
+from scheduler.spawners.templates.restart_policy import get_max_restart, get_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -153,7 +155,7 @@ class ExperimentSpawner(K8SManager):
                     node_selector=None,
                     affinity=None,
                     tolerations=None,
-                    restart_policy='Never'):
+                    max_restarts=None):
         ephemeral_token = None
         if self.token_scope:
             ephemeral_token = RedisEphemeralTokens.generate_header_token(scope=self.token_scope)
@@ -211,8 +213,9 @@ class ExperimentSpawner(K8SManager):
             tolerations=tolerations,
             init_context_mounts=context_mounts,
             reconcile_url=reconcile_url,
-            restart_policy=restart_policy)
-        pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
+            max_restarts=max_restarts,
+            restart_policy=get_restart_policy(max_restarts))
+        pod_resp, _ = self.create_or_update_pod(name=resource_name, body=pod, reraise=True)
         results = {'pod': pod_resp.to_dict()}
         if add_service:
             service = services.get_service(namespace=self.namespace,
@@ -220,13 +223,16 @@ class ExperimentSpawner(K8SManager):
                                            labels=labels,
                                            ports=self.ports,
                                            target_ports=self.ports)
-            service_resp, _ = self.create_or_update_service(name=resource_name, data=service)
+            service_resp, _ = self.create_or_update_service(name=resource_name,
+                                                            body=service,
+                                                            reraise=True)
             results['service'] = service_resp.to_dict()
         return results
 
     def create_multi_jobs(self, task_type, add_service):
         resp = []
         n_pods = self.get_n_pods(task_type=task_type)
+        max_restarts = get_max_restart(self.spec.max_restarts, conf.get(MAX_RESTARTS_EXPERIMENTS))
         for i in range(n_pods):
             command, args = self.get_pod_command_args(task_type=task_type, task_idx=i)
             env_vars = self.get_env_vars(task_type=task_type, task_idx=i)
@@ -243,7 +249,8 @@ class ExperimentSpawner(K8SManager):
                                          node_selector=node_selector,
                                          affinity=affinity,
                                          tolerations=tolerations,
-                                         add_service=add_service))
+                                         add_service=add_service,
+                                         max_restarts=max_restarts))
         return resp
 
     def _delete_job(self, task_type, task_idx, has_service):
@@ -273,6 +280,7 @@ class ExperimentSpawner(K8SManager):
         node_selector = self.get_node_selector(task_type=TaskType.MASTER, task_idx=0)
         affinity = self.get_affinity(task_type=TaskType.MASTER, task_idx=0)
         tolerations = self.get_tolerations(task_type=TaskType.MASTER, task_idx=0)
+        max_restarts = get_max_restart(self.spec.max_restarts, conf.get(MAX_RESTARTS_EXPERIMENTS))
         return self._create_job(task_type=TaskType.MASTER,
                                 task_idx=0,
                                 command=command,
@@ -282,7 +290,8 @@ class ExperimentSpawner(K8SManager):
                                 node_selector=node_selector,
                                 affinity=affinity,
                                 tolerations=tolerations,
-                                add_service=self.MASTER_SERVICE)
+                                add_service=self.MASTER_SERVICE,
+                                max_restarts=max_restarts)
 
     def delete_master(self):
         try:

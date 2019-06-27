@@ -18,6 +18,8 @@ export const SERVICE_ACCOUNTS_BUILD_JOBS =
   `${option_namespaces.SERVICE_ACCOUNTS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.BUILD_JOBS}`;
 export const K8S_RESOURCES_BUILD_JOBS =
   `${option_namespaces.K8S_RESOURCES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.BUILD_JOBS}`;
+export const MAX_RESTARTS_BUILD_JOBS =
+  `${option_namespaces.MAX_RESTARTS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.BUILD_JOBS}`;
 
 export const BUILD_JOBS_BACKEND =
   `${option_namespaces.BUILD_JOBS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.BACKEND}`;
@@ -40,6 +42,7 @@ export const BUILD_JOB_KEYS = [
   K8S_SECRETS_BUILD_JOBS,
   SERVICE_ACCOUNTS_BUILD_JOBS,
   K8S_RESOURCES_BUILD_JOBS,
+  MAX_RESTARTS_BUILD_JOBS,
   BUILD_JOBS_SET_SECURITY_CONTEXT,
   BUILD_JOBS_LANG_ENV,
   BUILD_JOBS_BACKEND,

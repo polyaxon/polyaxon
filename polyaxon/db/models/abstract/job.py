@@ -119,6 +119,12 @@ class JobMixin(UniqueNameMixin):
         return self.specification.tolerations
 
     @cached_property
+    def max_restarts(self) -> Optional[int]:
+        if not self.specification:
+            return None
+        return self.specification.max_restarts
+
+    @cached_property
     def build_image(self) -> str:
         if not self.specification:
             return None

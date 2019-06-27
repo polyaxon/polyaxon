@@ -297,6 +297,7 @@ class ResourceManager(BaseResourceManager):
                      sidecar_context_mounts=None,
                      init_context_mounts=None,
                      reconcile_url=None,
+                     max_restarts=None,
                      restart_policy=None):
         resource_name = self.get_resource_name(task_type=task_type, task_idx=task_idx)
         env_vars = to_list(env_vars, check_none=True)
@@ -330,6 +331,7 @@ class ResourceManager(BaseResourceManager):
                             sidecar_context_mounts=sidecar_context_mounts,
                             init_context_mounts=init_context_mounts,
                             reconcile_url=reconcile_url,
+                            max_restarts=max_restarts,
                             restart_policy=restart_policy)
 
     def _get_from_experiment_config_map(self, key_name):

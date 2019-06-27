@@ -1,6 +1,6 @@
-from django.conf import settings
-
 from hestia.service_interface import LazyServiceWrapper
+
+from django.conf import settings
 
 from executor.manager import default_manager
 from executor.service import BaseExecutorService

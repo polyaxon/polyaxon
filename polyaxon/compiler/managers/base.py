@@ -1,8 +1,6 @@
 from rest_framework.exceptions import ValidationError
 
-from schemas import PolyaxonSchemaError
-
-from schemas import ops_params
+from schemas import PolyaxonSchemaError, ops_params
 
 
 class BaseCompileManager(object):

@@ -1,4 +1,4 @@
 -r ../requirements-base.txt
 
-polyaxon-k8s==0.4.2
+polyaxon-k8s==0.4.7
 ocular==0.1.6

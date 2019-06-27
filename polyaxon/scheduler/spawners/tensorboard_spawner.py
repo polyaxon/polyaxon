@@ -14,6 +14,7 @@ from options.registry.tensorboards import TENSORBOARDS_PORT_RANGE
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import ingresses, services
+from scheduler.spawners.templates.restart_policy import get_restart_policy
 from scheduler.spawners.templates.stores import get_stores_secrets
 from scheduler.spawners.templates.tensorboards import manager
 from scheduler.spawners.templates.volumes import (
@@ -153,6 +154,7 @@ class TensorboardSpawner(ProjectJobSpawner):
                           node_selector=None,
                           affinity=None,
                           tolerations=None,
+                          max_restarts=None,
                           reconcile_url=None):
         ports = [self.request_tensorboard_port()]
         target_ports = [self.port]
@@ -217,9 +219,12 @@ class TensorboardSpawner(ProjectJobSpawner):
             tolerations=tolerations,
             ports=target_ports,
             reconcile_url=reconcile_url,
-            restart_policy=None)
+            max_restarts=max_restarts,
+            restart_policy=get_restart_policy(max_restarts))
 
-        dep_resp, _ = self.create_or_update_deployment(name=resource_name, data=deployment)
+        dep_resp, _ = self.create_or_update_deployment(name=resource_name,
+                                                       body=deployment,
+                                                       reraise=True)
         service = services.get_service(
             namespace=self.namespace,
             name=resource_name,
@@ -227,7 +232,9 @@ class TensorboardSpawner(ProjectJobSpawner):
             ports=ports,
             target_ports=target_ports,
             service_type=self._get_service_type())
-        service_resp, _ = self.create_or_update_service(name=resource_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=resource_name,
+                                                        body=service,
+                                                        reraise=True)
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
@@ -244,7 +251,7 @@ class TensorboardSpawner(ProjectJobSpawner):
                                             labels=self.resource_manager.get_labels(),
                                             annotations=annotations,
                                             paths=paths)
-            self.create_or_update_ingress(name=resource_name, data=ingress)
+            self.create_or_update_ingress(name=resource_name, body=ingress, reraise=True)
 
         return results
 

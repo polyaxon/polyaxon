@@ -1,8 +1,8 @@
 from django.contrib.admin import site
 
 from administration.register import (
-    artifacts_stores,
     activitylogs,
+    artifacts_stores,
     bookmarks,
     build_jobs,
     clusters,
@@ -23,12 +23,12 @@ from administration.register import (
     projects,
     repos,
     searches,
+    secrets,
     sso,
     tensorboards,
     tokens,
     users,
-    versions,
-    secrets,
+    versions
 )
 
 REGISTRY = {

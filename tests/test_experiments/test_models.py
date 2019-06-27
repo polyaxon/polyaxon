@@ -5,11 +5,12 @@ from unittest.mock import patch
 import mock
 import pytest
 
+from rest_framework.exceptions import ValidationError
+
 from django.core.files import File
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.client import MULTIPART_CONTENT
 from django.utils import timezone
-from rest_framework.exceptions import ValidationError
 
 import compiler
 import stores

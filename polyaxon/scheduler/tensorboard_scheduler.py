@@ -8,6 +8,8 @@ import conf
 from libs.unique_urls import get_tensorboard_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from options.registry.restarts import MAX_RESTARTS_TENSORBOARDS
+from scheduler.spawners.templates.restart_policy import get_max_restart
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
@@ -42,6 +44,8 @@ def start_tensorboard(tensorboard):
             node_selector=tensorboard.node_selector,
             affinity=tensorboard.affinity,
             tolerations=tensorboard.tolerations,
+            max_restarts=get_max_restart(tensorboard.max_restarts,
+                                         conf.get(MAX_RESTARTS_TENSORBOARDS)),
             reconcile_url=get_tensorboard_reconcile_url(tensorboard.unique_name))
         tensorboard.definition = get_job_definition(results)
         tensorboard.save(update_fields=['definition'])

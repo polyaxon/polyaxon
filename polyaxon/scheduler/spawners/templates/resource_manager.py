@@ -151,7 +151,7 @@ class BaseResourceManager(object):
     def get_sidecar_volume_mounts(self, context_mounts, persistence_outputs, persistence_data):
         return context_mounts
 
-    def get_sidecar_container(self, volume_mounts, reconcile_url):
+    def get_sidecar_container(self, volume_mounts, reconcile_url, max_restarts):
         """Pod sidecar container for task logs."""
         return get_sidecar_container(
             job_container_name=self.job_container_name,
@@ -161,7 +161,8 @@ class BaseResourceManager(object):
             namespace=self.namespace,
             sidecar_config=self.sidecar_config,
             sidecar_args=get_sidecar_args(container_id=self.job_container_name,
-                                          app_label=self.app_label),
+                                          app_label=self.app_label,
+                                          max_restarts=max_restarts),
             internal_health_check_url=self.health_check_url,
             internal_reconcile_url=reconcile_url,
             volume_mounts=volume_mounts)
@@ -201,6 +202,7 @@ class BaseResourceManager(object):
                           sidecar_context_mounts=None,
                           init_context_mounts=None,
                           reconcile_url=None,
+                          max_restarts=None,
                           restart_policy=None):
         """Pod spec to be used to create pods for tasks: master, worker, ps."""
         sidecar_context_mounts = to_list(sidecar_context_mounts, check_none=True)
@@ -236,7 +238,8 @@ class BaseResourceManager(object):
                 persistence_data=persistence_data,
                 context_mounts=sidecar_context_mounts)
             sidecar_container = self.get_sidecar_container(volume_mounts=sidecar_volume_mounts,
-                                                           reconcile_url=reconcile_url)
+                                                           reconcile_url=reconcile_url,
+                                                           max_restarts=max_restarts)
             containers.append(sidecar_container)
 
         init_container = self.get_init_container(init_command=init_command,
@@ -286,33 +289,34 @@ class BaseResourceManager(object):
     def _get_kv_env_vars(self, env_vars):
         raise NotImplementedError()
 
-    def get_pod(self,
-                resource_name,
-                volume_mounts,
-                volumes,
-                labels,
-                env_vars=None,
-                command=None,
-                args=None,
-                init_command=None,
-                init_args=None,
-                init_env_vars=None,
-                ports=None,
-                persistence_outputs=None,
-                persistence_data=None,
-                outputs_refs_jobs=None,
-                outputs_refs_experiments=None,
-                secret_refs=None,
-                config_map_refs=None,
-                resources=None,
-                ephemeral_token=None,
-                node_selector=None,
-                affinity=None,
-                tolerations=None,
-                sidecar_context_mounts=None,
-                init_context_mounts=None,
-                reconcile_url=None,
-                restart_policy=None):
+    def get_pod_spec(self,
+                     resource_name,
+                     volume_mounts,
+                     volumes,
+                     labels,
+                     env_vars=None,
+                     command=None,
+                     args=None,
+                     init_command=None,
+                     init_args=None,
+                     init_env_vars=None,
+                     ports=None,
+                     persistence_outputs=None,
+                     persistence_data=None,
+                     outputs_refs_jobs=None,
+                     outputs_refs_experiments=None,
+                     secret_refs=None,
+                     config_map_refs=None,
+                     resources=None,
+                     ephemeral_token=None,
+                     node_selector=None,
+                     affinity=None,
+                     tolerations=None,
+                     max_restarts=None,
+                     restart_policy=None,
+                     reconcile_url=None,
+                     init_context_mounts=None,
+                     sidecar_context_mounts=None):
         resources = self._get_pod_resources(resources=resources)
         annotations = None
         if requests_tpu(resources):
@@ -347,7 +351,66 @@ class BaseResourceManager(object):
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
             reconcile_url=reconcile_url,
+            max_restarts=max_restarts,
             restart_policy=restart_policy)
+        return metadata, pod_spec
+
+    def get_pod(self,
+                resource_name,
+                volume_mounts,
+                volumes,
+                labels,
+                env_vars=None,
+                command=None,
+                args=None,
+                init_command=None,
+                init_args=None,
+                init_env_vars=None,
+                ports=None,
+                persistence_outputs=None,
+                persistence_data=None,
+                outputs_refs_jobs=None,
+                outputs_refs_experiments=None,
+                secret_refs=None,
+                config_map_refs=None,
+                resources=None,
+                ephemeral_token=None,
+                node_selector=None,
+                affinity=None,
+                tolerations=None,
+                max_restarts=None,
+                restart_policy=None,
+                reconcile_url=None,
+                init_context_mounts=None,
+                sidecar_context_mounts=None):
+        metadata, pod_spec = self.get_pod_spec(
+            resource_name=resource_name,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            labels=labels,
+            env_vars=env_vars,
+            command=command,
+            args=args,
+            init_command=init_command,
+            init_args=init_args,
+            init_env_vars=init_env_vars,
+            ports=ports,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
+            secret_refs=secret_refs,
+            config_map_refs=config_map_refs,
+            resources=resources,
+            ephemeral_token=ephemeral_token,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            max_restarts=max_restarts,
+            restart_policy=restart_policy,
+            reconcile_url=reconcile_url,
+            init_context_mounts=init_context_mounts,
+            sidecar_context_mounts=sidecar_context_mounts)
         return client.V1Pod(api_version=k8s_constants.K8S_API_VERSION_V1,
                             kind=k8s_constants.K8S_POD_KIND,
                             metadata=metadata,
@@ -376,23 +439,16 @@ class BaseResourceManager(object):
                               node_selector=None,
                               affinity=None,
                               tolerations=None,
+                              max_restarts=None,
                               restart_policy=None,
                               reconcile_url=None,
                               init_context_mounts=None,
                               sidecar_context_mounts=None):
-        resources = self._get_pod_resources(resources=resources)
-        annotations = None
-        if requests_tpu(resources):
-            annotations = get_tpu_annotations()
-        metadata = client.V1ObjectMeta(name=resource_name,
-                                       labels=labels,
-                                       namespace=self.namespace,
-                                       annotations=annotations)
-
-        pod_spec = self.get_task_pod_spec(
+        metadata, pod_spec = self.get_pod_spec(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
+            labels=labels,
             env_vars=env_vars,
             command=command,
             args=args,
@@ -411,40 +467,40 @@ class BaseResourceManager(object):
             node_selector=node_selector,
             affinity=affinity,
             tolerations=tolerations,
-            init_context_mounts=init_context_mounts,
-            sidecar_context_mounts=sidecar_context_mounts,
+            max_restarts=max_restarts,
+            restart_policy=restart_policy,
             reconcile_url=reconcile_url,
-            restart_policy=restart_policy)
+            init_context_mounts=init_context_mounts,
+            sidecar_context_mounts=sidecar_context_mounts)
         return client.V1PodTemplateSpec(metadata=metadata, spec=pod_spec)
 
-    def get_deployment(self,
-                       resource_name,
-                       volume_mounts,
-                       volumes,
-                       labels,
-                       env_vars=None,
-                       command=None,
-                       args=None,
-                       init_command=None,
-                       init_args=None,
-                       init_env_vars=None,
-                       ports=None,
-                       persistence_outputs=None,
-                       persistence_data=None,
-                       outputs_refs_jobs=None,
-                       outputs_refs_experiments=None,
-                       secret_refs=None,
-                       config_map_refs=None,
-                       resources=None,
-                       ephemeral_token=None,
-                       node_selector=None,
-                       affinity=None,
-                       tolerations=None,
-                       restart_policy=None,
-                       reconcile_url=None,
-                       init_context_mounts=None,
-                       sidecar_context_mounts=None,
-                       replicas=1):
+    def get_job(self,
+                resource_name,
+                volume_mounts,
+                volumes,
+                labels,
+                env_vars=None,
+                command=None,
+                args=None,
+                init_command=None,
+                init_args=None,
+                init_env_vars=None,
+                ports=None,
+                persistence_outputs=None,
+                persistence_data=None,
+                outputs_refs_jobs=None,
+                outputs_refs_experiments=None,
+                secret_refs=None,
+                config_map_refs=None,
+                resources=None,
+                ephemeral_token=None,
+                node_selector=None,
+                affinity=None,
+                tolerations=None,
+                restart_policy=None,
+                reconcile_url=None,
+                init_context_mounts=None,
+                sidecar_context_mounts=None):
         template_spec = self.get_pod_template_spec(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
@@ -473,13 +529,76 @@ class BaseResourceManager(object):
             init_context_mounts=init_context_mounts,
             sidecar_context_mounts=sidecar_context_mounts,
         )
+        job_spec = client.V1JobSpec(template=template_spec, parallelism=1, completions=1)
+        metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
+        return client.V1Job(metadata=metadata, spec=job_spec)
+
+    def get_deployment(self,
+                       resource_name,
+                       volume_mounts,
+                       volumes,
+                       labels,
+                       env_vars=None,
+                       command=None,
+                       args=None,
+                       init_command=None,
+                       init_args=None,
+                       init_env_vars=None,
+                       ports=None,
+                       persistence_outputs=None,
+                       persistence_data=None,
+                       outputs_refs_jobs=None,
+                       outputs_refs_experiments=None,
+                       secret_refs=None,
+                       config_map_refs=None,
+                       resources=None,
+                       ephemeral_token=None,
+                       node_selector=None,
+                       affinity=None,
+                       tolerations=None,
+                       max_restarts=None,
+                       restart_policy=None,
+                       reconcile_url=None,
+                       init_context_mounts=None,
+                       sidecar_context_mounts=None,
+                       replicas=1):
+        template_spec = self.get_pod_template_spec(
+            resource_name=resource_name,
+            volume_mounts=volume_mounts,
+            volumes=volumes,
+            labels=labels,
+            env_vars=env_vars,
+            command=command,
+            args=args,
+            init_command=init_command,
+            init_args=init_args,
+            init_env_vars=init_env_vars,
+            ports=ports,
+            persistence_outputs=persistence_outputs,
+            persistence_data=persistence_data,
+            outputs_refs_jobs=outputs_refs_jobs,
+            outputs_refs_experiments=outputs_refs_experiments,
+            secret_refs=secret_refs,
+            config_map_refs=config_map_refs,
+            resources=resources,
+            ephemeral_token=ephemeral_token,
+            node_selector=node_selector,
+            affinity=affinity,
+            tolerations=tolerations,
+            max_restarts=max_restarts,
+            restart_policy=restart_policy,
+            reconcile_url=reconcile_url,
+            init_context_mounts=init_context_mounts,
+            sidecar_context_mounts=sidecar_context_mounts,
+        )
         deployment_spec = client.AppsV1beta1DeploymentSpec(replicas=replicas,
                                                            template=template_spec)
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)
-        return client.AppsV1beta1Deployment(api_version=k8s_constants.K8S_API_VERSION_V1_BETA1,
-                                            kind=k8s_constants.K8S_DEPLOYMENT_KIND,
-                                            metadata=metadata,
-                                            spec=deployment_spec)
+        return client.AppsV1beta1Deployment(
+            api_version=k8s_constants.K8S_API_VERSION_EXTENSIONS_V1_BETA1,
+            kind=k8s_constants.K8S_DEPLOYMENT_KIND,
+            metadata=metadata,
+            spec=deployment_spec)
 
     def get_custom_object(self, resource_name, kind, api_version, labels, template_spec):
         metadata = client.V1ObjectMeta(name=resource_name, labels=labels, namespace=self.namespace)

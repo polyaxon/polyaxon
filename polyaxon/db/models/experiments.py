@@ -35,9 +35,9 @@ from db.models.unique_names import EXPERIMENT_UNIQUE_NAME_FORMAT
 from db.redis.heartbeat import RedisHeartBeat
 from events.registry.experiment import (
     EXPERIMENT_COPIED,
+    EXPERIMENT_NEW_METRIC,
     EXPERIMENT_RESTARTED,
-    EXPERIMENT_RESUMED,
-    EXPERIMENT_NEW_METRIC
+    EXPERIMENT_RESUMED
 )
 from libs.paths.experiments import get_experiment_subpath
 from lifecycles.experiments import ExperimentLifeCycle
@@ -192,6 +192,12 @@ class Experiment(DiffModel,
         if not self.specification:
             return None
         return self.specification.total_resources
+
+    @cached_property
+    def max_restarts(self) -> Optional[int]:
+        if not self.specification:
+            return None
+        return self.specification.max_restarts
 
     @property
     def last_job_statuses(self) -> List[str]:

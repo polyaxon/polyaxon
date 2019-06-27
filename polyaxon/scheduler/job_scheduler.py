@@ -8,10 +8,12 @@ import conf
 from libs.unique_urls import get_job_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from options.registry.restarts import MAX_RESTARTS_JOBS
 from registry.exceptions import ContainerRegistryError
 from registry.image_info import get_image_info
 from registry.registry_context import get_registry_context
 from scheduler.spawners.job_spawner import JobSpawner
+from scheduler.spawners.templates.restart_policy import get_max_restart
 from scheduler.spawners.utils import get_job_definition
 from stores.exceptions import VolumeNotFoundError
 
@@ -55,18 +57,20 @@ def start_job(job):
 
     error = {}
     try:
-        results = spawner.start_job(container_cmd_callback=job.specification.run.get_container_cmd,
-                                    persistence_data=job.persistence_data,
-                                    persistence_outputs=job.persistence_outputs,
-                                    outputs_refs_jobs=job.outputs_refs_jobs,
-                                    outputs_refs_experiments=job.outputs_refs_experiments,
-                                    secret_refs=job.specification.secret_refs,
-                                    config_map_refs=job.specification.config_map_refs,
-                                    resources=job.resources,
-                                    node_selector=job.node_selector,
-                                    affinity=job.affinity,
-                                    tolerations=job.tolerations,
-                                    reconcile_url=get_job_reconcile_url(job.unique_name))
+        results = spawner.start_job(
+            container_cmd_callback=job.specification.run.get_container_cmd,
+            persistence_data=job.persistence_data,
+            persistence_outputs=job.persistence_outputs,
+            outputs_refs_jobs=job.outputs_refs_jobs,
+            outputs_refs_experiments=job.outputs_refs_experiments,
+            secret_refs=job.secret_refs,
+            config_map_refs=job.config_map_refs,
+            resources=job.resources,
+            node_selector=job.node_selector,
+            affinity=job.affinity,
+            tolerations=job.tolerations,
+            max_restarts=get_max_restart(job.max_restarts, conf.get(MAX_RESTARTS_JOBS)),
+            reconcile_url=get_job_reconcile_url(job.unique_name))
         job.definition = get_job_definition(results)
         job.save(update_fields=['definition'])
         return

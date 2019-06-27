@@ -1,6 +1,6 @@
-from django.conf import settings
-
 from hestia.service_interface import LazyServiceWrapper
+
+from django.conf import settings
 
 from polyaxon.config_manager import config
 from tracker.manager import default_manager

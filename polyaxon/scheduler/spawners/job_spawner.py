@@ -8,6 +8,7 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.jobs import manager
+from scheduler.spawners.templates.restart_policy import get_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -79,7 +80,8 @@ class JobSpawner(K8SManager):
                   node_selector=None,
                   affinity=None,
                   tolerations=None,
-                  reconcile_url=None):
+                  reconcile_url=None,
+                  max_restarts=None):
         # Set and validate volumes
         volumes, volume_mounts = get_pod_volumes(persistence_outputs=persistence_outputs,
                                                  persistence_data=persistence_data)
@@ -125,8 +127,9 @@ class JobSpawner(K8SManager):
             tolerations=tolerations,
             init_context_mounts=context_mounts,
             reconcile_url=reconcile_url,
-            restart_policy='Never')
-        pod_resp, _ = self.create_or_update_pod(name=resource_name, data=pod)
+            max_restarts=max_restarts,
+            restart_policy=get_restart_policy(max_restarts))
+        pod_resp, _ = self.create_or_update_pod(name=resource_name, body=pod, reraise=True)
 
         return pod_resp.to_dict()
 

@@ -60,11 +60,11 @@ from lifecycles.jobs import JobLifeCycle
 from logs_handlers.log_queries.job import process_logs
 from options.registry.scheduler import SCHEDULER_RECONCILE_COUNTDOWN
 from polyaxon.settings import K8SEventsCeleryTasks, SchedulerCeleryTasks
+from schemas import kinds
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
 from stores.exceptions import VolumeNotFoundError  # noqa
-from schemas import kinds
 
 _logger = logging.getLogger("polyaxon.views.jobs")
 

@@ -1,7 +1,6 @@
 import argparse
-import time
-
 import requests
+import time
 
 from polyaxon_client.client import PolyaxonClient
 

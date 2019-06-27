@@ -20,6 +20,7 @@ from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.notebooks import manager
+from scheduler.spawners.templates.restart_policy import get_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -155,6 +156,7 @@ class NotebookSpawner(ProjectJobSpawner):
                        affinity=None,
                        tolerations=None,
                        backend=None,
+                       max_restarts=None,
                        reconcile_url=None,
                        mount_code_in_notebooks=False):
         ports = [self.request_notebook_port()]
@@ -212,9 +214,11 @@ class NotebookSpawner(ProjectJobSpawner):
             ports=target_ports,
             init_context_mounts=context_mounts,
             reconcile_url=reconcile_url,
-            restart_policy=None)
+            max_restarts=max_restarts,
+            restart_policy=get_restart_policy(max_restarts))
         dep_resp, _ = self.create_or_update_deployment(name=resource_name,
-                                                       data=deployment)
+                                                       body=deployment,
+                                                       reraise=True)
         service = services.get_service(
             namespace=self.namespace,
             name=resource_name,
@@ -222,7 +226,9 @@ class NotebookSpawner(ProjectJobSpawner):
             ports=ports,
             target_ports=target_ports,
             service_type=self._get_service_type())
-        service_resp, _ = self.create_or_update_service(name=resource_name, data=service)
+        service_resp, _ = self.create_or_update_service(name=resource_name,
+                                                        body=service,
+                                                        reraise=True)
         results = {'deployment': dep_resp.to_dict(), 'service': service_resp.to_dict()}
 
         if self._use_ingress():
@@ -239,7 +245,7 @@ class NotebookSpawner(ProjectJobSpawner):
                                             labels=self.resource_manager.get_labels(),
                                             annotations=annotations,
                                             paths=paths)
-            self.create_or_update_ingress(name=resource_name, data=ingress)
+            self.create_or_update_ingress(name=resource_name, body=ingress, reraise=True)
         return results
 
     def stop_notebook(self):
