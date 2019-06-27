@@ -1,10 +1,10 @@
 ---
-title: "Install Polyaxon on Kubernetes"
-title_link: "Install Polyaxon on Kubernetes"
+title: "Install Polyaxon using kubeadm on Kubernetes"
+title_link: "Install Polyaxon using kubeadm on Kubernetes"
 sub_link: "kubernetes"
 date: "2018-10-01"
-meta_title: "How to install Polyaxon on Kubernetes"
-meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using Kubernetes."
+meta_title: "How to install Polyaxon using kubeadm on Kubernetes"
+meta_description: "This is a guide to assist you through the process of setting up a Polyaxon deployment using kubeadm and Kubernetes."
 tags:
     - setup
     - kubernetes
