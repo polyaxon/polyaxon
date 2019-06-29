@@ -22,7 +22,7 @@ def get_output_args(command, outputs_path, original_outputs_path=None):
                   'then rm -r {path}/*; fi;'.format(path=outputs_path))
     copy_file_if_exist = 'if [ -f {original_path} ]; then cp {original_path} {path}; fi;'.format(
         original_path=original_outputs_path, path=outputs_path)
-    copy_dir_if_exist = 'if [ -d {original_path} ]; then cp -r {original_path} {path}; fi;'.format(
+    copy_dir_if_exist = 'if [ -d {original_path} ]; then cp -r {original_path}/* {path}; fi;'.format(
         original_path=original_outputs_path, path=outputs_path)
     if InitCommands.is_create(command=command):
         return '{} {}'.format(get_or_create, delete_dir)
