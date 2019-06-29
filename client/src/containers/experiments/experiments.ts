@@ -59,6 +59,7 @@ export interface DispatchProps {
   onStop: (experimentName: string) => actions.ExperimentAction;
   onArchive: (experimentName: string) => actions.ExperimentAction;
   onRestart: (experimentName: string) => actions.ExperimentAction;
+  onResume: (experimentName: string) => actions.ExperimentAction;
   onRestore: (experimentName: string) => actions.ExperimentAction;
   onStopMany: (experimentIds: number[]) => actions.ExperimentAction;
   bookmark: (experimentName: string) => actions.ExperimentAction;
@@ -94,6 +95,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.ExperimentAction>,
     onStop: (experimentName: string) => dispatch(actions.stopExperiment(experimentName)),
     onArchive: (experimentName: string) => dispatch(actions.archiveExperiment(experimentName)),
     onRestart: (experimentName: string) => dispatch(actions.restartExperiment(experimentName, true)),
+    onResume: (experimentName: string) => dispatch(actions.resumeExperiment(experimentName, true)),
     onRestore: (experimentName: string) => dispatch(actions.restoreExperiment(experimentName)),
     onStopMany: (experimentIds: number[]) => {
       if (cProjectName) {

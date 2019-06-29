@@ -35,6 +35,7 @@ export interface Props {
   onArchive: () => actions.ExperimentAction;
   onRestore: () => actions.ExperimentAction;
   onRestart: () => actions.ExperimentAction;
+  onResume: () => actions.ExperimentAction;
   onStop: () => actions.ExperimentAction;
   fetchData: () => actions.ExperimentAction;
   bookmark: () => actions.ExperimentAction;
@@ -90,6 +91,7 @@ export default class ExperimentDetail extends React.Component<Props, {}> {
                   onDelete={this.props.onDelete}
                   onStop={this.props.onStop}
                   onRestart={this.props.onRestart}
+                  onResume={this.props.onResume}
                   onArchive={experiment.deleted ? undefined : this.props.onArchive}
                   onRestore={experiment.deleted ? this.props.onRestore : undefined}
                   tensorboardActionCallback={experiment.has_tensorboard ? this.props.stopTensorboard : undefined}

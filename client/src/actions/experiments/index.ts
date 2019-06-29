@@ -6,6 +6,7 @@ import { FetchExperimentAction } from './fetch';
 import { GetExperimentAction } from './get';
 import { RestartExperimentAction } from './restart';
 import { RestoreExperimentAction } from './restore';
+import { ResumeExperimentAction } from './resume';
 import { StopExperimentAction } from './stop';
 import { TensorboardExperimentAction } from './tensorboard';
 import { UpdateExperimentAction } from './update';
@@ -18,6 +19,7 @@ export * from './delete';
 export * from './fetch';
 export * from './get';
 export * from './restart';
+export * from './resume';
 export * from './restore';
 export * from './stop';
 export * from './tensorboard';
@@ -31,6 +33,7 @@ export type ExperimentAction =
   | FetchExperimentAction
   | GetExperimentAction
   | RestartExperimentAction
+  | ResumeExperimentAction
   | RestoreExperimentAction
   | StopExperimentAction
   | TensorboardExperimentAction

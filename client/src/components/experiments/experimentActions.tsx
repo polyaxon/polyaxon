@@ -13,6 +13,7 @@ export interface Props {
   onArchive?: () => any;
   onRestore?: () => any;
   onRestart?: () => any;
+  onResume?: () => any;
   tensorboardActionCallback?: () => any;
   hasTensorboard?: boolean;
   isRunning: boolean;
@@ -111,8 +112,13 @@ export default class ExperimentActions extends React.Component<Props, State> {
             <i className="fas fa-redo icon" aria-hidden="true"/> Restart
           </MenuItem>
           }
+          {this.props.onResume && !this.props.isRunning &&
+          <MenuItem eventKey="2" onClick={this.props.onResume}>
+            <i className="fas fa-redo icon" aria-hidden="true"/> Resume
+          </MenuItem>
+          }
           {this.props.tensorboardActionCallback && this.props.hasTensorboard &&
-          <MenuItem eventKey="2" onClick={() => this.handleShow('stopTensorboard')}>
+          <MenuItem eventKey="3" onClick={() => this.handleShow('stopTensorboard')}>
             <i
               className="fas fa-stop icon"
               aria-hidden="true"
@@ -121,7 +127,7 @@ export default class ExperimentActions extends React.Component<Props, State> {
           }
           {!this.props.hasTensorboard && this.props.experimentUrl &&
           <LinkContainer to={`${this.props.experimentUrl}/tensorboards/new`}>
-            <MenuItem eventKey="2" onClick={() => this.handleShow('stopTensorboard')}>
+            <MenuItem eventKey="4" onClick={() => this.handleShow('stopTensorboard')}>
               <i
                 className="fas fa-play fa-sm icon"
                 aria-hidden="true"
@@ -130,16 +136,16 @@ export default class ExperimentActions extends React.Component<Props, State> {
           </LinkContainer>
           }
           {this.props.onRestore &&
-          <MenuItem eventKey="3" onClick={this.props.onRestore}>
+          <MenuItem eventKey="5" onClick={this.props.onRestore}>
             <i className="fas fa-recycle icon" aria-hidden="true"/> Restore
           </MenuItem>
           }
           {this.props.onArchive &&
-          <MenuItem eventKey="4" onClick={() => this.handleShow('archive')}>
+          <MenuItem eventKey="6" onClick={() => this.handleShow('archive')}>
             <i className="fas fa-archive icon" aria-hidden="true"/> Archive
           </MenuItem>
           }
-          <MenuItem eventKey="5" onClick={() => this.handleShow('delete')}>
+          <MenuItem eventKey="7" onClick={() => this.handleShow('delete')}>
           <i className="fas fa-trash icon" aria-hidden="true"/> Delete
           </MenuItem>
         </Dropdown.Menu>

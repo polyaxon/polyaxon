@@ -6,6 +6,7 @@ export const ACTIONS = {
   FETCH: 'fetch',
   ARCHIVE: 'archive',
   RESTART: 'restart',
+  RESUME: 'resume',
   RESTORE: 'restore',
   SET_GIT: 'setGit',
   STOP: 'stop',
