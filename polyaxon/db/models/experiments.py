@@ -307,13 +307,13 @@ class Experiment(DiffModel,
                params: dict = None,
                code_reference=None,
                update_code_reference: bool = False,
-               experiment_group=None) -> 'Experiment':
+               experiment_group_id=None) -> 'Experiment':
         if not code_reference and not update_code_reference:
             code_reference = self.code_reference
         instance = Experiment.objects.create(
-            project=self.project,
+            project_id=self.project_id,
             user=user or self.user,
-            experiment_group=experiment_group,
+            experiment_group_id=experiment_group_id or self.experiment_group_id,
             description=description or self.description,
             content=content or self.content,
             params=params or self.params,
@@ -330,7 +330,7 @@ class Experiment(DiffModel,
                params: Dict = None,
                code_reference=None,
                update_code_reference: bool = False,
-               experiment_group=None) -> 'Experiment':
+               experiment_group_id=None) -> 'Experiment':
         # TODO: We need to check if this instance was stopped after it was created
         # TODO: If that's the case and no updates are passed we just resume this very same instance
         # If the current instance is a resume of an original than we need to resume the original
@@ -342,7 +342,7 @@ class Experiment(DiffModel,
                 params=params,
                 code_reference=code_reference,
                 update_code_reference=update_code_reference,
-                experiment_group=experiment_group or self.experiment_group)
+                experiment_group_id=experiment_group_id or self.experiment_group_id)
 
         # Resume normal workflow
         return self._clone(cloning_strategy=CloningStrategy.RESUME,
@@ -353,7 +353,7 @@ class Experiment(DiffModel,
                            params=params,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference,
-                           experiment_group=experiment_group or self.experiment_group)
+                           experiment_group_id=experiment_group_id or self.experiment_group_id)
 
     def restart(self,
                 user=None,
@@ -371,7 +371,7 @@ class Experiment(DiffModel,
                            params=params,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference,
-                           experiment_group=experiment_group)
+                           experiment_group_id=experiment_group.id if experiment_group else None)
 
     def copy(self,
              user=None,
@@ -389,7 +389,7 @@ class Experiment(DiffModel,
                            params=params,
                            code_reference=code_reference,
                            update_code_reference=update_code_reference,
-                           experiment_group=experiment_group)
+                           experiment_group_id=experiment_group.id if experiment_group else None)
 
 
 class ExperimentStatus(StatusModel):
