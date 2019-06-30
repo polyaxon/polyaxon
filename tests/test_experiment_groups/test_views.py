@@ -347,6 +347,57 @@ run:
         assert last_object.is_study is True
         assert last_object.selection_experiments.count() == 0
 
+    def test_create_group_with_early_stopping(self):
+        content = """---
+version: 1
+
+kind: group
+
+environment:
+ node_selector:
+   polyaxon: experiments
+
+hptuning:
+  concurrency: 10
+  random_search:
+    n_experiments: 20
+
+  early_stopping:
+    - metric: accuracy
+      value: 0.9
+      optimization: maximize
+
+  matrix:
+    learning_rate:
+      linspace: 0.001:0.1:5
+    dropout:
+      values: [0.25, 0.3]
+    activation:
+      pvalues: [[relu, 0.1], [sigmoid, 0.8]]
+
+declarations:
+  batch_size: 128
+  num_steps: 500
+  num_epochs: 1
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
+  build_steps:
+    - pip3 install --no-cache-dir -U polyaxon-client==0.4.4
+
+run:
+  cmd:  python3 model.py --batch_size={{ batch_size }} \
+                         --num_steps={{ num_steps }} \
+                         --learning_rate={{ learning_rate }} \
+                         --dropout={{ dropout }} \
+                         --num_epochs={{ num_epochs }} \
+                         --activation={{ activation }}"""
+
+        data = {'content': content, 'description': 'new-deep'}
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.queryset.count() == self.num_objects + 1
+
     def test_create_without_content_passes_if_no_spec_validation_requested(self):
         data = {'is_managed': False}
         resp = self.auth_client.post(self.url, data)
