@@ -22,6 +22,7 @@ class ApiConfig(object):
                  use_https=None,
                  verify_ssl=None,
                  is_managed=None,
+                 is_local=None,
                  schema_response=None,
                  reraise=False,
                  timeout=None,
@@ -30,6 +31,7 @@ class ApiConfig(object):
         self.token = token or settings.SECRET_USER_TOKEN
         self.host = host or settings.API_HOST
         self.is_managed = self._get_bool(is_managed, settings.IS_MANAGED)
+        self.is_local = self._get_bool(is_local, settings.IS_LOCAL)
         self.use_https = self._get_bool(use_https, settings.USE_HTTPS)
         self.verify_ssl = self._get_bool(verify_ssl, settings.VERIFY_SSL)
 
@@ -46,7 +48,7 @@ class ApiConfig(object):
         self.version = version or settings.API_VERSION
         self.internal_header = None
 
-        if self.is_managed:
+        if self.is_managed and not self.is_local:
             if not settings.API_HTTP_HOST:
                 print('Could get api host info, '
                       'please make sure this is running inside a polyaxon job.')
