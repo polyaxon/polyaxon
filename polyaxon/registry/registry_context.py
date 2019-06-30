@@ -23,8 +23,8 @@ def get_in_cluster_registry_spec(build_backend: Optional[str]) -> RegistryContex
 
 def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSpec:
     return RegistryContextSpec(host=config.host,
-                               secret=config.k8s_secret.k8s_ref,
-                               secret_items=config.k8s_secret.items,
+                               secret=config.k8s_secret.k8s_ref if config.k8s_secret else None,
+                               secret_items=config.k8s_secret.items if config.k8s_secret else None,
                                insecure=config.insecure)
 
 
