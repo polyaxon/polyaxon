@@ -67,7 +67,8 @@ class GroupSpecification(BaseRunSpecification):
 
     def get_experiment_spec(self, matrix_declaration):
         """Returns an experiment spec for this group spec and the given matrix declaration."""
-        parsed_data = self.parse_data(matrix_declaration)
+        params = self._config_data.get_params(context=matrix_declaration)
+        parsed_data = Parser.parse(self, self._config_data, params, matrix_declaration)
         del parsed_data[self.HP_TUNING]
         return ExperimentSpecification(values=[parsed_data, {'kind': kinds.EXPERIMENT}])
 
