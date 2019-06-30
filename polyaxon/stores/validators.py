@@ -1,7 +1,7 @@
 import conf
 
 from options.registry.persistence import PERSISTENCE_DATA, PERSISTENCE_OUTPUTS
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 
 def validate_persistence_data(persistence_data):
@@ -14,6 +14,6 @@ def validate_persistence_outputs(persistence_outputs):
     if not persistence_outputs:
         return list(conf.get(PERSISTENCE_OUTPUTS).keys())[0]
     if not isinstance(persistence_outputs, str):
-        raise VolumeNotFoundError('Persistence outputs value is not valid `{}`, '
-                                  'it should be a string.'.format(persistence_outputs))
+        raise StoreNotFoundError('Persistence outputs value is not valid `{}`, '
+                                 'it should be a string.'.format(persistence_outputs))
     return persistence_outputs

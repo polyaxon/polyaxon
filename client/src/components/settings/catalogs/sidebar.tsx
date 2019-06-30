@@ -21,12 +21,6 @@ export default class CatalogsSidebar extends React.Component<{}, {}> {
         <nav className="nav menu nav-stacked">
           <h3 className="menu-heading">Catalogs</h3>
           <Link
-            className={currentPath === ClusterDatasetsCatalogURL ? 'active menu-item' : 'menu-item'}
-            to={ClusterDatasetsCatalogURL}
-          >
-            Data
-          </Link>
-          <Link
             className={currentPath === ClusterK8SConfigMapsCatalogURL ? 'active menu-item' : 'menu-item'}
             to={ClusterK8SConfigMapsCatalogURL}
           >
@@ -43,12 +37,6 @@ export default class CatalogsSidebar extends React.Component<{}, {}> {
             to={ClusterRegistriesCatalogURL}
           >
             Registries
-          </Link>
-          <Link
-            className={currentPath === ClusterReposCatalogURL ? 'active menu-item' : 'menu-item'}
-            to={ClusterReposCatalogURL}
-          >
-            Git
           </Link>
         </nav>
       </div>

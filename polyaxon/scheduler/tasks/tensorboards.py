@@ -8,7 +8,7 @@ from lifecycles.jobs import JobLifeCycle
 from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import tensorboard_scheduler
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ def tensorboards_start(tensorboard_job_id):
 
     try:
         tensorboard_scheduler.start_tensorboard(tensorboard)
-    except VolumeNotFoundError:
+    except StoreNotFoundError:
         tensorboard.set_status(status=JobLifeCycle.FAILED,
                                message='Tensorboard failed to start, '
                                        'the outputs volume/storage was not found.')

@@ -21,7 +21,7 @@ from scheduler.spawners.kaniko_spawner import KanikoSpawner
 from scheduler.spawners.templates.restart_policy import get_max_restart
 from scheduler.spawners.utils import get_job_definition
 from schemas import BuildBackend
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.dockerizer')
 
@@ -147,7 +147,7 @@ def start_dockerizer(build_job):
             'traceback': traceback.format_exc(),
             'message': 'Could not start build job, encountered a Kubernetes ApiException.'
         }
-    except VolumeNotFoundError as e:
+    except StoreNotFoundError as e:
         _logger.error('Could not start build job, please check your volume definitions.',
                       exc_info=True)
         error = {

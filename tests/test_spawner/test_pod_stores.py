@@ -10,7 +10,7 @@ from scheduler.spawners.templates.stores import (
     get_outputs_refs_store_secrets,
     get_outputs_store_secrets
 )
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 
 @pytest.mark.spawner_mark
@@ -59,12 +59,12 @@ class TestPodStores(TestCase):
         self.assertEqual(len(secrets), 0)
         secrets, _ = get_outputs_store_secrets(None, None)
         self.assertEqual(len(secrets), 0)
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_outputs_store_secrets('outputs1', '/path')
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS)
     def test_get_outputs_store_secrets_with_updated_settings(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_outputs_store_secrets('outputs', '/path')
 
         secrets, _ = get_outputs_store_secrets('outputs1', '/path/to/outputs')
@@ -82,12 +82,12 @@ class TestPodStores(TestCase):
         self.assertEqual(len(secrets), 0)
         secrets, _ = get_data_store_secrets(None, None)
         self.assertEqual(len(secrets), 0)
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_data_store_secrets(['data1'], {})
 
     @override_settings(PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_data_store_secrets_with_updated_settings(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_data_store_secrets(['data'], {})
 
         secrets, _ = get_data_store_secrets(['data1'], {'data1': '/path/to/data'})
@@ -119,7 +119,7 @@ class TestPodStores(TestCase):
         secrets, _ = get_outputs_refs_store_secrets([
             OutputsRefsSpec(path='/path1', persistence='outputs')])
         self.assertEqual(len(secrets), 0)
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_outputs_refs_store_secrets([
                 OutputsRefsSpec(path='/path1', persistence='outputs1'),
                 OutputsRefsSpec(path='/path2', persistence='outputs2')])

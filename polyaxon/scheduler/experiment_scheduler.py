@@ -34,7 +34,7 @@ from schemas import (
     TaskType,
     TensorflowSpecification
 )
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.experiment')
 
@@ -632,7 +632,7 @@ def start_experiment(experiment):
             'traceback': traceback.format_exc(),
             'message': 'Could not start the experiment, encountered a Kubernetes ApiException.'
         }
-    except VolumeNotFoundError as e:
+    except StoreNotFoundError as e:
         _logger.error('Could not start the experiment, please check your volume definitions.',
                       exc_info=True)
         error = {

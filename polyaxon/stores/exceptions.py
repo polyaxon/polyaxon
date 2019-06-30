@@ -1,2 +1,2 @@
-class VolumeNotFoundError(Exception):
+class StoreNotFoundError(Exception):
     pass

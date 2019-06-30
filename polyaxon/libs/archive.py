@@ -12,7 +12,7 @@ import stores
 
 from options.registry.archives import ARCHIVES_ROOT_ARTIFACTS, ARCHIVES_ROOT_REPOS
 from options.registry.downloads import DOWNLOADS_ROOT_ARTIFACTS, DOWNLOADS_ROOT_LOGS
-from stores.exceptions import VolumeNotFoundError  # pylint:disable=ungrouped-imports
+from stores.exceptions import StoreNotFoundError  # pylint:disable=ungrouped-imports
 
 
 def create_tarfile(files: List[str], tar_path: str) -> None:
@@ -52,7 +52,7 @@ def archive_outputs(outputs_path: str, namepath: str, persistence_outputs: str) 
     try:
         store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
         store_manager.download_dir(outputs_path, download_path)
-    except (PolyaxonStoresException, VolumeNotFoundError) as e:
+    except (PolyaxonStoresException, StoreNotFoundError) as e:
         raise ValidationError(e)
 
     if store_manager.store.is_local_store:
@@ -78,7 +78,7 @@ def archive_outputs_file(outputs_path: str,
         store_manager = stores.get_outputs_store(persistence_outputs=persistence_outputs)
         outputs_filepath = os.path.join(outputs_path, filepath)
         store_manager.download_file(outputs_filepath, download_filepath)
-    except (PolyaxonStoresException, VolumeNotFoundError) as e:
+    except (PolyaxonStoresException, StoreNotFoundError) as e:
         raise ValidationError(e)
     if store_manager.store.is_local_store:
         return outputs_filepath
@@ -94,7 +94,7 @@ def archive_logs_file(log_path: str, namepath: str, persistence_logs: str = 'def
     try:
         store_manager = stores.get_logs_store(persistence_logs=persistence_logs)
         store_manager.download_file(log_path, download_filepath)
-    except (PolyaxonStoresException, VolumeNotFoundError) as e:
+    except (PolyaxonStoresException, StoreNotFoundError) as e:
         raise ValidationError(e)
     if store_manager.store.is_local_store:
         return log_path

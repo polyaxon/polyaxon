@@ -103,7 +103,7 @@ from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.ephemeral import IsEphemeral
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
-from stores.exceptions import VolumeNotFoundError  # noqa
+from stores.exceptions import StoreNotFoundError  # noqa
 
 _logger = logging.getLogger("polyaxon.views.experiments")
 
@@ -417,7 +417,7 @@ class ExperimentOutputsTreeView(ExperimentEndpoint, RetrieveEndpoint):
         try:
             store_manager = stores.get_outputs_store(
                 persistence_outputs=self.experiment.persistence_outputs)
-        except (PolyaxonStoresException, VolumeNotFoundError) as e:
+        except (PolyaxonStoresException, StoreNotFoundError) as e:
             raise ValidationError(e)
         experiment_outputs_path = stores.get_experiment_outputs_path(
             persistence=self.experiment.persistence_outputs,
@@ -429,7 +429,7 @@ class ExperimentOutputsTreeView(ExperimentEndpoint, RetrieveEndpoint):
                                                    request.query_params.get('path'))
         try:
             data = store_manager.ls(experiment_outputs_path)
-        except VolumeNotFoundError:
+        except StoreNotFoundError:
             raise ValidationError('Store manager could not load the volume requested,'
                                   ' to get the outputs data.')
         except Exception:

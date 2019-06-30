@@ -12,7 +12,7 @@ from scheduler.spawners.templates.volumes import (
     get_pod_volumes,
     get_shm_volumes
 )
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 
 @pytest.mark.spawner_mark
@@ -57,7 +57,7 @@ class TestPodVolumes(TestCase):
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS)
     def test_get_pod_outputs_volume_wrong_values(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_pod_outputs_volume(persistence_outputs='foo')
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS)
@@ -80,7 +80,7 @@ class TestPodVolumes(TestCase):
 
     @override_settings(PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_pod_data_volumes_wrong_values(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_pod_data_volume(persistence_data=['foo'])
 
     @override_settings(PERSISTENCE_DATA=PERSISTENCE_DATA)
@@ -104,10 +104,10 @@ class TestPodVolumes(TestCase):
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS, PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_pod_volumes_raises_for_wrong_values(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_pod_volumes(persistence_outputs='foo', persistence_data=None)
 
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             get_pod_volumes(persistence_outputs=None, persistence_data='foo')
 
     @override_settings(PERSISTENCE_OUTPUTS=PERSISTENCE_OUTPUTS, PERSISTENCE_DATA=PERSISTENCE_DATA)

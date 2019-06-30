@@ -5,7 +5,7 @@ from django.test import override_settings
 
 import stores
 
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 from stores.validators import validate_persistence_data
 from tests.base.case import BaseTest
 
@@ -34,12 +34,12 @@ class TestDataPaths(BaseTest):
         assert validate_persistence_data(None) == settings.PERSISTENCE_DATA.keys()
 
     def test_get_data_paths_raises_for_unrecognised_paths(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             stores.get_data_paths(['path1', 'path2'])
 
     @override_settings(PERSISTENCE_DATA=PERSISTENCE_DATA)
     def test_get_data_paths_works_as_expected(self):
-        with self.assertRaises(VolumeNotFoundError):
+        with self.assertRaises(StoreNotFoundError):
             stores.get_data_paths(['path1', 'path2'])
 
         assert stores.get_data_paths(['data2']) == {'data2': '/data/2'}

@@ -20,7 +20,7 @@ from options.registry.scheduler import (
 )
 from polyaxon.settings import Intervals, SchedulerCeleryTasks
 from scheduler import dockerizer_scheduler
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.build_jobs')
 
@@ -85,7 +85,7 @@ def build_jobs_stop(self,
     if collect_logs and is_managed:
         try:
             logs_collect_build_job(build_uuid=build_job_uuid)
-        except (OSError, VolumeNotFoundError, PolyaxonStoresException):
+        except (OSError, StoreNotFoundError, PolyaxonStoresException):
             _logger.warning('Scheduler could not collect the logs for build `%s`.', build_job_name)
 
     if is_managed:

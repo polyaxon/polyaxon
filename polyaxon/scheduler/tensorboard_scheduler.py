@@ -12,7 +12,7 @@ from options.registry.restarts import MAX_RESTARTS_TENSORBOARDS
 from scheduler.spawners.templates.restart_policy import get_max_restart
 from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
 from scheduler.spawners.utils import get_job_definition
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.tensorboard')
 
@@ -58,7 +58,7 @@ def start_tensorboard(tensorboard):
             'traceback': traceback.format_exc(),
             'message': 'Could not start the job, encountered a Kubernetes ApiException.',
         }
-    except VolumeNotFoundError as e:
+    except StoreNotFoundError as e:
         _logger.error('Could not start the tensorboard, please check your volume definitions.',
                       exc_info=True)
         error = {

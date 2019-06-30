@@ -34,4 +34,4 @@ class ReposCredentials(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
-    description = 'Credentials (user/password) to pull repos'
+    description = 'Credentials (user:password) to pull repos'

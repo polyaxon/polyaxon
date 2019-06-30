@@ -1,5 +1,5 @@
 from constants.store_types import StoreTypes
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 
 
 def get_store_secret_from_definition(definition):
@@ -9,15 +9,15 @@ def get_store_secret_from_definition(definition):
 
     if store:
         if store not in StoreTypes.CLOUD_STORES:
-            raise VolumeNotFoundError(
+            raise StoreNotFoundError(
                 'Volume with store class `{}` is not supported.'.format(store))
 
         if not secret:
-            raise VolumeNotFoundError(
+            raise StoreNotFoundError(
                 'Volume with store class `{}` does not define a secret.'.format(store))
 
         if not secret_key:
-            raise VolumeNotFoundError(
+            raise StoreNotFoundError(
                 'Volume with store class `{}` does not define a secretKey.'.format(store))
 
     return store, secret, secret_key
@@ -25,8 +25,8 @@ def get_store_secret_from_definition(definition):
 
 def get_store_secret_for_persistence(volume_name, volume_settings):
     if volume_name not in volume_settings:
-        raise VolumeNotFoundError('Volume with name `{}` was defined in specification, '
-                                  'but was not found'.format(volume_name))
+        raise StoreNotFoundError('Volume with name `{}` was defined in specification, '
+                                 'but was not found'.format(volume_name))
 
     definition = volume_settings[volume_name]
     return get_store_secret_from_definition(definition)

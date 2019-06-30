@@ -1,7 +1,7 @@
 from rest_framework.exceptions import ValidationError
 
 from schemas import PersistenceConfig
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 from stores.validators import validate_persistence_data, validate_persistence_outputs
 
 
@@ -41,5 +41,5 @@ def set_persistence(instance, default_persistence_data=None, default_persistence
         _set_persistence(instance=instance,
                          default_persistence_data=default_persistence_data,
                          default_persistence_outputs=default_persistence_outputs)
-    except VolumeNotFoundError as e:
+    except StoreNotFoundError as e:
         raise ValidationError(e)

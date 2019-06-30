@@ -6,7 +6,7 @@ import conf
 
 from options.registry.persistence import PERSISTENCE_DATA, PERSISTENCE_OUTPUTS
 from scheduler.spawners.templates import constants
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 from stores.validators import validate_persistence_data, validate_persistence_outputs
 
 
@@ -40,7 +40,7 @@ def get_volume_from_secret(volume_name, mount_path, secret_name, items=None):
 
 def get_volume_from_definition(volume_name, volume_settings):
     if volume_name not in volume_settings:
-        raise VolumeNotFoundError('Volume with name `{}` was defined in specification, '
+        raise StoreNotFoundError('Volume with name `{}` was defined in specification, '
                                   'but was not found'.format(volume_name))
     volumes = []
     volume_mounts = []

@@ -15,7 +15,7 @@ from libs.paths.jobs import create_job_path
 from options.registry.archives import ARCHIVES_ROOT_LOGS
 from options.registry.persistence import PERSISTENCE_DATA, PERSISTENCE_LOGS, PERSISTENCE_OUTPUTS
 from polyaxon.config_manager import config
-from stores.exceptions import VolumeNotFoundError
+from stores.exceptions import StoreNotFoundError
 from stores.schemas.store import StoreConfig
 from stores.schemas.volume import VolumeConfig
 from stores.store_secrets import get_store_secret_for_persistence, get_store_secret_from_definition
@@ -62,7 +62,7 @@ class StoresService(Service):
         persistence_paths = {}
         for persistence in persistence_data:
             if persistence not in conf.get(PERSISTENCE_DATA):
-                raise VolumeNotFoundError(
+                raise StoreNotFoundError(
                     'Data volume with name `{}` was defined in specification, '
                     'but was not found'.format(persistence))
             persistence_type_condition = (
@@ -70,7 +70,7 @@ class StoresService(Service):
                 'bucket' not in conf.get(PERSISTENCE_DATA)[persistence]
             )
             if persistence_type_condition:
-                raise VolumeNotFoundError(
+                raise StoreNotFoundError(
                     'Data volume with name `{}` '
                     'does not define a mountPath or bucket.'.format(persistence))
 
@@ -99,14 +99,14 @@ class StoresService(Service):
 
         persistence_outputs = validate_persistence_outputs(persistence_outputs=persistence)
         if persistence_outputs not in conf.get(PERSISTENCE_OUTPUTS):
-            raise VolumeNotFoundError('Outputs volume with name `{}` was defined in specification, '
-                                      'but was not found'.format(persistence_outputs))
+            raise StoreNotFoundError('Outputs volume with name `{}` was defined in specification, '
+                                     'but was not found'.format(persistence_outputs))
         persistence_type_condition = (
             'mountPath' not in conf.get(PERSISTENCE_OUTPUTS)[persistence_outputs] and
             'bucket' not in conf.get(PERSISTENCE_OUTPUTS)[persistence_outputs]
         )
         if persistence_type_condition:
-            raise VolumeNotFoundError(
+            raise StoreNotFoundError(
                 'Outputs volume with name `{}` '
                 'does not define a mountPath or bucket.'.format(persistence_outputs))
 
@@ -123,7 +123,7 @@ class StoresService(Service):
         store = cls.get_outputs_store(persistence_outputs=persistence_outputs)
         try:
             store.delete(path)
-        except (PolyaxonStoresException, VolumeNotFoundError):
+        except (PolyaxonStoresException, StoreNotFoundError):
             pass
 
     @staticmethod
@@ -135,7 +135,7 @@ class StoresService(Service):
             'bucket' not in conf.get(PERSISTENCE_LOGS)
         )
         if persistence_type_condition:
-            raise VolumeNotFoundError('Logs volume does not define a mountPath or bucket.')
+            raise StoreNotFoundError('Logs volume does not define a mountPath or bucket.')
 
         return (conf.get(PERSISTENCE_LOGS).get('bucket') or
                 conf.get(PERSISTENCE_LOGS).get('mountPath'))
@@ -147,7 +147,7 @@ class StoresService(Service):
         store = cls.get_logs_store(persistence_logs=persistence)
         try:
             store.delete(path)
-        except (PolyaxonStoresException, VolumeNotFoundError):
+        except (PolyaxonStoresException, StoreNotFoundError):
             pass
 
     @staticmethod
@@ -157,7 +157,7 @@ class StoresService(Service):
         try:
             store_access = config.get_dict(secret_key)
         except RheaError:
-            raise VolumeNotFoundError(
+            raise StoreNotFoundError(
                 'Could not create store for path,'
                 'received a store type `{}` without valid access key.'.format(store))
 

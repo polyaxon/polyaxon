@@ -64,7 +64,7 @@ from schemas import kinds
 from scopes.authentication.internal import InternalAuthentication
 from scopes.permissions.internal import IsAuthenticatedOrInternal, IsInitializer
 from scopes.permissions.projects import get_permissible_project
-from stores.exceptions import VolumeNotFoundError  # noqa
+from stores.exceptions import StoreNotFoundError  # noqa
 
 _logger = logging.getLogger("polyaxon.views.jobs")
 
@@ -361,7 +361,7 @@ class JobOutputsTreeView(JobEndpoint, RetrieveEndpoint):
         try:
             store_manager = stores.get_outputs_store(
                 persistence_outputs=self.job.persistence_outputs)
-        except (PolyaxonStoresException, VolumeNotFoundError) as e:
+        except (PolyaxonStoresException, StoreNotFoundError) as e:
             raise ValidationError(e)
         job_outputs_path = stores.get_job_outputs_path(
             persistence=self.job.persistence_outputs,
@@ -372,7 +372,7 @@ class JobOutputsTreeView(JobEndpoint, RetrieveEndpoint):
 
         try:
             data = store_manager.ls(job_outputs_path)
-        except VolumeNotFoundError:
+        except StoreNotFoundError:
             raise ValidationError('Store manager could not load the volume requested,'
                                   ' to get the outputs data.')
         except Exception:
