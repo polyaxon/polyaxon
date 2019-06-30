@@ -87,7 +87,10 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 rules:
   - apiGroups: [""]
-    resources: ["pods"]
+    resources: ["pods", "batch"]
+    verbs: ["get", "watch", "list", "create", "delete", "patch"]
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
     verbs: ["get", "watch", "list", "create", "delete", "patch"]
   - apiGroups: [""]
     resources: ["configmaps", "secrets"]
