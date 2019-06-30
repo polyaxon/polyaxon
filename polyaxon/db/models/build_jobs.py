@@ -115,6 +115,10 @@ class BuildJob(AbstractJobModel,
         return self.specification.config.env_vars
 
     @cached_property
+    def build_lang_env(self) -> Optional[List[str]]:
+        return self.specification.config.lang_env
+
+    @cached_property
     def build_nocache(self) -> List[str]:
         return self.specification.config.nocache
 

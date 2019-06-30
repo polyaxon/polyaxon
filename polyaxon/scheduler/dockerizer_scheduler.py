@@ -113,6 +113,7 @@ def start_dockerizer(build_job):
             registry_host=registry_spec.host),
         build_steps=build_job.build_steps,
         env_vars=build_job.build_env_vars,
+        lang_env=build_job.build_lang_env,
         nocache=build_job.build_nocache,
         insecure=registry_spec.insecure,
         creds_secret_ref=registry_spec.secret,

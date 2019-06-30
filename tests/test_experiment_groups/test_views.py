@@ -1,3 +1,4 @@
+# pylint:disable=too-many-lines
 from unittest.mock import patch
 
 import pytest
