@@ -42,9 +42,7 @@ class ApiConfig(object):
         self.http_port = http_port or settings.HTTP_PORT or (settings.DEFAULT_HTTPS_PORT
                                                              if self.use_https
                                                              else settings.DEFAULT_HTTP_PORT)
-        self.ws_port = ws_port or settings.WS_PORT or (settings.DEFAULT_HTTPS_PORT
-                                                       if self.use_https
-                                                       else settings.DEFAULT_HTTP_PORT)
+        self.ws_port = ws_port or settings.WS_PORT or self.http_port
         self.version = version or settings.API_VERSION
         self.internal_header = None
 
