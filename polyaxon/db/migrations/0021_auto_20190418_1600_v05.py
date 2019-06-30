@@ -55,6 +55,18 @@ def migrate_tensorboard_jobs_config(apps, schema_editor):
     TensorboardJob.objects.update(content=ExpressionWrapper(F('config'), output_field=str))
 
 
+def migrate_experimentgroup_hptuning(apps, schema_editor):
+    ExperimentGroup = apps.get_model('db', 'ExperimentGroup')
+
+    groups = []
+    for group in ExperimentGroup.objects.exclude(hptuning__early_stopping=None):
+        hptuning = group.hptuning
+        [e.pop('policy', None) for e in hptuning['early_stopping']]
+        group.hptuning = hptuning
+        groups.append(group)
+    ExperimentGroup.objects.bulk_update(groups, ['hptuning'])
+
+
 class Migration(migrations.Migration):
     dependencies = [
         ('db', '0020_auto_20190307_1611'),
@@ -342,5 +354,6 @@ class Migration(migrations.Migration):
         migrations.RunPython(migrate_notebook_jobs_config),
         migrations.RunPython(migrate_tensorboard_jobs_config),
         migrations.RunPython(migrate_experimentgroup_config),
+        migrations.RunPython(migrate_experimentgroup_hptuning),
         migrations.RunPython(create_cluster_owner),
     ]
