@@ -115,6 +115,41 @@ Polyaxon also provides, an easy way to install multiple python libraries:
       cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
     ```
 
+### Installing libraries with conda
+
+You can also set a conda environment:
+
+ 1. you can define a `conda_env.yaml`, `conda_env.yml`, `polyaxon_conda_env.yaml`, `polyaxon_conda_env.yml`, similar to the requirements section
+
+
+    ```bash
+    $ vi conda_env.yaml
+    ...
+    ```
+
+ 2. a command `conda ...` to install the requirements
+
+
+    ```yaml
+    ---
+    version: 1
+
+    kind: experiment
+
+    declarations:
+      batch_size: 128
+      lr: 0.1
+
+    build:
+      image: tensorflow/tensorflow:1.4.1-py3
+      build_steps:
+        - conda env update -n base -f conda_env.yaml
+
+    run:
+      cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
+    ```
+
+
 ### Installing other libraries or running other commands
 
 You can also install or execute other commands, by adding them to the `build_steps` part.
