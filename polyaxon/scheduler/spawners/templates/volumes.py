@@ -41,7 +41,7 @@ def get_volume_from_secret(volume_name, mount_path, secret_name, items=None):
 def get_volume_from_definition(volume_name, volume_settings):
     if volume_name not in volume_settings:
         raise StoreNotFoundError('Volume with name `{}` was defined in specification, '
-                                  'but was not found'.format(volume_name))
+                                 'but was not found'.format(volume_name))
     volumes = []
     volume_mounts = []
     definition = volume_settings[volume_name]

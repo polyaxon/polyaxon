@@ -5,11 +5,8 @@ from hestia.signal_decorators import ignore_raw, ignore_updates, ignore_updates_
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 
-import auditor
-
 from db.models.experiment_jobs import ExperimentJob
 from db.models.experiments import Experiment, ExperimentMetric
-from events.registry.experiment import EXPERIMENT_NEW_METRIC
 from libs.repos.utils import assign_code_reference
 from lifecycles.experiments import ExperimentLifeCycle
 from lifecycles.jobs import JobLifeCycle
