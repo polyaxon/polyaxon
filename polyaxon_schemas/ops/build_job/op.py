@@ -41,6 +41,7 @@ class BuildSchema(BaseOpSchema):
     context = fields.Str(allow_none=True)
     image = fields.Str(allow_none=True)
     build_steps = fields.List(fields.Str(), allow_none=True)
+    lang_env = fields.Str(allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
     commit = fields.Str(allow_none=True)
@@ -77,6 +78,7 @@ class BuildConfig(BaseOpConfig):
         'branch',
         'build_steps',
         'env_vars',
+        'lang_env',
         'commit',
         'backend',
         'context',
@@ -102,6 +104,7 @@ class BuildConfig(BaseOpConfig):
                  backend=None,
                  build_steps=None,
                  env_vars=None,
+                 lang_env=None,
                  nocache=None,
                  commit=None,
                  branch=None):
@@ -127,6 +130,7 @@ class BuildConfig(BaseOpConfig):
         self.image = image
         self.build_steps = build_steps
         self.env_vars = env_vars
+        self.lang_env = lang_env
         self.nocache = nocache
         self.commit = commit
         self.branch = branch
