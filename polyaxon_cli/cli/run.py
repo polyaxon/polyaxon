@@ -11,7 +11,7 @@ from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.run.conda import run as conda_run
 from polyaxon_cli.run.docker import run as docker_run
 from polyaxon_cli.run.platform import run as platform_run
-from polyaxon_cli.schemas import PolyaxonFile
+from polyaxon_cli.schemas import PolyaxonFile, PolyaxonSchemaError
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_cli.utils.validation import validate_tags
 
@@ -108,6 +108,11 @@ def run(ctx,  # pylint:disable=redefined-builtin
     tags = validate_tags(tags)
 
     if local:
+        try:
+            specification.parse_data()
+        except PolyaxonSchemaError:
+            Printer.print_error('Could not run this polyaxonfile locally, '
+                                'a context is required to resolve it dependencies.')
         if conda_env:
             conda_run(ctx=ctx,
                       name=name,

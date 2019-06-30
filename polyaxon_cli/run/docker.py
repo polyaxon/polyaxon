@@ -79,7 +79,7 @@ def _create_docker_build(build_job, build_config):
                 from_image=build_config.image,
                 build_steps=build_config.build_steps,
                 env_vars=build_config.env_vars,
-                set_lang_env=False,
+                lang_env=build_config.lang_env,
             )
         else:
             with open(dockerfile_path) as dockerfile:
@@ -115,13 +115,13 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
     project = '{}.{}'.format(user, project_name)
     build_job = BuildJob(project=project, track_logs=False)
 
-    build_spec = BuildSpecification.create_specification(
-        specification.build, to_dict=False)
+    build_spec = BuildSpecification.create_specification(specification.build, to_dict=False)
+    build_spec.parse_data()
     build_config = build_spec.config
     build_job.create(name=name,
                      description=description,
                      tags=tags,
-                     config=build_spec._data)
+                     content=build_spec.raw_data)
     image = _create_docker_build(build_job, build_config)
 
     experiment = Experiment(project=project, track_logs=False)
@@ -129,7 +129,7 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
                       tags=tags,
                       description=description,
                       build_id=build_job.job_id,
-                      config=specification._data)
+                      content=specification.raw_data)
 
     cmd_args = ['run', '--rm']
     for key, value in _get_env_vars(project=project, experiment_id=experiment.experiment_id):
