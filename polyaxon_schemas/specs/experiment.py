@@ -11,7 +11,7 @@ from polyaxon_schemas.ops.experiment import ExperimentConfig
 from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentConfig
 from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.specs import kinds
-from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
+from polyaxon_schemas.specs.base import BaseRunSpecification
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MPISpecification,

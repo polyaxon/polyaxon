@@ -5,10 +5,15 @@ import os
 
 from unittest import TestCase
 
+from flaky import flaky
+
 from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
+from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingConfig
+from polyaxon_schemas.ops.group.hptuning import HPTuningConfig, SearchAlgorithms
+from polyaxon_schemas.ops.group.matrix import MatrixConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.specs.frameworks import TensorflowSpecification

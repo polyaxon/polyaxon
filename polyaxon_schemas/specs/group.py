@@ -11,13 +11,13 @@ from polyaxon_schemas.ops.environments.persistence import PersistenceConfig
 from polyaxon_schemas.ops.group import GroupConfig
 from polyaxon_schemas.ops.group.hptuning import SearchAlgorithms
 from polyaxon_schemas.specs import kinds
-from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.specs.base import BaseRunSpecification
 from polyaxon_schemas.specs.experiment import ExperimentSpecification
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
 
 
-class GroupSpecification(BaseSpecification):
+class GroupSpecification(BaseRunSpecification):
     """Parses Polyaxonfiles/Configuration, with matrix section definition.
 
     SECTIONS:
@@ -33,23 +33,23 @@ class GroupSpecification(BaseSpecification):
     _SPEC_KIND = kinds.GROUP
 
     SECTIONS = ExperimentSpecification.SECTIONS + (
-        BaseSpecification.HP_TUNING,
+        BaseRunSpecification.HP_TUNING,
     )
 
     STD_PARSING_SECTIONS = ExperimentSpecification.STD_PARSING_SECTIONS + (
-        BaseSpecification.HP_TUNING,
+        BaseRunSpecification.HP_TUNING,
     )
 
     HEADER_SECTIONS = ExperimentSpecification.HEADER_SECTIONS + (
-        BaseSpecification.HP_TUNING,
+        BaseRunSpecification.HP_TUNING,
     )
 
     REQUIRED_SECTIONS = ExperimentSpecification.REQUIRED_SECTIONS + (
-        BaseSpecification.HP_TUNING,
+        BaseRunSpecification.HP_TUNING,
     )
 
     POSSIBLE_SECTIONS = ExperimentSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.HP_TUNING,
+        BaseRunSpecification.HP_TUNING,
     )
     CONFIG = GroupConfig
 
@@ -70,36 +70,6 @@ class GroupSpecification(BaseSpecification):
         parsed_data = self.parse_data(matrix_declaration)
         del parsed_data[self.HP_TUNING]
         return ExperimentSpecification(values=[parsed_data, {'kind': kinds.EXPERIMENT}])
-
-    def get_build_spec(self):
-        """Returns a build spec for this group spec."""
-        if BaseSpecification.BUILD not in self._data:
-            return None
-        return BuildConfig.from_dict(self._data[BaseSpecification.BUILD])
-
-    @cached_property
-    def build(self):
-        build_spec = self.get_build_spec()
-        return self.get_build_spec() if build_spec else None
-
-    @cached_property
-    def environment(self):
-        # This is a hack, in the future we need to gather the paths of the experiments
-        parsed_data = self.parse_data(context=self.matrix_declaration_test)
-        return parsed_data.get(self.ENVIRONMENT, None)
-
-    @cached_property
-    def secret_refs(self):
-        return self.environment.get('secret_refs') if self.environment else None
-
-    @cached_property
-    def config_map_refs(self):
-        return self.environment.get('config_map_refs') if self.environment else None
-
-    @cached_property
-    def persistence(self):
-        persistence = self.environment.get('persistence') if self.environment else None
-        return PersistenceConfig.from_dict(persistence) if persistence else None
 
     @cached_property
     def hptuning(self):
