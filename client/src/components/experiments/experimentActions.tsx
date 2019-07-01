@@ -114,7 +114,7 @@ export default class ExperimentActions extends React.Component<Props, State> {
           }
           {this.props.onResume && !this.props.isRunning &&
           <MenuItem eventKey="2" onClick={this.props.onResume}>
-            <i className="fas fa-redo icon" aria-hidden="true"/> Resume
+            <i className="fas fa-reply icon" aria-hidden="true"/> Resume
           </MenuItem>
           }
           {this.props.tensorboardActionCallback && this.props.hasTensorboard &&
