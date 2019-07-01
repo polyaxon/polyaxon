@@ -1,5 +1,5 @@
 -r ../requirements-base.txt
 
-docker==4.0.1
+docker==4.0.2
 polyaxon-gpustat==0.3.4
 requests>=2.20.1
