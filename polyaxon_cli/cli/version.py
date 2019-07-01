@@ -36,13 +36,13 @@ def session_expired():
     sys.exit(1)
 
 
-def get_version(pkg):
+def get_version(package):
     import pkg_resources
 
     try:
-        return pkg_resources.get_distribution(pkg).version
+        return pkg_resources.get_distribution(package).version
     except pkg_resources.DistributionNotFound:
-        logger.error('`%s` is not installed', pkg)
+        logger.error('`%s` is not installed', package)
 
 
 def get_current_version():

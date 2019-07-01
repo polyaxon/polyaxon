@@ -11,7 +11,7 @@ def parse_params(params):
     for param in params:
         index = param.find("=")
         if index == -1:
-            Printer.print_error("Invalid format for -P parameter: '%s'. Use -P name=value." % s)
+            Printer.print_error("Invalid format for -P parameter: '%s'. Use -P name=value." % param)
             sys.exit(1)
         name = param[:index]
         value = param[index + 1:]

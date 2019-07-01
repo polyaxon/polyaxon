@@ -43,13 +43,9 @@ def _get_env_vars(project, experiment_id):
     if POLYAXON_NO_OP_KEY in os.environ:
         env_vars += [('POLYAXON_NO_OP', 'true')]
 
-    if True:
-        # TODO
-        env_vars += [('POLYAXON_RUN_DATA_PATHS', json.dumps({'local': '/tmp'}))]
-
-    if True:
-        # TODO
-        env_vars += [('POLYAXON_RUN_OUTPUTS_PATH', '/tmp')]
+    # TODO: use user's (data/outputs) paths
+    env_vars += [('POLYAXON_RUN_DATA_PATHS', json.dumps({'local': '/tmp'}))]
+    env_vars += [('POLYAXON_RUN_OUTPUTS_PATH', '/tmp')]
 
     return env_vars
 

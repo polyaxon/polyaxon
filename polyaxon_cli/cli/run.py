@@ -39,9 +39,9 @@ from polyaxon_cli.utils.validation import validate_tags
               help="A parameter to overide the default params of the run, form -P name=value.")
 @click.pass_context
 @clean_outputs
-def run(ctx,  # pylint:disable=redefined-builtin
+def run(ctx,
         project,
-        file,
+        file,  # pylint:disable=redefined-builtin
         name,
         tags,
         description,
