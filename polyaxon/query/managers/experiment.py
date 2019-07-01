@@ -32,6 +32,7 @@ class ExperimentQueryManager(BaseQueryManager):
     FIELDS_PROXY = {
         'metric': 'last_metric',
         'metrics': 'last_metric',
+        'declarations': 'params',
         'status': 'status__status',
         'group': 'experiment_group',
         'build': 'build_job',
@@ -66,6 +67,7 @@ class ExperimentQueryManager(BaseQueryManager):
         # Commit
         'commit': parse_value_operation,
         # Params
+        'declarations': parse_value_operation,
         'params': parse_value_operation,
         # Tags
         'tags': parse_value_operation,
@@ -104,6 +106,7 @@ class ExperimentQueryManager(BaseQueryManager):
         # Commit
         'commit': ValueCondition,
         # Params
+        'declarations': ValueCondition,
         'params': ValueCondition,
         # Tags
         'tags': ArrayCondition,

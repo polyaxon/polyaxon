@@ -36,7 +36,7 @@ export interface Props {
 
 export interface State {
   openMetrics: boolean;
-  openDeclarations: boolean;
+  openParams: boolean;
   openRunEnv: boolean;
   openPackages: boolean;
   openDataRefs: boolean;
@@ -48,7 +48,7 @@ export default class ExperimentOverview extends React.Component<Props, State> {
     super(props);
     this.state = {
       openMetrics: false,
-      openDeclarations: false,
+      openParams: false,
       openRunEnv: false,
       openPackages: false,
       openDataRefs: false,
@@ -139,15 +139,15 @@ export default class ExperimentOverview extends React.Component<Props, State> {
                 <div className="meta meta-header meta-params">
                   <span
                     className="meta-info"
-                    onClick={() => this.setState({ openDeclarations: !this.state.openDeclarations })}
+                    onClick={() => this.setState({ openParams: !this.state.openParams })}
                   >
                     <i className="fas fa-cog icon" aria-hidden="true"/>
-                    <span className="title">Declarations:</span>
+                    <span className="title">Params:</span>
                   </span>
                 </div>
               </div>
             </div>
-            <Collapse in={this.state.openDeclarations}>
+            <Collapse in={this.state.openParams}>
               <div className="row">
                 <div className="col-md-12">
                   <VerticalTable values={experiment.params || {}}/>

@@ -381,7 +381,7 @@ export default class Experiments extends React.Component<Props, State> {
               <th className="block">
                 Run
               </th>
-              {this.state.params.map((declaration: string, idx: number) =>
+              {this.state.params.map((param: string, idx: number) =>
                 <th
                   key={idx}
                   className={
@@ -389,7 +389,7 @@ export default class Experiments extends React.Component<Props, State> {
                     (idx === 0 ? 'border-left ' : ' ') +
                     (idx === this.state.params.length - 1 ? 'border-right ' : ' ')}
                 >
-                  {declaration}
+                  {param}
                 </th>
               )}
               {this.state.metrics.map((metric: string, idx: number) =>
