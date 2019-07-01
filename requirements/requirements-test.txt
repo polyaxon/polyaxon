@@ -9,4 +9,4 @@ responses==0.10.6
 pylint-django==2.0.9
 pytest-cov==2.7.1
 pytest-django==3.5.1
-pytest-pythonpath==0.7.1
+pytest-pythonpath==0.7.3
