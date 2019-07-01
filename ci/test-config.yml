@@ -20,7 +20,6 @@ postgresql:
       cpu: 20m
 
 redis:
-  imageTag: 4.0.2-alpine
   resources:
     requests:
       memory: 40Mi
@@ -121,20 +120,7 @@ resourcesDaemon:
       memory: 80Mi
       cpu: 30m
 
-sidecar:
-  imageTag: latest
-
-dockerizer:
-  imageTag: latest
-
-job:
-  imageTag: latest
-
 hooks:
-  imageTag: latest
-  imagePullPolicy: Always
-
-tableshook:
   imageTag: latest
   imagePullPolicy: Always
 

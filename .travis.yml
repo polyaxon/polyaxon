@@ -8,11 +8,11 @@ services:
 
 env:
   global:
-    - MINIKUBE_VERSION=0.28.2
-    - HELM_VERSION=2.9.1
+    - MINIKUBE_VERSION=0.33.1
+    - HELM_VERSION=2.12.3
     - PATH="$PWD/bin:$PATH"
   matrix:
-    - KUBE_VERSION=1.9.4
+    - KUBE_VERSION=1.13.2
 
 install:
   - ./ci/install.sh
