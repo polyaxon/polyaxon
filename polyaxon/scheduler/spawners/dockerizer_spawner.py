@@ -127,11 +127,12 @@ class DockerizerSpawner(K8SManager):
         ]
 
         # Add security context if set
-        if conf.get(BUILD_JOBS_SET_SECURITY_CONTEXT):
-            env_vars.append(get_env_var('POLYAXON_SECURITY_CONTEXT_USER',
-                                        value=conf.get(SECURITY_CONTEXT_USER)))
-            env_vars.append(get_env_var('POLYAXON_SECURITY_CONTEXT_GROUP',
-                                        value=conf.get(SECURITY_CONTEXT_GROUP)))
+        sid = conf.get(SECURITY_CONTEXT_USER)
+        gid = conf.get(SECURITY_CONTEXT_GROUP)
+        should_set_security_context = conf.get(BUILD_JOBS_SET_SECURITY_CONTEXT) and sid and gid
+        if should_set_security_context:
+            env_vars.append(get_env_var('POLYAXON_SECURITY_CONTEXT_USER', value=sid))
+            env_vars.append(get_env_var('POLYAXON_SECURITY_CONTEXT_GROUP', value=gid))
 
         # Add set env lang
         env_lang = self.lang_env or conf.get(BUILD_JOBS_LANG_ENV)

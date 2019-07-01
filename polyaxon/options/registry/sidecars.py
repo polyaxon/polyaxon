@@ -22,7 +22,7 @@ class SidecarsDockerImage(Option):
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
-    default = 'polyaxon/polyaxon-sidecar:0.5.0rc1'
+    default = 'polyaxon/polyaxon-sidecar:0.5.0rc2'
     options = None
     description = 'Sidecar docker image'
 
