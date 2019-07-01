@@ -1,6 +1,6 @@
 -r ../requirements-base.txt
 
-django-auth-ldap==1.7.0
+django-auth-ldap==2.0.0
 django-debug-toolbar
 GitPython==2.1.11
 sanic==19.3.1
