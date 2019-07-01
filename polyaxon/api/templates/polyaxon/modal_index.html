@@ -3,9 +3,9 @@
 
 {% block styles %}
     {% if frontend_debug %}
-    <link href="{% static 'css/global_modal.css' %}?version=0.4.4" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/global_modal.css' %}?version=0.5.0rc1" media="all" rel="stylesheet" type="text/css"/>
     {% else %}
-    <link href="{% static 'dist/css/global_modal.min.css' %}?version=0.4.4" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'dist/css/global_modal.min.css' %}?version=0.5.0rc1" media="all" rel="stylesheet" type="text/css"/>
     {%  endif %}
 {% endblock %}
 
@@ -19,7 +19,7 @@
         {% block branding %}
         <h1 id="site-name">
             <a class="brand" href="{% url 'index' %}">
-                <img src="{% static 'images/logo_white.svg' %}?version=0.4.4" alt="Polyaxon"> Polyaxon
+                <img src="{% static 'images/logo_white.svg' %}?version=0.5.0rc1" alt="Polyaxon"> Polyaxon
             </a>
         </h1>
         {% endblock %}
