@@ -123,7 +123,7 @@ class TestDeploymentConfig(TestCase):
         assert config.eventMonitors.replicas == 3
         assert config.resourcesDaemon is None
         assert config.hooks is None
-        assert config.postgresql.enabled is False
+        assert config.postgresql.enabled is True
         assert config.rabbitmq.enabled is False
         assert config.redis.enabled is False
         assert config.dockerRegistry.enabled is False
@@ -231,6 +231,151 @@ class TestDeploymentConfig(TestCase):
         }
         assert config.mountPaths == {
             'nvidia': {'lib': '', 'bin': '', 'libcuda': ''}
+        }
+
+    def test_read_deploy_config_pgsql_values(self):
+        config = reader.read('tests/fixtures/external_pgsql_values.yml')
+        assert isinstance(config, DeploymentConfig)
+        assert config.deploymentType == 'docker-compose'
+        assert config.namespace is None
+        assert config.rbac.enabled is True
+        assert config.adminViewEnabled is None
+        assert config.timeZone is None
+        assert config.environment == 'staging'
+        assert config.ingress is None
+        assert config.serviceType == 'ClusterIP'
+        assert config.user.to_dict() == {'password': 'root'}
+        assert config.nodeSelector is None
+        assert config.tolerations is None
+        assert config.affinity is None
+        assert config.limitResources is None
+        assert config.globalReplicas is None
+        assert config.globalConcurrency is None
+        assert config.api is None
+        assert config.streams is None
+        assert config.scheduler is None
+        assert config.hpsearch is None
+        assert config.eventsHandlers is None
+        assert config.k8sEventsHandlers is None
+        assert config.beat is None
+        assert config.crons is None
+        assert config.eventMonitors is None
+        assert config.resourcesDaemon is None
+        assert config.hooks is None
+        assert config.dockerRegistry is None
+        assert config.email is None
+        assert config.hostName is None
+        assert config.allowedHosts is None
+        assert config.intervals is None
+        assert config.persistence is None
+        assert config.ldap is None
+        assert config.rabbitmq is None
+        assert config.redis is None
+        assert config.postgresql.enabled is False
+        assert config.externalServices.redis is None
+        assert config.externalServices.rabbitmq is None
+        assert config.externalServices.postgresql.to_dict() == {
+            'user': 'polyaxon',
+            'password': 'polyaxon',
+            'database': 'postgres',
+            'host': '35.226.163.84',
+            'port': 1111,
+        }
+
+    def test_read_deploy_config_rabbitmq_values(self):
+        config = reader.read('tests/fixtures/external_rabbitmq_values.yml')
+        assert isinstance(config, DeploymentConfig)
+        assert config.deploymentType == 'docker-compose'
+        assert config.namespace is None
+        assert config.rbac.enabled is True
+        assert config.adminViewEnabled is None
+        assert config.timeZone is None
+        assert config.environment == 'staging'
+        assert config.ingress is None
+        assert config.serviceType == 'ClusterIP'
+        assert config.user.to_dict() == {'password': 'root'}
+        assert config.nodeSelector is None
+        assert config.tolerations is None
+        assert config.affinity is None
+        assert config.limitResources is None
+        assert config.globalReplicas is None
+        assert config.globalConcurrency is None
+        assert config.api is None
+        assert config.streams is None
+        assert config.scheduler is None
+        assert config.hpsearch is None
+        assert config.eventsHandlers is None
+        assert config.k8sEventsHandlers is None
+        assert config.beat is None
+        assert config.crons is None
+        assert config.eventMonitors is None
+        assert config.resourcesDaemon is None
+        assert config.hooks is None
+        assert config.dockerRegistry is None
+        assert config.email is None
+        assert config.hostName is None
+        assert config.allowedHosts is None
+        assert config.intervals is None
+        assert config.persistence is None
+        assert config.ldap is None
+        assert config.redis is None
+        assert config.postgresql is None
+        assert config.rabbitmq.enabled is False
+        assert config.externalServices.redis is None
+        assert config.externalServices.postgresql is None
+        assert config.externalServices.rabbitmq.to_dict() == {
+            'user': 'polyaxon',
+            'password': 'polyaxon',
+            'host': '35.226.163.84',
+            'port': 111,
+        }
+
+    def test_read_deploy_config_redis_values(self):
+        config = reader.read('tests/fixtures/external_redis_values.yml')
+        assert isinstance(config, DeploymentConfig)
+        assert config.deploymentType == 'docker-compose'
+        assert config.namespace is None
+        assert config.rbac.enabled is True
+        assert config.adminViewEnabled is None
+        assert config.timeZone is None
+        assert config.environment == 'staging'
+        assert config.ingress is None
+        assert config.serviceType == 'ClusterIP'
+        assert config.user.to_dict() == {'password': 'root'}
+        assert config.nodeSelector is None
+        assert config.tolerations is None
+        assert config.affinity is None
+        assert config.limitResources is None
+        assert config.globalReplicas is None
+        assert config.globalConcurrency is None
+        assert config.api is None
+        assert config.streams is None
+        assert config.scheduler is None
+        assert config.hpsearch is None
+        assert config.eventsHandlers is None
+        assert config.k8sEventsHandlers is None
+        assert config.beat is None
+        assert config.crons is None
+        assert config.eventMonitors is None
+        assert config.resourcesDaemon is None
+        assert config.hooks is None
+        assert config.dockerRegistry is None
+        assert config.email is None
+        assert config.hostName is None
+        assert config.allowedHosts is None
+        assert config.intervals is None
+        assert config.persistence is None
+        assert config.ldap is None
+        assert config.postgresql is None
+        assert config.rabbitmq is None
+        assert config.redis.enabled is False
+        assert config.externalServices.postgresql is None
+        assert config.externalServices.rabbitmq is None
+        assert config.externalServices.redis.to_dict() == {
+            'usePassword': True,
+            'password': 'polyaxon',
+            'host': '35.226.163.84',
+            'port': 111,
         }
 
     def test_read_deploy_config_wrong_values1(self):

@@ -11,11 +11,10 @@ user:
 
 
 postgresql:
-  enabled: false
+  enabled: true
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: postgres
-  externalPostgresHost: 35.226.163.84
 
 nodeSelector:
   polyaxon: core

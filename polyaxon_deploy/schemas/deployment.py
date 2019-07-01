@@ -15,12 +15,14 @@ from polyaxon_deploy.schemas.service import (
     ApiSchema,
     DockerRegistrySchema,
     EventMonitorsSchema,
+    ExternalServicesSchema,
     HooksSchema,
     PostgresqlSchema,
     RabbitmqSchema,
-    ServiceSchema,
     RedisSchema,
-    ThirdPartyServiceSchema)
+    ServiceSchema,
+    ThirdPartyServiceSchema
+)
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.ssl import SSLSchema
 
@@ -80,6 +82,7 @@ class DeploymentSchema(BaseSchema):
     dirs = fields.Dict(allow_none=True)
     mountPaths = fields.Dict(allow_none=True)
     securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
+    externalServices = fields.Nested(ExternalServicesSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -139,7 +142,8 @@ class DeploymentConfig(BaseConfig):
                  trackerBackend=None,
                  dirs=None,
                  mountPaths=None,
-                 securityContext=None):
+                 securityContext=None,
+                 externalServices=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
         self.clusterId = clusterId
@@ -190,3 +194,4 @@ class DeploymentConfig(BaseConfig):
         self.dirs = dirs
         self.mountPaths = mountPaths
         self.securityContext = securityContext
+        self.externalServices = externalServices

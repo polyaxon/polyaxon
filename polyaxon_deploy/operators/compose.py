@@ -100,12 +100,12 @@ class ComposeOperator(CmdOperator):
                                        config.securityContext.groups))
         if config.postgresql and not config.postgresql.enabled:
             env.append(template.format('POLYAXON_DB_USER',
-                                       config.postgresql.postgresUser))
+                                       config.externalServices.postgresql.user))
             env.append(template.format('POLYAXON_DB_PASSWORD',
-                                       config.postgresql.postgresPassword))
+                                       config.externalServices.postgresql.password))
             env.append(template.format('POLYAXON_DB_NAME',
-                                       config.postgresql.postgresDatabase))
+                                       config.externalServices.postgresql.database))
             env.append(template.format('POLYAXON_DB_HOST',
-                                       config.postgresql.externalPostgresHost))
+                                       config.externalServices.postgresql.host))
 
         return '\n'.join(env)

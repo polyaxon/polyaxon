@@ -184,7 +184,6 @@ class PostgresqlSchema(ThirdPartyServiceSchema):
     postgresUser = fields.Str(allow_none=True)
     postgresPassword = fields.Str(allow_none=True)
     postgresDatabase = fields.Str(allow_none=True)
-    externalPostgresHost = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -197,7 +196,6 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
         'postgresUser',
         'postgresPassword',
         'postgresDatabase',
-        'externalPostgresHost'
     ]
 
     def __init__(self,  # noqa
@@ -205,7 +203,6 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
                  postgresUser=None,
                  postgresPassword=None,
                  postgresDatabase=None,
-                 externalPostgresHost=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -229,13 +226,11 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
         self.postgresUser = postgresUser
         self.postgresPassword = postgresPassword
         self.postgresDatabase = postgresDatabase
-        self.externalPostgresHost = externalPostgresHost
 
 
 class RedisSchema(ThirdPartyServiceSchema):
     usePassword = fields.Bool(allow_none=True)
     redisPassword = fields.Str(allow_none=True)
-    externalRedisHost = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -247,14 +242,12 @@ class RedisConfig(ThirdPartyServiceConfig):
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
         'usePassword',
         'redisPassword',
-        'externalRedisHost',
     ]
 
     def __init__(self,  # noqa
                  enabled=None,
                  usePassword=None,
                  redisPassword=None,
-                 externalRedisHost=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -277,13 +270,11 @@ class RedisConfig(ThirdPartyServiceConfig):
             tolerations=tolerations, )
         self.usePassword = usePassword
         self.redisPassword = redisPassword
-        self.externalRedisHost = externalRedisHost
 
 
 class RabbitmqSchema(ThirdPartyServiceSchema):
     rabbitmqUsername = fields.Str(allow_none=True)
     rabbitmqPassword = fields.Str(allow_none=True)
-    externalRabbitmqHost = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -295,14 +286,12 @@ class RabbitmqConfig(ThirdPartyServiceConfig):
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
         'rabbitmqUsername',
         'rabbitmqPassword',
-        'externalRabbitmqHost',
     ]
 
     def __init__(self,  # noqa
                  enabled=None,
                  rabbitmqUsername=None,
                  rabbitmqPassword=None,
-                 externalRabbitmqHost=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -325,13 +314,11 @@ class RabbitmqConfig(ThirdPartyServiceConfig):
             tolerations=tolerations, )
         self.rabbitmqUsername = rabbitmqUsername
         self.rabbitmqPassword = rabbitmqPassword
-        self.externalRabbitmqHost = externalRabbitmqHost
 
 
 class DockerRegistrySchema(ThirdPartyServiceSchema):
     registryUser = fields.Str(allow_none=True)
     registryPassword = fields.Str(allow_none=True)
-    externalRegistryHost = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -343,14 +330,12 @@ class DockerRegistryConfig(ThirdPartyServiceConfig):
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
         'registryUser',
         'registryPassword',
-        'externalRegistryHost',
     ]
 
     def __init__(self,  # noqa
                  enabled=None,
                  registryUser=None,
                  registryPassword=None,
-                 externalRegistryHost=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -373,4 +358,69 @@ class DockerRegistryConfig(ThirdPartyServiceConfig):
             tolerations=tolerations, )
         self.registryUser = registryUser
         self.registryPassword = registryPassword
-        self.externalRegistryHost = externalRegistryHost
+
+
+class ExternalServiceSchema(BaseSchema):
+    user = fields.Str(allow_none=True)
+    password = fields.Str(allow_none=True)
+    host = fields.Str(allow_none=True)
+    port = fields.Int(allow_none=True)
+    database = fields.Str(allow_none=True)
+    usePassword = fields.Bool(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return ExternalServiceConfig
+
+
+class ExternalServiceConfig(BaseConfig):
+    SCHEMA = ExternalServiceSchema
+    REDUCED_ATTRIBUTES = [
+        'user',
+        'password',
+        'host',
+        'port',
+        'database',
+        'usePassword'
+    ]
+
+    def __init__(self,  # noqa
+                 user=None,
+                 password=None,
+                 host=None,
+                 port=None,
+                 database=None,
+                 usePassword=None):
+        self.user = user
+        self.password = password
+        self.host = host
+        self.port = port
+        self.database = database
+        self.usePassword = usePassword
+
+
+class ExternalServicesSchema(BaseSchema):
+    redis = fields.Nested(ExternalServiceSchema, allow_none=True)
+    rabbitmq = fields.Nested(ExternalServiceSchema, allow_none=True)
+    postgresql = fields.Nested(ExternalServiceSchema, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return ExternalServicesConfig
+
+
+class ExternalServicesConfig(BaseConfig):
+    SCHEMA = ExternalServicesSchema
+    REDUCED_ATTRIBUTES = [
+        'redis',
+        'rabbitmq',
+        'postgresql',
+    ]
+
+    def __init__(self,
+                 redis=None,
+                 rabbitmq=None,
+                 postgresql=None):
+        self.redis = redis
+        self.rabbitmq = rabbitmq
+        self.postgresql = postgresql

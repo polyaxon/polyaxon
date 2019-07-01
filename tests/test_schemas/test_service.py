@@ -7,6 +7,8 @@ from marshmallow import ValidationError
 from polyaxon_deploy.schemas.service import (
     DockerRegistryConfig,
     EventMonitorsConfig,
+    ExternalServiceConfig,
+    ExternalServicesConfig,
     PostgresqlConfig,
     RabbitmqConfig,
     RedisConfig,
@@ -183,7 +185,7 @@ class TestServiceConfig(TestCase):
             'postgresUser': 'dsf',
             'postgresPassword': 'sdf',
             'postgresDatabase': 'sdf',
-            'externalPostgresHost': 123
+            'postgresHost': 'sdf',
         }
         with self.assertRaises(ValidationError):
             PostgresqlConfig.from_dict(config_dict)
@@ -193,7 +195,6 @@ class TestServiceConfig(TestCase):
             'postgresUser': 'dsf',
             'postgresPassword': 'sdf',
             'postgresDatabase': 'sdf',
-            'externalPostgresHost': 'sdf',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -210,7 +211,6 @@ class TestServiceConfig(TestCase):
 
         config_dict = {
             'postgresUser': 'dsf',
-            'externalPostgresHost': 'sdf',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -238,7 +238,6 @@ class TestServiceConfig(TestCase):
             'enabled': True,
             'usePassword': True,
             'redisPassword': 'sdf',
-            'externalRedisHost': 'sd123',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -255,7 +254,6 @@ class TestServiceConfig(TestCase):
 
         config_dict = {
             'redisPassword': 'sdf',
-            'externalRedisHost': 'sd123',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -283,7 +281,6 @@ class TestServiceConfig(TestCase):
             'enabled': True,
             'rabbitmqUsername': 'dsf',
             'rabbitmqPassword': 'sdf',
-            'externalRabbitmqHost': 'sd123',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -328,7 +325,6 @@ class TestServiceConfig(TestCase):
             'enabled': True,
             'registryUser': 'dsf',
             'registryPassword': 'sdf',
-            'externalRegistryHost': 'sd123',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -358,4 +354,95 @@ class TestServiceConfig(TestCase):
             'affinity': {}
         }
         config = DockerRegistryConfig.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+
+    def test_external_service_config(self):
+        config_dict = {
+            'user': 'user',
+            'password': 'pass',
+            'host': '123.123.123.123',
+            'port': 'user',
+        }
+        with self.assertRaises(ValidationError):
+            ExternalServiceConfig.from_dict(config_dict)
+
+        config_dict = {
+            'user': 'user',
+            'password': 'pass',
+            'host': '123.123.123.123',
+            'port': 123231
+        }
+        config = ExternalServiceConfig.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+
+        config_dict = {
+            'user': 'user',
+            'password': 'pass',
+            'host': '123.123.123.123',
+            'port': 123231,
+            'database': 'sdf',
+            'usePassword': True
+        }
+        config = ExternalServiceConfig.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+
+    def test_test_external_services_config(self):
+        config_dict = {
+            'postgresql': {
+                'user': 'user',
+                'password': 'pass-pg',
+                'host': '123.123.123.123',
+                'port': 5656,
+            },
+            'redis': {
+                'usePassword': True,
+                'password': 'pass-redis',
+                'host': 'https://foo.com',
+                'port': 2344,
+            },
+            'rabbitmq': {
+                'foo': 'bar',
+            }
+        }
+        with self.assertRaises(ValidationError):
+            ExternalServicesConfig.from_dict(config_dict)
+
+        config_dict = {
+            'redis': {
+                'usePassword': True,
+                'password': 'pass-redis',
+                'host': 'https://foo.com',
+                'port': 2344,
+            },
+            'rabbitmq': {
+                'user': 'mq-0user',
+                'password': 'pass-redis',
+                'host': 'https://foo.com',
+                'port': 2344,
+            }
+        }
+        config = ExternalServicesConfig.from_dict(config_dict)
+        assert config.to_light_dict() == config_dict
+
+        config_dict = {
+            'postgresql': {
+                'user': 'user',
+                'password': 'pass-pg',
+                'host': '123.123.123.123',
+                'port': 5656,
+            },
+            'redis': {
+                'usePassword': True,
+                'password': 'pass-redis',
+                'host': 'https://foo.com',
+                'port': 2344,
+            },
+            'rabbitmq': {
+                'user': 'mq-0user',
+                'password': 'pass-redis',
+                'host': 'https://foo.com',
+                'port': 2344,
+            }
+        }
+        config = ExternalServicesConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict

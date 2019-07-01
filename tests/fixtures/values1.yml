@@ -22,4 +22,3 @@ postgresql:
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: postgres
-  externalPostgresHost: 35.226.163.84
