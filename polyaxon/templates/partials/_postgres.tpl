@@ -7,10 +7,30 @@
 {{- if .Values.postgresql.enabled }}
 {{- template "postgresql.fullname" . }}
 {{- else }}
-{{- .Values.postgresql.externalPostgresHost }}
+{{- .Values.externalServices.postgresql.host }}
 {{- end }}
 {{- end -}}
 
 {{- define "postgresql.port" -}}
+{{- if .Values.postgresql.enabled }}
 {{- default 5432 .Values.postgresql.port -}}
+{{- else }}
+{{- default 5432 .Values.externalServices.postgresql.port }}
+{{- end }}
+{{- end -}}
+
+{{- define "postgresql.user" -}}
+{{- if .Values.postgresql.enabled }}
+{{- default "polyaxon" .Values.postgresql.postgresUser -}}
+{{- else }}
+{{- default "polyaxon" .Values.externalServices.postgresql.user }}
+{{- end }}
+{{- end -}}
+
+{{- define "postgresql.database" -}}
+{{- if .Values.postgresql.enabled }}
+{{- default "polyaxon" .Values.postgresql.postgresDatabase -}}
+{{- else }}
+{{- default "polyaxon" .Values.externalServices.postgresql.database }}
+{{- end }}
 {{- end -}}

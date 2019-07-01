@@ -7,10 +7,14 @@
 {{- if .Values.redis.enabled }}
 {{- template "redis.fullname" . }}-master
 {{- else }}
-{{- .Values.redis.externalRedisHost }}
+{{- .Values.externalServices.redis.host }}
 {{- end }}
 {{- end -}}
 
 {{- define "redis.port" -}}
+{{- if .Values.redis.enabled }}
 {{- default 6379 .Values.redis.port -}}
+{{- else }}
+{{- default 6379 .Values.externalServices.redis.port }}
+{{- end }}
 {{- end -}}

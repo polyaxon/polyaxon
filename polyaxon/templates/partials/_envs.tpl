@@ -15,28 +15,19 @@ secrets config
       name: {{ template "polyaxon.fullname" . }}-rabbitmq-secret
 {{- end }}
       key: rabbitmq-password
-{{- if .Values.redis.usePassword }}
+{{- if and .Values.redis.enabled .Values.redis.usePassword }}
 - name: POLYAXON_REDIS_PASSWORD
   valueFrom:
     secretKeyRef:
-{{- if .Values.redis.enabled }}
       name: {{ template "redis.fullname" . }}
-{{- else }}
-      name: {{ template "polyaxon.fullname" . }}-redis-secret
-{{- end }}
       key: redis-password
 {{- end }}
-{{- if (index .Values "docker-registry").auth.password }}
-- name: POLYAXON_REGISTRY_USER
+{{- if and (not .Values.redis.enabled) .Values.externalServices.redis.usePassword }}
+- name: POLYAXON_REDIS_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-registry-secret
-      key: registry-user
-- name: POLYAXON_REGISTRY_PASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ template "polyaxon.fullname" . }}-registry-secret
-      key: registry-password
+      name: {{ template "polyaxon.fullname" . }}-redis-secret
+      key: redis-password
 {{- end }}
 - name: POLYAXON_DB_PASSWORD
   valueFrom:
