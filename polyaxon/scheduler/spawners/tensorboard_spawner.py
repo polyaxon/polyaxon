@@ -14,7 +14,7 @@ from options.registry.tensorboards import TENSORBOARDS_PORT_RANGE
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import ingresses, services
-from scheduler.spawners.templates.restart_policy import get_restart_policy
+from scheduler.spawners.templates.restart_policy import get_deployment_restart_policy
 from scheduler.spawners.templates.stores import get_stores_secrets
 from scheduler.spawners.templates.tensorboards import manager
 from scheduler.spawners.templates.volumes import (
@@ -220,7 +220,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             ports=target_ports,
             reconcile_url=reconcile_url,
             max_restarts=max_restarts,
-            restart_policy=get_restart_policy(max_restarts))
+            restart_policy=get_deployment_restart_policy(max_restarts))
 
         dep_resp, _ = self.create_or_update_deployment(name=resource_name,
                                                        body=deployment,

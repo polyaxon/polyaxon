@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 import * as React from 'react';
 
-import { humanizeTimeDelta } from '../../constants/utils';
+import { humanizeTimeDelta } from '../../utils/humanize';
 import MetaInfo from './metaInfo';
 
 export interface Props {

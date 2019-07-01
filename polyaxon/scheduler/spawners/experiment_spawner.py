@@ -16,7 +16,7 @@ from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
-from scheduler.spawners.templates.restart_policy import get_max_restart, get_restart_policy
+from scheduler.spawners.templates.restart_policy import get_max_restart, get_pod_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -214,7 +214,7 @@ class ExperimentSpawner(K8SManager):
             init_context_mounts=context_mounts,
             reconcile_url=reconcile_url,
             max_restarts=max_restarts,
-            restart_policy=get_restart_policy(max_restarts))
+            restart_policy=get_pod_restart_policy(max_restarts))
         pod_resp, _ = self.create_or_update_pod(name=resource_name, body=pod, reraise=True)
         results = {'pod': pod_resp.to_dict()}
         if add_service:

@@ -20,7 +20,7 @@ from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import constants, ingresses, services
 from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.notebooks import manager
-from scheduler.spawners.templates.restart_policy import get_restart_policy
+from scheduler.spawners.templates.restart_policy import get_deployment_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
     get_pod_refs_outputs_volumes,
@@ -215,7 +215,7 @@ class NotebookSpawner(ProjectJobSpawner):
             init_context_mounts=context_mounts,
             reconcile_url=reconcile_url,
             max_restarts=max_restarts,
-            restart_policy=get_restart_policy(max_restarts))
+            restart_policy=get_deployment_restart_policy(max_restarts))
         dep_resp, _ = self.create_or_update_deployment(name=resource_name,
                                                        body=deployment,
                                                        reraise=True)

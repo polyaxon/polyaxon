@@ -19,7 +19,7 @@ from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
 from scheduler.spawners.templates.env_vars import get_env_var, get_internal_env_vars
-from scheduler.spawners.templates.restart_policy import get_restart_policy
+from scheduler.spawners.templates.restart_policy import get_pod_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_build_context_volumes,
     get_docker_credentials_volumes,
@@ -210,7 +210,7 @@ class DockerizerSpawner(K8SManager):
             init_context_mounts=context_mounts,
             reconcile_url=reconcile_url,
             max_restarts=max_restarts,
-            restart_policy=get_restart_policy(max_restarts))
+            restart_policy=get_pod_restart_policy(max_restarts))
 
         pod_resp, _ = self.create_or_update_pod(name=resource_name, body=pod, reraise=True)
         return pod_resp.to_dict()

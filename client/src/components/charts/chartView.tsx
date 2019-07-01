@@ -11,6 +11,7 @@ import { ChartViewModel } from '../../models/chartView';
 import { MetricModel } from '../../models/metric';
 import Chart from '../charts/chart';
 import { Empty } from '../empty/empty';
+import { humanizeMetric } from '../../utils/humanize';
 
 import './chart.less';
 
@@ -396,7 +397,8 @@ export default class ChartView extends React.Component<Props, {}> {
         } as DataDimension;
         if (dimensionValues[dim].type === 'number') {
           dimension.values = dimValues;
-          dimension.range = [Math.min.apply(null, dimValues), Math.max.apply(null, dimValues)];
+          dimension.range = [humanizeMetric(Math.min.apply(null, dimValues)),
+            humanizeMetric(Math.max.apply(null, dimValues))];
         } else {
           dimension.ticktext = dimValues as string[];
           // dimension.constraintrange = [0, dimValues.length];
