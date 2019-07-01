@@ -1,6 +1,6 @@
 -r ../requirements-base.txt
 
-django-auth-ldap==1.7.0
+django-auth-ldap==2.0.0
 GitPython==2.1.11
 polyaxon-k8s==0.4.7
 polyaxon-nginx==0.5.1
