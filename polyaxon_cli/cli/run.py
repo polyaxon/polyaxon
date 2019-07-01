@@ -35,6 +35,8 @@ from polyaxon_cli.utils.validation import validate_tags
               help='To start the run locally, with `docker` environment as default.')
 @click.option('--conda_env', type=str,
               help='To start a local run with `conda`.')
+@click.option("--params", "-P", metavar="NAME=VALUE", multiple=True,
+              help="A parameter to overide the default params of the run, form -P name=value.")
 @click.pass_context
 @clean_outputs
 def run(ctx,  # pylint:disable=redefined-builtin
@@ -47,7 +49,8 @@ def run(ctx,  # pylint:disable=redefined-builtin
         upload,
         log,
         local,
-        conda_env):
+        conda_env,
+        params):
     """Run polyaxonfile specification.
 
     Examples:
@@ -83,12 +86,19 @@ def run(ctx,  # pylint:disable=redefined-builtin
     ```bash
     $ polyaxon run -p project1 -f file.yaml
     ```
+
+
+    \b
+    ```bash
+    $ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
+    ```
     """
     if not file:
         file = PolyaxonFile.check_default_path(path='.')
     if not file:
         file = ''
-    specification = check_polyaxonfile(file, log=False).specification
+
+    specification = check_polyaxonfile(file, params=params, log=False).specification
 
     spec_cond = (specification.is_experiment or
                  specification.is_group or

@@ -11,14 +11,19 @@ import click
 from hestia.list_utils import to_list
 
 from polyaxon_cli.logger import clean_outputs
+from polyaxon_cli.run.params import parse_params
 from polyaxon_cli.schemas import PolyaxonFile
 from polyaxon_cli.utils import constants
 from polyaxon_cli.utils.formatting import Printer, dict_tabulate
 
 
-def check_polyaxonfile(file, log=True):  # pylint:disable=redefined-builtin
+def check_polyaxonfile(file, params=None, log=True):  # pylint:disable=redefined-builtin
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]
+
+    parsed_params = None
+    if params:
+        parsed_params = parse_params(params)
 
     if not any(exists):
         Printer.print_error('Polyaxonfile is not present, '
@@ -26,7 +31,7 @@ def check_polyaxonfile(file, log=True):  # pylint:disable=redefined-builtin
         sys.exit(1)
 
     try:
-        plx_file = PolyaxonFile(file)
+        plx_file = PolyaxonFile(file, params=parsed_params)
         if log:
             Printer.print_success("Polyaxonfile valid")
         return plx_file
@@ -63,13 +68,16 @@ def get_group_experiments_info(search_algorithm, concurrency, early_stopping=Fal
 @click.option('--version', '-v', is_flag=True, default=False, help='Checks and prints the version.')
 @click.option('--definition', '-def', is_flag=True, default=False,
               help='Checks and prints the file definition.')
+@click.option("--params", "-P", metavar="NAME=VALUE", multiple=True,
+              help="A parameter to overide the default params of the run, form -P name=value.")
 @clean_outputs
 def check(file,  # pylint:disable=redefined-builtin
           version,
-          definition):
+          definition,
+          params):
     """Check a polyaxonfile."""
     file = file or 'polyaxonfile.yaml'
-    specification = check_polyaxonfile(file).specification
+    specification = check_polyaxonfile(file, params=params).specification
 
     if version:
         Printer.decorate_format_value('The version is: {}',

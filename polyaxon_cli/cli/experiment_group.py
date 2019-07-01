@@ -14,8 +14,8 @@ from polyaxon_cli.utils import cache
 from polyaxon_cli.utils.formatting import (
     Printer,
     dict_tabulate,
-    get_experiments_with_params,
     get_experiments_with_metrics,
+    get_experiments_with_params,
     get_meta_response,
     list_dicts_to_tabulate
 )

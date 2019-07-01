@@ -10,7 +10,7 @@ from polyaxon_schemas.api.job import BuildJobConfig, JobConfig  # noqa
 from polyaxon_schemas.api.log_handler import LogHandlerSchema  # noqa
 from polyaxon_schemas.api.project import ProjectConfig  # noqa
 from polyaxon_schemas.base import BaseConfig, BaseSchema  # noqa
-from polyaxon_schemas.exceptions import PolyaxonSchemaError, PolyaxonfileError  # noqa
+from polyaxon_schemas.exceptions import PolyaxonfileError, PolyaxonSchemaError  # noqa
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig  # noqa
 from polyaxon_schemas.polyaxonfile import PolyaxonFile  # noqa
 from polyaxon_schemas.specs import (  # noqa
