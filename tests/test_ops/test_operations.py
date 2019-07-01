@@ -134,12 +134,12 @@ class TestOperationsConfigs(TestCase):
             ]
         }
         config = BaseOpConfig.from_dict(config_dict)
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(params=config.params,
-                                       inputs=config.inputs,
-                                       outputs=config.outputs,
-                                       is_template=False,
-                                       is_run=True)
+
+        ops_params.validate_params(params=config.params,
+                                   inputs=config.inputs,
+                                   outputs=config.outputs,
+                                   is_template=False,
+                                   is_run=True)
 
         # IO
         config_dict = {
@@ -154,12 +154,11 @@ class TestOperationsConfigs(TestCase):
             ]
         }
         config = BaseOpConfig.from_dict(config_dict)
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(params=config.params,
-                                       inputs=config.inputs,
-                                       outputs=config.outputs,
-                                       is_template=False,
-                                       is_run=True)
+        ops_params.validate_params(params=config.params,
+                                   inputs=config.inputs,
+                                   outputs=config.outputs,
+                                   is_template=False,
+                                   is_run=True)
 
     def test_incomplete_params(self):
         config_dict = {
@@ -189,12 +188,11 @@ class TestOperationsConfigs(TestCase):
             ]
         }
         config = BaseOpConfig.from_dict(config_dict)
-        with self.assertRaises(ValidationError):
-            ops_params.validate_params(params=config.params,
-                                       inputs=config.inputs,
-                                       outputs=config.outputs,
-                                       is_template=False,
-                                       is_run=True)
+        ops_params.validate_params(params=config.params,
+                                   inputs=config.inputs,
+                                   outputs=config.outputs,
+                                   is_template=False,
+                                   is_run=True)
 
     def test_extra_params(self):
         # inputs

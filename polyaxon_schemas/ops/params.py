@@ -135,8 +135,7 @@ def validate_params(params, inputs, outputs, context=None, is_template=True, is_
                 out.validate_value(param_value)
             validated_params.append(param)
             processed_params.append(out.name)
-        elif not out.is_optional and not is_template:
-            raise ValidationError('Input {} is required, no param was passed.'.format(out.name))
+        # No validation for outputs we assume that the op might populate a context or send a metric
         else:
             validated_params.append(ParamSpec(name=out.name,
                                               value=out.default,

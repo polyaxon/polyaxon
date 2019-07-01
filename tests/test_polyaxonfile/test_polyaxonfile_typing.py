@@ -39,9 +39,8 @@ class TestPolyaxonfileWithTypes(TestCase):
             PolyaxonFile(os.path.abspath(
                 'tests/fixtures/typing/required_inputs.yml'))
 
-        with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath(
-                'tests/fixtures/typing/required_outputs.yml'))
+        PolyaxonFile(os.path.abspath(
+            'tests/fixtures/typing/required_outputs.yml'))
 
     def test_required_inputs_with_params(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
