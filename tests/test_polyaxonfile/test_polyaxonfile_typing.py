@@ -43,6 +43,33 @@ class TestPolyaxonfileWithTypes(TestCase):
             PolyaxonFile(os.path.abspath(
                 'tests/fixtures/typing/required_outputs.yml'))
 
+    def test_required_inputs_with_params(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
+                               params={'loss': 'bar'})
+        spec = plxfile.specification
+        spec.parse_data()
+        assert spec.version == 1
+        assert spec.logging is None
+        assert set(spec.tags) == {'foo', 'bar'}
+        assert spec.params == {'loss': 'bar'}
+        assert spec.build.image == 'my_image'
+        assert spec.run.cmd == 'video_prediction_train --loss=bar'
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.is_experiment
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.is_experiment is True
+
+        # Adding extra value raises
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
+                         params={'loss': 'bar', 'value': 1.1})
+
+        # Adding non valid params raises
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
+                         params={'value': 1.1})
+
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/typing/matrix_file_with_int_float_types.yml'))

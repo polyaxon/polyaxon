@@ -44,12 +44,13 @@ class TestPolyaxonfile(TestCase):
             PolyaxonFile(os.path.abspath('tests/fixtures/plain/missing_kind.yml'))
 
     def test_simple_file_passes(self):
-        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'))
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'), )
         spec = plxfile.specification
         spec.parse_data()
         assert spec.version == 1
         assert spec.logging is None
         assert spec.tags is None
+        assert spec.params is None
         assert spec.build.image == 'my_image'
         assert spec.run.cmd == 'video_prediction_train --model=DNA --num_masks=1'
         assert spec.environment is None
@@ -57,6 +58,27 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.is_experiment is True
+
+    def test_passing_params_overrides_polyaxon_files(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'),
+                               params={'foo': 'bar', 'value': 1.1})
+        spec = plxfile.specification
+        spec.parse_data()
+        assert spec.version == 1
+        assert spec.logging is None
+        assert spec.tags is None
+        assert spec.params == {'foo': 'bar', 'value': 1.1}
+        assert spec.build.image == 'my_image'
+        assert spec.run.cmd == 'video_prediction_train --model=DNA --num_masks=1'
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.is_experiment
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.is_experiment is True
+
+    def test_passing_wrong_params_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'), params='foo')
 
     def test_simple_file_framework_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file_framework.yml'))
