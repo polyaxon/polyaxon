@@ -74,6 +74,12 @@ function YamlText({config, configText, title}: Props) {
     if (!_.isNil(config.nocache)) {
       orderedConfig.nocache = config.nocache;
     }
+    if (!_.isNil(config.lang_env)) {
+      orderedConfig.lang_env = config.lang_env;
+    }
+    if (!_.isNil(config.ref)) {
+      orderedConfig.lang_env = config.ref;
+    }
     if (!_.isNil(config.run)) {
       orderedConfig.run = config.run;
     }
