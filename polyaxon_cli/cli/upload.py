@@ -40,9 +40,8 @@ def upload(sync=True):  # pylint:disable=assign-to-new-keyword
                     Printer.print_error(
                         'Check the project exists, '
                         'and that you have access rights, '
-                        'this could happen as well when uploading large files.'
-                        'If you are running a notebook and mounting the code to the notebook, '
-                        'you should stop it before uploading.')
+                        'this could happen as well when uploading large files. '
+                        'Please also make sure that you have enough space to upload the data.')
                     sys.exit(1)
                 Printer.print_success('Files uploaded.')
     except Exception as e:
