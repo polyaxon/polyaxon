@@ -44,6 +44,9 @@ function YamlText({config, configText, title}: Props) {
     if (!_.isNil(config.environment)) {
       orderedConfig.environment = config.environment;
     }
+    if (!_.isNil(config.declarations)) {
+      orderedConfig.params = config.declarations;
+    }
     if (!_.isNil(config.params)) {
       orderedConfig.params = config.params;
     }

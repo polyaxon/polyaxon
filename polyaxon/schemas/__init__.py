@@ -48,7 +48,7 @@ from polyaxon_schemas.ops.group.metrics import Optimization, SearchMetricConfig 
 from polyaxon_schemas.ops.notebook.backends import NotebookBackend  # noqa
 from polyaxon_schemas.pod import PodLifeCycle  # noqa
 from polyaxon_schemas.polyaxonfile import PolyaxonFile  # noqa
-from polyaxon_schemas.specs import kinds  # noqa; noqa
+from polyaxon_schemas.specs import kinds  # noqa
 from polyaxon_schemas.specs import (
     BuildSpecification,
     ExperimentSpecification,
