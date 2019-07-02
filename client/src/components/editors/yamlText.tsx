@@ -38,6 +38,24 @@ function YamlText({config, configText, title}: Props) {
     if (!_.isNil(config.framework)) {
       orderedConfig.framework = config.framework;
     }
+    if (!_.isNil(config.name)) {
+      orderedConfig.name = config.name;
+    }
+    if (!_.isNil(config.description)) {
+      orderedConfig.description = config.description;
+    }
+    if (!_.isNil(config.tags)) {
+      orderedConfig.tags = config.tags;
+    }
+    if (!_.isNil(config.inputs)) {
+      orderedConfig.inputs = config.inputs;
+    }
+    if (!_.isNil(config.outputs)) {
+      orderedConfig.outputs = config.outputs;
+    }
+    if (!_.isNil(config.build)) {
+      orderedConfig.build = config.build;
+    }
     if (!_.isNil(config.hptuning)) {
       orderedConfig.hptuning = config.hptuning;
     }
@@ -49,9 +67,6 @@ function YamlText({config, configText, title}: Props) {
     }
     if (!_.isNil(config.params)) {
       orderedConfig.params = config.params;
-    }
-    if (!_.isNil(config.build)) {
-      orderedConfig.build = config.build;
     }
     if (!_.isNil(config.image)) {
       orderedConfig.image = config.image;
