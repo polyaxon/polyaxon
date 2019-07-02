@@ -1,3 +1,4 @@
+{{- if .Values.hooks.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -46,3 +47,4 @@ spec:
             name: {{ template "polyaxon.fullname" . }}-secret
         env:
 {{ include "config.envs" . | indent 8 }}
+{{- end }}
