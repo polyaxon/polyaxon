@@ -10,6 +10,7 @@ services:
 
 env:
   matrix:
+  - VERSION=1.13-2
   - VERSION=1.13
   - VERSION=1.12
   - VERSION=1.11

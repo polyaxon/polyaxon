@@ -27,7 +27,7 @@ echo "create namespace"
 kubectl create namespace $TEST_NAMESPACE
 
 echo "deploy polyaxon"
-helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./ci/test-config.yml
+helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./ci/test-config${CONFIG_VERSION}.yml
 
 echo "waiting for servers to become responsive"
 until curl --fail -s $TEST_URL/api/v1/versions/cli/; do
