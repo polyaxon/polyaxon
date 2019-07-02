@@ -108,6 +108,18 @@ class DummyNonOptionalDBOption(Option):
     options = None
 
 
+class DummyBoolDBOption(Option):
+    key = 'BOOL_KEY'
+    is_global = True
+    is_secret = False
+    is_optional = True
+    is_list = False
+    store = OptionStores.DB_OPTION
+    typing = CONF_TYPES.BOOL
+    default = True
+    options = None
+
+
 @pytest.mark.configs_mark
 class TestConfService(BaseTest):
     def setUp(self):
@@ -215,6 +227,19 @@ class TestConfService(BaseTest):
         assert len(self.db_service.options) == 1
         option_key = self.db_service.options.pop()
         assert option_key == DummyDBOption.key
+
+        # Get bool options
+        self.db_service.option_manager.subscribe(DummyBoolDBOption)
+
+        option_dict = DummyBoolDBOption.to_dict(value=True)
+        assert option_dict['value'] is True
+        assert self.db_service.get(key=DummyBoolDBOption.key, to_dict=True) == option_dict
+
+        option_dict = DummyBoolDBOption.to_dict(value=False)
+        assert option_dict['value'] is False
+
+        ConfigOption.objects.create(owner=self.owner, key=DummyBoolDBOption.key, value=False)
+        assert self.db_service.get(key=DummyBoolDBOption.key, to_dict=True) == option_dict
 
     def test_setting_none_value_raises(self):
         with self.assertRaises(ConfException):

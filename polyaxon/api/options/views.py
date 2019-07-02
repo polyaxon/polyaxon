@@ -42,7 +42,7 @@ class ClusterConfigOptionsViewV1(AdminListEndpoint, ListEndpoint, CreateEndpoint
         for key in self.request.data:
             value = self.request.data.get(key)
             try:
-                if value:
+                if value is not None:
                     conf.set(key, value)
                 else:
                     conf.delete(key)

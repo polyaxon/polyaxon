@@ -9,7 +9,7 @@ from constants.urls import API_V1
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
 from db.models.owner import Owner
-from options.registry import node_selectors
+from options.registry import node_selectors, build_jobs
 from options.registry.node_selectors import NODE_SELECTORS_BUILD_JOBS, NODE_SELECTORS_JOBS
 from tests.base.clients import AuthorizedClient
 from tests.base.views import BaseViewTest
@@ -103,6 +103,30 @@ class TesClusterConfigOptionsViewV1(BaseViewTest):
         # Wrong key
         resp = self.auth_client.post(self.url, data={'foo': 'bar'})
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+    def test_create_update_bool(self):
+        resp = self.auth_client.post(self.url)
+        assert resp.status_code == status.HTTP_400_BAD_REQUEST
+
+        # Check value
+        assert conf.get(build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT) is True
+
+        # Set new value
+        resp = self.auth_client.post(self.url, data={
+            build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT: False
+        })
+        assert resp.status_code == status.HTTP_200_OK
+        # Check value
+        assert conf.get(build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT) == False
+
+        # Delete value
+        resp = self.auth_client.post(self.url, data={
+            build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT: None
+        })
+        assert resp.status_code == status.HTTP_200_OK
+
+        # Check value
+        assert conf.get(node_selectors.NODE_SELECTORS_BUILD_JOBS) is True
 
 
 @pytest.mark.configs_mark
