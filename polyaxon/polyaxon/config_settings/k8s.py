@@ -2,6 +2,12 @@ from polyaxon.config_manager import config
 
 POLYAXON_K8S_APP_NAME = config.get_string('POLYAXON_K8S_APP_NAME')
 POLYAXON_K8S_API_HOST = config.get_string('POLYAXON_K8S_API_HOST')
+POLYAXON_K8S_API_INTERNAL_PORT = config.get_int('POLYAXON_K8S_API_INTERNAL_PORT',
+                                                is_optional=True,
+                                                default=80)
+POLYAXON_K8S_STREAM_INTERNAL_PORT = config.get_int('POLYAXON_K8S_STREAM_INTERNAL_PORT',
+                                                   is_optional=True,
+                                                   default=1337)
 POLYAXON_K8S_API_HTTP_PORT = config.get_int('POLYAXON_K8S_API_HTTP_PORT')
 POLYAXON_K8S_APP_CONFIG_NAME = config.get_string('POLYAXON_K8S_APP_CONFIG_NAME')
 POLYAXON_K8S_APP_SECRET_NAME = config.get_string('POLYAXON_K8S_APP_SECRET_NAME')

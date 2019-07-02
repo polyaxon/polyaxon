@@ -16,6 +16,14 @@ def get_settings_ws_api_url() -> str:
     return '{}://{}'.format(settings.WS_PROTOCOL, settings.POLYAXON_K8S_API_HOST)
 
 
+def get_local_api() -> str:
+    return '{}://localhost:{}'.format(settings.PROTOCOL, settings.POLYAXON_K8S_API_INTERNAL_PORT)
+
+
+def get_local_stream() -> str:
+    return '{}://localhost:{}'.format(settings.PROTOCOL, settings.POLYAXON_K8S_STREAM_INTERNAL_PORT)
+
+
 def get_settings_external_http_api_url() -> str:
     return '{}://{}:{}'.format(settings.PROTOCOL,
                                settings.POLYAXON_K8S_API_HOST,
