@@ -359,6 +359,22 @@ class ProjectApi(BaseApiHandler):
             self.transport.handle_exception(e=e, log_message='Error while retrieving build jobs.')
             return []
 
+    def invalidate_builds(self, username, project_name, background=False):
+        """Invalidate all build jobs related to this project."""
+        request_url = self.build_url(
+            self._get_http_url(), username, project_name, 'builds', 'invalidate')
+
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
+        try:
+            return self.transport.post(request_url)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while invalidating builds.')
+            return None
+
     def create_build(self, username, project_name, build_config, background=False):
         build_config = self.validate_config(config=build_config, config_schema=BuildJobConfig)
         request_url = self.build_url(self._get_http_url(), username, project_name, 'builds')

@@ -152,6 +152,28 @@ class BuildJobApi(BaseApiHandler):
                 e=e, log_message='Error while creating build coderef.')
             return None
 
+    def invalidate(self,
+                   username,
+                   project_name,
+                   job_id,
+                   background=False):
+        request_url = self.build_url(self._get_http_url(),
+                                     username,
+                                     project_name,
+                                     'builds',
+                                     job_id,
+                                     'invalidate')
+        if background:
+            self.transport.async_post(request_url)
+            return None
+
+        try:
+            return self.transport.post(request_url)
+        except PolyaxonClientException as e:
+            self.transport.handle_exception(
+                e=e, log_message='Error while invalidating build.')
+            return None
+
     def send_logs(self,
                   username,
                   project_name,

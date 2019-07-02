@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking import Experiment
-from polyaxon_client import settings
 
 try:
     from keras.callbacks import Callback

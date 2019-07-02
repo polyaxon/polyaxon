@@ -975,6 +975,28 @@ class TestProjectApi(TestBaseApi):
             method='post')
 
     @httpretty.activate
+    def test_invalidate_builds(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'builds',
+                'invalidate'),
+            content_type='application/json',
+            status=200)
+        result = self.api_handler.invalidate_builds('username', 'project_name')
+        assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.invalidate_builds(
+                'username', 'project_name', background=True),
+            method='post')
+
+    @httpretty.activate
     def test_start_tensorboard(self):
         httpretty.register_uri(
             httpretty.POST,

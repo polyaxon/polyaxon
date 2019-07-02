@@ -243,6 +243,29 @@ class TestBuildJobApi(TestBaseApi):
             method='post')
 
     @httpretty.activate
+    def test_invalidate_build(self):
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'username',
+                'project_name',
+                'builds',
+                1,
+                'invalidate'),
+            content_type='application/json',
+            status=200)
+        result = self.api_handler.invalidate('username', 'project_name', 1)
+        assert result.status_code == 200
+
+        # Async
+        self.assert_async_call(
+            api_handler_call=lambda: self.api_handler.invalidate(
+                'username', 'project_name', 1, background=True),
+            method='post')
+
+    @httpretty.activate
     def test_bookmark_build(self):
         httpretty.register_uri(
             httpretty.POST,
