@@ -217,6 +217,37 @@ def stop(ctx, yes):
 @build.command()
 @click.pass_context
 @clean_outputs
+def invalidate(ctx):
+    """Invalidate build job.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon build invalidate
+    ```
+
+    \b
+    ```bash
+    $ polyaxon build -b 2 invalidate
+    ```
+    """
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
+    try:
+        PolyaxonClient().build_job.invalidate(user, project_name, _build)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        Printer.print_error('Could not invalidate build job `{}`.'.format(_build))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+
+    Printer.print_success("Build job has being invalidated.")
+
+
+@build.command()
+@click.pass_context
+@clean_outputs
 def bookmark(ctx):
     """Bookmark build job.
 
