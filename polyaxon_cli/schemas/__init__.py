@@ -18,3 +18,4 @@ from polyaxon_schemas.specs import (  # noqa
     ExperimentSpecification,
     JobSpecification
 )
+from polyaxon_schemas.specs import kinds  # noqa

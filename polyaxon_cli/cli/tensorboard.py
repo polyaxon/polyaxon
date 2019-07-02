@@ -8,11 +8,15 @@ import click
 from polyaxon_cli.cli.check import check_polyaxonfile, check_polyaxonfile_kind
 from polyaxon_cli.cli.project import get_project_or_local
 from polyaxon_cli.client import PolyaxonClient
-from polyaxon_cli.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon_cli.client.exceptions import (
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError,
+    PolyaxonClientException
+)
 from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils import indentation
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_cli.schemas import kinds
 
 
 def get_tensorboard_url(user, project_name, experiment=None, group=None):
@@ -177,7 +181,7 @@ def start(ctx, file):  # pylint:disable=redefined-builtin
 
     if specification:
         # pylint:disable=protected-access
-        check_polyaxonfile_kind(specification=specification, kind=specification._TENSORBOARD)
+        check_polyaxonfile_kind(specification=specification, kind=kinds.TENSORBOARD)
         job_content = specification.raw_data
 
     user, project_name = get_project_or_local(ctx.obj.get('project'))

@@ -64,7 +64,7 @@ def run(ctx,
             name=name,
             description=description,
             tags=tags,
-            content=specification.raw_data,  # pylint:disable=protected-access
+            content=specification.raw_data,
             is_managed=True,
         )
         try:

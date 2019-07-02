@@ -14,6 +14,7 @@ from polyaxon_cli.logger import clean_outputs
 from polyaxon_cli.utils import indentation
 from polyaxon_cli.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon_cli.schemas import kinds
 
 
 def get_notebook_url(user, project_name):
@@ -97,7 +98,7 @@ def start(ctx, file, u):  # pylint:disable=redefined-builtin
 
     if specification:
         # pylint:disable=protected-access
-        check_polyaxonfile_kind(specification=specification, kind=specification._NOTEBOOK)
+        check_polyaxonfile_kind(specification=specification, kind=kinds.NOTEBOOK)
         job_content = specification.raw_data
     user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
