@@ -12,6 +12,7 @@ from polyaxon_cli.cli.bookmark import bookmark
 from polyaxon_cli.cli.build import build
 from polyaxon_cli.cli.check import check
 from polyaxon_cli.cli.cluster import cluster
+from polyaxon_cli.cli.completion import completion
 from polyaxon_cli.cli.config import config
 from polyaxon_cli.cli.dashboard import dashboard
 from polyaxon_cli.cli.deploy import deploy, teardown
@@ -53,7 +54,9 @@ def cli(context, verbose):
         configure_logger(verbose or GlobalConfigManager.get_value('verbose'))
     except ValidationError:
         GlobalConfigManager.purge()
-    non_check_cmds = ['config', 'version', 'login', 'logout', 'deploy', 'admin', 'teardown']
+    non_check_cmds = [
+        'completion', 'config', 'version', 'login', 'logout', 'deploy', 'admin', 'teardown'
+    ]
     if context.invoked_subcommand not in non_check_cmds:
         check_cli_version()
 
@@ -83,3 +86,4 @@ cli.add_command(bookmark)
 cli.add_command(admin)
 cli.add_command(deploy)
 cli.add_command(teardown)
+cli.add_command(completion)
