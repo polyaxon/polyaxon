@@ -117,7 +117,7 @@ class TesClusterConfigOptionsViewV1(BaseViewTest):
         })
         assert resp.status_code == status.HTTP_200_OK
         # Check value
-        assert conf.get(build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT) == False
+        assert conf.get(build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT) is False
 
         # Delete value
         resp = self.auth_client.post(self.url, data={
