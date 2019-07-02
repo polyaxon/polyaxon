@@ -32,6 +32,8 @@ data:
   POLYAXON_K8S_NAMESPACE: {{ .Values.namespace | quote }}
   POLYAXON_K8S_APP_NAME: {{ template "polyaxon.fullname" . }}
   POLYAXON_K8S_API_HOST: {{ template "polyaxon.fullname" . }}-api:{{ .Values.api.service.internalPort }}
+  POLYAXON_K8S_API_INTERNAL_PORT: {{ .Values.api.service.internalPort | quote }}
+  POLYAXON_K8S_STREAM_INTERNAL_PORT: {{ .Values.streams.service.internalPort | quote }}
   {{- if contains "NodePort" .Values.serviceType }}
   POLYAXON_K8S_API_HTTP_PORT: {{ .Values.api.service.nodePort | quote }}
   {{- else }}
@@ -134,7 +136,7 @@ data:
   POLYAXON_DB_CONN_MAX_AGE: {{ default "60" .Values.postgresql.connMaxAge | quote }}
   POLYAXON_DB_HOST: "{{ template "postgresql.host" . }}"
   # Broker
-  {{- if eq .Values.broker "redis" }}
+  {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
   POLYAXON_BROKER_BACKEND: {{ .Values.broker }}
   POLYAXON_REDIS_CELERY_BROKER_URL: {{ template "redis.host" . }}:{{ template "redis.port" . }}/0
   {{- else }}
