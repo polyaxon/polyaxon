@@ -140,3 +140,7 @@ mountPaths:
     bin: ""
     libcuda: ""
 
+rabbitmq-ha:
+  enabled: false
+
+broker: redis

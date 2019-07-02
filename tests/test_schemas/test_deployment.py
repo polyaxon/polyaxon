@@ -170,6 +170,7 @@ class TestDeploymentConfig(TestCase):
         assert config.hooks.imageTag == 'latest'
         assert config.postgresql is None
         assert config.rabbitmq is None
+        assert config.broker is None
         assert config.dockerRegistry is None
         assert config.email is None
         assert config.hostName == '19.3.50.12'
@@ -213,7 +214,8 @@ class TestDeploymentConfig(TestCase):
         assert config.resourcesDaemon.imageTag == 'latest'
         assert config.hooks.imageTag == 'latest'
         assert config.postgresql is None
-        assert config.rabbitmq is None
+        assert config.rabbitmq.enabled is False
+        assert config.broker == 'redis'
         assert config.dockerRegistry is None
         assert config.email is None
         assert config.hostName == '19.3.50.12'

@@ -66,6 +66,7 @@ class DeploymentSchema(BaseSchema):
     rabbitmq = fields.Nested(RabbitmqSchema,
                              data_key="rabbitmq-ha",
                              allow_none=True)
+    broker = fields.Str(allow_none=True, validate=validate.OneOf(['redis', 'rabbitmq']))
     dockerRegistry = fields.Nested(DockerRegistrySchema,
                                    data_key="docker-registry",
                                    allow_none=True)
@@ -129,6 +130,7 @@ class DeploymentConfig(BaseConfig):
                  postgresql=None,
                  redis=None,
                  rabbitmq=None,
+                 broker=None,
                  dockerRegistry=None,
                  email=None,
                  ldap=None,
@@ -180,6 +182,7 @@ class DeploymentConfig(BaseConfig):
         self.postgresql = postgresql
         self.redis = redis
         self.rabbitmq = rabbitmq
+        self.broker = broker
         self.dockerRegistry = dockerRegistry
         self.email = email
         self.ldap = ldap
