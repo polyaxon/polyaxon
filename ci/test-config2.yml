@@ -19,7 +19,7 @@ postgresql:
       memory: 40Mi
       cpu: 20m
 
-borker: redis
+broker: redis
 
 redis:
   resources:
