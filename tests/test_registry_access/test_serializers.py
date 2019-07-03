@@ -44,6 +44,37 @@ class TestRegistryAccessSerializer(BaseTest):
         for k, v in data.items():
             assert getattr(self.obj1, k) == v
 
+    def test_serializer_localhost(self):
+        registry = RegistryAccess.objects.create(owner=self.obj1.owner,
+                                                 name='my_registry_with_secret_and_host',
+                                                 insecure=True,
+                                                 host='localhost:5000')
+        data = self.serializer_class(registry).data
+        assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
+        assert data.pop('uuid') == registry.uuid.hex
+        assert data.pop('is_default') is False
+
+        for k, v in data.items():
+            assert getattr(registry, k) == v
+
+    def test_serializer_ip_port(self):
+        registry = RegistryAccess.objects.create(owner=self.obj1.owner,
+                                                 name='my_registry_with_secret_and_host',
+                                                 insecure=False,
+                                                 host='123.123.123.123:5000')
+
+        data = self.serializer_class(registry).data
+        assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
+        assert data.pop('uuid') == registry.uuid.hex
+        assert data.pop('is_default') is False
+
+        for k, v in data.items():
+            assert getattr(registry, k) == v
+
     def test_serialize_many(self):
         data = self.serializer_class(RegistryAccess.objects.all(), many=True).data
         assert len(data) == 2

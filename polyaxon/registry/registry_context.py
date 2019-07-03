@@ -16,9 +16,11 @@ def get_in_cluster_registry_host(build_backend: Optional[str]) -> str:
     return conf.get(REGISTRY_HOST)
 
 
-def get_in_cluster_registry_spec(build_backend: Optional[str]) -> RegistryContextSpec:
+def get_in_cluster_registry_spec(build_backend: Optional[str],
+                                 secret=None,
+                                 secret_items=None) -> RegistryContextSpec:
     host = get_in_cluster_registry_host(build_backend)
-    return RegistryContextSpec(host=host, secret=None, secret_items=None, insecure=True)
+    return RegistryContextSpec(host=host, secret=secret, secret_items=secret_items, insecure=True)
 
 
 def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSpec:
@@ -29,9 +31,22 @@ def get_registry_spec_from_config(config: 'RegistryAccess') -> RegistryContextSp
 
 
 def get_registry_context(build_backend: Optional[str]) -> RegistryContextSpec:
-    registry_config = RegistryAccess.objects.filter(id=conf.get(ACCESS_REGISTRY))
-    if registry_config.exists():
-        registry_config = registry_config.last()
+    registry_config = RegistryAccess.objects.filter(id=conf.get(ACCESS_REGISTRY)).last()
+    if registry_config:
+
+        # The default registry has no host
+        if not registry_config.host:
+            if conf.get(REGISTRY_IN_CLUSTER):
+                secret = None
+                secret_items = None
+                if registry_config.k8s_secret:
+                    secret = registry_config.k8s_secret.k8s_ref
+                    secret_items = registry_config.k8s_secret.items
+                return get_in_cluster_registry_spec(
+                    build_backend=build_backend, secret=secret, secret_items=secret_items)
+            else:
+                raise ContainerRegistryError('The default registry has no host defined.')
+
         return get_registry_spec_from_config(registry_config)
 
     if conf.get(REGISTRY_IN_CLUSTER):

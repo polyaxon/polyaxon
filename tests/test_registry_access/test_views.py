@@ -85,6 +85,7 @@ class TestRegistryAccessListViewV1(BaseViewTest):
 
         secret = K8SSecretFactory()
 
+        # URL
         data = {
             'name': 'foo',
             'description': 'new description',
@@ -95,6 +96,62 @@ class TestRegistryAccessListViewV1(BaseViewTest):
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_201_CREATED
         assert self.model_class.objects.count() == self.num_objects + 1
+        last_object = self.model_class.objects.last()
+        assert last_object.owner.owner == Cluster.load()
+        assert last_object.name == data['name']
+        assert last_object.description == data['description']
+        assert last_object.tags == data['tags']
+        assert last_object.host == data['host']
+        assert last_object.k8s_secret.id == data['k8s_secret']
+
+        # No host
+        data = {
+            'name': 'foo-host',
+            'description': 'new description',
+            'tags': ['foo', 'bar'],
+            'k8s_secret': secret.id,
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 2
+        last_object = self.model_class.objects.last()
+        assert last_object.owner.owner == Cluster.load()
+        assert last_object.name == data['name']
+        assert last_object.description == data['description']
+        assert last_object.tags == data['tags']
+        assert last_object.host == ''
+        assert last_object.k8s_secret.id == data['k8s_secret']
+
+        # IP
+        data = {
+            'name': 'foo2',
+            'description': 'new description',
+            'tags': ['foo', 'bar'],
+            'host': '123.123.123.123:5000',
+            'k8s_secret': secret.id,
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 3
+        last_object = self.model_class.objects.last()
+        assert last_object.owner.owner == Cluster.load()
+        assert last_object.name == data['name']
+        assert last_object.description == data['description']
+        assert last_object.tags == data['tags']
+        assert last_object.host == data['host']
+        assert last_object.k8s_secret.id == data['k8s_secret']
+
+        # Localhost
+        data = {
+            'name': 'foo3',
+            'description': 'new description',
+            'tags': ['foo', 'bar'],
+            'host': 'localhost:5000',
+            'k8s_secret': secret.id,
+        }
+        resp = self.auth_client.post(self.url, data)
+        assert resp.status_code == status.HTTP_201_CREATED
+        assert self.model_class.objects.count() == self.num_objects + 4
         last_object = self.model_class.objects.last()
         assert last_object.owner.owner == Cluster.load()
         assert last_object.name == data['name']

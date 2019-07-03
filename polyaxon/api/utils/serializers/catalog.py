@@ -63,6 +63,8 @@ class AccessCatalogSerializer(CatalogSerializer):
 
 
 class HostCatalogSerializer(AccessCatalogSerializer):
+    host = fields.CharField(required=False)
+
     class Meta:
         fields = AccessCatalogSerializer.Meta.fields + (
             'host',

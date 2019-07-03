@@ -117,6 +117,21 @@ class TestRegistryContext(BaseTest):
         assert spec.secret_items is None
         assert spec.insecure is True
 
+        # Creating a registry access and using it with in cluster registry
+        secret = K8SSecret.objects.create(owner=self.owner,
+                                          name='my_secret',
+                                          k8s_ref='my_secret')
+        registry_access = RegistryAccess.objects.create(owner=self.owner,
+                                                        k8s_secret=secret,
+                                                        name='d-registry')
+        conf.set(ACCESS_REGISTRY, registry_access.id)
+
+        spec = get_registry_context(build_backend=BuildBackend.KANIKO)
+        assert spec.host == 'registry_host'
+        assert spec.secret == secret.k8s_ref
+        assert spec.secret_items == secret.items
+        assert spec.insecure is True
+
     @override_settings(REGISTRY_IN_CLUSTER=False)
     def test_get_external_registry_context(self):
         secret = K8SSecret.objects.create(owner=self.owner,
