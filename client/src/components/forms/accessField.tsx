@@ -9,14 +9,14 @@ import { checkValidationError } from './validation';
 import './groupFields.less';
 
 export interface AccessFieldSchema {
-  host: string;
+  host?: string;
   k8s_secret?: string | number;
 }
 
 export function validateAccess(value: AccessFieldSchema) {
   let error;
-  if (!value.host) {
-    error = 'Host is Required.';
+  if (!value.host && !value.k8s_secret) {
+    error = 'Host or Secret is Required.';
   }
   return error;
 }
