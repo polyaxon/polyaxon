@@ -126,7 +126,7 @@ class TesClusterConfigOptionsViewV1(BaseViewTest):
         assert resp.status_code == status.HTTP_200_OK
 
         # Check value
-        assert conf.get(node_selectors.NODE_SELECTORS_BUILD_JOBS) is True
+        assert conf.get(build_jobs.BUILD_JOBS_SET_SECURITY_CONTEXT) is True
 
 
 @pytest.mark.configs_mark
