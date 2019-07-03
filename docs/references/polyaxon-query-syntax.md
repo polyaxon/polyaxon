@@ -35,7 +35,7 @@ Examples:
 
  * Sort by creation date: `sort="created_at"`
  * Sort by creation date descending and start date ascending: `sort="-created_at, started_at"`
- * Sort by finished date and loss: `finished_at, metric.loss`
+ * Sort by finished date and loss: `finished_at, metrics.loss`
 
 ## Query with scalar condition
 
@@ -45,19 +45,19 @@ greater than or equal to, less than, and less than or equal to another value.
 
 operator     | example
 -------------|------------------
-`x = n`      | `metric.loss: 0.1` will match all entities that have a metric loss equal to 0.1
-`x != n`     | `metric.loss: ~0.1` will match all entities that have a metric loss not equal to 0.1
-`x > n`      | `metric.loss: >0.1` or with negation `metric.loss: ~<=0.1` will match all entities that have a metric loss greater than 0.1
-`x >= n`     | `metric.loss: >=0.1` or with negation `metric.loss: ~<0.1` will match all entities that have a metric loss greater than or equal 0.1
-`x < n`      | `metric.loss: <0.1` or with negation `metric.loss: ~>=0.1` will match all entities that have a metric loss less than 0.1
-`x <= n`     | `metric.loss: <=0.1` or with negation `metric.loss: ~>0.1` will match all entities that have a metric loss less than or equal than 0.1
+`x = n`      | `metrics.loss: 0.1` will match all entities that have a metric loss equal to 0.1
+`x != n`     | `metrics.loss: ~0.1` will match all entities that have a metric loss not equal to 0.1
+`x > n`      | `metrics.loss: >0.1` or with negation `metrics.loss: ~<=0.1` will match all entities that have a metric loss greater than 0.1
+`x >= n`     | `metrics.loss: >=0.1` or with negation `metrics.loss: ~<0.1` will match all entities that have a metric loss greater than or equal 0.1
+`x < n`      | `metrics.loss: <0.1` or with negation `metrics.loss: ~>=0.1` will match all entities that have a metric loss less than 0.1
+`x <= n`     | `metrics.loss: <=0.1` or with negation `metrics.loss: ~>0.1` will match all entities that have a metric loss less than or equal than 0.1
 
 To search for a range or outside a range you can combine two operators:
 
 operator                                 | example
 -----------------------------------------|------------------
-`n <[=] x <[=] m` where n < m            | `metric.loss:>0.1, metric.loss:<0.4` will match all entities that have a metric strictly between 0.1 and 0.4
-`x <[=] n` and `x >[=] m`  where n < m   | `metric.loss:<=0.1, metric.loss:>=0.4` will match all entities that have a metric outside the range 0.1 and 0.4
+`n <[=] x <[=] m` where n < m            | `metrics.loss:>0.1, metrics.loss:<0.4` will match all entities that have a metric strictly between 0.1 and 0.4
+`x <[=] n` and `x >[=] m`  where n < m   | `metrics.loss:<=0.1, metrics.loss:>=0.4` will match all entities that have a metric outside the range 0.1 and 0.4
 
 You can of course use any combination of the operators and with negation modifier.
 

@@ -39,7 +39,7 @@ polyaxon_client.experiment_group.list_experiments(
     project_name,
     group_id,
     metrics=None,
-    declarations=None,
+    params=None,
     query=None,
     sort=None,
     page=1)

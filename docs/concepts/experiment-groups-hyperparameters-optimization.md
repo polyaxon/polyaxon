@@ -48,7 +48,7 @@ This declares a section to run our `train.py` file by passing two values, the `l
 
 Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
 
- * A [declarations section](/references/polyaxonfile-yaml-specification/declarations/), to declare a constant value for `batch_size`
+ * A [params section](/references/polyaxonfile-yaml-specification/params/), to declare a constant value for `batch_size`
  * A [hptuning section](/references/polyaxonfile-yaml-specification/hptuning/) with [matrix subsection](/references/polyaxonfile-yaml-specification/hptuning/#matrix), to declare the values for `lr`
 
 The new `polyaxonfile.yml` after the update
@@ -60,7 +60,7 @@ version: 1
 
 kind: group
 
-declarations:
+params:
   batch_size: 128
 
 hptuning:
@@ -77,7 +77,7 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
-> The declarations section was not completely necessary, 
+> The params section was not completely necessary, 
 we could have also just passed the value directly `--batch-size=128`
 
 So what we did is that we declared a constant value for `batch_size`, and a value for `lr` going from `0.01` to `0.1` with `5` steps spaced evenly on a `log scale`.
@@ -124,8 +124,8 @@ This command validate the polyaxonfile, and the option `-def` returns the group 
 > For more details about this command please run `polyaxon check --help`, 
 or check the [command reference](/references/polyaxon-cli/check/)
 
-> Polyaxon merges the combination values from matrix for a single experiment with the values from declarations and export under the environment variable name `POLYAXON_DECLARATIONS`. 
-Check how you can [get the experiment declarations](/references/polyaxon-tracking-api/in-cluster/#hyperparams) to use them with your models.
+> Polyaxon merges the combination values from matrix for a single experiment with the values from params and export under the environment variable name `POLYAXON_DECLARATIONS`. 
+Check how you can [get the experiment params](/references/polyaxon-tracking-api/in-cluster/#hyperparams) to use them with your models.
 
 ## Running a group of experiments
 

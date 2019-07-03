@@ -92,14 +92,18 @@ read more about some of the [supported platforms](/integrations/scm/).
 
 ### Deploying with an access token
 
+You can set the access token under `Private repos` -> `REPOS:ACCESS_TOKEN` on the settings page:
+
 ```yaml
-reposAccessToken: "TokenHashHere"
+TokenHash
 ```
 
 ### Deploying with username and password
 
+You can set the username and password under `Private repos` -> `REPOS:CREDENTIALS` on the settings page:
+
 ```yaml
-reposAccessToken: "username:password"
+username:password
 ```
 
 ### Create a project

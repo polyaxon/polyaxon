@@ -119,7 +119,7 @@ Options:
 option | type | description
 -------|------|------------
   -m, --metrics | | List experiments with their metrics.
-  -d, --declarations | | List experiments with their declarations/params.
+  -p, --params | | List experiments with their declarations/params.
   -q, --query| TEXT | To filter the experiments based on this query spec.
   -s, --sort | TEXT | To change order by of the experiments.
   --page | INTEGER | To paginate through the list of experiments.

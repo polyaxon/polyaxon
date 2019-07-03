@@ -15,7 +15,7 @@ tags:
   - scheduling
 featured: true
 visibility: public
-status: beta
+status: published
 ---
 
 Polyaxon allows users to build container images using the Kaniko project.

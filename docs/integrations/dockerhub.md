@@ -22,22 +22,63 @@ You can use your docker images hosted on [https://hub.docker.com/](https://hub.d
 
 ## Overview
 
-You can use your public images without the need to set any configuration. In order to use private docker images hosted on docker hub, you need to set access credentials. 
+You can use your public images without the need to set any configuration. 
 
-## Add credentials to use with docker hub
+In order to use private docker images hosted on docker hub, you need to set access credentials. 
 
-You can use the `privateRegistries` section to set your docker hub credentials:
+## Create a secret containing the credentials to use with docker hub
 
-```yaml
-privateRegistries:
-  - "my_username:my_password@https://index.docker.io/v1/"
+```json
+{
+    "auths": {
+        "https://index.docker.io/v1/": {
+            "auth": "YW11cmRhY2Esdfdsflkdjsf==",
+            "email": "user@acme.com"
+        }
+    }
+}
 ```
 
 or 
 
-```yaml
-privateRegistries:
-  - host: "https://index.docker.io/v1/"
-    user: "myname"
-    password: "mypassword"
+```json
+{
+    "auths": {
+        "https://index.docker.io/v1/": {
+            "auth": "YW11cmRhY2Esdfdsflkdjsf==",
+        }
+    }
+}
 ```
+
+N.B. that the auth must contain a concatenation of the username, a colon, and the password, i.e. `user:password`, 
+you can find the auths in your `$HOME/.docker/config.json` for instance, or you can create this auth using a simple python script:
+
+```python
+import base64
+base64.b64encode("user:secret".encode())
+```
+
+```bash
+kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
+```
+
+## Create a docker registry access in the UI
+
+In Polyaxon's stores, add a new entry and link to this secret, and set the host to `https://index.docker.io/v1/`.
+
+![access](../../content/images/integrations/docker-access.png)
+
+
+## Make this access as default
+
+After creating the access you need to mark it ass default, so that Polyaxon uses it for scheduling builds. 
+
+
+## Using the secret for pull only
+
+If you wish to only use this credential secret for pulling images and the in-cluster registry for pushing, you should leave the host field empty.
+
+## You can include allow the docker process to pull from different registries
+
+To allow this access to pull from other registries, you can set as many other auths and credsStore.

@@ -15,7 +15,7 @@ tags:
   - experimentation
 featured: false
 visibility: public
-status: beta
+status: published
 ---
 
 Polyaxon makes it easy to start JupyterLab on your projects for you and your team members.
@@ -28,7 +28,6 @@ Jupyter Lab is an alternative backend when creating notebooks on Polyaxon.
 
 > To learn more about polyaxon notebook CLI, run `polyaxon notebook --help`, or check the [command reference](/references/polyaxon-cli/notebook/)
 
-> Future releases will allow you to specify a default notebook image and backend to start notebooks/labs without providing a polyaxonfile
 
 ## Create a polyaxonfile for your Jupyter Lab
 

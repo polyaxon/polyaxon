@@ -106,8 +106,7 @@ By default Polyaxon will schedule all data, volume, paths, and storages, to your
 
 ```yaml
 environment:
-  persistence:
-    data: ['azure-data1']
+  data_refs: ['azure-data1']
 ```
 
 Exposes only `azure-data1` to this run.
@@ -115,8 +114,7 @@ Exposes only `azure-data1` to this run.
 
 ```yaml
 environment:
-  persistence:
-    data: ['azure-data1', 'azure-data2', 'some-other-data-on-a-volume']
+  data_refs: ['azure-data1', 'azure-data2', 'some-other-data-on-a-volume']
 ```
 
 ## Using the store manager to access data

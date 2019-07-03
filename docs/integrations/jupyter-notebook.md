@@ -26,8 +26,6 @@ Users can run notebook jobs on projects level, these jobs are subject to the sam
 
 > To learn more about Polyaxon notebook CLI, run `polyaxon notebook --help`, or check the [command reference](/references/polyaxon-cli/notebook/)
 
-> Future releases will allow you to specify a default notebook image and backend to start notebooks/labs without providing a polyaxonfile
-
 ## Create a polyaxonfile for your notebook
 
 To create a notebook, you need a polyaxonfile to customize the container running your notebook:

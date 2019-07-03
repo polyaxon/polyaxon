@@ -41,13 +41,16 @@ Once all entries are filled, you can click the Purchase button.
 
 You can now use this PostgreSQL server with you Polyaxon deployment:
 
-```python
+```yaml
 postgresql:
   enabled: false
-  postgresUser: <server_admin_login_name>
-  postgresPassword: <password>
-  postgresDatabase: <database>
-  externalPostgresHost: <server_name>
+
+externalServices:
+  postgresql:
+    user: <server_admin_login_name>
+    password: <password>
+    database: <database>
+    host: <server_name>
 ``` 
 
 You need to replace the user, password, database, and host based on the information you filled in the form, you can always find this information on the entity overview of Azure dashboard.
@@ -98,11 +101,14 @@ az postgres server firewall-rule create --resource-group <resource_group> \
 
 ### Update polyaxon deployment
 
-```python
+```yaml
 postgresql:
   enabled: false
-  postgresUser: <servr_admin_login_name>
-  postgresPassword: <password>
-  postgresDatabase: <database>
-  externalPostgresHost: <server_name>
+
+externalServices:
+  postgresql:
+    user: <server_admin_login_name>
+    password: <password>
+    database: <database>
+    host: <server_name>
 ``` 

@@ -23,32 +23,18 @@ Integrate your secured, private, and internal docker registry with Polyaxon to s
 
 You can easily add many private registries to Polyaxon to pull private images and use them when scheduling your deep learning and machine learning experiments on Kubernetes using Polyaxon.
 
-## Add your private docker registries to your Polyaxon deployment config
+## Add your private docker registries credentials
 
-You can use the `privateRegistries` section to set your private docker registry information:
+You need to create a secret containing docker credentials config, e.g.
 
-```yaml
-privateRegistries:
-  - "username1:password1@registry1.example.com"
-  - "username2:password2@registry2.example.com"
-  - "username3:password3@registry3.example.com"
-```
-
-or 
-
-```yaml
-privateRegistries:
-  - host: "another.registry.com"
-    user: "myname"
-    password: "mypassword"
-```
-
-or 
-```yaml
-privateRegistries:
-  - "username1:password1@registry1.example.com"
-  - host: "another.registry.com"
-    user: "myname"
-    password: "mypassword"
-  ... 
-```
+```json
+{
+    "auths": {
+        "localhost:5001": {
+            "auth": "YW11cmRhY2E6c3VwZXJzZWNyZXRwYXNzd29yZA==",
+            "email": "user@acme.com"
+        }
+    },
+    "credsStore": "secretservice"
+}
+``` 

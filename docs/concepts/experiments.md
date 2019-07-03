@@ -59,7 +59,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   lr: 0.01
   batch_size: 128
 
@@ -72,9 +72,9 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
-> The declarations section was not completely necessary, 
+> The params section was not completely necessary, 
 we could have also just passed the value directly `--batch-size=128 --lr=0.01`
-For more information please visit the [declarations section](/references/polyaxonfile-yaml-specification/declarations/) reference.
+For more information please visit the [params section](/references/polyaxonfile-yaml-specification/params/) reference.
 
 
 > For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/run/)
@@ -159,7 +159,7 @@ which means that this experiment is running independently of a group.
 After running this experiment, we can imagine that you were not satisfied with the result and
 that you wanted to try another learning rate `0.5`.
 If you hardcoded the value and passed it directly `--lr=0.01`, you would be obliged to updated the polyaxonfile.yml.
-Of course we can do that also now, but since we declared the `lr` in the declarations sections,
+Of course we can do that also now, but since we declared the `lr` in the params sections,
 we can create instead another file `polyaxonfile_override.yml` to override just that section:
 
 > "You can call your polyaxonfiles anything you want"
@@ -170,7 +170,7 @@ we can create instead another file `polyaxonfile_override.yml` to override just 
 $ vi polyaxonfile_override.yml
 ```
 
-And past the new declarations section.
+And past the new params section.
 
 ```yaml
 version: 1

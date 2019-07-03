@@ -32,7 +32,7 @@ version: 1
 
 kind: group
 
-declarations:
+params:
   batch_size: 128
 
 hptuning:
@@ -77,7 +77,7 @@ version: 1
 
 kind: group
 
-declarations:
+params:
   batch_size: 128
 
 hptuning:
@@ -121,7 +121,7 @@ version: 1
 
 kind: group
 
-declarations:
+params:
   batch_size: 128
 
 hptuning:

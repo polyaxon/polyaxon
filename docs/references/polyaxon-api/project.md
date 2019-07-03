@@ -396,7 +396,7 @@ curl -X POST \
     "description": "my new experiment",
     "original_experiment": null,
     "config": null,
-    "declarations": null,
+    "params": null,
     "tags": null
 }
 ```

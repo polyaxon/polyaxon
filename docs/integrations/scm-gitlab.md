@@ -53,10 +53,12 @@ Or If you only want to allow Polyaxon read access please select:
 
 Select the token and copy it.
 
-## Update your deployment config file and deploy/upgrade
+## Update your private repos setting
+
+In the settings page, under private repos, set the access token:
 
 ```yaml
-reposAccessToken: TokenHashHere
+TokenHash
 ```
 
 ## Setting an external repo for code tracking

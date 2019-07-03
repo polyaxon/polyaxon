@@ -56,10 +56,12 @@ you can click the blue icon next to the token to automatically copy it to the cl
 ![github-integration1](../../content/images/integrations/github/img4.png)
 
 
-## Update your deployment config file and deploy/upgrade
+## Update your private repos setting
+
+In the settings page, under private repos, set the access token:
 
 ```yaml
-reposAccessToken: TokenHashHere
+TokenHash
 ```
 
 ## Setting an external repo for code tracking

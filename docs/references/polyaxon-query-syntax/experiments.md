@@ -38,8 +38,8 @@ field                         | condition
 `name`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `status`                      | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `tags`                        | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
-`declarations.*`              | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
-`metric.*`                    | [comparison condition](/references/polyaxon-query-syntax/#query-with-comparison-condition)
+`params.*`              | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
+`metrics.*`                    | [comparison condition](/references/polyaxon-query-syntax/#query-with-comparison-condition)
 `backend`                     | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 `framework`                   | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
 
@@ -52,4 +52,4 @@ field:
  * `updated_at`
  * `started_at`
  * `finished_at`
- * `metric.*`
+ * `metrics.*`

@@ -62,7 +62,7 @@ run:
 ```python
 from polyaxon_helper import (
     get_cluster_def,
-    get_declarations,
+    get_params,
     get_experiment_info,
     get_task_info,
     get_tf_config,
@@ -74,7 +74,7 @@ from polyaxon_helper import (
 )
 
 cluster_def = get_cluster_def()
-declarations = get_declarations()
+params = get_params()
 experiment_info = get_experiment_info()
 task_info = get_task_info()
 job_info = get_job_info()
@@ -94,9 +94,9 @@ log_level = get_log_level()
         "ps": ["plx-ps3-8eefb7a1146f476ca66e3bee9b88c1de:2000"],
     }
     ```
- * `get_declarations`: Returns all the experiment declarations based on both,
+ * `get_params`: Returns all the experiment params based on both,
 
-    * declarations section
+    * params section
     * matrix section
 
  * `get_tf_config`: Returns the TF_CONFIG defining the cluster and the current task.

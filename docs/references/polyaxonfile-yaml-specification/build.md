@@ -23,6 +23,7 @@ This section defines the following values/subsections:
  * build_steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
  * env_vars [optional]: environment variables are also a list of tuples of 2 elements, that Polyaxon will use to add env variables in the docker image.
+ * lang_env [optional]: an easy way to expose language environment on your dockerfile.
  * commit [optional]: the commit to use for creating the build.
  * branch [optional]: the branch to use for creating the build.
  * nocache [optional]: to force rebuild the image. 
@@ -107,4 +108,20 @@ build:
         limits: 2
   dockerfile: path/to/Dockerfile
   context: different/path/to/context
+```
+
+## Exposing language environment
+
+```yaml
+build:
+  ...
+  lang_env: 'C.UTF-8'
+```
+
+Will result in these env section added to your dockerfile
+
+```
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+ENV LANGUAGE C.UTF-8
 ```

@@ -25,23 +25,17 @@ It also packages some required dependencies for Polyaxon:
 
  * [PostgreSQL](https://github.com/kubernetes/charts/tree/master/stable/postgresql)
  * [Redis](https://github.com/kubernetes/charts/tree/master/stable/redis)
- * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq)
+ * [Rabbitmq](https://github.com/kubernetes/charts/tree/master/stable/rabbitmq-ha)
  * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
-> **Note**: It's possible to provide your own database host.
-
-> **Warning**: This chart does not yet allow for you to specify your redis host, rabbitmq host.
+> **Note**: It's possible to provide your own manged version of each one fo these dependecies.
 
 This chart can be installed on single node or multi-nodes cluster,
-in which case you need to provide some volumes with `ReadWriteMany`.
+in which case you need to provide some volumes with `ReadWriteMany` or cloud buckets.
 An nfs provisioner can be used in cases where you want to try the platform on multi-nodes cluster
 without the need to create your own volumes. Please see [polyaxon-nfs-provisioner](https://github.com/polyaxon/polyaxon-nfs-provisioner)
 
-> **Warning**: You should know that using the nfs provisioner is not meant to be a production option.
-
 > **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
-
-> **Tip**: We created a [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
 
 ## Prerequisites
 
@@ -51,7 +45,7 @@ without the need to create your own volumes. Please see [polyaxon-nfs-provisione
 
 ## Add polyaxon charts
 
-```console
+```bash
 $ helm repo add polyaxon https://charts.polyaxon.com
 $ helm repo update
 ```
@@ -60,13 +54,13 @@ $ helm repo update
 
 To install the chart with the release name `<RELEASE_NAME>`:
 
-```console
+```bash
 $ helm install --name=<RELEASE_NAME> --namespace=<NAMESPACE> --wait polyaxon/polyaxon
 ```
 
 If you encounter an error, please use the `--wait` flag
 
-```console
+```bash
 $ helm install --name=<RELEASE_NAME> --wait polyaxon/polyaxon
 ```
 
@@ -81,13 +75,13 @@ The [configuration](#configuration) section lists the parameters that can be con
 
 To uninstall/delete the `<RELEASE_NAME>` deployment:
 
-```console
+```bash
 $ helm delete <RELEASE_NAME>
 ```
 
 or with `--purge` flag
 
-```console
+```bash
 $ helm delete <RELEASE_NAME> --purge
 ```
 
@@ -97,22 +91,49 @@ The command removes all the Kubernetes components associated with the chart and 
 Jobs are only deleted if they succeeded,
 sometime if you cancel a deployment you might end up with undeleted jobs.
 
-```console
+```bash
 $ kubectl delete job ...
 ```
 
 > **Note**:
-You can delete the chart and skip the cleaning hooks
+You can delete the chart and skip the cleaning the hooks
 
-```console
-$ helm del --purge  <RELEASE_NAME>  --no-hooks
+```bash
+helm del --purge  <RELEASE_NAME>  --no-hooks
 ```
 
 This can be particularly useful if your deployment is not working, because the hooks will most probably fail.
 
-## Configuration
+### How to set the configuration
 
-The following tables lists the configurable parameters of the Polyaxon chart and their default values.
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+
+```bash
+$ helm install --name=<RELEASE_NAME> \
+    --namespace=<NAMESPACE>\
+    --set persistence.enabled=false,email.host=email \
+    polyaxon
+```
+
+Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
+
+```bash
+$ helm install --name my-release -f values.yaml polyaxon
+```
+
+### DeploymentType
+
+| Parameter                       | Description                                                                                                           | Default
+| --------------------------------| ----------------------------------------------------------------------------------------------------------------------| ----------------------------------------------------------
+| `DeploymentType`                | The deployment type tells polyaxon how to show instructions ('kuberentes', 'minikube', 'microk8s', 'docker-compose')  | `kubernetes`
+
+
+### deploymentVersion
+
+| Parameter                       | Description                                                                                                                                             | Default
+| --------------------------------| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------
+| `deploymentVersion`             | The deployment version to use, this is important if you are using polyaxon-cli to avoid accidentally deploying/upgrading to a version without noticing  | `latest`
+
 
 ### Namespace
 
@@ -157,10 +178,10 @@ once installed, you can set the values for `ingress.tls`:
 ingress:
   enabled: true
   hostName: polyaxon.acme.com
-  tls: 
-  - secretName: polyaxon.acme-tls
-    hosts:
-      - polyaxon.acme.com
+  tls:
+    - secretName: polyaxon.acme-tls
+      hosts:
+        - polyaxon.acme.com
 ```
 
 TLS can have more than one host.
@@ -173,6 +194,18 @@ i.e
 annotations:
   domainName: polyaxon.my.domain.com
 ```
+
+### SSL
+
+| Parameter | Description                                                             | Default
+| ----------| ------------------------------------------------------------------------| ----------------------------------------------------------
+| `ssl`     | To set ssl and serve https with Polyaxon deployed with NodePort service | `{}`
+
+### dns
+
+| Parameter | Description                                                             | Default
+| ----------| ------------------------------------------------------------------------| ----------------------------------------------------------
+| `dns`     | DNS configuration for cluster running with custom dns setup             | `{}`
 
 ### Time zone
 
@@ -358,7 +391,7 @@ persistence:
       hostPath: "/outputs"
 ```
 
-> N.B. Multi-outputs is not supported in CE version 
+> N.B. Multi-outputs is not supported in CE version
 
 Example of multi-outputs persistence definition with:
 
@@ -396,56 +429,25 @@ persistence:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelectors.core`               | Node selector for core pod assignment                        | `{}`
-| `nodeSelectors.experiments`        | Node selector for experiments pod assignment                 | `{}`
-| `nodeSelectors.jobs`               | Node selector for jobs pod assignment                        | `{}`
-| `nodeSelectors.builds`             | Node selector for builds pod assignment                      | `{}`
-| `nodeSelectors.tensorboards`       | Node selector for tensorboards pod assignment                | `{}`
-| `tolerations.core`                 | Tolerations for core pod assignment                          | `[]`
-| `tolerations.experiments`          | Tolerations for experiments pod assignment                   | `[]`
-| `tolerations.jobs`                 | Tolerations for jobs pod assignment                          | `[]`
-| `tolerations.builds`               | Tolerations for builds pod assignment                        | `[]`
-| `tolerations.tensorboards`         | Tolerations for tensorboards pod assignment                  | `[]`
-| `tolerations.resourcesDaemon`      | Tolerations for resourcesDaemon pod assignment               | `[]`
-| `affinity.core`                    | Affinity for core                                            | Please check the values
-| `affinity.experiments`             | Affinity for experiments                                     | `{}`
-| `affinity.jobs`                    | Affinity for jobs                                            | `{}`
-| `affinity.builds`                  | Affinity for builds                                          | `{}`
-| `affinity.tensorboards`            | Affinity for tensorboards                                    | `{}`
+| `nodeSelector`                     | Node selector for core pod assignment                        | `{}`
+| `tolerations`                      | Tolerations for core pod assignment                          | `[]`
+| `affinity`                         | Affinity for core                                            | Please check the values
 
 
 Dependent charts can also have values overwritten. Preface values with
 
  * `postgresql.*`
  * `redis.*`
- * `rabbitmq.*`
- * `registry.*`
+ * `rabbitmq-ha.*`
+ * `docker-registry.*`
 
 
-### Secrets and ConfigMaps
+### Resources discovery
 
-| Parameter    | Description                                     | Default
-| -------------| ----------------------------------------------- | -------
-| `secretRefs`    | List of secrets' names to mount for you jobs    | `[]`
-| `configmapRefs` | List of configmaps' names to mount for you jobs | `[]`
-
-
-### How to set the configuration
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```console
-$ helm install --name=<RELEASE_NAME> \
-    --namespace=<NAMESPACE>\
-    --set persistence.enabled=false,email.host=email \
-    polyaxon
-```
-
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
-
-```console
-$ helm install --name my-release -f values.yaml polyaxon
-```
+| Parameter                          | Description                                                  | Default
+| -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
+| `resourcesDaemon.enabled`          | resourcesDaemon enabled                                      | `true` 
+| `resourcesDaemon.tolerations`      | Tolerations for resourcesDaemon pod assignment               | `[]` 
 
 
 ### IPs/Hosts White list
@@ -465,11 +467,11 @@ In order to receive email and notifcation with a clickable link to the objects o
 
 ```yaml
 hostName: 159.203.150.212
-``` 
-Or 
+```
+Or
 
 ```yaml
-hostName: polyaxon.foo.com  
+hostName: polyaxon.foo.com
 ```
 
 ### Admin view
@@ -479,8 +481,7 @@ Polyaxon ships with an admin interface, it disabled by default
 
 ```yaml
 adminViewEnabled: true
-``` 
-
+```
 
 ## Port forwarding
 
@@ -488,13 +489,12 @@ You ca yse port forwarding to access the api and dashboard on you localhost:
 
 ```bash
 kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
-``` 
+```
 
 ## Upgrade Polyaxon
 
 To upgrade Polyaxon to a newer version, you can simply run:
-
 ```bash
-helm update
+helm repo update
 helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
 ```

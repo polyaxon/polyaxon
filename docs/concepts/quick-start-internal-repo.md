@@ -279,10 +279,10 @@ Experiments:
  23   root.quick-start.1.23     4.62058       0.902         0.1028
 ```
 
-Comparing experiments declarations in the groups:
+Comparing experiments params in the groups:
 
 ```bash
-polyaxon group -g 1 experiments -d
+polyaxon group -g 1 experiments -p
 
 Experiments for experiment group `1`.
 
@@ -322,7 +322,7 @@ Experiments:
 Filtering only experiments with certain condition
 
 ```bash
-polyaxon group -g 1 experiments -m -q "status:succeeded, declarations.activation:relu|sigmoid, metric.loss:<=0.3"
+polyaxon group -g 1 experiments -m -q "status:succeeded, params.activation:relu|sigmoid, metrics.loss:<=0.3"
 
 Experiments for experiment group `1`.
 

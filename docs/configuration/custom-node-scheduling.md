@@ -16,25 +16,53 @@ sidebar: "configuration"
 
 <blockquote class="warning">This configuration is only available for Polyaxon deployed on Kubernetes clusters.</blockquote>
 
-Polyaxon provides a list of options to select which nodes
-should be used for the core platform, for the dependencies, and for the experiments.
+Polyaxon provides a list of options to select which nodes should be used for the core platform, for the dependencies, and for the runs.
 
 
 ## Node Selectors
 
-Polyaxon comes with a couple of node selectors options to assign pods to nodes
+### Core and dependencies
 
-  * **core**: the core polyaxon platform
-  * **experiments**: all user's experiments scheduled by polyaxon
-  * **jobs**: all user's generic jobs scheduled by polyaxon
-  * **builds**: all build jobs scheduled by polyaxon
-  * **tensorboards**: all tensorboard jobs scheduled by polyaxon
+Polyaxon comes with a couple of node selectors options to assign pods to nodes for polyaxon's core platform
 
-Additionally every dependency in our helm package, exposes a node selector option.
+Additionally every dependency in the helm package, exposes a node selector option.
 
 By providing these values, or some of them,
 you can constrain the pods belonging to that category to only run on
 particular nodes or to prefer to run on particular nodes.
+
+```yaml
+nodeSelector:
+  ...
+  
+postgresql:
+  nodeSelector:
+    ...
+
+redis:
+  nodeSelector:
+    ...
+
+rabbitmq-ha:
+  nodeSelector:
+    ...
+    
+dockrer-registry:
+  nodeSelector:
+    ... 
+```
+
+### Experiments, jobs, builds, notebooks, tensorboards
+
+For the runs started by users:
+
+  * **experiments**: all user's experiments scheduled by polyaxon
+  * **jobs**: all user's generic jobs scheduled by polyaxon
+  * **builds**: all build jobs scheduled by polyaxon
+  * **notebooks**: all build jobs scheduled by polyaxon
+  * **tensorboards**: all tensorboard jobs scheduled by polyaxon
+  
+You should check the settings page under the scheduling section, to provide default node selectors for each one of these primitives. 
 
 For example, if you have some GPU nodes, you might want to only use them for training your experiments.
 In this case you should label your nodes:
@@ -50,13 +78,14 @@ Example:
 ```bash
 kubectl label nodes worker_1 worker_2 polyaxon.com=experiments
 ```
+
+And then on the setting page, under `Experiment scheduling`, set the node selector to:
+
 ```yaml
-nodeSelectors:
-  experiments:
-    polyaxon.com: experiments
+polyaxon.com: experiments
 ```
 
-### Experiments and Jobs node selectors
+### Updating node selectors from the Polyaxonfile
 
 In some cases providing a default node selectors for scheduling experiments on some specific nodes is not enough,
 for example if the user has labelled 3 nodes with following label:
@@ -100,7 +129,6 @@ This definition can be used in very similar way to schedule a notebook or a tens
 Notebook:
 
 ```yaml
----
 version: 1
 
 kind: notebook
@@ -153,60 +181,137 @@ and will force the second worker to be scheduled on the node with the label `pol
 
 If one or more taints are applied to a node,
 and you want to make sure some pods should not deploy on it,
-Polyaxon provides tolerations option for the core platform, for experiments/jobs/builds..., 
-as well as for all dependencies, e.i. database, broker, expose their own tolerations option.
+Polyaxon provides tolerations option for the core platform, as well as for all dependencies, e.i. database, broker, expose their own tolerations option.
 
-Example for core platform:
+### Core and dependencies
 
 ```yaml
 tolerations:
-  core:
-    ...
-```
-
-Example for Rabbitmq:
-
-```yaml
-rabbitmq:
+  ...
+  
+postgresql:
   tolerations:
     ...
+
+redis:
+  tolerations:
+    ...
+
+rabbitmq-ha:
+  tolerations:
+    ...
+    
+dockrer-registry:
+  tolerations:
+    ... 
 ```
 
-Polyaxon's default toleration:
+### Experiments, jobs, builds, notebooks, tensorboards
+
+For the runs started by users:
+
+  * **experiments**: all user's experiments scheduled by polyaxon
+  * **jobs**: all user's generic jobs scheduled by polyaxon
+  * **builds**: all build jobs scheduled by polyaxon
+  * **notebooks**: all build jobs scheduled by polyaxon
+  * **tensorboards**: all tensorboard jobs scheduled by polyaxon
+  
+You should check the settings page under the scheduling section, to provide default tolerations for each one of these primitives. 
+
+### Updating tolerations from the Polyaxonfile
+
+Additionally every Polyaxon users can override the default tolerations by using the Polyaxonfile, e.g.:
+
 
 ```yaml
-tolerations:
-  resourcesDaemon:
-  core:
-  experiments:
-  jobs:
-  builds:
-  tensorboards:
+version: 1
+
+kind: notebook
+
+environment:
+  tolerations:
+    ...
+
+build:
+  image: tensorflow/tensorflow:1.4.1-gpu-py3
+  build_steps:
+    - pip3 install jupyter
 ```
 
 ## Affinity
 
+### Core and dependencies
+
 It allows you to constrain which nodes your pod is eligible to schedule on, based on the node's labels.
-Polyaxon has a default `Affinity` values for both dependencies and core to ensure that they deploy on the same node.
+Polyaxon has a default `Affinity` values for it's core components to ensure that they deploy on the same node.
 
 Polyaxon's default affinity:
 
 ```yaml
 affinity:
-  experiments:
-  jobs:
-  builds:
-  tensorboards:
-  core:
-    podAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchExpressions:
-              - key: type
-                operator: In
-                values:
-                - "polyaxon-core"
-            topologyKey: "kubernetes.io/hostname"
+  podAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: type
+              operator: In
+              values:
+              - "polyaxon-core"
+          topologyKey: "kubernetes.io/hostname"
+```
+
+You can update your config deployment file to set affinity for each dependency:
+
+
+```yaml
+affinity:
+  ...
+  
+postgresql:
+  affinity:
+    ...
+
+redis:
+  affinity:
+    ...
+
+rabbitmq-ha:
+  affinity:
+    ...
+    
+dockrer-registry:
+  affinity:
+    ... 
+```
+
+### Experiments, jobs, builds, notebooks, tensorboards
+
+For the runs started by users:
+
+  * **experiments**: all user's experiments scheduled by polyaxon
+  * **jobs**: all user's generic jobs scheduled by polyaxon
+  * **builds**: all build jobs scheduled by polyaxon
+  * **notebooks**: all build jobs scheduled by polyaxon
+  * **tensorboards**: all tensorboard jobs scheduled by polyaxon
+  
+You should check the settings page under the scheduling section, to provide default affinity for each one of these primitives. 
+
+### Updating affinity from the Polyaxonfile
+
+Additionally every Polyaxon users can override the default tolerations by using the Polyaxonfile, e.g.:
+
+
+```yaml
+version: 1
+
+kind: tensorbaord
+
+environment:
+  affinity:
+    ...
+
+build:
+  image: tensorflow/tensorflow:1.4.1-py3
 ```

@@ -54,7 +54,7 @@ you need to define a PVC and assign it to the `persistence.existingClaim`.
         existingClaim: myClaimName
     ```
 
-## External postgresql
+## External Postgresql
 
 If you prefer to have the postgresql database managed and hosted outside of Kubernetes,
 instead of the in-cluster one provided by Polyaxon, e.g.
@@ -68,10 +68,13 @@ You need to disable the in-cluster database, and provide the information needed 
 ```yaml
 postgresql:
   enabled: false
-  postgresUser: polyaxon
-  postgresPassword: polyaxon
-  postgresDatabase: postgres
-  externalPostgresHost: 35.262.163.88
+
+externalServices:
+  postgresql:
+    user: polyaxon
+    password: polyaxon
+    database: postgres
+    host: 35.262.163.88
 ```
 
 Please check this [integration guide](/integrations/database/) for cloud specific instructions on how to setup a postgreSQL server instance.

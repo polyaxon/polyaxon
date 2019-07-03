@@ -2,7 +2,7 @@
 title: "Customize Run Environment"
 sub_link: "custom-run-environment"
 meta_title: "Customize run environment in Polyaxon - Configuration"
-meta_description: "The following sections will describe how to use existing docker images and how to create custom images for your experiments' run environment."
+meta_description: "The following sections will describe how to use existing docker images and how to create custom images for your experiments/jobs/builds/notebooks/tensorboards' run environment."
 tags:
     - configuration
     - polyaxon
@@ -15,10 +15,10 @@ sidebar: "configuration"
 
 <blockquote class="warning">This configuration is only available for Polyaxon deployed on Kubernetes clusters.</blockquote>
 
-Usually a docker image specifies the functionality and environment
-that you wish to run your experiments.
+Usually a docker image specifies the functionality and environment that you wish to use for running your experiments.
 
 The following sections will describe how to use existing docker images and how to create custom images.
+
 
 ## Public images
 
@@ -39,7 +39,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   batch_size: 128
   lr: 0.1
 
@@ -65,7 +65,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   batch_size: 128
   lr: 0.1
 
@@ -80,6 +80,35 @@ build:
 run:
   cmd: python3 train.py --batch_size={{ batch_size }} --lr={{ lr }}
 ```
+
+### Lang environment
+
+In some cases users will often want to expose some language environment, e.g.
+
+```
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+ENV LANGUAGE C.UTF-8
+```
+
+Although it's possible to do that use the `env_vars` section:
+
+```yaml
+  env_vars:
+    - ['LC_ALL', 'C.UTF-8']
+    - ['LANG', 'C.UTF-8']
+    - ['LANGUAGE', 'C.UTF-8']
+```
+
+Polyaxon has section to make that easier:
+
+```yaml
+build:
+  ...
+  lang_env: 'C.UTF-8'
+```
+
+If you which to use this config `lang_env` definition for all your builds without the need to set it on every Polyaxonfile, you can use the setting page to set a default value for all builds.
 
 ### Installing libraries with pip
 
@@ -102,7 +131,7 @@ Polyaxon also provides, an easy way to install multiple python libraries:
 
     kind: experiment
 
-    declarations:
+    params:
       batch_size: 128
       lr: 0.1
 
@@ -136,7 +165,7 @@ You can also set a conda environment:
 
     kind: experiment
 
-    declarations:
+    params:
       batch_size: 128
       lr: 0.1
 
@@ -161,7 +190,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   batch_size: 128
   lr: 0.1
 
@@ -271,7 +300,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   batch_size: 128
   lr: 0.1
 
@@ -280,6 +309,24 @@ build:
   build_steps:
     - ./polyaxon_setup.sh
   nocache: true
+```
+
+### Invalidating a build
+
+Often time a user might need to trigger a build with same config without the need to set `nocache` property, Polyaxon provides a way to invalidate a build by id or all builds under a project, 
+using the CLI:
+
+ * For a single build
+
+```bash
+polyaxon build -b 123 invalidate
+```
+
+ * For all builds under a projects
+ 
+
+```bash
+polyaxon projevt invalidate_builds
 ```
 
 ### Changing the build backend
@@ -357,23 +404,18 @@ run:
 
 ## Custom configmaps and secrets
 
-
 In some cases, users might need to authenticate to a third party service 
 that the platform does not have an integration for yet, 
 Polyaxon provides a way to mount custom config maps and secrets for your runs.
 
-To be able to mount a config map or secret in your jobs/builds/experiments, 
+To be able to mount a config map or secret in your jobs/builds/experiments/notebooks, 
 you need to create the config map/secret in the namespace of your Polyaxon 
-deployment and add it to you deployment config:
+deployment and add it to you config map and / or secret catalogs in the UI:
 
-For example:
+> N.B.1 You can also define the same config map/secret several times by exposing only some of it's items.
+> N.B.2 If no items are defined in the form, Polyaxon will expose all items of the reference. 
 
-```yaml
-secretRefs: [secret1, secret2, secret3]
-configmapRefs: [configmap1, configmap2, secret3]
-```
-
-During the scheduling of your build/job/experiment, 
+During the scheduling of your build/job/experiment/notebook, 
 you can reference the config map(s)/secret(s) that you want to mount in the environment section:
 
 ```yaml
@@ -384,7 +426,7 @@ environment:
   configmap_refs: ['configmap1', 'configmap3']
 ```
 
-Within your build/job/experiment the individual items of your secrets are then exposed
+Within your build/job/experiment/notebook the individual items of your secrets are then exposed
 as environment variables. As an example, requiring a secret with the following data section
 
 ```yaml
@@ -395,9 +437,17 @@ data:
 
 would expose `test_user` and `test_password` environment values containing the decoded values.
 
+## Env vars
+
+Polyaxon now allows to set env vars to be used when scheduling runs, this allows users to expose some environment variables on every run without defining a config map or setting those environment variables on the docker image.
+
+In order to set the default environment variables, you can update the ENV_VARS in the setting page for every primitive.
+
 ## Custom resources
 
-You can customize your container's resources, by providing a resources subsection to the environment's section: 
+You can set a default resources definition to apply all experiments/jobs/builds/tensorboards/notebooks using the settings page.
+
+Additionally any Polyaxon user can can customize the container's resources, by providing a resources subsection to the environment's section: 
 
 ```yaml
 environment:
@@ -447,9 +497,35 @@ environment:
       limits: 8
 ```
 
-Polyaxon uses `cloud-tpus.google.com/v2` as a default resource key and `1.12` as default Tensorflow TPU version, but you can change this values in your deployment config file:
+### Update default hardware accelerators configuration
+
+Polyaxon uses `cloud-tpus.google.com/v2` as a default resource key and `1.12` as default Tensorflow TPU version, but you can change this values using the setting page in the dashboard, e.g.:
+
+To use Tensorflow 1.11 version for example, set:
+ 
+ * K8S:TPU_TF_VERSION 
+ 
+```
+1.11 
+```
+
+To use preemptible TPU, set:
+
+ * K8S:TPU_RESOURCE_KEY 
+
+```
+cloud-tpus.google.com/preemptible-v2
+``` 
+
+## Max restarts
+
+Polyaxon allows to set a number of times a pod should be restarted in case of failure, before marking the run as failed.
+
+It's possible to set a global default value for all experiments/jobs/builds/notebooks/tensorboards under the settings page, in the scheduling section.
+
+Additionally users can override the default value per run, e.g. 
 
 ```yaml
-tpuResourceKey: "cloud-tpus.google.com/preemptible-v2"  # To use preemptible TPU
-tpuTensorflowVersion: "1.11"  # To use Tensorflow 1.11 version
-```
+environment:
+  max_restarts: 3
+```  

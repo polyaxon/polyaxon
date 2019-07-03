@@ -35,8 +35,8 @@ ensuring you're aware of important things happening in your workflow.
  
 ### Best performing experiments based on a specific metrics:
 
- * query: `metric.loss: <=0.3, metric.precision: >=0.89`
- * sort: `metric.loss, -metric.precision`
+ * query: `metrics.loss: <=0.3, metrics.precision: >=0.89`
+ * sort: `metrics.loss, -metrics.precision`
  
 ### Experiment with specific code commit:
 

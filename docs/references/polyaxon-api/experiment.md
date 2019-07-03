@@ -63,7 +63,7 @@ curl --request GET \
       "cmd": "python3 model.py"
     }
   },
-  "declarations": null,
+  "params": null,
   "resources": null,
   "last_metric": {
     "loss": 0.0502114,
@@ -128,7 +128,7 @@ curl --request PATCH \
       "cmd": "python3 model.py"
     }
   },
-  "declarations": null,
+  "params": null,
   "resources": null,
   "last_metric": {
     "loss": 0.0502114,

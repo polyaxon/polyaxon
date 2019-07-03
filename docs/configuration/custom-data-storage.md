@@ -87,8 +87,7 @@ you then need to provide this information in the polyaxonfile, e.g.
 
 ```yaml
 environment:
-  persistence:
-    data: ['data1', 'data-foo']
+  data_refs: ['data1', 'data-foo']
 ```
 
 By providing this persistence subsection,

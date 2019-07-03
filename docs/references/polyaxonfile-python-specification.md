@@ -79,7 +79,7 @@ kind: experiment
 
 tags: ['foo', 'bar']
 
-declarations:
+params:
   num_masks: 2
 
 build:
@@ -110,7 +110,7 @@ spec = plx_file.specification
 assert spec.version == 1
 assert spec.logging is None
 assert sorted(spec.tags) == sorted(['foo', 'bar'])
-assert sorted(spec.declarations) == {'num_masks': 2}
+assert sorted(spec.params) == {'num_masks': 2}
 
 assert spec.build.image == 'my_image'
 assert spec.build.build_steps == ['pip install package1']

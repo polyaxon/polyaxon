@@ -50,40 +50,7 @@ environment:
       limits: 8
 ```
 
-## outputs
-
-Sometime you experiment or your job might depend on previous jobs or experiments,
-and you need to use their outputs to either do fine tuning or post processing of those outputs.
-
-Outputs gives you a way to reference outputs from previous experiments and jobs,
-by either using their ids or names (if you gave them name).
-
-This will both mount necessary outputs volumes,
-and will expose the paths of those outputs in your experiment/job that requested them.
-
-If you referenced different outputs from jobs and experiments, the paths will following
-the same order that was provided.
-
-```yaml
-environment:
-  outputs:
-    jobs: [1, 234, 'job_name1', 'another_username/another_project/job_name2']
-    experiments: [12, 'experiment_name', 'my_other_project/experiment_name2']
-```
-
-## persistence
-
-The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
-with multiple data volumes or multiple outputs volumes or both.
-
-```yaml
-environment:
-  persistence:
-    data: ['data_volume_name1', 'data_volume_name2', 'data_volume_name3']
-    outputs: 'outputs_volume_name2'
-```
-
-## node selectors
+## node_selector
 
 The labels to use as node selectors for scheduling the job on a specific node.
 You can also set default [node selectors](/references/polyaxon-helm-reference/#node-and-deployment-manipulation)
@@ -133,14 +100,45 @@ environment:
 
 To enable a distributed run, the user can define one of the following framework:
 
-## configmap_refs
 
-A list of config map references to mount during the scheduling of a job/build/experiment
+
+## persistence [deprecated]
+
+This section is deprecated in favor of: `data_refs`, `artifact_refs` and will be remove in future versions.
+ 
+The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
+with multiple data volumes or multiple outputs volumes or both.
 
 ```yaml
 environment:
-  configmap_refs: ['configmap1', 'configmap3']
+  persistence:
+    data: ['data_volume_name1', 'data_volume_name2', 'data_volume_name3']
+    outputs: 'outputs_volume_name2'
 ```
+
+## data_refs
+
+The volumes to mount for data and outputs, this is only needed when Polyaxon was deployed
+with multiple data volumes.
+
+```yaml
+environment:
+  data_refs: ['data_volume_name1', 'data_volume_name2', 'data_volume_name3']
+```
+
+
+## config_\map\_refs
+
+> Please note that previously this section used to be `configmaps_refs`
+
+A list of config map references to mount during the scheduling of a job/build/experiment/notebooks/tensorboards
+
+```yaml
+environment:
+  config_map_refs: ['configmap1', 'configmap3']
+```
+
+N.B. the references must be declared by the admin in the catalog to allow access to the resources.
 
 ## secret_refs
 
@@ -149,7 +147,48 @@ environment:
   secret_refs: ['secret1', 'secret2']
 ```
 
-A list of secret references to mount during the scheduling of a job/build/experiment
+A list of secret references to mount during the scheduling of a job/build/experiment/notebooks/tensorboards
+
+N.B. the references must be declared by the admin in the catalog to allow access to the resources.
+
+## service_account
+
+```yaml
+environment:
+  service_account: 'my-custom-service-account'
+```
+
+A custom service account to use during the scheduling of a job/build/experiment/notebooks/tensorboards
+
+## max_restarts
+
+```yaml
+environment:
+  max_restarts: 4
+```
+
+How many times to allow a pod restarts when running job/build/experiment/notebooks/tensorboards in case of an error.
+
+## outputs
+
+Sometime you experiment or your job might depend on previous jobs or experiments,
+and you need to use their outputs to either do fine tuning or post processing of those outputs.
+
+Outputs gives you a way to reference outputs from previous experiments and jobs,
+by either using their ids or names (if you gave them name).
+
+This will both mount necessary outputs volumes,
+and will expose the paths of those outputs in your experiment/job that requested them.
+
+If you referenced different outputs from jobs and experiments, the paths will following
+the same order that was provided.
+
+```yaml
+environment:
+  outputs:
+    jobs: [1, 234, 'job_name1', 'another_username/another_project/job_name2']
+    experiments: [12, 'experiment_name', 'my_other_project/experiment_name2']
+```
 
 ## backend
 

@@ -15,7 +15,7 @@ tags:
   - scheduling
 featured: false
 visibility: public
-status: beta
+status: published
 ---
 
 Polyaxon allows to schedule Fastai experiments, and supports tracking metrics, outputs, and models.

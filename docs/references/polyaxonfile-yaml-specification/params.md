@@ -1,8 +1,8 @@
 ---
-title: "Declarations - Polyaxonfile YAML Specification"
-sub_link: "polyaxonfile-yaml-specification/declarations"
-meta_title: "Declarations Section - Polyaxonfile YAML Specification Sections - Polyaxon References"
-meta_description: "Declarations Section - Polyaxonfile YAML Specification Sections."
+title: "Params - Polyaxonfile YAML Specification"
+sub_link: "polyaxonfile-yaml-specification/Params"
+meta_title: "Params Section - Polyaxonfile YAML Specification Sections - Polyaxon References"
+meta_description: "Params Section - Polyaxonfile YAML Specification Sections."
 visibility: public
 status: published
 tags:
@@ -20,19 +20,19 @@ that will be used by the rest of our specification file.
 ## Example using a simple constant value:
 
 ```yaml
-declarations:
+params:
   batch_size: 128
 ```
 
 ## Example using a list of values or nested values
 
 ```yaml
-declarations:
+params:
   layer_units: [100, 200, 10]
 ```
 Or
 ```yaml
-declarations:
+params:
   convolutions:
     conv1:
        kernels: [32, 32]
@@ -64,7 +64,7 @@ The double-brackets is important and indicate that we want to use our declaratio
 
 The declaration are particularly important for descriptive models.
 
-All your declaration will be exported under the environment variable name `POLYAXON_DECLARATIONS`.
+All your declaration will be exported under the environment variable name `POLYAXON_PARAMS`.
 
-> tip "Polyaxon export your declarations under environment variable name `POLYAXON_DECLARATIONS`"
-> Check how you can [get the experiment declarations](/references/polyaxon-tracking-api/in-cluster/#hyperparams) to use them with your models.
+> tip "Polyaxon export your params under environment variable name `POLYAXON_PARAMS`"
+> Check how you can [get the experiment params](/references/polyaxon-tracking-api/in-cluster/#hyperparams) to use them with your models.

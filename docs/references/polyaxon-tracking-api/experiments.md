@@ -231,20 +231,25 @@ experiment.log_data_ref(data=dataset2, data_name='my_dataset2')
 experiment.log_data_ref(data=dataset3, data_name='my_dataset3', reset=True)
 ```
 
-### log_output
+### log_artifact
+
+> `log_output` is now deprecated in favor of `log_artifact`
 
 Logs a local file as an artifact and optionally upload it to the registered cloud storage.
 
 ```python
-experiment.log_output(file_path)
+experiment.log_artifact(file_path)
 ```
 
-### log_outputs
+### log_artifacts
+
+> `log_outputs` is now deprecated in favor of `log_outputs` 
+
 
 Logs a local directory as artifacts and optionally upload it to the registered cloud storage.
 
 ```python
-experiment.log_outputs(dir_path)
+experiment.log_artifacts(dir_path)
 ```
 
 ### get\_log\_level

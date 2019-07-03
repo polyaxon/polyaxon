@@ -98,8 +98,7 @@ By default Polyaxon will schedule all data, volume, paths, and storages, to your
 
 ```yaml
 environment:
-  persistence:
-    data: ['gcs-data1']
+  data_refs: ['gcs-data1']
 ```
 
 Exposes only `gcs-data1` to this run.
@@ -107,8 +106,7 @@ Exposes only `gcs-data1` to this run.
 
 ```yaml
 environment:
-  persistence:
-    data: ['gcs-data1', 'gcs-data2', 'some-other-data-on-a-volume']
+  data_refs: ['gcs-data1', 'gcs-data2', 'some-other-data-on-a-volume']
 ```
 
 ## Using the store manager to access data

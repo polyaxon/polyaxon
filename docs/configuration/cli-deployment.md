@@ -23,8 +23,9 @@ as well as walk you through some of the important config options, like database,
 ## Deploying Polyaxon
 
 In order to deploy Polyaxon, you will need to a `config.yaml`. 
-You can use `polyaxon deploy -f config.yaml check` to verify that your configuration file is valid, 
-and then you can run `polyaxon deploy -f config.yaml install`.
+ * To validate the deployment file: `polyaxon admin deploy -f config.yaml --check`
+ * To do a dry run: `polyaxon admin deploy -f config.yaml --dry_run`
+ * To install: `polyaxon admin deploy -f config.yaml`
 
 Please visit the [setup](/setup/) page to learn more about how you can setup a Polyaxon deployment.
 
@@ -33,15 +34,8 @@ Please visit the [setup](/setup/) page to learn more about how you can setup a P
 The general method to modify your a Polyaxon deployment is to:
 
  1. Make a change to the config.yaml
- 2. Run `polyaxon deploy -f config.yaml check`
- 3. Run `polyaxon deploy -f config.yaml upgrade --name=<RELEASE_NAME>`
-
-    `<RELEASE_NAME>` is the parameter you passed to `--name` when installing polyaxon with `polyaxon -f config.yaml install --name=<RELEASE_NAME>`.
-
-    If you don’t remember it, you can probably find it by doing `polyaxon deploy list`.
-
-    If you used the default values suggested in the docs, the `<RELEASE_NAME>` should be `polyaxon`
-
+ 2. Run `polyaxon admin upgrade -f config.yaml --check`
+ 3. Run `polyaxon admin upgrade -f config.yaml`
  4. Wait for the upgrade to finish, and make sure that when you do
     `kubectl --namespace=<NAMESPACE> get pod` the pods are in Ready state.
     Your configuration change has been applied!

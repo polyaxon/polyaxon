@@ -45,8 +45,8 @@ experiment.log_data_ref(data=y, data_name='dataset_y')
 experiment.log_metrics(accuracy_mean=accuracy_mean, accuracy_std=accuracy_std)
 ...
 # If you are using a cloud storage
-experiment.log_output(file_path)
-experiment.log_outputs(dir_path)
+experiment.log_artifact(file_path)
+experiment.log_artifacts(dir_path)
 ``` 
 
 ## Data references
@@ -57,17 +57,18 @@ please refer to the reference [log_params](/references/polyaxon-tracking-api/exp
 
 ## Hyperparams
 
-Since hyperparams are defined in the `declarations` section of the Polyaxonfile, 
+Since hyperparams are defined in the `params` section of the Polyaxonfile, 
 you generally don't need to set them manually. But you can always add or reset these params once your code starts running:
 
 please refer to the reference [log_params](/references/polyaxon-tracking-api/experiments/#log_params).
 
 You can also get the hyperparams that the experiment has:
 
- * `experiment.get_declarations`: Returns all the experiment declarations based on both, 
- this value is also exposed as an env var `POLYAXON_DECLARATIONS`.
+ * `experiment.get_params`: Returns all the experiment params based on both, 
+ this value is also exposed as an env var `POLYAXON_PARAMS`.
 
-    * declarations section
+    * inputs section
+    * params section
     * matrix section
 
 ## Metrics
@@ -85,8 +86,8 @@ please refer to the reference [log_metrics](/references/polyaxon-tracking-api/ex
 
 You can save your outputs and artifacts by:
  * saving them on the outputs path exposed by Polyaxon `get_outputs_path`
- * or if you are using a cloud storage by using [log_output](/references/polyaxon-tracking-api/experiments/#log_output) 
-   and [log_outputs](/references/polyaxon-tracking-api/experiments/#log_outputs).
+ * or if you are using a cloud storage by using [log_artifact](/references/polyaxon-tracking-api/experiments/#log_artifact) 
+   and [log_artifacts](/references/polyaxon-tracking-api/experiments/#log_artifacts).
 
 ## Get log level: 
 

@@ -91,7 +91,7 @@ polyaxon_client.project.list_experiments(
     independent=None,
     group=None,
     metrics=None,
-    declarations=None,
+    params=None,
     query=None,
     sort=None,
     page=1)

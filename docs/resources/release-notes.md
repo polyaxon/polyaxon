@@ -9,6 +9,94 @@ tags:
     - reference
 ---
 
+## 0.5.0
+
+ * Add "Cluster Level Dynamic Configuration":
+   * Move scheduling configuration to UI.
+   * Move integrations to UI.
+   * Move secrets and config maps catalogs to UI.
+   * Move github/gitlab/bitbucket/azure authentication setup to UI.
+   * Move private repos setup to UI.
+   * More hardware accelerator setup to UI.
+   * Add possibility to create an access catalog for registries and git repos.
+   * Add possibility to create an access catalog for connections, data, logs, outputs. 
+   * Move kaniko, default tensorboards config, default notebooks config to UI.  
+ * Introduce security group with optional and configurable user UID and group GID for all Polyaxon services and scheduled runs.
+ * Mount all volumes with the proper security context.
+ * Add a warning when code is big.
+ * Add possibility to specify a service account for jobs/experiments/builds/notebooks/tensorboards.
+   * By default polyaxon uses a worker service account.
+   * Users can now use a default service account for each primitive cluster wide.
+   * Polyaxonfile spec allows to override the service account per run.
+ * Add possibility to specify a default resources to use for jobs/experiments/builds/notebooks/tensorboards.
+   * By default polyaxon schedules runs without resources.
+   * Users can now set a default resources to use for each primitive cluster wide.
+   * Polyaxonfile spec allows to override the resources per run.
+ * Add pod restarts.
+   * By default polyaxon schedules runs without pod restarts.
+   * Users can now set a default pod restarts to use for each primitive cluster wide.
+   * Polyaxonfile spec allows to override the pod restarts per run.
+ * Add minimum resources requirement for injected containers (init and sidecar).
+   * This will fix the issue in clusters with pod security policy requiring that all pods must specify resources. 
+ * Update redis chart and support using external/managed redis instance.
+ * Update rabbitmq chart and support using external/managed rabbitmq instance.
+ * Update docker-registry chart and support using external/managed docker registries.
+ * Add possibility to turn-off rabbitmq completely and use Redis as broker instead.
+ * Make .polyaxonignore honour .gitignore syntax.
+ * Rename declarations section to params.
+ * Add typing to Polyaxonfiles and schemas.
+ * Extract polyaxon dockerizer logic to reuse in other environment.
+ * Add possibility to run polyaxonfiles and update params without changing the yaml files: `polyaxon run -f polyaxonfile.yaml -P param1=value1 -P param2=value2`.
+ * Add possibility to run polyaxonfiles locally. 
+   * Allow to run experiments (non-distributed) locally either by invoking a python with a conda/pip env or by generating a dockerfile, with out-of-the box tracking if POLYAXON_NO_OP is not set to true.
+ * Deprecate docker registry authentication using user/password in favor of credential stores and credential helpers.
+ * Add documentation for using ECR as Docker registry.
+ * Mark kaniko stable: possibility to pull / push from any docker registry.
+ * Mark jupyter lab stable.
+ * Add sorting for outputs.
+ * Update internal architecture to allow development and extending the platform with internal plugins.
+ * Expose one single port for accessing all internal Polyaxon's APIs.
+ * Update e2e tests with different deployments configurations.
+ * Extend input schema to allow users to easily convert boolean params to flags in polyaxonfiles.
+ * Add caching layer when checking statuses.
+ * Add encryptor for managing secrets in-cluster with future possibility to use vault as a backend, currently the backend uses fernet.
+ * Add possibility to search entities by name or description using regex. 
+ * Improve deploy using CLI, add new command: `polyaxon admin`.
+ * Extend build king with `lang_env` to easily export language environment.
+ * Add initial work on early stopping policies for hyperparams tuning.
+ * Add possibility to install auto-completion for polyaxon CLI.
+ * Add possibility to invalidate individual builds and builds under a project.
+ * Update API logic to save raw content to post-resolve contexts.
+ * Add admin deploy/upgrade --dry_run commands for debugging purpose.
+ * Add alpha version of polyaxon on docker-compose.
+ * Remove several dependencies and replace with simple utils functions.
+ * Allow verify_ssl to be turned on via the CLI.
+ * Add tensorflow tracking to contrib.
+ * Improve keras tracking.
+ * Add fastai tracking to contrib.
+ * Improve init container stability by introducing retry on ConnectionError.
+ * Improve docs for ingress's annotations.
+ * Fix issues in log_artifact and log_artifacts.
+ * Fix issue with default ssl path: SSL with node port service should not mount certs in /etc/ssl by default.
+ * Fix issue when updating the internal API port.
+ * Fix issue with using S3 as outputs storage.
+ * Fix issue with the Helm chart not working correctly when RBAC is disabled (This is issue was noticed in Minikube with RBAC disabled).
+ * Fix issue preventing to install Polyaxon with the latest helm version.
+ * Fix issue with default build backend being ignored in some instances.
+ * Fix issue breaking Jupyter lab theme in the some recent versions.
+ * Fix issue with scheduling S3 credentials for tensorboards.
+ * Fix Experiment restart --copy creates additional folder.
+ * Fix restart and resume experiments in groups not adding the new experiment to the same group.
+ * Add resume button to UI. 
+ * Add initial data/artifacts/logs stores and catalogs.
+ * Add initial documentation on Polylow: an actions/events pipeline engine for creating and automating machine learning workflows.
+   * Allow to run ops in parallel while respecting concurrency in pipelines.
+   * Allow to run pipelines following schedules: 2 interfaces intervals and crons.
+   * Allow to run pipelines with complex ops dependencies as DAGs.
+   * All to resolve ops' definitions, from inline templates, local templates, registries of actions/events.
+   * Add initial work on supporting airflow out-of-the-box or possibility to easily port ops to Polyaxon to run container native operations.
+ * Add templating for operationalizing and reusing Polyaxon's experiments and jobs.
+
 ## 0.4.4
 
 This is a patch release on top of 0.4.3/0.4.2 containing no breaking changes., this version has no data or db migrations.

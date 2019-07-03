@@ -63,16 +63,9 @@ You need to register a new [application on github](https://github.com/settings/a
 
 You should provide a callback URL: [Domain/IP]`/oauth/github`
 
-And use your client id and secret token during the deployment:
+And use your client id and secret token using the settings page (auth section).
 
-```yaml
-auth:
-  github:
-    enabled: true
-    clientId:
-    clientSecret:
-```
-
+Please see this [section for more details](/integrations/sso-github/).
 
 ### Gitlab
 
@@ -80,28 +73,10 @@ You need to register a new [application on gitlab](http://doc.gitlab.com/ce/inte
 
 You should provide a callback URL: [Domain/IP]`/oauth/gitlab`
 
-And use your client id and secret token during the deployment:
+And use your client id and secret token using the settings page (auth section). 
+If you have an on-premise Gitlab installation you can additionally provide your Gitlab url.
 
-```yaml
-auth:
-  gitlab:
-    enabled: true
-    clientId:
-    clientSecret:
-```
-
-If you have an on-premise Gitlab installation you can additionally provide your Gitlab url:
-
-
-```yaml
-auth:
-  gitlab:
-    enabled: true
-    clientId:
-    clientSecret:
-    url:
-```
-
+Please see this [section for more details](/integrations/sso-gitlab/).
 
 ### Bitbucket
 
@@ -109,15 +84,9 @@ You need to register a new [application on bitbucket](https://confluence.atlassi
 
 You should provide a callback URL: [Domain/IP]`/oauth/bitbucket`
 
-And use your client id and secret token during the deployment:
+And use your client id and secret token using the settings page (auth section).
 
-```yaml
-auth:
-  bitbucket:
-    enabled: true
-    clientId:
-    clientSecret:
-```
+Please see this [section for more details](/integrations/sso-bitbucket/).
 
 ### Microsoft (Azure)
 
@@ -125,16 +94,7 @@ You need to register a new [application on Azure](https://docs.microsoft.com/en-
 
 You will need to provide a reply URL: [Domain/IP]`/oauth/azure`
 
-And use your client id and secret token during the deployment:
-
-```yaml
-auth:
-  azure:
-    enabled: true
-    tenantId:
-    clientId:
-    clientSecret:
-```
+And use your client id and secret token using the settings page (auth section).
 
 ## Signup/Login
 

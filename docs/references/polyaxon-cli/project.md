@@ -232,11 +232,11 @@ $ polyaxon project experiments
 ```
 
 Get all experiments with with status {created or running}, and creation
-date between 2018-01-01 and 2018-01-02, and declarations activation equal
+date between 2018-01-01 and 2018-01-02, and param activation equal
 to sigmoid and metric loss less or equal to 0.2
 
 ```bash
-$ polyaxon project experiments -q "status:created|running, started_at:2018-01-01..2018-01-02, declarations.activation:sigmoid, metric.loss:<=0.2"
+$ polyaxon project experiments -q "status:created|running, started_at:2018-01-01..2018-01-02, params.activation:sigmoid, metrics.loss:<=0.2"
 ```
 
 Get all experiments sorted by update date
@@ -250,7 +250,7 @@ Options:
 option | type | description
 -------|------|------------
   -m, --metrics | | List experiments with their metrics.
-  -d, --declarations | | List experiments with their declarations/params.
+  -p, --params | | List experiments with their declarations/params.
   -i, --independent | | To return only independent experiments.
   -g, --group| INTEGER | To filter experiments for a specific group.
   -q, --query| TEXT | To filter the experiments based on this query spec.

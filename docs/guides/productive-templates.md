@@ -35,7 +35,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   lr: 0.01
   batch_size: 128
 
@@ -61,7 +61,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   lr: 0.2
   batch_size: 64
 ```
@@ -72,7 +72,7 @@ Using this override file:
 polyaxon run -f polyaxonfile.yaml -f polyaxonfile_params.yaml
 ```
 
-By running this command your experiment will be started using the declarations of the override file.
+By running this command your experiment will be started using the params of the override file.
 
 ## Overriding the node scheduling
 

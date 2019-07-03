@@ -119,8 +119,7 @@ By default Polyaxon will schedule all data, volume, paths, and storages, to your
 
 ```yaml
 environment:
-  persistence:
-    data: ['s3-data1']
+  data_refs: ['s3-data1']
 ```
 
 Exposes only `s3-data1` to this run.
@@ -128,8 +127,7 @@ Exposes only `s3-data1` to this run.
 
 ```yaml
 environment:
-  persistence:
-    data: ['s3-data1', 's3-data2', 'some-other-data-on-a-volume']
+  data_refs: ['s3-data1', 's3-data2', 'some-other-data-on-a-volume']
 ```
 
 ## Using the store manager to access data

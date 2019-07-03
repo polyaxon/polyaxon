@@ -51,12 +51,15 @@ Please check this [guide](https://cloud.google.com/sql/docs/postgres/connect-kub
 
 ## Update polyaxon deployment
 
-```python
+```yaml
 postgresql:
   enabled: false
-  postgresUser: <username>
-  postgresPassword: <password>
-  postgresDatabase: <database>
-  externalPostgresHost: <server_name>
+
+externalServices:
+  postgresql:
+    user: <username>
+    password: <password>
+    database: <database>
+    host: <server_ip>
 ``` 
 

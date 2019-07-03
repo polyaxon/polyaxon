@@ -34,10 +34,12 @@ to use code from public Bitbucket repositories.
 Bitbucket allows to create [app passwords](https://confluence.atlassian.com/bitbucket/app-passwords-828781300.html), 
 you can also create a user `polyaxon` with read only access to your organization repos, and use the username/password. 
 
-## Update your deployment config file and deploy/upgrade
+## Update your private repos setting
+
+In the settings page, under private repos, set the credentials:
 
 ```yaml
-reposAccessToken: "username:password"
+"username:password"
 ```
 
 ## Setting an external repo for code tracking
