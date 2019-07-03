@@ -113,7 +113,7 @@ export default class Option extends React.Component<Props, State> {
   };
 
   public parseValue = (value: any) => {
-    if (this.isObj() && value) {
+    if (this.isObj() && !_.isNil(value)) {
       try {
         return JSON.parse(value);
       } catch (e) {
