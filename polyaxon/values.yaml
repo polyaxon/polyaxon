@@ -413,7 +413,6 @@ redis:
   enabled: true
   usePassword: false
   password:
-  externalRedisHost:
   image:
 #    repository: redis
     tag: 5.0.4

@@ -32,20 +32,14 @@ It also packages some required dependencies for Polyaxon:
  * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 
-> **Note**: It's possible to provide your own database host.
-
-> **Warning**: This chart does not yet allow for you to specify your redis host, rabbitmq host.
+> **Note**: It's possible to provide your own manged version of each one fo these dependecies.
 
 This chart can be installed on single node or multi-nodes cluster,
-in which case you need to provide some volumes with `ReadWriteMany`.
+in which case you need to provide some volumes with `ReadWriteMany` or cloud buckets.
 An nfs provisioner can be used in cases where you want to try the platform on multi-nodes cluster
 without the need to create your own volumes. Please see [polyaxon-nfs-provisioner](https://github.com/polyaxon/polyaxon-nfs-provisioner)
 
-> **Warning**: You should know that using the nfs provisioner is not meant to be a production option.
-
 > **Tip**: The full list of the default [values.yaml](https://github.com/polyaxon/polyaxon-chart/blob/master/polyaxon/values.yaml)
-
-> **Tip**: We created a [small interactive app](https://install.polyaxon.com) to help you navigate the most important options to install Polyaxon.
 
 
 ## Prerequisites
@@ -115,6 +109,37 @@ helm del --purge  <RELEASE_NAME>  --no-hooks
 
 This can be particularly useful if your deployment is not working, because the hooks will most probably fail.
 
+### How to set the configuration
+
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+
+```bash
+$ helm install --name=<RELEASE_NAME> \
+    --namespace=<NAMESPACE>\
+    --set persistence.enabled=false,email.host=email \
+    polyaxon
+```
+
+Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
+
+```bash
+$ helm install --name my-release -f values.yaml polyaxon
+```
+
+### DeploymentType
+
+| Parameter                       | Description                                                                                                           | Default
+| --------------------------------| ----------------------------------------------------------------------------------------------------------------------| ----------------------------------------------------------
+| `DeploymentType`                | The deployment type tells polyaxon how to show instructions ('kuberentes', 'minikube', 'microk8s', 'docker-compose')  | `kubernetes`
+
+
+### deploymentVersion
+
+| Parameter                       | Description                                                                                                                                             | Default
+| --------------------------------| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------
+| `deploymentVersion`             | The deployment version to use, this is important if you are using polyaxon-cli to avoid accidentally deploying/upgrading to a version without noticing  | `latest`
+
+
 ### Namespace
 
 | Parameter                       | Description                                                                                          | Default
@@ -174,6 +199,18 @@ i.e
 annotations:
   domainName: polyaxon.my.domain.com
 ```
+
+### SSL
+
+| Parameter | Description                                                             | Default
+| ----------| ------------------------------------------------------------------------| ----------------------------------------------------------
+| `ssl`     | To set ssl and serve https with Polyaxon deployed with NodePort service | `{}`
+
+### dns
+
+| Parameter | Description                                                             | Default
+| ----------| ------------------------------------------------------------------------| ----------------------------------------------------------
+| `dns`     | DNS configuration for cluster running with custom dns setup             | `{}`
 
 ### Time zone
 
@@ -397,7 +434,7 @@ persistence:
 
 | Parameter                          | Description                                                  | Default
 | -----------------------------------| -------------------------------------------------------------| ----------------------------------------------------------
-| `nodeSelector`                    | Node selector for core pod assignment                        | `{}`
+| `nodeSelector`                     | Node selector for core pod assignment                        | `{}`
 | `tolerations`                      | Tolerations for core pod assignment                          | `[]`
 | `affinity`                         | Affinity for core                                            | Please check the values
 
@@ -417,31 +454,6 @@ Dependent charts can also have values overwritten. Preface values with
 | `resourcesDaemon.enabled`          | resourcesDaemon enabled                                      | `true` 
 | `resourcesDaemon.tolerations`      | Tolerations for resourcesDaemon pod assignment               | `[]` 
 
-
-### Secrets and ConfigMaps
-
-| Parameter    | Description                                     | Default
-| -------------| ----------------------------------------------- | -------
-| `secretRefs`    | List of secrets' names to mount for you jobs    | `[]`
-| `configmapRefs` | List of configmaps' names to mount for you jobs | `[]`
-
-
-### How to set the configuration
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```bash
-$ helm install --name=<RELEASE_NAME> \
-    --namespace=<NAMESPACE>\
-    --set persistence.enabled=false,email.host=email \
-    polyaxon
-```
-
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
-
-```bash
-$ helm install --name my-release -f values.yaml polyaxon
-```
 
 ### IPs/Hosts White list
 
