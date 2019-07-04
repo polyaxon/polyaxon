@@ -11,6 +11,7 @@ from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.environments.pods import EnvironmentSchema
 from polyaxon_schemas.ops.io import IOSchema
 from polyaxon_schemas.ops.logging import LoggingSchema
+from polyaxon_schemas.ops.params import get_param_display_value
 
 PARAM_REGEX = re.compile(r'{{\s*([^\s]*)\s*}}')
 
@@ -112,9 +113,10 @@ class BaseOpConfig(BaseConfig):
         params = {}
         for param in self._validated_params:
             if not param.entity_ref:
-                params[param.name] = param.value
+                value = param.value
             else:
-                params[param.name] = context[param.value.replace('.', '__')]
+                value = context[param.value.replace('.', '__')]
+            params[param.name] = get_param_display_value(param=param, value=value)
 
         return params
 

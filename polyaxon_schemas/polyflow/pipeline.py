@@ -30,6 +30,7 @@ class PipelineSchema(ExecutableSchema):
     version = fields.Int(allow_none=True)
     kind = fields.Str(allow_none=True, validate=validate.Equal('pipeline'))
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    description = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     logging = fields.Nested(LoggingSchema, allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     backend = fields.Str(allow_none=True)
@@ -50,6 +51,7 @@ class PipelineConfig(ExecutableConfig):
         'kind',
         'version',
         'name',
+        'description',
         'logging',
         'tags',
         'backend',
@@ -63,6 +65,7 @@ class PipelineConfig(ExecutableConfig):
                  kind=None,
                  version=None,
                  name=None,
+                 description=None,
                  logging=None,
                  tags=None,
                  backend=None,
@@ -76,6 +79,7 @@ class PipelineConfig(ExecutableConfig):
         self.kind = kind
         self.version = version
         self.name = name
+        self.description = description
         self.logging = logging
         self.tags = tags
         self.backend = backend
@@ -107,7 +111,10 @@ class PipelineConfig(ExecutableConfig):
             return upstream
 
         for param in op.params:
-            param_ref = ops_params.get_param(name=param, value=op.params[param], iotype=None)
+            param_ref = ops_params.get_param(name=param,
+                                             value=op.params[param],
+                                             iotype=None,
+                                             is_flag=None)
             if param_ref and param_ref.entity == ops_params.OPS:
                 upstream.add(param_ref.entity_ref)
 

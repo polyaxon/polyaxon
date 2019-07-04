@@ -8,6 +8,9 @@ tags: ['foo', 'bar']
 inputs:
   - name: loss
     type: str
+  - name: flag
+    type: bool
+    is_flag: true
 
 
 build:
@@ -19,4 +22,4 @@ build:
     - ['KEY2', 2]
 
 run:
-  cmd: video_prediction_train --loss={{loss}}
+  cmd: video_prediction_train --loss={{loss}} {{ flag }}

@@ -17,11 +17,17 @@ JOBS = 'jobs'
 ENTITIES = {JOBS, EXPERIMENTS, OPS}
 
 
-class ParamSpec(namedtuple("ParamSpec", "name iotype value entity entity_ref")):
+class ParamSpec(namedtuple("ParamSpec", "name iotype value entity entity_ref is_flag")):
     pass
 
 
-def get_param(name, value, iotype):
+def get_param_display_value(param, value):
+    if param.is_flag:
+        return '--{}'.format(param.name) if value else ''
+    return value
+
+
+def get_param(name, value, iotype, is_flag):
     """
     Checks if the value is param ref and validates it.
 
@@ -29,11 +35,21 @@ def get_param(name, value, iotype):
     raises: ValidationError
     """
     if not isinstance(value, six.string_types):
-        return ParamSpec(name=name, iotype=iotype, value=value, entity=None, entity_ref=None)
+        return ParamSpec(name=name,
+                         iotype=iotype,
+                         value=value,
+                         entity=None,
+                         entity_ref=None,
+                         is_flag=is_flag)
 
     param = REGEX.search(value)
     if not param:
-        return ParamSpec(name=name, iotype=iotype, value=value, entity=None, entity_ref=None)
+        return ParamSpec(name=name,
+                         iotype=iotype,
+                         value=value,
+                         entity=None,
+                         entity_ref=None,
+                         is_flag=is_flag)
 
     param = param.group(1)
     param_parts = param.split('.')
@@ -56,7 +72,8 @@ def get_param(name, value, iotype):
                      iotype=iotype,
                      value=param,
                      entity=param_parts[0],
-                     entity_ref=param_parts[1])
+                     entity_ref=param_parts[1],
+                     is_flag=is_flag)
 
 
 def validate_param(param, context):
@@ -108,7 +125,10 @@ def validate_params(params, inputs, outputs, context=None, is_template=True, is_
     for inp in inputs:
         if inp.name in params:
             param_value = params[inp.name]
-            param = get_param(name=inp.name, value=param_value, iotype=inp.iotype)
+            param = get_param(name=inp.name,
+                              value=param_value,
+                              iotype=inp.iotype,
+                              is_flag=inp.is_flag)
             if param.entity_ref:
                 validate_param(param, context)
             else:  # Plain value
@@ -122,12 +142,16 @@ def validate_params(params, inputs, outputs, context=None, is_template=True, is_
                                               value=inp.default,
                                               iotype=inp.iotype,
                                               entity=None,
-                                              entity_ref=None))
+                                              entity_ref=None,
+                                              is_flag=inp.is_flag))
 
     for out in outputs:
         if out.name in params:
             param_value = params[out.name]
-            param = get_param(name=out.name, value=param_value, iotype=out.iotype)
+            param = get_param(name=out.name,
+                              value=param_value,
+                              iotype=out.iotype,
+                              is_flag=out.is_flag)
             validated_params.append(param)
             if param.entity_ref:
                 validate_param(param, None)
@@ -141,7 +165,8 @@ def validate_params(params, inputs, outputs, context=None, is_template=True, is_
                                               value=out.default,
                                               iotype=out.iotype,
                                               entity=None,
-                                              entity_ref=None))
+                                              entity_ref=None,
+                                              is_flag=out.is_flag))
     extra_params = set(six.iterkeys(params)) - set(processed_params)
     if extra_params:
         raise ValidationError('Received unexpected params `{}`.'.format(extra_params))

@@ -44,15 +44,31 @@ class TestPolyaxonfileWithTypes(TestCase):
 
     def test_required_inputs_with_params(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
-                               params={'loss': 'bar'})
+                               params={'loss': 'bar', 'flag': False})
         spec = plxfile.specification
         spec.parse_data()
         assert spec.version == 1
         assert spec.logging is None
         assert set(spec.tags) == {'foo', 'bar'}
-        assert spec.params == {'loss': 'bar'}
+        assert spec.params == {'loss': 'bar', 'flag': ''}
         assert spec.build.image == 'my_image'
-        assert spec.run.cmd == 'video_prediction_train --loss=bar'
+        assert spec.run.cmd == 'video_prediction_train --loss=bar '
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.is_experiment
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.is_experiment is True
+
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
+                               params={'loss': 'bar', 'flag': True})
+        spec = plxfile.specification
+        spec.parse_data()
+        assert spec.version == 1
+        assert spec.logging is None
+        assert set(spec.tags) == {'foo', 'bar'}
+        assert spec.params == {'loss': 'bar', 'flag': '--flag'}
+        assert spec.build.image == 'my_image'
+        assert spec.run.cmd == 'video_prediction_train --loss=bar --flag'
         assert spec.environment is None
         assert spec.framework is None
         assert spec.is_experiment
