@@ -228,7 +228,7 @@ class TestServiceConfig(TestCase):
     def test_redis_config(self):
         config_dict = {
             'usePassword': 'dsf',
-            'redisPassword': 'sdf',
+            'password': 'sdf',
             'externalRedisHost': 123
         }
         with self.assertRaises(ValidationError):
@@ -237,7 +237,7 @@ class TestServiceConfig(TestCase):
         config_dict = {
             'enabled': True,
             'usePassword': True,
-            'redisPassword': 'sdf',
+            'password': 'sdf',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {
@@ -253,7 +253,7 @@ class TestServiceConfig(TestCase):
         assert config.to_light_dict() == config_dict
 
         config_dict = {
-            'redisPassword': 'sdf',
+            'password': 'sdf',
             'resources': {'requests': {'cpu': 2}, 'limits': {'memory': '500Mi'}},
             'tolerations': [
                 {

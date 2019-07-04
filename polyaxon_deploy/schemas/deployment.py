@@ -35,6 +35,7 @@ class DeploymentSchema(BaseSchema):
     rbac = fields.Nested(RBACSchema, allow_none=True)
     polyaxonSecret = fields.Str(allow_none=True)
     internalToken = fields.Str(allow_none=True)
+    passwordLength = fields.Int(allow_none=True)
     ssl = fields.Nested(SSLSchema, allow_none=True)
     serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
     adminViewEnabled = fields.Bool(allow_none=True)
@@ -85,6 +86,10 @@ class DeploymentSchema(BaseSchema):
     securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
     externalServices = fields.Nested(ExternalServicesSchema, allow_none=True)
 
+    # Pending validation
+    dns = fields.Raw(allow_none=True)
+    plugins = fields.Raw(allow_none=True)
+
     @staticmethod
     def schema_config():
         return DeploymentConfig
@@ -101,7 +106,9 @@ class DeploymentConfig(BaseConfig):
                  rbac=None,
                  polyaxonSecret=None,
                  internalToken=None,
+                 passwordLength=None,
                  ssl=None,
+                 dns=None,
                  serviceType=None,
                  adminViewEnabled=None,
                  timeZone=None,
@@ -145,7 +152,8 @@ class DeploymentConfig(BaseConfig):
                  dirs=None,
                  mountPaths=None,
                  securityContext=None,
-                 externalServices=None):
+                 externalServices=None,
+                 plugins=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
         self.clusterId = clusterId
@@ -153,7 +161,9 @@ class DeploymentConfig(BaseConfig):
         self.rbac = rbac
         self.polyaxonSecret = polyaxonSecret
         self.internalToken = internalToken
+        self.passwordLength = passwordLength
         self.ssl = ssl
+        self.dns = dns
         self.serviceType = serviceType
         self.adminViewEnabled = adminViewEnabled
         self.timeZone = timeZone
@@ -198,3 +208,4 @@ class DeploymentConfig(BaseConfig):
         self.mountPaths = mountPaths
         self.securityContext = securityContext
         self.externalServices = externalServices
+        self.plugins = plugins

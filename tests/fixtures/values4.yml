@@ -135,3 +135,19 @@ ldap:
   groupSearchGroupType:
   requireGroup:
   denyGroup:
+
+ssl:
+  enabled: true
+  secretName: 'polyaxon-cert'
+  path: /etc/tls
+
+dns:
+  backend: "coredns"
+  customCluster: "custom.cluster.name"
+
+securityContext:
+  enabled: true
+  user: 2222
+  group: 2222
+
+passwordLength: 4

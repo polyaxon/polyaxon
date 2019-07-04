@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields
+from marshmallow import EXCLUDE, fields
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 
 from polyaxon_schemas.ops.environments.resources import K8SContainerResourcesSchema
 
 
 class ServiceSchema(BaseSchema):
+    enabled = fields.Bool(allow_none=True)
     image = fields.Str(allow_none=True)
     imageTag = fields.Str(allow_none=True)
     imagePullPolicy = fields.Str(allow_none=True)
     replicas = fields.Int(allow_none=True)
     concurrency = fields.Int(allow_none=True)
     resources = fields.Nested(K8SContainerResourcesSchema, allow_none=True)
+
+    class Meta:
+        unknown = EXCLUDE
 
     @staticmethod
     def schema_config():
@@ -23,6 +27,7 @@ class ServiceSchema(BaseSchema):
 class ServiceConfig(BaseConfig):
     SCHEMA = ServiceSchema
     REDUCED_ATTRIBUTES = [
+        'enabled',
         'image',
         'imageTag',
         'imagePullPolicy',
@@ -32,12 +37,14 @@ class ServiceConfig(BaseConfig):
     ]
 
     def __init__(self,  # noqa
+                 enabled=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
                  replicas=None,
                  concurrency=None,
                  resources=None):
+        self.enabled = enabled
         self.image = image
         self.imageTag = imageTag
         self.imagePullPolicy = imagePullPolicy
@@ -229,8 +236,9 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
 
 
 class RedisSchema(ThirdPartyServiceSchema):
+    image = fields.Raw(allow_none=True)
     usePassword = fields.Bool(allow_none=True)
-    redisPassword = fields.Str(allow_none=True)
+    password = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -241,13 +249,13 @@ class RedisConfig(ThirdPartyServiceConfig):
     SCHEMA = RedisSchema
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
         'usePassword',
-        'redisPassword',
+        'password',
     ]
 
     def __init__(self,  # noqa
                  enabled=None,
                  usePassword=None,
-                 redisPassword=None,
+                 password=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -269,7 +277,7 @@ class RedisConfig(ThirdPartyServiceConfig):
             affinity=affinity,
             tolerations=tolerations, )
         self.usePassword = usePassword
-        self.redisPassword = redisPassword
+        self.password = password
 
 
 class RabbitmqSchema(ThirdPartyServiceSchema):

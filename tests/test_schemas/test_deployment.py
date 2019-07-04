@@ -138,6 +138,8 @@ class TestDeploymentConfig(TestCase):
         assert len(config.persistence.outputs) == 3
         assert config.trackerBackend is None
         assert config.ldap is None
+        assert config.ssl is None
+        assert config.dns is None
 
     def test_read_deploy_config_values4(self):
         config = reader.read('tests/fixtures/values4.yml')
@@ -183,6 +185,15 @@ class TestDeploymentConfig(TestCase):
         assert len(config.persistence.outputs) == 2
         assert config.trackerBackend is None
         assert config.ldap is not None
+        assert config.ssl.enabled is True
+        assert config.ssl.secretName == 'polyaxon-cert'
+        assert config.ssl.path == '/etc/tls'
+        assert config.dns == {'backend': "coredns", 'customCluster': "custom.cluster.name"}
+        assert config.securityContext is not None
+        assert config.securityContext.enabled is True
+        assert config.securityContext.user == 2222
+        assert config.securityContext.group == 2222
+        assert config.passwordLength == 4
 
     def test_read_deploy_config_values5(self):
         config = reader.read('tests/fixtures/values5.yml')
@@ -387,3 +398,7 @@ class TestDeploymentConfig(TestCase):
     def test_read_deploy_config_wrong_values2(self):
         with self.assertRaises(ValidationError):
             reader.read('tests/fixtures/wrong_values2.yml')
+
+    def test_read_deploy_config_all_values(self):
+        config = reader.read('tests/fixtures/all_values.yml')
+        assert isinstance(config, DeploymentConfig)
