@@ -40,10 +40,7 @@ spec:
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["clean_notebooks"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
       - name: clean-tensorboards
@@ -51,9 +48,6 @@ spec:
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["clean_tensorboards"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}

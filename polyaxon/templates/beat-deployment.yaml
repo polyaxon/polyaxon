@@ -41,10 +41,7 @@ spec:
         image: "{{ .Values.beat.image }}:{{ .Values.beat.imageTag }}"
         imagePullPolicy: {{ .Values.beat.imagePullPolicy }}
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
         resources:
@@ -59,10 +56,7 @@ spec:
         imagePullPolicy: {{ .Values.crons.imagePullPolicy }}
         args: ["--concurrency={{ .Values.crons.concurrency }}"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
         resources:

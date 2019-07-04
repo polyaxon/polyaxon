@@ -40,10 +40,7 @@ spec:
         imagePullPolicy: {{ .Values.hooks.imagePullPolicy }}
         args: ["migrate"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
         - name: POLYAXON_DB_NO_CHECK
           value: "true"

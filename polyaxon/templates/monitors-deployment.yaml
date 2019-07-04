@@ -44,10 +44,7 @@ spec:
         imagePullPolicy: {{ .Values.eventMonitors.namespace.imagePullPolicy }}
         args: ["--sleep_interval={{ .Values.eventMonitors.namespace.sleepInterval }}", "--persist={{ .Values.eventMonitors.namespace.persists }}"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
         resources:
@@ -65,10 +62,7 @@ spec:
         imagePullPolicy: {{ .Values.eventMonitors.statuses.imagePullPolicy }}
         args: ["--sleep_interval={{ .Values.eventMonitors.statuses.sleepInterval }}", "--persist={{ .Values.eventMonitors.statuses.persists }}"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
         resources:

@@ -42,10 +42,7 @@ spec:
         imagePullPolicy: {{ .Values.scheduler.imagePullPolicy }}
         args: ["--concurrency={{ .Values.scheduler.concurrency }}"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.dns" . | indent 8 }}
 {{ include "config.envs" . | indent 8 }}

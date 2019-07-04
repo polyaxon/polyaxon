@@ -42,10 +42,7 @@ spec:
         imagePullPolicy: {{ .Values.k8sEventsHandlers.imagePullPolicy }}
         args: ["--concurrency={{ .Values.k8sEventsHandlers.concurrency }}"]
         envFrom:
-        - configMapRef:
-            name: {{ template "polyaxon.fullname" . }}-config
-        - secretRef:
-            name: {{ template "polyaxon.fullname" . }}-secret
+{{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
 {{ include "config.persistence.logs" . | indent 8 }}
