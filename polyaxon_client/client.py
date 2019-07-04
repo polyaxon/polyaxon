@@ -26,6 +26,7 @@ class PolyaxonClient(object):
                  api_config=None,
                  host=None,
                  token=None,
+                 port=None,
                  http_port=None,
                  ws_port=None,
                  use_https=False,
@@ -38,6 +39,7 @@ class PolyaxonClient(object):
                  timeout=None):
 
         self._api_config = api_config or ApiConfig(host=host,
+                                                   port=port,
                                                    http_port=http_port,
                                                    ws_port=ws_port,
                                                    token=token,

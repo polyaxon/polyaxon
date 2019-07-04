@@ -14,6 +14,7 @@ class ApiConfig(object):
 
     def __init__(self,
                  host=None,
+                 port=None,
                  http_port=None,
                  ws_port=None,
                  token=None,
@@ -39,10 +40,15 @@ class ApiConfig(object):
             raise PolyaxonClientException(
                 'Api config requires at least a host if not running in-cluster.')
 
-        self.http_port = http_port or settings.HTTP_PORT or (settings.DEFAULT_HTTPS_PORT
-                                                             if self.use_https
-                                                             else settings.DEFAULT_HTTP_PORT)
-        self.ws_port = ws_port or settings.WS_PORT or self.http_port
+        self.port = port
+        if port:
+            self.http_port = port
+            self.ws_port = port
+        else:
+            self.http_port = http_port or settings.HTTP_PORT or (settings.DEFAULT_HTTPS_PORT
+                                                                 if self.use_https
+                                                                 else settings.DEFAULT_HTTP_PORT)
+            self.ws_port = ws_port or settings.WS_PORT or self.http_port
         self.version = version or settings.API_VERSION
         self.internal_header = None
 
