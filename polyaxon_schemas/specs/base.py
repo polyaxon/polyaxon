@@ -123,6 +123,9 @@ class BaseSpecification(object):
         return config
 
     def parse_data(self, context=None):
+        return self.apply_context(context=context)
+
+    def apply_context(self, context=None):
         context = context or {}
         params = self._config_data.get_params(context=context)
         parsed_data = Parser.parse(self, self._config_data, params, None)
@@ -179,7 +182,7 @@ class BaseSpecification(object):
     def patch(self, values):
         values = [self._parsed_data] + to_list(values)
         spec = self.read(values=values)
-        spec.parse_data()
+        spec.apply_context()
         return spec
 
     @classmethod

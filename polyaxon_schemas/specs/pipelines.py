@@ -49,7 +49,7 @@ class PipelineSpecification(BaseSpecification):
         config = self.CONFIG.from_dict(copy.deepcopy(data))
         return config
 
-    def parse_data(self, context=None):
+    def apply_context(self, context=None):
         self._config_data.process_dag()
         self._config_data.validate_dag()
         self._config_data.process_templates()

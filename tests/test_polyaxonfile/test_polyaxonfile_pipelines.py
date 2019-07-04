@@ -14,31 +14,31 @@ class TestPolyaxonfileWithPipelines(TestCase):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/pipeline_with_no_ops.yml'))
         with self.assertRaises(PolyaxonSchemaError):
-            plx_file.specification.parse_data()
+            plx_file.specification.apply_context()
 
     def test_pipeline_with_no_templates_raises(self):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/pipeline_with_no_templates.yml'))
         with self.assertRaises(PolyaxonSchemaError):
-            plx_file.specification.parse_data()
+            plx_file.specification.apply_context()
 
     def test_pipeline_ops_not_corresponding_to_templates(self):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/pipeline_ops_not_corresponding_to_templates.yml'))
         with self.assertRaises(PolyaxonSchemaError):
-            plx_file.specification.parse_data()
+            plx_file.specification.apply_context()
 
     def test_cyclic_pipeline_raises(self):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/cyclic_pipeline.yml'))
         with self.assertRaises(PolyaxonSchemaError):
-            plx_file.specification.parse_data()
+            plx_file.specification.apply_context()
 
     def test_cron_pipeline(self):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/simple_cron_pipeline.yml'))
         spec = plx_file.specification
-        spec.parse_data()
+        spec.apply_context()
         assert len(spec.config.ops) == 1
         assert spec.config.ops[0].name == 'cron-task'
         assert spec.config.concurrency is None
@@ -50,7 +50,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/simple_recurrent_pipeline.yml'))
         spec = plx_file.specification
-        spec.parse_data()
+        spec.apply_context()
         assert len(spec.config.ops) == 1
         assert spec.config.ops[0].name == 'recurrent-task'
         assert spec.config.concurrency is None
@@ -64,7 +64,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/simple_sequential_pipeline.yml'))
         spec = plx_file.specification
-        spec.parse_data()
+        spec.apply_context()
         assert len(spec.config.ops) == 4
         assert spec.config.ops[0].name == 'job1'
         assert spec.config.ops[1].name == 'job2'
@@ -82,7 +82,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/simple_parallel_pipeline.yml'))
         spec = plx_file.specification
-        spec.parse_data()
+        spec.apply_context()
         assert len(spec.config.ops) == 4
         assert spec.config.ops[0].name == 'job1'
         assert spec.config.ops[0].dependencies is None
@@ -101,7 +101,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         plx_file = PolyaxonFile(os.path.abspath(
             'tests/fixtures/pipelines/simple_dag_pipeline.yml'))
         spec = plx_file.specification
-        spec.parse_data()
+        spec.apply_context()
         assert len(spec.config.ops) == 5
         assert spec.config.ops[0].name == 'job1'
         assert spec.config.ops[1].name == 'experiment1'

@@ -46,7 +46,7 @@ class TestPolyaxonfile(TestCase):
     def test_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'), )
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert spec.tags is None
@@ -63,7 +63,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'),
                                params={'foo': 'bar', 'value': 1.1})
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert spec.tags is None
@@ -83,7 +83,7 @@ class TestPolyaxonfile(TestCase):
     def test_simple_file_framework_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file_framework.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert spec.tags is None
@@ -97,7 +97,7 @@ class TestPolyaxonfile(TestCase):
     def test_advanced_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/advanced_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
@@ -131,7 +131,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/advanced_file_with_custom_configs_and_resources.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
@@ -227,7 +227,7 @@ class TestPolyaxonfile(TestCase):
     def test_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/matrix_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.hptuning.matrix['lr'], MatrixConfig)
@@ -253,7 +253,7 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is not None
         assert spec.artifact_refs == ['outputs1']
         assert spec.data_refs == ['data1', 'data2']
@@ -269,7 +269,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/matrix_file_with_int_float_types.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.hptuning.matrix['param1'], MatrixConfig)
@@ -293,7 +293,7 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -306,7 +306,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/matrix_file_early_stopping.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.hptuning.matrix['lr'], MatrixConfig)
@@ -334,7 +334,7 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -347,7 +347,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(
             os.path.abspath('tests/fixtures/plain/matrix_file_ignored_n_experiments.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.hptuning.matrix['lr'], MatrixConfig)
@@ -374,7 +374,7 @@ class TestPolyaxonfile(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -386,7 +386,7 @@ class TestPolyaxonfile(TestCase):
     def test_one_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/one_matrix_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert spec.hptuning is not None
@@ -398,7 +398,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.build.ref == 1
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -408,7 +408,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/run_cmd_simple_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
@@ -426,7 +426,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/run_cmd_simple_file_list_cmds.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
@@ -444,7 +444,7 @@ class TestPolyaxonfile(TestCase):
     def test_run_simple_file_with_build_env_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/run_cmd_with_build_env.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
@@ -466,7 +466,7 @@ class TestPolyaxonfile(TestCase):
     def test_run_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/run_cmd_matrix_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.hptuning.matrix['model'], MatrixConfig)
@@ -480,7 +480,7 @@ class TestPolyaxonfile(TestCase):
         assert build.image == 'my_image'
 
         spec = spec.get_experiment_spec(params)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.logging is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -498,7 +498,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/run_cmd_matrix_sampling_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.build, BuildConfig)
@@ -519,7 +519,7 @@ class TestPolyaxonfile(TestCase):
         assert build.image == 'my_image'
 
         spec = spec.get_experiment_spec(params)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.logging is not None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -537,7 +537,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_tensorflow_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
@@ -662,7 +662,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_tensorflow_with_node_selectors_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -770,7 +770,7 @@ class TestPolyaxonfile(TestCase):
     def test_distributed_horovod_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/distributed_horovod_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -852,7 +852,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_horovod_with_node_selectors_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -924,7 +924,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_pytorch_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -1005,7 +1005,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_pytorch_with_node_selectors_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -1077,7 +1077,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_mpi_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -1154,7 +1154,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_mpi_with_node_selectors_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert spec.framework == ExperimentFramework.PYTORCH
@@ -1219,7 +1219,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_mxnet_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -1347,7 +1347,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/distributed_mxnet_with_node_selectors_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_experiment
         assert isinstance(spec.logging, LoggingConfig)
@@ -1460,7 +1460,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/notebook_with_custom_environment.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_notebook
         assert spec.is_notebook is True
@@ -1500,7 +1500,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/jupyterlab_with_custom_environment.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_notebook
         assert spec.is_notebook is True
@@ -1540,7 +1540,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/tensorboard_with_custom_environment.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_tensorboard
         assert spec.is_tensorboard is True
@@ -1575,7 +1575,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/run_with_custom_environment.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_job
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
@@ -1614,7 +1614,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/build_with_custom_environment.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_build is True
         assert spec.logging is None
@@ -1648,7 +1648,7 @@ class TestPolyaxonfile(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/plain/build_with_context_and_dockerfile.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_build is True
         assert spec.logging is None

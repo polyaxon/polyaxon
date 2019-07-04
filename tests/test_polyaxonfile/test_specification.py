@@ -75,28 +75,28 @@ class TestSpecifications(TestCase):
         build_config = {'image': 'blabla'}
         config = NotebookSpecification.create_specification(build_config)
         spec = NotebookSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         spec = NotebookSpecification.read(spec.raw_data)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         assert config['build'] == build_config
         spec = NotebookSpecification.create_specification(build_config, to_dict=False)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.build.image == build_config['image']
 
     def test_create_tensorboard_specification(self):
         build_config = {'image': 'blabla'}
         config = TensorboardSpecification.create_specification(build_config)
         spec = TensorboardSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         new_spec = TensorboardSpecification.read(spec.raw_data)
-        new_spec.parse_data()
+        new_spec.apply_context()
         assert new_spec.parsed_data == config
         assert config['build'] == build_config
         spec = TensorboardSpecification.create_specification(build_config, to_dict=False)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.build.image == build_config['image']
 
     def test_create_build_specification(self):
@@ -104,21 +104,21 @@ class TestSpecifications(TestCase):
         build_config = {'image': 'blabla'}
         config = BuildSpecification.create_specification(build_config)
         spec = BuildSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         new_spec = BuildSpecification.read(spec.raw_data)
-        new_spec.parse_data()
+        new_spec.apply_context()
         assert new_spec.parsed_data == config
         assert config['image'] == build_config['image']
         spec = BuildSpecification.create_specification(build_config, to_dict=False)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.config.image == build_config['image']
 
         # Run config
         run_config = {'image': 'blabla', 'cmd': 'some command'}
         config = BuildSpecification.create_specification(run_config)
         spec = BuildSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
 
         config = BuildSpecification.create_specification(run_config,
@@ -129,18 +129,18 @@ class TestSpecifications(TestCase):
 
         config = BuildSpecification.create_specification(run_config, config_map_refs=['foo'])
         spec = BuildSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         assert config['environment']['config_map_refs'] == ['foo']
         config = BuildSpecification.create_specification(run_config, secret_refs=['foo'])
         spec = BuildSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         assert config['environment']['secret_refs'] == ['foo']
 
         assert config['image'] == 'blabla'
         spec = BuildSpecification.create_specification(run_config, to_dict=False)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.config.image == run_config['image']
 
         assert config['image'] == 'blabla'
@@ -148,7 +148,7 @@ class TestSpecifications(TestCase):
                                                        config_map_refs=['foo'],
                                                        secret_refs=['foo'],
                                                        to_dict=False)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.config.image == run_config['image']
         assert spec.environment.secret_refs == ['foo']
         assert spec.environment.config_map_refs == ['foo']
@@ -159,26 +159,26 @@ class TestSpecifications(TestCase):
         config = JobSpecification.create_specification(build_config=build_config,
                                                        run_config=run_config)
         spec = JobSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         spec = JobSpecification.read(spec.raw_data)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         spec = JobSpecification.read(config)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.parsed_data == config
         assert config['run'] == run_config
         assert config['build'] == build_config
         spec = JobSpecification.create_specification(build_config=build_config,
                                                      run_config=run_config,
                                                      to_dict=False)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.build.image == build_config['image']
         assert spec.run.cmd == run_config['cmd']
 
     def test_cluster_def_without_framework(self):
         spec = ExperimentSpecification.read(os.path.abspath(
             'tests/fixtures/plain/env_without_framework.yml'))
-        spec.parse_data()
+        spec.apply_context()
         self.assertEqual(spec.cluster_def, ({TaskType.MASTER: 1}, False))
 
     def test_patch_experiment(self):
@@ -189,9 +189,9 @@ class TestSpecifications(TestCase):
             'run': {'cmd': 'train'}
         }
         spec = ExperimentSpecification.read(content)
-        spec.parse_data()
+        spec.apply_context()
         new_spec = ExperimentSpecification.read(spec.raw_data)
-        new_spec.parse_data()
+        new_spec.apply_context()
         assert new_spec.parsed_data == content
         assert spec.params is None
 

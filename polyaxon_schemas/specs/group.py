@@ -56,7 +56,7 @@ class GroupSpecification(BaseRunSpecification):
             raise PolyaxonConfigurationError(
                 'A matrix definition is required for group specification.')
 
-    def parse_data(self, context=None):
+    def apply_context(self, context=None):
         params = self._config_data.get_params(context=context)
         parsed_data = Parser.parse(self, self._config_data, params, self.matrix_declaration_test)
         validator.validate(spec=self, data=parsed_data)

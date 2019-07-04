@@ -46,7 +46,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
                                params={'loss': 'bar', 'flag': False})
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert set(spec.tags) == {'foo', 'bar'}
@@ -62,7 +62,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/typing/required_inputs.yml'),
                                params={'loss': 'bar', 'flag': True})
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert set(spec.tags) == {'foo', 'bar'}
@@ -89,7 +89,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/typing/matrix_file_with_int_float_types.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_group
         assert isinstance(spec.hptuning.matrix['param1'], MatrixConfig)
@@ -113,7 +113,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert build is None
 
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.parse_data()
+        spec.apply_context()
         assert spec.environment is None
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
@@ -125,7 +125,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/typing/run_cmd_simple_file.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
@@ -147,7 +147,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert len(required_refs) == 1
         assert required_refs[0].name == 'model_path'
         assert required_refs[0].value == 'jobs.1.outputs.doo'
-        spec.parse_data(context={'jobs__1__outputs__doo': 'model_path'})
+        spec.apply_context(context={'jobs__1__outputs__doo': 'model_path'})
         assert spec.version == 1
         assert spec.logging is None
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
@@ -165,7 +165,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         plxfile = PolyaxonFile(os.path.abspath(
             'tests/fixtures/typing/jupyterlab_with_custom_environment.yml'))
         spec = plxfile.specification
-        spec.parse_data()
+        spec.apply_context()
         assert spec.version == 1
         assert spec.is_notebook
         assert spec.is_notebook is True
