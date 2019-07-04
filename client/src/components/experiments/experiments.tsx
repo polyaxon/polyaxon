@@ -282,7 +282,7 @@ export default class Experiments extends React.Component<Props, State> {
 
   public render() {
     const columnOptions = getColumnFilters(
-      this.props.groupId ? getExperimentAllColumnOptions() : getExperimentColumnOptions());
+      this.props.groupId ? getExperimentColumnOptions() : getExperimentAllColumnOptions());
     const sortOptions = [
       ...BASE_SORT_OPTIONS,
       ...this.state.metrics.map((metric) => `metrics.${metric}`),
