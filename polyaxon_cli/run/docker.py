@@ -112,7 +112,7 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
     build_job = BuildJob(project=project, track_logs=False)
 
     build_spec = BuildSpecification.create_specification(specification.build, to_dict=False)
-    build_spec.parse_data()
+    build_spec.apply_context()
     build_config = build_spec.config
     build_job.create(name=name,
                      description=description,

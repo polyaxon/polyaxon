@@ -119,7 +119,7 @@ def run(ctx,
 
     if local:
         try:
-            specification.parse_data()
+            specification.apply_context()
         except PolyaxonSchemaError:
             Printer.print_error('Could not run this polyaxonfile locally, '
                                 'a context is required to resolve it dependencies.')
