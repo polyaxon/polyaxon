@@ -78,7 +78,7 @@ export function archiveGroup(groupName: string, redirect: boolean = false): any 
         const dispatched = dispatch(archiveGroupActionSuccessCreator(groupName));
         if (redirect) {
           const values = groupName.split('.');
-          history.push(getProjectUrl(values[0], values[1], true) + '#group');
+          history.push(getProjectUrl(values[0], values[1], true) + '#groups');
         }
         return dispatched;
       });
