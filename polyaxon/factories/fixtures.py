@@ -234,7 +234,7 @@ exec_experiment_spec_content = """---
 """
 
 exec_experiment_spec_parsed_content = ExperimentSpecification.read(exec_experiment_spec_content)
-exec_experiment_spec_parsed_content.parse_data()
+exec_experiment_spec_parsed_content.apply_context()
 
 exec_experiment_ext_repo_spec_content = """---
     version: 1
@@ -270,7 +270,7 @@ exec_experiment_outputs_refs_content = """---
 
 exec_experiment_outputs_refs_parsed_content = ExperimentSpecification.read(
     exec_experiment_outputs_refs_content)
-exec_experiment_outputs_refs_parsed_content.parse_data()
+exec_experiment_outputs_refs_parsed_content.apply_context()
 
 exec_experiment_resources_content = """---
     version: 1
@@ -326,7 +326,7 @@ exec_experiment_resources_content = """---
 """
 exec_experiment_resources_parsed_content = ExperimentSpecification.read(
     exec_experiment_resources_content)
-exec_experiment_resources_parsed_content.parse_data()
+exec_experiment_resources_parsed_content.apply_context()
 
 tensorboard_spec_content = """---
     version: 1
@@ -340,7 +340,7 @@ tensorboard_spec_content = """---
 """
 
 tensorboard_spec_parsed_content = TensorboardSpecification.read(tensorboard_spec_content)
-tensorboard_spec_parsed_content.parse_data()
+tensorboard_spec_parsed_content.apply_context()
 
 notebook_spec_content = """---
     version: 1
@@ -354,7 +354,7 @@ notebook_spec_content = """---
 """
 
 notebook_spec_parsed_content = NotebookSpecification.read(notebook_spec_content)
-notebook_spec_parsed_content.parse_data()
+notebook_spec_parsed_content.apply_context()
 
 job_spec_content = """---
     version: 1
@@ -371,7 +371,7 @@ job_spec_content = """---
 """
 
 job_spec_parsed_content = JobSpecification.read(job_spec_content)
-job_spec_parsed_content.parse_data()
+job_spec_parsed_content.apply_context()
 
 job_spec_resources_content = """---
     version: 1
@@ -397,7 +397,7 @@ job_spec_resources_content = """---
 """
 
 job_spec_resources_parsed_content = JobSpecification.read(job_spec_resources_content)
-job_spec_resources_parsed_content.parse_data()
+job_spec_resources_parsed_content.apply_context()
 
 build_spec_content = """---
     version: 1
@@ -411,4 +411,4 @@ build_spec_content = """---
 """
 
 build_spec_parsed_content = BuildSpecification.read(build_spec_content)
-build_spec_parsed_content.parse_data()
+build_spec_parsed_content.apply_context()

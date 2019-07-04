@@ -163,7 +163,7 @@ class BuildJob(AbstractJobModel,
                                                              config_map_refs=config_map_refs,
                                                              secret_refs=secret_refs,
                                                              to_dict=False)
-        build_spec.parse_data()
+        build_spec.apply_context()
         if not nocache and build_spec.config.nocache is not None:
             # Set the config's nocache rebuild
             nocache = build_spec.config.nocache

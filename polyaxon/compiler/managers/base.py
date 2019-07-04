@@ -28,7 +28,7 @@ class BaseCompileManager(object):
         try:
             spec = cls.SPECIFICATION(values=values)  # pylint:disable=not-callable
             context = cls.create_context_for_spec(spec=spec)
-            spec.parse_data(context=context)
+            spec.apply_context(context=context)
             return spec
         except PolyaxonSchemaError as e:
             message_error = 'Received non valid specification config. %s' % e
