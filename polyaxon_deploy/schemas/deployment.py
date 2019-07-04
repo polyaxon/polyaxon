@@ -37,6 +37,7 @@ class DeploymentSchema(BaseSchema):
     internalToken = fields.Str(allow_none=True)
     passwordLength = fields.Int(allow_none=True)
     ssl = fields.Nested(SSLSchema, allow_none=True)
+    encryptionSecret = fields.Str(allow_none=True)
     serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
     adminViewEnabled = fields.Bool(allow_none=True)
     timeZone = fields.Str(allow_none=True)
@@ -109,6 +110,7 @@ class DeploymentConfig(BaseConfig):
                  passwordLength=None,
                  ssl=None,
                  dns=None,
+                 encryptionSecret=None,
                  serviceType=None,
                  adminViewEnabled=None,
                  timeZone=None,
@@ -164,6 +166,7 @@ class DeploymentConfig(BaseConfig):
         self.passwordLength = passwordLength
         self.ssl = ssl
         self.dns = dns
+        self.encryptionSecret = encryptionSecret
         self.serviceType = serviceType
         self.adminViewEnabled = adminViewEnabled
         self.timeZone = timeZone
