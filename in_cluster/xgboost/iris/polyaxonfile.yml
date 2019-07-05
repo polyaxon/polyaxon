@@ -7,11 +7,11 @@ framework: xgboost
 
 tags: [examples]
 
-declarations:
-  log_learning_rate: -3
-  max_depth: 3
-  num_rounds: 10
-  min_child_weight: 5
+inputs:
+  - {name: log_learning_rate, type: int, is_optional: true, default: -3}
+  - {name: max_depth, type: int, is_optional: true, default: 3}
+  - {name: num_rounds, type: int, is_optional: true, default: 10}
+  - {name: min_child_weight, type: int, is_optional: true, default: 5}
 
 build:
   image: python:2.7

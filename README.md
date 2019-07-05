@@ -1,12 +1,17 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-0.4.4-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
-![Release](https://img.shields.io/badge/release-0.4.4-brightgreen.svg?longCache=true)
+[![Docs](https://img.shields.io/badge/docs-0.5.0-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
+![Release](https://img.shields.io/badge/release-0.5.0-brightgreen.svg?longCache=true)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
 
 # polyaxon-examples
 
 Code for polyaxon tutorials and examples.
+
+This is the code used for [latest version of Polyaxon](https://docs.polyaxon.com/concepts/quick_start/)
+
+> If you are looking for the examples code used for v0.4, please go to the [v0.4 branch](https://github.com/polyaxon/polyaxon-examples/tree/v0.4) 
+
 
 This repository contains examples of using Polyaxon with all major Machine Learning and Deep Learning libraries, 
 including fastai, torch, sklearn, chainer, caffe, keras, tensorflow, mxnet, and Jupyter notebooks.
@@ -22,7 +27,7 @@ The examples have a comment `# Polyaxon` to show what is added to a raw code to 
 
 ### Getting Started
 
-If you are new to Polyaxon we recommend reading our [quick-start](https://docs.polyaxon.com/quick_start/) guide which explains some of the core Platform capabilities.
+If you are new to Polyaxon we recommend reading our [quick-start](https://docs.polyaxon.com/concepts/quick-start/) guide which explains some of the core Platform capabilities.
 
 ### Setup & Installation
 
