@@ -32,6 +32,7 @@ spec:
 {{ include "securityContext" . | indent 6 }}
 {{ include "config.scheduling" . | indent 6 }}
 {{ include "config.sa" . | indent 6 }}
+      restartPolicy: Never
       activeDeadlineSeconds: 360
       containers:
       - name: clean-experiments
