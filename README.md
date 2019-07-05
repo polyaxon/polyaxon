@@ -47,7 +47,7 @@ Polyaxon makes it faster, easier, and more efficient to develop deep learning ap
 
 Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
 
-> If you are looking for the documentation of Polyaxon v0.4, please [go here](https://docs.polyaxon.com/setup/). 
+> If you are looking for the documentation of Polyaxon v0.4, please [go here](https://v0-4.polyaxon.com/). 
 
 # Quick start
 
