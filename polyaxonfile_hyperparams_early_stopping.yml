@@ -3,6 +3,34 @@ version: 1
 
 kind: group
 
+framework: tensorflow
+
+inputs:
+  - name: batch_size
+    is_optional: true
+    default: 128
+    type: int
+  - name: num_steps
+    is_optional: true
+    default: 100
+    type: int
+  - name: learning_rate
+    is_optional: true
+    default: 0.001
+    type: float
+  - name: dropout
+    is_optional: true
+    default: 0.25
+    type: float
+  - name: num_epochs
+    is_optional: true
+    default: 1
+    type: int
+  - name: activation
+    is_optional: true
+    default: relu
+    type: str
+
 hptuning:
   concurrency: 2
   random_search:
@@ -21,15 +49,10 @@ hptuning:
     activation:
       pvalues: [[relu, 0.1], [sigmoid, 0.8]]
 
-declarations:
-  batch_size: 128
-  num_steps: 500
-  num_epochs: 1
-
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-client==0.4.4
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.0
 
 run:
   cmd:  python3 model.py --batch_size={{ batch_size }} \

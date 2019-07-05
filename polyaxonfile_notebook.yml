@@ -9,4 +9,4 @@ backend: lab
 build:
   image: python:3
   build_steps:
-    - pip3 install jupyterlab==0.33.12
+    - pip3 install jupyterlab

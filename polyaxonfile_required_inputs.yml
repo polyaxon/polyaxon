@@ -1,23 +1,18 @@
 ---
 version: 1
 
-kind: group
-
-framework: tensorflow
+kind: experiment
 
 inputs:
   - name: batch_size
+    description: batch size
     is_optional: true
     default: 128
     type: int
   - name: num_steps
     is_optional: true
-    default: 300
+    default: 500
     type: int
-  - name: learning_rate
-    is_optional: true
-    default: 0.001
-    type: float
   - name: dropout
     is_optional: true
     default: 0.25
@@ -26,21 +21,10 @@ inputs:
     is_optional: true
     default: 1
     type: int
-  - name: activation
-    is_optional: true
-    default: relu
+  - name: learning_rate  # required
+    type: float
+  - name: activation  # required
     type: str
-
-hptuning:
-  concurrency: 5
-
-  matrix:
-    learning_rate:
-      linspace: 0.001:0.1:5
-    dropout:
-      values: [0.25, 0.3]
-    activation:
-      values: [relu, sigmoid]
 
 build:
   image: tensorflow/tensorflow:1.4.1-py3

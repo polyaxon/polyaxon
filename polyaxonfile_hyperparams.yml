@@ -3,6 +3,8 @@ version: 1
 
 kind: group
 
+framework: tensorflow
+
 hptuning:
   concurrency: 5
   random_search:
@@ -24,7 +26,7 @@ declarations:
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-client==0.4.4
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.0
 
 run:
   cmd:  python3 model.py --batch_size={{ batch_size }} \
