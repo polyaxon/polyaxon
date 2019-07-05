@@ -27,6 +27,8 @@ sidebar: "polyaxon-query-syntax"
 field                         | condition
 ------------------------------|------------------
 `id`                          | [value condition](/references/polyaxon-query-syntax/#query-with-value-condition)
+`name`                        | [string condition](/references/polyaxon-query-syntax/#query-with-string-condition)
+`description`                 | [string condition](/references/polyaxon-query-syntax/#query-with-string-condition)
 `created_at`                  | [datetime condition](/references/polyaxon-query-syntax/#query-with-datetime-condition)
 `updated_at`                  | [datetime condition](/references/polyaxon-query-syntax/#query-with-datetime-condition)
 `started_at`                  | [datetime condition](/references/polyaxon-query-syntax/#query-with-datetime-condition)

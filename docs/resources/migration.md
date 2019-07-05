@@ -41,7 +41,10 @@ please make sure to delete them before proceeding.
 ### Migrate your configuration YAML/Json file
 
 In order to upgrade to the new version while reusing your previous data, 
-you need to make sure that your deployment config file is valid. 
+you need to make sure that your deployment config file is valid, you can use the CLI to validate your new config file. 
+
+Make sure to keep a backup of your config file to set the configuration using the web UI.
+
 Several options have been migrated to a web UI settings page, please section [Dynamic configuration](/resources/migration/#dynamic-configuration).
 
 ### Dependencies

@@ -378,12 +378,12 @@ persistence:
       mountPath: /outputs
 EOF
 
-helm install polyaxon/polyaxon --name=polyaxon --version=0.4.4 --namespace=polyaxon -f /tmp/polyaxon.conf
+helm install polyaxon/polyaxon --name=polyaxon --version=0.5.0 --namespace=polyaxon -f /tmp/polyaxon.conf
 ```
 
 To upgrade polyaxon in the future you can run:
 ```bash
-helm upgrade polyaxon polyaxon/polyaxon --version=0.4.4 --namespace=polyaxon -f /tmp/polyaxon.conf
+helm upgrade polyaxon polyaxon/polyaxon --version=0.5.0 --namespace=polyaxon -f /tmp/polyaxon.conf
 ```
 
 Now wait until polyaxon is ready: `kubectl get pods --namespace=polyaxon | grep polyaxon-api`

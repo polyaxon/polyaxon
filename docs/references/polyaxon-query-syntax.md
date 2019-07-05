@@ -98,6 +98,23 @@ operator                     | example
 `YYYY-MM-DD .. YYYY-MM-DD`   | `created_at: 2018-10-01 .. 2019-10-01` will match all entities that were created between 2018-10-01 and 2019-10-01 (you can be more precise by providing hours and minutes)
 `~YYYY-MM-DD .. YYYY-MM-DD`  | `created_at: ~2018-10-01 .. 2019-10-01` will match all entities that were created before 2018-10-01 and after 2019-10-01 (you can be more precise by providing hours and minutes)
 
+## Query with string condition
+
+This is useful to compare string values, e.g. name and description.
+you can search for values that are equal, not equal, in a set of values, or not in a set of values, start with, end with, start with and end with.
+
+
+operator                    | example
+----------------------------|------------------
+`x = y`                     | `status: running` will match all entities that have the status running
+`x != y`                    | `status: running` will match all entities that have the status not running
+`x in {a, b, c}`            | `status: started|building|running` will match all entities that have the status in one of the values started, building, or running
+`x not in {a, b, c}`        | `status: ~started|building|running` will match all entities that have the status not in one of the values started, building, or running
+`x ends with foo`           | `x: %foo` will match all entities that have the value ending with foo
+`x starts with foo`         | `x: foo%` will match all entities that have the value starting with foo
+`x starts/ends with foo`    | `x: %foo%` will match all entities that have the value starting/ending with foo
+
+
 ## Query with the negation modifier
 
 You can negate any condition by prefixing the query with `~`, e.g `x:~2` is the equivalent of saying is different than 2.

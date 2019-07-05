@@ -6,7 +6,7 @@ kind: experiment
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-client==0.4.4
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.0
   nocache: true
 
 run:
