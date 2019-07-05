@@ -36,7 +36,7 @@ from polyaxon_cli.utils.validation import validate_tags
 @click.option('--conda_env', type=str,
               help='To start a local run with `conda`.')
 @click.option("--params", "-P", metavar="NAME=VALUE", multiple=True,
-              help="A parameter to overide the default params of the run, form -P name=value.")
+              help="A parameter to override the default params of the run, form -P name=value.")
 @click.pass_context
 @clean_outputs
 def run(ctx,

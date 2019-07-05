@@ -69,7 +69,7 @@ def get_group_experiments_info(search_algorithm, concurrency, early_stopping=Fal
 @click.option('--definition', '-def', is_flag=True, default=False,
               help='Checks and prints the file definition.')
 @click.option("--params", "-P", metavar="NAME=VALUE", multiple=True,
-              help="A parameter to overide the default params of the run, form -P name=value.")
+              help="A parameter to override the default params of the run, form -P name=value.")
 @clean_outputs
 def check(file,  # pylint:disable=redefined-builtin
           version,
