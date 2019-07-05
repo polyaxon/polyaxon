@@ -12,7 +12,7 @@ sidebar: "configuration"
 ---
 
 Polyaxon runs all containers as root by default, this configuration is often fine for several deployment, 
-however, in some use case it can be expose a compliance issue for some teams.
+however, in some use case it can expose a compliance issue for some teams.
 
 Polyaxon provides a simple way to enable a security context for all core components, experiments and jobs.  
 

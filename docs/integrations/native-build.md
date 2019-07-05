@@ -57,12 +57,10 @@ build:
 
 ## Using the native builder as the default build backend
 
-In order to deploy Polyaxon with the native build backend as the default builder option, users need to either remove or set `buildBackend` in their Polyaxon deployment config file.
+In order to use the native build backend as the default builder option in Polyaxon, users need to either remove or set `build backend` option in the settings page in the dashboard to
 
 ```yaml
-...
-buildBackend: native
-...
+native
 ```
 
 By deleting this option as well, you are using the default values, and the native build backend is one of them.

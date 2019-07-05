@@ -54,8 +54,7 @@ from polyaxon_client.client import PolyaxonClient
 polyaxon_client = PolyaxonClient(
     host=POLYAXON_IP,
     token=MY_TOKEN, 
-    http_port=POLYAXON_HTTP_PORT,
-    ws_port=POLYAXON_WS_PORT)
+    port=POLYAXON_PORT)
 
 polyaxon_client.auth
 polyaxon_client.cluster
@@ -105,7 +104,6 @@ When you need to  authenticate a client in an environment outside of a Polyaxon 
         * `POLYAXON_SECRET_USER_TOKEN`
         * `POLYAXON_API_HOST`
         * `POLYAXON_HTTP_PORT`
-        * `POLYAXON_WS_PORT`
     
     Once these environment variables are set, you can run:
     
@@ -118,12 +116,12 @@ When you need to  authenticate a client in an environment outside of a Polyaxon 
  * Provide authentication params:
  
     ```python
-    client = PolyaxonClient(token=MY_TOKEN, host=HOST_IP, http_port=HTTP_PORT, ws_port=WS_PORT, use_https=None, verify_ssl=None)
+    client = PolyaxonClient(token=MY_TOKEN, host=HOST_IP, port=HTTP_PORT, use_https=None, verify_ssl=None)
     ```
  
  * Provide an `ApiConfig` instance:
         
     ```python
-    api_config = ApiConfig(token=MY_TOKEN, host=HOST_IP, http_port=HTTP_PORT, ws_port=WS_PORT, use_https=None, verify_ssl=None)
+    api_config = ApiConfig(token=MY_TOKEN, host=HOST_IP, port=HTTP_PORT, use_https=None, verify_ssl=None)
     client = PolyaxonClient(api_config=api_config)
     ```

@@ -155,14 +155,13 @@ Polyaxon is currently running:
 
   export POLYAXON_IP=$(kubectl get svc --namespace polyaxon polyaxon-polyaxon-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-  export POLYAXON_HTTP_PORT=80
-  export POLYAXON_WS_PORT=80
+  export POLYAXON_PORT=80
 
-  echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
+  echo http://$POLYAXON_IP:$POLYAXON_PORT
 
 2. Setup your cli by running theses commands:
 
-  polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
+  polyaxon config set --host=$POLYAXON_IP --port=$POLYAXON_PORT
 
 
 3. Log in with superuser

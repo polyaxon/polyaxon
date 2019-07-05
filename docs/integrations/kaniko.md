@@ -40,23 +40,23 @@ build:
 
 ## Using Kaniko as the default build backend
 
-In order to deploy Polyaxon with Kaniko as the default backend build option, users need to set `buildBackend` in their Polyaxon deployment config file.
+In order to use Kaniko as the default backend build option in Polyaxon, users need to set `build Backend` option in the settings page in the dashboard to:
 
 ```yaml
-...
-buildBackend: kaniko
-...
+kaniko
 ```
 
 ## Changing the Kaniko image, image tag, and the image pull policy
 
-You can change the default image and version used for creating the Kaniko build container:
+You can also change the default image and version used for creating the Kaniko build container in the settings page:
 
+image:
 ```yaml
-...
-kaniko:
-  image: gcr.io/kaniko-project/executor
-  imageTag: latest
-  imagePullPolicy: IfNotPresent
-...
+gcr.io/kaniko-project/executor:latest
+```
+
+imagePullPolicy:
+ 
+```yaml
+IfNotPresent
 ```

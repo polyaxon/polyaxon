@@ -95,7 +95,7 @@ For more details about the HA for each one of these components, please check:
 
 Finally, in the v0.5, Polyaxon allows to use Redis as a broker as well, 
 which means that you can turn-off rabbitmq completely and rely on redis. 
-Please see [this for more details].
+Please see [this for more details](/configuration/broker/).
 
 ## Dynamic configuration
 
@@ -104,7 +104,7 @@ Several configuration options are now stored in the database, not in a config.ya
 Editing the options is now only possible through the web UI. Some configuration are still managed by the config.yaml file, 
 e.g. data, logs, outputs, and will be migrated slowly to the web UI in the following versions.
 
-### Config options that were move to the web UI settings page
+### Config options that were moved to the web UI settings page
 
 ```
 integrations:
@@ -194,7 +194,7 @@ postgresql:
 For jobs, experiments, builds, notebooks, and tensorboards, 
 a web UI has all information about default values, and an easy way to change them.
 
-After deploying the platform, you can update the default [node scheduling] for each primitive through the web UI, 
+After deploying the platform, you can update the default [node scheduling](/configuration/custom-node-scheduling/). for each primitive through the web UI, 
 and using Polyaxonfiles.
 
 N.B. This change only applies to CE versions, since EE had dynamic configurations.

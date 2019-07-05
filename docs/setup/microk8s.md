@@ -174,15 +174,14 @@ these note will be different depending on your configuration (the service type u
 ## Env var for setting the CLI
 
 ```bash
-set -xg POLYAXON_HTTP_PORT (kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[0].nodePort}" services polyaxon-polyaxon-api)
-set -xg POLYAXON_WS_PORT (kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[1].nodePort}" services polyaxon-polyaxon-api)
+set -xg POLYAXON_PORT (kubectl get --namespace polyaxon -o jsonpath="{.spec.ports[0].nodePort}" services polyaxon-polyaxon-api)
 set -xg POLYAXON_IP (kubectl get nodes --namespace polyaxon -o jsonpath="{.items[0].status.addresses[1].address}")
 
 env | grep POLYAXON
 
-echo http://$POLYAXON_IP:$POLYAXON_HTTP_PORT
+echo http://$POLYAXON_IP:$POLYAXON_PORT
 
-polyaxon config set --host=$POLYAXON_IP --http_port=$POLYAXON_HTTP_PORT  --ws_port=$POLYAXON_WS_PORT
+polyaxon config set --host=$POLYAXON_IP --port=$POLYAXON_PORT
 ```
 
 ## Upgrade Polyaxon

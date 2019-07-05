@@ -391,7 +391,7 @@ Now wait until polyaxon is ready: `kubectl get pods --namespace=polyaxon | grep 
 ## Install and configure client
 ```bash
 pip install polyaxon-cli
-polyaxon config set --host=$DOMAIN --verbose=false --http_port=443 --ws_port=443 --use_https=true --verify_ssl=true
+polyaxon config set --host=$DOMAIN --verbose=false --port=443 --use_https=true --verify_ssl=true
 ```
 
 Check everything is working:
