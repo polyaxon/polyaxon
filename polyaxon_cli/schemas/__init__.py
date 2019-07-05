@@ -13,5 +13,6 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema  # noqa
 from polyaxon_schemas.exceptions import PolyaxonfileError, PolyaxonSchemaError  # noqa
 from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig  # noqa
 from polyaxon_schemas.polyaxonfile import PolyaxonFile  # noqa
-from polyaxon_schemas.specs import kinds  # noqa; noqa
 from polyaxon_schemas.specs import BuildSpecification, ExperimentSpecification, JobSpecification
+
+from polyaxon_schemas.specs import kinds  # noqa; noqa

@@ -87,6 +87,7 @@ def run(ctx,
     $ polyaxon run -p project1 -f file.yaml
     ```
 
+    Run with updated params
 
     \b
     ```bash
