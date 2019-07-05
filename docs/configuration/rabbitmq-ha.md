@@ -1,12 +1,12 @@
 ---
-title: "PostgreSQL HA"
-sub_link: "postgresql-ha"
-meta_title: "High availability of postgresql database in Polyaxon - Configuration"
-meta_description: "Keeping database records of your users, projects, experiments, and jobs is very important. Polyaxon offers a couple of ways to set a high available database."
+title: "Rabbitmq HA"
+sub_link: "rabbitmq-ha"
+meta_title: "High availability of Rabbitmq in Polyaxon - Configuration"
+meta_description: "Polyaxon offers a couple of ways to set a high available Rabbitmq."
 tags:
     - configuration
     - polyaxon
-    - postgresql
+    - rabbitmq
     - scaling
     - high-availability
     - kubernetes
@@ -36,6 +36,6 @@ externalServices:
     host: 35.262.163.88
 ```
 
-## Not using Rabbitmq
+## Disabling Rabbitmq
 
 If you decide not to use Rabbitmq, and use Redis for handling events, please check this section on how to alter the [default broker behaviour](/configuration/broker/).

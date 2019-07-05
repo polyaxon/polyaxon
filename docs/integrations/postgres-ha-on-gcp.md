@@ -19,7 +19,7 @@ status: published
 
 This integration is about using Google CLOUD SQL for postgres server to provide a High Available database for Polyaxon.
 
-> You can use this integration can used with all Polyaxon deployment types
+> This integration can used with all Polyaxon deployment types
 
 ## Create a Google Cloud Project
 

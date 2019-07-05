@@ -24,15 +24,13 @@ Notify Mattermost when an experiment, a job, or a build is finished so that your
 First, you'll need to set up a new incoming webhook in your team's [Mattermost](https://docs.mattermost.com/developer/webhooks-incoming.html) configuration. 
 An incoming webhook is a method for Mattermost to receive incoming messages to be posted to your Mattermost team from external services.
 
-## Add your Mattermost webhook to Polyaxon deployment config
+## Add your Mattermost webhook to Polyaxon integrations settings
 
-Now you can add your Mattermost's webhook to the integrations' section:
+Now you can add your Mattermost's webhook to the integrations' section, under settings integrations:
 
 ```yaml
-integrations:
-  mattermost:
-    - url: url1
-    - url: url2
+- url: url1
+- url: url2
 ```
 
 ## More automation with Zapier

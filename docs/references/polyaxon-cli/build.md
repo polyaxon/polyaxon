@@ -144,6 +144,27 @@ $ polyaxon build delete
 $ polyaxon build -b 2 delete
 ```
 
+## invalidate
+
+Usage:
+
+```bash
+$ polyaxon build invalidate
+```
+
+Invalidate build job.
+
+Uses [Caching](/references/polyaxon-cli/#caching)
+
+Example:
+
+```bash
+$ polyaxon build invalidate
+```
+
+```bash
+$ polyaxon build -b 2 invalidate
+```
 
 ## logs
 

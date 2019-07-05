@@ -24,15 +24,13 @@ Notify Discord when an experiment, a job, or a build is finished so that your te
 First, you'll need to set up a new incoming webhook in your team's [Discord](https://discordapp.com/developers/docs/resources/webhook) configuration. 
 An incoming webhook is a method for Discord to receive incoming messages to be posted to your Discord team from external services.
 
-## Add your Discord webhook to Polyaxon deployment config
+## Add your Discord webhook to Polyaxon integrations settings
 
-Now you can add your Discord's webhook to the integrations' section:
+Now you can add your Discord's webhook to the integrations' section, under settings integrations:
 
 ```yaml
-integrations:
-  discord:
-    - url: url1
-    - url: url2
+- url: url1
+- url: url2
 ```
 
 ## More automation with Zapier

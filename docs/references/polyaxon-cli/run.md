@@ -60,6 +60,18 @@ Run and set a unique name for this run
 polyaxon run --name=foo
 ```
 
+Run for a specific project
+
+```bash
+$ polyaxon run -p project1 -f file.yaml
+```
+
+Run with updated params
+
+```bash
+$ polyaxon run -p project1 -f file.yaml -P param1=234.2 -P param2=relu
+```
+
 Options:
 
 option | type | description
@@ -71,4 +83,6 @@ option | type | description
   --ttl [optional] | INT | Time to live for the current run after it's done.
   -l [optional] | | To start logs after running.
   -u [optional] | | To upload the repo before running.
+  --local | | To start the run locally, with `docker` environment as default.
+  -P, --params | | NAME=VALUE  A parameter to override the default params of the run, form `-P name=value`.
   --help | | Show this message and exit.

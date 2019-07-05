@@ -32,5 +32,6 @@ option| type | description
 ------|------|------------
   -f, --file| PATH| The polyaxon file to check.
   -v, --version| | Checks and prints the version.
-  -def, --definition| | Checks and prints the file definition.
+  -def, --definition | | Checks and prints the file definition.
+  -P, --params NAME=VALUE | | A parameter to override the default params of the run, form -P name=value.
   --help| | Show this message and exit.

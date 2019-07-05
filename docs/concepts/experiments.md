@@ -59,9 +59,9 @@ version: 1
 
 kind: experiment
 
-params:
-  lr: 0.01
-  batch_size: 128
+inputs:
+  - {name: lr, type: float, is_optional: true, default: 0.01}
+  - {name: batch_size, type: int, is_optional: true, default: 128}
 
 build:
   image: tensorflow/tensorflow:1.4.1-py3
@@ -72,9 +72,9 @@ run:
   cmd: python3 train.py --batch-size={{ batch_size }} --lr={{ lr }}
 ```
 
-> The params section was not completely necessary, 
-we could have also just passed the value directly `--batch-size=128 --lr=0.01`
-For more information please visit the [params section](/references/polyaxonfile-yaml-specification/params/) reference.
+> The inputs section was not completely necessary, 
+we could have also just passed the value directly `--batch-size=128 --lr=0.01`, but to reuse the same polyaxonfile with differnet params while validating the type of the params we are using the inputs.
+For more information please visit the [inputs/outputs section](/references/polyaxonfile-yaml-specification/inputs-outputs/) reference.
 
 
 > For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/run/)
@@ -154,13 +154,18 @@ You should notice that the column experiment group is empty,
 which means that this experiment is running independently of a group.
 
 
-## Running the experiment with different parameters
+## Running the experiment with different parameters and/or environment
 
 After running this experiment, we can imagine that you were not satisfied with the result and
-that you wanted to try another learning rate `0.5`.
+that you wanted to try another learning rate `0.5`, or that the experiment consumed too much cpu and you want to restrict the resources usage.
 If you hardcoded the value and passed it directly `--lr=0.01`, you would be obliged to updated the polyaxonfile.yml.
-Of course we can do that also now, but since we declared the `lr` in the params sections,
-we can create instead another file `polyaxonfile_override.yml` to override just that section:
+Of course we can do that also now, but since we declared the `lr` in the inputs section, we can just run with updated params:
+
+```bash
+$ polyaxon run -f polyaxonfile.yml -P lr=0.01
+```
+
+we can also create instead another file `polyaxonfile_override.yml` to override just that section:
 
 > "You can call your polyaxonfiles anything you want"
  By default polyaxon commands look for files called `polyaxonfile.yml`.
@@ -175,7 +180,32 @@ And past the new params section.
 ```yaml
 version: 1
 
-declarations:
+params:
+  lr: 0.5
+```
+
+and run again
+
+```bash
+$ polyaxon run -f polyaxonfile.yml -f polyaxonfile_override.yml
+
+Creating an independent experiment.
+
+Experiment was created.
+```
+
+If we want to set a cpu limits:
+
+```yaml
+version: 1
+
+environment:
+  resources:
+    cpu:
+      requests: 2
+      limits: 4
+
+params:
   lr: 0.5
 ```
 

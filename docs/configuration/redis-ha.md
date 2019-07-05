@@ -1,12 +1,12 @@
 ---
-title: "PostgreSQL HA"
-sub_link: "postgresql-ha"
-meta_title: "High availability of postgresql database in Polyaxon - Configuration"
-meta_description: "Keeping database records of your users, projects, experiments, and jobs is very important. Polyaxon offers a couple of ways to set a high available database."
+title: "Redis HA"
+sub_link: "redis-ha"
+meta_title: "High availability for Redis in Polyaxon - Configuration"
+meta_description: "Polyaxon offers a couple of ways to set a high available redis instances."
 tags:
     - configuration
     - polyaxon
-    - postgresql
+    - redis
     - scaling
     - high-availability
     - kubernetes
@@ -56,3 +56,7 @@ externalServices:
 
 You can use [Cloud MemoryStore for Redis](https://cloud.google.com/memorystore/) if you are running Polyaxon on GKE, 
 please follow this [integration guide](/integrations/redis/).
+
+## Using Redis as broker
+
+You can also use Redis for as async worker broker, please check this section on how to alter the [default broker behaviour](/configuration/broker/).

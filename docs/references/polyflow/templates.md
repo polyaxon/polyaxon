@@ -1,5 +1,5 @@
 ---
-title: "Polyaxon Polyflow: Templates"
+title: "Polyflow: Templates"
 sub_link: "polyflow"
 meta_title: "Polyaxon Polyflow: Templates - Polyaxon References"
 meta_description: "To operationalize an experiment, a job, a build, a notebook, or a tensorboard, you can take advantage of templates."
@@ -8,6 +8,9 @@ status: published
 tags:
     - reference
     - polyaxon
+    - polyflow
+    - pipelines
+    - dags
     - experimentation
 sidebar: "polyflow"
 ---
@@ -18,7 +21,7 @@ Templates are Polyaxonfiles where every parameter passed should be checked again
 
 Templates require access to the current project to use the current version of the code.
 
-The difference between a Template and an Action or an Event, is that Action and Event are self contained components, 
+> The difference between a Template and an Action or an Event, is that Action and Event are self contained components, 
 i.e. they are built and packaged independently of the project they are used in.
 
 ## Specification

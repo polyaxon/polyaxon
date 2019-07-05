@@ -60,71 +60,34 @@ email:
 ## Slack
 
 You can get notification directly to your your slack team's channels.
-In order to do that you need to link one or multiple slack webhook:
-
-```yaml
-integrations:
-  slack:
-    - url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
-    - url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
-      channel: channel12
-```
-
+In order to do that you need to link one or multiple slack webhook, 
+Please check this [integration guide](/integrations/slack/) for to set Slack notifications.
 
 ## HipChat
 
-In order to configure Polyaxon to send notification to HipChat, you need to set the hipchat's integration section:
-
-```yaml
-integrations:
-  hipchat:
-    - url: https://hipchat.com/v2/room/room_id_or_name/webhook
-```
+In order to configure Polyaxon to send notification to HipChat, you need to set the hipchat's integration section. 
+Please check this [integration guide](/integrations/hipchat/) for to set HipChat notifications.
 
 
 ## Discord
 
-In order to configure Polyaxon to send notification to Discord, you need to set the discord's integration section:
-
-```yaml
-integrations:
-  discord:
-    - url: url1
-    - url: url2
-```
+In order to configure Polyaxon to send notification to Discord, you need to set the discord's integration section. 
+Please check this [integration guide](/integrations/discord/) for to set Discord notifications.
 
 
 ## Mattermost
 
-In order to configure Polyaxon to send notification to Mattermost, you need to set the mattermost's integration section:
+In order to configure Polyaxon to send notification to Mattermost, you need to set the mattermost's integration section. 
+Please check this [integration guide](/integrations/mattermost/) for to set Mattermost notifications.
 
-```yaml
-integrations:
-  mattermost:
-    - url: url1
-```
 
 ## PagerDuty
 
-In order to configure Polyaxon to send notification to PagerDuty, you need to set the pagerduty's integration section:
-
-```yaml
-integrations:
-  pagerduty:
-    - url: url1
-```
+In order to configure Polyaxon to send notification to PagerDuty, you need to set the pagerduty's integration section. 
+Please check this [integration guide](/integrations/pagerduty/) for to set PagerDuty notifications.
 
 
 ## Webhooks
 
-To send generic webhooks, you just need to set the urls that you want to send webhooks to and the http methods to use:
-
-```yaml
-integrations:
-  webhook:
-    - url: url1
-    - url: url2
-      method: post
-    - url: url2
-      method: get  # N.B. This is just for illustration, get method is not recommended
-```
+To send generic webhooks, you just need to set the urls that you want to send webhooks to and the http methods to use. 
+Please check this [integration guide](/integrations/webhooks/) for to set Webhooks notifications.

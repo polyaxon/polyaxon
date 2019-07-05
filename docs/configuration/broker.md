@@ -11,12 +11,13 @@ tags:
 sidebar: "configuration"
 ---
 
-Polyaxon comes with a built-in queue to process tasks in a more asynchronous fashion. 
+Polyaxon comes with a built-in queue to process tasks in a more asynchronous fashion.
+
 For example when a new event comes in instead of writing it to the database immediately, 
 it schedules a task to the queue so that the request can be returned right away, 
 and the background workers handle actually saving that data.
 
-Prior to v0.5.0, Polyaxon supported one broker: RabbitMQ. RabbitMQ used to be used as a bus for sending fan-out messages. 
+Prior to v0.5.0, Polyaxon supported one broker: RabbitMQ. 
 
 Starting from v0.5.0, Polyaxon provides support for two primary brokers which may be adjusted depending on your workload: 
 RabbitMQ and Redis.
@@ -37,7 +38,7 @@ You can have as much control on the RabbitMQ dependency, or you can [turn it off
 Redis can be used and will work under most situations. 
 The primary limitation to using Redis is that all pending work must fit in memory.
 
-In order to use Redis as the broker, make sure to disable RabbitMQ (to not waste resources), and set broker to redis:
+In order to use Redis as the broker, make sure to disable RabbitMQ (to not waste resources), and set `broker` option to redis:
 
 ```yaml
 rabbitmq-ha:
@@ -46,4 +47,4 @@ rabbitmq-ha:
 broker: redis
 ```
 
-You can further customize the redis dependency or  or you can [turn it off and provide your own instance configuration](/configuration/redis-ha/).
+You can further customize the redis dependency or or you can [turn it off and provide your own instance configuration](/configuration/redis-ha/).

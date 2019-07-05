@@ -31,16 +31,14 @@ Once the webhook is created, you can optionally customise the channel, name, and
 
 ![slack-integration2](../../content/images/integrations/slack/img2.png)
 
-## Add your Slack webhook to Polyaxon deployment config
+## Add your Slack webhook to Polyaxon integrations settings
 
-Now you can add your slack webhook to the integrations' section:
+Now you can add your slack webhook to the integrations' section, under settings integrations:
 
 ```yaml
-integrations:
-  slack:
-    - url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
-    - url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
-      channel: channel12
+- url: https://hooks.slack.com/services/T6QR3FYN7/BC34VRP/7KRWJAtQWOxjxYgee
+- url: https://hooks.slack.com/services/FGDR3FD34/BC34VRP/7KRWDSFSD3xjxYgee
+  channel: channel12
 ```
 
 ## More automation with Zapier

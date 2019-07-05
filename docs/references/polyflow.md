@@ -1,5 +1,5 @@
 ---
-title: "Polyaxon Pipeline Engine: Polyflow"
+title: "Polyaxon's Pipeline Engine: Polyflow"
 sub_link: "polyflow"
 meta_title: "Polyaxon Pipeline Engine: Polyflow - Polyaxon References"
 meta_description: "Running pipelines is often important to optimize an build strong models."
@@ -17,31 +17,31 @@ sidebar: "polyflow"
 
 ## Overview 
 
-Polyflow is an open source project that provides container-native engine for running pipelines on Kubernetes. 
+Polyflow is an open source project that provides container-native engine for running machine learning pipelines on Polyaxon. 
 Each operation in a Polyflow pipeline is defined as pod running a main container defined by the user.
 
 Often times, Polyaxon's users tend to run complex jobs and experiment that depend on each other. 
-Polyaxon define a several primitive that can run independently, each one of these primitives is a mini-pipeline. For example example: 
+Polyaxon defines several primitives that can run independently, each one of these primitives is a mini-pipeline. For example: 
  * An experiment requires a build to prepare a docker image before running
- * An hyperparameters group run several experiments and follow their progress
+ * A hyperparameters group run several experiments and follow their progress
  
 Polyflow is an extension to these primitive to allow the users to automate workflows and define complex interactions. 
 
 ## Features
 
- * Easy-to-use: Polyflow is easy to use and does not extra complexity or extra dependencies to a cluster already running Polyaxon.
+ * Easy-to-use: Polyflow is easy to use and does not add any extra complexity or extra dependencies to a cluster already running Polyaxon.
  * Scalability: Polyflow scales similarly to Polyaxon, defines extra API endpoints, and reuses same logic for scheduling and monitoring runs.
  * Flexibility: Similar to Polyaxon, Polyflow allows users to run anything that can be run in a container.
- * Reusability: Polyflow introduces some notions that will allow several teams to operationalize and reuse several logic and package them as templates/actions/events. 
+ * Reusability: Polyflow introduces new concepts that will allow several teams to operationalize and reuse several logic and package them as templates/actions/events. 
  * Kubernetes and Polyaxon Native: Polyflow integrates natively with Polyaxon and reuses it's components, and it also allows to leverage Kubernetes services such as volumes, secrets, and RBAC.
- * Interoperability: Polyflow similar to Polyaxon, has a native backend, but can be used to leverage other backends: e.g. airflow.
+ * Interoperability: Similar to Polyaxon, Polyflow has a native backend, but can be used to leverage other backends: e.g. airflow.
 
 ## Concepts
 
  * [Templates](/references/polyflow/templates/)
  * [Actions/Events](/references/polyflow/actions-events/)
  * [Pipelines](/references/polyflow/pipelines/)
- * [Schedules](/references/polyflow/pipelines/#schedules)
+ * [Schedules](/references/polyflow/schedule/)
 
 ## Example
 

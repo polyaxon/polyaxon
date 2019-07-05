@@ -219,7 +219,7 @@ and depending on your persistence configuration you can keep all your data saved
 
 You can also decide to completely turn off Polyaxon and remove the namespace and computational resources.
 
-`polyaxon teardown`
+`polyaxon admin teardown`
 
 Or
 

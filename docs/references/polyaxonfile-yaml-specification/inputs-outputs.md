@@ -14,15 +14,16 @@ sidebar: "polyaxon-yaml-specification"
 
 ## Overview
 
-Starting from v0.5, Polyaxon specification introduced 2 new section that allow to operationalize you experiments/jobs/builds.
+Starting from v0.5, Polyaxon specification introduced 2 new sections that allow to operationalize you experiments/jobs/builds.
 
 
-An input/output sections include a name, a description, an optional type to check the value passed, a flag to tell if the input/output is optional, and if yes a default value.
+An input/output section includes a name, a description, an optional type to check the value passed, a flag to tell if the input/output is optional, and a default value if it is optional.
 
  * name `required`: the name of this input/output, the name must be a slug.
  * description: an optional description of this input/output, giving a description will self-document the component for future use, and will be used by the UI.
  * type: the type of this input/output, if given any value that is passed to will be checked for validation, 
-    in case the component is used in a pipeline, the Polyaxon will validate chaining from one operation to another will before any execution. 
+    in case the component is used in a pipeline, the Polyaxon will validate chaining from one operation to another will before any execution.
+    * Possible types: `int`, `float`, `str`, `bool`, `dict`, `uri`, `auth`, `list`, `gcs_path`, `s3_path`, `azure_path`, `path`, `metric`, `metadata`
  * default: a default value to use in case no params is passed.
  * is_optional: by default inputs are required, and outputs will be validate post-run to check that outputs meet the specs.  
  * is_list: a flag to check if the input should be a list of `type`.

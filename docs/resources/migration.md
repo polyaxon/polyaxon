@@ -13,21 +13,19 @@ v0.5 includes a few major product and configuration changes that you should be a
 
 ## Before you upgrade
 
-Before upgrading to Polyaxon v0.5, please make sure you are running the latest version v0.4.4. 
-
-Also please make sure you have a backup of your database.
+Before upgrading to Polyaxon v0.5, please make sure you are running the latest version v0.4.4. Also please make sure you have a backup of your database.
 
 ## How to upgrade
 
-The latest Polyaxon's Helm chart has up-to-date dependency requirements, except for the postgres database,  
+The latest Polyaxon's Helm chart has up-to-date dependency requirements,  
 some of these dependencies cannot be upgraded automatically and require a shutdown.
 
 N.B.1 the Postgres dependency is still the same, we also suggest that you always pin the db version, 
-Polyaxon's built-in dependency points to `imageTag: 9.6.1`, but it supports any version from 9.6 and it's 
-recommended that you have this value in your deployment config.
+Polyaxon's built-in dependency points to `imageTag: 9.6.1`.
+ 
+N.B.2 Polyaxon supports any version of postfresql from 9.6 and it's recommended that you have this value in your deployment config.
 
-N.B.2 If you are using an external Postgres instance, 
-the chart has been updated to consolidate all external services in one section. 
+N.B.3 If you are using an external Postgres instance, the chart has been updated to consolidate all external services in one section. 
 
 ### Teardown Polyaxon deployment
 
@@ -44,7 +42,7 @@ please make sure to delete them before proceeding.
 
 In order to upgrade to the new version while reusing your previous data, 
 you need to make sure that your deployment config file is valid. 
-Several options have been migrated to a web UI settings page, please section [Dynamic configuration].
+Several options have been migrated to a web UI settings page, please section [Dynamic configuration](/resources/migration/#dynamic-configuration).
 
 ### Dependencies
 
@@ -74,18 +72,21 @@ To provide an external connexion for one or several of these dependencies:
 ```yaml
 externalServices:
   postgresql:
+    ...
   redis:
+    ...
   rabbitmq:
+    ...
 ```
 
-For the docker registry, since it's not required for starting the core component, 
+For the docker registry, since it's not required for starting the core components, 
 you can use the web UI to set a connexion or several depending on your distribution.
 
 For more details about the HA for each one of these components, please check:
 
  * [Postgresql HA](/configuration/postgresql-ha/)
- * [Redis HA](/configuration/postgresql-ha/)
- * [Rabbitmq HA](/configuration/postgresql-ha/)
+ * [Redis HA](/configuration/redis-ha/)
+ * [Rabbitmq HA](/configuration/rabbitmq-ha/)
  * [Docker registry HA](/configuration/postgresql-ha/)
 
 
