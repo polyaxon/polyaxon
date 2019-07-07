@@ -65,14 +65,15 @@ def get_container(containers: Dict, container_id: str) -> Any:
 
 def get_container_resources(node: 'ClusterNode',
                             container: Any,
-                            gpu_resources: Mapping) -> Optional['ContainerResourcesConfig']:
+                            gpu_resources: Mapping,
+                            job_containers) -> Optional['ContainerResourcesConfig']:
     # Check if the container is running
     if container.status != ContainerStatuses.RUNNING:
         logger.debug("`%s` container is not running", container.name)
-        RedisJobContainers.remove_container(container.id)
+        job_containers.remove_container(container.id)
         return
 
-    job_uuid, experiment_uuid = RedisJobContainers.get_job(container.id)
+    job_uuid, experiment_uuid = job_containers.get_job(container.id)
 
     if not job_uuid:
         logger.debug("`%s` container is not recognised", container.name)
@@ -89,7 +90,7 @@ def get_container_resources(node: 'ClusterNode',
         return
     except NotFound:
         logger.debug("`%s` was not found", container.name)
-        RedisJobContainers.remove_container(container.id)
+        job_containers.remove_container(container.id)
         return
     except requests.ReadTimeout:
         return
@@ -155,8 +156,9 @@ def update_cluster_node(node_gpus: Dict) -> None:
         node_gpu.save()
 
 
-def run(containers: Dict, node: 'ClusterNode', persist: bool) -> None:
-    container_ids = RedisJobContainers.get_containers()
+def monitor(containers: Dict, node: 'ClusterNode', persist: bool) -> None:
+    job_containers = RedisJobContainers()
+    container_ids = job_containers.get_containers()
     gpu_resources = get_gpu_resources()
     if gpu_resources:
         gpu_resources = {gpu_resource['index']: gpu_resource for gpu_resource in gpu_resources}
@@ -166,7 +168,10 @@ def run(containers: Dict, node: 'ClusterNode', persist: bool) -> None:
         if not container:
             continue
         try:
-            payload = get_container_resources(node, containers[container_id], gpu_resources)
+            payload = get_container_resources(node,
+                                              containers[container_id],
+                                              gpu_resources,
+                                              job_containers)
         except KeyError:
             payload = None
         if payload:
@@ -180,9 +185,16 @@ def run(containers: Dict, node: 'ClusterNode', persist: bool) -> None:
             job_uuid = payload['job_uuid']
             # Check if we should stream the payload
             # Check if we have this container already in place
-            experiment_uuid = RedisJobContainers.get_experiment_for_job(job_uuid)
+            experiment_uuid = job_containers.get_experiment_for_job(job_uuid)
             set_last_resources_cond = (
                 RedisToStream.is_monitored_job_resources(job_uuid) or
                 RedisToStream.is_monitored_experiment_resources(experiment_uuid))
             if set_last_resources_cond:
                 RedisToStream.set_latest_job_resources(job_uuid, payload)
+
+
+def run():
+    gpu_resources = get_gpu_resources()
+    if gpu_resources:
+        gpu_resources = {gpu_resource['index']: gpu_resource for gpu_resource in gpu_resources}
+    update_cluster_node(gpu_resources)

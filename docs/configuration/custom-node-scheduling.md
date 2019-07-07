@@ -40,8 +40,12 @@ postgresql:
     ...
 
 redis:
-  nodeSelector:
-    ...
+  master:
+    nodeSelector:
+      ...
+  slave:
+    nodeSelector:
+      ...
 
 rabbitmq-ha:
   nodeSelector:
@@ -194,8 +198,12 @@ postgresql:
     ...
 
 redis:
-  tolerations:
-    ...
+  master:
+    tolerations:
+      ...
+  slave:
+    tolerations:
+      ...
 
 rabbitmq-ha:
   tolerations:
@@ -274,8 +282,12 @@ postgresql:
     ...
 
 redis:
-  affinity:
-    ...
+  master:
+    affinity:
+      ...
+  slave:
+    affinity:
+      ...
 
 rabbitmq-ha:
   affinity:

@@ -2,6 +2,8 @@ import logging
 
 from typing import Any, Mapping
 
+import redis
+
 import conf
 import ocular
 import workers
@@ -37,11 +39,12 @@ logger = logging.getLogger('polyaxon.monitors.statuses')
 def update_job_containers(event: Mapping,
                           status: str,
                           job_container_name: str) -> None:
+    job_containers = RedisJobContainers()
     if JobLifeCycle.is_done(status):
         # Remove the job monitoring
         job_uuid = event['metadata']['labels']['job_uuid']
         logger.info('Stop monitoring job_uuid: %s', job_uuid)
-        RedisJobContainers.remove_job(job_uuid)
+        job_containers.remove_job(job_uuid)
 
     if event['status']['container_statuses'] is None:
         return
@@ -63,10 +66,10 @@ def update_job_containers(event: Mapping,
             if container_status['state']['running'] is not None:
                 logger.info('Monitoring (container_id, job_uuid): (%s, %s)',
                             container_id, job_uuid)
-                RedisJobContainers.monitor(container_id=container_id, job_uuid=job_uuid)
+                job_containers.monitor(container_id=container_id, job_uuid=job_uuid)
             else:
 
-                RedisJobContainers.remove_container(container_id=container_id)
+                job_containers.remove_container(container_id=container_id)
 
 
 def get_restart_count(event: Mapping, job_container_name: str) -> int:
@@ -90,8 +93,15 @@ def get_label_selector() -> str:
 
 def should_handle_job_status(pod_state: Any, status: str) -> bool:
     job_uuid = pod_state['details']['labels']['job_uuid']
-    return JobLifeCycle.can_transition(status_from=RedisStatuses.get_status(job=job_uuid),
-                                       status_to=status)
+    current_status = RedisStatuses.get_status(job=job_uuid)
+    if not current_status:  # If the status does not exist or is evicted
+        return True
+
+    try:
+        return JobLifeCycle.can_transition(status_from=RedisStatuses.get_status(job=job_uuid),
+                                           status_to=status)
+    except redis.connection.ConnectionError:
+        return True
 
 
 def handle_job_condition(event_object,
@@ -102,7 +112,10 @@ def handle_job_condition(event_object,
                          task_name,
                          update_containers):
     if update_containers:
-        update_job_containers(event_object, status, container_name)
+        try:
+            update_job_containers(event_object, status, container_name)
+        except redis.connection.ConnectionError:
+            pass
     # Handle experiment job statuses
     if should_handle_job_status(pod_state=pod_state, status=status):
         logger.debug("Sending state to handler %s, %s", status, labels)
@@ -201,7 +214,7 @@ def run(k8s_manager: 'K8SManager') -> None:
                     labels=labels,
                     container_name=container_name_tf_job,
                     task_name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    update_containers=True
+                    update_containers=False
                 )
 
             elif pytorch_job_condition:
@@ -218,7 +231,7 @@ def run(k8s_manager: 'K8SManager') -> None:
                     labels=labels,
                     container_name=container_name_pytorch_job,
                     task_name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    update_containers=True
+                    update_containers=False
                 )
 
             elif mpi_job_condition:
@@ -241,7 +254,7 @@ def run(k8s_manager: 'K8SManager') -> None:
                     labels=labels,
                     container_name=container_name_experiment_job,
                     task_name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    update_containers=True
+                    update_containers=False
                 )
 
             elif experiment_job_condition:
@@ -252,7 +265,7 @@ def run(k8s_manager: 'K8SManager') -> None:
                     labels=labels,
                     container_name=container_name_experiment_job,
                     task_name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_EXPERIMENT_JOB_STATUSES,
-                    update_containers=True
+                    update_containers=False
                 )
 
         elif job_condition:
@@ -263,7 +276,7 @@ def run(k8s_manager: 'K8SManager') -> None:
                 labels=labels,
                 container_name=container_name_job,
                 task_name=K8SEventsCeleryTasks.K8S_EVENTS_HANDLE_JOB_STATUSES,
-                update_containers=True
+                update_containers=False
             )
 
         elif plugin_job_condition:

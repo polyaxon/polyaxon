@@ -289,9 +289,7 @@ def experiment_job_status_post_save(sender, **kwargs):
 
     # check if the new status is done to remove the containers from the monitors
     if job.is_done:
-        from db.redis.containers import RedisJobContainers
-
-        RedisJobContainers.remove_job(job.uuid.hex)
+        # TODO: re-enable container monitor: RedisJobContainers().remove_job(job.uuid.hex)
         RedisStatuses.delete_status(job.uuid.hex)
 
     # Check if we need to change the experiment status

@@ -38,19 +38,12 @@ class Command(BaseMonitorCommand):
                 time.sleep(sleep_interval * 2)
         return None
 
-    def handle(self, *args, **options):
-        sleep_interval = options['sleep_interval']
-        persist = to_bool(options['persist'])
-        node = self.get_node_or_wait(sleep_interval)
-        self.stdout.write(
-            "Started a new resources monitor with, "
-            "log sleep interval: `{}` and persist: `{}`".format(sleep_interval, persist),
-            ending='\n')
+    def monitor(self, node, sleep_interval, persist):
         containers = {}
         while True:
             try:
                 if node:
-                    monitor.run(containers, node, persist)
+                    monitor.monitor(containers, node, persist)
             except redis.exceptions.ConnectionError as e:
                 monitor.logger.warning("Redis connection is probably already closed %s\n", e)
             except Exception as e:
@@ -65,3 +58,33 @@ class Command(BaseMonitorCommand):
             except (InterfaceError, ProgrammingError, OperationalError) as e:
                 monitor.logger.exception("Database connection is probably already closed %s\n", e)
                 return
+
+    def discover(self, node, sleep_interval):
+        while True:
+            try:
+                if node:
+                    monitor.run()
+            except redis.exceptions.ConnectionError as e:
+                monitor.logger.warning("Redis connection is probably already closed %s\n", e)
+            except Exception as e:
+                monitor.logger.exception("Unhandled exception occurred %s\n", e)
+
+            time.sleep(sleep_interval)
+            try:
+                if node:
+                    node.refresh_from_db()
+                else:
+                    node = self.get_node()
+            except (InterfaceError, ProgrammingError, OperationalError) as e:
+                monitor.logger.exception("Database connection is probably already closed %s\n", e)
+                return
+
+    def handle(self, *args, **options):
+        sleep_interval = options['sleep_interval']
+        persist = to_bool(options['persist'])
+        node = self.get_node_or_wait(sleep_interval)
+        self.stdout.write(
+            "Started a new resources monitor with, "
+            "log sleep interval: `{}` and persist: `{}`".format(sleep_interval, persist),
+            ending='\n')
+        self.discover(node=node, sleep_interval=sleep_interval)

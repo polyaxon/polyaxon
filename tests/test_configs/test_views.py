@@ -9,7 +9,7 @@ from constants.urls import API_V1
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
 from db.models.owner import Owner
-from options.registry import node_selectors, build_jobs
+from options.registry import build_jobs, node_selectors
 from options.registry.node_selectors import NODE_SELECTORS_BUILD_JOBS, NODE_SELECTORS_JOBS
 from tests.base.clients import AuthorizedClient
 from tests.base.views import BaseViewTest
