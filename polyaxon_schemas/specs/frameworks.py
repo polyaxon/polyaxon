@@ -7,10 +7,12 @@ from polyaxon_schemas.ops.environments.resources import PodResourcesConfig
 from polyaxon_schemas.specs.utils import (
     get_task_configs,
     get_task_job_affinities,
+    get_task_job_annotations,
+    get_task_job_labels,
     get_task_job_node_selectors,
     get_task_job_resources,
-    get_task_job_tolerations,
-    get_task_job_annotations, get_task_job_labels)
+    get_task_job_tolerations
+)
 from polyaxon_schemas.utils import TaskType
 
 

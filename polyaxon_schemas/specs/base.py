@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import abc
 import copy
+import json
 import six
 
 from collections import Mapping
@@ -242,7 +243,7 @@ class BaseSpecification(object):
 
     @cached_property
     def raw_data(self):
-        return '{}'.format(self._data)
+        return json.dumps(self._data)
 
     @cached_property
     def version(self):

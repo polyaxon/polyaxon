@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import json
 import os
 
 from unittest import TestCase
@@ -19,6 +20,7 @@ from polyaxon_schemas.ops.group.matrix import MatrixConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.specs import ExperimentSpecification
 from polyaxon_schemas.specs.frameworks import (
     HorovodSpecification,
     MPISpecification,
@@ -1709,3 +1711,13 @@ class TestPolyaxonfile(TestCase):
 
         assert spec.environment.tolerations == tolerations
         assert spec.tolerations == tolerations
+
+    def test_specification_with_quotes(self):
+        plxfile = PolyaxonFile(os.path.abspath(
+            'tests/fixtures/plain/polyaxonfile_with_quotes.yaml'))
+        spec = plxfile.specification
+        spec.apply_context()
+        assert spec.run.cmd == ['python -c "print(\'Tweet tweet\')"']
+        spec = ExperimentSpecification(spec.raw_data)
+        spec.apply_context()
+        assert spec.run.cmd == ['python -c "print(\'Tweet tweet\')"']
