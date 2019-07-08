@@ -201,7 +201,19 @@ class TestPolyaxonfile(TestCase):
             cluster=cluster,
             is_distributed=is_distributed
         )
+        worker_labels = TensorflowSpecification.get_worker_labels(
+            environment=spec.config.tensorflow,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        worker_annotations = TensorflowSpecification.get_worker_annotations(
+            environment=spec.config.tensorflow,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
         assert len(worker_node_selectors) == spec.config.tensorflow.n_workers
+        assert len(worker_labels) == spec.config.tensorflow.n_workers
+        assert len(worker_annotations) == spec.config.tensorflow.n_workers
         assert set([i['foo'] for i in worker_node_selectors.values()]) == {
             spec.config.tensorflow.default_worker_node_selector['foo'],
             spec.config.tensorflow.worker_node_selectors[3]['foo']}

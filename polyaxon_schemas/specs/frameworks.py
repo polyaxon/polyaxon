@@ -9,8 +9,8 @@ from polyaxon_schemas.specs.utils import (
     get_task_job_affinities,
     get_task_job_node_selectors,
     get_task_job_resources,
-    get_task_job_tolerations
-)
+    get_task_job_tolerations,
+    get_task_job_annotations, get_task_job_labels)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -87,8 +87,8 @@ class DistributedSpecificationInterface(object):
         return get_task_job_labels(
             cluster=cluster,
             is_distributed=is_distributed,
-            node_selectors=environment.worker_node_selectors,
-            default_node_selector=environment.default_worker_node_selector,
+            labels=environment.worker_labels,
+            default_labels=environment.default_worker_labels,
             task_type=cls.TASK_WORKER)
 
     @classmethod
@@ -99,8 +99,8 @@ class DistributedSpecificationInterface(object):
         return get_task_job_labels(
             cluster=cluster,
             is_distributed=is_distributed,
-            node_selectors=environment.ps_node_selectors,
-            default_node_selector=environment.default_ps_node_selector,
+            labels=environment.ps_labels,
+            default_labels=environment.default_ps_labels,
             task_type=cls.TASK_PS)
 
     @classmethod
@@ -108,23 +108,23 @@ class DistributedSpecificationInterface(object):
         if not environment:
             return {}
 
-        return get_task_job_node_selectors(
+        return get_task_job_annotations(
             cluster=cluster,
             is_distributed=is_distributed,
-            node_selectors=environment.worker_node_selectors,
-            default_node_selector=environment.default_worker_node_selector,
+            annotations=environment.worker_annotations,
+            default_annotations=environment.default_worker_annotations,
             task_type=cls.TASK_WORKER)
 
     @classmethod
-    def get_worker_annotations(cls, environment, cluster, is_distributed):
+    def get_ps_annotations(cls, environment, cluster, is_distributed):
         if not environment:
             return {}
 
-        return get_task_job_node_selectors(
+        return get_task_job_annotations(
             cluster=cluster,
             is_distributed=is_distributed,
-            node_selectors=environment.ps_node_selectors,
-            default_node_selector=environment.default_ps_node_selector,
+            annotations=environment.ps_annotations,
+            default_annotations=environment.default_ps_annotations,
             task_type=cls.TASK_PS)
 
     @classmethod

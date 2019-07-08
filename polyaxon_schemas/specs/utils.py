@@ -33,6 +33,22 @@ def get_task_job_resources(cluster, is_distributed, resources, default_resources
                            task_type=task_type)
 
 
+def get_task_job_labels(cluster, is_distributed, labels, default_labels, task_type):
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=labels,
+                           default_value=default_labels,
+                           task_type=task_type)
+
+
+def get_task_job_annotations(cluster, is_distributed, annotations, default_annotations, task_type):
+    return get_task_values(cluster=cluster,
+                           is_distributed=is_distributed,
+                           values=annotations,
+                           default_value=default_annotations,
+                           task_type=task_type)
+
+
 def get_task_job_node_selectors(cluster,
                                 is_distributed,
                                 node_selectors,
