@@ -302,7 +302,7 @@ crons:
 
 eventMonitors:
   namespace:
-    enabled: true
+    enabled: false
     image: polyaxon/polyaxon-monitor-namespace
     imageTag: 0.5.0
     imagePullPolicy: Always

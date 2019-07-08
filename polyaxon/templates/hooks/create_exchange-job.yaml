@@ -1,3 +1,4 @@
+{{- if eq (.Values.broker | default "rabbitmq") "rabbitmq" -}}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -43,3 +44,4 @@ spec:
 {{ include "config.envFrom" . | indent 8 }}
         env:
 {{ include "config.envs" . | indent 8 }}
+{{- end }}

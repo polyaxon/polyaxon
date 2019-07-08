@@ -45,8 +45,8 @@ spec:
         image: "{{ .Values.resourcesDaemon.image }}:{{ .Values.resourcesDaemon.imageTag }}"
         imagePullPolicy: {{ .Values.resourcesDaemon.imagePullPolicy }}
         args: ["--sleep_interval={{ .Values.resourcesDaemon.sleepInterval }}", "--persist={{ .Values.resourcesDaemon.persists }}"]
-        securityContext:
-          privileged: true
+#        securityContext:
+#          privileged: true
         envFrom:
 {{ include "config.envFrom" . | indent 8 }}
         env:
