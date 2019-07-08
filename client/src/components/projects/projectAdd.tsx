@@ -75,7 +75,7 @@ export default class ProjectAdd extends React.Component<Props, {}> {
               <i
                 className="fas fa-play fa-sm icon"
                 aria-hidden="true"
-              /> Start tensorboard
+              /> Start TensorBoard
             </MenuItem>
           </LinkContainer>
         </Dropdown.Menu>

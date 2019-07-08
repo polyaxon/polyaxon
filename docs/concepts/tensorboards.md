@@ -22,7 +22,7 @@ Polyaxon allows users to run tensorboard jobs on project, experiment, and experi
 [Tensorboard](https://www.tensorflow.org/programmers_guide/summaries_and_tensorboard) is a visualization tool for Tensorflow projects.
 Tensorboard can help visualize the Tensorflow computation graph and plot quantitative metrics about your run.
 
-## Start tensorboard
+## Start TensorBoard
 
 We assume that you have already a [project](/concepts/projects/) created and initialized, and code uploaded.
 
