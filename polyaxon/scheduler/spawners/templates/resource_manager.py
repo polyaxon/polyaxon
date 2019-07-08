@@ -268,6 +268,9 @@ class BaseResourceManager(object):
     def _get_pod_resources(self, resources):
         raise NotImplementedError()
 
+    def _get_annotations(self, annotations):
+        raise NotImplementedError()
+
     def _get_node_selector(self, node_selector):
         raise NotImplementedError()
 
@@ -308,6 +311,7 @@ class BaseResourceManager(object):
                      secret_refs=None,
                      config_map_refs=None,
                      resources=None,
+                     annotations=None,
                      ephemeral_token=None,
                      node_selector=None,
                      affinity=None,
@@ -318,9 +322,13 @@ class BaseResourceManager(object):
                      init_context_mounts=None,
                      sidecar_context_mounts=None):
         resources = self._get_pod_resources(resources=resources)
-        annotations = None
+        resources_annotations = {}
+        annotations = self._get_annotations(annotations=annotations)
         if requests_tpu(resources):
-            annotations = get_tpu_annotations()
+            resources_annotations = get_tpu_annotations()
+        if annotations:
+            resources_annotations.update(annotations)
+        annotations = resources_annotations
         metadata = client.V1ObjectMeta(name=resource_name,
                                        labels=labels,
                                        namespace=self.namespace,
@@ -374,6 +382,7 @@ class BaseResourceManager(object):
                 secret_refs=None,
                 config_map_refs=None,
                 resources=None,
+                annotations=None,
                 ephemeral_token=None,
                 node_selector=None,
                 affinity=None,
@@ -402,6 +411,7 @@ class BaseResourceManager(object):
             secret_refs=secret_refs,
             config_map_refs=config_map_refs,
             resources=resources,
+            annotations=annotations,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
             affinity=affinity,
@@ -435,6 +445,7 @@ class BaseResourceManager(object):
                               secret_refs=None,
                               config_map_refs=None,
                               resources=None,
+                              annotations=None,
                               ephemeral_token=None,
                               node_selector=None,
                               affinity=None,
@@ -463,6 +474,7 @@ class BaseResourceManager(object):
             secret_refs=secret_refs,
             config_map_refs=config_map_refs,
             resources=resources,
+            annotations=annotations,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
             affinity=affinity,
@@ -552,6 +564,7 @@ class BaseResourceManager(object):
                        secret_refs=None,
                        config_map_refs=None,
                        resources=None,
+                       annotations=None,
                        ephemeral_token=None,
                        node_selector=None,
                        affinity=None,
@@ -581,6 +594,7 @@ class BaseResourceManager(object):
             secret_refs=secret_refs,
             config_map_refs=config_map_refs,
             resources=resources,
+            annotations=annotations,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
             affinity=affinity,

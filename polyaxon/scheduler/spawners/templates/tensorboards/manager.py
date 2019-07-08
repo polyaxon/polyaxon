@@ -5,6 +5,7 @@ import stores
 
 from constants.k8s_jobs import JOB_NAME_FORMAT
 from options.registry.affinities import AFFINITIES_TENSORBOARDS
+from options.registry.annotations import ANNOTATIONS_TENSORBOARDS
 from options.registry.container_names import (
     CONTAINER_NAME_INIT,
     CONTAINER_NAME_PLUGIN_JOBS,
@@ -29,6 +30,7 @@ from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.env_vars import get_env_var, get_job_env_vars
 from scheduler.spawners.templates.pod_environment import (
     get_affinity,
+    get_annotations,
     get_config_map_refs,
     get_env_vars,
     get_node_selector,
@@ -158,6 +160,11 @@ class ResourceManager(BaseResourceManager):
         return get_pod_resources(
             resources=resources,
             default_resources=conf.get(K8S_RESOURCES_TENSORBOARDS))
+
+    def _get_annotations(self, annotations):
+        return get_annotations(
+            annotations=annotations,
+            default_annotations=conf.get(ANNOTATIONS_TENSORBOARDS))
 
     def _get_node_selector(self, node_selector):
         return get_node_selector(

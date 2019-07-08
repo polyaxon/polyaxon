@@ -13,6 +13,10 @@ def get_node_selector(node_selector, default_node_selector):
     return node_selector or default_node_selector
 
 
+def get_annotations(annotations, default_annotations):
+    return annotations or default_annotations
+
+
 def get_pod_resources(resources, default_resources):
     if resources:
         return resources

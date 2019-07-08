@@ -130,6 +130,8 @@ def start_dockerizer(build_job):
             secret_refs=build_job.secret_refs,
             config_map_refs=build_job.config_map_refs,
             resources=build_job.resources,
+            labels=build_job.labels,
+            annotations=build_job.annotations,
             node_selector=build_job.node_selector,
             affinity=build_job.affinity,
             tolerations=build_job.tolerations,

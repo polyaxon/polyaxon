@@ -30,19 +30,6 @@ from polyaxon_schemas.ops.experiment.environment import (  # noqa
 )
 from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework  # noqa
 from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingConfig  # noqa
-from polyaxon_schemas.ops.group.hptuning import (  # noqa; noqa
-    AcquisitionFunctions,
-    BOConfig,
-    GaussianProcessConfig,
-    GaussianProcessesKernels,
-    GridSearchConfig,
-    HPTuningConfig,
-    HyperbandConfig,
-    RandomSearchConfig,
-    ResourceConfig,
-    SearchAlgorithms,
-    UtilityFunctionConfig
-)
 from polyaxon_schemas.ops.group.matrix import MatrixConfig  # noqa
 from polyaxon_schemas.ops.group.metrics import Optimization, SearchMetricConfig  # noqa
 from polyaxon_schemas.ops.notebook.backends import NotebookBackend  # noqa
@@ -66,3 +53,17 @@ from polyaxon_schemas.specs.frameworks import (  # noqa
     TensorflowSpecification
 )
 from polyaxon_schemas.utils import TaskType  # noqa
+
+from polyaxon_schemas.ops.group.hptuning import (  # noqa; noqa
+    AcquisitionFunctions,
+    BOConfig,
+    GaussianProcessConfig,
+    GaussianProcessesKernels,
+    GridSearchConfig,
+    HPTuningConfig,
+    HyperbandConfig,
+    RandomSearchConfig,
+    ResourceConfig,
+    SearchAlgorithms,
+    UtilityFunctionConfig
+)

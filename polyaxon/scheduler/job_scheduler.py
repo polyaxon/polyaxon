@@ -66,6 +66,8 @@ def start_job(job):
             secret_refs=job.secret_refs,
             config_map_refs=job.config_map_refs,
             resources=job.resources,
+            labels=job.labels,
+            annotations=job.annotations,
             node_selector=job.node_selector,
             affinity=job.affinity,
             tolerations=job.tolerations,

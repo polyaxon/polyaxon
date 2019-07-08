@@ -33,6 +33,7 @@ class KFExperimentSpawner(ExperimentSpawner):
                     args=None,
                     env_vars=None,
                     resources=None,
+                    annotations=None,
                     node_selector=None,
                     affinity=None,
                     tolerations=None,
@@ -83,6 +84,7 @@ class KFExperimentSpawner(ExperimentSpawner):
             secret_refs=self.spec.secret_refs,
             config_map_refs=self.spec.config_map_refs,
             resources=resources,
+            annotations=annotations,
             ephemeral_token=ephemeral_token,
             node_selector=node_selector,
             affinity=affinity,
@@ -100,6 +102,7 @@ class KFExperimentSpawner(ExperimentSpawner):
         command, args = self.get_pod_command_args(task_type=task_type, task_idx=0)
         env_vars = self.get_env_vars(task_type=task_type, task_idx=0)
         resources = self.get_resources(task_type=task_type, task_idx=0)
+        annotations = self.get_annotations(task_type=task_type, task_idx=0)
         node_selector = self.get_node_selector(task_type=task_type, task_idx=0)
         affinity = self.get_affinity(task_type=task_type, task_idx=0)
         tolerations = self.get_tolerations(task_type=task_type, task_idx=0)
@@ -108,6 +111,7 @@ class KFExperimentSpawner(ExperimentSpawner):
                                 args=args,
                                 env_vars=env_vars,
                                 resources=resources,
+                                annotations=annotations,
                                 node_selector=node_selector,
                                 affinity=affinity,
                                 tolerations=tolerations,
@@ -117,6 +121,7 @@ class KFExperimentSpawner(ExperimentSpawner):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)
         env_vars = self.get_env_vars(task_type=TaskType.MASTER, task_idx=0)
         resources = self.get_resources(task_type=TaskType.MASTER, task_idx=0)
+        annotations = self.get_annotations(task_type=TaskType.MASTER, task_idx=0)
         node_selector = self.get_node_selector(task_type=TaskType.MASTER, task_idx=0)
         affinity = self.get_affinity(task_type=TaskType.MASTER, task_idx=0)
         tolerations = self.get_tolerations(task_type=TaskType.MASTER, task_idx=0)
@@ -125,6 +130,7 @@ class KFExperimentSpawner(ExperimentSpawner):
                                 args=args,
                                 env_vars=env_vars,
                                 resources=resources,
+                                annotations=annotations,
                                 node_selector=node_selector,
                                 affinity=affinity,
                                 tolerations=tolerations)

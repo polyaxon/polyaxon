@@ -14,6 +14,7 @@ from options.registry.tensorboards import TENSORBOARDS_PORT_RANGE
 from polyaxon_k8s.exceptions import PolyaxonK8SError
 from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from scheduler.spawners.templates import ingresses, services
+from scheduler.spawners.templates.labels import get_labels
 from scheduler.spawners.templates.restart_policy import get_deployment_restart_policy
 from scheduler.spawners.templates.stores import get_stores_secrets
 from scheduler.spawners.templates.tensorboards import manager
@@ -151,6 +152,8 @@ class TensorboardSpawner(ProjectJobSpawner):
                           outputs_refs_jobs=None,
                           outputs_refs_experiments=None,
                           resources=None,
+                          labels=None,
+                          annotations=None,
                           node_selector=None,
                           affinity=None,
                           tolerations=None,
@@ -201,11 +204,12 @@ class TensorboardSpawner(ProjectJobSpawner):
         args = [' && '.join(command_args)]
         command = ["/bin/sh", "-c"]
 
+        labels = get_labels(default_labels=self.resource_manager.labels, labels=labels)
         deployment = self.resource_manager.get_deployment(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
-            labels=self.resource_manager.labels,
+            labels=labels,
             env_vars=None,
             command=command,
             args=args,
@@ -213,6 +217,7 @@ class TensorboardSpawner(ProjectJobSpawner):
             outputs_refs_jobs=outputs_refs_jobs,
             outputs_refs_experiments=outputs_refs_experiments,
             resources=resources,
+            annotations=annotations,
             ephemeral_token=None,
             node_selector=node_selector,
             affinity=affinity,

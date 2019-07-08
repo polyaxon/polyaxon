@@ -47,11 +47,3 @@ class PluginJobBase(AbstractJobModel,
     class Meta:
         app_label = 'db'
         abstract = True
-
-    @cached_property
-    def secret_refs(self) -> Optional[List[str]]:
-        return self.specification.secret_refs
-
-    @cached_property
-    def config_map_refs(self) -> Optional[List[str]]:
-        return self.specification.config_map_refs

@@ -1,6 +1,7 @@
 from constants.experiment_jobs import get_experiment_job_uuid
 from scheduler.spawners.experiment_spawner import ExperimentSpawner
 from scheduler.spawners.templates.env_vars import get_env_var
+from scheduler.spawners.templates.labels import get_labels
 from schemas import PytorchClusterConfig, PytorchSpecification, TaskType
 
 
@@ -23,6 +24,32 @@ class PytorchSpawnerMixin(object):
         return {
             TaskType.MASTER: {0: self.spec.master_resources},
             TaskType.WORKER: worker_resources,
+        }
+
+    @property
+    def labels(self):
+        cluster, is_distributed, = self.spec.cluster_def
+        worker_labels = PytorchSpecification.get_worker_labels(
+            environment=self.spec.config.pytorch,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        return {
+            TaskType.MASTER: {0: self.spec.master_labels},
+            TaskType.WORKER: worker_labels,
+        }
+
+    @property
+    def annotations(self):
+        cluster, is_distributed, = self.spec.cluster_def
+        worker_annotations = PytorchSpecification.get_worker_annotations(
+            environment=self.spec.config.pytorch,
+            cluster=cluster,
+            is_distributed=is_distributed
+        )
+        return {
+            TaskType.MASTER: {0: self.spec.master_annotations},
+            TaskType.WORKER: worker_annotations,
         }
 
     @property
@@ -66,6 +93,16 @@ class PytorchSpawnerMixin(object):
 
     def get_resources(self, task_type, task_idx):
         return self.resources.get(task_type, {}).get(task_idx)
+
+    def get_annotations(self, task_type, task_idx):
+        return self.annotations.get(task_type, {}).get(task_idx)
+
+    def get_labels(self, task_type, task_idx, job_uuid):
+        labels = self.resource_manager.get_labels(task_type=task_type,
+                                                  task_idx=task_idx,
+                                                  job_uuid=job_uuid)
+        return get_labels(default_labels=labels,
+                          labels=self.labels.get(task_type, {}).get(task_idx))
 
     def get_node_selector(self, task_type, task_idx):
         return self.node_selectors.get(task_type, {}).get(task_idx)

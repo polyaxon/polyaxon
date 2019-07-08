@@ -101,6 +101,18 @@ class JobMixin(UniqueNameMixin):
         return self.specification.resources
 
     @cached_property
+    def labels(self) -> Optional[Dict]:
+        if not self.specification:
+            return None
+        return self.specification.labels
+
+    @cached_property
+    def annotations(self) -> Optional[Dict]:
+        if not self.specification:
+            return None
+        return self.specification.annotations
+
+    @cached_property
     def node_selector(self) -> Optional[Dict]:
         if not self.specification:
             return None

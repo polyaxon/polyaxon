@@ -16,6 +16,7 @@ from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants, services
 from scheduler.spawners.templates.env_vars import get_internal_env_vars
 from scheduler.spawners.templates.experiment_jobs import config_maps, manager
+from scheduler.spawners.templates.labels import get_labels
 from scheduler.spawners.templates.restart_policy import get_max_restart, get_pod_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_auth_context_volumes,
@@ -122,6 +123,16 @@ class ExperimentSpawner(K8SManager):
     def get_resources(self, task_type, task_idx):
         return self.spec.master_resources
 
+    def get_labels(self, task_type, task_idx, job_uuid):
+        labels = self.resource_manager.get_labels(task_type=task_type,
+                                                  task_idx=task_idx,
+                                                  job_uuid=job_uuid)
+
+        return get_labels(default_labels=labels, labels=self.spec.master_labels)
+
+    def get_annotations(self, task_type, task_idx):
+        return self.spec.master_annotations
+
     def get_node_selector(self, task_type, task_idx):
         return self.spec.master_node_selector
 
@@ -152,6 +163,7 @@ class ExperimentSpawner(K8SManager):
                     args=None,
                     env_vars=None,
                     resources=None,
+                    annotations=None,
                     node_selector=None,
                     affinity=None,
                     tolerations=None,
@@ -163,9 +175,9 @@ class ExperimentSpawner(K8SManager):
                                                                 task_idx=task_idx)
         job_uuid = self.get_job_uuids(task_type=task_type, task_idx=task_idx)
         reconcile_url = get_experiment_reconcile_url(self.experiment_name, job_uuid)
-        labels = self.resource_manager.get_labels(task_type=task_type,
-                                                  task_idx=task_idx,
-                                                  job_uuid=job_uuid)
+        labels = self.get_labels(task_type=task_type,
+                                 task_idx=task_idx,
+                                 job_uuid=job_uuid)
 
         # Set and validate volumes
         volumes, volume_mounts = get_pod_volumes(
@@ -237,6 +249,7 @@ class ExperimentSpawner(K8SManager):
             command, args = self.get_pod_command_args(task_type=task_type, task_idx=i)
             env_vars = self.get_env_vars(task_type=task_type, task_idx=i)
             resources = self.get_resources(task_type=task_type, task_idx=i)
+            annotations = self.get_annotations(task_type=task_type, task_idx=i)
             node_selector = self.get_node_selector(task_type=task_type, task_idx=i)
             affinity = self.get_affinity(task_type=task_type, task_idx=i)
             tolerations = self.get_tolerations(task_type=task_type, task_idx=i)
@@ -246,6 +259,7 @@ class ExperimentSpawner(K8SManager):
                                          args=args,
                                          env_vars=env_vars,
                                          resources=resources,
+                                         annotations=annotations,
                                          node_selector=node_selector,
                                          affinity=affinity,
                                          tolerations=tolerations,
@@ -277,6 +291,7 @@ class ExperimentSpawner(K8SManager):
         command, args = self.get_pod_command_args(task_type=TaskType.MASTER, task_idx=0)
         env_vars = self.get_env_vars(task_type=TaskType.MASTER, task_idx=0)
         resources = self.get_resources(task_type=TaskType.MASTER, task_idx=0)
+        annotations = self.get_annotations(task_type=TaskType.MASTER, task_idx=0)
         node_selector = self.get_node_selector(task_type=TaskType.MASTER, task_idx=0)
         affinity = self.get_affinity(task_type=TaskType.MASTER, task_idx=0)
         tolerations = self.get_tolerations(task_type=TaskType.MASTER, task_idx=0)
@@ -287,6 +302,7 @@ class ExperimentSpawner(K8SManager):
                                 args=args,
                                 env_vars=env_vars,
                                 resources=resources,
+                                annotations=annotations,
                                 node_selector=node_selector,
                                 affinity=affinity,
                                 tolerations=tolerations,

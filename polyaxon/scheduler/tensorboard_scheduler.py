@@ -41,6 +41,8 @@ def start_tensorboard(tensorboard):
             outputs_refs_jobs=tensorboard.outputs_refs_jobs,
             outputs_refs_experiments=tensorboard.outputs_refs_experiments,
             resources=tensorboard.resources,
+            labels=tensorboard.labels,
+            annotations=tensorboard.annotations,
             node_selector=tensorboard.node_selector,
             affinity=tensorboard.affinity,
             tolerations=tensorboard.tolerations,

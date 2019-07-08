@@ -63,6 +63,8 @@ def start_notebook(notebook):
             outputs_refs_jobs=notebook.outputs_refs_jobs,
             outputs_refs_experiments=notebook.outputs_refs_experiments,
             resources=notebook.resources,
+            labels=notebook.labels,
+            annotations=notebook.annotations,
             secret_refs=notebook.secret_refs,
             config_map_refs=notebook.config_map_refs,
             node_selector=notebook.node_selector,

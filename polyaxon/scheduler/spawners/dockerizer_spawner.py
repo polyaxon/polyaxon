@@ -19,6 +19,7 @@ from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
 from scheduler.spawners.templates.env_vars import get_env_var, get_internal_env_vars
+from scheduler.spawners.templates.labels import get_labels
 from scheduler.spawners.templates.restart_policy import get_pod_restart_policy
 from scheduler.spawners.templates.volumes import (
     get_build_context_volumes,
@@ -170,6 +171,8 @@ class DockerizerSpawner(K8SManager):
                          secret_refs=None,
                          config_map_refs=None,
                          resources=None,
+                         labels=None,
+                         annotations=None,
                          node_selector=None,
                          affinity=None,
                          tolerations=None,
@@ -186,11 +189,13 @@ class DockerizerSpawner(K8SManager):
         resource_name = self.resource_manager.get_resource_name()
         command, args = self.get_pod_command_args()
         init_command, init_args = self.get_init_command_args()
+
+        labels = get_labels(default_labels=self.resource_manager.labels, labels=labels)
         pod = self.resource_manager.get_pod(
             resource_name=resource_name,
             volume_mounts=volume_mounts,
             volumes=volumes,
-            labels=self.resource_manager.labels,
+            labels=labels,
             env_vars=self.get_env_vars(),
             command=command,
             args=args,
@@ -204,6 +209,7 @@ class DockerizerSpawner(K8SManager):
             secret_refs=secret_refs,
             config_map_refs=config_map_refs,
             resources=resources,
+            annotations=annotations,
             ephemeral_token=None,
             node_selector=node_selector,
             affinity=affinity,
