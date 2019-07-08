@@ -113,6 +113,11 @@ const ProjectRoutes = () => {
             /* Tensorboards */
             <Route
                 exact={true}
+                path={newProjectTensorboardURL}
+                component={TensorboardCreate}
+            />
+            <Route
+                exact={true}
                 path={newGroupTensorboardURL}
                 component={TensorboardCreate}
             />
@@ -168,11 +173,6 @@ const ProjectRoutes = () => {
                 exact={true}
                 path={projectDetailURL}
                 component={ProjectDetail}
-            />
-            <Route
-                exact={true}
-                path={newProjectTensorboardURL}
-                component={TensorboardCreate}
             />
         </Switch>
     );
