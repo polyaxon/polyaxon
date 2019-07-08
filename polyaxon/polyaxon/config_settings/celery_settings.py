@@ -9,6 +9,8 @@ CELERY_TRACK_STARTED = True
 BROKER_POOL_LIMIT = None
 
 CELERY_BROKER_BACKEND = config.broker_backend
+if config.is_rabbitmq_broker:  # see https://github.com/celery/celery/issues/5410 for details
+    BROKER_TRANSPORT_OPTIONS = {'confirm_publish': True}
 CELERY_BROKER_URL = config.get_broker_url()
 
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',

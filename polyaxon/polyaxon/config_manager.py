@@ -312,6 +312,14 @@ class ConfigManager(rhea.Rhea):
     def broker_backend(self) -> str:
         return self._broker_backend
 
+    @property
+    def is_redis_broker(self):
+        return self.broker_backend == 'redis'
+
+    @property
+    def is_rabbitmq_broker(self):
+        return self.broker_backend == 'rabbitmq'
+
     def get_redis_url(self, env_url_name) -> str:
         redis_url = self.get_string(env_url_name)
         if self._redis_password:

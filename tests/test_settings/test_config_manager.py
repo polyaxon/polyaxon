@@ -29,6 +29,8 @@ class TestConfigManager(BaseTest):
         config = ConfigManager.read_configs(
             [os.environ, './tests/fixtures_static/configs/non_opt_config_tests.json'])
         assert config.broker_backend == 'rabbitmq'
+        assert config.is_redis_broker is False
+        assert config.is_rabbitmq_broker is True
 
         config = ConfigManager.read_configs(
             [os.environ,
@@ -41,6 +43,8 @@ class TestConfigManager(BaseTest):
              './tests/fixtures_static/configs/non_opt_config_tests.json',
              {'POLYAXON_BROKER_BACKEND': 'redis'}])
         assert config.broker_backend == 'redis'
+        assert config.is_redis_broker is True
+        assert config.is_rabbitmq_broker is False
 
     def test_get_broker_url(self):
         os.environ['POLYAXON_ENVIRONMENT'] = 'testing'
