@@ -105,7 +105,7 @@ Please check [polyaxon installation guide](https://docs.polyaxon.com/setup/)
 
  * Tensorboard
     ```bash
-    # Start Tensorboard
+    # Start TensorBoard
     $ polyaxon tensorboard start
 
     Tensorboard is being deployed for project `quick-start`

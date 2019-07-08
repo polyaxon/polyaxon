@@ -131,7 +131,7 @@ export default class ExperimentActions extends React.Component<Props, State> {
               <i
                 className="fas fa-play fa-sm icon"
                 aria-hidden="true"
-              /> Start Tensorboard
+              /> Start TensorBoard
             </MenuItem>
           </LinkContainer>
           }
