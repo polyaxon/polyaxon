@@ -26,19 +26,34 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add labels
+        config_dict['labels'] = {
+            'foo': 'bar',
+        }
+
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add annotations
+        config_dict['annotations'] = {
+            'foo': 'bar',
+        }
+
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add persistence
         config_dict['data_refs'] = ['data1', 'data2']
         config_dict['artifact_refs'] = ['outputs1']
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # TODO: Add outputs
-        # config_dict['outputs'] = {
-        #     'jobs': ['data1.dfs', 34, 'data2'],
-        #     'experiments': [1, 'outputs1', 2, 3],
-        # }
-        # config = EnvironmentConfig.from_dict(config_dict)
-        # assert_equal_dict(config_dict, config.to_dict())
+        config_dict['outputs'] = {
+            'jobs': ['data1.dfs', 34, 'data2'],
+            'experiments': [1, 'outputs1', 2, 3],
+        }
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
         # Add secrets
         config_dict['secret_refs'] = ['secret1', 'secret2']

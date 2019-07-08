@@ -151,6 +151,14 @@ class FrameworkEnvironmentMixin(object):
         return self.default_worker.resources if self.default_worker else None
 
     @property
+    def default_worker_labels(self):
+        return self.default_worker.labels if self.default_worker else None
+
+    @property
+    def default_worker_annotations(self):
+        return self.default_worker.annotations if self.default_worker else None
+
+    @property
     def default_worker_node_selector(self):
         return self.default_worker.node_selector if self.default_worker else None
 
@@ -171,6 +179,14 @@ class FrameworkEnvironmentMixin(object):
         return self.default_ps.resources if self.default_ps else None
 
     @property
+    def default_ps_labels(self):
+        return self.default_ps.labels if self.default_ps else None
+
+    @property
+    def default_ps_annotations(self):
+        return self.default_ps.annotations if self.default_ps else None
+
+    @property
     def default_ps_node_selector(self):
         return self.default_ps.node_selector if self.default_ps else None
 
@@ -185,6 +201,14 @@ class FrameworkEnvironmentMixin(object):
     # @property
     # def worker_configs(self):
     #     return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.config)
+
+    @property
+    def worker_labels(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.labels)
+
+    @property
+    def worker_annotations(self):
+        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.annotations)
 
     @property
     def worker_resources(self):
@@ -205,6 +229,14 @@ class FrameworkEnvironmentMixin(object):
     # @property
     # def ps_configs(self):
     #     return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.config)
+
+    @property
+    def ps_labels(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.labels)
+
+    @property
+    def ps_annotations(self):
+        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.annotations)
 
     @property
     def ps_resources(self):

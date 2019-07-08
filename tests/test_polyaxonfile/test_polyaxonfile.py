@@ -152,12 +152,24 @@ class TestPolyaxonfile(TestCase):
         assert spec.config.tensorflow.default_worker_node_selector == {
             'foo': True
         }
+        assert spec.config.tensorflow.default_worker_labels == {
+            'key1': 'val1'
+        }
+        assert spec.config.tensorflow.default_worker_annotations == {
+            'key1': 'val1'
+        }
 
         assert spec.config.tensorflow.worker_resources == {}
         assert spec.config.tensorflow.worker_affinities == {}
         assert isinstance(spec.config.tensorflow.worker_node_selectors[3], dict)
         assert spec.config.tensorflow.worker_node_selectors[3] == {
             'foo': False
+        }
+        assert spec.config.tensorflow.worker_labels[3] == {
+            'key1': 'val2'
+        }
+        assert spec.config.tensorflow.worker_annotations[3] == {
+            'key1': 'val2'
         }
         assert isinstance(spec.config.tensorflow.worker_tolerations[4], list)
         assert spec.config.tensorflow.worker_tolerations[4] == [{
@@ -1515,8 +1527,15 @@ class TestPolyaxonfile(TestCase):
         assert spec.config_map_refs == ['config_map1', 'config_map2']
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
+        labels = {"key1": "value1", "key2": "value2"}
+        annotations = {'anno1': 'value1'}
+
         assert spec.environment.node_selector == node_selector
         assert spec.node_selector == node_selector
+        assert spec.environment.labels == labels
+        assert spec.labels == labels
+        assert spec.environment.annotations == annotations
+        assert spec.annotations == annotations
 
         resources = {
             'cpu': {'requests': 1, 'limits': 2},

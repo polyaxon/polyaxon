@@ -279,6 +279,14 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.resources if self.environment else None
 
     @cached_property
+    def labels(self):
+        return self.environment.labels if self.environment else None
+
+    @cached_property
+    def annotations(self):
+        return self.environment.annotations if self.environment else None
+
+    @cached_property
     def artifact_refs(self):
         return self.environment.artifact_refs if self.environment else None
 

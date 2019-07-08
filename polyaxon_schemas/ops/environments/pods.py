@@ -57,6 +57,8 @@ class EnvironmentSchema(BaseSchema):
     # To indicate which worker/ps index this session config belongs to
     index = fields.Int(allow_none=True)
     resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    labels = fields.Dict(allow_none=True)
+    annotations = fields.Dict(allow_none=True)
     node_selector = fields.Dict(allow_none=True)
     affinity = fields.Dict(allow_none=True)
     tolerations = fields.List(fields.Dict(), allow_none=True)
@@ -103,6 +105,8 @@ class EnvironmentConfig(BaseConfig):
     SCHEMA = EnvironmentSchema
     REDUCED_ATTRIBUTES = ['index',
                           'resources',
+                          'labels',
+                          'annotations',
                           'node_selector',
                           'affinity',
                           'tolerations',
@@ -118,6 +122,8 @@ class EnvironmentConfig(BaseConfig):
     def __init__(self,
                  index=None,
                  resources=None,
+                 labels=None,
+                 annotations=None,
                  node_selector=None,
                  affinity=None,
                  tolerations=None,
@@ -134,6 +140,8 @@ class EnvironmentConfig(BaseConfig):
                  ):
         self.index = index
         self.resources = resources
+        self.labels = labels
+        self.annotations = annotations
         self.node_selector = node_selector
         self.affinity = affinity
         self.tolerations = tolerations

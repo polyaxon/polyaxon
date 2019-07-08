@@ -12,6 +12,13 @@ environment:
   node_selector:
     polyaxon.com: node_for_notebook_jobs
 
+  labels:
+    key1: value1
+    key2: value2
+
+  annotations:
+    anno1: value1
+
   artifact_refs: ['outputs1']
   data_refs: ['data1', 'data2']
   secret_refs: ['secret1', 'secret2']

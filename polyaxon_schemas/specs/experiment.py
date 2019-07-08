@@ -161,6 +161,14 @@ class ExperimentSpecification(BaseRunSpecification):
         return self.environment.resources if self.environment else None
 
     @cached_property
+    def master_labels(self):
+        return self.environment.labels if self.environment else None
+
+    @cached_property
+    def master_annotations(self):
+        return self.environment.annotations if self.environment else None
+
+    @cached_property
     def master_node_selector(self):
         return self.environment.node_selector if self.environment else None
 

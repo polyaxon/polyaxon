@@ -80,6 +80,54 @@ class DistributedSpecificationInterface(object):
         pass
 
     @classmethod
+    def get_worker_labels(cls, environment, cluster, is_distributed):
+        if not environment:
+            return {}
+
+        return get_task_job_labels(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            node_selectors=environment.worker_node_selectors,
+            default_node_selector=environment.default_worker_node_selector,
+            task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_ps_labels(cls, environment, cluster, is_distributed):
+        if not environment:
+            return {}
+
+        return get_task_job_labels(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            node_selectors=environment.ps_node_selectors,
+            default_node_selector=environment.default_ps_node_selector,
+            task_type=cls.TASK_PS)
+
+    @classmethod
+    def get_worker_annotations(cls, environment, cluster, is_distributed):
+        if not environment:
+            return {}
+
+        return get_task_job_node_selectors(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            node_selectors=environment.worker_node_selectors,
+            default_node_selector=environment.default_worker_node_selector,
+            task_type=cls.TASK_WORKER)
+
+    @classmethod
+    def get_worker_annotations(cls, environment, cluster, is_distributed):
+        if not environment:
+            return {}
+
+        return get_task_job_node_selectors(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            node_selectors=environment.ps_node_selectors,
+            default_node_selector=environment.default_ps_node_selector,
+            task_type=cls.TASK_PS)
+
+    @classmethod
     def get_worker_node_selectors(cls, environment, cluster, is_distributed):
         if not environment:
             return {}

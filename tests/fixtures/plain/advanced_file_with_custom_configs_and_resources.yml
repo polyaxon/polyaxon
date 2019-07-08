@@ -26,11 +26,19 @@ environment:
     default_worker:
       node_selector:
         foo: true
+      labels:
+        key1: val1
+      annotations:
+        key1: val1
 
     worker:
       - index: 3
         node_selector:
           foo: false
+        labels:
+          key1: val2
+        annotations:
+          key1: val2
       - index: 4
         tolerations:
           - key: "key"
