@@ -50,7 +50,9 @@ if __name__ == '__main__':
                                                 settings.POD_ID,
                                                 container_id,
                                                 max_restarts)
-            print(is_running, status)
         except ApiException:
             retry += 1
             time.sleep(sleep_interval)  # We wait a bit more before try
+
+    if status:
+        client.reconcile(status=status)

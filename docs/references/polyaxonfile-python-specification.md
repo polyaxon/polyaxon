@@ -23,7 +23,7 @@ You can use the `PolyaxonFile` object to read and validate YAML/Json files or Py
 ```python
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 
-plx_file = PolyaxonFile('path/to/polyaxonfile.ymal')
+plx_file = PolyaxonFile('path/to/polyaxonfile.yaml')
 plx_file.specification   # This is the config and has access to all section as python objects
 ```
 
@@ -34,7 +34,7 @@ You can pass multiple files, `PolyaxonFile` will follow the order and each time 
 ```python
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 
-plx_file = PolyaxonFile(['path/to/polyaxonfile1.ymal', 'path/to/polyaxonfile2_to_override_values_from_file1.json'])
+plx_file = PolyaxonFile(['path/to/polyaxonfile1.yaml', 'path/to/polyaxonfile2_to_override_values_from_file1.json'])
 ```
 
 ### Reading a Python dictionary
@@ -64,7 +64,7 @@ You can also opt to read a file/files (YAML and Json) and only use a Python dict
 ```python
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 
-plx_file = PolyaxonFile(['path/to/yaml_file.ymal', 'path/to/json_file.json', {'run': {'cmd': 'override_command'}}])
+plx_file = PolyaxonFile(['path/to/yaml_file.yaml', 'path/to/json_file.json', {'run': {'cmd': 'override_command'}}])
 ```
 
 ## Using PolyaxonFile
@@ -100,12 +100,15 @@ You can read this file:
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.specs import ExperimentSpecification
 
-plx_file = PolyaxonFile('path/to/polyaxonfile.ymal')
+plx_file = PolyaxonFile('path/to/polyaxonfile.yaml')
 
 assert plx_file.is_experiment == True
 assert isinstance(plx_file.specification, ExperimentSpecification)
 
 spec = plx_file.specification
+# In order to resolve the spec we need to call apply context
+# Context is any dependency or references that need to be resolved for validating the specification
+spec.apply_context()
 
 assert spec.version == 1
 assert spec.logging is None

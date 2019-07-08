@@ -31,7 +31,7 @@ export const K8sRefItemsField = (props: FormikProps<{}>, errors: any) => {
         The K8S entity items to expose, if no key is provided, Polyaxon will expose all items of the resource.
       </span>
       <span id="helpBlock" className="help-block">
-        Use new line to make different build steps.
+        Use new lines to separate items.
       </span>
       {hasServerError && <div className="help-block">{errors.items}</div>}
       <ErrorMessage name="name">
