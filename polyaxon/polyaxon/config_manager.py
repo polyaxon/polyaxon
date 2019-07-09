@@ -52,6 +52,9 @@ class ConfigManager(rhea.Rhea):
                                           is_local=True,
                                           is_optional=True,
                                           default='WARNING').upper()
+        self._time_zone = self.get_string('POLYAXON_TIME_ZONE',
+                                          is_optional=True,
+                                          default='UTC')
         self._enable_scheduler = self.get_boolean('POLYAXON_ENABLE_SCHEDULER',
                                                   is_optional=True,
                                                   default=True)
@@ -210,6 +213,10 @@ class ConfigManager(rhea.Rhea):
         elif self._log_level == 'DEBUG':
             return 'INFO'
         return self._log_level
+
+    @property
+    def time_zone(self) -> str:
+        return self._time_zone
 
     @property
     def enable_scheduler(self) -> bool:

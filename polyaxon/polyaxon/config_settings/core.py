@@ -39,7 +39,7 @@ def get_allowed_hosts():
 ALLOWED_HOSTS = get_allowed_hosts()
 
 WSGI_APPLICATION = 'polyaxon.wsgi.application'
-TIME_ZONE = config.get_string('POLYAXON_TIME_ZONE', is_optional=True) or 'Europe/Berlin'
+TIME_ZONE = config.time_zone
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
     ('en', u'English'),

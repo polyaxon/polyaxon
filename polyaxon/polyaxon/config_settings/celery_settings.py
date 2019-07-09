@@ -4,13 +4,22 @@ from kombu import Exchange, Queue
 
 from polyaxon.config_manager import config
 
-CELERY_TRACK_STARTED = True
+CELERY_TASK_TRACK_STARTED = config.get_boolean('POLYAXON_CELERY_TASK_TRACK_STARTED',
+                                               is_optional=True,
+                                               default=True)
 
-BROKER_POOL_LIMIT = None
+CELERY_BROKER_POOL_LIMIT = config.get_int('POLYAXON_CELERY_BROKER_POOL_LIMIT',
+                                          is_optional=True,
+                                          default=100)
 
 CELERY_BROKER_BACKEND = config.broker_backend
-if config.is_rabbitmq_broker:  # see https://github.com/celery/celery/issues/5410 for details
-    BROKER_TRANSPORT_OPTIONS = {'confirm_publish': True}
+CELERY_CONFIRM_PUBLISH = config.get_boolean('POLYAXON_CELERY_CONFIRM_PUBLISH',
+                                            is_optional=True,
+                                            default=True)
+if config.is_rabbitmq_broker and CELERY_CONFIRM_PUBLISH:
+    # see https://github.com/celery/celery/issues/5410 for details
+    CELERY_BROKER_TRANSPORT_OPTIONS = {'confirm_publish': True}
+
 CELERY_BROKER_URL = config.get_broker_url()
 
 INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
@@ -18,23 +27,30 @@ INTERNAL_EXCHANGE = config.get_string('POLYAXON_INTERNAL_EXCHANGE',
                                       default='internal')
 
 CELERY_RESULT_BACKEND = config.get_redis_url('POLYAXON_REDIS_CELERY_RESULT_BACKEND_URL')
-CELERYD_PREFETCH_MULTIPLIER = config.get_int('POLYAXON_CELERYD_PREFETCH_MULTIPLIER')
 
-CELERY_TASK_ALWAYS_EAGER = config.get_boolean('POLYAXON_CELERY_ALWAYS_EAGER')
+CELERY_WORKER_PREFETCH_MULTIPLIER = config.get_int('POLYAXON_CELERY_WORKER_PREFETCH_MULTIPLIER',
+                                                   is_optional=True,
+                                                   default=4)
+
+CELERY_TASK_ALWAYS_EAGER = config.get_boolean('POLYAXON_CELERY_TASK_ALWAYS_EAGER')
 if CELERY_TASK_ALWAYS_EAGER:
-    BROKER_TRANSPORT = 'memory'
+    CELERY_BROKER_TRANSPORT = 'memory'
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_IGNORE_RESULT = True
-CELERY_IGNORE_RESULT = True
+CELERY_TIMEZONE = config.time_zone
 CELERY_HARD_TIME_LIMIT_DELAY = config.get_int('POLYAXON_CELERY_HARD_TIME_LIMIT_DELAY',
                                               is_optional=True,
                                               default=180)
-CELERYD_MAX_TASKS_PER_CHILD = config.get_int('POLYAXON_CELERYD_MAX_TASKS_PER_CHILD',
-                                             is_optional=True,
-                                             default=100)
+
+CELERY_WORKER_MAX_TASKS_PER_CHILD = config.get_int('POLYAXON_CELERY_WORKER_MAX_TASKS_PER_CHILD',
+                                                   is_optional=True,
+                                                   default=100)
+
+CELERY_WORKER_MAX_MEMORY_PER_CHILD = config.get_int('POLYAXON_CELERY_WORKER_MAX_MEMORY_PER_CHILD',
+                                                    is_optional=True)
 
 
 class Intervals(object):
