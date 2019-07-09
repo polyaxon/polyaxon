@@ -217,10 +217,6 @@ class ProjectExperimentListView(BookmarkedListMixinView,
         if ttl:
             RedisTTL.set_for_experiment(experiment_id=instance.id, value=ttl)
 
-    @gzip()
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
 
 class ExperimentDetailView(ExperimentEndpoint,
                            RetrieveEndpoint,

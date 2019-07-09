@@ -5,6 +5,7 @@ from rest_framework.serializers import Serializer
 from django.http import HttpRequest, HttpResponse
 
 import auditor
+from api.utils.gzip import gzip
 
 from scopes.authentication.utils import is_user
 
@@ -145,6 +146,7 @@ class PostEndpoint(object):
 
 
 class ListEndpoint(object):
+    @gzip()
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return self.list(request, *args, **kwargs)
 
