@@ -3,7 +3,7 @@
 
 {% block title %}{{ title }} | Polyaxon Admin {% endblock %}
 {% block extrastyle %}
-<link href="//fonts.googleapis.com/css?family=Dosis:500&amp;text=Polyaxon" rel="stylesheet" type="text/css">
+<link href="{% static 'vendors/fonts/fonts.css' %}?version=0.5.0" media="all" rel="stylesheet" type="text/css"/>
 {% if frontend_debug %}
 <link href="{% static 'css/global.css' %}?version=0.5.0" media="all" rel="stylesheet" type="text/css"/>
 {% else %}
