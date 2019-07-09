@@ -86,6 +86,7 @@ class DeploymentSchema(BaseSchema):
     mountPaths = fields.Dict(allow_none=True)
     securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
     externalServices = fields.Nested(ExternalServicesSchema, allow_none=True)
+    debugMode = fields.Bool(allow_none=True)
 
     # Pending validation
     dns = fields.Raw(allow_none=True)
@@ -155,6 +156,7 @@ class DeploymentConfig(BaseConfig):
                  mountPaths=None,
                  securityContext=None,
                  externalServices=None,
+                 debugMode=None,
                  plugins=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
@@ -211,4 +213,5 @@ class DeploymentConfig(BaseConfig):
         self.mountPaths = mountPaths
         self.securityContext = securityContext
         self.externalServices = externalServices
+        self.debugMode = debugMode
         self.plugins = plugins
