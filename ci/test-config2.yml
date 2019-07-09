@@ -30,6 +30,9 @@ redis:
 rabbitmq-ha:
   enabled: false
 
+docker-registry:
+  enabled: false
+
 api:
   imageTag: latest
   imagePullPolicy: Always

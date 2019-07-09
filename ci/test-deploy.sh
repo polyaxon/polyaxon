@@ -26,6 +26,9 @@ TEST_URL=http://$IP:31811
 echo "create namespace"
 kubectl create namespace $TEST_NAMESPACE
 
+echo "validate chart"
+polyaxon admin deploy --manager_path=./polyaxon/ -f ./ci/test-config${CONFIG_VERSION}.yml --check
+
 echo "deploy polyaxon"
 helm install --name polyaxon-test --namespace $TEST_NAMESPACE ./polyaxon/ -f ./ci/test-config${CONFIG_VERSION}.yml
 
