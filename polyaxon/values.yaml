@@ -531,3 +531,5 @@ intervals:  # in seconds
 plugins:
   notebook: {port: 8888}
   tensorboard: {port: 6006}
+
+celery: {}
