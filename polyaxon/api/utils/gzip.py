@@ -3,6 +3,8 @@ from functools import wraps
 from django.utils.decorators import available_attrs
 from django.utils.text import compress_string
 
+from polyaxon.config_manager import config
+
 
 class GzipDecorator(object):
     """Gzip the response and set the respective header.
@@ -11,6 +13,8 @@ class GzipDecorator(object):
         @wraps(func, assigned=available_attrs(func))
         def inner(self, request, *args, **kwargs):
             response = func(self, request, *args, **kwargs)
+            if config.is_debug_mode and config.is_monolith_service:
+                return response
 
             # Before we can access response.content, the response needs to be rendered.
             response = self.finalize_response(request, response, *args, **kwargs)
