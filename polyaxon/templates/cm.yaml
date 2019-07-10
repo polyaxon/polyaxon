@@ -127,8 +127,6 @@ data:
   POLYAXON_INTERVALS_PIPELINES_SCHEDULER: {{ .Values.intervals.pipelinesScheduler | quote }}
   POLYAXON_INTERVALS_OPERATIONS_DEFAULT_RETRY_DELAY: {{ .Values.intervals.operationsDefaultRetryDelay | quote }}
   POLYAXON_INTERVALS_OPERATIONS_MAX_RETRY_DELAY: {{ .Values.intervals.operationsMaxRetryDelay | quote }}
-  POLYAXON_CELERY_ALWAYS_EAGER: {{ default "false" .Values.celeryEagerMode | quote }}
-  POLYAXON_CELERYD_PREFETCH_MULTIPLIER: {{ default "4" .Values.celeryPrefetchMultiplier | quote }}
   # DB
   POLYAXON_DB_USER: {{ template "postgresql.user" . }}
   POLYAXON_DB_NAME: {{ template "postgresql.database" . }}
@@ -182,26 +180,6 @@ data:
   POLYAXON_PLUGINS: {{ toJson .Values.plugins | quote }}
   POLYAXON_DNS_USE_RESOLVER: "true"
   POLYAXON_WS_PORT: {{ .Values.streams.service.internalPort | quote }}
-  # CELERY
-  {{- if and .Values.celery.taskTrackStarted }}
-  POLYAXON_CELERY_TASK_TRACK_STARTED: {{ .Values.celery.taskTrackStarted | quote }}
-  {{- end }}
-  {{- if and .Values.celery.brokerPoolLimit }}
-  POLYAXON_CELERY_BROKER_POOL_LIMIT: {{ .Values.celery.brokerPoolLimit | quote }}
-  {{- end }}
-  {{- if and .Values.celery.confirmPublish }}
-  POLYAXON_CELERY_CONFIRM_PUBLISH: {{ .Values.celery.confirmPublish | quote }}
-  {{- end }}
-  {{- if and .Values.celery.workerPrefetchMultiplier }}
-  POLYAXON_CELERY_WORKER_PREFETCH_MULTIPLIER: {{ .Values.celery.workerPrefetchMultiplier | quote }}
-  {{- end }}
-  {{- if and .Values.celery.workerMaxTasksPerChild }}
-  POLYAXON_CELERY_WORKER_MAX_TASKS_PER_CHILD: {{ .Values.celery.workerMaxTasksPerChild | quote }}
-  {{- end }}
-  {{- if and .Values.celery.workerMaxMemoryPerChild }}
-  POLYAXON_CELERY_WORKER_MAX_MEMORY_PER_CHILD: {{ .Values.celery.workerMaxMemoryPerChild | quote }}
-  {{- end }}
-  # Registry
   # Registry
   {{- if (index .Values "docker-registry").enabled }}
   POLYAXON_REGISTRY_HOST: "{{ template "docker-registry.host" . }}:{{ template "docker-registry.port" . }}"

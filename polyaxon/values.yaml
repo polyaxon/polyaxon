@@ -232,6 +232,7 @@ scheduler:
     requests:
       cpu: 150m
       memory: 200Mi
+  celery: {}
 
 hpsearch:
   image: polyaxon/polyaxon-hpsearch
@@ -243,6 +244,7 @@ hpsearch:
     requests:
       cpu: 150m
       memory: 200Mi
+  celery: {workerMaxMemoryPerChild: 600000}
 
 eventsHandlers:
   image: polyaxon/polyaxon-events-handlers
@@ -257,6 +259,7 @@ eventsHandlers:
     requests:
       cpu: 130m
       memory: 200Mi
+  celery: {workerPrefetchMultiplier: 10}
 
 
 k8sEventsHandlers:
@@ -272,6 +275,7 @@ k8sEventsHandlers:
     requests:
       cpu: 130m
       memory: 200Mi
+  celery: {workerPrefetchMultiplier: 10}
 
 beat:
   image: polyaxon/polyaxon-beat
@@ -531,5 +535,3 @@ intervals:  # in seconds
 plugins:
   notebook: {port: 8888}
   tensorboard: {port: 6006}
-
-celery: {}

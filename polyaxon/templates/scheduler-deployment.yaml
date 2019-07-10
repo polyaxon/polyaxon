@@ -53,6 +53,7 @@ spec:
 {{ include "config.persistence.repos" . | indent 8 }}
 {{ include "config.storesSecrets.outputs" . | indent 8 }}
 {{ include "config.storesSecrets.logs" . | indent 8 }}
+{{ include "config.celery.scheduler" . | indent 8 }}
         volumeMounts:
 {{ include "volumes.dirMounts" . | indent 8}}
 {{ include "volumes.volumeMounts.logs" . | indent 8}}

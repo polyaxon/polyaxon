@@ -48,6 +48,7 @@ spec:
 {{ include "config.persistence.data" . | indent 8 }}
 {{ include "config.persistence.outputs" . | indent 8 }}
 {{ include "config.persistence.logs" . | indent 8 }}
+{{ include "config.celery.hpsearch" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.hpsearch.resources.requests | indent 12 }}

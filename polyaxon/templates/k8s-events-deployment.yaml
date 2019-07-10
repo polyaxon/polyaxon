@@ -46,6 +46,7 @@ spec:
         env:
 {{ include "config.envs" . | indent 8 }}
 {{ include "config.persistence.logs" . | indent 8 }}
+{{ include "config.celery.k8sEventsHandlers" . | indent 8 }}
         resources:
           requests:
 {{ toYaml .Values.k8sEventsHandlers.resources.requests | indent 12 }}
