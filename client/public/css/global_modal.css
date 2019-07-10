@@ -159,7 +159,7 @@ body.modal {
 .modal .submit-row {
   clear: both;
   padding: 1em 0 0 9.4em;
-  margin: 0;
+  margin: 0 10px;
   border: none;
   background: none;
   text-align: left;

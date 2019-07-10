@@ -3,6 +3,7 @@ export const AUTH_GITHUB = 'AUTH_GITHUB';
 export const AUTH_GITLAB = 'AUTH_GITLAB';
 export const AUTH_BITBUCKET = 'AUTH_BITBUCKET';
 export const AUTH_AZURE = 'AUTH_AZURE';
+export const ANNOTATIONS = 'ANNOTATIONS';
 export const AFFINITIES = 'AFFINITIES';
 export const MAX_RESTARTS = 'MAX_RESTARTS';
 export const ARCHIVES_ROOT = 'ARCHIVES_ROOT';

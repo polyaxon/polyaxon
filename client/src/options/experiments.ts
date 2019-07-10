@@ -2,6 +2,8 @@ import * as option_namespaces from './namespaces';
 import * as separators from './separators';
 import * as option_subjects from './subjects';
 
+export const ANNOTATIONS_EXPERIMENTS =
+  `${option_namespaces.ANNOTATIONS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.EXPERIMENTS}`;
 export const AFFINITIES_EXPERIMENTS =
   `${option_namespaces.AFFINITIES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.EXPERIMENTS}`;
 export const TOLERATIONS_EXPERIMENTS =
@@ -25,6 +27,7 @@ export const EXPERIMENT_KEYS = [
   AFFINITIES_EXPERIMENTS,
   TOLERATIONS_EXPERIMENTS,
   NODE_SELECTORS_EXPERIMENTS,
+  ANNOTATIONS_EXPERIMENTS,
   ENV_VARS_EXPERIMENTS,
   K8S_CONFIG_MAPS_EXPERIMENTS,
   K8S_SECRETS_EXPERIMENTS,

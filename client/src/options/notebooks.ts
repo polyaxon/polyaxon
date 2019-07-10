@@ -2,6 +2,8 @@ import * as option_namespaces from './namespaces';
 import * as separators from './separators';
 import * as option_subjects from './subjects';
 
+export const ANNOTATIONS_NOTEBOOKS =
+  `${option_namespaces.ANNOTATIONS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.NOTEBOOKS}`;
 export const AFFINITIES_NOTEBOOKS =
   `${option_namespaces.AFFINITIES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.NOTEBOOKS}`;
 export const TOLERATIONS_NOTEBOOKS =
@@ -30,6 +32,7 @@ export const NOTEBOOK_KEYS = [
   AFFINITIES_NOTEBOOKS,
   TOLERATIONS_NOTEBOOKS,
   NODE_SELECTORS_NOTEBOOKS,
+  ANNOTATIONS_NOTEBOOKS,
   ENV_VARS_NOTEBOOKS,
   K8S_CONFIG_MAPS_NOTEBOOKS,
   K8S_SECRETS_NOTEBOOKS,

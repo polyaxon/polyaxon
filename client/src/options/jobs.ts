@@ -2,6 +2,8 @@ import * as option_namespaces from './namespaces';
 import * as separators from './separators';
 import * as option_subjects from './subjects';
 
+export const ANNOTATIONS_JOBS =
+  `${option_namespaces.ANNOTATIONS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.JOBS}`;
 export const AFFINITIES_JOBS =
   `${option_namespaces.AFFINITIES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.JOBS}`;
 export const TOLERATIONS_JOBS =
@@ -25,6 +27,7 @@ export const JOB_KEYS = [
   AFFINITIES_JOBS,
   TOLERATIONS_JOBS,
   NODE_SELECTORS_JOBS,
+  ANNOTATIONS_JOBS,
   ENV_VARS_JOBS,
   K8S_CONFIG_MAPS_JOBS,
   K8S_SECRETS_JOBS,

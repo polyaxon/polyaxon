@@ -2,6 +2,8 @@ import * as option_namespaces from './namespaces';
 import * as separators from './separators';
 import * as option_subjects from './subjects';
 
+export const ANNOTATIONS_TENSORBOARDS =
+  `${option_namespaces.ANNOTATIONS}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.TENSORBOARDS}`;
 export const AFFINITIES_TENSORBOARDS =
   `${option_namespaces.AFFINITIES}${separators.NAMESPACE_DB_OPTION_MARKER}${option_subjects.TENSORBOARDS}`;
 export const TOLERATIONS_TENSORBOARDS =
@@ -28,6 +30,7 @@ export const TENSORBOARD_KEYS = [
   AFFINITIES_TENSORBOARDS,
   TOLERATIONS_TENSORBOARDS,
   NODE_SELECTORS_TENSORBOARDS,
+  ANNOTATIONS_TENSORBOARDS,
   ENV_VARS_TENSORBOARDS,
   K8S_CONFIG_MAPS_TENSORBOARDS,
   K8S_SECRETS_TENSORBOARDS,
