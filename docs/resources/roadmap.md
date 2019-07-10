@@ -46,6 +46,7 @@ We welcome our users to give feedback and suggest updates and additions.
    we believe that by open sourcing the cluster level configuration we will allow several users to reconfigure their cluster without the need to upgrade the deployment, 
    hence avoiding downtime. 
    Our EE users will still enjoy several additional benefits with much better and fine grained configurable Polyaxon deployments.
+ * Polyaxon CLI multi-deployment management.
  * Provide an easy way to use HA managed and external core dependencies: redis, registry, rabbitmq.
  * Polyaxon tracking and Polyaxon tracking & scheduling one click deployment on AWS MarketPlace, GCP MarketPlace, Azure MarketPlace.
  * Possibility to plugin a tsdb for high performance metrics insights and time series management.
@@ -63,6 +64,7 @@ We welcome our users to give feedback and suggest updates and additions.
  * Stabilise PolyaxonCI, our CI engine solution to automate experimentation workflows, with additional enterprise extensions (private beta).
  * Stabilise several integrations.
  * Autoscaling of Polyaxon's core components.
+ * Expose monitoring.
 
 ### UI
 
