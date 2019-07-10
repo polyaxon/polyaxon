@@ -78,3 +78,9 @@ externalServices:
 ```
 
 Please check this [integration guide](/integrations/database/) for cloud specific instructions on how to setup a postgreSQL server instance.
+
+
+## Scheduling
+
+If you decided to deploy Polyaxon in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
+to avoid running high load runs on the same node hosting the database. 

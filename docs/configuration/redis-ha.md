@@ -60,3 +60,8 @@ please follow this [integration guide](/integrations/redis/).
 ## Using Redis as broker
 
 You can also use Redis for as async worker broker, please check this section on how to alter the [default broker behaviour](/configuration/broker/).
+
+## Scheduling
+
+If you decided to deploy Redis in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
+to avoid running high load runs on the same node hosting the Redis.

@@ -39,3 +39,8 @@ externalServices:
 ## Disabling Rabbitmq
 
 If you decide not to use Rabbitmq, and use Redis for handling events, please check this section on how to alter the [default broker behaviour](/configuration/broker/).
+
+## Scheduling
+
+If you decided to deploy Rabbitmq in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
+to avoid running high load runs on the same node hosting the Rabbitmq.

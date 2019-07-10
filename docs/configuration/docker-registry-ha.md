@@ -70,3 +70,8 @@ And you need to set the access as default one.
 If you want to keep using the built-in Docker Registry and authorize the [Native Builder](/integrations/native-build/) or [Kaniko](/integrations/kaniko/) to pull private images, 
 you can follow the same steps as before to provide authentication to all registries the docker process should have access to, 
 and leave the host empty to use the internal docker process, if the host is not provided and the build-in Docker Registry is disabled the builds will fail.
+
+## Scheduling
+
+If you decided to deploy a Registry in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
+to avoid running high load runs on the same node hosting the Docker Registry.
