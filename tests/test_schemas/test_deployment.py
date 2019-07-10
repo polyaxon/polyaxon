@@ -224,6 +224,7 @@ class TestDeploymentConfig(TestCase):
             'workerPrefetchMultiplier': 2,
             'workerMaxTasksPerChild': 2,
             'workerMaxMemoryPerChild': 2,
+            'taskAlwaysEager': True
         }
         assert config.hpsearch.replicas == 1
         assert config.hpsearch.celery.to_dict() == {

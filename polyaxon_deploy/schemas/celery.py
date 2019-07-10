@@ -13,6 +13,7 @@ class CelerySchema(BaseSchema):
     workerPrefetchMultiplier = fields.Int(allow_none=True)
     workerMaxTasksPerChild = fields.Int(allow_none=True)
     workerMaxMemoryPerChild = fields.Int(allow_none=True)
+    taskAlwaysEager = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -28,6 +29,7 @@ class CeleryConfig(BaseConfig):
         'workerPrefetchMultiplier',
         'workerMaxTasksPerChild',
         'workerMaxMemoryPerChild',
+        'taskAlwaysEager'
     ]
 
     def __init__(self,  # noqa
@@ -36,10 +38,12 @@ class CeleryConfig(BaseConfig):
                  confirmPublish=None,
                  workerPrefetchMultiplier=None,
                  workerMaxTasksPerChild=None,
-                 workerMaxMemoryPerChild=None):
+                 workerMaxMemoryPerChild=None,
+                 taskAlwaysEager=None):
         self.taskTrackStarted = taskTrackStarted
         self.brokerPoolLimit = brokerPoolLimit
         self.confirmPublish = confirmPublish
         self.workerPrefetchMultiplier = workerPrefetchMultiplier
         self.workerMaxTasksPerChild = workerMaxTasksPerChild
         self.workerMaxMemoryPerChild = workerMaxMemoryPerChild
+        self.taskAlwaysEager = taskAlwaysEager
