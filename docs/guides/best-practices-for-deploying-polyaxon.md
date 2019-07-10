@@ -52,6 +52,9 @@ You can also decide to just use at a minimum 2 selectors one for core components
 Several teams have advanced setup where they take advantage of Node Selectors, Affinity, and Tolerations to setup the default platform behaviour, 
 and use a custom scheduling per experiment/job when needed. Please refer to this section for full reference of the [node scheduling behaviour](/configuration/custom-node-scheduling/).
 
+> N.B. make sure that Polyaxon's dependencies are not deployed on the same node where you are running your experiments and jobs, 
+this way you won't impact the stability of these components if one of the runs has a high CPU/Memory consumption or being preempted.
+
 ## Database high availability
 
 If you are running Polyaxon in production mode, we suggest that you keep your database "safe" and highly available. 
@@ -60,6 +63,14 @@ We provide a reference document on how to achieve High Available Database on Pol
 Stateful application are very hard to setup correctly on a Kubernetes cluster, so to achieve Postgres HA, we suggest that to look at setting an external Database with Polyaxon.
 
 We also recommend users to take snapshots and backups before going through a migration, this is particularly important if an upgrade contains DB or Data migrations.
+
+## Other components high availability
+
+If you are running Polyaxon in production mode and using a cloud provider, you might think about using a managed version of one or several dependencies. please check:
+
+ * [redis](/configuration/redis-ha/).
+ * [rabbitmq](/configuration/rabbitmq-ha/).
+ * [docker-registry](/configuration/docker-registry-ha/).
 
 ## Storages
 
@@ -77,9 +88,9 @@ our [FAQ on using custom domain](/faq/use-custom-domain/), [Nginx Ingress](/inte
 
 ## Security context
 
-Starting from Polyaxon v0.5, we will be recommending tp our users to run all Polyaxon's services and workloads with a non-root/privileged user.
+Starting from Polyaxon v0.5, we recommend running all Polyaxon's services and workloads with a non-root/privileged user.
 
-Polyaxon will expose a security context for users to setup a user uid and a group uid to use for it's containers.
+Polyaxon exposes a security context to setup a user uid and a group gid to use for it's containers.
 
 All mounted volumes will have a filesystem group with the same value as the gid provided by the user. 
 
@@ -89,6 +100,7 @@ Debugging workloads on Kubernetes can be challenging, we generally tell our user
 
  * to start a notebook to get an interactive environment to try their code
  * to try their code locally first, before submitting long running jobs to Polyaxon
+ * Take advantage of local run `polyaxon run ... --local`
 
 For our tracking API, Polyaxon respect a setting to [disable calls to the APIs](/references/polyaxon-tracking-api/#disabling-polyaxon-tracking-without-changing-the-code).
 
