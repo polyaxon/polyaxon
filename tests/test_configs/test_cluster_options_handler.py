@@ -3,7 +3,6 @@ import pytest
 from conf.exceptions import ConfException
 from conf.handlers.cluster_options_handler import ClusterOptionsHandler
 from db.models.clusters import Cluster
-from db.models.owner import Owner
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 from tests.base.case import BaseTest
@@ -61,7 +60,7 @@ class DummySecretDBOption(Option):
 class TestClusterOptionsHandler(BaseTest):
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
         self.cluster_options_handler = ClusterOptionsHandler()
 
     def test_owner(self):

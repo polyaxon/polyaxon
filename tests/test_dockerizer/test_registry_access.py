@@ -6,7 +6,6 @@ from django.test import override_settings
 import conf
 
 from db.models.clusters import Cluster
-from db.models.owner import Owner
 from db.models.registry_access import RegistryAccess
 from db.models.secrets import K8SSecret
 from options.registry.access import ACCESS_REGISTRY
@@ -26,7 +25,7 @@ from tests.base.case import BaseTest
 class TestRegistryContext(BaseTest):
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
 
     def registry_spec(self):
         spec = RegistryContextSpec(host='https://some_host:5000',

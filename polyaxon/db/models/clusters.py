@@ -60,10 +60,23 @@ class Cluster(SingletonModel):
         from db.models.owner import Owner
         from django.contrib.contenttypes.models import ContentType
 
-        Owner.objects.create(
-            name=cluster.uuid,
+        owner, _ = Owner.objects.get_or_create(
             object_id=cluster.id,
             content_type_id=ContentType.objects.get_for_model(cluster).id)
+        if owner.name != cluster.uuid.hex:
+            owner.name = cluster.uuid.hex
+            owner.save(update_fields=['name'])
+
+        return owner
+
+    @staticmethod
+    def get_or_create_owner(cluster):
+        from db.models.owner import Owner
+
+        try:
+            return Owner.objects.get(name=cluster.uuid.hex)
+        except Owner.DoesNotExist:
+            return cluster.create_cluster_owner(cluster)
 
     @classmethod
     def load(cls) -> 'Cluster':

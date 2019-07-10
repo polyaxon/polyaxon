@@ -4,7 +4,6 @@ from conf.cluster_conf_service import ClusterConfService
 from conf.exceptions import ConfException
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
-from db.models.owner import Owner
 from options.feature import Feature
 from options.option_manager import OptionManager
 from tests.base.case import BaseTest
@@ -29,7 +28,7 @@ class DummyFeature(Feature):
 class TestFeaturesService(BaseTest):
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
         self.db_service = DummyDBService()
         self.db_service.option_manager = OptionManager()
         self.db_service.setup()

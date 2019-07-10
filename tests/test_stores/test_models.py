@@ -21,7 +21,7 @@ class BaseStoreTest(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
 
     def test_has_owner(self):
         obj = self.factory_class()  # pylint:disable=not-callable

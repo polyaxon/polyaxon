@@ -17,9 +17,9 @@ sidebar: "polyflow"
 
 > Polyflow is in beta, please reach out to us if you want to have early access
 
-Templates are Polyaxonfiles where every parameter passed should be checked against an input/output.
+Templates are typed Polyaxonfiles where every parameter passed should be checked against an input/output.
 
-Templates require access to the current project to use the current version of the code.
+Templates require access to the current project to use a version of the code.
 
 > The difference between a Template and an Action or an Event, is that Action and Event are self contained components, 
 i.e. they are built and packaged independently of the project they are used in.
@@ -47,7 +47,7 @@ kind: experiment
 
 name: classifier
 
-description: rains a classifier 
+description: A machine learning classifier 
 
 framework: tensorflow
 

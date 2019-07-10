@@ -19,7 +19,7 @@ class TestK8SResourceModels(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
 
     def test_has_owner(self):
         entity = self.factory_class()  # pylint:disable=not-callable

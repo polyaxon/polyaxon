@@ -32,7 +32,8 @@ class OwnershipService(Service):
         from db.models.clusters import Cluster
 
         try:
-            self._cluster_owner = self.owner_manager.get(name=Cluster.load().uuid)
+            cluster = Cluster.load()
+            self._cluster_owner = cluster.get_or_create_owner(cluster)
         except (Cluster.DoesNotExist, InterfaceError, ProgrammingError, OperationalError):
             pass
         return self._cluster_owner

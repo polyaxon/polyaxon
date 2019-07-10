@@ -17,12 +17,13 @@ class ClusterOptionsHandler(BaseHandler):
             return self._owner
 
         from db.models.clusters import Cluster
-        from db.models.owner import Owner
 
         try:
-            self._owner = Owner.objects.get(name=Cluster.load().uuid)
+            cluster = Cluster.load()
         except (Cluster.DoesNotExist, InterfaceError, ProgrammingError, OperationalError):
-            pass
+            return None
+
+        self._owner = cluster.get_or_create_owner(cluster)
         return self._owner
 
     @property

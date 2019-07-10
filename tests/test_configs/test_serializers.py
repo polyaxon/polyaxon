@@ -3,7 +3,6 @@ import pytest
 from api.options.serializers import ConfigOptionSerializer
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
-from db.models.owner import Owner
 from tests.base.case import BaseTest
 
 
@@ -19,7 +18,7 @@ class TestConfigOptionSerializer(BaseTest):
 
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
         self.option_value1 = ConfigOption.objects.create(owner=self.owner,
                                                          key='value1',
                                                          value=2341)

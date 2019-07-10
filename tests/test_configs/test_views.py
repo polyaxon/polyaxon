@@ -30,7 +30,7 @@ class TesClusterConfigOptionsViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(owner=self.owner)
 
     def get_owner(self):
-        return Owner.objects.get(name=Cluster.load().uuid)
+        return Cluster.get_or_create_owner(Cluster.load())
 
     def get_url(self):
         return '/{}/options/'.format(API_V1)
@@ -157,7 +157,7 @@ class TesOwnerConfigOptionsViewV1(BaseViewTest):
         self.queryset = self.model_class.objects.filter(owner=self.owner)
 
     def get_owner(self):
-        return Owner.objects.get(name=Cluster.load().uuid)
+        return Owner.objects.get(name=Cluster.load().uuid.hex)
 
     def get_url(self):
         return '/{}/{}/options/'.format(API_V1, self.owner.name)

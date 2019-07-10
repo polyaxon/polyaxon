@@ -9,7 +9,6 @@ import conf
 from constants.urls import API_V1
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
-from db.models.owner import Owner
 from options.registry import (
     affinities,
     auth_azure,
@@ -44,7 +43,7 @@ class TestOptionsSaveLoad(BaseViewTest):
         self.queryset = self.model_class.objects.filter(owner=self.owner)
 
     def get_owner(self):
-        return Owner.objects.get(name=Cluster.load().uuid)
+        return Cluster.get_or_create_owner(Cluster.load())
 
     def get_url(self):
         return '/{}/options/'.format(API_V1)

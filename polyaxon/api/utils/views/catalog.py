@@ -8,7 +8,6 @@ from api.endpoint.base import (
 )
 from api.paginator import LargeLimitOffsetPagination
 from db.models.clusters import Cluster
-from db.models.owner import Owner
 
 
 class CatalogListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, CreateEndpoint):
@@ -16,7 +15,8 @@ class CatalogListViewV1(AdminOrReadOnlyListEndpoint, ListEndpoint, CreateEndpoin
     serializer_class = None
 
     def get_owner(self):
-        return Owner.objects.get(name=Cluster.load().uuid)
+        cluster = Cluster.load()
+        return cluster.get_or_create_owner(cluster)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.get_owner())

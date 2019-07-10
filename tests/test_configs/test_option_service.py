@@ -7,7 +7,6 @@ from conf.exceptions import ConfException
 from conf.service import ConfService
 from db.models.clusters import Cluster
 from db.models.config_options import ConfigOption
-from db.models.owner import Owner
 from options.option import Option, OptionStores
 from options.option_manager import OptionManager
 from options.types import CONF_TYPES
@@ -124,7 +123,7 @@ class DummyBoolDBOption(Option):
 class TestConfService(BaseTest):
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
         self.settings_service = DummySettingsService()
         self.db_service = DummyDBService()
         self.settings_service.option_manager = OptionManager()

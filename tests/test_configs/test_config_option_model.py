@@ -13,7 +13,7 @@ from tests.base.case import BaseTest
 class TestConfigOptionModels(BaseTest):
     def setUp(self):
         super().setUp()
-        self.owner = Owner.objects.get(name=Cluster.load().uuid)
+        self.owner = Cluster.get_or_create_owner(Cluster.load())
 
     def test_create_without_owner_raises(self):
         with self.assertRaises(IntegrityError):

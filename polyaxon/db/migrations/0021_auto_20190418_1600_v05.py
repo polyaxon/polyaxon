@@ -16,7 +16,7 @@ def create_cluster_owner(apps, schema_editor):
     for cluster in Cluster.objects.all():
         Owner.objects.create(object_id=cluster.id,
                              content_type_id=cluster_type_id,
-                             name=cluster.uuid)
+                             name=cluster.uuid.hex)
 
 
 def migrate_experimentgroup_config(apps, schema_editor):
