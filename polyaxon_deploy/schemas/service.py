@@ -2,8 +2,9 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import EXCLUDE, fields
-from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 
+from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
+from polyaxon_deploy.schemas.celery import CelerySchema
 from polyaxon_schemas.ops.environments.resources import K8SContainerResourcesSchema
 
 
@@ -51,6 +52,37 @@ class ServiceConfig(BaseConfig):
         self.replicas = replicas
         self.concurrency = concurrency
         self.resources = resources
+
+
+class WorkerSchema(ServiceSchema):
+    celery = fields.Nested(CelerySchema, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return WorkerConfig
+
+
+class WorkerConfig(ServiceConfig):
+    SCHEMA = WorkerSchema
+    REDUCED_ATTRIBUTES = ServiceConfig.REDUCED_ATTRIBUTES + ['celery']
+
+    def __init__(self,  # noqa
+                 image=None,
+                 imageTag=None,
+                 imagePullPolicy=None,
+                 replicas=None,
+                 concurrency=None,
+                 resources=None,
+                 celery=None):
+        super(WorkerConfig, self).__init__(
+            image=image,
+            imageTag=imageTag,
+            imagePullPolicy=imagePullPolicy,
+            replicas=replicas,
+            concurrency=concurrency,
+            resources=resources,
+        )
+        self.celery = celery
 
 
 class ApiSchema(ServiceSchema):

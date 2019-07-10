@@ -2,8 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
+
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
-from polyaxon_deploy.schemas.celery import CelerySchema
 from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
 from polyaxon_deploy.schemas.email import EmailSchema
 from polyaxon_deploy.schemas.ingress import IngressSchema
@@ -22,7 +22,8 @@ from polyaxon_deploy.schemas.service import (
     RabbitmqSchema,
     RedisSchema,
     ServiceSchema,
-    ThirdPartyServiceSchema
+    ThirdPartyServiceSchema,
+    WorkerSchema
 )
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.ssl import SSLSchema
@@ -53,11 +54,11 @@ class DeploymentSchema(BaseSchema):
     globalConcurrency = fields.Int(allow_none=True)
     api = fields.Nested(ApiSchema, allow_none=True)
     streams = fields.Nested(ApiSchema, allow_none=True)
-    scheduler = fields.Nested(ServiceSchema, allow_none=True)
-    worker = fields.Nested(ServiceSchema, allow_none=True)
-    hpsearch = fields.Nested(ServiceSchema, allow_none=True)
-    eventsHandlers = fields.Nested(ServiceSchema, allow_none=True)
-    k8sEventsHandlers = fields.Nested(ServiceSchema, allow_none=True)
+    scheduler = fields.Nested(WorkerSchema, allow_none=True)
+    worker = fields.Nested(WorkerSchema, allow_none=True)
+    hpsearch = fields.Nested(WorkerSchema, allow_none=True)
+    eventsHandlers = fields.Nested(WorkerSchema, allow_none=True)
+    k8sEventsHandlers = fields.Nested(WorkerSchema, allow_none=True)
     beat = fields.Nested(ServiceSchema, allow_none=True)
     crons = fields.Nested(ServiceSchema, allow_none=True)
     eventMonitors = fields.Nested(EventMonitorsSchema, allow_none=True)
@@ -88,7 +89,6 @@ class DeploymentSchema(BaseSchema):
     securityContext = fields.Nested(SecurityContextSchema, allow_none=True)
     externalServices = fields.Nested(ExternalServicesSchema, allow_none=True)
     debugMode = fields.Bool(allow_none=True)
-    celery = fields.Nested(CelerySchema, allow_none=True)
 
     # Pending validation
     dns = fields.Raw(allow_none=True)
@@ -159,7 +159,6 @@ class DeploymentConfig(BaseConfig):
                  securityContext=None,
                  externalServices=None,
                  debugMode=None,
-                 celery=None,
                  plugins=None):
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
@@ -217,5 +216,4 @@ class DeploymentConfig(BaseConfig):
         self.securityContext = securityContext
         self.externalServices = externalServices
         self.debugMode = debugMode
-        self.celery = celery
         self.plugins = plugins

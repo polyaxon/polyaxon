@@ -221,6 +221,13 @@ scheduler:
     requests:
       cpu: 150m
       memory: 200Mi
+  celery:
+    taskTrackStarted: True
+    brokerPoolLimit: 123
+    confirmPublish: True
+    workerPrefetchMultiplier: 4
+    workerMaxTasksPerChild: 123
+    workerMaxMemoryPerChild: 123
 
 hpsearch:
   image: polyaxon/polyaxon-hpsearch
@@ -232,6 +239,13 @@ hpsearch:
     requests:
       cpu: 150m
       memory: 200Mi
+  celery:
+    taskTrackStarted: True
+    brokerPoolLimit: 123
+    confirmPublish: True
+    workerPrefetchMultiplier: 4
+    workerMaxTasksPerChild: 123
+    workerMaxMemoryPerChild: 123
 
 eventsHandlers:
   image: polyaxon/polyaxon-events-handlers
@@ -246,6 +260,13 @@ eventsHandlers:
     requests:
       cpu: 130m
       memory: 200Mi
+  celery:
+    taskTrackStarted: True
+    brokerPoolLimit: 123
+    confirmPublish: True
+    workerPrefetchMultiplier: 4
+    workerMaxTasksPerChild: 123
+    workerMaxMemoryPerChild: 123
 
 
 k8sEventsHandlers:
@@ -261,6 +282,13 @@ k8sEventsHandlers:
     requests:
       cpu: 130m
       memory: 200Mi
+  celery:
+    taskTrackStarted: True
+    brokerPoolLimit: 123
+    confirmPublish: True
+    workerPrefetchMultiplier: 4
+    workerMaxTasksPerChild: 123
+    workerMaxMemoryPerChild: 123
 
 beat:
   image: polyaxon/polyaxon-beat
@@ -505,11 +533,3 @@ intervals:  # in seconds
 plugins:
   notebook: {port: 8888}
   tensorboard: {port: 6006}
-
-celery:
-  taskTrackStarted: True
-  brokerPoolLimit: 123
-  confirmPublish: True
-  workerPrefetchMultiplier: 4
-  workerMaxTasksPerChild: 123
-  workerMaxMemoryPerChild: 123

@@ -70,21 +70,49 @@ scheduler:
   replicas: 1
   imageTag: latest
   imagePullPolicy: Always
+  celery:
+    taskTrackStarted: false
+    brokerPoolLimit: 2
+    confirmPublish: false
+    workerPrefetchMultiplier: 2
+    workerMaxTasksPerChild: 2
+    workerMaxMemoryPerChild: 2
 
 hpsearch:
   replicas: 1
   imageTag: latest
   imagePullPolicy: Always
+  celery:
+    taskTrackStarted: True
+    brokerPoolLimit: 1
+    confirmPublish: True
+    workerPrefetchMultiplier: 1
+    workerMaxTasksPerChild: 1
+    workerMaxMemoryPerChild: 1
 
 eventsHandlers:
   replicas: 1
   imageTag: latest
   imagePullPolicy: Always
+  celery:
+    taskTrackStarted: true
+    brokerPoolLimit: 3
+    confirmPublish: true
+    workerPrefetchMultiplier: 3
+    workerMaxTasksPerChild: 3
+    workerMaxMemoryPerChild: 3
 
 k8sEventsHandlers:
   replicas: 1
   imageTag: latest
   imagePullPolicy: Always
+  celery:
+    taskTrackStarted: true
+    brokerPoolLimit: 4
+    confirmPublish: true
+    workerPrefetchMultiplier: 4
+    workerMaxTasksPerChild: 4
+    workerMaxMemoryPerChild: 4
 
 beat:
   imageTag: latest

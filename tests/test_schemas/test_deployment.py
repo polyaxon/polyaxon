@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from marshmallow import ValidationError
+
 from polyaxon_deploy import reader
 from polyaxon_deploy.schemas.deployment import DeploymentConfig
 
@@ -216,9 +217,41 @@ class TestDeploymentConfig(TestCase):
         assert config.api.replicas == 1
         assert config.streams.imageTag == 'latest'
         assert config.scheduler.replicas == 1
+        assert config.scheduler.celery.to_dict() == {
+            'taskTrackStarted': False,
+            'brokerPoolLimit': 2,
+            'confirmPublish': False,
+            'workerPrefetchMultiplier': 2,
+            'workerMaxTasksPerChild': 2,
+            'workerMaxMemoryPerChild': 2,
+        }
         assert config.hpsearch.replicas == 1
+        assert config.hpsearch.celery.to_dict() == {
+            'taskTrackStarted': True,
+            'brokerPoolLimit': 1,
+            'confirmPublish': True,
+            'workerPrefetchMultiplier': 1,
+            'workerMaxTasksPerChild': 1,
+            'workerMaxMemoryPerChild': 1,
+        }
         assert config.eventsHandlers.replicas == 1
+        assert config.eventsHandlers.celery.to_dict() == {
+            'taskTrackStarted': True,
+            'brokerPoolLimit': 3,
+            'confirmPublish': True,
+            'workerPrefetchMultiplier': 3,
+            'workerMaxTasksPerChild': 3,
+            'workerMaxMemoryPerChild': 3,
+        }
         assert config.k8sEventsHandlers.replicas == 1
+        assert config.k8sEventsHandlers.celery.to_dict() == {
+            'taskTrackStarted': True,
+            'brokerPoolLimit': 4,
+            'confirmPublish': True,
+            'workerPrefetchMultiplier': 4,
+            'workerMaxTasksPerChild': 4,
+            'workerMaxMemoryPerChild': 4,
+        }
         assert config.beat.imageTag == 'latest'
         assert config.crons.imageTag == 'latest'
         assert config.eventMonitors.replicas == 1
