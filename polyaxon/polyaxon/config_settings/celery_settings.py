@@ -50,7 +50,8 @@ CELERY_WORKER_MAX_TASKS_PER_CHILD = config.get_int('POLYAXON_CELERY_WORKER_MAX_T
                                                    default=100)
 
 CELERY_WORKER_MAX_MEMORY_PER_CHILD = config.get_int('POLYAXON_CELERY_WORKER_MAX_MEMORY_PER_CHILD',
-                                                    is_optional=True)
+                                                    is_optional=True,
+                                                    default=400000)
 
 
 class Intervals(object):
