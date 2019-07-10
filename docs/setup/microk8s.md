@@ -36,32 +36,6 @@ microk8s.enable \
   storage
 ```
 
-## Allow privileged mode or disable Polyaxon's resources deamon
-
-If you don't want to allow privileged mode, please disable Polyaxon's deamon
-
-```yaml
-resourcesDaemon:
-  enabled: true
-```
-
-Otherwise add `--allow-privileged=true` to:
-
-```bash
-# kubelet config
-sudo vim /var/snap/microk8s/current/args/kubelet
-
-#kube-apiserver config
-sudo vim /var/snap/microk8s/current/args/kube-apiserver
-```
-
-Restart services:
-
-```bash
-sudo systemctl restart snap.microk8s.daemon-kubelet.service
-sudo systemctl restart snap.microk8s.daemon-apiserver.service
-```
-
 ## Polyaxon configuration
 
 If you are here, it means that you have a Microk8s cluster and [helm](/guides/setup-helm/) setup.
