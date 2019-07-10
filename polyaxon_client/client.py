@@ -29,7 +29,7 @@ class PolyaxonClient(object):
                  port=None,
                  http_port=None,
                  ws_port=None,
-                 use_https=False,
+                 use_https=None,
                  verify_ssl=None,
                  is_managed=None,
                  authentication_type=None,
