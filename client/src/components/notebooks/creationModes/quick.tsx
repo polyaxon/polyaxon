@@ -42,7 +42,7 @@ export default class NotebookCreateQuick extends React.Component<Props, {}> {
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: state.build.image ? getConfigFromBuild(state.build, 'notebook') : null,
+      content: state.build.image ? getConfigFromBuild(state.build, 'notebook') : null,
       is_managed: true
     }) as NotebookModel;
 

@@ -67,7 +67,7 @@ export const RunComponent: React.FunctionComponent<FieldProps> = (
 );
 
 export const RunField = (props: FormikProps<{}>, errors: any, isRequired: boolean, defaultImage?: string) => {
-  const hasServerError = checkServerError(errors, 'config');
+  const hasServerError = checkServerError(errors, 'content');
   const hasValidationError = checkValidationError(props, 'run');
   const hasError = hasServerError || hasValidationError;
 
@@ -84,7 +84,7 @@ export const RunField = (props: FormikProps<{}>, errors: any, isRequired: boolea
         If left empty it will use the default <code>{defaultImage}</code>
       </span>
       }
-      {hasServerError && <div className="help-block">{errors.config}</div>}
+      {hasServerError && <div className="help-block">{errors.content}</div>}
       <ErrorMessage name="run">
         {(errorMessage) => <div className="help-block">{errorMessage}</div>}
       </ErrorMessage>

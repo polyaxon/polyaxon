@@ -49,7 +49,7 @@ export default class TensorboardCreateQuick extends React.Component<Props, {}> {
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: state.dockerImage ? getConfigFromImage(state.dockerImage, 'tensorboard') : null,
+      content: state.dockerImage ? getConfigFromImage(state.dockerImage, 'tensorboard') : null,
       is_managed: true
     }) as TensorboardModel;
 

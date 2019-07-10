@@ -46,7 +46,7 @@ export default class GroupCreateQuick extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      content: state.hptuning ? JSON.stringify(getConfigFromGroup(state.hptuning, 'group')) : null,
+      content: state.hptuning ? getConfigFromGroup(state.hptuning, 'group') : null,
       is_managed: true
     }) as GroupModel;
 

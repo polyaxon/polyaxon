@@ -10,45 +10,45 @@ import { checkServerError, checkValidationError } from './validation';
 
 export const ConfigSchema = Yup.string();
 
-export const getConfigFromImage = (dockerImage: string, kind: string): { [key: string]: any } => {
-  return {
+export const getConfigFromImage = (dockerImage: string, kind: string): string => {
+  return JSON.stringify({
     version: 1,
     kind,
     build: {image: dockerImage}
-  };
+  });
 };
 
-export const getConfigFromBuild = (build: BuildFieldSchema, kind: string): { [key: string]: any } => {
+export const getConfigFromBuild = (build: BuildFieldSchema, kind: string): string => {
   return kind === 'build'
-    ? {
+    ? JSON.stringify({
       version: 1,
       kind,
       ...build
-    } :
-    {
+    }) :
+    JSON.stringify({
       version: 1,
       kind,
       build
-    };
+    });
 };
 
-export const getConfigFromRun = (run: RunFieldSchema, kind: string): { [key: string]: any } => {
-  return {
+export const getConfigFromRun = (run: RunFieldSchema, kind: string): string => {
+  return JSON.stringify({
     version: 1,
     kind,
     build: {image: run.image, build_steps: run.build_steps},
     run: {cmd: run.command}
-  };
+  });
 };
 
-export const getConfigFromGroup = (group: GroupFieldSchema, kind: string): { [key: string]: any } => {
-  return {
+export const getConfigFromGroup = (group: GroupFieldSchema, kind: string): string => {
+  return JSON.stringify({
     version: 1,
     kind,
     hptuning: group.hptuning,
     build: {image: group.image, build_steps: group.build_steps},
     run: {cmd: group.command}
-  };
+  });
 };
 
 export const getConfig = (config: string): { [key: string]: any } => {

@@ -43,7 +43,7 @@ export default class BuildCreateQuick extends React.Component<Props, {}> {
       tags: state.tags.map((v) => v.value),
       description: state.description,
       name: state.name,
-      config: state.build.image ? getConfigFromBuild(state.build, 'build') : null,
+      content: state.build.image ? getConfigFromBuild(state.build, 'build') : null,
       is_managed: true
     }) as BuildModel;
 

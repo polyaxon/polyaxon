@@ -20,7 +20,7 @@ export const DockerImageField = (props: FormikProps<{}>,
                                  errors: any,
                                  defaultImage: string,
                                  isRequired: boolean = false) => {
-  const hasServerError = checkServerError(errors, 'config');
+  const hasServerError = checkServerError(errors, 'content');
   const hasValidationError = checkValidationError(props, 'dockerImage');
   const hasError = hasServerError || hasValidationError;
 
@@ -38,7 +38,7 @@ export const DockerImageField = (props: FormikProps<{}>,
       </span>
       <div className="row">
         <div className="col-md-12">
-          {hasServerError && <div className="help-block">{errors.config}</div>}
+          {hasServerError && <div className="help-block">{errors.content}</div>}
           <ErrorMessage name="dockerImage">
             {(errorMessage) => <div className="help-block">{errorMessage}</div>}
           </ErrorMessage>

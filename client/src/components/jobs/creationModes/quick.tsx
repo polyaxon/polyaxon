@@ -46,7 +46,7 @@ export default class JobCreateQuick extends React.Component<Props, {}> {
       readme: state.readme,
       description: state.description,
       name: state.name,
-      config: state.run.command ? getConfigFromRun(state.run, 'job') : null,
+      content: state.run.command ? getConfigFromRun(state.run, 'job') : null,
       is_managed: true
     }) as JobModel;
 
