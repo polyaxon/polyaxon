@@ -1,4 +1,5 @@
-isMinikube: true
+deploymentType: minikube
+namespace: polyaxon
 
 rbac:
   enabled: false
@@ -19,57 +20,76 @@ postgresql:
       memory: 40Mi
       cpu: 20m
 
+broker: redis
+
 redis:
-  imageTag: 4.0.2-alpine
   resources:
     requests:
       memory: 40Mi
       cpu: 20m
 
-rabbitmq:
-  imageTag: 3.6.12-management-alpine
-  resources:
-    requests:
-      memory: 40Mi
-      cpu: 20m
+rabbitmq-ha:
+  enabled: false
 
 api:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 streams:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 scheduler:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 hpsearch:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 eventsHandlers:
+  imageTag: latest
+  imagePullPolicy: Always
+  resources:
+    requests:
+      memory: 80Mi
+      cpu: 30m
+
+k8sEventsHandlers:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 beat:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
 
 crons:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
@@ -77,22 +97,32 @@ crons:
 
 eventMonitors:
   namespace:
+    imageTag: latest
+    imagePullPolicy: Always
     resources:
       requests:
         memory: 80Mi
         cpu: 30m
 
   statuses:
+    imageTag: latest
+    imagePullPolicy: Always
     resources:
       requests:
         memory: 80Mi
         cpu: 30m
 
 resourcesDaemon:
+  imageTag: latest
+  imagePullPolicy: Always
   resources:
     requests:
       memory: 80Mi
       cpu: 30m
+
+hooks:
+  imageTag: latest
+  imagePullPolicy: Always
 
 persistence:
   logs:

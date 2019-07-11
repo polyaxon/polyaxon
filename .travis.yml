@@ -1,3 +1,5 @@
+dist: xenial
+
 language: python
 
 python:
@@ -7,16 +9,13 @@ services:
   - docker
 
 env:
-  global:
-    - MINIKUBE_VERSION=0.28.2
-    - HELM_VERSION=2.9.1
-    - PATH="$PWD/bin:$PATH"
   matrix:
-    - KUBE_VERSION=1.9.4
+  - VERSION=1.13
+
 
 install:
+  - . "ci/envs/minikube-${VERSION}.env"
   - ./ci/install.sh
-
 script:
   - ./ci/test-deploy.sh
 
