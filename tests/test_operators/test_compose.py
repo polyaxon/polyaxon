@@ -5,6 +5,7 @@ from unittest import TestCase
 
 import mock
 
+from polyaxon_deploy import reader
 from polyaxon_deploy.operators.compose import ComposeOperator
 from polyaxon_deploy.operators.exceptions import OperatorException
 
@@ -51,3 +52,7 @@ class TestComposeOperator(TestCase):
                 stdout,
                 stderr)
         )
+
+    def test_generate(self):
+        config = reader.read('tests/fixtures/all_values.yml')
+        assert ComposeOperator.generate_env(config) is not None
