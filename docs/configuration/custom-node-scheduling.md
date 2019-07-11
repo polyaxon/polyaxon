@@ -51,7 +51,7 @@ rabbitmq-ha:
   nodeSelector:
     ...
     
-dockrer-registry:
+docker-registry:
   nodeSelector:
     ... 
 ```
@@ -209,7 +209,7 @@ rabbitmq-ha:
   tolerations:
     ...
     
-dockrer-registry:
+docker-registry:
   tolerations:
     ... 
 ```
@@ -293,7 +293,7 @@ rabbitmq-ha:
   affinity:
     ...
     
-dockrer-registry:
+docker-registry:
   affinity:
     ... 
 ```
