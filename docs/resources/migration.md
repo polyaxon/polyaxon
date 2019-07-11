@@ -90,7 +90,7 @@ For more details about the HA for each one of these components, please check:
  * [Postgresql HA](/configuration/postgresql-ha/)
  * [Redis HA](/configuration/redis-ha/)
  * [Rabbitmq HA](/configuration/rabbitmq-ha/)
- * [Docker registry HA](/configuration/postgresql-ha/)
+ * [Docker registry HA](/configuration/docker-registry-ha/)
 
 
 Finally, in the v0.5, Polyaxon allows to use Redis as a broker as well, 
