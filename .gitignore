@@ -27,6 +27,7 @@ target/
 values.dev.yaml
 values.*.test.yaml
 values.*.test.json
+values.*.test.sh
 
 # Chart dependencies
 **/charts/*.tgz

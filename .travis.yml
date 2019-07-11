@@ -17,7 +17,7 @@ env:
 
 
 install:
-  - . "ci/env/minikube-${VERSION}.env"
+  - . "ci/envs/minikube-${VERSION}.env"
   - ./ci/install.sh
 script:
   - ./ci/test-helm.sh
