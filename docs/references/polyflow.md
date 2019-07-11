@@ -20,12 +20,12 @@ sidebar: "polyflow"
 Polyflow is an open source project that provides container-native engine for running machine learning pipelines on Polyaxon. 
 Each operation in a Polyflow pipeline is defined as pod running a main container defined by the user.
 
-Often times, Polyaxon's users tend to run complex jobs and experiment that depend on each other. 
+Often times, Polyaxon's users tend to run complex jobs and experiments that depend on each other. 
 Polyaxon defines several primitives that can run independently, each one of these primitives is a mini-pipeline. For example: 
  * An experiment requires a build to prepare a docker image before running
  * A hyperparameters group run several experiments and follow their progress
  
-Polyflow is an extension to these primitive to allow the users to automate workflows and define complex interactions. 
+Polyflow is an extension to these primitives to allow the users to automate workflows and define complex interactions. 
 
 ## Features
 
