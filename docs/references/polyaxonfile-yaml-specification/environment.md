@@ -100,7 +100,27 @@ environment:
 
 To enable a distributed run, the user can define one of the following framework:
 
+## annotations
 
+The annotations to inject during the scheduling of the job.
+
+```yaml
+environment:
+  annotations:
+    key1: "value1"
+    key2: "value2"
+```
+
+## labels
+
+The labels to inject during the scheduling of the job.
+
+```yaml
+environment:
+  labels:
+    key1: "label1"
+    key2: "label2"
+```
 
 ## persistence [deprecated]
 
@@ -127,7 +147,7 @@ environment:
 ```
 
 
-## config_\map\_refs
+## config\_map\_refs
 
 > Please note that previously this section used to be `configmaps_refs`
 
