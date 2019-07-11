@@ -23,7 +23,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-dockerizer',
-      version='0.5.0',
+      version='0.5.1',
       description='Polyaxon dockerizer.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
@@ -41,7 +41,7 @@ setup(name='polyaxon-dockerizer',
           'instrumentation'
       ],
       install_requires=[
-          'polyaxon-client==0.5.0',
+          'polyaxon-client==0.5.1',
           'polyaxon-dockerizer==0.0.5',
       ],
       classifiers=[

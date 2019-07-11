@@ -17,7 +17,7 @@ These guides provide you with a range of options to configure your deployment to
 
 ## Overview
 
-Starting form Polyaxon v0.5.0 we recommend using `polyaxon-cli` for deploying Polyaxon. 
+Starting form Polyaxon v0.5.1 we recommend using `polyaxon-cli` for deploying Polyaxon. 
 There are some configuration options which are required and many other that are optional.
 
 The following articles in this section explain how to use the `cli` to create config deployment, 

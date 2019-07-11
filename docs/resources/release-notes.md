@@ -9,6 +9,35 @@ tags:
     - reference
 ---
 
+## 0.5.1
+
+ * Add possibility to specify pod annotations for jobs/experiments/builds/notebooks/tensorboards.
+   * By default polyaxon will inject necessary annotations, e.g. when using TPU.
+   * Users can now define default annotations for each primitive cluster wide.
+   * Polyaxonfile spec allows to override the annotations per run.
+ * Add possibility to specify custom pod labels for jobs/experiments/builds/notebooks/tensorboards.
+   * By default polyaxon uses recommended k8s labels for all managed resources.
+   * Users can now define default custom labels for each primitive cluster wide.
+   * Polyaxonfile spec allows to override the labels per run.
+   * N.B. The custom labels cannot override Polyaxon's required labels.
+ * strengthen statuses check and fall back to db check if keys are evicted.
+ * Disable namespace monitoring by default.
+ * Disable containers resources monitoring by default.
+ * Expose several celery options by worker type.
+ * Force rabbitmq confirmation when used as a broker by default.
+ * Add gzip to list APIs by default
+ * Remove parts requiring privileged mode when deploying Polyaxon.
+ * Fix in-cluster redis node scheduling docs: uses master/slave.
+ * Fix Helm chart validation when disabling docker-registry.
+ * Fix issue detecting some local configs when running polyaxonfiles locally (use_https was not detected correctly).
+ * Fix quick creation modes in UI.
+ * Fix route for creating Tensorboard in UI.
+ * Fix UI issues noticed in offline deployment: self-host all styling requirements.
+ * Fix spelling in UI.
+ * Fix polyaxonfile spec unable to handle quotes in commands.
+ * Update lodash: vulnerability issue.
+ 
+
 ## 0.5.0
 
  * Add "Cluster Level Dynamic Configuration":
