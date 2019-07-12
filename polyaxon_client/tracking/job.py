@@ -227,14 +227,6 @@ class Job(BaseJob):
                                    background=True)
 
     @check_no_op
-    def log_artifact(self, file_path):
-        self.job.outputs_store.upload_file(file_path)
-
-    @check_no_op
-    def log_artifacts(self, dir_path):
-        self.job.outputs_store.upload_file(dir_path)
-
-    @check_no_op
     def get_outputs_path(self):
         return get_outputs_path()
 
