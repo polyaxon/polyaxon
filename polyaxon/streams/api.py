@@ -14,7 +14,7 @@ from streams.resources.jobs import job_logs_v2
 app = Sanic(__name__, log_config=conf.get(LOGGING))
 
 
-app.add_route(health, '/_health')
+app.add_route(health, '/healthz')
 
 EXPERIMENT_URL = '/v1/<username>/<project_name>/experiments/<experiment_id>'
 EXPERIMENT_JOB_URL = EXPERIMENT_URL + '/jobs/<job_id>'

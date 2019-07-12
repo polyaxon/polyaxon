@@ -54,7 +54,7 @@ export function fetchHealthStatus(): any {
   return (dispatch: any) => {
     dispatch(fetchHealthStatusRequestActionCreator());
 
-    return fetch(BASE_URL + '/_status', {
+    return fetch(BASE_URL + '/statusz', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

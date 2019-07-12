@@ -11,7 +11,7 @@ class StreamsCheck(Check):
 
     @classmethod
     def run(cls) -> Dict:
-        response = safe_request('{}/_health'.format(get_local_stream()), 'GET')
+        response = safe_request('{}/healthz'.format(get_local_stream()), 'GET')
         status_code = response.status_code
         if status_code == 200:
             result = Result()

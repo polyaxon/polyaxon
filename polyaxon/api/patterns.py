@@ -78,8 +78,8 @@ urlpatterns = [
             RedirectView.as_view(url=conf.get(LOGIN_URL), permanent=True, query_string=True),
             name='login'),
 
-    re_path(r'^_health/?$', HealthView.as_view(), name='health_check'),
-    re_path(r'^_status/?$', StatusView.as_view(), name='status_check'),
+    re_path(r'^healthz/?$', HealthView.as_view(), name='health_check'),
+    re_path(r'^statusz/?$', StatusView.as_view(), name='status_check'),
     re_path(r'^{}/'.format(API_V1), include((api_patterns, 'v1'), namespace='v1')),
     re_path(r'^$', IndexView.as_view(), name='index'),
     re_path(r'^50x.html$', Handler50xView.as_view(), name='50x'),
