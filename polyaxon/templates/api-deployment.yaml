@@ -65,7 +65,7 @@ spec:
         livenessProbe:
           failureThreshold: 10
           httpGet:
-            path: /_health/
+            path: /healthz/
             port: {{ .Values.api.service.internalPort }}
             scheme: {{ .Values.api.service.scheme | default "HTTP" }}
             {{- if .Values.allowedHosts }}
@@ -80,7 +80,7 @@ spec:
         readinessProbe:
           failureThreshold: 30
           httpGet:
-            path: /_health/
+            path: /healthz/
             port: {{ .Values.api.service.internalPort }}
             scheme: {{ .Values.api.service.scheme | default "HTTP" }}
             {{- if .Values.allowedHosts }}
@@ -111,7 +111,7 @@ spec:
         livenessProbe:
           failureThreshold: 10
           httpGet:
-            path: /_health/
+            path: /healthz/
             port: {{ .Values.streams.service.internalPort }}
             scheme: {{ .Values.api.service.scheme | default "HTTP" }}
           initialDelaySeconds: 100
@@ -121,7 +121,7 @@ spec:
         readinessProbe:
           failureThreshold: 30
           httpGet:
-            path: /_health/
+            path: /healthz/
             port: {{ .Values.streams.service.internalPort }}
             scheme: {{ .Values.api.service.scheme | default "HTTP" }}
           initialDelaySeconds: 150
