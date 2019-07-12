@@ -67,7 +67,8 @@ def _create_docker_build(build_job, build_config):
         dockerfile_path = POLYAXON_DOCKERFILE_NAME
         dockerfile_generate = True
         if build_config.dockerfile:
-            shutil.copy(build_config.dockerfile, os.path.join(directory, dockerfile_path))
+            dockerfile_path = os.path.join(directory, dockerfile_path)
+            shutil.copy(build_config.dockerfile, dockerfile_path)
             dockerfile_generate = False
         if dockerfile_generate:
             rendered_dockerfile = dockerizer_generate(
