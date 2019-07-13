@@ -9,6 +9,17 @@ tags:
     - reference
 ---
 
+## 0.5.2
+
+ * Add asset version context processor.
+ * Remove settings dropdown condition on admin interface.
+ * Update health and status checks urls to follow best practices.
+ * Fix jobs artifacts logging. 
+ * Fix dockerfile path resolution for local runs.
+ * Add a simple way to inject debug mode command (only CLI side).
+ * Fix issue displaying artifacts for S3 stores.
+ * Add docs for using Minio for logs/data/artifacts.
+
 ## 0.5.1
 
  * Add possibility to specify pod annotations for jobs/experiments/builds/notebooks/tensorboards.
