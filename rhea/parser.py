@@ -621,6 +621,8 @@ def parse_auth_spec(auth_spec):
 
 def parse_wasbs_path(wasbs_path):
     parsed_url = urllib.parse.urlparse(wasbs_path)
+    if parsed_url.scheme != "wasbs":
+        raise RheaError('Received an invalid url `{}`'.format(wasbs_path))
     match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
     if match is None:
         raise RheaError(
