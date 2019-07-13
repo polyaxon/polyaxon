@@ -174,6 +174,19 @@ class S3Store(BaseStore):
             key = parsed_url.path.strip('/')
             return bucket_name, key
 
+    def validate_key(self, path):
+        try:
+            return self.parse_s3_url(path)  # Path is a valid S3
+        except PolyaxonStoresException:
+            if not self._endpoint_url:
+                raise PolyaxonStoresException('Received an invalid url `{}`'.format(path))
+
+        (bucket_name, key) = self.parse_s3_url(self._endpoint_url)  # Use endpoint_url
+        if path:
+            key = os.path.join(key, path)
+
+        return bucket_name, key
+
     @staticmethod
     def check_prefix_format(prefix, delimiter):
         if not delimiter or not prefix:
@@ -204,7 +217,7 @@ class S3Store(BaseStore):
         return self.resource.Bucket(bucket_name)
 
     def ls(self, path):
-        (bucket_name, key) = self.parse_s3_url(path)
+        (bucket_name, key) = self.validate_key(path)
         results = self.list(bucket_name=bucket_name, prefix=key)
         return {'files': results['keys'], 'dirs': results['prefixes']}
 
@@ -320,7 +333,7 @@ class S3Store(BaseStore):
             bucket_name: `str`. Name of the bucket in which the file is stored
         """
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            (bucket_name, key) = self.validate_key(key)
 
         try:
             self.client.head_object(Bucket=bucket_name, Key=key)
@@ -338,7 +351,7 @@ class S3Store(BaseStore):
             bucket_name: `str`. the name of the bucket.
         """
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            (bucket_name, key) = self.validate_key(key)
 
         try:
             obj = self.resource.Object(bucket_name, key)
@@ -383,7 +396,7 @@ class S3Store(BaseStore):
             acl: `str`. ACL to use for uploading, e.g. "public-read".
         """
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            (bucket_name, key) = self.validate_key(key)
 
         if not overwrite and self.check_key(key, bucket_name):
             raise ValueError("The key {key} already exists.".format(key=key))
@@ -454,7 +467,7 @@ class S3Store(BaseStore):
             use_basename: `bool`. whether or not to use the basename of the filename.
         """
         if not bucket_name:
-            bucket_name, key = self.parse_s3_url(key)
+            bucket_name, key = self.validate_key(key)
 
         if use_basename:
             key = append_basename(key, filename)
@@ -481,7 +494,7 @@ class S3Store(BaseStore):
             use_basename: `bool`. whether or not to use the basename of the key.
         """
         if not bucket_name:
-            bucket_name, key = self.parse_s3_url(key)
+            bucket_name, key = self.validate_key(key)
 
         local_path = os.path.abspath(local_path)
 
@@ -519,7 +532,7 @@ class S3Store(BaseStore):
             use_basename: `bool`. whether or not to use the basename of the directory.
         """
         if not bucket_name:
-            bucket_name, key = self.parse_s3_url(key)
+            bucket_name, key = self.validate_key(key)
 
         if use_basename:
             key = append_basename(key, dirname)
@@ -548,7 +561,7 @@ class S3Store(BaseStore):
             use_basename: `bool`. whether or not to use the basename of the key.
         """
         if not bucket_name:
-            bucket_name, key = self.parse_s3_url(key)
+            bucket_name, key = self.validate_key(key)
 
         local_path = os.path.abspath(local_path)
 
@@ -584,7 +597,7 @@ class S3Store(BaseStore):
 
     def delete(self, key, bucket_name=None):
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            (bucket_name, key) = self.validate_key(key)
 
         results = self.list(bucket_name=bucket_name, prefix=key, delimiter='/')
 
@@ -605,7 +618,7 @@ class S3Store(BaseStore):
 
     def delete_file(self, key, bucket_name=None):
         if not bucket_name:
-            (bucket_name, key) = self.parse_s3_url(key)
+            (bucket_name, key) = self.validate_key(key)
         try:
             obj = self.resource.Object(bucket_name, key)
             obj.delete()

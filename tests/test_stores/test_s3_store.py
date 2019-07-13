@@ -26,7 +26,7 @@ class TestAwsStore(TestCase):
         assert isinstance(store.resource, ServiceResource)
 
     def test_parse_s3_url(self):
-        s3_url = 's3://test/this/is/bad/key.txt'
+        s3_url = 's3://test/this/is/valid/key.txt'
         parsed_url = S3Store.parse_s3_url(s3_url)
         assert parsed_url == ('test', 'this/is/bad/key.txt')
 
