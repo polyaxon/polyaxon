@@ -27,6 +27,9 @@ from polyaxon_cli.utils.validation import validate_tags
               help='The description to give to this run.')
 @click.option('--ttl', type=int,
               help='TTL for this run after it\'s done.')
+@click.option('--debug',  is_flag=True, default=False,
+              help='Enable debug mode for this run. '
+                   'N.B. you should pass a TTL to specify the how long the run should live.')
 @click.option('--upload', '-u', is_flag=True, default=False,
               help='To upload the repo before running.')
 @click.option('--log', '-l', is_flag=True, default=False,
@@ -46,6 +49,7 @@ def run(ctx,
         tags,
         description,
         ttl,
+        debug,
         upload,
         log,
         local,
@@ -99,7 +103,19 @@ def run(ctx,
     if not file:
         file = ''
 
-    specification = check_polyaxonfile(file, params=params, log=False).specification
+    if debug and not ttl:
+        Printer.print_error('Debug mode requires a ttl to properly set a sleep time.')
+        sys.exit(1)
+
+    debug_ttl = None
+    if debug and ttl:
+        debug_ttl = ttl
+        ttl = None
+
+    specification = check_polyaxonfile(file,
+                                       params=params,
+                                       debug_ttl=debug_ttl,
+                                       log=False).specification
 
     spec_cond = (specification.is_experiment or
                  specification.is_group or
