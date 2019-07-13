@@ -31,7 +31,7 @@ DEFAULT_POLYAXON_FILE_EXTENSION = [
 class PolyaxonFile(object):
     """Parses Polyaxonfiles, and validate that it respects the current file specification"""
 
-    def __init__(self, filepaths, params=None):
+    def __init__(self, filepaths, params=None, debug_ttl=False):
         filepaths = to_list(filepaths)
         for filepath in filepaths:
             if not os.path.isfile(filepath):
@@ -39,10 +39,21 @@ class PolyaxonFile(object):
         self._filenames = [os.path.basename(filepath) for filepath in filepaths]
         if params:
             if not isinstance(params, Mapping):
-                raise PolyaxonfileError("`{}` must be a valid mapping".format(params))
+                raise PolyaxonfileError("Params: `{}` must be a valid mapping".format(params))
             filepaths.append({'params': params})
+        if debug_ttl:
+            if not isinstance(debug_ttl, int):
+                raise PolyaxonfileError("Debug TTL `{}` must be a valid integer".format(debug_ttl))
+            filepaths.append({'run': {'cmd': 'sleep {}'.format(debug_ttl)}})
         data = rhea.read(filepaths)
         kind = BaseSpecification.get_kind(data=data)
+
+        debug_cond = (debug_ttl and not (BaseSpecification.check_kind_experiment(kind) or
+                                         BaseSpecification.check_kind_job(kind)))
+        if debug_cond:
+            raise PolyaxonfileError(
+                'You can only trigger debug mode on a job or an experiment specification, '
+                'received instead a `{}` specification'.format(kind))
         try:
             self.specification = SPECIFICATION_BY_KIND[kind](data)
         except PolyaxonConfigurationError as e:

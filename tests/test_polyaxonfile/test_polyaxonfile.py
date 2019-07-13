@@ -61,7 +61,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.is_experiment is True
 
-    def test_passing_params_overrides_polyaxon_files(self):
+    def test_passing_params_overrides_polyaxonfiles(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'),
                                params={'foo': 'bar', 'value': 1.1})
         spec = plxfile.specification
@@ -81,6 +81,42 @@ class TestPolyaxonfile(TestCase):
     def test_passing_wrong_params_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'), params='foo')
+
+    def test_passing_debug_ttl_overrides_polyaxonfiles(self):
+        plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'),
+                               debug_ttl=100)
+        spec = plxfile.specification
+        spec.apply_context()
+        assert spec.version == 1
+        assert spec.logging is None
+        assert spec.tags is None
+        assert spec.build.image == 'my_image'
+        assert spec.run.cmd == 'sleep 100'
+        assert spec.environment is None
+        assert spec.framework is None
+        assert spec.is_experiment
+        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        assert spec.is_experiment is True
+
+    def test_passing_wrong_debug_ttl_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file.yml'), debug_ttl='foo')
+
+    def test_passing_wrong_kind_with_debug_ttl_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath('tests/fixtures/plain/matrix_file.yml'), debug_ttl=120)
+
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath(
+                'tests/fixtures/plain/build_with_context_and_dockerfile.yml'), debug_ttl=120)
+
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath(
+                'tests/fixtures/plain/tensorboard_with_custom_environment.yml'), debug_ttl=120)
+
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(os.path.abspath(
+                'tests/fixtures/plain/notebook_with_custom_environment.yml'), debug_ttl=120)
 
     def test_simple_file_framework_passes(self):
         plxfile = PolyaxonFile(os.path.abspath('tests/fixtures/plain/simple_file_framework.yml'))

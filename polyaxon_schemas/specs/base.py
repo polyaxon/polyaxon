@@ -191,6 +191,34 @@ class BaseSpecification(object):
         cls.check_kind(data=data)
         return data[cls.KIND]
 
+    @staticmethod
+    def check_kind_experiment(kind):
+        return kind == kinds.EXPERIMENT
+
+    @staticmethod
+    def check_kind_group(kind):
+        return kind == kinds.GROUP
+
+    @staticmethod
+    def check_kind_job(kind):
+        return kind == kinds.JOB
+
+    @staticmethod
+    def check_kind_notebook(kind):
+        return kind == kinds.NOTEBOOK
+
+    @staticmethod
+    def check_kind_tensorboard(kind):
+        return kind == kinds.TENSORBOARD
+
+    @staticmethod
+    def check_kind_build(kind):
+        return kind == kinds.BUILD
+
+    @staticmethod
+    def check_kind_pipeline(kind):
+        return kind == kinds.PIPELINE
+
     @classmethod
     def read(cls, values):
         if isinstance(values, cls):
@@ -199,31 +227,31 @@ class BaseSpecification(object):
 
     @cached_property
     def is_experiment(self):
-        return self.kind == kinds.EXPERIMENT
+        return self.check_kind_experiment(self.kind)
 
     @cached_property
     def is_group(self):
-        return self.kind == kinds.GROUP
+        return self.check_kind_group(self.kind)
 
     @cached_property
     def is_job(self):
-        return self.kind == kinds.JOB
+        return self.check_kind_job(self.kind)
 
     @cached_property
     def is_notebook(self):
-        return self.kind == kinds.NOTEBOOK
+        return self.check_kind_notebook(self.kind)
 
     @cached_property
     def is_tensorboard(self):
-        return self.kind == kinds.TENSORBOARD
+        return self.check_kind_tensorboard(self.kind)
 
     @cached_property
     def is_build(self):
-        return self.kind == kinds.BUILD
+        return self.check_kind_build(self.kind)
 
     @cached_property
     def is_pipeline(self):
-        return self.kind == kinds.PIPELINE
+        return self.check_kind_pipeline(self.kind)
 
     @property
     def values(self):
