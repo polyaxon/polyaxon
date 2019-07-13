@@ -39,7 +39,7 @@ declarations:
 build:
   image: pytorch/pytorch:v0.2
   build_steps:
-    - pip install --no-cache-dir polyaxon-client==0.5.0
+    - pip install --no-cache-dir polyaxon-client==0.5.2
 
 run:
   cmd: python -u distributed_run.py --batch-size={{ batch_size_train }} \

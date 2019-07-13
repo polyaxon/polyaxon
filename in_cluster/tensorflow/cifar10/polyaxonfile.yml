@@ -10,7 +10,7 @@ tags: [examples]
 build:
   image: tensorflow/tensorflow:1.4.1
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-client==0.5.0
+    - pip install --no-cache-dir -U polyaxon-client==0.5.2
 
 run:
   cmd: python -u run.py --train-steps=400
