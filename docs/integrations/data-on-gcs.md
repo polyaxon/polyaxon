@@ -32,7 +32,7 @@ You should then create a secret with this access keys information on Kubernetes 
 
 `kubectl create secret generic gcs-secret --from-file=gcs-secret.json=path/to/gcs-key.json -n polyaxon`
 
-## Use the secret name and secret in your data persistence definition
+## Use the secret name and secret key in your data persistence definition
 
 ```yaml
 persistence:

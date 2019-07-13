@@ -40,7 +40,7 @@ You should then create a secret with this access keys information on Kubernetes 
 
 `kubectl create secret generic az-secret --from-file=az-secret.json=path/to/az-key.json -n polyaxon`
 
-## Use the secret name and secret in your logs persistence definition
+## Use the secret name and secret key in your logs persistence definition
 
 ```yaml
 persistence:

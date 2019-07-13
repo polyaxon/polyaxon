@@ -52,7 +52,7 @@ You should then create a secret with this access keys information on Kubernetes 
 
 `kubectl create secret generic s3-secret --from-file=s3-secret.json=path/to/s3-key.json -n polyaxon`
 
-## Use the secret name and secret in your data persistence definition
+## Use the secret name and secret key in your data persistence definition
 
 ```yaml
 persistence:

@@ -52,7 +52,7 @@ You should then create a secret with this access keys information on Kubernetes 
 
 `kubectl create secret generic s3-secret --from-file=s3-secret.json=path/to/s3-key.json -n polyaxon`
 
-## Use the secret name and secret in your logs persistence definition
+## Use the secret name and secret key in your logs persistence definition
 
 ```yaml
 persistence:
@@ -73,3 +73,7 @@ persistence:
     secret: s3-secret
     secretKey: s3-key
 ```
+
+## Update/Install Polyaxon deployment
+
+You can now [install](/setup/kubernetes/)/[upgrade](/setup/kubernetes/#upgrade-polyaxon) Polyaxon with access the outputs on S3.
