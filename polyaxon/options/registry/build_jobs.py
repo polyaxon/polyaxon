@@ -116,7 +116,7 @@ class KanikoDockerImage(Option):
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
-    default = 'gcr.io/kaniko-project/executor:v0.7.0'
+    default = 'gcr.io/kaniko-project/executor:v0.10.0'
     options = None
     description = 'Kaniko docker image to use'
 
