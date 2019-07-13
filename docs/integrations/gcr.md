@@ -47,7 +47,7 @@ So using python you can do:
 
 ```python
 import base64
-base64.b64encode('json_key:{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'.encode())
+base64.b64encode('_json_key:{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'.encode())
 
 > b'anNvbl9rZXk6eyJ0eXBlIjogInNlcnZpY2VfYWNjb3VudCIsICJwcm9qZWN0X2lkIjogIm15X3Byb2plY3QiLCAicHJpdmF0ZV9rZXlfaWQiOiAiYWpzaHZhc2pocXdlcWV0cXV5dHF1dDE3MjUzODcxMjM4IiwgInByaXZhdGVfa2V5IjogIi0tLS0tQkVHSU4gUFJJVkFURSBLRVktLS0tLQpBU0JISkFTSkRBU0JESkFKSFNCREpCL3NmYmRqMTIyMyJ9+'
 ```
