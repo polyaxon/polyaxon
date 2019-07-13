@@ -3,11 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
+from rhea import RheaError
+from rhea import parser as rhea_parser
 from six import BytesIO
 
 from botocore.exceptions import ClientError
-
-from rhea import parser as rhea_parser, RheaError
 
 from polystores.clients import aws_client
 from polystores.exceptions import PolyaxonStoresException

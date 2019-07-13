@@ -3,10 +3,11 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
+from rhea import RheaError
+from rhea import parser as rhea_parser
+
 from azure.common import AzureHttpError
 from azure.storage.blob.models import BlobPrefix
-
-from rhea import parser as rhea_parser, RheaError
 
 from polystores.clients.azure_client import get_blob_service_connection
 from polystores.exceptions import PolyaxonStoresException

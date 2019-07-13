@@ -4,9 +4,10 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-from google.api_core.exceptions import GoogleAPIError, NotFound
+from rhea import RheaError
+from rhea import parser as rhea_parser
 
-from rhea import parser as rhea_parser, RheaError
+from google.api_core.exceptions import GoogleAPIError, NotFound
 
 from polystores import settings
 from polystores.clients import gc_client

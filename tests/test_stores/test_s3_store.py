@@ -91,9 +91,9 @@ class TestAwsStore(TestCase):
         b.put_object(Key='a', Body=b'a')
         b.put_object(Key='dir/b', Body=b'b')
 
-        full_response = {'dirs': [], 'files': [('a', 1), ('dir/b', 1)]}
+        full_response = {'files': [('a', 1)], 'dirs': ['dir']}
         empty_response = {'dirs': [], 'files': []}
-        dir_response = {'dirs': [], 'files': [('/b', 1)]}
+        dir_response = {'dirs': [], 'files': [('b', 1)]}
 
         assert store.ls('s3://bucket') == full_response
         assert store.ls('s3://bucket/') == full_response
