@@ -102,7 +102,7 @@ tags:
  * Add encryptor for managing sensitive data in-cluster with future possibility to use vault as a backend, currently the backend uses fernet encryption.
  * Add possibility to search entities by name or description using regex. 
  * Improve deployment using CLI, add new command: `polyaxon admin`.
- * Extend build king with `lang_env` to easily export language environment.
+ * Extend build kind with `lang_env` to easily export language environment.
  * Add initial work on early stopping policies for hyperparams tuning.
  * Add possibility to install auto-completion for polyaxon CLI.
  * Add possibility to invalidate individual builds and builds under a project.
@@ -129,7 +129,7 @@ tags:
  * Add fastai tracking to contrib.
  * Remove several dependencies and replace with simple utils functions.
  * Add initial data/artifacts/logs stores and catalogs.
- * Add initial documentation for Polylow: an actions/events pipeline engine for creating and automating machine learning workflows.
+ * Add initial documentation for Polyflow: an actions/events pipeline engine for creating and automating machine learning workflows.
    * Allow to run ops in parallel while respecting concurrency in pipelines.
    * Allow to run pipelines following schedules: 2 interfaces intervals and crons.
    * Allow to run pipelines with complex ops dependencies as DAGs.

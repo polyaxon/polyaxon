@@ -86,6 +86,6 @@ After creating the access you need to mark it as default, so that Polyaxon uses 
 
 If you wish to only use this credential secret for pulling images and the in-cluster registry for pushing, you should leave the host field empty.
 
-## You can include allow the docker process to pull from different registries
+## You can allow the docker process to pull from different registries
 
 To allow this access to pull from other registries, you can set as many other auths and credsStore.
