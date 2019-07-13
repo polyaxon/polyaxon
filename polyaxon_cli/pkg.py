@@ -1,5 +1,5 @@
 NAME = 'polyaxon-cli'
-VERSION = '0.5.1'
+VERSION = '0.5.2'
 DESC = 'Command Line Interface (CLI) for Polyaxon.'
 URL = 'https://github.com/polyaxon/polyaxon-cli'
 AUTHOR = 'Mourad Mourafiq'

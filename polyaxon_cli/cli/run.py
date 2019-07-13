@@ -27,7 +27,7 @@ from polyaxon_cli.utils.validation import validate_tags
               help='The description to give to this run.')
 @click.option('--ttl', type=int,
               help='TTL for this run after it\'s done.')
-@click.option('--debug',  is_flag=True, default=False,
+@click.option('--debug', is_flag=True, default=False,
               help='Enable debug mode for this run. '
                    'N.B. you should pass a TTL to specify the how long the run should live.')
 @click.option('--upload', '-u', is_flag=True, default=False,
