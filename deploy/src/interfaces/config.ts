@@ -189,7 +189,7 @@ export interface ConfigInterface {
   serviceType?: SERVICE_TYPES;
   limitResources?: boolean;
   user?: UserInterface;
-  passwordLenght?:  number;
+  passwordLength?:  number;
   timeZone?: string;
   persistence?: PersistenceInterface;
   defaultPersistence?: PersistenceInterface;

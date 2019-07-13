@@ -44,7 +44,7 @@ export default class Preview extends React.Component<Props, State> {
         config.user = this.props.config.user;
       }
       if (!_.isNil(this.props.config.timeZone)) {
-        config.passwordLenght = this.props.config.passwordLenght;
+        config.passwordLength = this.props.config.passwordLength;
       }
       if (!_.isNil(this.props.config.timeZone)) {
         config.timeZone = this.props.config.timeZone;
