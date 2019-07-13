@@ -4,9 +4,9 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
-from six.moves import urllib
-
 from google.api_core.exceptions import GoogleAPIError, NotFound
+
+from rhea import parser as rhea_parser, RheaError
 
 from polystores import settings
 from polystores.clients import gc_client
@@ -92,13 +92,11 @@ class GCSStore(BaseStore):
         Returns:
             tuple(bucket_name, blob).
         """
-        parsed_url = urllib.parse.urlparse(gcs_url)
-        if not parsed_url.netloc:
-            raise PolyaxonStoresException('Received an invalid url `{}`'.format(gcs_url))
-        if parsed_url.scheme != 'gs':
-            raise PolyaxonStoresException('Received an invalid url `{}`'.format(gcs_url))
-        blob = parsed_url.path.lstrip('/')
-        return parsed_url.netloc, blob
+        try:
+            spec = rhea_parser.parse_gcs_path(gcs_url)
+            return spec.bucket, spec.blob
+        except RheaError as e:
+            raise PolyaxonStoresException(e)
 
     def get_bucket(self, bucket_name):
         """

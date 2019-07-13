@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polystores',
-      version='0.2.0',
+      version='0.2.2',
       description='Polystores is an abstraction and a collection of clients '
                   'to interact with cloud storages.',
       long_description=read_readme(),
@@ -54,7 +54,7 @@ setup(name='polystores',
           'docker'
       ],
       install_requires=[
-          "rhea>=0.4.2",
+          "rhea>=0.5.4",
       ],
       extras_require={
           "s3": [

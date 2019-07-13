@@ -28,7 +28,7 @@ class TestAwsStore(TestCase):
     def test_parse_s3_url(self):
         s3_url = 's3://test/this/is/valid/key.txt'
         parsed_url = S3Store.parse_s3_url(s3_url)
-        assert parsed_url == ('test', 'this/is/bad/key.txt')
+        assert parsed_url == ('test', 'this/is/valid/key.txt')
 
     def test_check_prefix_format(self):
         assert S3Store.check_prefix_format(prefix='foo', delimiter='') == 'foo'

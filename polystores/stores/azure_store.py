@@ -2,12 +2,11 @@
 from __future__ import absolute_import, division, print_function
 
 import os
-import re
-
-from six.moves import urllib
 
 from azure.common import AzureHttpError
 from azure.storage.blob.models import BlobPrefix
+
+from rhea import parser as rhea_parser, RheaError
 
 from polystores.clients.azure_client import get_blob_service_connection
 from polystores.exceptions import PolyaxonStoresException
@@ -71,19 +70,11 @@ class AzureStore(BaseStore):
         Returns:
             tuple(container, storage_account, path).
         """
-        parsed_url = urllib.parse.urlparse(wasbs_url)
-        if parsed_url.scheme != "wasbs":
-            raise PolyaxonStoresException('Received an invalid url `{}`'.format(wasbs_url))
-        match = re.match("([^@]+)@([^.]+)\\.blob\\.core\\.windows\\.net", parsed_url.netloc)
-        if match is None:
-            raise PolyaxonStoresException(
-                'wasbs_url must be of the form <container>@<account>.blob.core.windows.net')
-        container = match.group(1)
-        storage_account = match.group(2)
-        path = parsed_url.path
-        if path.startswith('/'):
-            path = path[1:]
-        return container, storage_account, path
+        try:
+            spec = rhea_parser.parse_wasbs_path(wasbs_url)
+            return spec.container, spec.storage_account, spec.path
+        except RheaError as e:
+            raise PolyaxonStoresException(e)
 
     def check_blob(self, blob, container_name=None):
         """
