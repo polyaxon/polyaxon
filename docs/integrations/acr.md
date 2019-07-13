@@ -116,7 +116,7 @@ kubectl create secret generic docker-conf --from-file=config.json=./config.json 
   
 ## Make this access as default
 
-After creating the access you need to mark it ass default, so that Polyaxon uses it for scheduling builds. 
+After creating the access you need to mark it as default, so that Polyaxon uses it for scheduling builds. 
 
 
 ## Using the secret for pull only

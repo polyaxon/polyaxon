@@ -72,7 +72,7 @@ In Polyaxon's stores, add a new entry and link to this secret, and set the host 
 
 ## Make this access as default
 
-After creating the access you need to mark it ass default, so that Polyaxon uses it for scheduling builds. 
+After creating the access you need to mark it as default, so that Polyaxon uses it for scheduling builds. 
 
 
 ## Using the secret for pull only
