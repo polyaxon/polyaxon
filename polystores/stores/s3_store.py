@@ -210,7 +210,7 @@ class S3Store(BaseStore):
     def list(self,
              bucket_name,
              prefix='',
-             delimiter='',
+             delimiter='/',
              page_size=None,
              max_items=None,
              keys=True,
