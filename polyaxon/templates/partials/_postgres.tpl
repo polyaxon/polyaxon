@@ -34,3 +34,12 @@
 {{- default "polyaxon" .Values.externalServices.postgresql.database }}
 {{- end }}
 {{- end -}}
+
+
+{{- define "postgresql.connMaxAge" -}}
+{{- if .Values.postgresql.enabled }}
+{{- default "polyaxon" .Values.postgresql.connMaxAge -}}
+{{- else }}
+{{- .Values.externalServices.postgresql.connMaxAge }}
+{{- end }}
+{{- end -}}

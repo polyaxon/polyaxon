@@ -131,7 +131,7 @@ data:
   POLYAXON_DB_USER: {{ template "postgresql.user" . }}
   POLYAXON_DB_NAME: {{ template "postgresql.database" . }}
   POLYAXON_DB_PORT: "{{ template "postgresql.port" . }}"
-  POLYAXON_DB_CONN_MAX_AGE: {{ default "60" .Values.postgresql.connMaxAge | quote }}
+  POLYAXON_DB_CONN_MAX_AGE: "{{ template "postgresql.connMaxAge" . }}"
   POLYAXON_DB_HOST: "{{ template "postgresql.host" . }}"
   # Broker
   {{ if ( .Values.broker ) and eq .Values.broker "redis" -}}
