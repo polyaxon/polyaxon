@@ -75,6 +75,6 @@ DATABASES = {
         'HOST': config.get_string('POLYAXON_DB_HOST'),
         'PORT': config.get_string('POLYAXON_DB_PORT'),
         'ATOMIC_REQUESTS': True,
-        'CONN_MAX_AGE': config.get_int('POLYAXON_DB_CONN_MAX_AGE', is_optional=True, default=0),
+        'CONN_MAX_AGE': config.get_int('POLYAXON_DB_CONN_MAX_AGE', is_optional=True, default=None),
     }
 }

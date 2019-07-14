@@ -84,3 +84,15 @@ Please check this [integration guide](/integrations/database/) for cloud specifi
 
 If you decided to deploy Polyaxon in-cluster make sure to set proper [node scheduling](/configuration/custom-node-scheduling/) 
 to avoid running high load runs on the same node hosting the database. 
+
+
+## Connexion Max Age
+
+`default: 60`
+
+`connMaxAge` allows you to set the lifetime of a database connection, in seconds. 
+Use `0` to close database connections at the end of each request and `None` for unlimited persistent connections.
+
+## Transaction pooling with pgbouncer
+
+If you are running a high load Polyaxon deployment, we suggest to use a connection pooler, e.g [pgbouncer](https://pgbouncer.github.io/).
