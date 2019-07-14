@@ -382,6 +382,7 @@ externalServices:
     database:
     host:
     port:
+    connMaxAge: 100
 
   redis:
     usePassword:
@@ -406,6 +407,7 @@ postgresql:
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: polyaxon
+  connMaxAge: 120
   imageTag: 9.6.1
   persistence:
     enabled: false

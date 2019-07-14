@@ -223,6 +223,7 @@ class PostgresqlSchema(ThirdPartyServiceSchema):
     postgresUser = fields.Str(allow_none=True)
     postgresPassword = fields.Str(allow_none=True)
     postgresDatabase = fields.Str(allow_none=True)
+    connMaxAge = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -235,6 +236,7 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
         'postgresUser',
         'postgresPassword',
         'postgresDatabase',
+        'connMaxAge',
     ]
 
     def __init__(self,  # noqa
@@ -242,6 +244,7 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
                  postgresUser=None,
                  postgresPassword=None,
                  postgresDatabase=None,
+                 connMaxAge=None,
                  image=None,
                  imageTag=None,
                  imagePullPolicy=None,
@@ -265,6 +268,7 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
         self.postgresUser = postgresUser
         self.postgresPassword = postgresPassword
         self.postgresDatabase = postgresDatabase
+        self.connMaxAge = connMaxAge
 
 
 class RedisSchema(ThirdPartyServiceSchema):
@@ -407,6 +411,7 @@ class ExternalServiceSchema(BaseSchema):
     port = fields.Int(allow_none=True)
     database = fields.Str(allow_none=True)
     usePassword = fields.Bool(allow_none=True)
+    connMaxAge = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -421,7 +426,8 @@ class ExternalServiceConfig(BaseConfig):
         'host',
         'port',
         'database',
-        'usePassword'
+        'usePassword',
+        'connMaxAge'
     ]
 
     def __init__(self,  # noqa
@@ -430,13 +436,15 @@ class ExternalServiceConfig(BaseConfig):
                  host=None,
                  port=None,
                  database=None,
-                 usePassword=None):
+                 usePassword=None,
+                 connMaxAge=None):
         self.user = user
         self.password = password
         self.host = host
         self.port = port
         self.database = database
         self.usePassword = usePassword
+        self.connMaxAge = connMaxAge
 
 
 class ExternalServicesSchema(BaseSchema):

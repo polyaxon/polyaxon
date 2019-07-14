@@ -20,3 +20,4 @@ externalServices:
     database: postgres
     host: 35.226.163.84
     port: 1111
+    connMaxAge: null

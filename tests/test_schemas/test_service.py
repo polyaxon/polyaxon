@@ -382,7 +382,8 @@ class TestServiceConfig(TestCase):
             'host': '123.123.123.123',
             'port': 123231,
             'database': 'sdf',
-            'usePassword': True
+            'usePassword': True,
+            'connMaxAge': 100
         }
         config = ExternalServiceConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
@@ -431,6 +432,7 @@ class TestServiceConfig(TestCase):
                 'password': 'pass-pg',
                 'host': '123.123.123.123',
                 'port': 5656,
+                'connMaxAge': 123
             },
             'redis': {
                 'usePassword': True,
