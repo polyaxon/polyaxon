@@ -31,6 +31,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/jobs/{}/logs/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobLogsView.as_view()),
+    re_path(r'^{}/{}/jobs/{}/logs/stream/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
+        views.JobLogsStream.as_view()),
     re_path(r'^{}/{}/jobs/{}/stop/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, JOB_ID_PATTERN),
         views.JobStopView.as_view()),

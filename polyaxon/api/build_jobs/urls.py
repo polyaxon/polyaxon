@@ -28,6 +28,9 @@ build_jobs_urlpatterns = [
     re_path(r'^{}/{}/builds/{}/logs/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildLogsView.as_view()),
+    re_path(r'^{}/{}/builds/{}/logs/stream/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
+        views.BuildLogsStream.as_view()),
     re_path(r'^{}/{}/builds/{}/stop/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, BUILD_ID_PATTERN),
         views.BuildStopView.as_view()),

@@ -59,6 +59,7 @@ from api.utils.files import stream_file
 from api.utils.gzip import gzip
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
+from constants.urls import WS_V1
 from db.models.experiment_groups import ExperimentGroup
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import (
@@ -691,6 +692,24 @@ class ExperimentLogsView(ExperimentEndpoint, RetrieveEndpoint, PostEndpoint):
         return Response(status=status.HTTP_200_OK)
 
 
+class ExperimentLogsStream(ExperimentEndpoint, ProtectedView):
+    """Stream Experiment logs."""
+    HANDLE_UNAUTHENTICATED = False
+
+    @staticmethod
+    def get_stream_url(request, project, experiment):
+        return '/{}/{}/{}/experiments/{}/logs'.format(
+            WS_V1, request.user.username, project.name, experiment.id)
+
+    def get(self, request, *args, **kwargs):
+        auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        path = self.get_stream_url(request, self.project, self.experiment)
+        return self.redirect(path=path)
+
+
 class ExperimentHeartBeatView(ExperimentEndpoint, PostEndpoint):
     """
     post:
@@ -796,6 +815,24 @@ class ExperimentJobLogsView(ExperimentJobResourceEndpoint,
                             data='Experiment has no logs.')
 
         return stream_file(file_path=logs_path, logger=_logger)
+
+
+class ExperimentJobLogsStream(ExperimentJobResourceEndpoint, ProtectedView):
+    """Stream job logs."""
+    HANDLE_UNAUTHENTICATED = False
+
+    @staticmethod
+    def get_stream_url(request, project, experiment, job):
+        return '/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
+            WS_V1, request.user.username, project.name, experiment.id, job.id)
+
+    def get(self, request, *args, **kwargs):
+        auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
+                       instance=self.experiment,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        path = self.get_stream_url(request, self.project, self.experiment, self.job)
+        return self.redirect(path=path)
 
 
 class ExperimentStopView(ExperimentEndpoint, CreateEndpoint):

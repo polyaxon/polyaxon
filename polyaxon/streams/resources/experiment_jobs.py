@@ -7,10 +7,7 @@ import conf
 
 from constants.experiment_jobs import get_experiment_job_container_name
 from db.redis.to_stream import RedisToStream
-from events.registry.experiment_job import (
-    EXPERIMENT_JOB_LOGS_VIEWED,
-    EXPERIMENT_JOB_RESOURCES_VIEWED
-)
+from events.registry.experiment_job import EXPERIMENT_JOB_RESOURCES_VIEWED
 from options.registry.k8s import K8S_NAMESPACE
 from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, RESOURCES_CHECK, SOCKET_SLEEP
@@ -18,7 +15,7 @@ from streams.logger import logger
 from streams.resources.logs import log_job
 from streams.resources.utils import get_error_message
 from streams.socket_manager import SocketManager
-from streams.validation.experiment_job import validate_experiment_job
+from streams.validation.experiment_job import get_experiment_job, validate_experiment_job
 
 
 @authorized()
@@ -88,13 +85,8 @@ async def experiment_job_resources(request, ws, username, project_name, experime
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@authorized()
 async def experiment_job_logs_v2(request, ws, username, project_name, experiment_id, job_id):
-    job, experiment, message = validate_experiment_job(request=request,
-                                                       username=username,
-                                                       project_name=project_name,
-                                                       experiment_id=experiment_id,
-                                                       job_id=job_id)
+    job, experiment, message = get_experiment_job(experiment_id=experiment_id, job_id=job_id)
     if job is None:
         await ws.send(get_error_message(message))
         return
@@ -103,11 +95,6 @@ async def experiment_job_logs_v2(request, ws, username, project_name, experiment
 
     container_job_name = get_experiment_job_container_name(backend=experiment.backend,
                                                            framework=experiment.framework)
-
-    auditor.record(event_type=EXPERIMENT_JOB_LOGS_VIEWED,
-                   instance=job,
-                   actor_id=request.app.user.id,
-                   actor_name=request.app.user.username)
 
     # Stream logs
     await log_job(request=request,

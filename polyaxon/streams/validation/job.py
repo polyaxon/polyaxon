@@ -15,7 +15,19 @@ def validate_job(request, username, project_name, job_id):
     except (Job.DoesNotExist, ValidationError):
         return None, 'Job was not found'
     if job.is_done:
-        return None, 'Experiment is not running, current status: {}'.format(
+        return None, 'Job is not running, current status: {}'.format(
+            job.last_status
+        )
+    return job, None
+
+
+def get_job(job_id):
+    try:
+        job = Job.objects.get(id=job_id)
+    except (Job.DoesNotExist, ValidationError):
+        return None, 'Job was not found'
+    if job.is_done:
+        return None, 'Job is not running, current status: {}'.format(
             job.last_status
         )
     return job, None

@@ -38,6 +38,7 @@ from api.jobs.serializers import (
 from api.utils.files import stream_file
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
 from api.utils.views.protected import ProtectedView
+from constants.urls import WS_V1
 from db.models.jobs import Job, JobStatus
 from db.models.tokens import Token
 from db.redis.heartbeat import RedisHeartBeat
@@ -309,6 +310,24 @@ class JobLogsView(JobEndpoint, RetrieveEndpoint):
             log_path = stores.get_job_logs_path(job_name=job_name, temp=True)
 
         return stream_file(file_path=log_path, logger=_logger)
+
+
+class JobLogsStream(JobEndpoint, ProtectedView):
+    """Stream job logs."""
+    HANDLE_UNAUTHENTICATED = False
+
+    @staticmethod
+    def get_stream_url(request, project, job):
+        return '/{}/{}/{}/jobs/{}/logs'.format(
+            WS_V1, request.user.username, project.name, job.id)
+
+    def get(self, request, *args, **kwargs):
+        auditor.record(event_type=JOB_LOGS_VIEWED,
+                       instance=self.job,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        path = self.get_stream_url(request, self.project, self.job)
+        return self.redirect(path=path)
 
 
 class JobStopView(JobEndpoint, PostEndpoint):

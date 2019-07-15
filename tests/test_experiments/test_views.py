@@ -28,7 +28,7 @@ from api.experiments.serializers import (
     ExperimentStatusSerializer
 )
 from api.utils.views.protected import ProtectedView
-from constants.urls import API_V1
+from constants.urls import API_V1, WS_V1
 from db.models.bookmarks import Bookmark
 from db.models.experiment_groups import GroupTypes
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
@@ -1734,6 +1734,18 @@ class TestExperimentJobLogsViewV1(BaseViewTest):
             project.name,
             self.experiment.id,
             self.experiment_job.id)
+        self.stream_url = '/{}/{}/{}/experiments/{}/jobs/{}/logs/stream'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id,
+            self.experiment_job.id)
+        self.ws_url ='/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
+            WS_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id,
+            self.experiment_job.id)
 
     def create_logs(self, temp):
         log_path = stores.get_experiment_job_logs_path(
@@ -1789,6 +1801,12 @@ class TestExperimentJobLogsViewV1(BaseViewTest):
         data = [d for d in data[0].decode('utf-8').split('\n') if d]
         assert len(data) == len(self.logs)
         assert data == self.logs
+
+    def test_stream_redirects_to_internal_service(self):
+        response = self.auth_client.get(self.stream_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], self.ws_url)
 
 
 @pytest.mark.experiments_mark
@@ -2096,6 +2114,16 @@ class TestExperimentLogsViewV1(BaseViewTest):
             project.user.username,
             project.name,
             self.experiment.id)
+        self.stream_url = '/{}/{}/{}/experiments/{}/logs/stream'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id)
+        self.ws_url = '/{}/{}/{}/experiments/{}/logs'.format(
+            WS_V1,
+            project.user.username,
+            project.name,
+            self.experiment.id)
 
     def create_logs(self, temp):
         log_path = stores.get_experiment_logs_path(
@@ -2168,6 +2196,12 @@ class TestExperimentLogsViewV1(BaseViewTest):
 
         assert resp.status_code == status.HTTP_200_OK
         assert mock_fct.call_count == 1
+
+    def test_stream_redirects_to_internal_service(self):
+        response = self.auth_client.get(self.stream_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], self.ws_url)
 
 
 @pytest.mark.experiments_mark

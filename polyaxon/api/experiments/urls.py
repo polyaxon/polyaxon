@@ -63,6 +63,9 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/logs/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentLogsView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/logs/stream/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
+        views.ExperimentLogsStream.as_view()),
     re_path(r'^{}/{}/experiments/{}/stop/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentStopView.as_view()),
@@ -108,6 +111,9 @@ jobs_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/jobs/{}/logs/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
         views.ExperimentJobLogsView.as_view()),
+    re_path(r'^{}/{}/experiments/{}/jobs/{}/logs/stream/?$'.format(
+        OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN, JOB_ID_PATTERN),
+        views.ExperimentJobLogsStream.as_view()),
     re_path(r'^{}/{}/experiments/{}/jobs/{}/statuses/{}/?$'.format(
         OWNER_NAME_PATTERN,
         PROJECT_NAME_PATTERN,

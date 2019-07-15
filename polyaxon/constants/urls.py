@@ -16,3 +16,4 @@ JOB_UUID_PATTERN = r'(?P<job_uuid>\w{1,36})'
 CLUSTER_NODE_UUID_PATTERN = r'(?P<node_uuid>\w{1,36})'
 VERSION_V1 = 'v1'
 API_V1 = 'api/{}'.format(VERSION_V1)
+WS_V1 = 'ws/{}'.format(VERSION_V1)

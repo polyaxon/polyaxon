@@ -5,8 +5,8 @@ from rest_framework.serializers import Serializer
 from django.http import HttpRequest, HttpResponse
 
 import auditor
-from api.utils.gzip import gzip
 
+from api.utils.gzip import gzip
 from scopes.authentication.utils import is_user
 
 

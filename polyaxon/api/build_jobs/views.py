@@ -33,6 +33,8 @@ from api.endpoint.project import ProjectResourceListEndpoint
 from api.filters import OrderingFilter, QueryFilter
 from api.utils.files import stream_file
 from api.utils.views.bookmarks_mixin import BookmarkedListMixinView
+from api.utils.views.protected import ProtectedView
+from constants.urls import WS_V1
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
 from db.redis.tll import RedisTTL
@@ -251,6 +253,24 @@ class BuildLogsView(BuildEndpoint, RetrieveEndpoint):
             log_path = stores.get_job_logs_path(job_name=job_name, temp=True)
 
         return stream_file(file_path=log_path, logger=_logger)
+
+
+class BuildLogsStream(BuildEndpoint, ProtectedView):
+    """Stream build logs."""
+    HANDLE_UNAUTHENTICATED = False
+
+    @staticmethod
+    def get_stream_url(request, project, build):
+        return '/{}/{}/{}/builds/{}/logs'.format(
+            WS_V1, request.user.username, project.name, build.id)
+
+    def get(self, request, *args, **kwargs):
+        auditor.record(event_type=BUILD_JOB_LOGS_VIEWED,
+                       instance=self.build,
+                       actor_id=request.user.id,
+                       actor_name=request.user.username)
+        path = self.get_stream_url(request, self.project, self.build)
+        return self.redirect(path=path)
 
 
 class BuildStopView(BuildEndpoint, CreateEndpoint):

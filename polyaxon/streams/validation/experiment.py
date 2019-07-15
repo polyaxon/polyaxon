@@ -19,3 +19,15 @@ def validate_experiment(request, username, project_name, experiment_id):
             experiment.last_status
         )
     return experiment, None
+
+
+def get_experiment(experiment_id):
+    try:
+        experiment = Experiment.objects.get(id=experiment_id)
+    except (Experiment.DoesNotExist, ValidationError):
+        return None, 'Experiment was not found'
+    if experiment.is_done:
+        return None, 'Experiment is not running, current status: {}'.format(
+            experiment.last_status
+        )
+    return experiment, None

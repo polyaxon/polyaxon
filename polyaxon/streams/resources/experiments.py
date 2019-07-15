@@ -7,7 +7,7 @@ import conf
 
 from constants.experiment_jobs import get_experiment_job_container_name
 from db.redis.to_stream import RedisToStream
-from events.registry.experiment import EXPERIMENT_LOGS_VIEWED, EXPERIMENT_RESOURCES_VIEWED
+from events.registry.experiment import EXPERIMENT_RESOURCES_VIEWED
 from options.registry.k8s import K8S_NAMESPACE
 from streams.authentication import authorized
 from streams.constants import CHECK_DELAY, RESOURCES_CHECK, SOCKET_SLEEP
@@ -15,7 +15,7 @@ from streams.logger import logger
 from streams.resources.logs import log_experiment
 from streams.resources.utils import get_error_message
 from streams.socket_manager import SocketManager
-from streams.validation.experiment import validate_experiment
+from streams.validation.experiment import get_experiment, validate_experiment
 
 
 @authorized()
@@ -90,20 +90,11 @@ async def experiment_resources(request, ws, username, project_name, experiment_i
         await asyncio.sleep(SOCKET_SLEEP)
 
 
-@authorized()
 async def experiment_logs_v2(request, ws, username, project_name, experiment_id):
-    experiment, message = validate_experiment(request=request,
-                                              username=username,
-                                              project_name=project_name,
-                                              experiment_id=experiment_id)
+    experiment, message = get_experiment(experiment_id=experiment_id)
     if experiment is None:
         await ws.send(get_error_message(message))
         return
-
-    auditor.record(event_type=EXPERIMENT_LOGS_VIEWED,
-                   instance=experiment,
-                   actor_id=request.app.user.id,
-                   actor_name=request.app.user.username)
 
     container_job_name = get_experiment_job_container_name(backend=experiment.backend,
                                                            framework=experiment.framework)

@@ -15,7 +15,8 @@ from api.build_jobs.serializers import (
     BuildJobDetailSerializer,
     BuildJobStatusSerializer
 )
-from constants.urls import API_V1
+from api.utils.views.protected import ProtectedView
+from constants.urls import API_V1, WS_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
@@ -689,6 +690,16 @@ class TestBuildLogsViewV1(BaseViewTest):
             project.user.username,
             project.name,
             self.job.id)
+        self.stream_url = '/{}/{}/{}/builds/{}/logs/stream'.format(
+            API_V1,
+            project.user.username,
+            project.name,
+            self.job.id)
+        self.ws_url = '/{}/{}/{}/builds/{}/logs'.format(
+            WS_V1,
+            project.user.username,
+            project.name,
+            self.job.id)
 
     def create_logs(self, temp):
         log_path = stores.get_job_logs_path(job_name=self.job.unique_name, temp=temp)
@@ -741,6 +752,12 @@ class TestBuildLogsViewV1(BaseViewTest):
         data = [d for d in data[0].decode('utf-8').split('\n') if d]
         assert len(data) == len(self.logs)
         assert data == self.logs
+
+    def test_stream_redirects_to_internal_service(self):
+        response = self.auth_client.get(self.stream_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(ProtectedView.NGINX_REDIRECT_HEADER in response)
+        self.assertEqual(response[ProtectedView.NGINX_REDIRECT_HEADER], self.ws_url)
 
 
 @pytest.mark.build_jobs_mark
