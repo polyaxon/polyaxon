@@ -12,7 +12,7 @@ from django.utils.functional import cached_property
 
 
 def base_directory():
-    return Path(__file__).ancestor(3)
+    return Path(os.path.abspath(__file__)).ancestor(3)
 
 
 ROOT_DIR = base_directory()
