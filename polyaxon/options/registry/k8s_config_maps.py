@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -28,6 +29,7 @@ class K8SConfigMapsOption(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class K8SConfigMapsBuildJobs(K8SConfigMapsOption):

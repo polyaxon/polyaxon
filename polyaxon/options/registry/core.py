@@ -1,3 +1,4 @@
+from options.cache import LONG_CACHE_TTL
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -177,6 +178,7 @@ class HealthCheckWorkerTimeout(Option):
     typing = CONF_TYPES.INT
     default = 4
     options = None
+    cache_ttl = LONG_CACHE_TTL
 
 
 class ClusterNotificationAliveUrl(Option):

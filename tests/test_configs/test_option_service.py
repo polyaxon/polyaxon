@@ -19,9 +19,9 @@ class DummySettingsService(ConfService):
         self.options = set([])
         super().__init__()
 
-    def get(self, key, to_dict=False):
+    def get(self, key, check_cache=True, to_dict=False):
         self.options.add(key)
-        return super().get(key, to_dict=to_dict)
+        return super().get(key, check_cache=check_cache, to_dict=to_dict)
 
 
 class DummyDBService(ClusterConfService):
@@ -30,9 +30,9 @@ class DummyDBService(ClusterConfService):
         self.options = set([])
         super().__init__()
 
-    def get(self, key, to_dict=False):
+    def get(self, key, check_cache=True, to_dict=False):
         self.options.add(key)
-        return super().get(key, to_dict=to_dict)
+        return super().get(key, check_cache=check_cache, to_dict=to_dict)
 
 
 class DummySettingsOption(Option):
@@ -81,6 +81,7 @@ class DummyDBOption(Option):
     typing = None
     default = None
     options = None
+    cache_ttl = 0
 
 
 class DummyOptionalDefaultDBOption(Option):
@@ -239,6 +240,51 @@ class TestConfService(BaseTest):
 
         ConfigOption.objects.create(owner=self.owner, key=DummyBoolDBOption.key, value=False)
         assert self.db_service.get(key=DummyBoolDBOption.key, to_dict=True) == option_dict
+
+    def test_option_caching(self):
+        # Subscribe
+        self.db_service.option_manager.subscribe(DummyDBOption)
+
+        # No entry in db
+        assert self.db_service.get(key=DummyDBOption.key) is None
+
+        # Update db
+        db_option = ConfigOption.objects.create(owner=self.owner,
+                                                key=DummyDBOption.key,
+                                                value='foo')
+        assert self.db_service.get(key=DummyDBOption.key) == 'foo'
+
+        # Cache is 0, changing the value should be reflected automatically
+        db_option.value = 'bar'
+        db_option.save(update_fields=['value'])
+        assert self.db_service.get(key=DummyDBOption.key) == 'bar'
+
+        # Update caching ttl
+        DummyDBOption.cache_ttl = 10
+        assert self.db_service.get(key=DummyDBOption.key) == 'bar'
+        db_option.value = 'foo'
+        db_option.save(update_fields=['value'])
+        assert self.db_service.get(key=DummyDBOption.key) == 'bar'
+        assert self.db_service.get(key=DummyDBOption.key, check_cache=False) == 'foo'
+
+        # Delete remove from cache
+        DummyDBOption.cache_ttl = 0
+        self.db_service.delete(key=DummyDBOption.key)
+        assert self.db_service.get(key=DummyDBOption.key) is None
+
+        # Set new value
+        db_option = ConfigOption.objects.create(owner=self.owner,
+                                                key=DummyDBOption.key,
+                                                value='foo')
+        # Update caching tll
+        DummyDBOption.cache_ttl = 0
+        assert self.db_service.get(key=DummyDBOption.key) == 'foo'
+        db_option.value = 'bar'
+        db_option.save(update_fields=['value'])
+        assert self.db_service.get(key=DummyDBOption.key) == 'bar'
+        db_option.value = 'foo'
+        db_option.save(update_fields=['value'])
+        assert self.db_service.get(key=DummyDBOption.key) == 'foo'
 
     def test_setting_none_value_raises(self):
         with self.assertRaises(ConfException):

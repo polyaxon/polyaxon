@@ -1,6 +1,7 @@
 from constants.backends import NATIVE_BACKEND
 from constants.pull_policies import PullPolicies
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -41,6 +42,7 @@ class BuildJobsBackend(Option):
     default = NATIVE_BACKEND
     options = None
     description = 'The backend to use for building container images'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class BuildJobsAlwaysPullLatest(Option):
@@ -54,6 +56,7 @@ class BuildJobsAlwaysPullLatest(Option):
     default = False
     options = None
     description = 'Whether to always pull image tagged with latest tag'
+    cache_ttl = 240
 
 
 class BuildJobsLangEnv(Option):
@@ -67,6 +70,7 @@ class BuildJobsLangEnv(Option):
     default = None
     options = None
     description = 'To add language environment vars for the provided language on the docker image'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class BuildJobsDockerImage(Option):
@@ -80,6 +84,7 @@ class BuildJobsDockerImage(Option):
     default = 'polyaxon/polyaxon-dockerizer:0.5.2'
     options = None
     description = 'The dockerizer docker image'
+    cache_ttl = 240
 
 
 class BuildJobsImagePullPolicy(Option):
@@ -93,6 +98,7 @@ class BuildJobsImagePullPolicy(Option):
     default = PullPolicies.ALWAYS
     options = PullPolicies.VALUES
     description = 'The dockerizer pull policy'
+    cache_ttl = 240
 
 
 class BuildJobsSetSecurityContext(Option):
@@ -106,6 +112,7 @@ class BuildJobsSetSecurityContext(Option):
     default = True
     options = None
     description = 'Whether to set user/group on the image to not run containers as root'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class KanikoDockerImage(Option):
@@ -116,9 +123,10 @@ class KanikoDockerImage(Option):
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
-    default = 'gcr.io/kaniko-project/executor:v0.10.0'
+    default = 'gcr.io/kaniko-project/executor:v0.9.0'
     options = None
     description = 'Kaniko docker image to use'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class KanikoImagePullPolicy(Option):
@@ -132,3 +140,4 @@ class KanikoImagePullPolicy(Option):
     default = PullPolicies.IF_NOT_PRESENT
     options = PullPolicies.VALUES
     description = 'Kaniko pull policy'
+    cache_ttl = FREQUENT_CACHE_TTL

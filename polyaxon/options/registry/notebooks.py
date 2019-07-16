@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL, MID_FREQUENT_CACHE_TTL, LONG_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -27,6 +28,7 @@ class NotebooksDockerImage(Option):
     default = None
     options = None
     description = 'Default docker image to use for running notebooks'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class NotebooksBackend(Option):
@@ -40,6 +42,7 @@ class NotebooksBackend(Option):
     default = 'notebook'
     options = ['notebook', 'lab']
     description = 'The backend to use for running notebooks'
+    cache_ttl = MID_FREQUENT_CACHE_TTL
 
 
 class NotebooksPortRange(Option):
@@ -52,6 +55,7 @@ class NotebooksPortRange(Option):
     store = OptionStores.DB_OPTION
     default = [6700, 7700]
     options = None
+    cache_ttl = LONG_CACHE_TTL
 
 
 class NotebooksMountCode(Option):
@@ -64,3 +68,4 @@ class NotebooksMountCode(Option):
     store = OptionStores.DB_OPTION
     default = False
     options = None
+    cache_ttl = LONG_CACHE_TTL

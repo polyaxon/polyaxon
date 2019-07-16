@@ -1,5 +1,6 @@
 from constants.pull_policies import PullPolicies
 from options import option_namespaces, option_subjects
+from options.cache import LONG_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -22,6 +23,7 @@ class InitDockerImage(Option):
     default = 'polyaxon/polyaxon-init:0.5.2'
     options = None
     description = 'The docker image to use for init container'
+    cache_ttl = LONG_CACHE_TTL
 
 
 class InitImagePullPolicy(Option):
@@ -35,3 +37,4 @@ class InitImagePullPolicy(Option):
     default = PullPolicies.ALWAYS
     options = PullPolicies.VALUES
     description = 'The init container pull policy'
+    cache_ttl = LONG_CACHE_TTL

@@ -1,3 +1,4 @@
+from options.cache import LONG_CACHE_TTL
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -18,6 +19,7 @@ class AllowUserProjects(Option):
     typing = CONF_TYPES.BOOL
     default = True
     options = None
+    cache_ttl = LONG_CACHE_TTL
 
 
 class OwnerTypes(Option):

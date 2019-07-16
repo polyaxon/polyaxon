@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -154,6 +155,7 @@ class K8SGpuResourceKey(Option):
     store = OptionStores.DB_OPTION
     default = 'nvidia.com/gpu'
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class K8STpuTfVersion(Option):
@@ -166,6 +168,7 @@ class K8STpuTfVersion(Option):
     store = OptionStores.DB_OPTION
     default = '1.12'
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class K8STpuResourceKey(Option):
@@ -178,3 +181,4 @@ class K8STpuResourceKey(Option):
     store = OptionStores.DB_OPTION
     default = 'cloud-tpus.google.com/v2'
     options = {'cloud-tpus.google.com/v2', 'cloud-tpus.google.com/preemptible-v2'}
+    cache_ttl = FREQUENT_CACHE_TTL

@@ -1,5 +1,6 @@
 from constants.pull_policies import PullPolicies
 from options import option_namespaces, option_subjects
+from options.cache import LONG_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -25,6 +26,7 @@ class SidecarsDockerImage(Option):
     default = 'polyaxon/polyaxon-sidecar:0.5.2'
     options = None
     description = 'Sidecar docker image'
+    cache_ttl = LONG_CACHE_TTL
 
 
 class SidecarsImagePullPolicy(Option):
@@ -38,6 +40,7 @@ class SidecarsImagePullPolicy(Option):
     default = PullPolicies.ALWAYS
     options = PullPolicies.VALUES
     description = 'The sidecar container pull policy'
+    cache_ttl = LONG_CACHE_TTL
 
 
 class SidecarsSleepInterval(Option):
@@ -51,3 +54,4 @@ class SidecarsSleepInterval(Option):
     default = 1
     options = None
     description = 'Sleep interval'
+    cache_ttl = LONG_CACHE_TTL

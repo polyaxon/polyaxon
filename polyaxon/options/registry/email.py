@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import LONG_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -21,6 +22,7 @@ class EmailDefaultDomain(Option):
     store = OptionStores.DB_OPTION
     default = 'local_polyaxon.com'
     options = None
+    cache_ttl = LONG_CACHE_TTL
 
 
 class DefaultFromEmail(Option):

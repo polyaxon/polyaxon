@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -29,6 +30,7 @@ class AuthGitlabEnabled(Option):
     store = OptionStores.DB_OPTION
     default = False
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class AuthGitlabVerificationSchedule(Option):
@@ -41,6 +43,7 @@ class AuthGitlabVerificationSchedule(Option):
     store = OptionStores.DB_OPTION
     default = 0
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class AuthGitlabUrl(Option):
@@ -53,6 +56,7 @@ class AuthGitlabUrl(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class AuthGitlabClientId(Option):
@@ -65,6 +69,7 @@ class AuthGitlabClientId(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class AuthGitlabClientSecret(Option):
@@ -77,3 +82,4 @@ class AuthGitlabClientSecret(Option):
     store = OptionStores.DB_OPTION
     default = None
     options = None
+    cache_ttl = FREQUENT_CACHE_TTL

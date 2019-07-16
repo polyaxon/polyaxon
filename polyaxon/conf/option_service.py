@@ -33,20 +33,25 @@ class OptionService(Service):
 
         return self.stores[option.store]
 
-    def get(self, key: str, to_dict=False) -> Any:
+    def get(self, key: str, check_cache=True, to_dict=False) -> Any:
         if not self.is_setup:
             return
         if not self.can_handle(key=key):
             raise ConfException('{} service request an unknown key `{}`.'.format(
                 self.service_name, key))
 
-        value = self.cache_manager.get_from_cache(key=key)
-        if self.cache_manager.is_valid_value(value=value):
-            return value
+        if check_cache:
+            value = self.cache_manager.get_from_cache(key=key)
+            if self.cache_manager.is_valid_value(value=value):
+                return value
 
         option = self.get_option(key=key)
         store = self.get_store(option=option)
         value = store.get(option=option)
+
+        # Cache value
+        self.cache_manager.set_to_cache(key=key, value=value, ttl=option.cache_ttl)
+
         if not to_dict:
             return value
         option_dict = option.to_dict(value=value)
@@ -70,6 +75,8 @@ class OptionService(Service):
 
         store = self.get_store(option=option)
         store.set(option=option, value=value)
+        # Cache value
+        self.cache_manager.set_to_cache(key=key, value=value, ttl=option.cache_ttl)
 
     def delete(self, key: str) -> None:
         if not self.is_setup:
@@ -81,3 +88,5 @@ class OptionService(Service):
         option = self.get_option(key=key)
         store = self.get_store(option=option)
         store.delete(option=option)
+        # Clear Cache key
+        self.cache_manager.clear_key(key=key)

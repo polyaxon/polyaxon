@@ -30,6 +30,7 @@ class Option(object):
     default = None
     options = None
     description = None
+    cache_ttl = 0
 
     @classmethod
     def get_marker(cls) -> str:

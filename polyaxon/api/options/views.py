@@ -31,7 +31,7 @@ class ClusterConfigOptionsViewV1(AdminListEndpoint, ListEndpoint, CreateEndpoint
         if not keys:
             raise ValidationError('No keys passed.')
         try:
-            results = [conf.get(key, to_dict=True) for key in keys]
+            results = [conf.get(key, check_cache=False, to_dict=True) for key in keys]
         except ConfException as e:
             raise ValidationError(e)
         return Response(results, status=status.HTTP_200_OK)
@@ -42,7 +42,7 @@ class ClusterConfigOptionsViewV1(AdminListEndpoint, ListEndpoint, CreateEndpoint
         for key in self.request.data:
             value = self.request.data.get(key)
             try:
-                if value is not None:
+                if value is not None and value != '':
                     conf.set(key, value)
                 else:
                     conf.delete(key)

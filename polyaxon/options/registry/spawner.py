@@ -1,3 +1,4 @@
+from options.cache import LONG_CACHE_TTL
 from options.option import Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -35,6 +36,7 @@ class LabelsOption(Option):
     typing = CONF_TYPES.STR
     default = None
     options = None
+    cache_ttl = LONG_CACHE_TTL
 
 
 class RoleLabelsWorker(LabelsOption):
@@ -149,3 +151,4 @@ class RestrictK8SResources(Option):
     options = None
     description = ("Whether or not to all the user to mount any resource "
                    "without validating against the resource catalog.")
+    cache_ttl = LONG_CACHE_TTL

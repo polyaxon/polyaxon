@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL, LONG_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -21,6 +22,7 @@ class TensorboardsDockerImage(Option):
     default = 'tensorflow/tensorflow:1.11.0-py3'
     options = None
     description = 'Default docker image to use for running tensorboards'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class TensorboardsPortRange(Option):
@@ -33,3 +35,4 @@ class TensorboardsPortRange(Option):
     store = OptionStores.DB_OPTION
     default = [5700, 6700]
     options = None
+    cache_ttl = LONG_CACHE_TTL

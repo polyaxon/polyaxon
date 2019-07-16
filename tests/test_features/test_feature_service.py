@@ -15,9 +15,9 @@ class DummyDBService(ClusterConfService):
         self.options = set([])
         super().__init__()
 
-    def get(self, key, to_dict=False):
+    def get(self, key, check_cache=True, to_dict=False):
         self.options.add(key)
-        return super().get(key, to_dict=to_dict)
+        return super().get(key, check_cache=check_cache, to_dict=to_dict)
 
 
 class DummyFeature(Feature):

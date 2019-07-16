@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import LONG_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -25,6 +26,7 @@ class SchedulerCountdown(Option):
     default = 1
     options = None
     description = 'Global count down for scheduler'
+    cache_ttl = LONG_CACHE_TTL
 
 
 class SchedulerCountdownDelayed(Option):
@@ -38,6 +40,7 @@ class SchedulerCountdownDelayed(Option):
     default = 3
     options = None
     description = 'Global delayed count down for scheduler'
+    cache_ttl = LONG_CACHE_TTL
 
 
 class SchedulerReconcileCountdown(Option):
@@ -51,3 +54,4 @@ class SchedulerReconcileCountdown(Option):
     default = 120
     options = None
     description = 'Global count down for reconcile scheduler'
+    cache_ttl = LONG_CACHE_TTL

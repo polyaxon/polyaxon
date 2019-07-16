@@ -1,4 +1,5 @@
 from options import option_namespaces, option_subjects
+from options.cache import FREQUENT_CACHE_TTL
 from options.option import NAMESPACE_DB_OPTION_MARKER, Option, OptionStores
 from options.types import CONF_TYPES
 
@@ -22,6 +23,7 @@ class ReposAccessToken(Option):
     default = None
     options = None
     description = 'Access token to pull repos'
+    cache_ttl = FREQUENT_CACHE_TTL
 
 
 class ReposCredentials(Option):
@@ -35,3 +37,4 @@ class ReposCredentials(Option):
     default = None
     options = None
     description = 'Credentials (user:password) to pull repos'
+    cache_ttl = FREQUENT_CACHE_TTL
