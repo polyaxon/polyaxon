@@ -6,12 +6,12 @@ import os
 import stat
 
 from hestia.list_utils import to_list
+
+from polyaxon_dockerizer import constants
 from polyaxon_dockerizer.dockerfile import POLYAXON_DOCKER_TEMPLATE, POLYAXON_DOCKERFILE_NAME
 
 
 class DockerFileGenerator(object):
-    WORKDIR = '/code'
-
     def __init__(self,
                  repo_path,
                  from_image,
@@ -106,6 +106,7 @@ class DockerFileGenerator(object):
             return
         os.remove(self.dockerfile_path)
 
+    @property
     def render(self):
         docker_template = jinja2.Template(POLYAXON_DOCKER_TEMPLATE)
         return docker_template.render(
@@ -116,7 +117,7 @@ class DockerFileGenerator(object):
             build_steps=self.build_steps,
             env_vars=self.env_vars,
             folder_name=self.folder_name,
-            workdir=self.WORKDIR,
+            workdir=constants.WORKDIR,
             nvidia_bin=self.nvidia_bin,
             copy_code=self.copy_code,
             lang_env=self.lang_env,
@@ -146,6 +147,6 @@ def generate(repo_path,
 
     # Create DockerFile
     with open(dockerfile_generator.dockerfile_path, 'w') as dockerfile:
-        rendered_dockerfile = dockerfile_generator.render()
+        rendered_dockerfile = dockerfile_generator.render
         dockerfile.write(rendered_dockerfile)
         return rendered_dockerfile

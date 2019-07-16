@@ -16,7 +16,6 @@ _logger = logging.getLogger('polyaxon.dockerizer')
 
 class DockerBuilder(object):
     LATEST_IMAGE_TAG = 'latest'
-    WORKDIR = '/code'
 
     def __init__(self,
                  build_context,

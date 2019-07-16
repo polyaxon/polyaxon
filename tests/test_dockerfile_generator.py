@@ -6,6 +6,7 @@ import tempfile
 
 from unittest import TestCase
 
+from polyaxon_dockerizer import constants
 from polyaxon_dockerizer.dockerfile import POLYAXON_DOCKERFILE_NAME
 from polyaxon_dockerizer.generator import DockerFileGenerator, generate
 
@@ -72,11 +73,11 @@ class TestDockerfileGenerator(TestCase):
         builder = DockerFileGenerator(repo_path=repo_path,
                                       from_image='busybox')
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         builder.clean()
 
         assert 'FROM busybox' in dockerfile
-        assert 'WORKDIR {}'.format(builder.WORKDIR) in dockerfile
+        assert 'WORKDIR {}'.format(constants.WORKDIR) in dockerfile
         assert 'COPY {}'.format(builder.folder_name) in dockerfile
 
         # No lang env
@@ -89,7 +90,7 @@ class TestDockerfileGenerator(TestCase):
                                       from_image='busybox',
                                       env_vars=[('BLA', 'BLA')])
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'ENV BLA BLA' in dockerfile
         assert 'groupadd' not in dockerfile
         assert 'useradd' not in dockerfile
@@ -109,11 +110,11 @@ class TestDockerfileGenerator(TestCase):
                                       from_image='busybox',
                                       build_steps=build_steps)
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'COPY {} {}'.format(
-            builder.polyaxon_requirements_path, builder.WORKDIR) in dockerfile
+            builder.polyaxon_requirements_path, constants.WORKDIR) in dockerfile
         assert 'COPY {} {}'.format(
-            builder.polyaxon_setup_path, builder.WORKDIR) in dockerfile
+            builder.polyaxon_setup_path, constants.WORKDIR) in dockerfile
 
         assert 'RUN {}'.format(build_steps[0]) in dockerfile
         assert 'RUN {}'.format(build_steps[1]) in dockerfile
@@ -128,13 +129,13 @@ class TestDockerfileGenerator(TestCase):
                                       from_image='busybox',
                                       build_steps=build_steps)
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'COPY {} {}'.format(
-            builder.polyaxon_requirements_path, builder.WORKDIR) in dockerfile
+            builder.polyaxon_requirements_path, constants.WORKDIR) in dockerfile
         assert 'COPY {} {}'.format(
-            builder.polyaxon_setup_path, builder.WORKDIR) in dockerfile
+            builder.polyaxon_setup_path, constants.WORKDIR) in dockerfile
         assert 'COPY {} {}'.format(
-            builder.polyaxon_conda_env_path, builder.WORKDIR) in dockerfile
+            builder.polyaxon_conda_env_path, constants.WORKDIR) in dockerfile
 
         assert 'RUN {}'.format(build_steps[0]) in dockerfile
         assert 'RUN {}'.format(build_steps[1]) in dockerfile
@@ -147,7 +148,7 @@ class TestDockerfileGenerator(TestCase):
                                       from_image='busybox',
                                       uid=1000)
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'groupadd' not in dockerfile
         assert 'useradd' not in dockerfile
         builder.clean()
@@ -157,7 +158,7 @@ class TestDockerfileGenerator(TestCase):
                                       from_image='busybox',
                                       gid=1000)
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'groupadd' not in dockerfile
         assert 'useradd' not in dockerfile
         builder.clean()
@@ -168,7 +169,7 @@ class TestDockerfileGenerator(TestCase):
                                       uid=1000,
                                       gid=1000)
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'groupadd' in dockerfile
         assert 'useradd' in dockerfile
         builder.clean()
@@ -178,7 +179,7 @@ class TestDockerfileGenerator(TestCase):
                                       from_image='busybox',
                                       lang_env='en_US.UTF-8')
 
-        dockerfile = builder.render()
+        dockerfile = builder.render
         assert 'en_US.UTF-8' in dockerfile
         assert 'LC_ALL' in dockerfile
         assert 'LANG' in dockerfile
