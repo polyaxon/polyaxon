@@ -1,9 +1,31 @@
 from django.contrib import admin
 
 from administration.register.abstract_job import JobStatusAdmin
-from administration.register.utils import DiffModelAdmin
+from administration.register.utils import DiffModelAdmin, ReadOnlyAdmin
 from db.models.experiment_jobs import ExperimentJob, ExperimentJobStatus
 from db.models.experiments import Experiment, ExperimentMetric, ExperimentStatus
+
+
+class ExperimentLightAdmin(DiffModelAdmin, ReadOnlyAdmin):
+    list_display = ('id', 'user', 'project', 'name', 'last_status', 'framework',
+                    'created_at', 'updated_at', 'started_at', 'finished_at',)
+    fields = (
+        'project',
+        'name',
+        'description',
+        'backend',
+        'framework',
+        'last_status',
+        'created_at',
+        'updated_at',
+        'started_at',
+        'finished_at',
+    )
+    readonly_fields = ('last_status',)
+
+
+def register_light(admin_register):
+    admin_register(Experiment, ExperimentLightAdmin)
 
 
 class ExperimentAdmin(DiffModelAdmin):

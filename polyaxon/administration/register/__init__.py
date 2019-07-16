@@ -58,6 +58,15 @@ REGISTRY = {
     'versions': versions,
 }
 
+LIGHT_REGISTRY = {
+    'build_jobs',
+    'jobs',
+    'experiment_groups',
+    'experiments',
+    'notebooks',
+    'tensorboards'
+}
+
 
 def register(models=None):
     admin_register = site.register
@@ -67,8 +76,12 @@ def register(models=None):
     projects.register(admin_register)
 
     if not models:
-        return
+        models = []
 
+    registery = set([])
     for model in models:
         if model in REGISTRY:
             REGISTRY[model].register(admin_register)
+            registery.add(model)
+    for model in LIGHT_REGISTRY - registery:
+        REGISTRY[model].register_light(admin_register)

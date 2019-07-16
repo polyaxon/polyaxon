@@ -1,6 +1,10 @@
 from administration.register.abstract_job import JobStatusAdmin
-from administration.register.utils import DiffModelAdmin
+from administration.register.utils import DiffModelAdmin, JobLightAdmin
 from db.models.notebooks import NotebookJob, NotebookJobStatus
+
+
+def register_light(admin_register):
+    admin_register(NotebookJob, JobLightAdmin)
 
 
 class NotebookJobAdmin(DiffModelAdmin):

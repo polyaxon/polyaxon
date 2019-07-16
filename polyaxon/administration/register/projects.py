@@ -3,6 +3,8 @@ from db.models.projects import Project
 
 
 class ProjectAdmin(DiffModelAdmin):
+    list_display = ('id', 'name', 'user', 'created_at', 'updated_at',)
+    list_display_links = ('id', 'name')
     readonly_fields = DiffModelAdmin.readonly_fields + ('name',)
     fields = ('name', 'deleted', 'is_public', 'created_at', 'updated_at')
 

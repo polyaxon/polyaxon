@@ -28,7 +28,7 @@ class WebHookAction(Action):
     name = 'WebHook'
     event_type = WEBHOOK_ACTION_EXECUTED
     description = ("Webhooks send an HTTP payload to the webhook's configured URL."
-                   "Webhooks can be used automaticaly "
+                   "Webhooks can be used automatically "
                    "by subscribing to certain events on Polyaxon, "
                    "or manually triggered by a user operation.")
     raise_empty_context = False

@@ -3,7 +3,7 @@ from db.models.tokens import Token
 
 
 class TokenAdmin(DiffModelAdmin):
-    pass
+    list_display = ('user', 'started_at', 'is_expired', ) + DiffModelAdmin.list_display
 
 
 def register(admin_register):

@@ -9,7 +9,11 @@ class ReadOnlyAdmin(ModelAdmin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # pylint:disable=protected-access
-        self.readonly_fields = [field.name for field in self.model._meta.get_fields()]
+        readonly_fields = [field.name for field in self.model._meta.get_fields()]
+        if self.readonly_fields:
+            self.readonly_fields += tuple(readonly_fields)
+        else:
+            self.readonly_fields = readonly_fields
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = extra_context or {}
@@ -37,3 +41,21 @@ class ReadOnlyAdmin(ModelAdmin):
 class DiffModelAdmin(ModelAdmin):
     """Make diff model fields read-only."""
     readonly_fields = ('created_at', 'updated_at')
+
+
+class JobLightAdmin(DiffModelAdmin, ReadOnlyAdmin):
+    list_display = ('id', 'user', 'project', 'name', 'last_status',
+                    'created_at', 'updated_at', 'started_at', 'finished_at',)
+    fields = (
+        'user',
+        'project',
+        'name',
+        'description',
+        'backend',
+        'last_status',
+        'created_at',
+        'updated_at',
+        'started_at',
+        'finished_at',
+    )
+    readonly_fields = ('last_status',)
