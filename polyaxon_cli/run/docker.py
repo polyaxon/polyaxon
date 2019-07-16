@@ -10,6 +10,7 @@ import tempfile
 from hestia.user_path import polyaxon_user_path
 from polyaxon_deploy.operators.docker import DockerOperator
 from polyaxon_dockerizer import build as dockerizer_build
+from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
 
 from polyaxon_cli.client.exceptions import (
@@ -62,7 +63,7 @@ def _create_docker_build(build_job, build_config):
     directory = tempfile.mkdtemp()
     build_context = build_config.context or '.'
     try:
-        dst_path = os.path.join(directory, "code")
+        dst_path = os.path.join(directory, dockerizer_constants.REPO_PATH)
         shutil.copytree(src=build_context, dst=dst_path)
         dockerfile_path = POLYAXON_DOCKERFILE_NAME
         dockerfile_generate = True
