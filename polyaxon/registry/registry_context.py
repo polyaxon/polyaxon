@@ -11,7 +11,7 @@ from schemas import BuildBackend
 
 
 def get_in_cluster_registry_host(build_backend: Optional[str]) -> str:
-    if build_backend in {BuildBackend.NATIVE, None}:
+    if build_backend == BuildBackend.NATIVE or not build_backend:
         return conf.get(REGISTRY_LOCALHOST)
     return conf.get(REGISTRY_HOST)
 

@@ -1,6 +1,5 @@
 import argparse
 
-from builders import settings  # noqa
 from polyaxon_dockerizer import build_and_push
 
 if __name__ == '__main__':
@@ -36,5 +35,4 @@ if __name__ == '__main__':
         build_context=build_context,
         image_name=image_name,
         image_tag=image_tag,
-        nocache=nocache,
-        registries=settings.PRIVATE_REGISTRIES)
+        nocache=nocache)

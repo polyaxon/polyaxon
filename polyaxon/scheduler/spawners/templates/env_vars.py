@@ -22,6 +22,16 @@ from scheduler.spawners.templates.stores import (
 )
 
 
+def get_str_var(value, reraise=True):
+    if value is not None and not isinstance(value, str):
+        try:
+            value = json.dumps(value)
+        except (ValueError, TypeError) as e:
+            if reraise:
+                raise e
+    return value or ''
+
+
 def get_env_var(name, value, reraise=True):
     if not isinstance(value, str):
         try:

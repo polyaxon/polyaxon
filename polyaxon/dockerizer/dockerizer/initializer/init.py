@@ -1,8 +1,9 @@
 import traceback
 
-from typing import Tuple
+from typing import List, Optional, Tuple
 
-from . import settings
+from polyaxon_dockerizer import constants as dockerizer_constants
+
 from .download import download
 from .extract import extract_code, extract_dockerfile
 from .generate import generate
@@ -13,8 +14,14 @@ def init(job: 'Job',  # pylint:disable=too-many-branches
          from_image: str,
          commit: str,
          context_path: str,
-         dockerfile_path: str) -> Tuple[bool, str]:
-    build_path = '{}/{}'.format(build_context, 'build')
+         dockerfile_path: str,
+         lang_env: str,
+         uid: int,
+         gid: int,
+         build_steps: Optional[List[str]] = None,
+         env_vars: Optional[List[Tuple[str, str]]] = None,
+         nvidia_bin: str = None) -> Tuple[bool, str]:
+    build_path = '{}/{}'.format(build_context, dockerizer_constants.REPO_PATH)
     if context_path:
         # We only need a subpath from the extracted code
         extract_path = '{}/{}'.format(build_context, 'code')
@@ -52,12 +59,12 @@ def init(job: 'Job',  # pylint:disable=too-many-branches
             return generate(job=job,
                             build_path=build_path,
                             from_image=from_image,
-                            build_steps=settings.CONTAINER_BUILD_STEPS,
-                            env_vars=settings.CONTAINER_ENV_VARS,
-                            nvidia_bin=settings.MOUNT_PATHS_NVIDIA,
-                            lang_env=settings.LANG_ENV,
-                            gid=settings.SECURITY_CONTEXT_USER,
-                            uid=settings.SECURITY_CONTEXT_GROUP), ''
+                            build_steps=build_steps,
+                            env_vars=env_vars,
+                            nvidia_bin=nvidia_bin,
+                            lang_env=lang_env,
+                            gid=uid,
+                            uid=gid), ''
         except Exception:
             return False, 'An error occurred while generating the dockerfile.'
 
@@ -67,7 +74,13 @@ def cmd(job: 'Job',
         from_image: str,
         commit: str,
         context_path: str,
-        dockerfile_path: str):
+        dockerfile_path: str,
+        lang_env: str,
+        uid: int,
+        gid: int,
+        build_steps: Optional[List[str]] = None,
+        env_vars: Optional[List[Tuple[str, str]]] = None,
+        nvidia_bin: str = None):
     # Initializing the docker context
     try:
         status, message = init(job=job,
@@ -75,7 +88,13 @@ def cmd(job: 'Job',
                                from_image=from_image,
                                commit=commit,
                                context_path=context_path,
-                               dockerfile_path=dockerfile_path)
+                               dockerfile_path=dockerfile_path,
+                               lang_env=lang_env,
+                               uid=uid,
+                               gid=gid,
+                               build_steps=build_steps,
+                               env_vars=env_vars,
+                               nvidia_bin=nvidia_bin)
         if not status:
             job.failed(message='Failed to initialize build job ({}).'.format(message))
             return

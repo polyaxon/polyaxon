@@ -18,7 +18,7 @@ from polyaxon_k8s.exceptions import PolyaxonK8SError
 from polyaxon_k8s.manager import K8SManager
 from scheduler.spawners.templates import constants
 from scheduler.spawners.templates.dockerizers import manager
-from scheduler.spawners.templates.env_vars import get_env_var, get_internal_env_vars
+from scheduler.spawners.templates.env_vars import get_internal_env_vars, get_str_var
 from scheduler.spawners.templates.labels import get_labels
 from scheduler.spawners.templates.restart_policy import get_pod_restart_policy
 from scheduler.spawners.templates.volumes import (
@@ -120,25 +120,6 @@ class DockerizerSpawner(K8SManager):
                                          namespace=self.namespace,
                                          authentication_type=AuthenticationTypes.INTERNAL_TOKEN,
                                          include_internal_token=True)
-        # Add containers env vars
-        env_vars += [
-            get_env_var(name='POLYAXON_CONTAINER_BUILD_STEPS', value=self.build_steps),
-            get_env_var(name='POLYAXON_CONTAINER_ENV_VARS', value=self.env_vars),
-            get_env_var(name='POLYAXON_MOUNT_PATHS_NVIDIA', value=conf.get(MOUNT_PATHS_NVIDIA)),
-        ]
-
-        # Add security context if set
-        sid = conf.get(SECURITY_CONTEXT_USER)
-        gid = conf.get(SECURITY_CONTEXT_GROUP)
-        should_set_security_context = conf.get(BUILD_JOBS_SET_SECURITY_CONTEXT) and sid and gid
-        if should_set_security_context:
-            env_vars.append(get_env_var('POLYAXON_SECURITY_CONTEXT_USER', value=sid))
-            env_vars.append(get_env_var('POLYAXON_SECURITY_CONTEXT_GROUP', value=gid))
-
-        # Add set env lang
-        env_lang = self.lang_env or conf.get(BUILD_JOBS_LANG_ENV)
-        if env_lang:
-            env_vars.append(get_env_var(name='POLYAXON_LANG_ENV', value=env_lang))
         return env_vars
 
     def get_pod_command_args(self):
@@ -150,12 +131,32 @@ class DockerizerSpawner(K8SManager):
         return ["python3", "-u", "dockerizer/build_cmd.py"], args
 
     def get_init_command_args(self):
-        return (["python3", "-u", "dockerizer/init_cmd.py"],
-                ["--build_context={}".format(constants.BUILD_CONTEXT),
-                 "--from_image={}".format(self.from_image or ''),
-                 "--dockerfile_path={}".format(self.dockerfile_path or ''),
-                 "--context_path={}".format(self.context_path or ''),
-                 "--commit={}".format(self.commit or '')])
+        # Add security context if set
+        uid = conf.get(SECURITY_CONTEXT_USER)
+        gid = conf.get(SECURITY_CONTEXT_GROUP)
+        should_set_security_context = conf.get(BUILD_JOBS_SET_SECURITY_CONTEXT) and uid and gid
+        lang_env = self.lang_env or conf.get(BUILD_JOBS_LANG_ENV)
+        mount_paths_nvidia = conf.get(MOUNT_PATHS_NVIDIA).get('nvidia-bin')
+
+        args = [
+            "--build_context={}".format(constants.BUILD_CONTEXT),
+            "--from_image={}".format(self.from_image or ''),
+            "--dockerfile_path={}".format(self.dockerfile_path or ''),
+            "--context_path={}".format(self.context_path or ''),
+            "--commit={}".format(self.commit or ''),
+        ]
+        if should_set_security_context:
+            args += ["--uid={}".format(uid), "--gid={}".format(gid)]
+        if lang_env:
+            args.append("--lang_env={}".format(lang_env))
+        if self.env_vars:
+            args.append("--env_vars={}".format(get_str_var(self.env_vars)))
+        if mount_paths_nvidia:
+            args.append("--mount_paths_nvidia={}".format(get_str_var(mount_paths_nvidia)))
+        if self.build_steps:
+            args.append("--build_steps={}".format(get_str_var(self.build_steps)))
+
+        return ["python3", "-u", "dockerizer/init_cmd.py"], args
 
     def _get_docker_credentials_volumes(self, secret_mount_path: str):
         if not self.creds_secret_ref:

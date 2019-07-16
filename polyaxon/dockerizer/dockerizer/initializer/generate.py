@@ -13,7 +13,7 @@ def generate(job,
              build_steps: Optional[List[str]] = None,
              env_vars: Optional[List[Tuple[str, str]]] = None,
              nvidia_bin: str = None,
-             lang_env: bool = True,
+             lang_env: str = None,
              uid: int = None,
              gid: int = None) -> bool:
     """Build necessary code for a job to run"""

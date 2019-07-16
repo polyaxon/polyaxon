@@ -16,7 +16,8 @@ from scheduler.spawners.templates.env_vars import (
     get_pod_env_from_config_maps,
     get_pod_env_from_secrets,
     get_resources_env_vars,
-    get_service_env_vars
+    get_service_env_vars,
+    get_str_var
 )
 from tests.base.case import BaseTest
 
@@ -36,6 +37,23 @@ class TestEnvVars(BaseTest):
         env_var = get_env_var(name='foo', value={'moo': 'bar'})
         assert env_var.name == 'foo'
         assert env_var.value == '{"moo": "bar"}'
+
+    def test_str_var(self):
+        # String value
+        var = get_str_var(value='bar')
+        assert var == 'bar'
+        # Int value
+        var = get_str_var(value=1)
+        assert var == '1'
+        # Dict value
+        var = get_str_var(value={'moo': 'bar'})
+        assert var == '{"moo": "bar"}'
+        # Empty value
+        var = get_str_var(value=None)
+        assert var == ''
+        # 0 value
+        var = get_str_var(value=0)
+        assert var == '0'
 
     def test_get_from_secret(self):
         env_var = get_from_secret(key_name='foo',
