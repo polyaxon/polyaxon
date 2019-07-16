@@ -20,7 +20,7 @@ class DockerFileGenerator(object):
                  env_vars=None,
                  nvidia_bin=None,
                  dockerfile_name=POLYAXON_DOCKERFILE_NAME,
-                 lang_env=False,
+                 lang_env=None,
                  uid=None,
                  gid=None):
         self.from_image = from_image
@@ -130,7 +130,7 @@ def generate(repo_path,
              build_steps=None,
              env_vars=None,
              nvidia_bin=None,
-             lang_env=False,
+             lang_env=None,
              uid=None,
              gid=None):
     # Build the image
