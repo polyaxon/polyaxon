@@ -301,7 +301,8 @@ class BuildJobApi(BaseApiHandler):
                                      project_name,
                                      'builds',
                                      job_id,
-                                     'logs')
+                                     'logs',
+                                     'stream')
         self.transport.stream(request_url, message_handler=message_handler)
 
     def get_heartbeat_url(self, username, project_name, job_id):

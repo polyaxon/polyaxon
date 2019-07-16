@@ -98,5 +98,6 @@ class ExperimentJobApi(BaseApiHandler):
                                      experiment_id,
                                      'jobs',
                                      job_id,
-                                     'logs')
+                                     'logs',
+                                     'stream')
         self.transport.stream(request_url, message_handler=message_handler)

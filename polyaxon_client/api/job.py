@@ -374,7 +374,8 @@ class JobApi(BaseApiHandler):
                                      project_name,
                                      'jobs',
                                      job_id,
-                                     'logs')
+                                     'logs',
+                                     'stream')
         self.transport.stream(request_url, message_handler=message_handler)
 
     def download_outputs(self, username, project_name, job_id):

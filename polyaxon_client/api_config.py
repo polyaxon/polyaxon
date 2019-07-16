@@ -10,7 +10,6 @@ from polyaxon_client.exceptions import PolyaxonClientException
 class ApiConfig(object):
     PAGE_SIZE = 20
     BASE_URL = "{}/api/{}"
-    BASE_WS_URL = "{}/ws/{}"
 
     def __init__(self,
                  host=None,
@@ -74,7 +73,7 @@ class ApiConfig(object):
             self.http_host = '{}://{}:{}'.format(http_protocol, self.host, self.http_port)
             self.ws_host = '{}://{}:{}'.format(ws_protocol, self.host, self.ws_port)
         self.base_url = self.BASE_URL.format(self.http_host, self.version)
-        self.base_ws_url = self.BASE_WS_URL.format(self.ws_host, self.version)
+        self.base_ws_url = self.BASE_URL.format(self.ws_host, self.version)
         self.authentication_type = (authentication_type or
                                     settings.AUTHENTICATION_TYPE or
                                     AuthenticationTypes.TOKEN)

@@ -57,9 +57,9 @@ setup(name='polyaxon-client',
       install_requires=[
           "polyaxon-schemas==0.5.2",
           "polystores>=0.2.3",
-          "psutil==5.4.7",
+          "psutil>=5.4.7",
           "requests>=2.20.0",
-          "requests-toolbelt==0.8.0",
+          "requests-toolbelt>=0.8.0",
           "websocket-client>=0.53.0",
       ],
       extras_require={

@@ -446,7 +446,8 @@ class ExperimentApi(BaseApiHandler):
                                      project_name,
                                      'experiments',
                                      experiment_id,
-                                     'logs')
+                                     'logs',
+                                     'stream')
         self.transport.stream(request_url, message_handler=message_handler)
 
     def start_tensorboard(self,
