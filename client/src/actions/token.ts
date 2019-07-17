@@ -110,13 +110,20 @@ export function fetchToken(username: string, password: string): any {
 }
 
 export function discardToken(): any {
-  return (dispatch: any) =>
-    new Promise(function(resolve: any, reject: any) {
-      dispatch(discardTokenActionCreator());
-      dispatch(discardUser()).then(
-        () => resolve()
-    ).catch((error: any) => reject(error));
-    });
+  return (dispatch: any, getState: any) => {
+    return fetch(BASE_API_URL + '/users/logout', {
+      method: 'GET',
+      headers: {
+        'X-CSRFToken': getState().auth.csrftoken
+      },
+      credentials: 'include',
+    }).then(dispatch(discardTokenActionCreator()))
+      .then(dispatch(discardUser()))
+      .then(() => {
+          window.location.reload();
+        }
+      );
+  };
 }
 
 export function refreshSession(): any {

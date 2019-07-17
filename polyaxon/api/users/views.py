@@ -29,7 +29,7 @@ import auditor
 import conf
 
 from api.users.forms import RegistrationForm
-from api.users.utils import login_user, logout_user
+from api.users.utils import login_user, logout_user, get_token
 from api.utils.views.post import PostAPIView
 from db.models.tokens import Token
 from events.registry.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED
@@ -91,9 +91,7 @@ class AuthTokenLogin(ObtainAuthToken):
                                            context={'request': request})
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        if not created and token.is_expired:
-            token.refresh()
+        token = get_token(user)
         response = Response({'token': token.key})
         if request.data.get('login'):
             auth_login(self.request, user)
