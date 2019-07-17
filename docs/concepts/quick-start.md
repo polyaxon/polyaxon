@@ -75,7 +75,7 @@ $ polyaxon project create --name=quick-start --description='Polyaxon quick start
 
 Polyaxon offers 2 options for tracking code, an in-cluster git server or tracking code on external platforms (Github, GitLab, Bitbucket, ...).
 
-A project can only be linked to one repo (either in-cluster or on Github for example), in both cases, your workflow will be mor or less similar. 
+A project can only be linked to one repo (either in-cluster or on Github for example), in both cases, your workflow will be more or less similar. 
 
 We have created 2 quick-start guides to show how you can use each one of this options:
 
