@@ -42,7 +42,7 @@ class ConfCacheManager(object):
         if ttl <= 0 or value is None:
             return
         self._state[key] = CachedOptionSpec(value=value,
-                                            datetime=timezone.now() + timedelta(days=ttl))
+                                            datetime=timezone.now() + timedelta(seconds=ttl))
 
 
 conf_cache_manager = ConfCacheManager()
