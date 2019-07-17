@@ -188,8 +188,12 @@ class TestRegistryAccessDetailViewV1(BaseViewTest):
         super().setUp()
         self.normal_client = AuthorizedClient()
         self.object = self.factory_class()
-        self.url = '/{}/catalogs/registry_access/{}/'.format(API_V1, self.object.name)
+        self.url = self.get_access_url(self.object.name)
         self.queryset = self.model_class.objects.all()
+
+    @staticmethod
+    def get_access_url(name):
+        return '/{}/catalogs/registry_access/{}/'.format(API_V1, name)
 
     def test_get(self):
         resp = self.auth_client.get(self.url)
@@ -225,6 +229,59 @@ class TestRegistryAccessDetailViewV1(BaseViewTest):
         assert set(new_object.tags) == set(data['tags'])
         assert new_object.host == data['host']
         assert new_object.k8s_secret.id == data['k8s_secret']
+
+        # Path an access without a host
+        new_secret = K8SSecretFactory()
+        last_object = RegistryAccess.objects.create(owner=self.object.owner,
+                                                    name='my_registry',
+                                                    k8s_secret=secret)
+        assert last_object.owner.owner == Cluster.load()
+        assert last_object.name == 'my_registry'
+        assert last_object.description is None
+        assert last_object.tags is None
+        assert last_object.host == ''
+        assert last_object.k8s_secret.id == data['k8s_secret']
+        url = self.get_access_url(last_object.name)
+
+        # Patch
+        data = {
+            'k8s_secret': new_secret.id,
+        }
+        resp = self.auth_client.patch(url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=last_object.id)
+        assert new_object.name == 'my_registry'
+        assert new_object.description is None
+        assert new_object.tags is None
+        assert new_object.host == ''
+        assert new_object.k8s_secret.id == data['k8s_secret']
+
+        # Patch
+        data = {
+            'tags': ['foo', 'bar'],
+        }
+        resp = self.auth_client.patch(url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=last_object.id)
+        assert new_object.name == 'my_registry'
+        assert new_object.description is None
+        assert set(new_object.tags) == set(data['tags'])
+        assert new_object.host == ''
+        assert new_object.k8s_secret.id == new_secret.id
+
+        # Patch
+        data = {
+            'tags': ['foo', 'bar'],
+            'host': ''
+        }
+        resp = self.auth_client.patch(url, data=data)
+        assert resp.status_code == status.HTTP_200_OK
+        new_object = self.model_class.objects.get(id=last_object.id)
+        assert new_object.name == 'my_registry'
+        assert new_object.description is None
+        assert set(new_object.tags) == set(data['tags'])
+        assert new_object.host == ''
+        assert new_object.k8s_secret.id == new_secret.id
 
         # Non admin
         resp = self.normal_client.patch(self.url, data=data)

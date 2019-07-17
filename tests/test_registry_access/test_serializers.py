@@ -75,6 +75,31 @@ class TestRegistryAccessSerializer(BaseTest):
         for k, v in data.items():
             assert getattr(registry, k) == v
 
+    def test_serializer_empty_host(self):
+        registry = RegistryAccess.objects.create(owner=self.obj1.owner,
+                                                 name='my_registry_with_secret_and_host',
+                                                 insecure=False)
+
+        data = self.serializer_class(registry).data
+        assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
+        assert data.pop('uuid') == registry.uuid.hex
+        assert data.pop('is_default') is False
+
+    def test_serializer_none_host(self):
+        registry = RegistryAccess.objects.create(owner=self.obj1.owner,
+                                                 name='my_registry_with_secret_and_host',
+                                                 insecure=False,
+                                                 host='')
+
+        data = self.serializer_class(registry).data
+        assert set(data.keys()) == self.expected_keys
+        data.pop('created_at')
+        data.pop('updated_at')
+        assert data.pop('uuid') == registry.uuid.hex
+        assert data.pop('is_default') is False
+
     def test_serialize_many(self):
         data = self.serializer_class(RegistryAccess.objects.all(), many=True).data
         assert len(data) == 2

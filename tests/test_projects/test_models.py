@@ -37,6 +37,7 @@ class TestProjectModel(BaseTest):
         conf.set(key=ALLOW_USER_OWNERSHIP, value=False)
         with self.assertRaises(ValidationError):
             ProjectFactory()
+        conf.delete(key=ALLOW_USER_OWNERSHIP)
 
     @patch('scheduler.tasks.storage.stores_schedule_logs_deletion.apply_async')
     @patch('scheduler.tasks.storage.stores_schedule_outputs_deletion.apply_async')

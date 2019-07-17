@@ -78,11 +78,11 @@ export default class AccessActions extends React.Component<Props, State> {
           <MenuItem eventKey="2" onClick={() => this.handleShow('default')}>
             <i className="fas fa-check icon" aria-hidden="true"/> Make default
           </MenuItem>
-          <MenuItem eventKey="3" onClick={() => this.handleShow('delete')}>
-            <i className="fas fa-trash icon" aria-hidden="true"/> Delete
-          </MenuItem>
           <MenuItem eventKey="4" onClick={() => this.props.onEdit()}>
             <i className="fas fa-pen icon" aria-hidden="true"/> Edit
+          </MenuItem>
+          <MenuItem eventKey="3" onClick={() => this.handleShow('delete')}>
+            <i className="fas fa-trash icon" aria-hidden="true"/> Delete
           </MenuItem>
         </Dropdown.Menu>
       </Dropdown>

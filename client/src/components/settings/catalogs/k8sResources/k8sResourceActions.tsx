@@ -67,11 +67,11 @@ export default class K8SResourceActions extends React.Component<Props, State> {
             <i className="fas fa-ellipsis-h icon" aria-hidden="true"/>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <MenuItem eventKey="3" onClick={() => this.handleShow('delete')}>
-            <i className="fas fa-trash icon" aria-hidden="true"/> Delete
-          </MenuItem>
           <MenuItem eventKey="4" onClick={() => this.props.onEdit()}>
             <i className="fas fa-pen icon" aria-hidden="true"/> Edit
+          </MenuItem>
+          <MenuItem eventKey="3" onClick={() => this.handleShow('delete')}>
+            <i className="fas fa-trash icon" aria-hidden="true"/> Delete
           </MenuItem>
         </Dropdown.Menu>
       </Dropdown>

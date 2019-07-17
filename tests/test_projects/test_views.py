@@ -64,6 +64,7 @@ class TestProjectCreateViewV1(BaseViewTest):
         data = {'name': 'new_project'}
         resp = self.auth_client.post(self.url, data)
         assert resp.status_code == status.HTTP_400_BAD_REQUEST
+        conf.delete(key=ALLOW_USER_OWNERSHIP)
 
 
 @pytest.mark.projects_mark

@@ -43,6 +43,9 @@ export const AccessComponent: React.FunctionComponent<AccessFieldProps> = (
           defaultValue={form.initialValues.access.host}
           onChange={(event) => form.setFieldValue(field.name, {...field.value, host: event.target.value})}
         />
+        <span id="helpBlock" className="help-block">
+          If left empty it will default to the in-cluster configured host.
+        </span>
       </div>
     </div>
     {showInsecure &&
@@ -83,8 +86,8 @@ export const AccessComponent: React.FunctionComponent<AccessFieldProps> = (
           )}
         </select>
         <span id="helpBlock" className="help-block">
-            If this storage requires access.
-          </span>
+            The secret to attach when using this access.
+        </span>
       </div>
     </div>
   </div>
