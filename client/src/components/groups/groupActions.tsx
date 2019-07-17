@@ -21,7 +21,7 @@ export interface Props {
 
 interface State {
   confirmShow: boolean;
-  confirmText?: string;
+  confirmComponent?: React.ReactNode;
   confirmAction?: 'delete' | 'stop' | 'stopTensorboard' | 'archive';
 }
 
@@ -41,26 +41,36 @@ export default class GroupActions extends React.Component<Props, State> {
   };
 
   public handleShow = (action: 'delete' | 'stop' | 'stopTensorboard' | 'archive') => {
-    let confirmText = '';
+    let confirmComponent: React.ReactNode = null;
     if (action === 'delete') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to delete the selected group(s)' :
-        'Are you sure you want to delete this group';
+      confirmComponent = this.props.isSelection ?
+        (
+          <div>
+            <p>Are you sure you want to delete the selected <b>group(s)</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        ) :
+        (
+          <div>
+            <p>Are you sure you want to delete this <b>group</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        );
     } else if (action === 'archive') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to archive the selected group(s)' :
-        'Are you sure you want to archive this group';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to archive the selected <b>group(s)</b></p> :
+        <p>Are you sure you want to archive this <b>group</b></p>;
     } else if (action === 'stop') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to stop the selected group(s)' :
-        'Are you sure you want to stop this group';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop the selected <b>group(s)</b></p> :
+        <p>Are you sure you want to stop this <b>group</b></p>;
     } else if (action === 'stopTensorboard') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to stop tensorboard for the selected group(s)' :
-        'Are you sure you want to stop tensorboard for this group';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop tensorboard for the selected <b>group(s)</b></p> :
+        <p>Are you sure you want to stop tensorboard for this <b>group</b></p>;
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
     }));
   };
 
@@ -131,7 +141,7 @@ export default class GroupActions extends React.Component<Props, State> {
         </Dropdown.Menu>
       </Dropdown>
       <ConfirmAction
-        text={this.state.confirmText}
+        component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}

@@ -19,7 +19,7 @@ export interface Props {
 
 interface State {
   confirmShow: boolean;
-  confirmText?: string;
+  confirmComponent?: React.ReactNode;
   confirmAction?: 'delete' | 'stopNotebook' | 'stopTensorboard' | 'archive';
 }
 
@@ -39,26 +39,36 @@ export default class ProjectActions extends React.Component<Props, State> {
   };
 
   public handleShow = (action: 'delete' | 'stopNotebook' | 'stopTensorboard' | 'archive') => {
-    let confirmText = '';
+    let confirmComponent: React.ReactNode = null;
     if (action === 'delete') {
-      confirmText = this.props.isSelection ?
-         'Are you sure you want to delete the selected project(s)' :
-         'Are you sure you want to delete this project';
+      confirmComponent = this.props.isSelection ?
+        (
+          <div>
+            <p>Are you sure you want to delete the selected <b>project(s)</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        ) :
+        (
+          <div>
+            <p>Are you sure you want to delete this <b>project</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        );
     } else if (action === 'archive') {
-      confirmText = this.props.isSelection ?
-         'Are you sure you want to archive the selected project(s)' :
-         'Are you sure you want to archive this project';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to archive the selected <b>project(s)</b></p> :
+        <p>Are you sure you want to archive this <b>project</b></p>;
     } else if (action === 'stopNotebook') {
-      confirmText = this.props.isSelection ?
-         'Are you sure you want to stop notebook for the selected project(s)' :
-         'Are you sure you want to stop notebook for this project';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop notebook for the selected <b>project(s)</b></p> :
+        <p>Are you sure you want to stop notebook for this <b>project</b></p>;
     } else if (action === 'stopTensorboard') {
-      confirmText = this.props.isSelection ?
-         'Are you sure you want to stop tensorboard for the selected project(s)' :
-         'Are you sure you want to stop tensorboard for this project';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop tensorboard for the selected <b>project(s)</b></p> :
+        <p>Are you sure you want to stop tensorboard for this <b>project</b></p>;
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
     }));
   };
 
@@ -122,7 +132,7 @@ export default class ProjectActions extends React.Component<Props, State> {
         </Dropdown.Menu>
       </Dropdown>
       <ConfirmAction
-        text={this.state.confirmText}
+        component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}

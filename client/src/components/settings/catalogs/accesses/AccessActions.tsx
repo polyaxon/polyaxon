@@ -15,7 +15,7 @@ export interface Props {
 
 interface State {
   confirmShow: boolean;
-  confirmText?: string;
+  confirmComponent?: React.ReactNode;
   confirmBtn?: string;
   confirmAction?: 'delete' | 'default';
 }
@@ -36,18 +36,28 @@ export default class AccessActions extends React.Component<Props, State> {
   };
 
   public handleShow = (action: 'delete' | 'default') => {
-    let confirmText = '';
+    let confirmComponent: React.ReactNode = null;
     let confirmBtn = '';
     if (action === 'delete') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to delete the selected access(es)' :
-        'Are you sure you want to delete this access';
+      confirmComponent = this.props.isSelection ?
+        (
+          <div>
+            <p>Are you sure you want to delete the selected <b>access(es)</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        ) :
+        (
+          <div>
+            <p>Are you sure you want to delete this <b>access</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        );
     } else if  (action === 'default') {
-      confirmText = 'Are you sure you want to make this access the default';
+      confirmComponent = <p>Are you sure you want to make this access the default</p>;
       confirmBtn = 'btn-success';
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText, confirmBtn}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent, confirmBtn}
     }));
   };
 
@@ -88,7 +98,7 @@ export default class AccessActions extends React.Component<Props, State> {
       </Dropdown>
       <ConfirmAction
         btn={this.state.confirmBtn}
-        text={this.state.confirmText}
+        component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}

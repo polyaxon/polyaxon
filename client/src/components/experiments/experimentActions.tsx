@@ -25,7 +25,7 @@ export interface Props {
 
 interface State {
   confirmShow: boolean;
-  confirmText?: string;
+  confirmComponent?: React.ReactNode;
   confirmAction?: 'delete' | 'stop' | 'stopTensorboard' | 'archive';
 }
 
@@ -45,26 +45,36 @@ export default class ExperimentActions extends React.Component<Props, State> {
   };
 
   public handleShow = (action: 'delete' | 'stop' | 'stopTensorboard' | 'archive') => {
-    let confirmText = '';
+    let confirmComponent: React.ReactNode = null;
     if (action === 'delete') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to delete the selected experiment(s)' :
-        'Are you sure you want to delete this experiment';
+      confirmComponent = this.props.isSelection ?
+        (
+          <div>
+            <p>Are you sure you want to delete the selected <b>experiment(s)</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        ) :
+        (
+          <div>
+            <p>Are you sure you want to delete this <b>experiment</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        );
     } else if (action === 'archive') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to archive the selected experiment(s)' :
-        'Are you sure you want to archive this experiment';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to archive the selected <b>experiment(s)</b></p> :
+        <p>Are you sure you want to archive this <b>experiment</b></p>;
     } else if (action === 'stop') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to stop the selected experiment(s)' :
-        'Are you sure you want to stop this experiment';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop the selected <b>experiment(s)</b></p> :
+        <p>Are you sure you want to stop this <b>experiment</b></p>;
     } else if (action === 'stopTensorboard') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to stop tensorboard for the selected experiment(s)' :
-        'Are you sure you want to stop tensorboard for this experiment';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop tensorboard for the selected <b>experiment(s)</b></p> :
+        <p>Are you sure you want to stop tensorboard for this <b>experiment</b></p>;
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
     }));
   };
 
@@ -151,7 +161,7 @@ export default class ExperimentActions extends React.Component<Props, State> {
         </Dropdown.Menu>
       </Dropdown>
       <ConfirmAction
-        text={this.state.confirmText}
+        component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}

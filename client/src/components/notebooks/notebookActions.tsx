@@ -17,7 +17,7 @@ export interface Props {
 
 interface State {
   confirmShow: boolean;
-  confirmText?: string;
+  confirmComponent?: React.ReactNode;
   confirmAction?: 'delete' | 'stop' | 'archive';
 }
 
@@ -37,22 +37,32 @@ export default class NotebookActions extends React.Component<Props, State> {
   };
 
   public handleShow = (action: 'delete' | 'stop' | 'archive') => {
-    let confirmText = '';
+    let confirmComponent: React.ReactNode = null;
     if (action === 'delete') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to delete the selected notebook(s)' :
-        'Are you sure you want to delete this notebook';
+      confirmComponent = this.props.isSelection ?
+        (
+          <div>
+            <p>Are you sure you want to delete the selected <b>notebook(s)</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        ) :
+        (
+          <div>
+            <p>Are you sure you want to delete this <b>notebook</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        );
     } else if (action === 'archive') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to archive the selected notebook(s)' :
-        'Are you sure you want to archive this notebook';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to archive the selected <b>notebook(s)</b></p> :
+        <p>Are you sure you want to archive this <b>notebook</b></p>;
     } else if (action === 'stop' && this.props.onStop) {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to stop the selected notebook(s)' :
-        'Are you sure you want to stop this notebook';
+      confirmComponent = this.props.isSelection ?
+        <p>Are you sure you want to stop the selected <b>notebook(s)</b></p> :
+        <p>Are you sure you want to stop this <b>notebook</b></p>;
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
     }));
   };
 
@@ -103,7 +113,7 @@ export default class NotebookActions extends React.Component<Props, State> {
         </Dropdown.Menu>
       </Dropdown>
       <ConfirmAction
-        text={this.state.confirmText}
+        component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}

@@ -5,7 +5,7 @@ import '../actions.less';
 
 export interface Props {
   btn?: string;
-  text?: string;
+  component?: React.ReactNode;
   confirmShow: boolean;
   onConfirm: () => any;
   handleClose: () => void;
@@ -27,7 +27,7 @@ export default class ConfirmAction extends React.Component<Props, {}> {
           <Modal.Title>Confirm action</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>{this.props.text || `This action is irreversible`}</p>
+          {this.props.component ? this.props.component : <p>This action is irreversible</p>}
         </Modal.Body>
         <Modal.Footer>
           <button type="submit" className={`btn btn-default ${btn}`} onClick={this.confirm}>Confirm</button>

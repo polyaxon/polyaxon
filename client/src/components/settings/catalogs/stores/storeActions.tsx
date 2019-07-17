@@ -14,7 +14,7 @@ export interface Props {
 
 interface State {
   confirmShow: boolean;
-  confirmText?: string;
+  confirmComponent?: React.ReactNode;
   confirmAction?: 'delete' | 'edit';
 }
 
@@ -34,14 +34,24 @@ export default class StoreActions extends React.Component<Props, State> {
   };
 
   public handleShow = (action: 'delete') => {
-    let confirmText = '';
+    let confirmComponent: React.ReactNode = null;
     if (action === 'delete') {
-      confirmText = this.props.isSelection ?
-        'Are you sure you want to delete the selected store(s)' :
-        'Are you sure you want to delete this store';
+      confirmComponent = this.props.isSelection ?
+        (
+          <div>
+            <p>Are you sure you want to delete the selected <b>store(s)</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        ) :
+        (
+          <div>
+            <p>Are you sure you want to delete this <b>store</b></p>
+            <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
+          </div>
+        );
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmText}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
     }));
   };
 
@@ -76,7 +86,7 @@ export default class StoreActions extends React.Component<Props, State> {
         </Dropdown.Menu>
       </Dropdown>
       <ConfirmAction
-        text={this.state.confirmText}
+        component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}
