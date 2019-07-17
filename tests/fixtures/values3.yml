@@ -80,3 +80,7 @@ docker-registry:
 
 redis:
   enabled: false
+
+externalServices:
+  redis:
+    host: 35.226.163.84

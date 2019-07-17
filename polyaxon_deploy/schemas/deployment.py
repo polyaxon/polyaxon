@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate
+from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_deploy.schemas.base import BaseConfig, BaseSchema
 from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
@@ -27,6 +27,17 @@ from polyaxon_deploy.schemas.service import (
 )
 from polyaxon_deploy.schemas.service_types import ServiceTypes
 from polyaxon_deploy.schemas.ssl import SSLSchema
+
+
+def check_redis(redis, external_services):
+    redis_disabled = redis.enabled is False if redis else False
+    external_redis = None
+    if external_services:
+        external_redis = external_services.redis
+
+    if redis_disabled and not external_redis:
+        raise ValidationError('A redis instance is required, please enable the in-cluster redis, '
+                              'or provide an external instance.')
 
 
 class DeploymentSchema(BaseSchema):
@@ -98,6 +109,10 @@ class DeploymentSchema(BaseSchema):
     def schema_config():
         return DeploymentConfig
 
+    @validates_schema
+    def validate_deployment(self, data):
+        check_redis(data.get('redis'), data.get('externalServices'))
+
 
 class DeploymentConfig(BaseConfig):
     SCHEMA = DeploymentSchema
@@ -160,6 +175,7 @@ class DeploymentConfig(BaseConfig):
                  externalServices=None,
                  debugMode=None,
                  plugins=None):
+        check_redis(redis, externalServices)
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
         self.clusterId = clusterId
