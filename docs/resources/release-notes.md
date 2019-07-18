@@ -9,6 +9,25 @@ tags:
     - reference
 ---
 
+## 0.5.3
+
+ * Upgrade python to 3.7.4.
+ * Update default kaniko image tag to v0.9.0.
+ * Add note about using pgbouncer for scaling connexions to DB. 
+ * Add a conf caching mechanism to prevent hitting the db frequently when requesting config options.
+ * Update default admin pages for builds, jobs, experiments, groups, tensorboards, notebooks.
+ * Fix issue with registry access update form.
+ * Add better handling for refresh auth tokens.
+ * Make more defensive confirmation dialog by emphasising entities and actions.
+ * Make project deletion harder by requiring the user to enter the project name.
+ * Add more CLI checks for dependencies during deployment.
+ * Make code path resolving consistent between local run and platform run.
+ * Expose `maxConnAge` configuration option for both in-cluster and external postgresql connexion. 
+ * Force user to re-login when token expires.
+ * Make stream API internal.
+ * Internal improvements.
+
+
 ## 0.5.2
 
  * Add asset version context processor.

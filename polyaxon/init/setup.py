@@ -23,7 +23,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-init',
-      version='0.5.2',
+      version='0.5.3',
       description='Polyaxon init.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',

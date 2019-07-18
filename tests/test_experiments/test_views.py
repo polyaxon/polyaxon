@@ -1740,7 +1740,7 @@ class TestExperimentJobLogsViewV1(BaseViewTest):
             project.name,
             self.experiment.id,
             self.experiment_job.id)
-        self.ws_url ='/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
+        self.ws_url = '/{}/{}/{}/experiments/{}/jobs/{}/logs'.format(
             WS_V1,
             project.user.username,
             project.name,

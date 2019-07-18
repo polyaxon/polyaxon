@@ -23,7 +23,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-dockerizer',
-      version='0.5.2',
+      version='0.5.3',
       description='Polyaxon dockerizer.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mourad@polyaxon.com',
