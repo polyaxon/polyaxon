@@ -41,7 +41,7 @@ setup(name='polyaxon-dockerizer',
           'instrumentation'
       ],
       install_requires=[
-          'polyaxon-client==0.5.2',
+          'polyaxon-client==0.5.3',
           'polyaxon-dockerizer==0.0.8',
       ],
       classifiers=[

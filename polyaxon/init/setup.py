@@ -41,7 +41,7 @@ setup(name='polyaxon-init',
           'instrumentation'
       ],
       install_requires=[
-          'polyaxon-client==0.5.2',
+          'polyaxon-client==0.5.3',
           'Unipath==1.1'
       ],
       classifiers=[

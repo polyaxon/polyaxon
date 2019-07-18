@@ -177,7 +177,7 @@ params:
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-client==0.5.2
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.3
   nocache: true
 
 run:

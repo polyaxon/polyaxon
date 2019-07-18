@@ -40,7 +40,7 @@ setup(name='polyaxon-sidecar',
       ],
       install_requires=[
           'polyaxon-k8s==0.4.7',
-          'polyaxon-client==0.5.2',
+          'polyaxon-client==0.5.3',
           'ocular==0.1.6',
           'Unipath==1.1'
       ],
