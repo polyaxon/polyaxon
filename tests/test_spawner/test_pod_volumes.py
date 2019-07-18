@@ -5,7 +5,7 @@ import pytest
 from django.test import override_settings
 
 from db.models.outputs import OutputsRefsSpec
-from scheduler.spawners.templates.volumes import (
+from polypod.templates.volumes import (
     get_pod_data_volume,
     get_pod_outputs_volume,
     get_pod_refs_outputs_volumes,

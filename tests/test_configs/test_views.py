@@ -28,7 +28,7 @@ class TesClusterConfigOptionsViewV1(BaseViewTest):
         self.owner = self.get_owner()
         self.url = self.get_url()
         self.queryset = self.model_class.objects.filter(owner=self.owner)
-        conf.delete(NODE_SELECTORS_JOBS)
+        conf.clear_cache()
 
     def get_owner(self):
         return Cluster.get_or_create_owner(Cluster.load())

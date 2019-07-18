@@ -24,6 +24,7 @@ class TestBuildJobModels(BaseTest):
         super().setUp()
         self.project = ProjectFactory()
         self.code_reference = CodeReferenceFactory()
+        conf.clear_cache()
 
     def test_build_job_creation_triggers_status_creation_mock(self):
         with patch.object(BuildJob, 'set_status') as mock_fct:

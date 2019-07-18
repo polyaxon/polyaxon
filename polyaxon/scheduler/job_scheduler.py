@@ -7,14 +7,15 @@ import conf
 
 from libs.unique_urls import get_job_reconcile_url
 from lifecycles.jobs import JobLifeCycle
+from options.registry.deployments import CHART_VERSION
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from options.registry.restarts import MAX_RESTARTS_JOBS
+from polypod.job import JobSpawner
+from polypod.templates.restart_policy import get_max_restart
 from registry.exceptions import ContainerRegistryError
 from registry.image_info import get_image_info
 from registry.registry_context import get_registry_context
-from scheduler.spawners.job_spawner import JobSpawner
-from scheduler.spawners.templates.restart_policy import get_max_restart
-from scheduler.spawners.utils import get_job_definition
+from scheduler.utils import get_job_definition
 from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.notebook')
@@ -50,6 +51,7 @@ def start_job(job):
         job_uuid=job.uuid.hex,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
+        version=conf.get(CHART_VERSION),
         job_docker_image=job_docker_image,
         in_cluster=True,
         use_sidecar=True,

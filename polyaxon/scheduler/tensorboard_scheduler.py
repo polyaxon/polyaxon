@@ -7,11 +7,12 @@ import conf
 
 from libs.unique_urls import get_tensorboard_reconcile_url
 from lifecycles.jobs import JobLifeCycle
+from options.registry.deployments import CHART_VERSION
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from options.registry.restarts import MAX_RESTARTS_TENSORBOARDS
-from scheduler.spawners.templates.restart_policy import get_max_restart
-from scheduler.spawners.tensorboard_spawner import TensorboardSpawner, TensorboardValidation
-from scheduler.spawners.utils import get_job_definition
+from polypod.templates.restart_policy import get_max_restart
+from polypod.tensorboard import TensorboardSpawner, TensorboardValidation
+from scheduler.utils import get_job_definition
 from stores.exceptions import StoreNotFoundError
 
 _logger = logging.getLogger('polyaxon.scheduler.tensorboard')
@@ -28,6 +29,7 @@ def start_tensorboard(tensorboard):
         job_uuid=tensorboard.uuid.hex,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
+        version=conf.get(CHART_VERSION),
         job_docker_image=tensorboard.build_image,
         in_cluster=True)
 

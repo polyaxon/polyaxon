@@ -7,7 +7,7 @@ from kubernetes import client
 from factories.factory_k8s_config_maps import K8SConfigMapFactory
 from factories.factory_k8s_secrets import K8SSecretFactory
 from libs.api import API_HTTP_URL, API_WS_HOST
-from scheduler.spawners.templates.env_vars import (
+from polypod.templates.env_vars import (
     EnvFromRefFoundError,
     get_env_from,
     get_env_var,

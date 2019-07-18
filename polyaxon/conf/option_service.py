@@ -9,7 +9,7 @@ from conf.option_manager import option_manager
 
 
 class OptionService(Service):
-    __all__ = ('get', 'set', 'delete')
+    __all__ = ('get', 'set', 'delete', 'clear_cache')
 
     option_manager = option_manager
     cache_manager = conf_cache_manager
@@ -95,3 +95,6 @@ class OptionService(Service):
         store.delete(option=option)
         # Clear Cache key
         self.cache_manager.clear_key(key=key)
+
+    def clear_cache(self) -> None:
+        self.cache_manager.clear()

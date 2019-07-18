@@ -4,15 +4,15 @@ import pytest
 
 from db.models.experiment_jobs import ExperimentJob
 from factories.factory_experiments import ExperimentFactory
+from polypod.experiment import ExperimentSpawner
+from polypod.horovod import HorovodSpawner
+from polypod.mpi_job import MPIJobSpawner
+from polypod.mxnet import MXNetSpawner
+from polypod.pytorch import PytorchSpawner
+from polypod.pytorch_job import PytorchJobSpawner
+from polypod.tensorflow import TensorflowSpawner
+from polypod.tf_job import TFJobSpawner
 from scheduler.experiment_scheduler import create_job, get_spawner_class, set_job_definition
-from scheduler.spawners.experiment_spawner import ExperimentSpawner
-from scheduler.spawners.horovod_spawner import HorovodSpawner
-from scheduler.spawners.mpi_job_spawner import MPIJobSpawner
-from scheduler.spawners.mxnet_spawner import MXNetSpawner
-from scheduler.spawners.pytorch_job_spawner import PytorchJobSpawner
-from scheduler.spawners.pytorch_spawner import PytorchSpawner
-from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
-from scheduler.spawners.tf_job_spawner import TFJobSpawner
 from schemas import ExperimentBackend, ExperimentFramework, TaskType
 from tests.base.case import BaseTest
 

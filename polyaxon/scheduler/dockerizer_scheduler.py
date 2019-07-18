@@ -11,15 +11,16 @@ from events.registry.build_job import BUILD_JOB_STARTED, BUILD_JOB_STARTED_TRIGG
 from libs.unique_urls import get_build_reconcile_url
 from lifecycles.jobs import JobLifeCycle
 from options.registry.build_jobs import BUILD_JOBS_BACKEND
+from options.registry.deployments import CHART_VERSION
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
 from options.registry.restarts import MAX_RESTARTS_BUILD_JOBS
+from polypod.dockerizer import DockerizerSpawner
+from polypod.kaniko import KanikoSpawner
+from polypod.templates.restart_policy import get_max_restart
 from registry.exceptions import ContainerRegistryError
 from registry.image_info import get_image_name
 from registry.registry_context import get_registry_context
-from scheduler.spawners.dockerizer_spawner import DockerizerSpawner
-from scheduler.spawners.kaniko_spawner import KanikoSpawner
-from scheduler.spawners.templates.restart_policy import get_max_restart
-from scheduler.spawners.utils import get_job_definition
+from scheduler.utils import get_job_definition
 from schemas import BuildBackend
 from stores.exceptions import StoreNotFoundError
 
@@ -103,23 +104,9 @@ def start_dockerizer(build_job):
         project_uuid=build_job.project.uuid.hex,
         job_name=build_job.unique_name,
         job_uuid=build_job.uuid.hex,
-        commit=build_job.commit,
-        from_image=build_job.build_image,
-        dockerfile_path=build_job.build_dockerfile,
-        context_path=build_job.build_context,
-        image_tag=build_job.uuid.hex,
-        image_name=get_image_name(
-            build_job=build_job,
-            registry_host=registry_spec.host),
-        build_steps=build_job.build_steps,
-        env_vars=build_job.build_env_vars,
-        lang_env=build_job.build_lang_env,
-        nocache=build_job.build_nocache,
-        insecure=registry_spec.insecure,
-        creds_secret_ref=registry_spec.secret,
-        creds_secret_items=registry_spec.secret_items,
         k8s_config=conf.get(K8S_CONFIG),
         namespace=conf.get(K8S_NAMESPACE),
+        version=conf.get(CHART_VERSION),
         in_cluster=True,
         use_sidecar=True,
         log_level=build_job.specification.log_level)
@@ -127,6 +114,21 @@ def start_dockerizer(build_job):
     error = {}
     try:
         results = spawner.start_dockerizer(
+            commit=build_job.commit,
+            from_image=build_job.build_image,
+            dockerfile_path=build_job.build_dockerfile,
+            context_path=build_job.build_context,
+            image_tag=build_job.uuid.hex,
+            image_name=get_image_name(
+                build_job=build_job,
+                registry_host=registry_spec.host),
+            build_steps=build_job.build_steps,
+            env_vars=build_job.build_env_vars,
+            lang_env=build_job.build_lang_env,
+            nocache=build_job.build_nocache,
+            insecure=registry_spec.insecure,
+            creds_secret_ref=registry_spec.secret,
+            creds_secret_items=registry_spec.secret_items,
             secret_refs=build_job.secret_refs,
             config_map_refs=build_job.config_map_refs,
             resources=build_job.resources,

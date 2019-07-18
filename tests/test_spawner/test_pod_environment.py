@@ -2,11 +2,7 @@ from unittest import TestCase
 
 import pytest
 
-from scheduler.spawners.templates.pod_environment import (
-    get_affinity,
-    get_node_selector,
-    get_tolerations
-)
+from polypod.templates.pod_environment import get_affinity, get_node_selector, get_tolerations
 
 
 @pytest.mark.spawner_mark

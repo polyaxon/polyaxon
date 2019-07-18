@@ -38,8 +38,8 @@ from factories.factory_repos import RepoFactory
 from factories.fixtures import notebook_spec_parsed_content, tensorboard_spec_parsed_content
 from lifecycles.jobs import JobLifeCycle
 from options.registry.notebooks import NOTEBOOKS_MOUNT_CODE
+from polypod.project_job import ProjectJobSpawner
 from scheduler import notebook_scheduler
-from scheduler.spawners.project_job_spawner import ProjectJobSpawner
 from tests.base.views import BaseViewTest
 
 

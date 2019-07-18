@@ -29,7 +29,7 @@ import auditor
 import conf
 
 from api.users.forms import RegistrationForm
-from api.users.utils import login_user, logout_user, get_token
+from api.users.utils import get_token, login_user, logout_user
 from api.utils.views.post import PostAPIView
 from db.models.tokens import Token
 from events.registry.superuser import SUPERUSER_ROLE_GRANTED, SUPERUSER_ROLE_REVOKED

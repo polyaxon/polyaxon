@@ -11,19 +11,20 @@ import conf
 from db.models.experiment_jobs import ExperimentJob
 from db.models.job_resources import JobResources
 from lifecycles.experiments import ExperimentLifeCycle
+from options.registry.deployments import CHART_VERSION
 from options.registry.k8s import K8S_CONFIG, K8S_NAMESPACE
+from polypod.experiment import ExperimentSpawner
+from polypod.horovod import HorovodSpawner
+from polypod.mpi_job import MPIJobSpawner
+from polypod.mxnet import MXNetSpawner
+from polypod.pytorch import PytorchSpawner
+from polypod.pytorch_job import PytorchJobSpawner
+from polypod.tensorflow import TensorflowSpawner
+from polypod.tf_job import TFJobSpawner
 from registry.exceptions import ContainerRegistryError
 from registry.image_info import get_image_info
 from registry.registry_context import get_registry_context
-from scheduler.spawners.experiment_spawner import ExperimentSpawner
-from scheduler.spawners.horovod_spawner import HorovodSpawner
-from scheduler.spawners.mpi_job_spawner import MPIJobSpawner
-from scheduler.spawners.mxnet_spawner import MXNetSpawner
-from scheduler.spawners.pytorch_job_spawner import PytorchJobSpawner
-from scheduler.spawners.pytorch_spawner import PytorchSpawner
-from scheduler.spawners.tensorflow_spawner import TensorflowSpawner
-from scheduler.spawners.tf_job_spawner import TFJobSpawner
-from scheduler.spawners.utils import get_job_definition
+from scheduler.utils import get_job_definition
 from schemas import (
     ExperimentBackend,
     ExperimentFramework,
@@ -610,6 +611,7 @@ def start_experiment(experiment):
                                 spec=experiment.specification,
                                 k8s_config=conf.get(K8S_CONFIG),
                                 namespace=conf.get(K8S_NAMESPACE),
+                                version=conf.get(CHART_VERSION),
                                 in_cluster=True,
                                 job_docker_image=job_docker_image,
                                 use_sidecar=True)
