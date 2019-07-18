@@ -1,5 +1,5 @@
 -r requirements-base.txt
 
-polyaxon-client==0.5.2
-polyaxon-deploy==0.5.2
+polyaxon-client==0.5.3
+polyaxon-deploy==0.5.3
 polyaxon-dockerizer==0.0.8
