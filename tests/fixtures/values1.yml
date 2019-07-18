@@ -22,3 +22,7 @@ postgresql:
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: postgres
+
+externalServices:
+  postgresql:
+    host: https://foo.com

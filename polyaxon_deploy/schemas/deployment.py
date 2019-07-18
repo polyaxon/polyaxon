@@ -40,6 +40,32 @@ def check_redis(redis, external_services):
                               'or provide an external instance.')
 
 
+def check_postgres(postgresql, external_services):
+    postgresql_disabled = postgresql.enabled is False if postgresql else False
+    external_postgresql = None
+    if external_services:
+        external_postgresql = external_services.postgresql
+
+    if postgresql_disabled and not external_postgresql:
+        raise ValidationError('A postgresql instance is required, '
+                              'please enable the in-cluster postgresql, '
+                              'or provide an external instance.')
+
+
+def check_rabbitmq(rabbitmq, external_services, broker):
+    rabbitmq_disabled = rabbitmq.enabled is False if rabbitmq else False
+    external_rabbitmq = None
+    rabbitmq_borker = broker != 'redis'
+    if external_services:
+        external_rabbitmq = external_services.rabbitmq
+
+    if rabbitmq_disabled and rabbitmq_borker and not external_rabbitmq:
+        raise ValidationError('Rabbitmq is used as a broker, '
+                              'an instance is required, '
+                              'please enable the in-cluster rabbitmq, '
+                              'or provide an external instance.')
+
+
 class DeploymentSchema(BaseSchema):
     deploymentType = fields.Str(allow_none=True, validate=validate.OneOf(DeploymentTypes.VALUES))
     deploymentVersion = fields.Str(allow_none=True)
@@ -112,6 +138,8 @@ class DeploymentSchema(BaseSchema):
     @validates_schema
     def validate_deployment(self, data):
         check_redis(data.get('redis'), data.get('externalServices'))
+        check_postgres(data.get('postgresql'), data.get('externalServices'))
+        check_rabbitmq(data.get('rabbitmq'), data.get('externalServices'), data.get('broker'))
 
 
 class DeploymentConfig(BaseConfig):
@@ -176,6 +204,8 @@ class DeploymentConfig(BaseConfig):
                  debugMode=None,
                  plugins=None):
         check_redis(redis, externalServices)
+        check_postgres(postgresql, externalServices)
+        check_rabbitmq(rabbitmq, externalServices, broker)
         self.deploymentType = deploymentType
         self.deploymentVersion = deploymentVersion
         self.clusterId = clusterId

@@ -10,5 +10,5 @@ environment: staging
 user:
   password: root
 
-redis:
+rabbitmq-ha:
   enabled: false  # Requires external service

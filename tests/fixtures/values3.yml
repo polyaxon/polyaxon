@@ -78,6 +78,8 @@ rabbitmq-ha:
 docker-registry:
   enabled: false
 
+broker: redis
+
 redis:
   enabled: false
 

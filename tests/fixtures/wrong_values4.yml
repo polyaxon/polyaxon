@@ -10,5 +10,5 @@ environment: staging
 user:
   password: root
 
-redis:
+postgresql:
   enabled: false  # Requires external service

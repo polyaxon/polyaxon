@@ -437,6 +437,14 @@ class TestDeploymentConfig(TestCase):
         with self.assertRaises(ValidationError):
             reader.read('tests/fixtures/wrong_values3.yml')
 
+    def test_read_deploy_config_wrong_values4(self):
+        with self.assertRaises(ValidationError):
+            reader.read('tests/fixtures/wrong_values4.yml')
+
+    def test_read_deploy_config_wrong_values5(self):
+        with self.assertRaises(ValidationError):
+            reader.read('tests/fixtures/wrong_values5.yml')
+
     def test_read_deploy_config_all_values(self):
         config = reader.read('tests/fixtures/all_values.yml')
         assert isinstance(config, DeploymentConfig)
