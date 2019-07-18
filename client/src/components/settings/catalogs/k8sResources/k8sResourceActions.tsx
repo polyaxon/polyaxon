@@ -39,13 +39,13 @@ export default class K8SResourceActions extends React.Component<Props, State> {
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected k8s <b>resource(s)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected k8s <code>resource(s)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this k8s <b>resource</b></p>
+            <p>Are you sure you want to <b>delete</b> this k8s <code>resource</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );

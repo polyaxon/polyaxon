@@ -43,24 +43,24 @@ export default class JobActions extends React.Component<Props, State> {
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected <b>job(s)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected <code>job(s)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this <b>job</b></p>
+            <p>Are you sure you want to <b>delete</b> this <code>job</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );
     } else if (action === 'archive') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to archive the selected <b>job(s)</b></p> :
-        <p>Are you sure you want to archive this <b>job</b></p>;
+        <p>Are you sure you want to <b>archive</b> the selected <code>job(s)</code></p> :
+        <p>Are you sure you want to <b>archive</b> this <code>job</code></p>;
     } else if (action === 'stop') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop the selected <b>job(s)</b></p> :
-        <p>Are you sure you want to stop this <b>job</b></p>;
+        <p>Are you sure you want to <b>stop</b> the selected <code>job(s)</code></p> :
+        <p>Are you sure you want to <b>stop</b> this <code>job</code></p>;
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}

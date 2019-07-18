@@ -46,28 +46,28 @@ export default class GroupActions extends React.Component<Props, State> {
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected <b>group(s)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected <code>group(s)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this <b>group</b></p>
+            <p>Are you sure you want to <b>delete</b> this <code>group</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );
     } else if (action === 'archive') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to archive the selected <b>group(s)</b></p> :
-        <p>Are you sure you want to archive this <b>group</b></p>;
+        <p>Are you sure you want to <b>archive</b> the selected <code>group(s)</code></p> :
+        <p>Are you sure you want to <b>archive</b> this <code>group</code></p>;
     } else if (action === 'stop') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop the selected <b>group(s)</b></p> :
-        <p>Are you sure you want to stop this <b>group</b></p>;
+        <p>Are you sure you want to <b>stop</b> the selected <code>group(s)</code></p> :
+        <p>Are you sure you want to <b>stop</b> this <code>group</code></p>;
     } else if (action === 'stopTensorboard') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop tensorboard for the selected <b>group(s)</b></p> :
-        <p>Are you sure you want to stop tensorboard for this <b>group</b></p>;
+        <p>Are you sure you want to <b>stop</b> tensorboard for the selected <code>group(s)</code></p> :
+        <p>Are you sure you want to <b>stop</b> tensorboard for this <code>group</code></p>;
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}

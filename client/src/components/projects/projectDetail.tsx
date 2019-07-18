@@ -60,6 +60,7 @@ export default class ProjectDetail extends React.Component<Props, {}> {
             addActions={<ProjectAdd user={project.user} projectName={project.name}/>}
             actions={
               <ProjectActions
+                projectName={project.name}
                 onDelete={this.props.onDelete}
                 onArchive={project.deleted ? undefined : this.props.onArchive}
                 onRestore={project.deleted ? this.props.onRestore : undefined}

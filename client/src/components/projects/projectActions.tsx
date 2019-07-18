@@ -6,6 +6,7 @@ import ConfirmAction from '../modals/confimAction';
 import '../actions.less';
 
 export interface Props {
+  projectName: string;
   onDelete: () => any;
   onArchive?: () => any;
   onRestore?: () => any;
@@ -20,6 +21,7 @@ export interface Props {
 interface State {
   confirmShow: boolean;
   confirmComponent?: React.ReactNode;
+  confirmValidation?: string;
   confirmAction?: 'delete' | 'stopNotebook' | 'stopTensorboard' | 'archive';
 }
 
@@ -29,6 +31,7 @@ export default class ProjectActions extends React.Component<Props, State> {
     super(props);
     this.state = {
       confirmShow: false,
+      confirmValidation: ''
     };
   }
 
@@ -40,35 +43,37 @@ export default class ProjectActions extends React.Component<Props, State> {
 
   public handleShow = (action: 'delete' | 'stopNotebook' | 'stopTensorboard' | 'archive') => {
     let confirmComponent: React.ReactNode = null;
+    let confirmValidation = '';
     if (action === 'delete') {
+      confirmValidation = this.props.projectName;
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected <b>project(s)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected <code>project(s)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this <b>project</b></p>
+            <p>Are you sure you want to <b>delete</b> this <code>project</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );
     } else if (action === 'archive') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to archive the selected <b>project(s)</b></p> :
-        <p>Are you sure you want to archive this <b>project</b></p>;
+        <p>Are you sure you want to <b>archive</b> the selected <code>project(s)</code></p> :
+        <p>Are you sure you want to <b>archive</b> this <code>project</code></p>;
     } else if (action === 'stopNotebook') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop notebook for the selected <b>project(s)</b></p> :
-        <p>Are you sure you want to stop notebook for this <b>project</b></p>;
+        <p>Are you sure you want to <b>stop</b> notebook for the selected <code>project(s)</code></p> :
+        <p>Are you sure you want to <b>stop</b> notebook for this <code>project</code></p>;
     } else if (action === 'stopTensorboard') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop tensorboard for the selected <b>project(s)</b></p> :
-        <p>Are you sure you want to stop tensorboard for this <b>project</b></p>;
+        <p>Are you sure you want to <b>stop</b> tensorboard for the selected <code>project(s)</code></p> :
+        <p>Are you sure you want to <b>stop</b> tensorboard for this <code>project</code></p>;
     }
     this.setState((prevState, prevProps) => ({
-      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
+      ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent, confirmValidation}
     }));
   };
 
@@ -134,6 +139,7 @@ export default class ProjectActions extends React.Component<Props, State> {
       <ConfirmAction
         component={this.state.confirmComponent}
         confirmShow={this.state.confirmShow}
+        validation={this.state.confirmValidation}
         onConfirm={() => this.confirm()}
         handleClose={() => this.handleClose()}
       />

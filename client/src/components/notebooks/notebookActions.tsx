@@ -42,24 +42,24 @@ export default class NotebookActions extends React.Component<Props, State> {
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected <b>notebook(s)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected <code>notebook(s)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this <b>notebook</b></p>
+            <p>Are you sure you want to <b>delete</b> this <code>notebook</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );
     } else if (action === 'archive') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to archive the selected <b>notebook(s)</b></p> :
-        <p>Are you sure you want to archive this <b>notebook</b></p>;
+        <p>Are you sure you want to archive the selected <code>notebook(s)</code></p> :
+        <p>Are you sure you want to archive this <code>notebook</code></p>;
     } else if (action === 'stop' && this.props.onStop) {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop the selected <b>notebook(s)</b></p> :
-        <p>Are you sure you want to stop this <b>notebook</b></p>;
+        <p>Are you sure you want to stop the selected <code>notebook(s)</code></p> :
+        <p>Are you sure you want to stop this <code>notebook</code></p>;
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}

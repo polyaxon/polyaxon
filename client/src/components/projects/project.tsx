@@ -61,6 +61,7 @@ function Project({
       </td>
       <td className="block pull-right">
         <ProjectActions
+          projectName={project.name}
           onDelete={onDelete}
           onArchive={project.deleted ? undefined : onArchive}
           onRestore={project.deleted ? onRestore : undefined}

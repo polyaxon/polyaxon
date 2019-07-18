@@ -42,13 +42,13 @@ export default class AccessActions extends React.Component<Props, State> {
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected <b>access(es)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected <code>access(es)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this <b>access</b></p>
+            <p>Are you sure you want to <b>delete</b> this <code>access</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );

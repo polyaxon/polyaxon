@@ -42,24 +42,24 @@ export default class BuildActions extends React.Component<Props, State> {
       confirmComponent = this.props.isSelection ?
         (
           <div>
-            <p>Are you sure you want to delete the selected <b>build(s)</b></p>
+            <p>Are you sure you want to <b>delete</b> the selected <code>build(s)</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         ) :
         (
           <div>
-            <p>Are you sure you want to delete this <b>build</b></p>
+            <p>Are you sure you want to <b>delete</b> this <code>build</code></p>
             <p><i className="fas fa-info-circle fa-alert"/> This action is irreversible!</p>
           </div>
         );
     } else if (action === 'archive') {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to archive the selected <b>build(s)</b></p> :
-        <p>Are you sure you want to archive this <b>build</b></p>;
+        <p>Are you sure you want to <b>archive</b> the selected <code>build(s)</code></p> :
+        <p>Are you sure you want to <b>archive</b> this <code>build</code></p>;
     } else if (action === 'stop' && this.props.onStop) {
       confirmComponent = this.props.isSelection ?
-        <p>Are you sure you want to stop the selected <b>build(s)</b></p> :
-        <p>Are you sure you want to stop this <b>build</b></p>;
+        <p>Are you sure you want to <b>stop</b> the selected <code>build(s)</code></p> :
+        <p>Are you sure you want to <b>stop</b> this <code>build</code></p>;
     }
     this.setState((prevState, prevProps) => ({
       ...prevState, ...{confirmShow: true, confirmAction: action, confirmComponent}
