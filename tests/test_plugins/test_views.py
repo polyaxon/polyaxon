@@ -1424,6 +1424,7 @@ class TestStopNotebookViewV1(BaseViewTest):
             self.object.user.username,
             self.object.name)
         self.queryset = self.model_class.objects.all()
+        conf.clear_cache()
 
     def test_stop_serverless(self):
         data = {}

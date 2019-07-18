@@ -6,7 +6,7 @@ from polypod.templates import constants
 
 
 class KanikoSpawner(DockerizerSpawner):
-    SECRET_MOUNT_PATH = '/kaniko/.docker'
+    SECRET_MOUNT_PATH = '/kaniko/.docker'  # noqa
 
     @staticmethod
     def get_job_docker_image(job_docker_image):

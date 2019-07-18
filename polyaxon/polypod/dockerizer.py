@@ -31,7 +31,7 @@ from polypod.templates.volumes import (
 
 
 class DockerizerSpawner(K8SManager):
-    SECRET_MOUNT_PATH = '/root/.docker'
+    SECRET_MOUNT_PATH = '/root/.docker'  # noqa
 
     def __init__(self,
                  project_name,
