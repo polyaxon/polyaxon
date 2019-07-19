@@ -13,7 +13,7 @@ class GzipDecorator(object):
         @wraps(func, assigned=available_attrs(func))
         def inner(self, request, *args, **kwargs):
             response = func(self, request, *args, **kwargs)
-            if config.is_debug_mode and config.is_monolith_service:
+            if config.is_debug_mode and config.is_monolith_service and not config.is_testing_env:
                 return response
 
             # Before we can access response.content, the response needs to be rendered.
