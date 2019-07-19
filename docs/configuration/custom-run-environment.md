@@ -326,7 +326,7 @@ polyaxon build -b 123 invalidate
  
 
 ```bash
-polyaxon projevt invalidate_builds
+polyaxon project invalidate_builds
 ```
 
 ### Changing the build backend
