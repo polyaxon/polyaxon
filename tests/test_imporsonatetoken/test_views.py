@@ -65,7 +65,7 @@ class TestExperimentImpersonateTokenViewV1(TestBaseImpersonateTokenViewV1):
     LIFE_CYCLE = ExperimentLifeCycle
 
     def get_url(self):
-        return '/{}/{}/{}/experiments/{}/imporsonatetoken'.format(
+        return '/{}/{}/{}/experiments/{}/impersonatetoken'.format(
             API_V1,
             self.project.user.username,
             self.project.name,
@@ -84,7 +84,7 @@ class TestJobImpersonateTokenViewV1(TestBaseImpersonateTokenViewV1):
     LIFE_CYCLE = JobLifeCycle
 
     def get_url(self):
-        return '/{}/{}/{}/jobs/{}/imporsonatetoken'.format(
+        return '/{}/{}/{}/jobs/{}/impersonatetoken'.format(
             API_V1,
             self.project.user.username,
             self.project.name,
@@ -97,7 +97,7 @@ class TestNotebookImpersonateTokenViewV1(TestBaseImpersonateTokenViewV1):
     LIFE_CYCLE = JobLifeCycle
 
     def get_url(self):
-        return '/{}/{}/{}/notebook/imporsonatetoken'.format(
+        return '/{}/{}/{}/notebook/impersonatetoken'.format(
             API_V1,
             self.project.user.username,
             self.project.name)

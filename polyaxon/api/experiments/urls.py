@@ -90,7 +90,7 @@ experiments_urlpatterns = [
     re_path(r'^{}/{}/experiments/{}/ephemeraltoken/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentEphemeralTokenView.as_view()),
-    re_path(r'^{}/{}/experiments/{}/imporsonatetoken/?$'.format(
+    re_path(r'^{}/{}/experiments/{}/impersonatetoken/?$'.format(
         OWNER_NAME_PATTERN, PROJECT_NAME_PATTERN, EXPERIMENT_ID_PATTERN),
         views.ExperimentImpersonateTokenView.as_view()),
     re_path(r'^{}/{}/experiments/{}/_heartbeat/?$'.format(
