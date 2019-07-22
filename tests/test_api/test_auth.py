@@ -152,7 +152,7 @@ class TestAuthApi(TestBaseApi):
                 'project',
                 'experiments',
                 '1',
-                'imporsonatetoken'
+                'impersonatetoken'
             ),
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)
@@ -197,7 +197,7 @@ class TestAuthApi(TestBaseApi):
                 'project',
                 'jobs',
                 '1',
-                'imporsonatetoken'
+                'impersonatetoken'
             ),
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)
@@ -241,7 +241,7 @@ class TestAuthApi(TestBaseApi):
                 'user',
                 'project',
                 'notebook',
-                'imporsonatetoken'
+                'impersonatetoken'
             ),
             body=json.dumps({'token': token}),
             content_type='application/json', status=200)

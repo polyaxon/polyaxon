@@ -171,7 +171,7 @@ class AuthApi(BaseApiHandler):
                                      project_name,
                                      'experiments',
                                      experiment_id,
-                                     'imporsonatetoken')
+                                     'impersonatetoken')
         return self._login_impersonate_token(request_url=request_url,
                                              internal_token=internal_token,
                                              set_token=set_token,
@@ -189,7 +189,7 @@ class AuthApi(BaseApiHandler):
                                      project_name,
                                      'jobs',
                                      job_id,
-                                     'imporsonatetoken')
+                                     'impersonatetoken')
         return self._login_impersonate_token(request_url=request_url,
                                              internal_token=internal_token,
                                              set_token=set_token,
@@ -205,7 +205,7 @@ class AuthApi(BaseApiHandler):
                                      username,
                                      project_name,
                                      'notebook',
-                                     'imporsonatetoken')
+                                     'impersonatetoken')
         return self._login_impersonate_token(request_url=request_url,
                                              internal_token=internal_token,
                                              set_token=set_token,
