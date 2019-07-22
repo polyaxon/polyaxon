@@ -25,7 +25,7 @@ you need to disable the in-cluster Rabbitmq, and provide the information needed 
 
 
 ```yaml
-rabbitmq-hq:
+rabbitmq-ha:
   enabled: false
 
 externalServices:
