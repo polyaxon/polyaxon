@@ -3,6 +3,7 @@ import requests
 import time
 
 from polyaxon_client.client import PolyaxonClient
+from polyaxon_client.exceptions import PolyaxonHTTPError
 
 
 def create_experiment_auth_context(experiment_name: str):
@@ -53,7 +54,8 @@ def create_auth_context():
         except (requests.exceptions.ConnectionError,
                 requests.exceptions.RequestException,
                 requests.exceptions.Timeout,
-                requests.exceptions.HTTPError):
+                requests.exceptions.HTTPError,
+                PolyaxonHTTPError):
             retry += 1
             print('Could not establish connection, retrying ...')
             time.sleep(sleep_interval)
