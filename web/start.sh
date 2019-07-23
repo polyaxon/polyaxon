@@ -17,6 +17,12 @@ nginx -c /etc/nginx/nginx.conf -t
 service nginx status
 service nginx restart
 service nginx status
+if [[ "${POLYAXON_LOG_LEVEL}" == "DEBUG" ]] || [[ "${POLYAXON_LOG_LEVEL}" == "INFO" ]]; then
+    export DISABLE_LOGGING=false
+else
+    export DISABLE_LOGGING=true
+fi
+
 if [[ -z "${POLYAXON_SECURITY_CONTEXT_USER}" ]] || [[ -z "${POLYAXON_SECURITY_CONTEXT_GROUP}" ]]; then
     uwsgi --ini web/uwsgi.nginx.ini
 else
