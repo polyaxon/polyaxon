@@ -451,6 +451,23 @@ class TestMatrixConfigs(TestCase):
         config = MatrixConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
+        # as list
+        config_dict = {
+            'normal': [66, 30],
+        }
+        config = MatrixConfig.from_dict(config_dict)
+        assert_equal(config, *config_dict['normal'])
+
+        # as string
+        config_dict['normal'] = '66:30'
+        config = MatrixConfig.from_dict(config_dict)
+        assert_equal(config, 66, 30)
+
+        # as dict
+        config_dict['normal'] = {'loc': 60, 'scale': 30}
+        config = MatrixConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+
     def test_matrix_qnormal_option(self):
         def assert_equal(config, v1, v2, q, v3=None):
             result = {'loc': v1, 'scale': v2, 'q': q}

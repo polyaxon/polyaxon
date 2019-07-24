@@ -28,6 +28,7 @@ class Range(fields.Field):
     REQUIRED_KEYS = ['start', 'stop', 'step']
     OPTIONAL_KEY = None
     KEYS = REQUIRED_KEYS
+    CHECK_ORDER = True
 
     def _deserialize(self, value, attr, data, **kwargs):  # pylint:disable=too-many-branches
         if isinstance(value, six.string_types):
@@ -70,10 +71,10 @@ class Range(fields.Field):
             if not isinstance(v, (int, float)):
                 value[i] = ast.literal_eval(v)
 
-        # Check that lower value is  smaller than higher value
-        if value[0] >= value[1]:
+        # Check that lower value is smaller than higher value
+        if self.CHECK_ORDER and value[0] >= value[1]:
             raise ValidationError(
-                "{key2} value must strictly higher that {key1} value, "
+                "{key2} value must be strictly higher that {key1} value, "
                 "received instead {key1}: {val1}, {key2}: {val2}".format(
                     key1=self.REQUIRED_KEYS[0],
                     key2=self.REQUIRED_KEYS[1],
@@ -159,49 +160,53 @@ def pvalues(values, size=None, rand_generator=None):
     return [keys[ind.argmax()] for ind in indices]
 
 
-class Uniform(Range):
+class Dist(Range):
+    CHECK_ORDER = False
+
+
+class Uniform(Dist):
     REQUIRED_KEYS = ['low', 'high']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class QUniform(Range):
+class QUniform(Dist):
     REQUIRED_KEYS = ['low', 'high', 'q']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class LogUniform(Range):
+class LogUniform(Dist):
     REQUIRED_KEYS = ['low', 'high']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class QLogUniform(Range):
+class QLogUniform(Dist):
     REQUIRED_KEYS = ['low', 'high', 'q']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class Normal(Range):
+class Normal(Dist):
     REQUIRED_KEYS = ['loc', 'scale']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class QNormal(Range):
+class QNormal(Dist):
     REQUIRED_KEYS = ['loc', 'scale', 'q']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class LogNormal(Range):
+class LogNormal(Dist):
     REQUIRED_KEYS = ['loc', 'scale']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
-class QLogNormal(Range):
+class QLogNormal(Dist):
     REQUIRED_KEYS = ['loc', 'scale', 'q']
     OPTIONAL_KEYS = ['size']
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
