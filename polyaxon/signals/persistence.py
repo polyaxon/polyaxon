@@ -1,3 +1,4 @@
+from hestia.list_utils import to_list
 from rest_framework.exceptions import ValidationError
 
 from schemas import PersistenceConfig
@@ -22,7 +23,8 @@ def _set_persistence(instance, default_persistence_data=None, default_persistenc
             instance.specification.environment and
             instance.specification.environment.artifact_refs)
     if cond:
-        artifact_refs = instance.specification.environment.artifact_refs
+        # TODO: this is a temp workaround until the finalized Polyflow version
+        artifact_refs = to_list(instance.specification.environment.artifact_refs)[0]
 
     if not data_refs and default_persistence_data:
         data_refs = default_persistence_data

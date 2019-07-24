@@ -236,6 +236,27 @@ exec_experiment_spec_content = """---
 exec_experiment_spec_parsed_content = ExperimentSpecification.read(exec_experiment_spec_content)
 exec_experiment_spec_parsed_content.apply_context()
 
+exec_experiment_spec_content_regression_artifact_refs = """---
+    version: 1
+
+    kind: experiment
+
+    tags: [fixtures]
+
+    environment:
+      artifact_refs: ['outputs-s3-temp']
+
+    build:
+      image: my_image
+
+    run:
+      cmd: video_prediction_train --model=DNA --num_masks=1
+"""
+
+exec_experiment_spec_parsed_regression_artifact_refs = ExperimentSpecification.read(
+    exec_experiment_spec_content_regression_artifact_refs)
+exec_experiment_spec_parsed_regression_artifact_refs.apply_context()
+
 exec_experiment_ext_repo_spec_content = """---
     version: 1
 
