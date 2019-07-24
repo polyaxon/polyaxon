@@ -1,0 +1,22 @@
+version: "2"
+domain: polyaxon.com
+repo: github.com/polyaxon/polyaxon-operator
+resources:
+- group: core
+  version: v1alpha1
+  kind: PolyaxonNotebook
+- group: core
+  version: v1alpha1
+  kind: PolyaxonTensorboard
+- group: core
+  version: v1alpha1
+  kind: PolyaxonExperiment
+- group: core
+  version: v1alpha1
+  kind: PolyaxonJob
+- group: core
+  version: v1alpha1
+  kind: PolyaxonBuild
+- group: core
+  version: v1alpha1
+  kind: PolyaxonKF

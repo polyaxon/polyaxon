@@ -1,0 +1,188 @@
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonbuilds
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonbuilds/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonexperiments
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonexperiments/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonjobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonjobs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonkfs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonkfs/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonnotebooks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxonnotebooks/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxontensorboards
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - core.polyaxon.com
+  resources:
+  - polyaxontensorboards/status
+  verbs:
+  - get
+  - patch
+  - update

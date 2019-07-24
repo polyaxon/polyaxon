@@ -1,0 +1,84 @@
+apiVersion: core.polyaxon.com/v1alpha1
+kind: PolyaxonNotebook
+metadata:
+  name: polyaxonnotebook-sample
+  labels:
+    app: polyaxon-notebook
+    app.kubernetes.io/component: polyaxon-dashboard
+    app.kubernetes.io/instance: 6c3906d4b732467c8ac27fc0ce6a0sdf
+    app.kubernetes.io/managed-by: polyaxon
+    app.kubernetes.io/name: polyaxon-notebook
+    app.kubernetes.io/part-of: polyaxon-runner
+    app.kubernetes.io/version: 0.5.3
+    job_name: root.quick-start.notebooks.1
+    job_uuid: 6c3906d4b732467c8ac27fc0ce6a0sdf
+    project_name: root.quick-start
+    project_uuid: 4838a1c65592423c9b88a0581915bc91
+    role: polyaxon-dashboard
+    type: polyaxon-runner
+    foo: bar
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - 'jupyter notebook --no-browser --port=8888 --ip=0.0.0.0 --allow-root --NotebookApp.token=3bd455030c0da2cfc50a902e334af490fb0e0367
+          --NotebookApp.trust_xheaders=True --NotebookApp.base_url=/notebook/proxy/plx-notebook-6c3906d4b732467c8ac27fc0ce6a0sdf.polyaxon.svc.cluster.local
+          --NotebookApp.notebook_dir=. '
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: POLYAXON_K8S_NAMESPACE
+          value: polyaxon
+        - name: POLYAXON_API_HTTP_HOST
+          value: http://polyaxon-polyaxon-api:80
+        - name: POLYAXON_API_WS_HOST
+          value: ws://polyaxon-polyaxon-api:80
+        - name: POLYAXON_IN_CLUSTER
+          value: "true"
+        - name: POLYAXON_IS_MANAGED
+          value: "true"
+        - name: POLYAXON_API_VERSION
+          value: v1
+        - name: POLYAXON_INTERNAL_HEADER
+          value: X-POLYAXON-INTERNAL
+        - name: POLYAXON_INTERNAL_HEADER_SERVICE
+          value: runner
+        - name: POLYAXON_LOGS_PATH
+          value: /polyaxon-logs/root/quick-start/notebooks/1
+        - name: POLYAXON_RUN_OUTPUTS_PATH
+          value: /outputs/root/quick-start/notebooks/1
+        - name: POLYAXON_RUN_DATA_PATHS
+          value: '{"data": "/data"}'
+        - name: POLYAXON_NOTEBOOK_INFO
+          value: '{"app.kubernetes.io/name": "polyaxon-notebook", "app.kubernetes.io/instance":
+            "6c3906d4b732467c8ac27fc0ce6a0sdf", "app.kubernetes.io/version": "0.5.3",
+            "app.kubernetes.io/part-of": "polyaxon-runner", "app.kubernetes.io/component":
+            "polyaxon-dashboard", "app.kubernetes.io/managed-by": "polyaxon", "project_name":
+            "root.quick-start", "project_uuid": "4838a1c65592423c9b88a0581915bc91",
+            "job_name": "root.quick-start.notebooks.1", "job_uuid": "6c3906d4b732467c8ac27fc0ce6a0sdf",
+            "role": "polyaxon-dashboard", "type": "polyaxon-runner", "app": "polyaxon-notebook"}'
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: none
+        image: 127.0.0.1:31813/quick-start_1:3ca00ee9bd214d99bf3466d01ae9b472
+        imagePullPolicy: IfNotPresent
+        name: polyaxon-plugin-job
+        ports:
+        - containerPort: 8888
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: shm
+        - mountPath: /plx-context
+          name: auth-context
+      dnsPolicy: ClusterFirst
+      volumes:
+      - hostPath:
+          path: /tmp/data12
+          type: ""
+        name: data
+      - emptyDir:
+          medium: Memory
+        name: shm
+      - emptyDir: {}
+        name: auth-context

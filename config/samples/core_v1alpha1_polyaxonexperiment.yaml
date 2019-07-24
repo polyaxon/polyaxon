@@ -1,0 +1,138 @@
+apiVersion: core.polyaxon.com/v1alpha1
+kind: PolyaxonExperiment
+metadata:
+  name: polyaxonexperiment-sample
+  labels:
+    app: polyaxon-experiment
+    app.kubernetes.io/component: polyaxon-workers
+    app.kubernetes.io/instance: 8e98add4be9a52d6b53440cd28f7756f
+    app.kubernetes.io/managed-by: polyaxon
+    app.kubernetes.io/name: polyaxon-experiment
+    app.kubernetes.io/part-of: polyaxon-runner
+    app.kubernetes.io/version: 0.5.4
+    experiment_group_name: foo.bar.142
+    experiment_group_uuid: c9dfa097ab6b4b689115b93f9e2be0b9
+    experiment_name: foo.bar.142.1035757
+    experiment_uuid: 037268b9304e46eca91ee3f84482a580
+    job_uuid: 8e98add4be9a52d6b53440cd28f7756f
+    project_name: foo.bar
+    project_uuid: e8ab977180964f76b9291f3d674894f1
+    role: polyaxon-workers
+    task_idx: "0"
+    task_type: master
+    type: polyaxon-runner
+spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - echo
+        command:
+        - /bin/bash
+        - -c
+        env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: none
+        image: 127.0.0.1:31813/yo_7:d7836a1464544e20b61c810a8d727c8c
+        imagePullPolicy: IfNotPresent
+        name: polyaxon-experiment-job
+        ports:
+        - containerPort: 2222
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /outputs
+          name: outputs
+        - mountPath: /data
+          name: data
+        - mountPath: /dev/shm
+          name: shm
+        - mountPath: /plx-context
+          name: auth-context
+      - args:
+        - --container_id=polyaxon-experiment-job
+        - --sleep_interval=1
+        - --app_label=polyaxon-experiment
+        - --max_restarts=3
+        command:
+        - python3
+        - sidecar/__main__.py
+        env:
+        - name: POLYAXON_AUTHENTICATION_TYPE
+          value: Internaltoken
+        - name: POLYAXON_CONTAINER_ID
+          value: polyaxon-experiment-job
+        - name: POLYAXON_INTERNAL_HEALTH_CHECK_URL
+          value: /root/yo/experiments/1035757/_heartbeat
+        - name: POLYAXON_POD_ID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        image: polyaxon/polyaxon-sidecar:0.5.4
+        imagePullPolicy: Always
+        name: polyaxon-sidecar-job
+        resources:
+          limits:
+            cpu: "1"
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 60Mi
+      initContainers:
+      - args:
+        - if [ ! -d "/data/groups/142/1035757" ]; then mkdir -p /data/groups/142/1035757;
+          fi; if [ -d /data/groups/142/1035757 ] && [ "$(ls -A /data/groups/142/1035757)"
+          ]; then rm -r /data/groups/142/1035757/*; fi;python3 -u init/auth.py
+          --entity=experiment --entity_name=foo.bar.142.1035757
+        command:
+        - /bin/sh
+        - -c
+        env:
+        - name: POLYAXON_K8S_NAMESPACE
+          value: polyaxon
+        - name: POLYAXON_API_HTTP_HOST
+          value: http://polyaxon-polyaxon-api:80
+        - name: POLYAXON_API_WS_HOST
+          value: ws://polyaxon-polyaxon-api:80
+        - name: POLYAXON_IN_CLUSTER
+          value: "true"
+        - name: POLYAXON_IS_MANAGED
+          value: "true"
+        image: polyaxon/polyaxon-init:0.5.4
+        imagePullPolicy: Always
+        name: polyaxon-init-job
+        resources:
+          limits:
+            cpu: "1"
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 60Mi
+        volumeMounts:
+        - mountPath: /outputs
+          name: outputs
+        - mountPath: /plx-context
+          name: auth-context
+      tolerations:
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+        tolerationSeconds: 300
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+        tolerationSeconds: 300
+      volumes:
+      - hostPath:
+          path: /tmp/outputs
+          type: ""
+        name: outputs
+      - hostPath:
+          path: /tmp/data
+          type: ""
+        name: data
+      - emptyDir:
+          medium: Memory
+        name: shm
+      - emptyDir: {}
+        name: auth-context
