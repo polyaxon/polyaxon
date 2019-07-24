@@ -27,14 +27,8 @@ You need to register a [new application](https://confluence.atlassian.com/bitbuc
 
 You should provide a callback URL: [Domain/IP]/oauth/bitbucket
 
-## Update your deployment config file
+## Update Bitbucket configuration on the settings page
 
-Use your client id and secret token to update your deployment config file.
+You can now use your client id and secret token to set auth with Bitbucket. In Polyaxon's dashboard on the settings page under `Auth`, you can set the values for `Bitbucket`.
 
-```yaml
-auth:
-  bitbucket:
-    enabled: true
-    clientId:
-    clientSecret:
-```
+![bitbucket-settings](../../content/images/integrations/sso/bitbucket-settings.png)

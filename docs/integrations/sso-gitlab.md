@@ -27,25 +27,10 @@ You need to register a [new application](https://docs.gitlab.com/ce/integration/
 
 You should provide a callback URL: [Domain/IP]/oauth/gitlab
 
-## Update your deployment config file
+## Update GitLab configuration on the settings page
 
-Use your client id and secret token to update your deployment config file.
+You can now use your client id and secret token to set auth with GitLab. In Polyaxon's dashboard on the settings page under `Auth`, you can set the values for `GitLab`.
 
-```yaml
-auth:
-  gitlab:
-    enabled: true
-    clientId:
-    clientSecret:
-```
+![gitlab-settings](../../content/images/integrations/sso/gitlab-settings.png)
 
-If you have an on-premise Gitlab installation you can additionally provide your Gitlab url:
-
-```yaml
-auth:
-  gitlab:
-    enabled: true
-    clientId:
-    clientSecret:
-    url: privateUrl
-```
+> N.B. The Gitlab Url is only required if you have an on-premise Gitlab installation.

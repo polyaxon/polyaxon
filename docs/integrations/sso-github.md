@@ -27,14 +27,8 @@ You need to register a [new application](https://github.com/settings/application
 
 You should provide a callback URL: [Domain/IP]/oauth/github
 
-## Update your deployment config file
+## Update Github configuration on the settings page
 
-Use your client id and secret token to update your deployment config file.
+You can now use your client id and secret token to set auth with Github. In Polyaxon's dashboard on the settings page under `Auth`, you can set the values for `Github`.
 
-```yaml
-auth:
-  github:
-    enabled: true
-    clientId:
-    clientSecret:
-```
+![github-settings](../../content/images/integrations/sso/github-settings.png)
