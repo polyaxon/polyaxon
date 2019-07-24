@@ -61,7 +61,8 @@ def create_auth_context():
             time.sleep(sleep_interval)
 
     # One last attempt
-    _create_auth_context()
+    if not done:
+        _create_auth_context()
 
 
 if __name__ == '__main__':
