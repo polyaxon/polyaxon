@@ -1,1 +1,1 @@
-polyaxon-dockerizer==0.0.8
+polyaxon-dockerizer==0.0.9
