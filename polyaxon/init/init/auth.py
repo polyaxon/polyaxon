@@ -60,10 +60,6 @@ def create_auth_context():
             print('Could not establish connection, retrying ...')
             time.sleep(sleep_interval)
 
-    # One last attempt
-    if not done:
-        _create_auth_context()
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
