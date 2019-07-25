@@ -14,7 +14,7 @@ ENV SHELL /bin/bash
 
 {% if uid and gid -%}
 # Drop root user and use Polyaxon user
-RUN groupadd -g 2222 -r polyaxon && useradd -r -m -g polyaxon -u 2222 polyaxon
+RUN groupadd -g {{gid}} -r polyaxon && useradd -r -m -g polyaxon -u {{uid}} polyaxon
 {% endif -%}
 
 {% if nvidia_bin -%}

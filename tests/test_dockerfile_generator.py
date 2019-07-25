@@ -151,6 +151,7 @@ class TestDockerfileGenerator(TestCase):
         dockerfile = builder.render
         assert 'groupadd' not in dockerfile
         assert 'useradd' not in dockerfile
+        assert '1000' not in dockerfile
         builder.clean()
 
         # Add gid but no uid
@@ -161,6 +162,7 @@ class TestDockerfileGenerator(TestCase):
         dockerfile = builder.render
         assert 'groupadd' not in dockerfile
         assert 'useradd' not in dockerfile
+        assert '1000' not in dockerfile
         builder.clean()
 
         # Add uid and gid
@@ -172,6 +174,8 @@ class TestDockerfileGenerator(TestCase):
         dockerfile = builder.render
         assert 'groupadd' in dockerfile
         assert 'useradd' in dockerfile
+        assert '-u 1000' in dockerfile
+        assert '-g 1000' in dockerfile
         builder.clean()
 
         # Add lan env

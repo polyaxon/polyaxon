@@ -24,7 +24,7 @@ class PyTest(TestCommand):
 
 
 setup(name='polyaxon-dockerizer',
-      version='0.0.8',
+      version='0.0.9',
       description='Python dockerizer to generate and build docker images.',
       long_description=read_readme(),
       long_description_content_type="text/markdown",
