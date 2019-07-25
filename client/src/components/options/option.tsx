@@ -126,7 +126,7 @@ export default class Option extends React.Component<Props, State> {
   };
 
   public getValue = (value: any) => {
-    if (this.isObj() && value) {
+    if (this.isObj() && !_.isNil(value)) {
       return JSON.stringify(value);
     }
     return value;
@@ -156,8 +156,8 @@ export default class Option extends React.Component<Props, State> {
                   component="select"
                   className="form-control input-sm"
                 >
-                  <option value="true">True</option>
-                  <option value="false">False</option>
+                  <option value="true">true</option>
+                  <option value="false">false</option>
                 </Field>
                 }
                 {isObj && this.props.option.typing !== 'bool' &&
