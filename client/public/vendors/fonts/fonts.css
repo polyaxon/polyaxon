@@ -51,3 +51,17 @@
        url('../fonts/dosis/dosis-v8-latin-500.ttf') format('truetype'), /* Safari, Android, iOS */
        url('../fonts/dosis/dosis-v8-latin-500.svg#Dosis') format('svg'); /* Legacy iOS */
 }
+
+/* source-code-pro-regular - latin */
+@font-face {
+  font-family: 'Source Code Pro';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/source-code-pro/source-code-pro-v10-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Source Code Pro'), local('SourceCodePro-Regular'),
+       url('../fonts/source-code-pro/source-code-pro-v10-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/source-code-pro/source-code-pro-v10-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/source-code-pro/source-code-pro-v10-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('../fonts/source-code-pro/source-code-pro-v10-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/source-code-pro/source-code-pro-v10-latin-regular.svg#SourceCodePro') format('svg'); /* Legacy iOS */
+}
