@@ -9,6 +9,22 @@ tags:
     - reference
 ---
 
+## 0.5.4
+
+ * Increase internal API throttling.
+ * Make throttle rates configurable.
+ * Expose more verbose uwsgi logging for DEBUG and INFO levels.
+ * Use monospaced font and correct whitespace in logs viewer.
+ * Update notebook spawner to allow downloading artifcats/code: set allow_origin to "*".
+ * Expose ingress's path configuration.
+ * Remove wrong order check on HP tuning Matrix schemas, should be applied only to ranges and not distributions.   
+ * Add platform version to footer.
+ * Fix bool option's UI dropdown not handling initial state correctly.
+ * Fix issue with security context not reflected in the dockerfile template.
+ * Fix issue with init container not setting auth context correctly.
+ * Fix SSO docs.
+ * Fix impersonate urls typos (API and clients).
+ 
 ## 0.5.3
 
  * Upgrade python to 3.7.4.

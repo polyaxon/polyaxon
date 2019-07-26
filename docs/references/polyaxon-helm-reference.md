@@ -150,6 +150,8 @@ You can also provide different annotations for the ingress and it will not use `
 | ------------------------ | -------------------------------------------------- | ----------------------------------------------------------
 | `rbac.enabled`           | Use Kubernetes role-based access control (RBAC)    | `true`
 | `ingress.enabled`        | Use Kubernetes ingress                             | `true`
+| `ingress.path`           | Kubernetes ingress path                            | `/`
+| `ingress.hostName`       | Kubernetes ingress hostName                        | ``
 | `ingress.annotations`    | Ingress annotations                                | `{}`
 | `ingress.tls`            | Use Ingress TLS                                    | `[]`
 | `api.service.annotations`| API Service annotations                            | `{}`
