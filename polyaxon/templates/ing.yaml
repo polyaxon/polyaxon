@@ -27,7 +27,7 @@ spec:
   - host: {{ .Values.ingress.hostName | quote }}
     http:
       paths:
-      - path: /
+      - path: {{ default "/" .Values.ingress.path | quote }}
         backend:
           serviceName: {{ $fullName }}-api
           servicePort: {{ $.Values.api.service.externalPort }}
