@@ -26,6 +26,7 @@ class TestIngressConfig(TestCase):
 
         config_dict = {
             'enabled': False,
+            'path': '/*',
             'tls': [{'hosts': 'bar.com'}],
             'annotations': {'a': 'b'},
         }

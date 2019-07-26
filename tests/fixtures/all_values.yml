@@ -7,6 +7,7 @@ rbac:
 ingress:
   enabled: false
   hostName:
+  path:
   # Ingress TLS configuration
   # Secrets must be manually created in the namespace
   tls: []

@@ -5,6 +5,7 @@ rbac:
 
 ingress:
   enabled: true
+  path: /*
   tls:
     - secretName: polyaxon.cluster.local-tls
       hosts:
