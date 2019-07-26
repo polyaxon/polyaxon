@@ -10,7 +10,7 @@ tags: [examples]
 build:
   image: polyaxon/mxnetkv
   build_steps:
-    - pip install --no-cache-dir -U polyaxon-client==0.5.3
+    - pip install --no-cache-dir -U polyaxon-client==0.5.4
 
 run:
   cmd:  python -u run.py --network resnet --num-layers 110 --batch-size 128

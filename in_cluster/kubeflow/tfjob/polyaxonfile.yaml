@@ -27,7 +27,7 @@ environment:
 build:
   image: tensorflow/tensorflow:1.10.0-gpu
   build_steps:
-    - pip install polyaxon-client==0.5.3
+    - pip install polyaxon-client==0.5.4
 
 run:
   cmd: python -u run.py
