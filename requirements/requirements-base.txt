@@ -4,7 +4,7 @@ cryptography==2.7
 Django==2.2.3
 django-cors-headers==2.4.0
 django-picklefield==2.0
-djangorestframework==3.9.4
+djangorestframework==3.10.1
 psycopg2-binary==2.7.5
 psutil==5.4.7
 raven==6.7.0
