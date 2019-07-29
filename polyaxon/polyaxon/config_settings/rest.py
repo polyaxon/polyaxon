@@ -24,6 +24,7 @@ THROTTLE_RATES_CHECKS = config.get_int('POLYAXON_THROTTLE_RATES_CHECKS',
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'api.openapi.PolyaxonOpenAPISchema',
     'DEFAULT_RENDERER_CLASSES': (
         # 'djangorestframework_camel_case.render.CamelCaseJSONRenderer',  # Any other renders,
         'rest_framework.renderers.JSONRenderer',
