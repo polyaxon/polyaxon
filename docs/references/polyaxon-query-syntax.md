@@ -71,7 +71,7 @@ you can search for values that are equal, not equal, in a set of values, or not 
 operator               | example
 -----------------------|------------------
 `x = y`                | `status: running` will match all entities that have the status running
-`x != y`               | `status: running` will match all entities that have the status not running
+`x != y`               | `status: ~running` will match all entities that have the status not running
 `x in {a, b, c}`       | `status: started|building|running` will match all entities that have the status in one of the values started, building, or running
 `x not in {a, b, c}`   | `status: ~started|building|running` will match all entities that have the status not in one of the values started, building, or running
 
@@ -107,7 +107,7 @@ you can search for values that are equal, not equal, in a set of values, or not 
 operator                    | example
 ----------------------------|------------------
 `x = y`                     | `status: running` will match all entities that have the status running
-`x != y`                    | `status: running` will match all entities that have the status not running
+`x != y`                    | `status: ~running` will match all entities that have the status not running
 `x in {a, b, c}`            | `status: started|building|running` will match all entities that have the status in one of the values started, building, or running
 `x not in {a, b, c}`        | `status: ~started|building|running` will match all entities that have the status not in one of the values started, building, or running
 `x ends with foo`           | `x: %foo` will match all entities that have the value ending with foo
