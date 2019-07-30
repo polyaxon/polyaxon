@@ -2,8 +2,11 @@ import argparse
 import requests
 import time
 
+from pathlib import Path
+
 from polyaxon_client.client import PolyaxonClient
 from polyaxon_client.exceptions import PolyaxonHTTPError
+from polyaxon_client.settings import CONTEXT_AUTH_TOKEN_PATH
 
 
 def create_experiment_auth_context(experiment_name: str):
@@ -33,6 +36,8 @@ def create_notebook_auth_context(job_name: str):
 
 
 def _create_auth_context():
+    if Path(CONTEXT_AUTH_TOKEN_PATH).exists():
+        return True
     if entity == 'experiment':
         create_experiment_auth_context(experiment_name=entity_name)
     elif entity == 'job':
