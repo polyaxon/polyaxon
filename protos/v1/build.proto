@@ -1,0 +1,334 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+import "v1/base.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+	info: {
+		title: "Build service";
+		version: "1.0";
+		contact: {
+			name: "Polyaxon build service";
+			url: "https://github.com/polyaxon/polyaxon-sdks";
+			email: "contact@polyaxon.com";
+        };
+    };
+    schemes: HTTP;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+		key: "404";
+		value: {
+			description: "Resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+	}
+};
+
+// Build specification
+message Build {
+    // Unique integer identifier
+    int64 id = 1;
+
+    // UUID
+    string uuid = 2;
+
+    // Unique name generated
+    string unique_name = 3;
+
+    // Optional name
+    string name = 4;
+
+    // Optional description
+    string description = 5;
+
+    // Optional Tags of this entity
+    repeated string tags = 6;
+
+    // Optional if the entity has been deleted
+    bool deleted = 7;
+
+    // Required name of user started this entity
+    string user = 8;
+
+    // Optional time when the entityt was created
+    string created_at = 9;
+
+    // Optional last time the entity was updated
+    string updated_at = 10;
+
+    // Optional last time the entity was started
+    string started_at = 11;
+
+    // Optional last time the entity was started
+    string finished_at = 12;
+
+    // Required project name
+    string project = 13;
+
+    // Optional flag to tell if this entity is managed by the platform
+    string is_managed = 14;
+
+    // Optional content of the entity's spec
+    string spec = 15;
+
+    // Optional backend value of this entity
+    string backend = 16;
+
+    // Optional framework name of this entity
+    string framework = 17;
+
+    // Optional latest status of this entity
+    string last_status = 18;
+
+    // Optional Code reference
+    int64 code_reference = 19;
+
+    // Optional hardware resources requested by this entity
+    Dict resources = 20;
+
+    // Optional a readme text describing this entity
+    string readme = 21;
+
+    // Optional if this entity was bookmarked
+    bool bookmarked = 22;
+
+    // Optional params of this entity
+    Dict params = 23;
+
+    // Optional run enivronment tracked
+    Dict run_env = 24;
+
+    // Optional build build name
+    string build_build = 25;
+}
+
+// Build specification
+message BuildStatus {
+    // Unique integer identifier
+    int64 id = 1;
+
+    // UUID
+    string uuid = 2;
+
+    // Optional time when the entityt was created
+    string created_at = 3;
+
+    // Optional last time the entity was updated
+    string updated_at = 4;
+
+    // Optional status recorded
+    string status = 5; // Add oneof validation
+
+    // Optional status message
+    string message = 6;
+}
+
+// Request data to create/update build
+message BuildBodyRequest{
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Build object
+    Build build = 3;
+}
+
+ // Contains list builds
+ message ListBuildsResponse{
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Build results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+
+ // Contains list builds
+ message ListBuildStatusesResponse{
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated BuildStatus results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+
+// Service to manage builds
+service BuildService {
+    // List builds
+    rpc ListBuilds(ProjectBodyRequest) returns (ListBuildsResponse){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/builds"
+        };
+    }
+
+    // List bookmarked builds
+    rpc ListBookmarkedBuilds(OwnerBodyRequest) returns (ListBuildsResponse){
+        option (google.api.http) = {
+            get: "/v1/bookmarks/{owner}/builds"
+        };
+    }
+
+    // List archived builds
+    rpc ListArchivedBuilds(OwnerBodyRequest) returns (ListBuildsResponse){
+        option (google.api.http) = {
+            get: "/v1/archives/{owner}/builds"
+        };
+    }
+
+    // Create new build
+    rpc CreateBuild(BuildBodyRequest) returns (Build){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds"
+            body: "*"
+        };
+    }
+
+    // Get build
+    rpc GetBuild(OwnedEntityIdRequest) returns (Build){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/builds/{id}"
+        };
+    }
+
+    // Update build
+    rpc UpdateBuild(BuildBodyRequest) returns (Build){
+        option (google.api.http) = {
+            put: "/v1/{owner}/{project}/builds/{build.id}"
+            body: "*"
+
+            additional_bindings {
+                put: "/v1/{owner}/{project}/builds/{build.id}"
+                body: "*"
+            }
+        };
+    }
+
+    // Delete build
+    rpc DeleteBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/{owner}/{project}/builds/{id}"
+        };
+    }
+
+    // Delete builds
+    rpc DeleteBuilds(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/{owner}/{project}/builds/delete"
+            body: "*"
+        };
+    }
+
+    // Stop build
+    rpc StopBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/stop"
+            body: "*"
+        };
+    }
+
+    // Stop builds
+    rpc StopBuilds(ProjectBodyRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/stop"
+            body: "*"
+        };
+    }
+
+    // Restart build
+    rpc RestartBuild(OwnedEntityIdRequest) returns (Build){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/restart"
+            body: "*"
+        };
+    }
+
+    // Archive build
+    rpc ArchiveBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/archive"
+        };
+    }
+
+    // Restore build
+    rpc RestoreBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/restore"
+        };
+    }
+
+    // Bookmark build
+    rpc BookmarkBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/bookmark"
+        };
+    }
+
+    // UnBookmark build
+    rpc UnBookmarkBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/{owner}/{project}/builds/{id}/unbookmark"
+        };
+    }
+
+    // Get build status
+    rpc GetBuildStatuses(OwnedEntityIdRequest) returns (StatusResponse){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/builds/{id}/statuses"
+        };
+    }
+
+    // List build statuses
+    rpc ListBuildStatuses(OwnedEntityIdRequest) returns (ListBuildStatusesResponse){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/builds/{id}/statuses"
+        };
+    }
+
+    // Create new build status
+    rpc CreateBuildStatus(OwnedEntityIdRequest) returns (BuildStatus){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/statuses"
+            body: "*"
+        };
+    }
+
+    // Get build code ref
+    rpc GetBuildCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/builds/{id}/coderef"
+        };
+    }
+
+    // Get build code ref
+    rpc GreateBuildCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/builds/{id}/coderef"
+            body: "*"
+        };
+    }
+}

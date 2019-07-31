@@ -1,0 +1,354 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+import "v1/base.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+	info: {
+		title: "Job service";
+		version: "1.0";
+		contact: {
+			name: "Polyaxon job service";
+			url: "https://github.com/polyaxon/polyaxon-sdks";
+			email: "contact@polyaxon.com";
+        };
+    };
+    schemes: HTTP;
+    consumes: "application/json";
+    produces: "application/json";
+    responses: {
+		key: "404";
+		value: {
+			description: "Resource does not exist.";
+			schema: {
+				json_schema: {
+					type: STRING;
+				}
+			}
+		}
+	}
+};
+
+// Job specification
+message Job {
+    // Unique integer identifier
+    int64 id = 1;
+
+    // UUID
+    string uuid = 2;
+
+    // Unique name generated
+    string unique_name = 3;
+
+    // Optional name
+    string name = 4;
+
+    // Optional description
+    string description = 5;
+
+    // Optional Tags of this entity
+    repeated string tags = 6;
+
+    // Optional if the entity has been deleted
+    bool deleted = 7;
+
+    // Required name of user started this entity
+    string user = 8;
+
+    // Optional time when the entityt was created
+    string created_at = 9;
+
+    // Optional last time the entity was updated
+    string updated_at = 10;
+
+    // Optional last time the entity was started
+    string started_at = 11;
+
+    // Optional last time the entity was started
+    string finished_at = 12;
+
+    // Required project name
+    string project = 13;
+
+    // Optional flag to tell if this entity is managed by the platform
+    string is_managed = 14;
+
+    // Optional content of the entity's spec
+    string spec = 15;
+
+    // Optional backend value of this entity
+    string backend = 16;
+
+    // Optional framework name of this entity
+    string framework = 17;
+
+    // Optional latest status of this entity
+    string last_status = 18;
+
+    // Optional Code reference
+    int64 code_reference = 19;
+
+    // Optional hardware resources requested by this entity
+    Dict resources = 20;
+
+    // Optional a readme text describing this entity
+    string readme = 21;
+
+    // Optional if this entity was bookmarked
+    bool bookmarked = 22;
+
+    // Optional params of this entity
+    Dict params = 23;
+
+    // Optional run enivronment tracked
+    Dict run_env = 24;
+
+    // Optional build job name
+    string build_job = 25;
+
+    // Optional data references of this entity
+    Dict data_refs = 26;
+
+    // Optional artificat references of this entity
+    Dict artifact_refs = 27;
+
+    // Optional Id of the original job
+    int64 original = 28;
+
+    // Optional if this job was restarted/copied/resumed
+    string cloning_strategy = 29;
+}
+
+// Job specification
+message JobStatus {
+    // Unique integer identifier
+    int64 id = 1;
+
+    // UUID
+    string uuid = 2;
+
+    // Optional time when the entityt was created
+    string created_at = 3;
+
+    // Optional last time the entity was updated
+    string updated_at = 4;
+
+    // Optional status recorded
+    string status = 5; // Add oneof validation
+
+    // Optional status message
+    string message = 6;
+}
+
+// Request data to create/update job
+message JobBodyRequest{
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Job object
+    Job job = 3;
+}
+
+ // Contains list jobs
+ message ListJobsResponse{
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Job results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+
+ // Contains list jobs
+ message ListJobStatusesResponse{
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated JobStatus results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}
+
+
+// Service to manage jobs
+service JobService {
+    // List jobs
+    rpc ListJobs(ProjectBodyRequest) returns (ListJobsResponse){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/jobs"
+        };
+    }
+
+    // List bookmarked jobs
+    rpc ListBookmarkedJobs(OwnerBodyRequest) returns (ListJobsResponse){
+        option (google.api.http) = {
+            get: "/v1/bookmarks/{owner}/jobs"
+        };
+    }
+
+    // List archived jobs
+    rpc ListArchivedJobs(OwnerBodyRequest) returns (ListJobsResponse){
+        option (google.api.http) = {
+            get: "/v1/archives/{owner}/jobs"
+        };
+    }
+
+    // Create new job
+    rpc CreateJob(JobBodyRequest) returns (Job){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs"
+            body: "*"
+        };
+    }
+
+    // Get job
+    rpc GetJob(OwnedEntityIdRequest) returns (Job){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/jobs/{id}"
+        };
+    }
+
+    // Update job
+    rpc UpdateJob(JobBodyRequest) returns (Job){
+        option (google.api.http) = {
+            put: "/v1/{owner}/{project}/jobs/{job.id}"
+            body: "*"
+
+            additional_bindings {
+                put: "/v1/{owner}/{project}/jobs/{job.id}"
+                body: "*"
+            }
+        };
+    }
+
+    // Delete job
+    rpc DeleteJob(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/{owner}/{project}/jobs/{id}"
+        };
+    }
+
+    // Delete jobs
+    rpc DeleteJobs(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/{owner}/{project}/jobs/delete"
+            body: "*"
+        };
+    }
+
+    // Stop job
+    rpc StopJob(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/stop"
+            body: "*"
+        };
+    }
+
+    // Stop jobs
+    rpc StopJobs(ProjectBodyRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/stop"
+            body: "*"
+        };
+    }
+
+    // Restart job
+    rpc RestartJob(OwnedEntityIdRequest) returns (Job){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/restart"
+            body: "*"
+        };
+    }
+
+    // Resume job
+    rpc ResumeJob(OwnedEntityIdRequest) returns (Job){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/resume"
+            body: "*"
+        };
+    }
+
+    // Archive job
+    rpc ArchiveJob(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/archive"
+        };
+    }
+
+    // Restore job
+    rpc RestoreJob(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/restore"
+        };
+    }
+
+    // Bookmark job
+    rpc BookmarkJob(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/bookmark"
+        };
+    }
+
+    // UnBookmark job
+    rpc UnBookmarkJob(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/{owner}/{project}/jobs/{id}/unbookmark"
+        };
+    }
+
+    // Get job status
+    rpc GetJobStatuses(OwnedEntityIdRequest) returns (StatusResponse){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/jobs/{id}/statuses"
+        };
+    }
+
+    // List job statuses
+    rpc ListJobStatuses(OwnedEntityIdRequest) returns (ListJobStatusesResponse){
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/jobs/{id}/statuses"
+        };
+    }
+
+    // Create new job status
+    rpc CreateJobStatus(OwnedEntityIdRequest) returns (JobStatus){
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/statuses"
+            body: "*"
+        };
+    }
+
+    // Get job code ref
+    rpc GetJobCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+        option (google.api.http) = {
+            get: "/v1/{owner}/{project}/jobs/{id}/coderef"
+        };
+    }
+
+    // Get job code ref
+    rpc GreateJobCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+        option (google.api.http) = {
+            post: "/v1/{owner}/{project}/jobs/{id}/coderef"
+            body: "*"
+        };
+    }
+}

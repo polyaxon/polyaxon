@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/protobuf/any.proto";
+
+message KV {
+    string key = 1;
+    google.protobuf.Any value = 2;
+}
+
+message Dict {
+    repeated KV kv = 1;
+ }
+
+// Request data with owner namespace
+message OwnerBodyRequest{
+    // Owner of the namespace
+    string owner = 1;
+}
+
+// Request data with owner/project namespace
+message ProjectBodyRequest{
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+}
+
+// Request data for a status
+message StatusResponse{
+    // The status of the entity
+    string status = 1;
+}
+
+// Request data to get/delete entity
+message OwnedEntityIdRequest{
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Unique integer identifier of the entity
+    int64 id = 3;
+}
