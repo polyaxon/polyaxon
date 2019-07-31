@@ -1,12 +1,14 @@
 FROM polyaxon/polyaxon-npm-base
 
 # This dockerfile is intended for dev only purposes
-MAINTAINER mourad mourafiq <mourad@polyaxon.com>
+LABEL maintainer="mourad mourafiq <mourad@polyaxon.com>"
 
 RUN apt-get -y update && \
-    apt-get -y install git && \
     apt-get -y install nginx && \
-    apt-get -y install libldap2-dev libsasl2-dev
+    apt-get -y install libldap2-dev libsasl2-dev && \
+    apt-get autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 
 COPY requirements /requirements/
