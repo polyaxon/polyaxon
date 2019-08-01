@@ -10,7 +10,11 @@ spec:
   names:
     kind: PolyaxonKF
     plural: polyaxonkfs
-  scope: ""
+    shortNames:
+    - plxkf
+  scope: Namespaced
+  subresources:
+    status: {}
   validation:
     openAPIV3Schema:
       description: PolyaxonKF is the Schema for the polyaxonkfs API
@@ -27,11 +31,64 @@ spec:
           type: string
         metadata:
           type: object
-        spec:
-          description: PolyaxonKFSpec defines the desired state of PolyaxonKF
-          type: object
+        runSpec:
+          description: KFSpec represent the spec to pass to the underlaying KF operator
+          type: string
         status:
-          description: PolyaxonKFStatus defines the observed state of PolyaxonKF
+          description: PolyaxonBaseJobStatus defines the observed state of PolyaxonBaseJob
+          properties:
+            completionTime:
+              description: Represents the time when the job was completed. It is not
+                guaranteed to be set in happens-before order across separate operations.
+                It is represented in RFC3339 form and is in UTC.
+              format: date-time
+              type: string
+            conditions:
+              description: The latest available observations of an object's current
+                state.
+              items:
+                description: PolyaxonBaseJobCondition defines the conditions of PolyaxonBaseJobStatus
+                properties:
+                  lastTransitionTime:
+                    description: Last time the condition transitioned.
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    description: The last time this condition was updated.
+                    format: date-time
+                    type: string
+                  message:
+                    description: A human readable message indicating details about
+                      the transition.
+                    type: string
+                  reason:
+                    description: The reasonfor this container condition.
+                    type: string
+                  status:
+                    description: Status of the condition, one of True, False, Unknown.
+                    type: string
+                  type:
+                    description: Type is the type of the condition. Possible values
+                      are Running|Warning|Stopped|Succeeded|Failed
+                    type: string
+                required:
+                - status
+                - type
+                type: object
+              type: array
+            lastReconcileTime:
+              description: Represents the last time when the job was reconciled. It
+                is not guaranteed to be set in happens-before order across separate
+                operations. It is represented in RFC3339 form and is in UTC.
+              format: date-time
+              type: string
+            startTime:
+              description: Represents the time when the job was acknowledged by the
+                controller. It is not guaranteed to be set in happens-before order
+                across separate operations. It is represented in RFC3339 form and
+                is in UTC.
+              format: date-time
+              type: string
           type: object
       type: object
   versions:

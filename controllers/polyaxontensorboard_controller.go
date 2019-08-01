@@ -164,7 +164,7 @@ func (r *PolyaxonTensorboardReconciler) reconcileDeployment(instance *corev1alph
 			log.V(1).Info("Appending to conditions: ", "namespace", instance.Namespace, "name", instance.Name, "type", newCondition.Type, "reason", newCondition.Reason, "message", newCondition.Message)
 			instance.Status.Conditions = append([]corev1alpha1.PolyaxonDeploymentCondition{newCondition}, oldConditions...)
 		}
-		err = r.Status().Update(context.Background(), instance)
+		err = r.Status().Update(ctx, instance)
 		if err != nil {
 			return err
 		}

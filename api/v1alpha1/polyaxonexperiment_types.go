@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -57,6 +58,99 @@ func (instance *PolyaxonExperiment) AddFinalizer() {
 // RemoveFinalizer handler for PolyaxonExperiment
 func (instance *PolyaxonExperiment) RemoveFinalizer() {
 	instance.ObjectMeta.Finalizers = removeString(instance.ObjectMeta.Finalizers, PolyaxonExperimentFinalizerName)
+}
+
+// IsStarting checks if the PolyaxonExperiment is statrting
+func (instance *PolyaxonExperiment) IsStarting() bool {
+	return isStarting(instance.Status)
+}
+
+// IsRunning checks if the PolyaxonExperiment is running
+func (instance *PolyaxonExperiment) IsRunning() bool {
+	return isRunning(instance.Status)
+}
+
+// HasWarning checks if the PolyaxonExperiment succeeded
+func (instance *PolyaxonExperiment) HasWarning() bool {
+	return hasWarning(instance.Status)
+}
+
+// IsSucceeded checks if the PolyaxonExperiment succeeded
+func (instance *PolyaxonExperiment) IsSucceeded() bool {
+	return isSucceeded(instance.Status)
+}
+
+// IsFailed checks if the PolyaxonExperiment failed
+func (instance *PolyaxonExperiment) IsFailed() bool {
+	return isFailed(instance.Status)
+}
+
+// IsStopped checks if the PolyaxonExperiment stopped
+func (instance *PolyaxonExperiment) IsStopped() bool {
+	return isStopped(instance.Status)
+}
+
+// IsDone checks if it the PolyaxonExperiment reached a final condition
+func (instance *PolyaxonExperiment) IsDone() bool {
+	return instance.IsSucceeded() || instance.IsFailed() || instance.IsStopped()
+}
+
+func (instance *PolyaxonExperiment) removeCondition(conditionType PolyaxonBaseJobConditionType) {
+	var newConditions []PolyaxonBaseJobCondition
+	for _, c := range instance.Status.Conditions {
+
+		if c.Type == conditionType {
+			continue
+		}
+
+		newConditions = append(newConditions, c)
+	}
+	instance.Status.Conditions = newConditions
+}
+
+func (instance *PolyaxonExperiment) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) {
+	currentCond := getPlxBaseJobConditionFromStatus(instance.Status, condType)
+	cond := getOrUpdatePlxBaseJobCondition(currentCond, condType, status, reason, message)
+	if cond != nil {
+		instance.removeCondition(condType)
+		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
+	}
+}
+
+// LogStarting sets PolyaxonExperiment to statrting
+func (instance *PolyaxonExperiment) LogStarting() {
+	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonExperimentStarted", "Experiment is starting")
+}
+
+// LogRunning sets PolyaxonExperiment to running
+func (instance *PolyaxonExperiment) LogRunning() {
+	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonExperimentRunning", "Experiment is running")
+}
+
+// LogWarning sets PolyaxonExperiment to succeeded
+func (instance *PolyaxonExperiment) LogWarning(reason, message string) {
+	if reason == "" {
+		reason = "PolyaxonExperimentWarning"
+	}
+	if message == "" {
+		message = "Underlaying job has an issue"
+	}
+	instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
+}
+
+// LogSucceeded sets PolyaxonExperiment to succeeded
+func (instance *PolyaxonExperiment) LogSucceeded() {
+	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonExperimentSucceeded", "Experiment has succeded")
+}
+
+// LogFailed sets PolyaxonExperiment to failed
+func (instance *PolyaxonExperiment) LogFailed(reason, message string) {
+	instance.logCondition(JobFailed, corev1.ConditionFalse, reason, message)
+}
+
+// LogStopped sets PolyaxonExperiment to stopped
+func (instance *PolyaxonExperiment) LogStopped(reason, message string) {
+	instance.logCondition(JobStopped, corev1.ConditionFalse, reason, message)
 }
 
 // +kubebuilder:object:root=true

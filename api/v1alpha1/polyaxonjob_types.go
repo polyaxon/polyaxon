@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -57,6 +58,93 @@ func (instance *PolyaxonJob) AddFinalizer() {
 // RemoveFinalizer handler for PolyaxonJob
 func (instance *PolyaxonJob) RemoveFinalizer() {
 	instance.ObjectMeta.Finalizers = removeString(instance.ObjectMeta.Finalizers, PolyaxonJobFinalizerName)
+}
+
+// IsStarting checks if the PolyaxonJob is statrting
+func (instance *PolyaxonJob) IsStarting() bool {
+	return isStarting(instance.Status)
+}
+
+// IsRunning checks if the PolyaxonJob is running
+func (instance *PolyaxonJob) IsRunning() bool {
+	return isRunning(instance.Status)
+}
+
+// HasWarning checks if the PolyaxonJob succeeded
+func (instance *PolyaxonJob) HasWarning() bool {
+	return hasWarning(instance.Status)
+}
+
+// IsSucceeded checks if the PolyaxonJob succeeded
+func (instance *PolyaxonJob) IsSucceeded() bool {
+	return isSucceeded(instance.Status)
+}
+
+// IsFailed checks if the PolyaxonJob failed
+func (instance *PolyaxonJob) IsFailed() bool {
+	return isFailed(instance.Status)
+}
+
+// IsStopped checks if the PolyaxonJob stopped
+func (instance *PolyaxonJob) IsStopped() bool {
+	return isStopped(instance.Status)
+}
+
+// IsDone checks if it the PolyaxonJob reached a final condition
+func (instance *PolyaxonJob) IsDone() bool {
+	return instance.IsSucceeded() || instance.IsFailed() || instance.IsStopped()
+}
+
+func (instance *PolyaxonJob) removeCondition(conditionType PolyaxonBaseJobConditionType) {
+	var newConditions []PolyaxonBaseJobCondition
+	for _, c := range instance.Status.Conditions {
+
+		if c.Type == conditionType {
+			continue
+		}
+
+		newConditions = append(newConditions, c)
+	}
+	instance.Status.Conditions = newConditions
+}
+
+func (instance *PolyaxonJob) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) {
+	currentCond := getPlxBaseJobConditionFromStatus(instance.Status, condType)
+	cond := getOrUpdatePlxBaseJobCondition(currentCond, condType, status, reason, message)
+	if cond != nil {
+		instance.removeCondition(condType)
+		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
+	}
+}
+
+// LogStarting sets PolyaxonJob to statrting
+func (instance *PolyaxonJob) LogStarting() {
+	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonJobStarted", "Job is starting")
+}
+
+// LogRunning sets PolyaxonJob to running
+func (instance *PolyaxonJob) LogRunning() {
+	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonJobRunning", "Job is running")
+}
+
+// LogWarning sets PolyaxonJob to succeeded
+func (instance *PolyaxonJob) LogWarning(reason, message string) {
+	instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
+}
+
+// LogSucceeded sets PolyaxonJob to succeeded
+func (instance *PolyaxonJob) LogSucceeded() {
+	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonJobSucceeded", "Job has succeded")
+}
+
+// LogFailed sets PolyaxonJob to failed
+func (instance *PolyaxonJob) LogFailed(reason, message string) {
+	instance.logCondition(JobFailed, corev1.ConditionFalse, reason, message)
+}
+
+// LogStopped sets PolyaxonJob to stopped
+func (instance *PolyaxonJob) LogStopped(reason, message string) {
+	instance.logCondition(JobStopped, corev1.ConditionFalse, reason, message)
 }
 
 // +kubebuilder:object:root=true

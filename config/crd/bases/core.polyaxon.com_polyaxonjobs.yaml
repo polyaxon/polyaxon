@@ -4173,60 +4173,58 @@ spec:
         status:
           description: PolyaxonBaseJobStatus defines the observed state of PolyaxonBaseJob
           properties:
+            completionTime:
+              description: Represents the time when the job was completed. It is not
+                guaranteed to be set in happens-before order across separate operations.
+                It is represented in RFC3339 form and is in UTC.
+              format: date-time
+              type: string
             conditions:
               description: The latest available observations of an object's current
                 state.
               items:
                 description: PolyaxonBaseJobCondition defines the conditions of PolyaxonBaseJobStatus
                 properties:
-                  lastProbeTime:
-                    description: Last time we probed the condition.
+                  lastTransitionTime:
+                    description: Last time the condition transitioned.
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    description: The last time this condition was updated.
                     format: date-time
                     type: string
                   message:
-                    description: Message regarding why the container is in the current
-                      state.
+                    description: A human readable message indicating details about
+                      the transition.
                     type: string
                   reason:
-                    description: (brief) reason the container is in the current state
+                    description: The reasonfor this container condition.
+                    type: string
+                  status:
+                    description: Status of the condition, one of True, False, Unknown.
                     type: string
                   type:
                     description: Type is the type of the condition. Possible values
-                      are Running|Warning|Terminated|Succeeded|Failed
+                      are Running|Warning|Stopped|Succeeded|Failed
                     type: string
                 required:
+                - status
                 - type
                 type: object
               type: array
-            deploymentCondition:
-              description: JobCondition is the state of underlying job.
-              properties:
-                lastProbeTime:
-                  description: Last time the condition was checked.
-                  format: date-time
-                  type: string
-                lastTransitionTime:
-                  description: Last time the condition transit from one status to
-                    another.
-                  format: date-time
-                  type: string
-                message:
-                  description: Human readable message indicating details about last
-                    transition.
-                  type: string
-                reason:
-                  description: (brief) reason for the condition's last transition.
-                  type: string
-                status:
-                  description: Status of the condition, one of True, False, Unknown.
-                  type: string
-                type:
-                  description: Type of job condition, Complete or Failed.
-                  type: string
-              required:
-              - status
-              - type
-              type: object
+            lastReconcileTime:
+              description: Represents the last time when the job was reconciled. It
+                is not guaranteed to be set in happens-before order across separate
+                operations. It is represented in RFC3339 form and is in UTC.
+              format: date-time
+              type: string
+            startTime:
+              description: Represents the time when the job was acknowledged by the
+                controller. It is not guaranteed to be set in happens-before order
+                across separate operations. It is represented in RFC3339 form and
+                is in UTC.
+              format: date-time
+              type: string
           type: object
       type: object
   versions:

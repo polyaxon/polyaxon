@@ -19,7 +19,6 @@ package utils
 import (
 	"reflect"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -51,34 +50,17 @@ func CopyJobFields(from, to *batchv1.Job) bool {
 	return requireUpdate
 }
 
-// GetPlxJobCondition returns PolyaxonBaseJobCondition given a JobCondition
-func GetPlxJobCondition(jc batchv1.JobCondition) corev1alpha1.PolyaxonBaseJobCondition {
-	var jtype = ""
-	var reason = jc.Reason
-	var msg = jc.Message
-
-	if jc.Type == "ReplicaFailure" {
-		jtype = "warning"
-	} else if jc.Type == "Progressing" {
-		jtype = "starting"
-	} else if jc.Type == "Available" {
-		if jc.Status == "True" {
-			jtype = "running"
-		} else {
-			jtype = "warning"
-		}
-	}
-
-	newCondition := corev1alpha1.PolyaxonBaseJobCondition{
-		Type:          jtype,
-		LastProbeTime: metav1.Now(),
-		Reason:        reason,
-		Message:       msg,
-	}
-	return newCondition
+// IsPlxJobSucceded return true if job is running
+func IsPlxJobSucceded(jc batchv1.JobCondition) bool {
+	return jc.Type == batchv1.JobComplete && jc.Status == corev1.ConditionTrue
 }
 
-// GeneratePlxJob returns a deployment given a PolyaxonBaseJobSpec
+// IsPlxJobFailed return true if job is running
+func IsPlxJobFailed(jc batchv1.JobCondition) bool {
+	return jc.Type == batchv1.JobFailed && jc.Status == corev1.ConditionTrue
+}
+
+// GeneratePlxJob returns a a batch job given a PolyaxonBaseJobSpec
 func GeneratePlxJob(
 	name string,
 	namespace string,

@@ -17,7 +17,6 @@ limitations under the License.
 package v1alpha1
 
 import (
-	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
@@ -29,7 +28,7 @@ import (
 type PolyaxonBaseJobSpec struct {
 	// Specifies the number of retries before marking this job failed.
 	// +optional
-	MaxRetries *int32 `json:"maxRetries,omitempty" protobuf:"varint,1,opt,name=replicas"`
+	MaxRetries *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
 	// Template describes the pods that will be created.
 	Template corev1.PodTemplateSpec `json:"template" protobuf:"bytes,3,opt,name=template"`
 }
@@ -42,22 +41,133 @@ type PolyaxonBaseJobStatus struct {
 	// +patchStrategy=merge
 	Conditions []PolyaxonBaseJobCondition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
 
-	// JobCondition is the state of underlying job.
-	// +optional
-	JobCondition batchv1.JobCondition `json:"deploymentCondition,omitempty"`
+	// Represents the time when the job was acknowledged by the controller.
+	// It is not guaranteed to be set in happens-before order across separate operations.
+	// It is represented in RFC3339 form and is in UTC.
+	StartTime *metav1.Time `json:"startTime,omitempty"`
+
+	// Represents the time when the job was completed. It is not guaranteed to
+	// be set in happens-before order across separate operations.
+	// It is represented in RFC3339 form and is in UTC.
+	CompletionTime *metav1.Time `json:"completionTime,omitempty"`
+
+	// Represents the last time when the job was reconciled.
+	// It is not guaranteed to be set in happens-before order across separate operations.
+	// It is represented in RFC3339 form and is in UTC.
+	LastReconcileTime *metav1.Time `json:"lastReconcileTime,omitempty"`
 }
 
 // PolyaxonBaseJobCondition defines the conditions of PolyaxonBaseJobStatus
 type PolyaxonBaseJobCondition struct {
-	// Type is the type of the condition. Possible values are Running|Warning|Terminated|Succeeded|Failed
-	Type string `json:"type"`
-	// Last time we probed the condition.
+	// Type is the type of the condition. Possible values are Running|Warning|Stopped|Succeeded|Failed
+	Type PolyaxonBaseJobConditionType `json:"type"`
+
+	// Status of the condition, one of True, False, Unknown.
+	Status corev1.ConditionStatus `json:"status"`
+
+	// The last time this condition was updated.
 	// +optional
-	LastProbeTime metav1.Time `json:"lastProbeTime,omitempty"`
-	// (brief) reason the container is in the current state
+	LastUpdateTime metav1.Time `json:"lastUpdateTime,omitempty"`
+
+	// Last time the condition transitioned.
+	// +optional
+	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty"`
+
+	// The reasonfor this container condition.
 	// +optional
 	Reason string `json:"reason,omitempty"`
-	// Message regarding why the container is in the current state.
+
+	// A human readable message indicating details about the transition.
 	// +optional
 	Message string `json:"message,omitempty"`
+}
+
+// PolyaxonBaseJobConditionType maps the conditions a polyaxon job once deployed on
+type PolyaxonBaseJobConditionType string
+
+const (
+	// JobStarting means underlaying Job has started.
+	JobStarting PolyaxonBaseJobConditionType = "Starting"
+	// JobRunning means underlaying Job is running,
+	JobRunning PolyaxonBaseJobConditionType = "Running"
+	// JobWarning means underlaying Job has some issues.
+	JobWarning PolyaxonBaseJobConditionType = "Warning"
+	// JobSucceeded means underlaying Job has completed successfully.
+	JobSucceeded PolyaxonBaseJobConditionType = "Succeeded"
+	// JobFailed means underlaying Job has failed.
+	JobFailed PolyaxonBaseJobConditionType = "Failed"
+	// JobStopped means that the Job was stopped/killed.
+	JobStopped PolyaxonBaseJobConditionType = "Stopped"
+)
+
+// newPlxBaseJobCondition makes a new instance of PlxBaseJobcondition
+func newPlxBaseJobCondition(conditionType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) PolyaxonBaseJobCondition {
+	return PolyaxonBaseJobCondition{
+		Type:               conditionType,
+		Status:             status,
+		LastUpdateTime:     metav1.Now(),
+		LastTransitionTime: metav1.Now(),
+		Reason:             reason,
+		Message:            message,
+	}
+}
+
+// getOrUpdatePlxBaseJobCondition get new or updated version of current confition or returns nil if nothing changed
+func getOrUpdatePlxBaseJobCondition(currentCond *PolyaxonBaseJobCondition, conditionType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) *PolyaxonBaseJobCondition {
+	newCond := newPlxBaseJobCondition(conditionType, status, reason, message)
+
+	// Do nothing if condition doesn't change
+	if currentCond != nil && currentCond.Status == newCond.Status && currentCond.Reason == newCond.Reason {
+		return nil
+	}
+
+	// Do not update lastTransitionTime if the status of the condition doesn't change.
+	if currentCond != nil && currentCond.Status == newCond.Status {
+		newCond.LastTransitionTime = currentCond.LastTransitionTime
+	}
+
+	return &newCond
+}
+
+// getPlxBaseJobConditionFromStatus returns the condition with the specific type form status.conditions
+func getPlxBaseJobConditionFromStatus(status PolyaxonBaseJobStatus, condType PolyaxonBaseJobConditionType) *PolyaxonBaseJobCondition {
+	for _, condition := range status.Conditions {
+		if condition.Type == condType {
+			return &condition
+		}
+	}
+	return nil
+}
+
+// hasPlxBaseJobCondition checks if a status has a specific condition type
+func hasPlxBaseJobCondition(status PolyaxonBaseJobStatus, condType PolyaxonBaseJobConditionType) bool {
+	cond := getPlxBaseJobConditionFromStatus(status, condType)
+	if cond != nil && cond.Status == corev1.ConditionTrue {
+		return true
+	}
+	return false
+}
+
+func isStarting(status PolyaxonBaseJobStatus) bool {
+	return hasPlxBaseJobCondition(status, JobStarting)
+}
+
+func isRunning(status PolyaxonBaseJobStatus) bool {
+	return hasPlxBaseJobCondition(status, JobRunning)
+}
+
+func hasWarning(status PolyaxonBaseJobStatus) bool {
+	return hasPlxBaseJobCondition(status, JobWarning)
+}
+
+func isSucceeded(status PolyaxonBaseJobStatus) bool {
+	return hasPlxBaseJobCondition(status, JobSucceeded)
+}
+
+func isFailed(status PolyaxonBaseJobStatus) bool {
+	return hasPlxBaseJobCondition(status, JobFailed)
+}
+
+func isStopped(status PolyaxonBaseJobStatus) bool {
+	return hasPlxBaseJobCondition(status, JobStopped)
 }

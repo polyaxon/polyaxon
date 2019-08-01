@@ -22,30 +22,19 @@ import (
 
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// PolyaxonKFSpec defines the desired state of PolyaxonKF
-// +k8s:openapi-gen=true
-// +kubebuilder:resource:shortName=plxkf
-// +kubebuilder:subresource:status
-type PolyaxonKFSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-}
-
-// PolyaxonKFStatus defines the observed state of PolyaxonKF
-type PolyaxonKFStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-}
-
 // +kubebuilder:object:root=true
 
 // PolyaxonKF is the Schema for the polyaxonkfs API
+// +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxkf
+// +kubebuilder:subresource:status
 type PolyaxonKF struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   PolyaxonKFSpec   `json:"spec,omitempty"`
-	Status PolyaxonKFStatus `json:"status,omitempty"`
+	// KFSpec represent the spec to pass to the underlaying KF operator
+	KFSpec string                `json:"runSpec,omitempty"`
+	Status PolyaxonBaseJobStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

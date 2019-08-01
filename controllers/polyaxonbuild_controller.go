@@ -22,6 +22,7 @@ import (
 	"github.com/go-logr/logr"
 	batchv1 "k8s.io/api/batch/v1"
 	apierrs "k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -105,7 +106,7 @@ func (r *PolyaxonBuildReconciler) reconcileJob(instance *corev1alpha1.PolyaxonBu
 	}
 	// Update the job object and write the result back if there are any changes
 	if !justCreated && utils.CopyJobFields(plxJob, foundJob) {
-		log.V(1).Info("Updating Job", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		log.V(1).Info("Updating Build Job", "namespace", plxJob.Namespace, "name", plxJob.Name)
 		err = r.Update(ctx, foundJob)
 		if err != nil {
 			return err
@@ -113,27 +114,50 @@ func (r *PolyaxonBuildReconciler) reconcileJob(instance *corev1alpha1.PolyaxonBu
 	}
 
 	// Check the job status
-	if len(foundJob.Status.Conditions) > 0 &&
-		foundJob.Status.Conditions[0] != instance.Status.JobCondition {
-		log.V(1).Info("Updating container state: ", "namespace", instance.Namespace, "name", instance.Name)
-		jobCond := foundJob.Status.Conditions[0]
-		instance.Status.JobCondition = jobCond
-		oldConditions := instance.Status.Conditions
-		newCondition := utils.GetPlxJobCondition(jobCond)
-		// Append new condition
-		if len(oldConditions) == 0 || oldConditions[0].Type != newCondition.Type ||
-			oldConditions[0].Reason != newCondition.Reason ||
-			oldConditions[0].Message != newCondition.Message {
-			log.V(1).Info("Appending to conditions: ", "namespace", instance.Namespace, "name", instance.Name, "type", newCondition.Type, "reason", newCondition.Reason, "message", newCondition.Message)
-			instance.Status.Conditions = append([]corev1alpha1.PolyaxonBaseJobCondition{newCondition}, oldConditions...)
-		}
-		err = r.Status().Update(context.Background(), instance)
+	if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
+		log.V(1).Info("Reconciling Build Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Status().Update(ctx, instance)
 		if err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+func (r *PolyaxonBuildReconciler) reconcileJobStatus(instance *corev1alpha1.PolyaxonBuild, job batchv1.Job) bool {
+	now := metav1.Now()
+	log := r.Log
+
+	if len(job.Status.Conditions) == 0 {
+		if job.Status.Failed > 0 {
+			instance.LogWarning("", "")
+			log.V(1).Info("Build Logging Status Warning")
+			return true
+		} else if job.Status.Active > 0 {
+			instance.LogRunning()
+			log.V(1).Info("Build Logging Status Running")
+			return true
+		}
+		return false
+	}
+
+	newJobCond := job.Status.Conditions[len(job.Status.Conditions)-1]
+
+	if job.Status.Active == 0 && job.Status.Succeeded > 0 && utils.IsPlxJobSucceded(newJobCond) {
+		instance.LogSucceeded()
+		instance.Status.CompletionTime = &now
+		log.V(1).Info("Build Logging Status Succeeded")
+		return true
+	}
+
+	if job.Status.Failed > 0 && utils.IsPlxJobFailed(newJobCond) {
+		instance.LogFailed(newJobCond.Reason, newJobCond.Message)
+		instance.Status.CompletionTime = &now
+		log.V(1).Info("Build Logging Status Failed")
+		return true
+	}
+	return false
 }
 
 // SetupWithManager register the reconciliation logic
