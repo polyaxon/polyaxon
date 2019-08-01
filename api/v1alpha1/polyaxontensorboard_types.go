@@ -26,6 +26,7 @@ import (
 
 // PolyaxonTensorboard is the Schema for the polyaxontensorboards API
 // +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxtb
 // +kubebuilder:subresource:status
 type PolyaxonTensorboard struct {
 	metav1.TypeMeta   `json:",inline"`

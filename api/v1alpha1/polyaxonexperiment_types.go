@@ -26,6 +26,7 @@ import (
 
 // PolyaxonExperiment is the Schema for the polyaxonexperiments API
 // +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxxp
 // +kubebuilder:subresource:status
 type PolyaxonExperiment struct {
 	metav1.TypeMeta   `json:",inline"`

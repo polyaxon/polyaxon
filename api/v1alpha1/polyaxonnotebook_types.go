@@ -26,6 +26,7 @@ import (
 
 // PolyaxonNotebook is the Schema for the polyaxonnotebooks API
 // +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxnb
 // +kubebuilder:subresource:status
 type PolyaxonNotebook struct {
 	metav1.TypeMeta   `json:",inline"`

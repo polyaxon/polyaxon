@@ -26,6 +26,7 @@ import (
 
 // PolyaxonJob is the Schema for the polyaxonjobs API
 // +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxj
 // +kubebuilder:subresource:status
 type PolyaxonJob struct {
 	metav1.TypeMeta   `json:",inline"`

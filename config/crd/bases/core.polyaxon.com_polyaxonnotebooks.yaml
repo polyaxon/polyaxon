@@ -10,7 +10,9 @@ spec:
   names:
     kind: PolyaxonNotebook
     plural: polyaxonnotebooks
-  scope: ""
+    shortNames:
+    - plxnb
+  scope: Namespaced
   subresources:
     status: {}
   validation:

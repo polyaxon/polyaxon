@@ -10,7 +10,9 @@ spec:
   names:
     kind: PolyaxonJob
     plural: polyaxonjobs
-  scope: ""
+    shortNames:
+    - plxj
+  scope: Namespaced
   subresources:
     status: {}
   validation:

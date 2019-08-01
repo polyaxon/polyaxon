@@ -10,7 +10,9 @@ spec:
   names:
     kind: PolyaxonExperiment
     plural: polyaxonexperiments
-  scope: ""
+    shortNames:
+    - plxxp
+  scope: Namespaced
   subresources:
     status: {}
   validation:

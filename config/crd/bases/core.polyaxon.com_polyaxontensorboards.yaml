@@ -10,7 +10,9 @@ spec:
   names:
     kind: PolyaxonTensorboard
     plural: polyaxontensorboards
-  scope: ""
+    shortNames:
+    - plxtb
+  scope: Namespaced
   subresources:
     status: {}
   validation:

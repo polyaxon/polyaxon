@@ -27,6 +27,7 @@ import (
 
 // PolyaxonBuild is the Schema for the polyaxonbuilds API
 // +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxb
 // +kubebuilder:subresource:status
 type PolyaxonBuild struct {
 	metav1.TypeMeta   `json:",inline"`

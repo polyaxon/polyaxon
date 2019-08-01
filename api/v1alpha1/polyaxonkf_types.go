@@ -23,6 +23,9 @@ import (
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
 // PolyaxonKFSpec defines the desired state of PolyaxonKF
+// +k8s:openapi-gen=true
+// +kubebuilder:resource:shortName=plxkf
+// +kubebuilder:subresource:status
 type PolyaxonKFSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
