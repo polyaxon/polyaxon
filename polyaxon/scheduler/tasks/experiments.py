@@ -139,10 +139,13 @@ def experiments_set_metrics(experiment_id, data):
         _logger.error('Could not create metrics, a validation error was raised.')
 
     if is_list:
-        ExperimentMetric.objects.bulk_create(
-            [ExperimentMetric(experiment=experiment, **metric_data) for metric_data in
-             serializer.data])
-        experiment.set_metric(ExperimentMetric.objects.last().values)
+        merged_metrics = {}
+        metrics_instances = []
+        for metric_data in serializer.data:
+            metrics_instances.append(ExperimentMetric(experiment=experiment, **metric_data))
+            merged_metrics.update(metric_data['values'])
+        ExperimentMetric.objects.bulk_create(metrics_instances)
+        experiment.set_metric(merged_metrics)
     else:
         serializer.save(experiment=experiment)
 
