@@ -629,6 +629,7 @@ def get_experiment_logs_path(experiment: Experiment) -> Optional[str]:
         process_logs(experiment=experiment, temp=True)
         logs_path = stores.get_experiment_logs_path(experiment_name=experiment_name, temp=True)
     else:
+        # Normally it should load from the tmp file where we append the logs
         return None
 
     return logs_path

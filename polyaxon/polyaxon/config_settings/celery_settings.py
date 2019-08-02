@@ -434,10 +434,10 @@ class CeleryQueues(object):
     LOGS_HEALTH = config.get_string('POLYAXON_QUEUES_LOGS_HEALTH',
                                     is_optional=True,
                                     default='queues.logs.health')
-    LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS',
+    LOGS_HANDLERS = config.get_string('POLYAXON_QUEUES_LOGS_SIDECARS',
                                       is_optional=True,
                                       default='queues.logs.handler')
-    LOGS_HANDLERS = config.get_string('POLYAXON_QUEUES_LOGS_HANDLERS',
+    LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_LOGS_HANDLERS',
                                       is_optional=True,
                                       default='queues.logs.sidecars')
     STREAM_LOGS_SIDECARS = config.get_string('POLYAXON_QUEUES_STREAM_LOGS_SIDECARS',

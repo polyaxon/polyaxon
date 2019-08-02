@@ -1,9 +1,11 @@
+import conf
 import workers
 
 from db.redis.tll import RedisTTL
 from events import event_subjects
 from events.registry import experiment
 from executor.handlers.base import BaseHandler
+from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN_DELAYED
 from polyaxon.settings import HPCeleryTasks, LogsCeleryTasks, SchedulerCeleryTasks
 
 
@@ -92,7 +94,7 @@ class ExperimentHandler(BaseHandler):
                 countdown=1)
 
         # Collect tracked remote logs
-        if instance.is_managed:
+        if not instance.is_managed:
             workers.send(
                 LogsCeleryTasks.LOGS_HANDLE_EXPERIMENT_JOB,
                 kwargs={
@@ -101,7 +103,7 @@ class ExperimentHandler(BaseHandler):
                     'log_lines': '',
                     'temp': False
                 },
-                countdown=None)
+                countdown=conf.get(SCHEDULER_GLOBAL_COUNTDOWN_DELAYED))
 
     @classmethod
     def record_event(cls, event: 'Event') -> None:
