@@ -5,7 +5,7 @@ export const FormButtons = (cancelUrl: string, isLoading: boolean, configButton:
   return (
     <div className="form-group form-actions">
       <div className="row">
-        <div className="col-md-11">
+        <div className="col-md-12">
           <button
             type="submit"
             className="btn btn-success"

@@ -4,7 +4,7 @@ export const ModalFormButtons = (onCancel: () => void, isLoading: boolean, confi
   return (
     <div className="form-group form-actions">
       <div className="row">
-        <div className="col-md-11">
+        <div className="col-md-12">
           <button
             type="submit"
             className="btn btn-success"
