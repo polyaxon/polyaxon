@@ -105,7 +105,7 @@ class BaseTracker(object):
         self.start()
 
         def excepthook(exception, value, tb):
-            self.failed(message='Type: {}, Value: {}'.format(exception, value))
+            self.log_failed(message='Type: {}, Value: {}'.format(exception, value))
             # Resume normal work
             sys.__excepthook__(exception, value, tb)
 
@@ -113,7 +113,7 @@ class BaseTracker(object):
 
     @check_no_op
     def _end(self):
-        self.succeeded()
+        self.log_succeeded()
 
     @check_no_op
     def start(self):
