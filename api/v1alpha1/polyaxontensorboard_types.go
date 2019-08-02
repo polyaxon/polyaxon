@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -36,7 +37,7 @@ type PolyaxonTensorboard struct {
 	Status PolyaxonDeploymentStatus `json:"status,omitempty"`
 }
 
-// IsBeingDeleted checks if the notebook is being deleted
+// IsBeingDeleted checks if the Tensorboard is being deleted
 func (instance *PolyaxonTensorboard) IsBeingDeleted() bool {
 	return !instance.ObjectMeta.DeletionTimestamp.IsZero()
 }
@@ -57,6 +58,93 @@ func (instance *PolyaxonTensorboard) AddFinalizer() {
 // RemoveFinalizer handler for PolyaxonTensorboard
 func (instance *PolyaxonTensorboard) RemoveFinalizer() {
 	instance.ObjectMeta.Finalizers = removeString(instance.ObjectMeta.Finalizers, PolyaxonTensorboardFinalizerName)
+}
+
+// IsStarting checks if the PolyaxonTensorboard is statrting
+func (instance *PolyaxonTensorboard) IsStarting() bool {
+	return isDepStarting(instance.Status)
+}
+
+// IsRunning checks if the PolyaxonTensorboard is running
+func (instance *PolyaxonTensorboard) IsRunning() bool {
+	return isDepRunning(instance.Status)
+}
+
+// HasWarning checks if the PolyaxonTensorboard succeeded
+func (instance *PolyaxonTensorboard) HasWarning() bool {
+	return isDepWarning(instance.Status)
+}
+
+// IsSucceeded checks if the PolyaxonTensorboard succeeded
+func (instance *PolyaxonTensorboard) IsSucceeded() bool {
+	return isDepSucceeded(instance.Status)
+}
+
+// IsFailed checks if the PolyaxonTensorboard failed
+func (instance *PolyaxonTensorboard) IsFailed() bool {
+	return isDepFailed(instance.Status)
+}
+
+// IsStopped checks if the PolyaxonTensorboard stopped
+func (instance *PolyaxonTensorboard) IsStopped() bool {
+	return isDepStopped(instance.Status)
+}
+
+// IsDone checks if it the PolyaxonTensorboard reached a final condition
+func (instance *PolyaxonTensorboard) IsDone() bool {
+	return instance.IsSucceeded() || instance.IsFailed() || instance.IsStopped()
+}
+
+func (instance *PolyaxonTensorboard) removeCondition(conditionType PolyaxonDeploymentConditionType) {
+	var newConditions []PolyaxonDeploymentCondition
+	for _, c := range instance.Status.Conditions {
+
+		if c.Type == conditionType {
+			continue
+		}
+
+		newConditions = append(newConditions, c)
+	}
+	instance.Status.Conditions = newConditions
+}
+
+func (instance *PolyaxonTensorboard) logCondition(condType PolyaxonDeploymentConditionType, status corev1.ConditionStatus, reason, message string) {
+	currentCond := getPlxDeploymentConditionFromStatus(instance.Status, condType)
+	cond := getOrUpdatePlxDeploymentCondition(currentCond, condType, status, reason, message)
+	if cond != nil {
+		instance.removeCondition(condType)
+		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
+	}
+}
+
+// LogStarting sets PolyaxonTensorboard to statrting
+func (instance *PolyaxonTensorboard) LogStarting() {
+	instance.logCondition(DeploymentStarting, corev1.ConditionTrue, "PolyaxonTensorboardStarted", "Tensorboard is starting")
+}
+
+// LogRunning sets PolyaxonTensorboard to running
+func (instance *PolyaxonTensorboard) LogRunning() {
+	instance.logCondition(DeploymentRunning, corev1.ConditionTrue, "PolyaxonTensorboardRunning", "Tensorboard is running")
+}
+
+// LogWarning sets PolyaxonTensorboard to Warning
+func (instance *PolyaxonTensorboard) LogWarning(reason, message string) {
+	instance.logCondition(DeploymentWarning, corev1.ConditionTrue, reason, message)
+}
+
+// LogSucceeded sets PolyaxonTensorboard to succeeded
+func (instance *PolyaxonTensorboard) LogSucceeded() {
+	instance.logCondition(DeploymentSucceeded, corev1.ConditionFalse, "PolyaxonTensorboardSucceeded", "Tensorboard has succeded")
+}
+
+// LogFailed sets PolyaxonTensorboard to failed
+func (instance *PolyaxonTensorboard) LogFailed(reason, message string) {
+	instance.logCondition(DeploymentFailed, corev1.ConditionFalse, reason, message)
+}
+
+// LogStopped sets PolyaxonTensorboard to stopped
+func (instance *PolyaxonTensorboard) LogStopped(reason, message string) {
+	instance.logCondition(DeploymentStopped, corev1.ConditionFalse, reason, message)
 }
 
 // +kubebuilder:object:root=true

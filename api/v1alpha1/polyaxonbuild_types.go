@@ -62,32 +62,32 @@ func (instance *PolyaxonBuild) RemoveFinalizer() {
 
 // IsStarting checks if the PolyaxonBuild is statrting
 func (instance *PolyaxonBuild) IsStarting() bool {
-	return isStarting(instance.Status)
+	return isJobStarting(instance.Status)
 }
 
 // IsRunning checks if the PolyaxonBuild is running
 func (instance *PolyaxonBuild) IsRunning() bool {
-	return isRunning(instance.Status)
+	return isJobRunning(instance.Status)
 }
 
 // HasWarning checks if the PolyaxonBuild succeeded
 func (instance *PolyaxonBuild) HasWarning() bool {
-	return hasWarning(instance.Status)
+	return isJobWarning(instance.Status)
 }
 
 // IsSucceeded checks if the PolyaxonBuild succeeded
 func (instance *PolyaxonBuild) IsSucceeded() bool {
-	return isSucceeded(instance.Status)
+	return isJobSucceeded(instance.Status)
 }
 
 // IsFailed checks if the PolyaxonBuild failed
 func (instance *PolyaxonBuild) IsFailed() bool {
-	return isFailed(instance.Status)
+	return isJobFailed(instance.Status)
 }
 
 // IsStopped checks if the PolyaxonBuild stopped
 func (instance *PolyaxonBuild) IsStopped() bool {
-	return isStopped(instance.Status)
+	return isJobStopped(instance.Status)
 }
 
 // IsDone checks if it the PolyaxonBuild reached a final condition
@@ -119,12 +119,12 @@ func (instance *PolyaxonBuild) logCondition(condType PolyaxonBaseJobConditionTyp
 
 // LogStarting sets PolyaxonBuild to statrting
 func (instance *PolyaxonBuild) LogStarting() {
-	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonBuildStarted", "Job is starting")
+	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonBuildStarted", "Build is starting")
 }
 
 // LogRunning sets PolyaxonBuild to running
 func (instance *PolyaxonBuild) LogRunning() {
-	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonBuildRunning", "Job is running")
+	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonBuildRunning", "Build is running")
 }
 
 // LogWarning sets PolyaxonBuild to Warning
@@ -134,7 +134,7 @@ func (instance *PolyaxonBuild) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonBuild to succeeded
 func (instance *PolyaxonBuild) LogSucceeded() {
-	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonBuildSucceeded", "Job has succeded")
+	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonBuildSucceeded", "Build has succeded")
 }
 
 // LogFailed sets PolyaxonBuild to failed

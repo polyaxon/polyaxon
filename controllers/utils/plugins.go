@@ -28,8 +28,3 @@ func GetReplicas(dreplicas int, plxDeployment corev1alpha1.PolyaxonDeploymentSpe
 	}
 	return replicas
 }
-
-// ShouldReconcile checks if it controller should reschedule reconciliation
-func ShouldReconcile(plxDeploymentConditions []corev1alpha1.PolyaxonDeploymentCondition) bool {
-	return len(plxDeploymentConditions) > 0 && plxDeploymentConditions[0].Type == "warning"
-}

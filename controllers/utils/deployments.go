@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"reflect"
 
-	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -45,31 +44,26 @@ func CopyDeploymentFields(from, to *appsv1.Deployment) bool {
 	return requireUpdate
 }
 
-// GetPlxDeploymentCondition returns PolyaxonDeploymentCondition given a DeploymentCondition
-func GetPlxDeploymentCondition(dc appsv1.DeploymentCondition) corev1alpha1.PolyaxonDeploymentCondition {
-	var nbtype = ""
-	var nbreason = dc.Reason
-	var nbmsg = dc.Message
-
-	if dc.Type == "ReplicaFailure" {
-		nbtype = "warning"
-	} else if dc.Type == "Progressing" {
-		nbtype = "starting"
-	} else if dc.Type == "Available" {
-		if dc.Status == "True" {
-			nbtype = "running"
-		} else {
-			nbtype = "warning"
-		}
+// IsPlxDeploymentWarning return true if deploymeny is in warning state
+func IsPlxDeploymentWarning(ds appsv1.DeploymentStatus, dc appsv1.DeploymentCondition) bool {
+	if dc.Type == appsv1.DeploymentReplicaFailure {
+		return true
 	}
-
-	newCondition := corev1alpha1.PolyaxonDeploymentCondition{
-		Type:          nbtype,
-		LastProbeTime: metav1.Now(),
-		Reason:        nbreason,
-		Message:       nbmsg,
+	if dc.Type == appsv1.DeploymentAvailable && dc.Status == corev1.ConditionFalse {
+		return true
 	}
-	return newCondition
+	if dc.Type == appsv1.DeploymentProgressing && ds.UnavailableReplicas > 0 {
+		return true
+	}
+	return false
+}
+
+// IsPlxDeploymentRunning return true if deploymeny is running
+func IsPlxDeploymentRunning(ds appsv1.DeploymentStatus, dc appsv1.DeploymentCondition) bool {
+	if dc.Type == appsv1.DeploymentProgressing && ds.AvailableReplicas > 0 && ds.ReadyReplicas > 0 {
+		return true
+	}
+	return false
 }
 
 // GeneratePlxDeployment returns a deployment given a PolyaxonDeploymentSpec

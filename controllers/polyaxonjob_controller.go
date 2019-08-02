@@ -95,6 +95,9 @@ func (r *PolyaxonJobReconciler) reconcileJob(instance *corev1alpha1.PolyaxonJob)
 	justCreated := false
 	err := r.Get(ctx, types.NamespacedName{Name: plxJob.Name, Namespace: plxJob.Namespace}, foundJob)
 	if err != nil && apierrs.IsNotFound(err) {
+		if instance.IsDone() {
+			return nil
+		}
 		log.V(1).Info("Creating Job", "namespace", plxJob.Namespace, "name", plxJob.Name)
 		err = r.Create(ctx, plxJob)
 		justCreated = true

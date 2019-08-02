@@ -62,32 +62,32 @@ func (instance *PolyaxonExperiment) RemoveFinalizer() {
 
 // IsStarting checks if the PolyaxonExperiment is statrting
 func (instance *PolyaxonExperiment) IsStarting() bool {
-	return isStarting(instance.Status)
+	return isJobStarting(instance.Status)
 }
 
 // IsRunning checks if the PolyaxonExperiment is running
 func (instance *PolyaxonExperiment) IsRunning() bool {
-	return isRunning(instance.Status)
+	return isJobRunning(instance.Status)
 }
 
 // HasWarning checks if the PolyaxonExperiment succeeded
 func (instance *PolyaxonExperiment) HasWarning() bool {
-	return hasWarning(instance.Status)
+	return isJobWarning(instance.Status)
 }
 
 // IsSucceeded checks if the PolyaxonExperiment succeeded
 func (instance *PolyaxonExperiment) IsSucceeded() bool {
-	return isSucceeded(instance.Status)
+	return isJobSucceeded(instance.Status)
 }
 
 // IsFailed checks if the PolyaxonExperiment failed
 func (instance *PolyaxonExperiment) IsFailed() bool {
-	return isFailed(instance.Status)
+	return isJobFailed(instance.Status)
 }
 
 // IsStopped checks if the PolyaxonExperiment stopped
 func (instance *PolyaxonExperiment) IsStopped() bool {
-	return isStopped(instance.Status)
+	return isJobStopped(instance.Status)
 }
 
 // IsDone checks if it the PolyaxonExperiment reached a final condition

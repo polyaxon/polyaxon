@@ -62,32 +62,32 @@ func (instance *PolyaxonJob) RemoveFinalizer() {
 
 // IsStarting checks if the PolyaxonJob is statrting
 func (instance *PolyaxonJob) IsStarting() bool {
-	return isStarting(instance.Status)
+	return isJobStarting(instance.Status)
 }
 
 // IsRunning checks if the PolyaxonJob is running
 func (instance *PolyaxonJob) IsRunning() bool {
-	return isRunning(instance.Status)
+	return isJobRunning(instance.Status)
 }
 
 // HasWarning checks if the PolyaxonJob succeeded
 func (instance *PolyaxonJob) HasWarning() bool {
-	return hasWarning(instance.Status)
+	return isJobWarning(instance.Status)
 }
 
 // IsSucceeded checks if the PolyaxonJob succeeded
 func (instance *PolyaxonJob) IsSucceeded() bool {
-	return isSucceeded(instance.Status)
+	return isJobSucceeded(instance.Status)
 }
 
 // IsFailed checks if the PolyaxonJob failed
 func (instance *PolyaxonJob) IsFailed() bool {
-	return isFailed(instance.Status)
+	return isJobFailed(instance.Status)
 }
 
 // IsStopped checks if the PolyaxonJob stopped
 func (instance *PolyaxonJob) IsStopped() bool {
-	return isStopped(instance.Status)
+	return isJobStopped(instance.Status)
 }
 
 // IsDone checks if it the PolyaxonJob reached a final condition

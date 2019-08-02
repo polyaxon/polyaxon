@@ -87,7 +87,7 @@ func (r *PolyaxonTensorboardReconciler) Reconcile(req ctrl.Request) (ctrl.Result
 		return ctrl.Result{}, err
 	}
 
-	if utils.ShouldReconcile(instance.Status.Conditions) {
+	if instance.HasWarning() { // TODO: (mourad) Add should stop implementation
 		log.V(1).Info("Notebook has warning", "Reschdule check in", 30)
 		return ctrl.Result{Requeue: true, RequeueAfter: time.Second * time.Duration(30)}, nil
 	}
@@ -118,21 +118,25 @@ func (r *PolyaxonTensorboardReconciler) reconcileDeployment(instance *corev1alph
 	// Check if the Deployment already exists
 	foundDeployment := &appsv1.Deployment{}
 	justCreated := false
-	log.V(1).Info("Get deployment")
+	log.V(1).Info("Get Tensorboard deployment")
 	err = r.Get(ctx, types.NamespacedName{Name: plxDeployment.Name, Namespace: plxDeployment.Namespace}, foundDeployment)
+	if instance.IsDone() {
+		return nil
+	}
 	if err != nil && apierrs.IsNotFound(err) {
-		log.V(1).Info("Creating Deployment", "namespace", plxDeployment.Namespace, "name", plxDeployment.Name)
+		log.V(1).Info("Creating Tensorboard Deployment", "namespace", plxDeployment.Namespace, "name", plxDeployment.Name)
 		err = r.Create(ctx, plxDeployment)
-		justCreated = true
 		if err != nil {
 			return err
 		}
+		justCreated = true
+		instance.LogStarting()
 	} else if err != nil {
 		return err
 	}
 	// Update the deployment object and write the result back if there are any changes
 	if !justCreated && utils.CopyDeploymentFields(plxDeployment, foundDeployment) {
-		log.V(1).Info("Updating Deployment", "namespace", plxDeployment.Namespace, "name", plxDeployment.Name)
+		log.V(1).Info("Updating Tensorboard Deployment", "namespace", plxDeployment.Namespace, "name", plxDeployment.Name)
 		err = r.Update(ctx, foundDeployment)
 		if err != nil {
 			return err
@@ -141,7 +145,7 @@ func (r *PolyaxonTensorboardReconciler) reconcileDeployment(instance *corev1alph
 
 	// Update the readyReplicas if the status is changed
 	if foundDeployment.Status.ReadyReplicas != instance.Status.ReadyReplicas {
-		log.V(1).Info("Updating Status", "namespace", instance.Namespace, "name", instance.Name)
+		log.V(1).Info("Updating Tensorboard Status", "namespace", instance.Namespace, "name", instance.Name)
 		instance.Status.ReadyReplicas = foundDeployment.Status.ReadyReplicas
 		err = r.Status().Update(ctx, instance)
 		if err != nil {
@@ -150,20 +154,8 @@ func (r *PolyaxonTensorboardReconciler) reconcileDeployment(instance *corev1alph
 	}
 
 	// Check the deployment status
-	if len(foundDeployment.Status.Conditions) > 0 &&
-		foundDeployment.Status.Conditions[0] != instance.Status.DeploymentCondition {
-		log.V(1).Info("Updating container state: ", "namespace", instance.Namespace, "name", instance.Name)
-		deploymentCond := foundDeployment.Status.Conditions[0]
-		instance.Status.DeploymentCondition = deploymentCond
-		oldConditions := instance.Status.Conditions
-		newCondition := utils.GetPlxDeploymentCondition(deploymentCond)
-		// Append new condition
-		if len(oldConditions) == 0 || oldConditions[0].Type != newCondition.Type ||
-			oldConditions[0].Reason != newCondition.Reason ||
-			oldConditions[0].Message != newCondition.Message {
-			log.V(1).Info("Appending to conditions: ", "namespace", instance.Namespace, "name", instance.Name, "type", newCondition.Type, "reason", newCondition.Reason, "message", newCondition.Message)
-			instance.Status.Conditions = append([]corev1alpha1.PolyaxonDeploymentCondition{newCondition}, oldConditions...)
-		}
+	if condUpdated := r.reconcileDeploymentStatus(instance, *foundDeployment); condUpdated {
+		log.V(1).Info("Reconciling Tensorboard Job status", "namespace", plxDeployment.Namespace, "name", plxDeployment.Name)
 		err = r.Status().Update(ctx, instance)
 		if err != nil {
 			return err
@@ -171,6 +163,29 @@ func (r *PolyaxonTensorboardReconciler) reconcileDeployment(instance *corev1alph
 	}
 
 	return nil
+}
+
+func (r *PolyaxonTensorboardReconciler) reconcileDeploymentStatus(instance *corev1alpha1.PolyaxonTensorboard, deployment appsv1.Deployment) bool {
+	log := r.Log
+
+	if len(deployment.Status.Conditions) == 0 {
+		return false
+	}
+
+	newDeploymentCond := deployment.Status.Conditions[len(deployment.Status.Conditions)-1]
+
+	if utils.IsPlxDeploymentWarning(deployment.Status, newDeploymentCond) {
+		instance.LogWarning(newDeploymentCond.Reason, newDeploymentCond.Message)
+		log.V(1).Info("Tensorboard Logging Status Warning")
+		return true
+	}
+
+	if utils.IsPlxDeploymentRunning(deployment.Status, newDeploymentCond) {
+		instance.LogRunning()
+		log.V(1).Info("Tensorboard Logging Status Running")
+		return true
+	}
+	return false
 }
 
 func (r *PolyaxonTensorboardReconciler) reconcileservice(instance *corev1alpha1.PolyaxonTensorboard) error {

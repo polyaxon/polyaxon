@@ -4181,8 +4181,12 @@ spec:
                 description: PolyaxonDeploymentCondition defines the conditions of
                   PolyaxonDeploymentStatus
                 properties:
-                  lastProbeTime:
-                    description: Last time we probed the condition.
+                  lastTransitionTime:
+                    description: Last time the condition transitioned.
+                    format: date-time
+                    type: string
+                  lastUpdateTime:
+                    description: The last time this condition was updated.
                     format: date-time
                     type: string
                   message:
@@ -4192,43 +4196,17 @@ spec:
                   reason:
                     description: (brief) reason the container is in the current state
                     type: string
+                  status:
+                    description: Status of the condition, one of True, False, Unknown.
+                    type: string
                   type:
-                    description: Type is the type of the condition. Possible values
-                      are Running|Warning|Terminated
+                    description: Type is the type of the condition.
                     type: string
                 required:
+                - status
                 - type
                 type: object
               type: array
-            deploymentCondition:
-              description: DeploymentCondition is the state of underlying deployment.
-              properties:
-                lastTransitionTime:
-                  description: Last time the condition transitioned from one status
-                    to another.
-                  format: date-time
-                  type: string
-                lastUpdateTime:
-                  description: The last time this condition was updated.
-                  format: date-time
-                  type: string
-                message:
-                  description: A human readable message indicating details about the
-                    transition.
-                  type: string
-                reason:
-                  description: The reason for the condition's last transition.
-                  type: string
-                status:
-                  description: Status of the condition, one of True, False, Unknown.
-                  type: string
-                type:
-                  description: Type of deployment condition.
-                  type: string
-              required:
-              - status
-              - type
-              type: object
             readyReplicas:
               description: ReadyReplicas is the number of Pods created by the StatefulSet
                 controller that have a Ready Condition.

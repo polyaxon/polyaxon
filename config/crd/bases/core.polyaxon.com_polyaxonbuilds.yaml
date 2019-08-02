@@ -4204,8 +4204,7 @@ spec:
                     description: Status of the condition, one of True, False, Unknown.
                     type: string
                   type:
-                    description: Type is the type of the condition. Possible values
-                      are Running|Warning|Stopped|Succeeded|Failed
+                    description: Type is the type of the condition.
                     type: string
                 required:
                 - status

@@ -59,7 +59,7 @@ type PolyaxonBaseJobStatus struct {
 
 // PolyaxonBaseJobCondition defines the conditions of PolyaxonBaseJobStatus
 type PolyaxonBaseJobCondition struct {
-	// Type is the type of the condition. Possible values are Running|Warning|Stopped|Succeeded|Failed
+	// Type is the type of the condition.
 	Type PolyaxonBaseJobConditionType `json:"type"`
 
 	// Status of the condition, one of True, False, Unknown.
@@ -82,7 +82,7 @@ type PolyaxonBaseJobCondition struct {
 	Message string `json:"message,omitempty"`
 }
 
-// PolyaxonBaseJobConditionType maps the conditions a polyaxon job once deployed on
+// PolyaxonBaseJobConditionType maps the conditions a polyaxon job once deployed
 type PolyaxonBaseJobConditionType string
 
 const (
@@ -148,26 +148,26 @@ func hasPlxBaseJobCondition(status PolyaxonBaseJobStatus, condType PolyaxonBaseJ
 	return false
 }
 
-func isStarting(status PolyaxonBaseJobStatus) bool {
+func isJobStarting(status PolyaxonBaseJobStatus) bool {
 	return hasPlxBaseJobCondition(status, JobStarting)
 }
 
-func isRunning(status PolyaxonBaseJobStatus) bool {
+func isJobRunning(status PolyaxonBaseJobStatus) bool {
 	return hasPlxBaseJobCondition(status, JobRunning)
 }
 
-func hasWarning(status PolyaxonBaseJobStatus) bool {
+func isJobWarning(status PolyaxonBaseJobStatus) bool {
 	return hasPlxBaseJobCondition(status, JobWarning)
 }
 
-func isSucceeded(status PolyaxonBaseJobStatus) bool {
+func isJobSucceeded(status PolyaxonBaseJobStatus) bool {
 	return hasPlxBaseJobCondition(status, JobSucceeded)
 }
 
-func isFailed(status PolyaxonBaseJobStatus) bool {
+func isJobFailed(status PolyaxonBaseJobStatus) bool {
 	return hasPlxBaseJobCondition(status, JobFailed)
 }
 
-func isStopped(status PolyaxonBaseJobStatus) bool {
+func isJobStopped(status PolyaxonBaseJobStatus) bool {
 	return hasPlxBaseJobCondition(status, JobStopped)
 }
