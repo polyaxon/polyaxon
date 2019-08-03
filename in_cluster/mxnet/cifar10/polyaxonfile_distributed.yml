@@ -15,7 +15,7 @@ environment:
 build:
   image: polyaxon/mxnetkv
   build_steps:
-    - pip install --no-cache-dir polyaxon-client==0.5.4
+    - pip install --no-cache-dir polyaxon-client==0.5.5
   env_vars:
     - ['PS_VERBOSE', 2]
 

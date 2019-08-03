@@ -86,7 +86,7 @@ RUN echo "y" | ssh-keygen -N "" -f /root/.ssh/id_rsa && \
 
 # Polyaxon
 
-RUN pip install polyaxon-client==0.5.4
+RUN pip install polyaxon-client==0.5.5
 
 WORKDIR /code
 COPY build /code

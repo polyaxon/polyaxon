@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Docs](https://img.shields.io/badge/docs-0.5.4-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
-![Release](https://img.shields.io/badge/release-0.5.4-brightgreen.svg?longCache=true)
+[![Docs](https://img.shields.io/badge/docs-0.5.5-brightgreen.svg?style=flat)](https://docs.polyaxon.com)
+![Release](https://img.shields.io/badge/release-0.5.5-brightgreen.svg?longCache=true)
 [![Slack](https://img.shields.io/badge/chat-on%20slack-aadada.svg?logo=slack&longCache=true)](https://join.slack.com/t/polyaxon/shared_invite/enQtMzQ0ODc2MDg1ODc0LWY2ZTdkMTNmZjBlZmRmNjQxYmYwMTBiMDZiMWJhODI2ZTk0MDU4Mjg5YzA5M2NhYzc5ZjhiMjczMDllYmQ2MDg)
 
 
