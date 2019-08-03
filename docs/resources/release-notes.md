@@ -9,6 +9,17 @@ tags:
     - reference
 ---
 
+## 0.5.5
+
+ * Fix regression in last metric saving (Last metric should always output the last metric from all previous steps).
+ * Fix regression registering wrong queue for handling remote logs.
+ * Fix regression order-by metrics does not proxy to the correct field.
+ * Fix issue in Polystores: GCS might include empty blob names.
+ * Add eventual pod restart handling for init process.
+ * Update deps with security release.
+ * Add docs for elastic stack config for on-prem deployments.
+
+
 ## 0.5.4
 
  * Increase internal API throttling.

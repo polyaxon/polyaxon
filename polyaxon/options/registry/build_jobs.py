@@ -81,7 +81,7 @@ class BuildJobsDockerImage(Option):
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
-    default = 'polyaxon/polyaxon-dockerizer:0.5.4'
+    default = 'polyaxon/polyaxon-dockerizer:0.5.5'
     options = None
     description = 'The dockerizer docker image'
     cache_ttl = 240

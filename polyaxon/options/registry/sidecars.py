@@ -23,7 +23,7 @@ class SidecarsDockerImage(Option):
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
-    default = 'polyaxon/polyaxon-sidecar:0.5.4'
+    default = 'polyaxon/polyaxon-sidecar:0.5.5'
     options = None
     description = 'Sidecar docker image'
     cache_ttl = LONG_CACHE_TTL
