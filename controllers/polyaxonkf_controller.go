@@ -20,16 +20,19 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
+	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
+	"github.com/polyaxon/polyaxon-operator/controllers/utils"
 )
 
 // PolyaxonKFReconciler reconciles a PolyaxonKF object
 type PolyaxonKFReconciler struct {
 	client.Client
-	Log logr.Logger
+	Log    logr.Logger
+	Scheme *runtime.Scheme
 }
 
 // +kubebuilder:rbac:groups=core.polyaxon.com,resources=polyaxonkfs,verbs=get;list;watch;create;update;patch;delete
@@ -37,12 +40,37 @@ type PolyaxonKFReconciler struct {
 
 // Reconcile logic for PolyaxonKFReconciler
 func (r *PolyaxonKFReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
-	_ = context.Background()
-	_ = r.Log.WithValues("polyaxonkf", req.NamespacedName)
+	ctx := context.Background()
+	log := r.Log.WithValues("polyaxonkf", req.NamespacedName)
 
-	// your logic here
+	// Load the instance by name
+	instance := &corev1alpha1.PolyaxonKF{}
+	if err := r.Get(ctx, req.NamespacedName, instance); err != nil {
+		log.V(1).Info("unable to fetch PolyaxonKF", "err", err)
+		return ctrl.Result{}, utils.IgnoreNotFound(err)
+	}
+
+	// Finalizer
+	if instance.IsBeingDeleted() {
+		if err := r.handleFinalizer(instance); err != nil {
+			return ctrl.Result{}, err
+		}
+	} else if !instance.HasFinalizer() {
+		if err := r.addFinalizer(instance); err != nil {
+			return ctrl.Result{}, err
+		}
+	}
+
+	// Reconcile the underlaying KubeFlow entity
+	if err := r.reconcileKF(instance); err != nil {
+		return ctrl.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
+}
+
+func (r *PolyaxonKFReconciler) reconcileKF(instance *corev1alpha1.PolyaxonKF) error {
+	return nil
 }
 
 // SetupWithManager register the reconciliation logic

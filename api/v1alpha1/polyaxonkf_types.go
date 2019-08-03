@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -24,7 +25,7 @@ import (
 
 // +kubebuilder:object:root=true
 
-// PolyaxonKF is the Schema for the polyaxonkfs API
+// PolyaxonKF is the Schema for the polyaxonkfs API to manage Kubeflow operators
 // +k8s:openapi-gen=true
 // +kubebuilder:resource:shortName=plxkf
 // +kubebuilder:subresource:status
@@ -32,9 +33,137 @@ type PolyaxonKF struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	// KFSpec represent the spec to pass to the underlaying KF operator
+	KFKind KFKind `json:"kfKind"`
+	// KFSpec represent the spec to pass to the underlaying KubeFlow operator
+	// This vaidation of the spec is handled by the corresponding operator
 	KFSpec string                `json:"runSpec,omitempty"`
 	Status PolyaxonBaseJobStatus `json:"status,omitempty"`
+}
+
+// KFKind represents the valid Kubeflow kinds
+type KFKind string
+
+const (
+	// TFJob represent the Tensorflow operator
+	TFJob KFKind = "TFJob"
+	// PyTorchJob represent the PyTorch operator
+	PyTorchJob KFKind = "PyTorchJob"
+	// MPIJob represent the MPI operator
+	MPIJob KFKind = "MPIJob"
+	// MXJob represent the MXNet operator
+	MXJob KFKind = "MXJob"
+	// XGBoostJob represent the XGBoost operator
+	XGBoostJob KFKind = "XGBoostJob"
+)
+
+// IsBeingDeleted checks if the kf is being deleted
+func (instance *PolyaxonKF) IsBeingDeleted() bool {
+	return !instance.ObjectMeta.DeletionTimestamp.IsZero()
+}
+
+// PolyaxonKFFinalizerName registration
+const PolyaxonKFFinalizerName = "kf.finalizers.polyaxon.com"
+
+// HasFinalizer check for PolyaxonKF
+func (instance *PolyaxonKF) HasFinalizer() bool {
+	return containsString(instance.ObjectMeta.Finalizers, PolyaxonKFFinalizerName)
+}
+
+// AddFinalizer handler for PolyaxonKF
+func (instance *PolyaxonKF) AddFinalizer() {
+	instance.ObjectMeta.Finalizers = append(instance.ObjectMeta.Finalizers, PolyaxonKFFinalizerName)
+}
+
+// RemoveFinalizer handler for PolyaxonKF
+func (instance *PolyaxonKF) RemoveFinalizer() {
+	instance.ObjectMeta.Finalizers = removeString(instance.ObjectMeta.Finalizers, PolyaxonKFFinalizerName)
+}
+
+// IsStarting checks if the PolyaxonKF is statrting
+func (instance *PolyaxonKF) IsStarting() bool {
+	return isJobStarting(instance.Status)
+}
+
+// IsRunning checks if the PolyaxonKF is running
+func (instance *PolyaxonKF) IsRunning() bool {
+	return isJobRunning(instance.Status)
+}
+
+// HasWarning checks if the PolyaxonKF succeeded
+func (instance *PolyaxonKF) HasWarning() bool {
+	return isJobWarning(instance.Status)
+}
+
+// IsSucceeded checks if the PolyaxonKF succeeded
+func (instance *PolyaxonKF) IsSucceeded() bool {
+	return isJobSucceeded(instance.Status)
+}
+
+// IsFailed checks if the PolyaxonKF failed
+func (instance *PolyaxonKF) IsFailed() bool {
+	return isJobFailed(instance.Status)
+}
+
+// IsStopped checks if the PolyaxonKF stopped
+func (instance *PolyaxonKF) IsStopped() bool {
+	return isJobStopped(instance.Status)
+}
+
+// IsDone checks if it the PolyaxonKF reached a final condition
+func (instance *PolyaxonKF) IsDone() bool {
+	return instance.IsSucceeded() || instance.IsFailed() || instance.IsStopped()
+}
+
+func (instance *PolyaxonKF) removeCondition(conditionType PolyaxonBaseJobConditionType) {
+	var newConditions []PolyaxonBaseJobCondition
+	for _, c := range instance.Status.Conditions {
+
+		if c.Type == conditionType {
+			continue
+		}
+
+		newConditions = append(newConditions, c)
+	}
+	instance.Status.Conditions = newConditions
+}
+
+func (instance *PolyaxonKF) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) {
+	currentCond := getPlxBaseJobConditionFromStatus(instance.Status, condType)
+	cond := getOrUpdatePlxBaseJobCondition(currentCond, condType, status, reason, message)
+	if cond != nil {
+		instance.removeCondition(condType)
+		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
+	}
+}
+
+// LogStarting sets PolyaxonKF to statrting
+func (instance *PolyaxonKF) LogStarting() {
+	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonKFStarted", "KF is starting")
+}
+
+// LogRunning sets PolyaxonKF to running
+func (instance *PolyaxonKF) LogRunning() {
+	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonKFRunning", "KF is running")
+}
+
+// LogWarning sets PolyaxonKF to Warning
+func (instance *PolyaxonKF) LogWarning(reason, message string) {
+	instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
+}
+
+// LogSucceeded sets PolyaxonKF to succeeded
+func (instance *PolyaxonKF) LogSucceeded() {
+	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonKFSucceeded", "KF has succeded")
+}
+
+// LogFailed sets PolyaxonKF to failed
+func (instance *PolyaxonKF) LogFailed(reason, message string) {
+	instance.logCondition(JobFailed, corev1.ConditionFalse, reason, message)
+}
+
+// LogStopped sets PolyaxonKF to stopped
+func (instance *PolyaxonKF) LogStopped(reason, message string) {
+	instance.logCondition(JobStopped, corev1.ConditionFalse, reason, message)
 }
 
 // +kubebuilder:object:root=true
