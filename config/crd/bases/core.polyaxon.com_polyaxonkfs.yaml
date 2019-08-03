@@ -17,12 +17,16 @@ spec:
     status: {}
   validation:
     openAPIV3Schema:
-      description: PolyaxonKF is the Schema for the polyaxonkfs API
+      description: PolyaxonKF is the Schema for the polyaxonkfs API to manage Kubeflow
+        operators
       properties:
         apiVersion:
           description: 'APIVersion defines the versioned schema of this representation
             of an object. Servers should convert recognized schemas to the latest
             internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kfKind:
+          description: KFKind represents the valid Kubeflow kinds
           type: string
         kind:
           description: 'Kind is a string value representing the REST resource this
@@ -32,7 +36,8 @@ spec:
         metadata:
           type: object
         runSpec:
-          description: KFSpec represent the spec to pass to the underlaying KF operator
+          description: KFSpec represent the spec to pass to the underlaying KubeFlow
+            operator This vaidation of the spec is handled by the corresponding operator
           type: string
         status:
           description: PolyaxonBaseJobStatus defines the observed state of PolyaxonBaseJob
@@ -89,7 +94,10 @@ spec:
               format: date-time
               type: string
           type: object
+      required:
+      - kfKind
       type: object
+  version: v1alpha1
   versions:
   - name: v1alpha1
     served: true

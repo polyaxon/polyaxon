@@ -21,7 +21,6 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -75,18 +74,15 @@ func (in *PolyaxonBaseJobStatus) DeepCopyInto(out *PolyaxonBaseJobStatus) {
 	}
 	if in.StartTime != nil {
 		in, out := &in.StartTime, &out.StartTime
-		*out = new(v1.Time)
-		(*in).DeepCopyInto(*out)
+		*out = (*in).DeepCopy()
 	}
 	if in.CompletionTime != nil {
 		in, out := &in.CompletionTime, &out.CompletionTime
-		*out = new(v1.Time)
-		(*in).DeepCopyInto(*out)
+		*out = (*in).DeepCopy()
 	}
 	if in.LastReconcileTime != nil {
 		in, out := &in.LastReconcileTime, &out.LastReconcileTime
-		*out = new(v1.Time)
-		(*in).DeepCopyInto(*out)
+		*out = (*in).DeepCopy()
 	}
 }
 
