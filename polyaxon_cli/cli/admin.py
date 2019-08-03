@@ -58,7 +58,13 @@ def deploy(file, manager_path, check, dry_run):  # pylint:disable=redefined-buil
                             dry_run=dry_run)
     exception = None
     if check:
-        manager.check()
+        try:
+            manager.check()
+        except Exception as e:
+            Printer.print_error("Polyaxon deployment file is not valid ")
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
+
         Printer.print_success('Polyaxon deployment file is valid.')
     else:
         try:
@@ -90,7 +96,12 @@ def upgrade(file, manager_path, check, dry_run):  # pylint:disable=redefined-bui
                             dry_run=dry_run)
     exception = None
     if check:
-        manager.check()
+        try:
+            manager.check()
+        except Exception as e:
+            Printer.print_error("Polyaxon deployment file is not valid ")
+            Printer.print_error('Error message `{}`.'.format(e))
+            sys.exit(1)
         Printer.print_success('Polyaxon deployment file is valid.')
     else:
         try:
