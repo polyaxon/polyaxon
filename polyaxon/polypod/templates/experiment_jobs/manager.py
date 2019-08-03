@@ -206,7 +206,6 @@ class ResourceManager(BaseResourceManager):
                 experiment_name=self.experiment_name)
             original_outputs_path = None
 
-        _, outputs_volume_mount = get_pod_outputs_volume(persistence_outputs=persistence_outputs)
         return get_output_args(command=command,
                                outputs_path=outputs_path,
                                original_outputs_path=original_outputs_path)
