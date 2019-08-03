@@ -18,16 +18,48 @@ $ pip install -U polyaxon-dockerizer
 
 ## Usage
 
+### Generate Dockerfiles
+
 ```python
 from polyaxon_dockerizer import generate
-
+         
 generate(repo_path,
          from_image,
-         build_steps=None,
-         env_vars=None,
+         build_steps=['apt-get install git', 'pip install tensorflow'],
+         env_vars=[['ENV_VAR1', 'VALUE1'], ['ENV_VAR2', 'VALUE2']],
          nvidia_bin=None,
-         lang_env='en_US.UTF-8')
+         lang_env='en_US.UTF-8',
+         uid=2222,
+         gid=2222)
 ```
+
+### Build images
+
+```python
+from polyaxon_dockerizer import build
+
+build(build_context,
+      image_tag,
+      image_name,
+      nocache,
+      credstore_env=None,
+      registries=None)
+```
+
+
+### Build & Push images
+
+```python
+from polyaxon_dockerizer import build_and_push
+
+build_and_push(build_context,
+               image_tag,
+               image_name,
+               nocache,
+               credstore_env=None,
+               registries=None)
+```
+
 
 ## Install polyaxon
 
