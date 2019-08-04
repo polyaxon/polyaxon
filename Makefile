@@ -55,6 +55,11 @@ deploy: manifests
 manifests: controller-gen
 	$(CONTROLLER_GEN) $(CRD_OPTIONS) rbac:roleName=manager-role webhook paths="./..." output:crd:artifacts:config=config/crd/bases
 
+pull-kf:
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) paths=github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1 output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) paths=github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1 output:crd:artifacts:config=config/crd/bases
+	$(CONTROLLER_GEN) $(CRD_OPTIONS) paths=github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2 output:crd:artifacts:config=config/crd/bases
+
 # Run go fmt against code
 fmt:
 	go fmt ./...

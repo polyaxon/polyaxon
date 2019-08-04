@@ -19,9 +19,71 @@ package v1alpha1
 import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	// kfcommonv1 "github.com/kubeflow/common/job_controller/api/v1"
+	// mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
+	// mxnetjobv1 "github.com/kubeflow/mxnet-operator/pkg/apis/mxnet/v1"
+	// pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
+	// tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 )
 
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
+
+// KFSpec defines the desired state of PolyaxonKFJob
+type KFSpec struct {
+	// Specifies the Kubeflow kind opertor to use
+	KFKind KFKind `json:"kfKind"`
+
+	// Specifies the number of retries before marking this job failed.
+	// +optional
+	MaxRetries *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
+
+	// Specifies the duration (in seconds) since startTime during which the job can remain active
+	// before it is terminated. Must be a positive integer.
+	// This setting applies only to pods where restartPolicy is OnFailure or Always.
+	// +optional
+	ActiveDeadlineSeconds *int64 `json:"activeDeadlineSeconds,omitempty"`
+
+	// Defines the policy for cleaning up pods after the Job completes.
+	// Defaults to Running.
+	// CleanPodPolicy *kfcommonv1.CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
+
+	// Defines the TTL for cleaning up finished Jobs (temporary
+	// before kubernetes adds the cleanup controller)
+	TTLSecondsAfterFinished *int32 `json:"ttlSecondsAfterFinished,omitempty"`
+
+	// `ReplicaSpecs` contains maps from `KFReplicaType` to `ReplicaSpec` that
+	// specify the corresponding replicas to run.
+	// ReplicaSpecs map[KFReplicaType]*kfcommonv1.ReplicaSpec `json:"ReplicaSpecs"`
+}
+
+// KFReplicaType is the type for KF Replica.
+type KFReplicaType string // kfcommonv1.ReplicaType
+
+const (
+	// KFReplicaTypeLauncher is the type for launcher replica.
+	KFReplicaTypeLauncher KFReplicaType = "Launcher"
+
+	// KFReplicaTypeWorker is the type for worker replicas.
+	KFReplicaTypeWorker KFReplicaType = "Worker"
+
+	// KFReplicaTypePS is the type for parameter servers.
+	KFReplicaTypePS KFReplicaType = "PS"
+
+	// KFReplicaTypeChief is the type for chief worker.
+	KFReplicaTypeChief KFReplicaType = "Chief"
+
+	// TFReplicaTypeMaster is the type for master worker.
+	TFReplicaTypeMaster KFReplicaType = "Master"
+
+	// KFReplicaTypeEval is the type for evaluation replica (TF).
+	KFReplicaTypeEval KFReplicaType = "Evaluator"
+
+	// KFReplicaTypeScheduler is the type for scheduler replica (MXNet).
+	KFReplicaTypeScheduler KFReplicaType = "Scheduler"
+
+	// KFReplicaTypeServer is the type for parameter servers (MXNet).
+	KFReplicaTypeServer KFReplicaType = "Server"
+)
 
 // +kubebuilder:object:root=true
 
@@ -33,10 +95,9 @@ type PolyaxonKF struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	KFKind KFKind `json:"kfKind"`
 	// KFSpec represent the spec to pass to the underlaying KubeFlow operator
 	// This vaidation of the spec is handled by the corresponding operator
-	KFSpec string                `json:"runSpec,omitempty"`
+	Spec   KFSpec                `json:"spec,omitempty"`
 	Status PolyaxonBaseJobStatus `json:"status,omitempty"`
 }
 

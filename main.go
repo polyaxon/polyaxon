@@ -30,6 +30,10 @@ import (
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+
+	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
+	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
+	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -44,6 +48,9 @@ func init() {
 	_ = corev1.AddToScheme(scheme)
 	_ = appsv1.AddToScheme(scheme)
 	_ = batchv1.AddToScheme(scheme)
+	_ = tfjobv1.AddToScheme(scheme)
+	_ = pytorchjobv1.AddToScheme(scheme)
+	_ = mpijobv1.AddToScheme(scheme)
 	_ = corev1alpha1.AddToScheme(scheme)
 	// +kubebuilder:scaffold:scheme
 }

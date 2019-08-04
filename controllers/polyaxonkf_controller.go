@@ -26,6 +26,10 @@ import (
 
 	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
 	"github.com/polyaxon/polyaxon-operator/controllers/utils"
+
+	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
+	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
+	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 )
 
 // PolyaxonKFReconciler reconciles a PolyaxonKF object
@@ -70,6 +74,10 @@ func (r *PolyaxonKFReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 }
 
 func (r *PolyaxonKFReconciler) reconcileKF(instance *corev1alpha1.PolyaxonKF) error {
+	// Check if the Job already exists
+	_ = &mpijobv1.MPIJob{}
+	_ = &pytorchjobv1.PyTorchJob{}
+	_ = &tfjobv1.TFJob{}
 	return nil
 }
 

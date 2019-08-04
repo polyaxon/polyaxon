@@ -25,9 +25,6 @@ spec:
             of an object. Servers should convert recognized schemas to the latest
             internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
           type: string
-        kfKind:
-          description: KFKind represents the valid Kubeflow kinds
-          type: string
         kind:
           description: 'Kind is a string value representing the REST resource this
             object represents. Servers may infer this from the endpoint the client
@@ -35,10 +32,33 @@ spec:
           type: string
         metadata:
           type: object
-        runSpec:
+        spec:
           description: KFSpec represent the spec to pass to the underlaying KubeFlow
             operator This vaidation of the spec is handled by the corresponding operator
-          type: string
+          properties:
+            activeDeadlineSeconds:
+              description: Specifies the duration (in seconds) since startTime during
+                which the job can remain active before it is terminated. Must be a
+                positive integer. This setting applies only to pods where restartPolicy
+                is OnFailure or Always.
+              format: int64
+              type: integer
+            kfKind:
+              description: Specifies the Kubeflow kind opertor to use
+              type: string
+            maxRetries:
+              description: Specifies the number of retries before marking this job
+                failed.
+              format: int32
+              type: integer
+            ttlSecondsAfterFinished:
+              description: Defines the TTL for cleaning up finished Jobs (temporary
+                before kubernetes adds the cleanup controller)
+              format: int32
+              type: integer
+          required:
+          - kfKind
+          type: object
         status:
           description: PolyaxonBaseJobStatus defines the observed state of PolyaxonBaseJob
           properties:
@@ -94,8 +114,6 @@ spec:
               format: date-time
               type: string
           type: object
-      required:
-      - kfKind
       type: object
   version: v1alpha1
   versions:
