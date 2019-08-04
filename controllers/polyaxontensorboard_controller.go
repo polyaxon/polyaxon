@@ -88,7 +88,7 @@ func (r *PolyaxonTensorboardReconciler) Reconcile(req ctrl.Request) (ctrl.Result
 	}
 
 	if instance.HasWarning() { // TODO: (mourad) Add should stop implementation
-		log.V(1).Info("Notebook has warning", "Reschdule check in", 30)
+		log.V(1).Info("Tensorboard has warning", "Reschdule check in", 30)
 		return ctrl.Result{Requeue: true, RequeueAfter: time.Second * time.Duration(30)}, nil
 	}
 

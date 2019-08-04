@@ -17,6 +17,8 @@ limitations under the License.
 package kf
 
 import (
+	"reflect"
+
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
@@ -36,7 +38,10 @@ func CopyTFJobFields(from, to *tfjobv1.TFJob) bool {
 	}
 	to.Labels = from.Labels
 
-	// TODO: Add copy logic
+	if !reflect.DeepEqual(to.Spec, from.Spec) {
+		requireUpdate = true
+	}
+	to.Spec = from.Spec
 
 	return requireUpdate
 }
@@ -48,9 +53,17 @@ func GenerateTFJob(
 	labels map[string]string,
 	spec corev1alpha1.KFSpec,
 ) *tfjobv1.TFJob {
-	tfReplocSpecs := map[tfjobv1.TFReplicaType]*kfcommonv1.ReplicaSpec{}
+	tfReplicaSpecs := map[tfjobv1.TFReplicaType]*kfcommonv1.ReplicaSpec{}
 	for k, v := range spec.ReplicaSpecs {
-		tfReplocSpecs[tfjobv1.TFReplicaType(k)] = &v
+		tfReplicaSpecs[tfjobv1.TFReplicaType(k)] = generateKFReplica(v)
+	}
+
+	// copy all of the labels to the pod including pod default related labels
+	for _, replicaSpec := range tfReplicaSpecs {
+		l := &replicaSpec.Template.ObjectMeta.Labels
+		for k, v := range labels {
+			(*l)[k] = v
+		}
 	}
 
 	tfJobSpec := tfjobv1.TFJobSpec{
@@ -58,7 +71,7 @@ func GenerateTFJob(
 		BackoffLimit:            spec.MaxRetries,
 		CleanPodPolicy:          spec.CleanPodPolicy,
 		TTLSecondsAfterFinished: spec.TTLSecondsAfterFinished,
-		TFReplicaSpecs:          tfReplocSpecs,
+		TFReplicaSpecs:          tfReplicaSpecs,
 	}
 
 	tfJob := &tfjobv1.TFJob{

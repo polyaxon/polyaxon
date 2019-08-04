@@ -99,7 +99,7 @@ func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF)
 		instance.Spec,
 	)
 	if err := ctrl.SetControllerReference(instance, plxJob, r.Scheme); err != nil {
-		log.V(1).Info("generateTfJob Error")
+		log.V(1).Info("generateTFJob Error")
 		return err
 	}
 	// Check if the Job already exists
@@ -110,7 +110,6 @@ func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF)
 		if instance.IsDone() {
 			return nil
 		}
-		log.V(1).Info("Creating TFJob", "namespace", plxJob.Namespace, "name", plxJob.Name)
 		err = r.Create(ctx, plxJob)
 		justCreated = true
 		if err != nil {
@@ -122,7 +121,7 @@ func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF)
 
 	// Update the job object and write the result back if there are any changes
 	if !justCreated && kf.CopyTFJobFields(plxJob, foundJob) {
-		log.V(1).Info("Updating Job", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		log.V(1).Info("Updating TFJob", "namespace", plxJob.Namespace, "name", plxJob.Name)
 		err = r.Update(ctx, foundJob)
 		if err != nil {
 			return err
@@ -142,14 +141,106 @@ func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF)
 }
 
 func (r *PolyaxonKFReconciler) reconcilePytorchJob(instance *corev1alpha1.PolyaxonKF) error {
+	log := r.Log
+	ctx := context.Background()
+
+	plxJob := kf.GeneratePytorchJob(
+		instance.Name,
+		instance.Namespace,
+		instance.Labels,
+		instance.Spec,
+	)
+	if err := ctrl.SetControllerReference(instance, plxJob, r.Scheme); err != nil {
+		log.V(1).Info("generatePytorchJob Error")
+		return err
+	}
 	// Check if the Job already exists
-	_ = &pytorchjobv1.PyTorchJob{}
+	foundJob := &pytorchjobv1.PyTorchJob{}
+	justCreated := false
+	err := r.Get(ctx, types.NamespacedName{Name: plxJob.Name, Namespace: plxJob.Namespace}, foundJob)
+	if err != nil && apierrs.IsNotFound(err) {
+		if instance.IsDone() {
+			return nil
+		}
+		err = r.Create(ctx, plxJob)
+		justCreated = true
+		if err != nil {
+			return err
+		}
+	} else if err != nil {
+		return err
+	}
+
+	// Update the job object and write the result back if there are any changes
+	if !justCreated && kf.CopyPytorchJobFields(plxJob, foundJob) {
+		log.V(1).Info("Updating PytorchJob", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Update(ctx, foundJob)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Check the job status
+	// if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
+	// 	log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+	// 	err = r.Status().Update(ctx, instance)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// }
+
 	return nil
 }
 
 func (r *PolyaxonKFReconciler) reconcileMPIJob(instance *corev1alpha1.PolyaxonKF) error {
+	log := r.Log
+	ctx := context.Background()
+
+	plxJob := kf.GenerateMPIJob(
+		instance.Name,
+		instance.Namespace,
+		instance.Labels,
+		instance.Spec,
+	)
+	if err := ctrl.SetControllerReference(instance, plxJob, r.Scheme); err != nil {
+		log.V(1).Info("generateMPIJob Error")
+		return err
+	}
 	// Check if the Job already exists
-	_ = &mpijobv1.MPIJob{}
+	foundJob := &mpijobv1.MPIJob{}
+	justCreated := false
+	err := r.Get(ctx, types.NamespacedName{Name: plxJob.Name, Namespace: plxJob.Namespace}, foundJob)
+	if err != nil && apierrs.IsNotFound(err) {
+		if instance.IsDone() {
+			return nil
+		}
+		err = r.Create(ctx, plxJob)
+		justCreated = true
+		if err != nil {
+			return err
+		}
+	} else if err != nil {
+		return err
+	}
+
+	// Update the job object and write the result back if there are any changes
+	if !justCreated && kf.CopyMPIJobFields(plxJob, foundJob) {
+		log.V(1).Info("Updating MPIJob", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Update(ctx, foundJob)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Check the job status
+	// if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
+	// 	log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+	// 	err = r.Status().Update(ctx, instance)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// }
+
 	return nil
 }
 
