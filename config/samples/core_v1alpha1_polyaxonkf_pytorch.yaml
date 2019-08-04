@@ -1,0 +1,33 @@
+apiVersion: core.polyaxon.com/v1alpha1
+kind: PolyaxonKF
+metadata:
+  name: polyaxon-pytorch-sample
+spec:
+  kfKind: PyTorchJob
+  replicaSpecs:
+    Master:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+            - name: pytorch
+              image: gcr.io/<your_project>/pytorch_dist_mnist:mpi
+              args: ["--backend", "mpi"]
+              # Comment out the below resources to use the CPU.
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+            - name: pytorch
+              image: gcr.io/<your_project>/pytorch_dist_mnist:mpi
+              args: ["--backend", "mpi"]
+              # Comment out the below resources to use the CPU.
+              resources:
+                limits:
+                  nvidia.com/gpu: 1

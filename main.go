@@ -34,6 +34,7 @@ import (
 	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
 	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
 	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
+	// mxnetjobv1 "github.com/kubeflow/mxnet-operator/pkg/apis/mxnet/v1"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -118,6 +119,7 @@ func main() {
 	if err = (&controllers.PolyaxonKFReconciler{
 		Client: mgr.GetClient(),
 		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonKF"),
+		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonKF")
 		os.Exit(1)

@@ -19,11 +19,8 @@ package v1alpha1
 import (
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	// kfcommonv1 "github.com/kubeflow/common/job_controller/api/v1"
-	// mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
-	// mxnetjobv1 "github.com/kubeflow/mxnet-operator/pkg/apis/mxnet/v1"
-	// pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
-	// tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
+
+	kfcommonv1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1"
 )
 
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
@@ -45,7 +42,7 @@ type KFSpec struct {
 
 	// Defines the policy for cleaning up pods after the Job completes.
 	// Defaults to Running.
-	// CleanPodPolicy *kfcommonv1.CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
+	CleanPodPolicy *kfcommonv1.CleanPodPolicy `json:"cleanPodPolicy,omitempty"`
 
 	// Defines the TTL for cleaning up finished Jobs (temporary
 	// before kubernetes adds the cleanup controller)
@@ -53,11 +50,14 @@ type KFSpec struct {
 
 	// `ReplicaSpecs` contains maps from `KFReplicaType` to `ReplicaSpec` that
 	// specify the corresponding replicas to run.
-	// ReplicaSpecs map[KFReplicaType]*kfcommonv1.ReplicaSpec `json:"ReplicaSpecs"`
+	ReplicaSpecs map[KFReplicaType]kfcommonv1.ReplicaSpec `json:"replicaSpecs"`
+	// NOTE: The usage of map[KFReplicaType]kfcommonv1.ReplicaSpec instead of map[KFReplicaType]*kfcommonv1.ReplicaSpec
+	// is to avoid an apimachinery error: map values must be a named type, not *ast.StarExpr
+	// so replicaSpecs must be passed by ref (&) when generating corresponding jobs
 }
 
 // KFReplicaType is the type for KF Replica.
-type KFReplicaType string // kfcommonv1.ReplicaType
+type KFReplicaType kfcommonv1.ReplicaType
 
 const (
 	// KFReplicaTypeLauncher is the type for launcher replica.

@@ -21,6 +21,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/kubeflow/tf-operator/pkg/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -37,10 +38,22 @@ func (in *KFSpec) DeepCopyInto(out *KFSpec) {
 		*out = new(int64)
 		**out = **in
 	}
+	if in.CleanPodPolicy != nil {
+		in, out := &in.CleanPodPolicy, &out.CleanPodPolicy
+		*out = new(v1.CleanPodPolicy)
+		**out = **in
+	}
 	if in.TTLSecondsAfterFinished != nil {
 		in, out := &in.TTLSecondsAfterFinished, &out.TTLSecondsAfterFinished
 		*out = new(int32)
 		**out = **in
+	}
+	if in.ReplicaSpecs != nil {
+		in, out := &in.ReplicaSpecs, &out.ReplicaSpecs
+		*out = make(map[KFReplicaType]v1.ReplicaSpec, len(*in))
+		for key, val := range *in {
+			(*out)[key] = *val.DeepCopy()
+		}
 	}
 }
 

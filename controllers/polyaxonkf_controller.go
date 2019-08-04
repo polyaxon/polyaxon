@@ -20,11 +20,14 @@ import (
 	"context"
 
 	"github.com/go-logr/logr"
+	apierrs "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
+	"github.com/polyaxon/polyaxon-operator/controllers/kf"
 	"github.com/polyaxon/polyaxon-operator/controllers/utils"
 
 	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
@@ -74,10 +77,79 @@ func (r *PolyaxonKFReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) 
 }
 
 func (r *PolyaxonKFReconciler) reconcileKF(instance *corev1alpha1.PolyaxonKF) error {
+	switch instance.Spec.KFKind {
+	case corev1alpha1.TFJob:
+		return r.reconcileTFJob(instance)
+	case corev1alpha1.PyTorchJob:
+		return r.reconcilePytorchJob(instance)
+	case corev1alpha1.MPIJob:
+		return r.reconcileMPIJob(instance)
+	}
+	return nil
+}
+
+func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF) error {
+	log := r.Log
+	ctx := context.Background()
+
+	plxJob := kf.GenerateTFJob(
+		instance.Name,
+		instance.Namespace,
+		instance.Labels,
+		instance.Spec,
+	)
+	if err := ctrl.SetControllerReference(instance, plxJob, r.Scheme); err != nil {
+		log.V(1).Info("generateTfJob Error")
+		return err
+	}
+	// Check if the Job already exists
+	foundJob := &tfjobv1.TFJob{}
+	justCreated := false
+	err := r.Get(ctx, types.NamespacedName{Name: plxJob.Name, Namespace: plxJob.Namespace}, foundJob)
+	if err != nil && apierrs.IsNotFound(err) {
+		if instance.IsDone() {
+			return nil
+		}
+		log.V(1).Info("Creating TFJob", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Create(ctx, plxJob)
+		justCreated = true
+		if err != nil {
+			return err
+		}
+	} else if err != nil {
+		return err
+	}
+
+	// Update the job object and write the result back if there are any changes
+	if !justCreated && kf.CopyTFJobFields(plxJob, foundJob) {
+		log.V(1).Info("Updating Job", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Update(ctx, foundJob)
+		if err != nil {
+			return err
+		}
+	}
+
+	// Check the job status
+	// if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
+	// 	log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+	// 	err = r.Status().Update(ctx, instance)
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// }
+
+	return nil
+}
+
+func (r *PolyaxonKFReconciler) reconcilePytorchJob(instance *corev1alpha1.PolyaxonKF) error {
+	// Check if the Job already exists
+	_ = &pytorchjobv1.PyTorchJob{}
+	return nil
+}
+
+func (r *PolyaxonKFReconciler) reconcileMPIJob(instance *corev1alpha1.PolyaxonKF) error {
 	// Check if the Job already exists
 	_ = &mpijobv1.MPIJob{}
-	_ = &pytorchjobv1.PyTorchJob{}
-	_ = &tfjobv1.TFJob{}
 	return nil
 }
 
