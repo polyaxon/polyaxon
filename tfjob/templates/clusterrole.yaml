@@ -17,9 +17,11 @@ metadata:
     app.kubernetes.io/managed-by: "helm"
 rules:
 - apiGroups:
+  - tensorflow.org
   - kubeflow.org
   resources:
   - tfjobs
+  - tfjobs/status
   verbs:
   - "*"
 - apiGroups:
@@ -56,11 +58,5 @@ rules:
   - extensions
   resources:
   - deployments
-  verbs:
-  - "*"
-- apiGroups:
-  - policy
-  resources:
-  - poddisruptionbudgets
   verbs:
   - "*"

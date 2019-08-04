@@ -34,8 +34,18 @@ spec:
       serviceAccountName: {{ .Release.Name }}-{{ .Chart.Name }}
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
-        image: gcr.io/kubeflow-images-public/tf_operator:v0.4.1
+        image: gcr.io/kubeflow-images-public/tf_operator:v0.6.0.rc0
         command:
-          - /opt/kubeflow/tf-operator.v1beta1
-          - --alsologtostderr
-          - -v=1
+        - /opt/kubeflow/tf-operator.v1
+        - --alsologtostderr
+        - -v=1
+        - --monitoring-port=8443
+        env:
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name

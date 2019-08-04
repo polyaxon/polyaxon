@@ -4,7 +4,7 @@ metadata:
   name: mpijobs.kubeflow.org
 spec:
   group: kubeflow.org
-  version: v1alpha1
+  version: v1alpha2
   scope: Namespaced
   names:
     plural: mpijobs
@@ -13,87 +13,26 @@ spec:
     shortNames:
     - mj
     - mpij
+    subresources:
+      status: {}
   validation:
     openAPIV3Schema:
       properties:
         spec:
-          title: The MPIJob spec
-          description: Only one of `gpus`, `processingUnits`, or `replicas` should be specified
-          oneOf:
-          - properties:
-              gpus:
-                title: Total number of GPUs
-                description: Valid values are 1, 2, 4, or any multiple of 8
-                oneOf:
-                - type: integer
-                  enum:
-                  - 1
-                  - 2
-                  - 4
-                - type: integer
-                  multipleOf: 8
-                  minimum: 8
-              slotsPerWorker:
-                title: The number of slots per worker used in hostfile
-                description: Defaults to the number of processing units per worker
-                type: integer
-                minimum: 1
-              gpusPerNode:
-                title: The maximum number of GPUs available per node
-                description: Defaults to the number of GPUs per worker
-                type: integer
-                minimum: 1
-            required:
-            - gpus
-          - properties:
-              processingUnits:
-                title: Total number of processing units
-                description: Valid values are 1, 2, 4, or any multiple of 8
-                oneOf:
-                - type: integer
-                  enum:
-                  - 1
-                  - 2
-                  - 4
-                - type: integer
-                  multipleOf: 8
-                  minimum: 8
-              slotsPerWorker:
-                title: The number of slots per worker used in hostfile
-                description: Defaults to the number of processing units per worker
-                type: integer
-                minimum: 1
-              processingUnitsPerNode:
-                title: The maximum number of processing units available per node
-                description: Defaults to the number of processing units per worker
-                type: integer
-                minimum: 1
-              processingResourceType:
-                title: The processing resource type, e.g. 'nvidia.com/gpu' or 'cpu'
-                description: Defaults to 'nvidia.com/gpu'
-                type: string
-                enum:
-                  - nvidia.com/gpu
-                  - cpu
-            required:
-            - processingUnits
-          - properties:
-              replicas:
-                title: Total number of replicas
-                description: The processing resource limit should be specified for each replica
-                type: integer
-                minimum: 1
-              slotsPerWorker:
-                title: The number of slots per worker used in hostfile
-                description: Defaults to the number of processing units per worker
-                type: integer
-                minimum: 1
-              processingResourceType:
-                title: The processing resource type, e.g. 'nvidia.com/gpu' or 'cpu'
-                description: Defaults to 'nvidia.com/gpu'
-                type: string
-                enum:
-                  - nvidia.com/gpu
-                  - cpu
-            required:
-            - replicas
+          properties:
+            slotsPerWorker:
+              type: integer
+              minimum: 1
+            mpiReplicaSpecs:
+              properties:
+                Launcher:
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 1
+                      maximum: 1
+                Worker:
+                  properties:
+                    replicas:
+                      type: integer
+                      minimum: 1

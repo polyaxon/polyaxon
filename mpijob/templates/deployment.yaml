@@ -34,10 +34,9 @@ spec:
       serviceAccountName: {{ .Release.Name }}-{{ .Chart.Name }}
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
-        image: mpioperator/mpi-operator:latest
+        image: mpioperator/mpi-operator:0.2.1
         args: [
           "-alsologtostderr",
-          "--gpus-per-node", "8",
           "--kubectl-delivery-image",
           "mpioperator/kubectl-delivery:latest"
         ]
