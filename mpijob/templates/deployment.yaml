@@ -7,13 +7,13 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.type }}
-    role: {{ .Values.roles.worker }}
+    type: {{ template "type" . }}
+    role: {{ template "roles.worker" . }}
     app.kubernetes.io/name: {{ template "mpijob.fullname" . }}-deployment
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.type }}
-    app.kubernetes.io/component: {{ .Values.roles.worker }}
+    app.kubernetes.io/part-of: {{ template "type" . }}
+    app.kubernetes.io/component: {{ template "roles.worker" . }}
     app.kubernetes.io/managed-by: "helm"
 spec:
   replicas: 1
@@ -34,7 +34,7 @@ spec:
       serviceAccountName: {{ .Release.Name }}-{{ .Chart.Name }}
       containers:
       - name: {{ .Release.Name }}-{{ .Chart.Name }}
-        image: mpioperator/mpi-operator:0.2.1
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         args: [
           "-alsologtostderr",
           "--kubectl-delivery-image",

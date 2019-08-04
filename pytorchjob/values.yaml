@@ -1,8 +1,2 @@
-type: "polyaxon-integration"
-roles:
-  api: "polyaxon-api"
-  log: "polyaxon-logs"
-  config: "polyaxon-config"
-  hooks: "polyaxon-hooks"
-  worker: "polyaxon-workers"
-  dashboard: "polyaxon-dashboard"
+image: gcr.io/kubeflow-images-public/pytorch-operator
+imageTag: v0.5.1-5-ge775742

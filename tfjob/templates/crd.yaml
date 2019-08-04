@@ -7,13 +7,13 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.type }}
-    role: {{ .Values.roles.worker }}
+    type: {{ template "type" . }}
+    role: {{ template "roles.worker" . }}
     app.kubernetes.io/name: {{ template "tfjob.fullname" . }}-crd
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: polyaxon-{{ .Values.type }}
-    app.kubernetes.io/component: {{ .Values.roles.worker }}
+    app.kubernetes.io/part-of: {{ template "type" . }}
+    app.kubernetes.io/component: {{ template "roles.worker" . }}
     app.kubernetes.io/managed-by: "helm"
 spec:
   additionalPrinterColumns:

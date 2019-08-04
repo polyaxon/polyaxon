@@ -7,13 +7,13 @@ metadata:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
-    type: {{ .Values.type }}
-    role: {{ .Values.roles.worker }}
+    type: {{ template "type" . }}
+    role: {{ template "roles.worker" . }}
     app.kubernetes.io/name: {{ template "pytorchjob.fullname" . }}-deployment
     app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     app.kubernetes.io/version: "{{ .Chart.Version }}"
-    app.kubernetes.io/part-of: {{ .Values.type }}
-    app.kubernetes.io/component: {{ .Values.roles.worker }}
+    app.kubernetes.io/part-of: {{ template "type" . }}
+    app.kubernetes.io/component: {{ template "roles.worker" . }}
     app.kubernetes.io/managed-by: "helm"
 spec:
   replicas: 1
@@ -47,5 +47,5 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        image: gcr.io/kubeflow-images-public/pytorch-operator:v0.5.1-5-ge775742
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
         name: pytorch-operator
