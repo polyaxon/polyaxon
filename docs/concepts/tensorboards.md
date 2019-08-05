@@ -42,7 +42,7 @@ Your Tensorboard will be available on:
 ```
 
 This will start tensorboard with the default options,
-if you which to start tensorboard with a different Tensorflow image, or custom resources,
+if you wish to start tensorboard with a different Tensorflow image, or custom resources,
 you need to create a polyaxonfile containing:
 
  * [version](/references/polyaxonfile-yaml-specification/version/)

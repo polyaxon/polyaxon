@@ -19,7 +19,7 @@ This is where you define how you want to run your code.
  * cmd [required]: The command(s) to run during the execution of your code.
  
 
-## Exmaples
+## Examples
 
 Some examples of valid `cmd` commands to pass in the polyaxonfile:
 

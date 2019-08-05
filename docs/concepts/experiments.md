@@ -22,13 +22,13 @@ and you uploaded your code consisting of a single file `train.py` that accepts 2
 
 The first thing that you need to do is to update the default `polyaxonfile.yml` that was generated.
 
-We will start first by adding the `run` section. For example if the code requires `tensorflow` and `sklearn`,
-the polyaxonfile.yml `run` section could look something like this
+We will start first by adding the `build` section. For example if the code requires `tensorflow` and `sklearn`,
+the polyaxonfile.yml `build` section could look something like this:
 
 ```yaml
 ...
 
-build
+build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
     - pip install scikit-learn
@@ -38,8 +38,8 @@ run:
 ```
 
 If the code requires many python dependencies, you can install these requirements by using a `requirements.txt` file,
-instead of specifying every single library in the `build_steps` part of the `run` section,
-we can create a requirements file, the name must be `requirements.txt` or `polyaxon_requirements.txt` and we need to add one command in the build_steps `pip install -r polyaxon_requirements.txt`.
+instead of specifying every single library in the `build_steps` part of the `build` section,
+we can create a requirements file, the name must be `requirements.txt` or `polyaxon_requirements.txt` and we need to add one command in the build steps: `pip install -r polyaxon_requirements.txt`.
 
 You can also add any other executable script, the name must be `setup.sh` or `polyaxon_setup.sh` file, and a command to execute that file `./polyaxon_setup.sh`.
 
@@ -93,7 +93,7 @@ This file has one independent experiment.
 This command validate the polyaxon file, and the option `-def` returns the experiment definition,
 in this case we have only one independent experiment.
 
-In some case you will need to change the directory before running a command, or you might need to run multiple commands,
+In some cases you will need to change the directory before running a command, or you might need to run multiple commands,
 the best way to do that is to create an executable file,
 e.g. `run.sh` where you will put all the commands you wish to run, and then just run that file:
 
@@ -158,7 +158,7 @@ which means that this experiment is running independently of a group.
 
 After running this experiment, we can imagine that you were not satisfied with the result and
 that you wanted to try another learning rate `0.5`, or that the experiment consumed too much cpu and you want to restrict the resources usage.
-If you hardcoded the value and passed it directly `--lr=0.01`, you would be obliged to updated the polyaxonfile.yml.
+If you hardcoded the value and passed it directly `--lr=0.01`, you would be obliged to update the polyaxonfile.yml.
 Of course we can do that also now, but since we declared the `lr` in the inputs section, we can just run with updated params:
 
 ```bash
@@ -194,7 +194,7 @@ Creating an independent experiment.
 Experiment was created.
 ```
 
-If we want to set a cpu limits:
+If we want to set cpu limits:
 
 ```yaml
 version: 1
@@ -481,7 +481,7 @@ total_run        10m 40s
 
 ## Tracking experiment job logs
 
-To view the logs of a specific job, you need to have the experiment is it belongs to, and the job id within that experiment.
+To view the logs of a specific job, you need to have the experiment id it belongs to, and the job id within that experiment.
 
 For example
 

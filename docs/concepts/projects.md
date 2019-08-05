@@ -17,9 +17,9 @@ it aims at organizing your efforts to solve a specific problem.
 
 ## Create a project
 
-To create a project, you can both use the Polyaxon Dashboard or the Polyaxon CLI.
+To create a project, you can either use the Polyaxon Dashboard or the Polyaxon CLI.
 
-The projects consist of a required argument `--name` an optional argument `--description`,
+The projects consist of a required argument `--name`, an optional argument `--description`,
 and a flag `--private` with a default value set to `False`.
 
 The projects could be `public` (default behaviour) or `private`,
@@ -27,7 +27,7 @@ in that case only you i.e. `logged-in user`, and `superusers` can access the pro
 
 Public projects are visible to everyone as read only mode, and read/write mode to the `owner` and `superusers`.
 
-> More permissions and roles are available for organization who want to reflect their structure in the EE version.
+> More permissions and roles are available for organizations who want to reflect their structure in the EE version.
 
 
 > Tip "Only the creator and superusers can create experiment groups and experiments"
@@ -61,7 +61,7 @@ Project `mnist` was initialized and Polyaxonfile was created successfully `polya
 When a project is initialized, Polyaxon creates a default `.polyaxonignore`,
 you can customize it to ignore the files that you don't want to upload.
 
-Initializing a project is a not mandatory, unless you need are using the platform's in-cluster git server. 
+Initializing a project is a not mandatory, unless you need to use the platform's in-cluster git server. 
 Most of the CLI commands allow [switching project context](/references/polyaxon-cli/#switching-context).
 
 Now you can add some code to your project.
@@ -101,7 +101,7 @@ polyaxon project -p quick-start git --url="https://github.com/org/repo" --privat
 ``` 
 
 The `--private` is only necessary if the project is a private repo on the external platform, 
-this tells flag Polyaxon to use the [access token or user/password to clone the project](/integrations/scm/).
+this flag tells Polyaxon to use the [access token or user/password to clone the project](/integrations/scm/).
 
 You are ready now to run experiments, please go to [experiment groups](/concepts/experiment-groups-hyperparameters-optimization/)
 if you want to run multiple experiments concurrently and perform hyperparameters search.

@@ -108,7 +108,7 @@ build:
   lang_env: 'C.UTF-8'
 ```
 
-If you which to use this config `lang_env` definition for all your builds without the need to set it on every Polyaxonfile, you can use the setting page to set a default value for all builds.
+If you wish to use this config `lang_env` definition for all your builds without the need to set it on every Polyaxonfile, you can use the setting page to set a default value for all builds.
 
 ### Installing libraries with pip
 

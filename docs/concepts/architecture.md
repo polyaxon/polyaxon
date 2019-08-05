@@ -20,8 +20,8 @@ Polyaxon is structured as a modern, decoupled, micro-service oriented architectu
 3. **An extensive tracking API**
 4. **An event/action oriented interface**
 5. **A pipeline engine capable of authoring workflows as directed acyclic graphs (DAGs)**
-6. **An optimization engine to search automatically and concurrently for the best hyperparameters in a search spaces based on state of the art algorithms**
-7. **A CI system to trigger experiments/hyperparams tuning/pipelines automatically based on some event and track there execution and report results to users**
+6. **An optimization engine to search automatically and concurrently for the best hyperparameters in a search space based on state of the art algorithms**
+7. **A CI system to trigger experiments/hyperparams tuning/pipelines automatically based on some event and track their execution and report results to users**
 
 These components work together to make every Polyaxon deployment function smoothly, 
 but because they're decoupled there's plenty of room for customisation.
@@ -42,7 +42,7 @@ Polyaxon relies on several components to function smoothly:
  * docker registries
  * Storage for [data](/configuration/custom-data-storage/)/[outputs](/configuration/custom-outputs-storage/)/[logs](/configuration/custom-logs-storage/)
 
-Depending on the version you are deployment, you may need as well:
+Depending on the version you are deploying, you may need as well:
 
  * Kubernetes cluster(s) for deploying Polyaxon
  * Docker, Docker compose, or a container management platform for deploying a scalable Polyaxon (tracking only) version
@@ -63,12 +63,12 @@ Polyaxon runs both in the cloud and on premise, and provides access via:
  * Polyaxon Webhooks
 
 
-These interfaces hides the powerful abstraction provided by the Polyaxon architecture.
+These interfaces hide the powerful abstractions provided by the Polyaxon architecture.
 When a machine learning engineer or a data scientist deploys a model,
 Polyaxon relies on Kubernetes for:
 
  * Managing the resources of your cluster (Memory, CPU, and GPU)
- * Creating an easy, repeatable, portable deployments
+ * Creating easy, repeatable, portable deployments
  * Scaling up and down as needed
 
 Polyaxon does the heavy lifting of:
@@ -98,13 +98,13 @@ with more details in pages dedicated to each concept.
 ### User
 
 A `User` is the entity that creates projects, starts experiments, creates jobs and pipelines, manages teams and clusters.
-A `User` has a set of permissions, and can be normal user or superuser.
+A `User` has a set of permissions, and can be a normal user or a superuser.
 
 > Please refer to the [users management section](/configuration/users-management/) for more details.
 
 ### Teams & Organizations
 
-A `Team` provides a way to manage group of users, their access roles, and resources quotas.
+A `Team` provides a way to manage groups of users, their access roles, and resources quotas.
 
 <blockquote class="warning"> This entity exists only on Polyaxon EE version</blockquote>
 
@@ -127,7 +127,7 @@ A project consist of a name and a description, the code to execute, the data, an
 
 An `Experiment` is the execution of your model with data and the provided parameters on the cluster.
 
-A `Experiment Job` is the Kubernetes pod running on the cluster for a specific experiment,
+An `Experiment Job` is the Kubernetes pod running on the cluster for a specific experiment,
 if an experiment runs in a distributed way it will create multiple instances of `Experiment Job`.
 
 > Please refer to the [experiments section](/concepts/experiments/) for more details.
@@ -141,7 +141,7 @@ An `Experiment Group` provide 2 interfaces:
 
 > Please refer to the [experiment groups - selection](/concepts/experiment-groups-selections/) for more details on how to create group selections
  
-> Please refer to the [experiment groups - hyperparameters optimization](/concepts/experiment-groups-hyperparameters-optimization/) for more details on how to run hyperparametres search.
+> Please refer to the [experiment groups - hyperparameters optimization](/concepts/experiment-groups-hyperparameters-optimization/) for more details on how to run hyperparameter search.
 
 
 ### Job
@@ -167,8 +167,8 @@ the metrics of all experiment in a selection group, or the experiments of a proj
 
 ### Notebooks
 
-A `Notebooks` is a job running project wide to provide an fast and easy way to explore data, start experiments. 
-Polyaxon provides different backend to start notebooks, or Jupyter Labs.
+A `Notebooks` is a job running project wide to provide a fast and easy way to explore data and start experiments. 
+Polyaxon provides different backends to start notebooks, or Jupyter Labs.
 
 > Please refer to the [project notebooks§§](/concepts/notebooks/) for more details.
 
@@ -176,7 +176,7 @@ Polyaxon provides different backend to start notebooks, or Jupyter Labs.
 ### Checkpointing, resuming and restarting experiments
 
 Checkpointing is a very important concept in machine learning, it prevents losing progress.
-It also provide the possibility to resume an experiment from a specific state.
+It also provides the possibility to resume an experiment from a specific state.
 
 Polyaxon provides some structure and organization regarding checkpointing and outputs saving.
 
