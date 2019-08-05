@@ -12,12 +12,12 @@ spec:
         spec:
           containers:
             - name: pytorch
-              image: gcr.io/<your_project>/pytorch_dist_mnist:mpi
+              image: pytorch/pytorch:mpi
               args: ["--backend", "mpi"]
               # Comment out the below resources to use the CPU.
               resources:
                 limits:
-                  nvidia.com/gpu: 1
+                  nvidia.com/gpu: "1"
     Worker:
       replicas: 1
       restartPolicy: OnFailure
@@ -25,9 +25,9 @@ spec:
         spec:
           containers:
             - name: pytorch
-              image: gcr.io/<your_project>/pytorch_dist_mnist:mpi
+              image: pytorch/pytorch:mpi
               args: ["--backend", "mpi"]
               # Comment out the below resources to use the CPU.
               resources:
                 limits:
-                  nvidia.com/gpu: 1
+                  nvidia.com/gpu: "1"

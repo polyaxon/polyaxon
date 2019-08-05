@@ -199,12 +199,12 @@ func (instance *PolyaxonKF) logCondition(condType PolyaxonBaseJobConditionType, 
 
 // LogStarting sets PolyaxonKF to statrting
 func (instance *PolyaxonKF) LogStarting() {
-	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonKFStarted", "KF is starting")
+	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonKFStarted", "KFJob is starting")
 }
 
 // LogRunning sets PolyaxonKF to running
 func (instance *PolyaxonKF) LogRunning() {
-	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonKFRunning", "KF is running")
+	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonKFRunning", "KFJob is running")
 }
 
 // LogWarning sets PolyaxonKF to Warning
@@ -214,7 +214,7 @@ func (instance *PolyaxonKF) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonKF to succeeded
 func (instance *PolyaxonKF) LogSucceeded() {
-	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonKFSucceeded", "KF has succeded")
+	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonKFSucceeded", "KFJob has succeded")
 }
 
 // LogFailed sets PolyaxonKF to failed

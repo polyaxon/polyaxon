@@ -101,10 +101,11 @@ func (r *PolyaxonBuildReconciler) reconcileJob(instance *corev1alpha1.PolyaxonBu
 
 		log.V(1).Info("Creating Build Job", "namespace", plxJob.Namespace, "name", plxJob.Name)
 		err = r.Create(ctx, plxJob)
-		justCreated = true
 		if err != nil {
 			return err
 		}
+		justCreated = true
+		instance.LogStarting()
 	} else if err != nil {
 		return err
 	}

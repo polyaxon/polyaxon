@@ -98,3 +98,15 @@ func GenerateMPIJob(
 
 	return tfJob
 }
+
+// GetKFCommonCondFromMPICond generates a new common Job cond based on the MPIJobCond struct
+func GetKFCommonCondFromMPICond(cond mpijobv1.JobCondition) kfcommonv1.JobCondition {
+	return kfcommonv1.JobCondition{
+		Type:               kfcommonv1.JobConditionType(cond.Type),
+		Status:             cond.Status,
+		Reason:             cond.Reason,
+		Message:            cond.Message,
+		LastUpdateTime:     cond.LastUpdateTime,
+		LastTransitionTime: cond.LastTransitionTime,
+	}
+}

@@ -21,6 +21,7 @@ import (
 
 	"github.com/go-logr/logr"
 	apierrs "k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -32,6 +33,7 @@ import (
 
 	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
 	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
+	kfcommonv1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1"
 	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
 )
 
@@ -111,10 +113,11 @@ func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF)
 			return nil
 		}
 		err = r.Create(ctx, plxJob)
-		justCreated = true
 		if err != nil {
 			return err
 		}
+		justCreated = true
+		instance.LogStarting()
 	} else if err != nil {
 		return err
 	}
@@ -129,15 +132,22 @@ func (r *PolyaxonKFReconciler) reconcileTFJob(instance *corev1alpha1.PolyaxonKF)
 	}
 
 	// Check the job status
-	// if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
-	// 	log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
-	// 	err = r.Status().Update(ctx, instance)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// }
+	if condUpdated := r.reconcileTFJobStatus(instance, *foundJob); condUpdated {
+		log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Status().Update(ctx, instance)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
+}
+
+func (r *PolyaxonKFReconciler) reconcileTFJobStatus(instance *corev1alpha1.PolyaxonKF, job tfjobv1.TFJob) bool {
+	if len(job.Status.Conditions) == 0 {
+		return false
+	}
+	return r.reconcileKFJobStatus(instance, job.Status.Conditions[len(job.Status.Conditions)-1])
 }
 
 func (r *PolyaxonKFReconciler) reconcilePytorchJob(instance *corev1alpha1.PolyaxonKF) error {
@@ -163,10 +173,11 @@ func (r *PolyaxonKFReconciler) reconcilePytorchJob(instance *corev1alpha1.Polyax
 			return nil
 		}
 		err = r.Create(ctx, plxJob)
-		justCreated = true
 		if err != nil {
 			return err
 		}
+		justCreated = true
+		instance.LogStarting()
 	} else if err != nil {
 		return err
 	}
@@ -181,15 +192,22 @@ func (r *PolyaxonKFReconciler) reconcilePytorchJob(instance *corev1alpha1.Polyax
 	}
 
 	// Check the job status
-	// if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
-	// 	log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
-	// 	err = r.Status().Update(ctx, instance)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// }
+	if condUpdated := r.reconcilePytorchJobStatus(instance, *foundJob); condUpdated {
+		log.V(1).Info("Reconciling PyTorchJob status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Status().Update(ctx, instance)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
+}
+
+func (r *PolyaxonKFReconciler) reconcilePytorchJobStatus(instance *corev1alpha1.PolyaxonKF, job pytorchjobv1.PyTorchJob) bool {
+	if len(job.Status.Conditions) == 0 {
+		return false
+	}
+	return r.reconcileKFJobStatus(instance, job.Status.Conditions[len(job.Status.Conditions)-1])
 }
 
 func (r *PolyaxonKFReconciler) reconcileMPIJob(instance *corev1alpha1.PolyaxonKF) error {
@@ -215,10 +233,11 @@ func (r *PolyaxonKFReconciler) reconcileMPIJob(instance *corev1alpha1.PolyaxonKF
 			return nil
 		}
 		err = r.Create(ctx, plxJob)
-		justCreated = true
 		if err != nil {
 			return err
 		}
+		justCreated = true
+		instance.LogStarting()
 	} else if err != nil {
 		return err
 	}
@@ -233,20 +252,63 @@ func (r *PolyaxonKFReconciler) reconcileMPIJob(instance *corev1alpha1.PolyaxonKF
 	}
 
 	// Check the job status
-	// if condUpdated := r.reconcileJobStatus(instance, *foundJob); condUpdated {
-	// 	log.V(1).Info("Reconciling Job status", "namespace", plxJob.Namespace, "name", plxJob.Name)
-	// 	err = r.Status().Update(ctx, instance)
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// }
+	if condUpdated := r.reconcileMPIJobStatus(instance, *foundJob); condUpdated {
+		log.V(1).Info("Reconciling MPIJob status", "namespace", plxJob.Namespace, "name", plxJob.Name)
+		err = r.Status().Update(ctx, instance)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
+}
+
+func (r *PolyaxonKFReconciler) reconcileMPIJobStatus(instance *corev1alpha1.PolyaxonKF, job mpijobv1.MPIJob) bool {
+	if len(job.Status.Conditions) == 0 {
+		return false
+	}
+	return r.reconcileKFJobStatus(instance, kf.GetKFCommonCondFromMPICond(job.Status.Conditions[len(job.Status.Conditions)-1]))
+}
+
+// Common logic for reconciling job status
+func (r *PolyaxonKFReconciler) reconcileKFJobStatus(instance *corev1alpha1.PolyaxonKF, cond kfcommonv1.JobCondition) bool {
+	now := metav1.Now()
+	log := r.Log
+
+	if cond.Type == kfcommonv1.JobRunning || cond.Type == kfcommonv1.JobCreated {
+		instance.LogRunning()
+		log.V(1).Info("Job Logging Status Running")
+		return true
+	}
+
+	if cond.Type == kfcommonv1.JobSucceeded {
+		instance.LogSucceeded()
+		instance.Status.CompletionTime = &now
+		log.V(1).Info("Job Logging Status Succeeded")
+		return true
+	}
+
+	if cond.Type == kfcommonv1.JobFailed {
+		instance.LogFailed(cond.Reason, cond.Message)
+		instance.Status.CompletionTime = &now
+		log.V(1).Info("Job Logging Status Failed")
+		return true
+	}
+
+	if cond.Type == kfcommonv1.JobRestarting {
+		instance.LogWarning(cond.Reason, cond.Message)
+		log.V(1).Info("Job Logging Status Warning")
+		return true
+	}
+	return false
 }
 
 // SetupWithManager register the reconciliation logic
 func (r *PolyaxonKFReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&corev1alpha1.PolyaxonKF{}).
+		Owns(&mpijobv1.MPIJob{}).
+		Owns(&tfjobv1.TFJob{}).
+		Owns(&pytorchjobv1.PyTorchJob{}).
 		Complete(r)
 }
