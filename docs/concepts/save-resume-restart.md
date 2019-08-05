@@ -41,9 +41,9 @@ It's up to the user to decide the frequency and number of checkpoints to keep.
 
 ### Saving with Tensorflow
 
-Tensorflow provide different ways for saving and resuming a checkpoint. The easiest is to use the [Estimator](https://www.tensorflow.org/get_started/checkpoints) api.
+Tensorflow provides different ways for saving and resuming a checkpoint. The easiest is to use the [Estimator](https://www.tensorflow.org/get_started/checkpoints) api.
 The Estimator takes care of saving checkpoints automatically,
-you only need to specify the top-level directory in which the Estimator stores its information,
+you only need to specify the top-level directory in which the Estimator stores its information.
 This is done by assigning a value to the optional `model_dir` argument of any Estimator's constructor.
 
 In the case of Polyaxon you should assign provided path `POLYAXON_RUN_OUTPUTS_PATH`, e.g.
@@ -100,7 +100,7 @@ You can also resume an experiment with an updated environment or some parameters
 ### Resuming with Tensorflow
 
 If you used the Estimator api, you don't need to do anything because the Estimator will take care of resuming your training.
-Of course you can have tweak your code to resume from a very specific state.
+Of course you can tweak your code to resume from a very specific state.
 
 You just need to call:
 

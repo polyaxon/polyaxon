@@ -27,8 +27,8 @@ you can use the [matrix section](/references/polyaxonfile-yaml-specification/hpt
 
 The first thing you need to do is to update the default `polyaxonfile.yml` that was generated.
 
-You need set the required information, for example if the code requires `tensorflow` and `sklearn`,
-the polyaxonfile.yml `run` section could look something like this
+You need to set the required information, for example if the code requires `tensorflow` and `sklearn`,
+the polyaxonfile.yml `build` section could look something like this
 
 ```yaml
 ...
@@ -46,7 +46,7 @@ This declares a section to run our `train.py` file by passing two values, the `l
 
 > For more details about the `run section` check the [run section reference](/references/polyaxonfile-yaml-specification/run/)
 
-Now you need to declare this values, and for that you will add 2 more sections to the polyaxonfile.yml
+Now you need to declare these values, and for that you will add 2 more sections to the polyaxonfile.yml
 
  * A [params section](/references/polyaxonfile-yaml-specification/params/), to declare a constant value for `batch_size`
  * A [hptuning section](/references/polyaxonfile-yaml-specification/hptuning/) with [matrix subsection](/references/polyaxonfile-yaml-specification/hptuning/#matrix), to declare the values for `lr`
@@ -102,7 +102,7 @@ And distributions, when using random search, hyperband, or bayesian optimization
  * **lognormal**: [loc, scale]
  * **qlognormal**: [loc, scale]
 
-You can check all the options available on the [matrix section reference](/references/polyaxonfile-yaml-specification/hptuning/#matrix).
+You can check all the options available in the [matrix section reference](/references/polyaxonfile-yaml-specification/hptuning/#matrix).
 
 To make sure that the Polyaxon file is valid, and creates multiple values for `lr`, we can run the following
 
@@ -155,7 +155,7 @@ And we want to run 2 experiments concurrently, and explore the space [randomly](
 Although we can modify the `polyaxonfile.yml` to include this new section,
 we will do something different this time and override this value with a new file, same way you would do with `docker/docker-compose`.
 
-Create a new file, let's call polyaxonfile_override.yml
+Create a new file, let's call it polyaxonfile_override.yml
 
 > You can call your polyaxonfiles anything you want. 
 By default Polyaxon commands look for files called `polyaxonfile.yml`.
@@ -246,14 +246,14 @@ hptuning:
       optimization: minimize
 ```
 
-In this case, the scheduler will not start any more experiment, if one of the experiments in the group validate the following condition:
+In this case, the scheduler will not start any more experiments, if one of the experiments in the group validate the following condition:
 
  * An accuracy >= 0.9
  * Or a loss <= 0.05
 
 ## Checking the status of your experiments
 
-First, we can double check that our groups was created.
+First, we can double check that our groups were created.
 
 For that you can use the Polyaxon dashboard or Polyaxon CLI.
 
@@ -279,9 +279,9 @@ Experiment groups:
 
 We can see that we created 2 groups, the first one with sequential runs, and the second one with 2 concurrent runs.
 
-We can also see the how many experiments are running/pending now.
+We can also see how many experiments are running/pending now.
 
-We can have a look at the the two experiment running concurrently in the second group
+We can have a look at the two experiments running concurrently in the second group.
 
 Again you can go to the Polyaxon dashboard or use the Polyaxon CLI.
 
@@ -310,7 +310,7 @@ Experiments:
 
 ## Experiment group search algorithms
 
-In this introductory sections we demonstrated how to conduct hyperparameters tuning with 2 algorithms;
+In these introductory sections we demonstrated how to conduct hyperparameters tuning with 2 algorithms;
 [grid search](/references/polyaxon-optimization-engine/grid-search/) and [random search](/references/polyaxon-optimization-engine/random-search/).
 
 Sometimes you might have a large search space where you want to use advanced search algorithms.

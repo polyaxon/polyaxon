@@ -34,7 +34,7 @@ To create an experiment group selection, you need to select the experiments that
 
 ## Create the experiments group selection
 
-When select experiments in the table view, a new button will show to act on the selection, a couple of actions are possible:
+When selecting experiments in the table view, a new button will show to act on the selection, a couple of actions are possible:
 
  * Stopping all the experiments
  * Deleting all the experiments
