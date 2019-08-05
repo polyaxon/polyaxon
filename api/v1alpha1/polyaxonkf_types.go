@@ -32,7 +32,7 @@ type KFSpec struct {
 
 	// Specifies the number of retries before marking this job failed.
 	// +optional
-	MaxRetries *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
+	BackoffLimit *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
 
 	// Specifies the duration (in seconds) since startTime during which the job can remain active
 	// before it is terminated. Must be a positive integer.

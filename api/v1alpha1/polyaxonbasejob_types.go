@@ -28,7 +28,18 @@ import (
 type PolyaxonBaseJobSpec struct {
 	// Specifies the number of retries before marking this job failed.
 	// +optional
-	MaxRetries *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
+	BackoffLimit *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
+
+	// Specifies the duration (in seconds) since startTime during which the job can remain active
+	// before it is terminated. Must be a positive integer.
+	// This setting applies only to pods where restartPolicy is OnFailure or Always.
+	// +optional
+	ActiveDeadlineSeconds *int64 `json:"activeDeadlineSeconds,omitempty"`
+
+	// Defines the TTL for cleaning up finished Jobs (temporary
+	// before kubernetes adds the cleanup controller)
+	TTLSecondsAfterFinished *int32 `json:"ttlSecondsAfterFinished,omitempty"`
+
 	// Template describes the pods that will be created.
 	Template corev1.PodTemplateSpec `json:"template" protobuf:"bytes,3,opt,name=template"`
 }

@@ -34,6 +34,13 @@ spec:
         spec:
           description: PolyaxonBaseJobSpec defines the desired state of PolyaxonPod
           properties:
+            activeDeadlineSeconds:
+              description: Specifies the duration (in seconds) since startTime during
+                which the job can remain active before it is terminated. Must be a
+                positive integer. This setting applies only to pods where restartPolicy
+                is OnFailure or Always.
+              format: int64
+              type: integer
             maxRetries:
               description: Specifies the number of retries before marking this job
                 failed.
@@ -4167,6 +4174,11 @@ spec:
                   - containers
                   type: object
               type: object
+            ttlSecondsAfterFinished:
+              description: Defines the TTL for cleaning up finished Jobs (temporary
+                before kubernetes adds the cleanup controller)
+              format: int32
+              type: integer
           required:
           - template
           type: object

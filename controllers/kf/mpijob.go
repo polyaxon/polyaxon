@@ -39,10 +39,25 @@ func CopyMPIJobFields(from, to *mpijobv1.MPIJob) bool {
 	}
 	to.Labels = from.Labels
 
-	if !reflect.DeepEqual(to.Spec, from.Spec) {
+	if to.Spec.ActiveDeadlineSeconds != from.Spec.ActiveDeadlineSeconds {
+		to.Spec.ActiveDeadlineSeconds = from.Spec.ActiveDeadlineSeconds
 		requireUpdate = true
 	}
-	to.Spec = from.Spec
+
+	if to.Spec.BackoffLimit != from.Spec.BackoffLimit {
+		to.Spec.BackoffLimit = from.Spec.BackoffLimit
+		requireUpdate = true
+	}
+
+	if to.Spec.CleanPodPolicy != from.Spec.CleanPodPolicy {
+		to.Spec.CleanPodPolicy = from.Spec.CleanPodPolicy
+		requireUpdate = true
+	}
+
+	if !reflect.DeepEqual(to.Spec, from.Spec) {
+		requireUpdate = true
+		to.Spec = from.Spec
+	}
 
 	return requireUpdate
 }
@@ -82,7 +97,7 @@ func GenerateMPIJob(
 	CleanPodPolicy := mpijobv1.CleanPodPolicy(*spec.CleanPodPolicy)
 	tfJobSpec := mpijobv1.MPIJobSpec{
 		ActiveDeadlineSeconds: spec.ActiveDeadlineSeconds,
-		BackoffLimit:          spec.MaxRetries,
+		BackoffLimit:          spec.BackoffLimit,
 		CleanPodPolicy:        &CleanPodPolicy,
 		MPIReplicaSpecs:       mpiReplicaSpecs,
 	}

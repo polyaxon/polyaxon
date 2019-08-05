@@ -25,8 +25,8 @@ import (
 )
 
 const (
-	// DefaultMaxRetries for PlxJobs
-	DefaultMaxRetries = 1
+	// DefaultBackoffLimit for PlxJobs
+	DefaultBackoffLimit = 1
 	// DefaultRestartPolicy for PlxJobs
 	DefaultRestartPolicy = "Never"
 )
@@ -42,10 +42,25 @@ func CopyJobFields(from, to *batchv1.Job) bool {
 	}
 	to.Labels = from.Labels
 
-	if !reflect.DeepEqual(to.Spec.Template.Spec, from.Spec.Template.Spec) {
+	if to.Spec.ActiveDeadlineSeconds != from.Spec.ActiveDeadlineSeconds {
+		to.Spec.ActiveDeadlineSeconds = from.Spec.ActiveDeadlineSeconds
 		requireUpdate = true
 	}
-	to.Spec.Template.Spec = from.Spec.Template.Spec
+
+	if to.Spec.BackoffLimit != from.Spec.BackoffLimit {
+		to.Spec.BackoffLimit = from.Spec.BackoffLimit
+		requireUpdate = true
+	}
+
+	if to.Spec.TTLSecondsAfterFinished != from.Spec.TTLSecondsAfterFinished {
+		to.Spec.TTLSecondsAfterFinished = from.Spec.TTLSecondsAfterFinished
+		requireUpdate = true
+	}
+
+	if !reflect.DeepEqual(to.Spec.Template.Spec, from.Spec.Template.Spec) {
+		requireUpdate = true
+		to.Spec.Template.Spec = from.Spec.Template.Spec
+	}
 
 	return requireUpdate
 }
@@ -65,12 +80,12 @@ func GeneratePlxJob(
 	name string,
 	namespace string,
 	labels map[string]string,
-	maxRetries *int32,
+	backoffLimit *int32,
 	podSpec corev1.PodSpec,
 ) *batchv1.Job {
-	backoffLimit := int32(DefaultMaxRetries)
-	if maxRetries != nil {
-		backoffLimit = *maxRetries
+	jobBackoffLimit := int32(DefaultBackoffLimit)
+	if backoffLimit != nil {
+		jobBackoffLimit = *backoffLimit
 	}
 
 	if podSpec.RestartPolicy == "" {
@@ -84,7 +99,7 @@ func GeneratePlxJob(
 			Labels:    labels,
 		},
 		Spec: batchv1.JobSpec{
-			BackoffLimit: &backoffLimit,
+			BackoffLimit: &jobBackoffLimit,
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{}},
 				Spec:       podSpec,

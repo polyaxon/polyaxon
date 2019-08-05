@@ -83,7 +83,7 @@ func (r *PolyaxonBuildReconciler) reconcileJob(instance *corev1alpha1.PolyaxonBu
 		instance.Name,
 		instance.Namespace,
 		instance.Labels,
-		instance.Spec.MaxRetries,
+		instance.Spec.BackoffLimit,
 		instance.Spec.Template.Spec,
 	)
 	if err := ctrl.SetControllerReference(instance, plxJob, r.Scheme); err != nil {
