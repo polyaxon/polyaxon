@@ -40,7 +40,7 @@ version: 1
 
 kind: experiment
 
-declarations:
+params:
   batch_size: 128
   num_steps: 500
   learning_rate: 0.001
