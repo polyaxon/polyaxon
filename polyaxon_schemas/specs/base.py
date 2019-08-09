@@ -348,6 +348,14 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.outputs if self.environment else None
 
     @cached_property
+    def service_account(self):
+        return self.environment.service_account if self.environment else None
+
+    @cached_property
+    def image_pull_secrets(self):
+        return self.environment.image_pull_secrets if self.environment else None
+
+    @cached_property
     def max_restarts(self):
         return self.environment.max_restarts if self.environment else None
 
