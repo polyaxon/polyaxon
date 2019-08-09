@@ -90,7 +90,7 @@ helm repo update
 You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
 
 ```bash
-polyaxon deploy -f config.yml --check
+polyaxon admin deploy -f config.yml --check
 ```
 
 ### Deploy
@@ -100,7 +100,7 @@ Now you can install Polyaxon with your `config.yml` file
 You can use Polyaxon CLI to manage the deployment
 
 ```bash
-polyaxon deploy -f config.yml
+polyaxon admin deploy -f config.yml
 ```
 
 Or you can use Helm to do the same:
@@ -183,7 +183,7 @@ To upgrade Polyaxon to a newer version, you can simply run the following command
 
 ```bash
 helm update
-polyaxon deploy -f config.yml --upgrade
+polyaxon admin deploy -f config.yml --upgrade
 ```
 
 Or using Helm
@@ -198,8 +198,8 @@ helm upgrade polyaxon polyaxon/polyaxon -f polyaxon-config.yml
 The general method to modify your Kubernetes deployment is to:
 
  1. Make a change to the config.yml
- 2. [Optional] run `polyaxon deploy -f config.yml --check`
- 2. Run a `polyaxon deploy -f config.yml --upgrade` or `helm upgrade`:
+ 2. [Optional] run `polyaxon admin deploy -f config.yml --check`
+ 2. Run a `polyaxon admin deploy -f config.yml --upgrade` or `helm upgrade`:
 
     ```bash
     $ helm upgrade <RELEASE_NAME> polyaxon/polyaxon -f config.yml
