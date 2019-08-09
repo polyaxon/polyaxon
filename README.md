@@ -32,7 +32,7 @@ It also packages some required dependencies for Polyaxon:
  * [Docker-Registry](https://github.com/helm/charts/tree/master/stable/docker-registry)
 
 
-> **Note**: It's possible to provide your own manged version of each one fo these dependecies.
+> **Note**: It's possible to provide your own managed version of each one fo these dependecies.
 
 This chart can be installed on single node or multi-nodes cluster,
 in which case you need to provide some volumes with `ReadWriteMany` or cloud buckets.
@@ -44,7 +44,7 @@ without the need to create your own volumes. Please see [polyaxon-nfs-provisione
 
 ## Prerequisites
 
-- Kubernetes >= 1.8.0
+- Kubernetes >= 1.5.0
 - helm >= v2.5.0
 
 
@@ -94,7 +94,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 > **Warning**:
 Jobs are only deleted if they succeeded,
-sometime if you cancel a deployment you might end up with undeleted jobs.
+sometimes if you cancel a deployment you might end up with undeleted jobs.
 
 ```bash
 $ kubectl delete job ...
@@ -111,7 +111,7 @@ This can be particularly useful if your deployment is not working, because the h
 
 ### How to set the configuration
 
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 
 ```bash
 $ helm install --name=<RELEASE_NAME> \
@@ -120,7 +120,7 @@ $ helm install --name=<RELEASE_NAME> \
     polyaxon
 ```
 
-Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,
+Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example:
 
 ```bash
 $ helm install --name my-release -f values.yaml polyaxon
@@ -130,7 +130,7 @@ $ helm install --name my-release -f values.yaml polyaxon
 
 | Parameter                       | Description                                                                                                           | Default
 | --------------------------------| ----------------------------------------------------------------------------------------------------------------------| ----------------------------------------------------------
-| `DeploymentType`                | The deployment type tells polyaxon how to show instructions ('kuberentes', 'minikube', 'microk8s', 'docker-compose')  | `kubernetes`
+| `DeploymentType`                | The deployment type tells polyaxon how to show instructions ('kubernetes', 'minikube', 'microk8s', 'docker-compose')  | `kubernetes`
 
 
 ### deploymentVersion
@@ -163,7 +163,8 @@ You can also provide different annotations for the ingress and it will not use `
 
 
 Note: using TLS requires either:
-a preconfigured secret with the TLS secrets in it or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
+ - a preconfigured secret with the TLS secrets in it
+ - or the user of [cert-manager](https://github.com/helm/charts/tree/master/stable/cert-manager) to auto request certs from let's encrypt and store them in a secret.
 
 It's also possible to use a service like [externalDNS](https://github.com/helm/charts/tree/master/stable/external-dns) to auto create the DNS entry for the polyaxon API service.
 
@@ -483,7 +484,7 @@ hostName: polyaxon.foo.com
 
 ### Admin view
 
-Polyaxon ships with an admin interface, it disabled by default
+Polyaxon ships with an admin interface, it is disabled by default.
 
 
 ```yaml
@@ -492,7 +493,7 @@ adminViewEnabled: true
 
 ## Port forwarding
 
-You ca yse port forwarding to access the api and dashboard on you localhost:
+You can use port forwarding to access the api and dashboard on localhost:
 
 ```bash
 kubectl port-forward  svc/polyaxon-polyaxon-api 31811:80 31812:1337 -n polyaxon
