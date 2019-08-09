@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
-from hestia.cached_property import cached_property
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
@@ -50,7 +49,7 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
 
     CONFIG = BuildConfig
 
-    @cached_property
+    @property
     def backend(self):
         return self.raw_config.backend
 

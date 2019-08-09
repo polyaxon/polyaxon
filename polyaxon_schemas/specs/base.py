@@ -10,7 +10,6 @@ from collections import Mapping
 
 import rhea
 
-from hestia.cached_property import cached_property
 from hestia.list_utils import to_list
 from marshmallow import EXCLUDE, ValidationError
 
@@ -99,18 +98,17 @@ class BaseSpecification(object):
         except ValidationError as e:
             raise PolyaxonConfigurationError(e)
         self._parsed_data = None
-        self._validated_data = None
         self._config = None
         self._extra_validation()
 
     def _extra_validation(self):
         pass
 
-    @cached_property
+    @property
     def config(self):
         return self._config
 
-    @cached_property
+    @property
     def raw_config(self):
         return self._config_data
 
@@ -225,31 +223,31 @@ class BaseSpecification(object):
             return values
         return cls(values)
 
-    @cached_property
+    @property
     def is_experiment(self):
         return self.check_kind_experiment(self.kind)
 
-    @cached_property
+    @property
     def is_group(self):
         return self.check_kind_group(self.kind)
 
-    @cached_property
+    @property
     def is_job(self):
         return self.check_kind_job(self.kind)
 
-    @cached_property
+    @property
     def is_notebook(self):
         return self.check_kind_notebook(self.kind)
 
-    @cached_property
+    @property
     def is_tensorboard(self):
         return self.check_kind_tensorboard(self.kind)
 
-    @cached_property
+    @property
     def is_build(self):
         return self.check_kind_build(self.kind)
 
-    @cached_property
+    @property
     def is_pipeline(self):
         return self.check_kind_pipeline(self.kind)
 
@@ -257,41 +255,41 @@ class BaseSpecification(object):
     def values(self):
         return self._values
 
-    @cached_property
+    @property
     def data(self):
         return self._data
 
-    @cached_property
+    @property
     def headers(self):
         return self._headers
 
-    @cached_property
+    @property
     def parsed_data(self):
         return self._parsed_data
 
-    @cached_property
+    @property
     def raw_data(self):
         return json.dumps(self._data)
 
-    @cached_property
+    @property
     def version(self):
         return self.headers[self.VERSION]
 
-    @cached_property
+    @property
     def kind(self):
         return self.headers[self.KIND]
 
-    @cached_property
+    @property
     def logging(self):
         return self.headers.get(self.LOGGING, None)
 
-    @cached_property
+    @property
     def log_level(self):
         if self.logging:
             return self.logging.level
         return 'INFO'
 
-    @cached_property
+    @property
     def tags(self):
         tags = self.headers.get(self.TAGS, None)
         return list(set(tags)) if tags else None
@@ -299,63 +297,63 @@ class BaseSpecification(object):
 
 class EnvironmentSpecificationMixin(object):
 
-    @cached_property
+    @property
     def environment(self):
         return self._config_data.environment
 
-    @cached_property
+    @property
     def resources(self):
         return self.environment.resources if self.environment else None
 
-    @cached_property
+    @property
     def labels(self):
         return self.environment.labels if self.environment else None
 
-    @cached_property
+    @property
     def annotations(self):
         return self.environment.annotations if self.environment else None
 
-    @cached_property
+    @property
     def artifact_refs(self):
         return self.environment.artifact_refs if self.environment else None
 
-    @cached_property
+    @property
     def data_refs(self):
         return self.environment.data_refs if self.environment else None
 
-    @cached_property
+    @property
     def secret_refs(self):
         return self.environment.secret_refs if self.environment else None
 
-    @cached_property
+    @property
     def config_map_refs(self):
         return self.environment.config_map_refs if self.environment else None
 
-    @cached_property
+    @property
     def node_selector(self):
         return self.environment.node_selector if self.environment else None
 
-    @cached_property
+    @property
     def affinity(self):
         return self.environment.affinity if self.environment else None
 
-    @cached_property
+    @property
     def tolerations(self):
         return self.environment.tolerations if self.environment else None
 
-    @cached_property
+    @property
     def outputs(self):
         return self.environment.outputs if self.environment else None
 
-    @cached_property
+    @property
     def service_account(self):
         return self.environment.service_account if self.environment else None
 
-    @cached_property
+    @property
     def image_pull_secrets(self):
         return self.environment.image_pull_secrets if self.environment else None
 
-    @cached_property
+    @property
     def max_restarts(self):
         return self.environment.max_restarts if self.environment else None
 
@@ -378,7 +376,7 @@ class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         BaseSpecification.ENVIRONMENT, BaseSpecification.BUILD, BaseSpecification.BACKEND,
     )
 
-    @cached_property
+    @property
     def build(self):
         return self.config.build
 

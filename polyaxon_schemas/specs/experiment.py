@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from collections import Mapping
 
-from hestia.cached_property import cached_property
 from marshmallow import EXCLUDE
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
@@ -52,23 +51,23 @@ class ExperimentSpecification(BaseRunSpecification):
     ENVIRONMENT_CONFIG = ExperimentEnvironmentConfig
     CONFIG = ExperimentConfig
 
-    @cached_property
+    @property
     def params(self):
         return self.parsed_data.get(self.PARAMS, None)
 
-    @cached_property
+    @property
     def backend(self):
         return self.config.backend
 
-    @cached_property
+    @property
     def framework(self):
         return self.config.framework
 
-    @cached_property
+    @property
     def run(self):
         return self.config.run
 
-    @cached_property
+    @property
     def cluster_def(self):
         cluster = {
             TaskType.MASTER: 1,
@@ -103,7 +102,7 @@ class ExperimentSpecification(BaseRunSpecification):
         # No specified framework, It should return default standalone mode cluster definition
         return cluster, is_distributed
 
-    @cached_property
+    @property
     def total_resources(self):
         environment = self.environment
 
@@ -156,27 +155,27 @@ class ExperimentSpecification(BaseRunSpecification):
         # default value is the master resources
         return self.master_resources
 
-    @cached_property
+    @property
     def master_resources(self):
         return self.environment.resources if self.environment else None
 
-    @cached_property
+    @property
     def master_labels(self):
         return self.environment.labels if self.environment else None
 
-    @cached_property
+    @property
     def master_annotations(self):
         return self.environment.annotations if self.environment else None
 
-    @cached_property
+    @property
     def master_node_selector(self):
         return self.environment.node_selector if self.environment else None
 
-    @cached_property
+    @property
     def master_affinity(self):
         return self.environment.affinity if self.environment else None
 
-    @cached_property
+    @property
     def master_tolerations(self):
         return self.environment.tolerations if self.environment else None
 

@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
-from hestia.cached_property import cached_property
-
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.group import GroupConfig
 from polyaxon_schemas.ops.group.hptuning import SearchAlgorithms
@@ -70,17 +68,17 @@ class GroupSpecification(BaseRunSpecification):
         del parsed_data[self.HP_TUNING]
         return ExperimentSpecification(values=[parsed_data, {'kind': kinds.EXPERIMENT}])
 
-    @cached_property
+    @property
     def hptuning(self):
         return self.headers[self.HP_TUNING]
 
-    @cached_property
+    @property
     def matrix(self):
         if self.hptuning:
             return self.hptuning.matrix
         return None
 
-    @cached_property
+    @property
     def matrix_space(self):
         if not self.matrix:
             return 1
@@ -91,25 +89,25 @@ class GroupSpecification(BaseRunSpecification):
             space_size *= len(value.to_numpy())
         return space_size
 
-    @cached_property
+    @property
     def early_stopping(self):
         early_stopping = None
         if self.hptuning:
             early_stopping = self.hptuning.early_stopping
         return early_stopping or []
 
-    @cached_property
+    @property
     def search_algorithm(self):
         return self.hptuning.search_algorithm
 
-    @cached_property
+    @property
     def concurrency(self):
         concurrency = None
         if self.hptuning:
             concurrency = self.hptuning.concurrency
         return concurrency or 1
 
-    @cached_property
+    @property
     def experiments_def(self):
         definition = {
             'search_algorithm': self.search_algorithm,
@@ -125,7 +123,7 @@ class GroupSpecification(BaseRunSpecification):
 
         return definition
 
-    @cached_property
+    @property
     def matrix_declaration_test(self):
         if not self.matrix:
             return {}

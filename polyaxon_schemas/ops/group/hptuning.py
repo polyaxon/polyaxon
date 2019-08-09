@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import six
 
-from hestia.cached_property import cached_property
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
@@ -419,7 +418,7 @@ class HPTuningConfig(BaseConfig):
         results['matrix'] = {k: v.to_dict() for k, v in six.iteritems(results['matrix'])}
         return results
 
-    @cached_property
+    @property
     def search_algorithm(self):
         if not self.matrix:
             raise PolyaxonConfigurationError('a search algorithm requires a matrix definition.')

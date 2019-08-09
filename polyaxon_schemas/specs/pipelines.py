@@ -3,8 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
-from hestia.cached_property import cached_property
-
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification
@@ -41,7 +39,7 @@ class PipelineSpecification(BaseSpecification):
 
     CONFIG = PipelineConfig
 
-    @cached_property
+    @property
     def backend(self):
         return self.raw_config.backend
 

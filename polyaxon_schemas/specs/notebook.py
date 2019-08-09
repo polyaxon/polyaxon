@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.cached_property import cached_property
-
 from polyaxon_schemas.ops.notebook import NotebookConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseRunSpecification, BaseSpecification
@@ -27,6 +25,6 @@ class NotebookSpecification(BaseRunSpecification):
     ENVIRONMENT_CONFIG = NotebookConfig
     CONFIG = NotebookConfig
 
-    @cached_property
+    @property
     def backend(self):
         return self.config.backend
