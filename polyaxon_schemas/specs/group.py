@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import six
+from hestia.list_utils import to_list
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.ops.group import GroupConfig
@@ -60,6 +61,12 @@ class GroupSpecification(BaseRunSpecification):
         validator.validate(spec=self, data=parsed_data)
         self._config = self._config_data
         return parsed_data
+
+    def patch(self, values):
+        """Patch group should not resolve the context."""
+        values = [self._data] + to_list(values)
+        spec = self.read(values=values)
+        return spec
 
     def get_experiment_spec(self, matrix_declaration):
         """Returns an experiment spec for this group spec and the given matrix declaration."""
