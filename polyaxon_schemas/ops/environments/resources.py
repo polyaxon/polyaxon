@@ -58,7 +58,7 @@ class K8SContainerResourcesConfig(BaseConfig):
         self.requests = requests
 
     @staticmethod
-    def from_resources_entry(resources):
+    def from_resources_entry(resources):  # pylint:disable=too-many-branches
         if resources is None:
             return None
 

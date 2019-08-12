@@ -357,6 +357,10 @@ class EnvironmentSpecificationMixin(object):
     def max_restarts(self):
         return self.environment.max_restarts if self.environment else None
 
+    @property
+    def env_vars(self):
+        return self.environment.env_vars if self.environment else None
+
 
 class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
     """The polyaxonfile specification for build jobs.

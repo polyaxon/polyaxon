@@ -86,6 +86,11 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add env vars
+        config_dict['env_vars'] = [['key', 'value']]
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add max_restarts
         config_dict['max_restarts'] = 4
         config = EnvironmentConfig.from_dict(config_dict)
