@@ -27,7 +27,7 @@ class TestResourcesConfigs(TestCase):
                 'cpu': 0.8,
                 'gpu': 2,
                 'tpu': 2,
-                'memory': 265
+                'memory': 256
             },
             'limits': {
                 'cpu': 1,
@@ -72,7 +72,7 @@ class TestResourcesConfigs(TestCase):
         config = K8SContainerResourcesConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-    def test_pod_resources_config(self):
+    def test_pod_resources_to_container_resources(self):
         config_dict = {
             'cpu': {
                 'requests': 0.8,
@@ -87,12 +87,18 @@ class TestResourcesConfigs(TestCase):
                 'limits': 4
             },
             'memory': {
-                'requests': 265,
+                'requests': 256,
                 'limits': 512
             },
         }
         config = PodResourcesConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
+
+        resources = K8SContainerResourcesConfig.from_resources_entry(config)
+        assert resources == {
+            'requests': {'cpu': 0.8, 'gpu': 2, 'tpu': 2, 'memory': '256Mi'},
+            'limits': {'cpu': 1, 'gpu': 4, 'tpu': 4, 'memory': '512Mi'},
+        }
 
     def test_pod_resources_add(self):
         config_dict1 = {

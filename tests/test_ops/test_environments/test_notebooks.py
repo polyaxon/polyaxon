@@ -6,7 +6,6 @@ from unittest import TestCase
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.notebook import NotebookConfig
 
 
@@ -15,7 +14,7 @@ class TestNotebookEnvironmentsConfigs(TestCase):
     def test_notebook_environment_config(self):
         config_dict = {
             'environment': {
-                'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+                'resources': {'requests': {'cpu': 0.5}, 'limits': {'cpu': 1}},
             }
         }
         config = NotebookConfig.from_dict(config_dict)

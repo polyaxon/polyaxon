@@ -7,7 +7,6 @@ from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.ops.environments.legacy import TFRunConfig
-from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment.environment import (
     HorovodClusterConfig,
     HorovodConfig,
@@ -102,20 +101,20 @@ class TestExperimentEnvironmentsConfigs(TestCase):
 
         # Add default worker resources
         config_dict['default_worker'] = {
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                gpu=K8SResourcesConfig(2, 4),
-                tpu=K8SResourcesConfig(2, 8)
-            ).to_dict(),
+            'resources': {
+                'requests': {'cpu': 0.5, 'gpu': 2, 'tpu': 2},
+                'limits': {'cpu': 1, 'gpu': 4, 'tpu': 8},
+            }
         }
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
 
         # Add default ps resources
         config_dict['default_ps'] = {
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
@@ -123,10 +122,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         # Adding custom resources for worker 4
         config_dict['worker'] = [{
             'index': 4,
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400),
-            ).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }]
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
@@ -134,9 +133,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         # Adding custom resources for ps 4
         config_dict['ps'] = [{
             'index': 4,
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }]
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
@@ -150,10 +150,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
 
         # Add default worker resources
         config_dict['default_worker'] = {
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                tpu=K8SResourcesConfig(2, 8),
-                gpu=K8SResourcesConfig(2, 4)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'gpu': 2, 'tpu': 2},
+                'limits': {'cpu': 1, 'gpu': 4, 'tpu': 8},
+            }
         }
         config = HorovodConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -161,9 +161,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         # Adding custom resources for worker 4
         config_dict['worker'] = [{
             'index': 4,
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }]
         config = HorovodConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_light_dict())
@@ -177,10 +178,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
 
         # Add default worker resources
         config_dict['default_worker'] = {
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                tpu=K8SResourcesConfig(1, 1),
-                gpu=K8SResourcesConfig(2, 4)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'gpu': 2, 'tpu': 1},
+                'limits': {'cpu': 1, 'gpu': 4, 'tpu': 1},
+            }
         }
         config = PytorchConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -188,8 +189,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         # Adding custom resources for worker 4
         config_dict['worker'] = [{
             'index': 4,
-            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1),
-                                            memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }]
         config = PytorchConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -204,19 +207,20 @@ class TestExperimentEnvironmentsConfigs(TestCase):
 
         # Add default worker resources
         config_dict['default_worker'] = {
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                tpu=K8SResourcesConfig(1, 1),
-                gpu=K8SResourcesConfig(2, 4)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'gpu': 2, 'tpu': 1},
+                'limits': {'cpu': 1, 'gpu': 4, 'tpu': 1},
+            }
         }
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add default ps resources
         config_dict['default_ps'] = {
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -224,9 +228,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         # Adding custom resources for worker 4
         config_dict['worker'] = [{
             'index': 4,
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }]
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
@@ -234,9 +239,10 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         # Adding custom resources for ps 4
         config_dict['ps'] = [{
             'index': 4,
-            'resources': PodResourcesConfig(
-                cpu=K8SResourcesConfig(0.5, 1),
-                memory=K8SResourcesConfig(256, 400)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }]
         config = MXNetConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

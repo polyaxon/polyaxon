@@ -60,7 +60,7 @@ class TestPipelineConfigs(TestCase):
                     'tags': ['tag11', 'tag12'],
                     'params': {'param1': 'text', 'param2': 12, 'param3': 'https://foo.com'},
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -78,7 +78,7 @@ class TestPipelineConfigs(TestCase):
                         'param3': 'https://foo.com'
                     },
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -95,7 +95,7 @@ class TestPipelineConfigs(TestCase):
                         'param3': False
                     },
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -111,7 +111,7 @@ class TestPipelineConfigs(TestCase):
                     'tags': ['tag31', 'tag32'],
                     'dependencies': ['B', 'C'],
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -159,7 +159,7 @@ class TestPipelineConfigs(TestCase):
                     ],
                     'build': {'dockerfile': 'Dockerfile'},
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': '500m'}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -194,7 +194,7 @@ class TestPipelineConfigs(TestCase):
                     ],
                     'build': {'ref': '12'},
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': '200m'}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -216,7 +216,7 @@ class TestPipelineConfigs(TestCase):
                     'backend': 'kaniko',
                     'dockerfile': 'Dockerfile',
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': '500m'}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -246,7 +246,7 @@ class TestPipelineConfigs(TestCase):
                         }
                     ],
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'memory': '64Mi'}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1620,7 +1620,7 @@ class TestPipelineConfigs(TestCase):
                     'description': 'description A',
                     'tags': ['tag11', 'tag12'],
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1639,7 +1639,7 @@ class TestPipelineConfigs(TestCase):
                         'output1': 'S3://foo.com'
                     },
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1656,7 +1656,7 @@ class TestPipelineConfigs(TestCase):
                         'output1': 'S3://foo.com',
                     },
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1695,7 +1695,7 @@ class TestPipelineConfigs(TestCase):
                     ],
                     'build': {'dockerfile': 'Dockerfile'},
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1730,7 +1730,7 @@ class TestPipelineConfigs(TestCase):
                     ],
                     'build': {'ref': '12'},
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1752,7 +1752,7 @@ class TestPipelineConfigs(TestCase):
                     'backend': 'kaniko',
                     'dockerfile': 'Dockerfile',
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
@@ -1782,7 +1782,7 @@ class TestPipelineConfigs(TestCase):
                         }
                     ],
                     'environment': {
-                        'resources': {'cpu': {'requests': 1}},
+                        'resources': {'requests': {'cpu': 1}},
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],

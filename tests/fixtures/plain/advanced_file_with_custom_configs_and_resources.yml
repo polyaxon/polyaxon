@@ -15,9 +15,8 @@ environment:
   artifact_refs: ['outputs1']
 
   resources:
-    cpu:
-      requests: 1
-      limits: 2
+    requests: {cpu: 1}
+    limits: {cpu: 2}
 
   replicas:
     n_workers: 5

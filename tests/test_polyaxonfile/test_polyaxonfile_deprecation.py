@@ -5,15 +5,9 @@ import os
 
 from unittest import TestCase
 
-from flaky import flaky
-
 from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
-from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
-from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingConfig
-from polyaxon_schemas.ops.group.hptuning import HPTuningConfig, SearchAlgorithms
-from polyaxon_schemas.ops.group.matrix import MatrixConfig
 from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.specs.frameworks import TensorflowSpecification
@@ -32,7 +26,7 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert spec.build.dockerfile == 'Dockerfile'
         assert spec.run.cmd == 'video_prediction_train --model=DNA --num_masks=1'
         assert spec.environment is not None
-        assert spec.environment.resources.gpu.to_dict() == {'requests': 1, 'limits': 1}
+        assert spec.environment.resources == {'requests': {'gpu': 1}, 'limits': {'gpu': 1}}
         assert spec.environment.outputs.to_dict() == {'jobs': [111], 'experiments': None}
         assert spec.framework is not None
         assert spec.is_experiment is True
@@ -92,11 +86,11 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert spec.node_selector == node_selector
 
         resources = {
-            'cpu': {'requests': 1, 'limits': 2},
-            'memory': {'requests': 200, 'limits': 200},
+            'requests': {'cpu': 1, 'memory': '200Mi'},
+            'limits': {'cpu': 2, 'memory': '200Mi'},
         }
-        assert spec.environment.resources.to_dict() == resources
-        assert spec.resources.to_dict() == resources
+        assert spec.environment.resources == resources
+        assert spec.resources == resources
 
         affinity = {
             'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}
@@ -125,10 +119,7 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert spec.config.tensorflow.n_workers == 5
         assert spec.config.tensorflow.n_ps == 10
 
-        assert isinstance(spec.environment.resources, PodResourcesConfig)
-        assert isinstance(spec.environment.resources.cpu, K8SResourcesConfig)
-        assert spec.environment.resources.cpu.requests == 1
-        assert spec.environment.resources.cpu.limits == 2
+        assert spec.environment.resources == {'requests': {'cpu': 1}, 'limits': {'cpu': 2}}
 
         assert spec.config.tensorflow.default_worker_node_selector == {
             'foo': True
@@ -147,10 +138,8 @@ class TestPolyaxonfileDeprecation(TestCase):
             'effect': 'NoSchedule',
         }]
 
-        assert isinstance(spec.config.tensorflow.default_ps_resources, PodResourcesConfig)
-        assert isinstance(spec.config.tensorflow.default_ps_resources.cpu, K8SResourcesConfig)
-        assert spec.config.tensorflow.default_ps_resources.cpu.requests == 2
-        assert spec.config.tensorflow.default_ps_resources.cpu.limits == 4
+        assert spec.config.tensorflow.default_ps_resources == {
+            'requests': {'cpu': 2}, 'limits': {'cpu': 4}}
 
         assert spec.config.tensorflow.ps_node_selectors == {}
         assert isinstance(spec.config.tensorflow.ps_tolerations[7], list)
@@ -158,10 +147,8 @@ class TestPolyaxonfileDeprecation(TestCase):
             'operator': 'Exists'
         }]
         assert isinstance(spec.config.tensorflow.ps_affinities[7], dict)
-        assert isinstance(spec.config.tensorflow.ps_resources[9], PodResourcesConfig)
-        assert isinstance(spec.config.tensorflow.ps_resources[9].memory, K8SResourcesConfig)
-        assert spec.config.tensorflow.ps_resources[9].memory.requests == 512
-        assert spec.config.tensorflow.ps_resources[9].memory.limits == 1024
+        assert spec.config.tensorflow.ps_resources[9] == {
+            'requests': {'memory': '512Mi'}, 'limits': {'memory': '1024Mi'}}
 
         # check that properties for return list of configs and resources is working
         cluster, is_distributed = spec.cluster_def
@@ -186,15 +173,6 @@ class TestPolyaxonfileDeprecation(TestCase):
             is_distributed=is_distributed
         )
         assert len(ps_resources) == spec.config.tensorflow.n_ps
-        assert set(ps_resources.values()) == {
-            spec.config.tensorflow.default_ps_resources,
-            spec.config.tensorflow.ps_resources[9]}
-
-        # Check total resources
-        assert spec.total_resources == {
-            'cpu': {'requests': 1 + 2 * 9, 'limits': 2 + 4 * 9},
-            'memory': {'requests': 512, 'limits': 1024},
-        }
 
         assert spec.cluster_def == ({TaskType.MASTER: 1,
                                      TaskType.WORKER: 5,

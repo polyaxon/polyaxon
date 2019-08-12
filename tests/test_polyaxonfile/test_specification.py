@@ -207,13 +207,13 @@ class TestSpecifications(TestCase):
 
         # Add env
         assert spec.environment is None
-        env = {'environment': {'resources': {
-            'gpu': {'requests': 1, 'limits': 1},
-            'tpu': {'requests': 1, 'limits': 1}}}}
+        env = {'environment': {
+            'resources': {'requests': {'gpu': 1, 'tpu': 1}, 'limits': {'gpu': 1, 'tpu': 1}}
+        }}
         spec = spec.patch(values=env)
         assert spec.params == params['params']
-        assert spec.environment.resources.gpu.to_dict() == env['environment']['resources']['gpu']
-        assert spec.environment.resources.tpu.to_dict() == env['environment']['resources']['gpu']
+        assert spec.environment.resources == {'requests': {'gpu': 1, 'tpu': 1},
+                                              'limits': {'gpu': 1, 'tpu': 1}}
 
         # Patch with unsupported spec
         matrix = {'hptuning': {'matrix': {'lr': {'values': [0.1, 0.2]}}}}
@@ -227,16 +227,19 @@ class TestSpecifications(TestCase):
 
     def test_experiment_environment_config(self):
         config_dict = {
-            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict(),
+            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(1, 0.5)).to_dict(),
             'replicas': {
                 'n_workers': 10,
                 'n_ps': 5,
             }
         }
         config = ExperimentEnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        results = config.to_dict()
+        assert_equal_dict(config_dict['replicas'], results['replicas'])
+        assert_equal_dict({'requests': {'cpu': 0.5}, 'limits': {'cpu': 1}}, results['resources'])
 
         # Add some field should raise
+        config_dict.pop('resources')
         config_dict['foo'] = {
             'n_workers': 10,
             'n_ps': 5,

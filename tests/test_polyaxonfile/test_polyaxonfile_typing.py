@@ -5,27 +5,13 @@ import os
 
 from unittest import TestCase
 
-from flaky import flaky
-
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.ops.build_job import BuildConfig
 from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
-from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
-from polyaxon_schemas.ops.experiment.backends import ExperimentBackend
-from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
-from polyaxon_schemas.ops.group.early_stopping_policies import EarlyStoppingConfig
 from polyaxon_schemas.ops.group.hptuning import HPTuningConfig, SearchAlgorithms
 from polyaxon_schemas.ops.group.matrix import MatrixConfig
-from polyaxon_schemas.ops.logging import LoggingConfig
 from polyaxon_schemas.ops.run import RunConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
-from polyaxon_schemas.specs.frameworks import (
-    HorovodSpecification,
-    MPISpecification,
-    MXNetSpecification,
-    PytorchSpecification,
-    TensorflowSpecification
-)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -184,11 +170,11 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.node_selector == node_selector
 
         resources = {
-            'cpu': {'requests': 1, 'limits': 2},
-            'memory': {'requests': 200, 'limits': 200},
+            'requests': {'cpu': 1, 'memory': '200Mi'},
+            'limits': {'cpu': 2, 'memory': '200Mi'},
         }
-        assert spec.environment.resources.to_dict() == resources
-        assert spec.resources.to_dict() == resources
+        assert spec.environment.resources == resources
+        assert spec.resources == resources
 
         affinity = {
             'nodeAffinity': {'requiredDuringSchedulingIgnoredDuringExecution': {}}

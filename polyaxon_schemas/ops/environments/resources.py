@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields
+from marshmallow import INCLUDE, fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.fields import FloatOrStr, IntOrStr
@@ -12,6 +12,9 @@ class K8SResourcesEntrySchema(BaseSchema):
     memory = IntOrStr(allow_none=True)
     gpu = fields.Int(allow_none=True)
     tpu = fields.Int(allow_none=True)
+
+    class Meta:
+        unknown = INCLUDE
 
     @staticmethod
     def schema_config():
@@ -53,6 +56,46 @@ class K8SContainerResourcesConfig(BaseConfig):
     def __init__(self, limits=None, requests=None):
         self.limits = limits
         self.requests = requests
+
+    @staticmethod
+    def from_resources_entry(resources):
+        if resources is None:
+            return None
+
+        limits = {}
+        requests = {}
+        if resources.cpu:
+            if resources.cpu.limits:
+                limits['cpu'] = resources.cpu.limits
+            if resources.cpu.requests:
+                requests['cpu'] = resources.cpu.requests
+        if resources.memory:
+            if resources.memory.limits:
+                memory = int(resources.memory.limits)
+                if memory != resources.memory.limits:
+                    memory = resources.memory.limits
+                limits['memory'] = '{}Mi'.format(memory)
+            if resources.memory.requests:
+                memory = int(resources.memory.requests)
+                if memory != resources.memory.requests:
+                    memory = resources.memory.requests
+                requests['memory'] = '{}Mi'.format(memory)
+        if resources.gpu:
+            if resources.gpu.limits:
+                limits['gpu'] = int(resources.gpu.limits)
+            if resources.gpu.requests:
+                requests['gpu'] = int(resources.gpu.requests)
+        if resources.tpu:
+            if resources.tpu.limits:
+                limits['tpu'] = int(resources.tpu.limits)
+            if resources.tpu.requests:
+                requests['tpu'] = int(resources.tpu.requests)
+        resource_results = {}
+        if limits:
+            resource_results['limits'] = limits
+        if requests:
+            resource_results['requests'] = requests
+        return resource_results
 
 
 class K8SResourcesSchema(BaseSchema):

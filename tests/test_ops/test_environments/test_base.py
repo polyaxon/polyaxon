@@ -6,14 +6,25 @@ from unittest import TestCase
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
-from polyaxon_schemas.ops.environments.resources import K8SResourcesConfig, PodResourcesConfig
 
 
 class TestEnvironmentsConfigs(TestCase):
+    def test_environment_resources(self):
+        config_dict = {
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi', 'nvidia.com/gpu': 1, 'amd.com/gpu': 2},
+                'limits': {'cpu': 1, 'memory': '400Mi', 'nvidia.com/gpu': 1, 'amd.com/gpu': 2},
+            }
+        }
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
 
     def test_environment_config(self):
         config_dict = {
-            'resources': PodResourcesConfig(cpu=K8SResourcesConfig(0.5, 1)).to_dict()
+            'resources': {
+                'requests': {'cpu': 0.5, 'memory': '256Mi'},
+                'limits': {'cpu': 1, 'memory': '400Mi'},
+            }
         }
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

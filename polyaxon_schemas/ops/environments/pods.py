@@ -9,7 +9,10 @@ from marshmallow import ValidationError, fields, validates_schema
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.environments.outputs import OutputsSchema
 from polyaxon_schemas.ops.environments.persistence import PersistenceSchema
-from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
+from polyaxon_schemas.ops.environments.resources import (
+    K8SContainerResourcesConfig,
+    PodResourcesConfig
+)
 
 
 def validate_configmap_refs(values, is_schema=False):
@@ -40,7 +43,7 @@ def validate_persistence(values, is_schema=False):
         values['data_refs'] = values.get('data_refs', persistence.data)
         values['artifact_refs'] = to_list(values.get('artifact_refs', persistence.outputs),
                                           check_none=True)
-        return values
+    return values
 
 
 def validate_outputs(values, is_schema=False):
@@ -53,10 +56,27 @@ def validate_outputs(values, is_schema=False):
             values.pop('outputs')
 
 
+def validate_resources(values):
+    resources = values.pop('resources', None)
+    if not resources:
+        return values
+
+    try:  # Check deprecated resources
+        resources = PodResourcesConfig.from_dict(resources)
+        warnings.warn(
+            'The `resources` parameter should specify a k8s compliant format.',
+            DeprecationWarning)
+        values['resources'] = K8SContainerResourcesConfig.from_resources_entry(resources)
+    except ValidationError:
+        values['resources'] = resources
+
+    return values
+
+
 class EnvironmentSchema(BaseSchema):
     # To indicate which worker/ps index this session config belongs to
     index = fields.Int(allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    resources = fields.Dict(allow_none=True)
     labels = fields.Dict(allow_none=True)
     annotations = fields.Dict(allow_none=True)
     node_selector = fields.Dict(allow_none=True)
@@ -84,6 +104,10 @@ class EnvironmentSchema(BaseSchema):
     @validates_schema
     def validate_persistence(self, values):
         validate_persistence(values, is_schema=True)
+
+    @validates_schema
+    def validate_resources(self, values):
+        validate_resources(values)
     #
     # @validates_schema
     # def validate_outputs(self, values):
@@ -139,7 +163,7 @@ class EnvironmentConfig(BaseConfig):
                  outputs=None,
                  ):
         self.index = index
-        self.resources = resources
+        self.resources = validate_resources({'resources': resources}).get('resources')
         self.labels = labels
         self.annotations = annotations
         self.node_selector = node_selector
@@ -149,13 +173,16 @@ class EnvironmentConfig(BaseConfig):
         self.image_pull_secrets = image_pull_secrets
         self.max_restarts = max_restarts
         self.secret_refs = secret_refs
-        validate_configmap_refs({'config_map_refs': config_map_refs,
-                                 'configmap_refs': configmap_refs})
-        self.config_map_refs = config_map_refs or configmap_refs
-        validate_persistence({'persistence': persistence,
-                              'data_refs': data_refs,
-                              'artifact_refs': artifact_refs})
-        self.data_refs = data_refs
-        self.artifact_refs = artifact_refs
+        self.config_map_refs = validate_configmap_refs({
+            'config_map_refs': config_map_refs,
+            'configmap_refs': configmap_refs
+        }).get('config_map_refs')
+        persistence_values = validate_persistence({
+            'persistence': persistence,
+            'data_refs': data_refs,
+            'artifact_refs': artifact_refs
+        })
+        self.data_refs = persistence_values.get('data_refs')
+        self.artifact_refs = persistence_values.get('artifact_refs')
         # validate_outputs({'outputs': outputs})
         self.outputs = outputs
