@@ -91,6 +91,11 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add security context per job
+        config_dict['security_context'] = {'runAsUser': 1000, 'runAsGroup': 3000, 'fsGroup': 5000}
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add max_restarts
         config_dict['max_restarts'] = 4
         config = EnvironmentConfig.from_dict(config_dict)

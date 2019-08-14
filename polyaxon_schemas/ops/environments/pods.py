@@ -94,6 +94,7 @@ class EnvironmentSchema(BaseSchema):
     artifact_refs = fields.List(fields.Str(), allow_none=True)
     outputs = fields.Nested(OutputsSchema, allow_none=True)  # Deprecated
     persistence = fields.Nested(PersistenceSchema, allow_none=True)
+    security_context = fields.Dict(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -144,7 +145,8 @@ class EnvironmentConfig(BaseConfig):
                           'config_map_refs',
                           'data_refs',
                           'artifact_refs',
-                          'outputs']
+                          'outputs',
+                          'security_context']
 
     def __init__(self,
                  index=None,
@@ -165,6 +167,7 @@ class EnvironmentConfig(BaseConfig):
                  artifact_refs=None,
                  persistence=None,
                  outputs=None,
+                 security_context=None,
                  ):
         self.index = index
         self.resources = validate_resources({'resources': resources}).get('resources')
@@ -191,3 +194,4 @@ class EnvironmentConfig(BaseConfig):
         self.artifact_refs = persistence_values.get('artifact_refs')
         # validate_outputs({'outputs': outputs})
         self.outputs = outputs
+        self.security_context = security_context

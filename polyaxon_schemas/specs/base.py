@@ -361,6 +361,10 @@ class EnvironmentSpecificationMixin(object):
     def env_vars(self):
         return self.environment.env_vars if self.environment else None
 
+    @property
+    def security_context(self):
+        return self.environment.security_context if self.environment else None
+
 
 class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
     """The polyaxonfile specification for build jobs.
