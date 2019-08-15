@@ -9,6 +9,13 @@ tags:
     - reference
 ---
 
+## 0.5.6
+
+ * Allow code download based on commit in CLI: `polyaxon project download --commit=...`
+ * Allow code download related to an experiment/job/build in CLI: e.g. `polyaxon experiment -xp 123 code`
+ * Fix issue with experiment resume cleaning the experiment's outputs.
+ * Fix some docs refs and issues.
+
 ## 0.5.5
 
  * Fix regression in last metric saving (Last metric should always output the last metric from all previous steps).

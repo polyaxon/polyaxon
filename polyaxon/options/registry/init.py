@@ -20,7 +20,7 @@ class InitDockerImage(Option):
     is_list = False
     typing = CONF_TYPES.STR
     store = OptionStores.DB_OPTION
-    default = 'polyaxon/polyaxon-init:0.5.5'
+    default = 'polyaxon/polyaxon-init:0.5.6'
     options = None
     description = 'The docker image to use for init container'
     cache_ttl = LONG_CACHE_TTL

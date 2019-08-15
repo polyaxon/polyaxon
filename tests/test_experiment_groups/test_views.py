@@ -384,7 +384,7 @@ declarations:
 build:
   image: tensorflow/tensorflow:1.4.1-py3
   build_steps:
-    - pip3 install --no-cache-dir -U polyaxon-client==0.5.5
+    - pip3 install --no-cache-dir -U polyaxon-client==0.5.6
 
 run:
   cmd:  python3 model.py --batch_size={{ batch_size }} \

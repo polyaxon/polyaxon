@@ -177,8 +177,11 @@ body > #container {
   font-size: 12px;
 }
 
-.site-footer .container i.love {
+.site-footer .container {
   border-top: 1px solid #f5f5f5;
+}
+
+.site-footer .container i.love {
   color: #a9a9a9;
   font-size: 1.3em;
 }
@@ -264,7 +267,6 @@ a.brand {
   font-size: 14px;
 }
 
-
 .header-item-link:hover {
   background-color: #dde1ea21 !important;
   color: #f9f9f9 !important;
@@ -289,6 +291,7 @@ a.brand {
   vertical-align: middle;
   display: inline-block;
 }
+
 .header-user .chevron {
   height: 24px
 }
