@@ -186,12 +186,8 @@ class ResourceManager(BaseResourceManager):
 
     def get_init_path_args(self, persistence_outputs):
         if self.original_name is not None and self.cloning_strategy == CloningStrategy.RESUME:
-            command = InitCommands.CREATE
-            outputs_path = stores.get_experiment_outputs_path(
-                persistence=persistence_outputs,
-                experiment_name=self.original_name)
-            original_outputs_path = None
-        elif self.original_name is not None and self.cloning_strategy == CloningStrategy.COPY:
+            return None
+        if self.original_name is not None and self.cloning_strategy == CloningStrategy.COPY:
             command = InitCommands.COPY
             outputs_path = stores.get_experiment_outputs_path(
                 persistence=persistence_outputs,
@@ -223,7 +219,8 @@ class ResourceManager(BaseResourceManager):
         volume_mounts = outputs_volume_mount + to_list(context_mounts, check_none=True)
         init_command = init_command or ["/bin/sh", "-c"]
         init_args = init_args or []
-        init_args += to_list(self.get_init_path_args(persistence_outputs=persistence_outputs))
+        init_args += to_list(self.get_init_path_args(persistence_outputs=persistence_outputs),
+                             check_none=True)
         init_args += to_list(get_auth_context_args(entity='experiment',
                                                    entity_name=self.experiment_name))
         return [
