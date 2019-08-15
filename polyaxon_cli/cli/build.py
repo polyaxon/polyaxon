@@ -439,3 +439,38 @@ def logs(ctx, past, follow, hide_time):
         Printer.print_error('Could not get logs for build job `{}`.'.format(_build))
         Printer.print_error('Error message `{}`.'.format(e))
         sys.exit(1)
+
+
+@build.command()
+@click.pass_context
+@clean_outputs
+def code(ctx):
+    """Download code for build.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon build -b 1 code
+    ```
+    """
+    user, project_name, _build = get_build_or_local(ctx.obj.get('project'), ctx.obj.get('build'))
+
+    try:
+        code_ref = PolyaxonClient().build_job.get_code_reference(user, project_name, _build)
+        commit = None
+        if code_ref:
+            commit = code_ref.commit
+            Printer.print_header(
+                'Build has code ref: `{}`, downloading ...'.format(commit))
+        else:
+            Printer.print_warning(
+                'Build has no code ref, downloading latest code...')
+        PolyaxonClient().project.download_repo(user, project_name, commit=commit)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        Printer.print_error('Could not download outputs for experiment `{}`.'.format(_build))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    Printer.print_success('Files downloaded.')

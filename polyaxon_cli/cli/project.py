@@ -724,13 +724,14 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
 
 
 @project.command()
+@click.option('--commit', '-c', type=str, help='The Commit to download.')
 @click.pass_context
 @clean_outputs
-def download(ctx):
+def download(ctx, commit):
     """Download code of the current project."""
     user, project_name = get_project_or_local(ctx.obj.get('project'))
     try:
-        PolyaxonClient().project.download_repo(user, project_name)
+        PolyaxonClient().project.download_repo(user, project_name, commit=commit)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not download code for project `{}`.'.format(project_name))
         Printer.print_error('Error message `{}`.'.format(e))

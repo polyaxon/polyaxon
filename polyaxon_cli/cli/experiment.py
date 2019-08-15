@@ -744,6 +744,41 @@ def outputs(ctx):
 @experiment.command()
 @click.pass_context
 @clean_outputs
+def code(ctx):
+    """Download code for experiment.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Examples:
+
+    \b
+    ```bash
+    $ polyaxon experiment -xp 1 code
+    ```
+    """
+    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
+                                                                      ctx.obj.get('experiment'))
+    try:
+        code_ref = PolyaxonClient().experiment.get_code_reference(user, project_name, _experiment)
+        commit = None
+        if code_ref:
+            commit = code_ref.commit
+            Printer.print_header(
+                'Experiment has code ref: `{}`, downloading ...'.format(commit))
+        else:
+            Printer.print_warning(
+                'Experiment has no code ref, downloading latest code...')
+        PolyaxonClient().project.download_repo(user, project_name, commit=commit)
+    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        Printer.print_error('Could not download outputs for experiment `{}`.'.format(_experiment))
+        Printer.print_error('Error message `{}`.'.format(e))
+        sys.exit(1)
+    Printer.print_success('Files downloaded.')
+
+
+@experiment.command()
+@click.pass_context
+@clean_outputs
 def bookmark(ctx):
     """Bookmark experiment.
 
