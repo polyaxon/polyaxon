@@ -231,6 +231,51 @@ class TestAuthApi(TestBaseApi):
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True
 
     @httpretty.activate
+    def test_login_build_job_impersonate_token(self):
+        token = uuid.uuid4().hex
+        httpretty.register_uri(
+            httpretty.POST,
+            BaseApiHandler.build_url(
+                self.api_config.base_url,
+                '/',
+                'user',
+                'project',
+                'builds',
+                '1',
+                'impersonatetoken'
+            ),
+            body=json.dumps({'token': token}),
+            content_type='application/json', status=200)
+
+        # Login without updating the token and without persistence
+        if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
+            os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_build_impersonate_token(
+            username='user',
+            project_name='project',
+            job_id=1,
+            internal_token='foo',
+            set_token=False,
+            persist_token=False)
+        assert self.api_config.token == 'token'
+        assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
+
+        # Login and update the token and persistence
+        if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
+            os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
+        assert self.api_config.token == 'token'
+        assert token == self.api_handler.login_build_impersonate_token(
+            username='user',
+            project_name='project',
+            job_id=1,
+            internal_token='foo',
+            set_token=True,
+            persist_token=True)
+        assert self.api_config.token == token
+        assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True
+
+    @httpretty.activate
     def test_login_notebook_impersonate_token(self):
         token = uuid.uuid4().hex
         httpretty.register_uri(
