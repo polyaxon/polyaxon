@@ -130,7 +130,7 @@ class NotebookSpawner(ProjectJobSpawner):
             "--port={port} "
             "--ip=0.0.0.0 "
             "--allow-root "
-            "--NotebookApp.allow_origin='*' "
+            "--NotebookApp.allow_origin=* "
             "--NotebookApp.token={token} "
             "--NotebookApp.trust_xheaders=True "
             "--NotebookApp.base_url={base_url} "
