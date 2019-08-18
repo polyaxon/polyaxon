@@ -2,7 +2,7 @@ import pytest
 
 import conf
 
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from options.registry.scheduler import SCHEDULER_GLOBAL_COUNTDOWN
 from tests.base.case import BaseTest
 

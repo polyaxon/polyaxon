@@ -42,7 +42,7 @@ from constants.urls import WS_V1
 from db.models.jobs import Job, JobStatus
 from db.models.tokens import Token
 from db.redis.heartbeat import RedisHeartBeat
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from events.registry.job import (
     JOB_ARCHIVED,
     JOB_DELETED_TRIGGERED,

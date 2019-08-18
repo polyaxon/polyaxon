@@ -20,7 +20,7 @@ from constants.urls import API_V1, WS_V1
 from db.models.bookmarks import Bookmark
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory, BuildJobStatusFactory
 from factories.factory_projects import ProjectFactory
 from factories.fixtures import build_spec_parsed_content

@@ -72,7 +72,7 @@ from db.models.experiments import (
 from db.models.tokens import Token
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.heartbeat import RedisHeartBeat
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from events.registry.chart_view import CHART_VIEW_CREATED, CHART_VIEW_DELETED
 from events.registry.experiment import (
     EXPERIMENT_ARCHIVED,

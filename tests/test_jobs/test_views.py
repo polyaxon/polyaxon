@@ -23,7 +23,7 @@ from constants.urls import API_V1, WS_V1
 from db.models.bookmarks import Bookmark
 from db.models.jobs import Job, JobStatus
 from db.redis.heartbeat import RedisHeartBeat
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_jobs import JobFactory, JobStatusFactory
 from factories.factory_projects import ProjectFactory

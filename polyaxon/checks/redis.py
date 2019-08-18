@@ -7,7 +7,7 @@ from checks.results import Result
 from db.redis.containers import RedisJobContainers
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.sessions import RedisSessions
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from db.redis.to_stream import RedisToStream
 
 

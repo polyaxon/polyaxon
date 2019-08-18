@@ -1,6 +1,6 @@
 import workers
 
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from events import event_subjects
 from events.registry import build_job
 from events.registry.build_job import BUILD_JOB_FAILED, BUILD_JOB_SUCCEEDED

@@ -1,7 +1,7 @@
 import conf
 import workers
 
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from events import event_subjects
 from events.registry import experiment
 from executor.handlers.base import BaseHandler

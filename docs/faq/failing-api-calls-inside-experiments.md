@@ -17,7 +17,7 @@ tags:
 ---
 
 Polyaxon uses an ephemeral token to authenticate the jobs/experiments before granting client access to other APIs related to the experiment/job, 
-this ephemeral tokens have a TLL with default value (e.g. 3 hours) after which the token gets invalidated, which in turn makes the job/experiment unable to authenticate.
+this ephemeral tokens have a TTL with default value (e.g. 3 hours) after which the token gets invalidated, which in turn makes the job/experiment unable to authenticate.
 
 ## Use experiment groups to control the concurrency
 

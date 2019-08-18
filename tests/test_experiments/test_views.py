@@ -41,7 +41,7 @@ from db.models.experiments import (
 from db.redis.ephemeral_tokens import RedisEphemeralTokens
 from db.redis.group_check import GroupChecks
 from db.redis.heartbeat import RedisHeartBeat
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from factories.factory_build_jobs import BuildJobFactory
 from factories.factory_experiment_groups import ExperimentGroupFactory
 from factories.factory_experiments import (

@@ -37,7 +37,7 @@ from api.utils.views.protected import ProtectedView
 from constants.urls import WS_V1
 from db.models.build_jobs import BuildJob, BuildJobStatus
 from db.redis.heartbeat import RedisHeartBeat
-from db.redis.tll import RedisTTL
+from db.redis.ttl import RedisTTL
 from events.registry.build_job import (
     BUILD_JOB_ARCHIVED,
     BUILD_JOB_DELETED_TRIGGERED,

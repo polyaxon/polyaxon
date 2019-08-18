@@ -276,7 +276,7 @@ class TestConfService(BaseTest):
         db_option = ConfigOption.objects.create(owner=self.owner,
                                                 key=DummyDBOption.key,
                                                 value='foo')
-        # Update caching tll
+        # Update caching ttl
         DummyDBOption.cache_ttl = 0
         assert self.db_service.get(key=DummyDBOption.key) == 'foo'
         db_option.value = 'bar'
