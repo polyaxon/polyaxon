@@ -1,6 +1,6 @@
 {
   "name": "build_service",
-  "version": "1.0",
+  "version": "1.14.4",
   "description": "ERROR_UNKNOWN",
   "license": "Unlicense",
   "main": "src/index.js",

@@ -12,7 +12,7 @@ import "v1/code_ref.proto";
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
 		title: "Build service";
-		version: "1.0";
+		version: "1.14.4";
 		contact: {
 			name: "Polyaxon build service";
 			url: "https://github.com/polyaxon/polyaxon-sdks";

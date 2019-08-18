@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Job service",
-    "version": "1.0",
+    "version": "1.14.4",
     "contact": {
       "name": "Polyaxon job service",
       "url": "https://github.com/polyaxon/polyaxon-sdks",
