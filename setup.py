@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+
 from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
@@ -18,7 +19,7 @@ class PyTest(TestCommand):
 
 
 setup(name='pandas-summary',
-      version='0.0.6',
+      version='0.0.7',
       description='An extension to pandas describe function.',
       maintainer='Mourad Mourafiq',
       maintainer_email='mouradmourafiq@gmail.com',
