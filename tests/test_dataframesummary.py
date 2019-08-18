@@ -1,7 +1,7 @@
 from __future__ import division
 
-from random import shuffle
 import unittest
+from random import shuffle
 
 import numpy as np
 import pandas as pd
@@ -171,7 +171,7 @@ class DataFrameSummaryTest(unittest.TestCase):
                              name='dbool1',
                              dtype=object).sort_index()
 
-        assert_series_equal(self.dfs['dbool1'].sort_index(), expected)
+        assert_series_equal(self.dfs['dbool1'], expected)
 
     def test_bool2_summary(self):
         count_values = self.df['dbool2'].value_counts()
@@ -217,13 +217,13 @@ class DataFrameSummaryTest(unittest.TestCase):
         num1 = self.df['dnumerics1']
         dm, dmp = self.dfs._get_deviation_of_mean(num1)
         dam, damp = self.dfs._get_median_absolute_deviation(num1)
-        expected = pd.Series(index=['mean', 'std', 'variance', 'min', 'max', '5%', '25%', '50%',
+        expected = pd.Series(index=['mean', 'std', 'variance', 'min', 'max', 'mode', '5%', '25%', '50%',
                                     '75%', '95%', 'iqr', 'kurtosis', 'skewness', 'sum', 'mad', 'cv',
                                     'zeros_num', 'zeros_perc', 'deviating_of_mean',
                                     'deviating_of_mean_perc', 'deviating_of_median',
                                     'deviating_of_median_perc', 'top_correlations', 'counts',
                                     'uniques', 'missing', 'missing_perc', 'types'],
-                             data=[num1.mean(), num1.std(), num1.var(), num1.min(), num1.max(),
+                             data=[num1.mean(), num1.std(), num1.var(), num1.min(), num1.max(), num1.mode()[0],
                                    num1.quantile(0.05), num1.quantile(
                                        0.25), num1.quantile(0.5),
                                    num1.quantile(0.75), num1.quantile(0.95),
