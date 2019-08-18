@@ -1,11 +1,11 @@
 from __future__ import division
-from six import string_types
 
 from collections import OrderedDict
 
 import numpy as np
 import pandas as pd
 from pandas.api import types
+from six import string_types
 
 
 class DataFrameSummary(object):
@@ -174,6 +174,7 @@ class DataFrameSummary(object):
         stats['variance'] = series.var()
         stats['min'] = series.min()
         stats['max'] = series.max()
+        stats['mode'] = series.mode()[0]
 
         for x in np.array([0.05, 0.25, 0.5, 0.75, 0.95]):
             stats[self._percent(x)] = series.quantile(x)
