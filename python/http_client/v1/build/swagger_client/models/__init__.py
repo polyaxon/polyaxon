@@ -44,6 +44,8 @@ from swagger_client.models.protobuf_any import ProtobufAny
 from swagger_client.models.v1_build import V1Build
 from swagger_client.models.v1_build_body_request import V1BuildBodyRequest
 from swagger_client.models.v1_build_status import V1BuildStatus
+from swagger_client.models.v1_code_reference import V1CodeReference
+from swagger_client.models.v1_code_reference_body_request import V1CodeReferenceBodyRequest
 from swagger_client.models.v1_dict import V1Dict
 from swagger_client.models.v1_kv import V1KV
 from swagger_client.models.v1_list_build_statuses_response import V1ListBuildStatusesResponse

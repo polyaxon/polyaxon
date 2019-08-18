@@ -114,7 +114,7 @@ Class | Method | HTTP request | Description
 *ExperimentServiceApi* | [**deleteExperiments**](docs/ExperimentServiceApi.md#deleteExperiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete experiments
 *ExperimentServiceApi* | [**getExperiment**](docs/ExperimentServiceApi.md#getExperiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get experiment
 *ExperimentServiceApi* | [**getExperimentCodeRef**](docs/ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-*ExperimentServiceApi* | [**greateExperimentCodeRef**](docs/ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+*ExperimentServiceApi* | [**greateExperimentCodeRef**](docs/ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
 *ExperimentServiceApi* | [**listArchivedExperiments**](docs/ExperimentServiceApi.md#listArchivedExperiments) | **GET** /v1/archives/{owner}/experiments | List archived experiments
 *ExperimentServiceApi* | [**listBookmarkedExperiments**](docs/ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked experiments
 *ExperimentServiceApi* | [**listExperimentStatuses**](docs/ExperimentServiceApi.md#listExperimentStatuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | List experiment statuses
@@ -133,6 +133,8 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [ProtobufAny](docs/ProtobufAny.md)
+ - [V1CodeReference](docs/V1CodeReference.md)
+ - [V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
  - [V1Dict](docs/V1Dict.md)
  - [V1Experiment](docs/V1Experiment.md)
  - [V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)

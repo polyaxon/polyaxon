@@ -26,6 +26,8 @@ import (
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
+
+	job_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/job_model"
 )
 
 // GetJobCodeRefReader is a Reader for the GetJobCodeRef structure.
@@ -64,21 +66,23 @@ func NewGetJobCodeRefOK() *GetJobCodeRefOK {
 A successful response.
 */
 type GetJobCodeRefOK struct {
-	Payload interface{}
+	Payload *job_model.V1CodeReference
 }
 
 func (o *GetJobCodeRefOK) Error() string {
 	return fmt.Sprintf("[GET /v1/{owner}/{project}/jobs/{id}/coderef][%d] getJobCodeRefOK  %+v", 200, o.Payload)
 }
 
-func (o *GetJobCodeRefOK) GetPayload() interface{} {
+func (o *GetJobCodeRefOK) GetPayload() *job_model.V1CodeReference {
 	return o.Payload
 }
 
 func (o *GetJobCodeRefOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(job_model.V1CodeReference)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

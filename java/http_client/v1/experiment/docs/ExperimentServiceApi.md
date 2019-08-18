@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteExperiments**](ExperimentServiceApi.md#deleteExperiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete experiments
 [**getExperiment**](ExperimentServiceApi.md#getExperiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get experiment
 [**getExperimentCodeRef**](ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-[**greateExperimentCodeRef**](ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+[**greateExperimentCodeRef**](ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
 [**listArchivedExperiments**](ExperimentServiceApi.md#listArchivedExperiments) | **GET** /v1/archives/{owner}/experiments | List archived experiments
 [**listBookmarkedExperiments**](ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked experiments
 [**listExperimentStatuses**](ExperimentServiceApi.md#listExperimentStatuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | List experiment statuses
@@ -361,7 +361,7 @@ No authorization required
 
 <a name="getExperimentCodeRef"></a>
 # **getExperimentCodeRef**
-> Object getExperimentCodeRef(owner, project, id)
+> V1CodeReference getExperimentCodeRef(owner, project, id)
 
 Get experiment code ref
 
@@ -377,7 +377,7 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String id = "id_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.getExperimentCodeRef(owner, project, id);
+    V1CodeReference result = apiInstance.getExperimentCodeRef(owner, project, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ExperimentServiceApi#getExperimentCodeRef");
@@ -395,7 +395,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -408,7 +408,7 @@ No authorization required
 
 <a name="greateExperimentCodeRef"></a>
 # **greateExperimentCodeRef**
-> Object greateExperimentCodeRef(owner, project, id, body)
+> V1CodeReference greateExperimentCodeRef(entityOwner, entityProject, entityId, body)
 
 Get experiment code ref
 
@@ -420,12 +420,12 @@ Get experiment code ref
 
 
 ExperimentServiceApi apiInstance = new ExperimentServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String id = "id_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityIdRequest body = new V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+String entityOwner = "entityOwner_example"; // String | Owner of the namespace
+String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
+String entityId = "entityId_example"; // String | Unique integer identifier of the entity
+V1CodeReferenceBodyRequest body = new V1CodeReferenceBodyRequest(); // V1CodeReferenceBodyRequest | 
 try {
-    Object result = apiInstance.greateExperimentCodeRef(owner, project, id, body);
+    V1CodeReference result = apiInstance.greateExperimentCodeRef(entityOwner, entityProject, entityId, body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ExperimentServiceApi#greateExperimentCodeRef");
@@ -437,14 +437,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **id** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  |
+ **entityOwner** | **String**| Owner of the namespace |
+ **entityProject** | **String**| Project where the experiement will be assigned |
+ **entityId** | **String**| Unique integer identifier of the entity |
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  |
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

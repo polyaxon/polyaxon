@@ -313,7 +313,7 @@ func (a *Client) GetBuildCodeRef(params *GetBuildCodeRefParams) (*GetBuildCodeRe
 }
 
 /*
-GreateBuildCodeRef gets build code ref
+GreateBuildCodeRef creates build code ref
 */
 func (a *Client) GreateBuildCodeRef(params *GreateBuildCodeRefParams) (*GreateBuildCodeRefOK, error) {
 	// TODO: Validate the params before sending
@@ -324,7 +324,7 @@ func (a *Client) GreateBuildCodeRef(params *GreateBuildCodeRefParams) (*GreateBu
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GreateBuildCodeRef",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/coderef",
+		PathPattern:        "/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

@@ -26,6 +26,8 @@ import (
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
+
+	experiment_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/experiment_model"
 )
 
 // GetExperimentCodeRefReader is a Reader for the GetExperimentCodeRef structure.
@@ -64,21 +66,23 @@ func NewGetExperimentCodeRefOK() *GetExperimentCodeRefOK {
 A successful response.
 */
 type GetExperimentCodeRefOK struct {
-	Payload interface{}
+	Payload *experiment_model.V1CodeReference
 }
 
 func (o *GetExperimentCodeRefOK) Error() string {
 	return fmt.Sprintf("[GET /v1/{owner}/{project}/experiments/{id}/coderef][%d] getExperimentCodeRefOK  %+v", 200, o.Payload)
 }
 
-func (o *GetExperimentCodeRefOK) GetPayload() interface{} {
+func (o *GetExperimentCodeRefOK) GetPayload() *experiment_model.V1CodeReference {
 	return o.Payload
 }
 
 func (o *GetExperimentCodeRefOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(experiment_model.V1CodeReference)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

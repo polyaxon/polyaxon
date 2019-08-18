@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest'], factory);
+    define(['ApiClient', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1Build'), require('../model/V1BuildBodyRequest'), require('../model/V1BuildStatus'), require('../model/V1ListBuildStatusesResponse'), require('../model/V1ListBuildsResponse'), require('../model/V1OwnedEntityIdRequest'), require('../model/V1ProjectBodyRequest'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1Build'), require('../model/V1BuildBodyRequest'), require('../model/V1BuildStatus'), require('../model/V1CodeReference'), require('../model/V1CodeReferenceBodyRequest'), require('../model/V1ListBuildStatusesResponse'), require('../model/V1ListBuildsResponse'), require('../model/V1OwnedEntityIdRequest'), require('../model/V1ProjectBodyRequest'));
   } else {
     // Browser globals (root is window)
     if (!root.BuildService) {
       root.BuildService = {};
     }
-    root.BuildService.BuildServiceApi = factory(root.BuildService.ApiClient, root.BuildService.V1Build, root.BuildService.V1BuildBodyRequest, root.BuildService.V1BuildStatus, root.BuildService.V1ListBuildStatusesResponse, root.BuildService.V1ListBuildsResponse, root.BuildService.V1OwnedEntityIdRequest, root.BuildService.V1ProjectBodyRequest);
+    root.BuildService.BuildServiceApi = factory(root.BuildService.ApiClient, root.BuildService.V1Build, root.BuildService.V1BuildBodyRequest, root.BuildService.V1BuildStatus, root.BuildService.V1CodeReference, root.BuildService.V1CodeReferenceBodyRequest, root.BuildService.V1ListBuildStatusesResponse, root.BuildService.V1ListBuildsResponse, root.BuildService.V1OwnedEntityIdRequest, root.BuildService.V1ProjectBodyRequest);
   }
-}(this, function(ApiClient, V1Build, V1BuildBodyRequest, V1BuildStatus, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest) {
+}(this, function(ApiClient, V1Build, V1BuildBodyRequest, V1BuildStatus, V1CodeReference, V1CodeReferenceBodyRequest, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest) {
   'use strict';
 
   /**
@@ -497,7 +497,7 @@
      * Callback function to receive the result of the getBuildCodeRef operation.
      * @callback module:api/BuildServiceApi~getBuildCodeRefCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/V1CodeReference} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -507,7 +507,7 @@
      * @param {String} project Project where the experiement will be assigned
      * @param {String} id Unique integer identifier of the entity
      * @param {module:api/BuildServiceApi~getBuildCodeRefCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/V1CodeReference}
      */
     this.getBuildCodeRef = function(owner, project, id, callback) {
       var postBody = null;
@@ -545,7 +545,7 @@
       var authNames = [];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = Object;
+      var returnType = V1CodeReference;
 
       return this.apiClient.callApi(
         '/v1/{owner}/{project}/builds/{id}/coderef', 'GET',
@@ -558,35 +558,35 @@
      * Callback function to receive the result of the greateBuildCodeRef operation.
      * @callback module:api/BuildServiceApi~greateBuildCodeRefCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/V1CodeReference} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Get build code ref
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the experiement will be assigned
-     * @param {String} id Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityIdRequest} body 
+     * Create build code ref
+     * @param {String} entity_owner Owner of the namespace
+     * @param {String} entity_project Project where the experiement will be assigned
+     * @param {String} entity_id Unique integer identifier of the entity
+     * @param {module:model/V1CodeReferenceBodyRequest} body 
      * @param {module:api/BuildServiceApi~greateBuildCodeRefCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/V1CodeReference}
      */
-    this.greateBuildCodeRef = function(owner, project, id, body, callback) {
+    this.greateBuildCodeRef = function(entity_owner, entity_project, entity_id, body, callback) {
       var postBody = body;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling greateBuildCodeRef");
+      // verify the required parameter 'entity_owner' is set
+      if (entity_owner === undefined || entity_owner === null) {
+        throw new Error("Missing the required parameter 'entity_owner' when calling greateBuildCodeRef");
       }
 
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling greateBuildCodeRef");
+      // verify the required parameter 'entity_project' is set
+      if (entity_project === undefined || entity_project === null) {
+        throw new Error("Missing the required parameter 'entity_project' when calling greateBuildCodeRef");
       }
 
-      // verify the required parameter 'id' is set
-      if (id === undefined || id === null) {
-        throw new Error("Missing the required parameter 'id' when calling greateBuildCodeRef");
+      // verify the required parameter 'entity_id' is set
+      if (entity_id === undefined || entity_id === null) {
+        throw new Error("Missing the required parameter 'entity_id' when calling greateBuildCodeRef");
       }
 
       // verify the required parameter 'body' is set
@@ -596,9 +596,9 @@
 
 
       var pathParams = {
-        'owner': owner,
-        'project': project,
-        'id': id
+        'entity.owner': entity_owner,
+        'entity.project': entity_project,
+        'entity.id': entity_id
       };
       var queryParams = {
       };
@@ -612,10 +612,10 @@
       var authNames = [];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = Object;
+      var returnType = V1CodeReference;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/builds/{id}/coderef', 'POST',
+        '/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

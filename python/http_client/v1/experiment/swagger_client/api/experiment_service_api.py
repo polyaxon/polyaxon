@@ -869,7 +869,7 @@ class ExperimentServiceApi(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str id: Unique integer identifier of the entity (required)
-        :return: object
+        :return: V1CodeReference
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -892,7 +892,7 @@ class ExperimentServiceApi(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str id: Unique integer identifier of the entity (required)
-        :return: object
+        :return: V1CodeReference
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -962,7 +962,7 @@ class ExperimentServiceApi(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type='V1CodeReference',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -970,49 +970,49 @@ class ExperimentServiceApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def greate_experiment_code_ref(self, owner, project, id, body, **kwargs):  # noqa: E501
+    def greate_experiment_code_ref(self, entity_owner, entity_project, entity_id, body, **kwargs):  # noqa: E501
         """Get experiment code ref  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.greate_experiment_code_ref(owner, project, id, body, async_req=True)
+        >>> thread = api.greate_experiment_code_ref(entity_owner, entity_project, entity_id, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str id: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityIdRequest body: (required)
-        :return: object
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_id: Unique integer identifier of the entity (required)
+        :param V1CodeReferenceBodyRequest body: (required)
+        :return: V1CodeReference
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.greate_experiment_code_ref_with_http_info(owner, project, id, body, **kwargs)  # noqa: E501
+            return self.greate_experiment_code_ref_with_http_info(entity_owner, entity_project, entity_id, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.greate_experiment_code_ref_with_http_info(owner, project, id, body, **kwargs)  # noqa: E501
+            (data) = self.greate_experiment_code_ref_with_http_info(entity_owner, entity_project, entity_id, body, **kwargs)  # noqa: E501
             return data
 
-    def greate_experiment_code_ref_with_http_info(self, owner, project, id, body, **kwargs):  # noqa: E501
+    def greate_experiment_code_ref_with_http_info(self, entity_owner, entity_project, entity_id, body, **kwargs):  # noqa: E501
         """Get experiment code ref  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.greate_experiment_code_ref_with_http_info(owner, project, id, body, async_req=True)
+        >>> thread = api.greate_experiment_code_ref_with_http_info(entity_owner, entity_project, entity_id, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str id: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityIdRequest body: (required)
-        :return: object
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_id: Unique integer identifier of the entity (required)
+        :param V1CodeReferenceBodyRequest body: (required)
+        :return: V1CodeReference
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'id', 'body']  # noqa: E501
+        all_params = ['entity_owner', 'entity_project', 'entity_id', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1027,18 +1027,18 @@ class ExperimentServiceApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `greate_experiment_code_ref`")  # noqa: E501
-        # verify the required parameter 'project' is set
-        if ('project' not in params or
-                params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `greate_experiment_code_ref`")  # noqa: E501
-        # verify the required parameter 'id' is set
-        if ('id' not in params or
-                params['id'] is None):
-            raise ValueError("Missing the required parameter `id` when calling `greate_experiment_code_ref`")  # noqa: E501
+        # verify the required parameter 'entity_owner' is set
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `greate_experiment_code_ref`")  # noqa: E501
+        # verify the required parameter 'entity_project' is set
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `greate_experiment_code_ref`")  # noqa: E501
+        # verify the required parameter 'entity_id' is set
+        if ('entity_id' not in params or
+                params['entity_id'] is None):
+            raise ValueError("Missing the required parameter `entity_id` when calling `greate_experiment_code_ref`")  # noqa: E501
         # verify the required parameter 'body' is set
         if ('body' not in params or
                 params['body'] is None):
@@ -1047,12 +1047,12 @@ class ExperimentServiceApi(object):
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'project' in params:
-            path_params['project'] = params['project']  # noqa: E501
-        if 'id' in params:
-            path_params['id'] = params['id']  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_id' in params:
+            path_params['entity.id'] = params['entity_id']  # noqa: E501
 
         query_params = []
 
@@ -1076,14 +1076,14 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/coderef', 'POST',
+            '/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef', 'POST',
             path_params,
             query_params,
             header_params,
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='object',  # noqa: E501
+            response_type='V1CodeReference',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),

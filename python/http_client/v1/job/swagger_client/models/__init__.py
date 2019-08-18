@@ -41,6 +41,8 @@ from __future__ import absolute_import
 
 # import models into model package
 from swagger_client.models.protobuf_any import ProtobufAny
+from swagger_client.models.v1_code_reference import V1CodeReference
+from swagger_client.models.v1_code_reference_body_request import V1CodeReferenceBodyRequest
 from swagger_client.models.v1_dict import V1Dict
 from swagger_client.models.v1_job import V1Job
 from swagger_client.models.v1_job_body_request import V1JobBodyRequest

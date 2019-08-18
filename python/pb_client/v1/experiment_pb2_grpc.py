@@ -28,6 +28,7 @@ import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
+from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 from v1 import experiment_pb2 as v1_dot_experiment__pb2
 
 
@@ -149,12 +150,12 @@ class ExperimentServiceStub(object):
     self.GetExperimentCodeRef = channel.unary_unary(
         '/v1.ExperimentService/GetExperimentCodeRef',
         request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
     self.GreateExperimentCodeRef = channel.unary_unary(
         '/v1.ExperimentService/GreateExperimentCodeRef',
-        request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        request_serializer=v1_dot_code__ref__pb2.CodeReferenceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
 
 
@@ -312,7 +313,6 @@ class ExperimentServiceServicer(object):
 
   def GetExperimentCodeRef(self, request, context):
     """Get experiment code ref
-    TODO: should be an code ref
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -320,7 +320,6 @@ class ExperimentServiceServicer(object):
 
   def GreateExperimentCodeRef(self, request, context):
     """Get experiment code ref
-    TODO: should be an code ref
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -437,12 +436,12 @@ def add_ExperimentServiceServicer_to_server(servicer, server):
       'GetExperimentCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.GetExperimentCodeRef,
           request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
       ),
       'GreateExperimentCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.GreateExperimentCodeRef,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          request_deserializer=v1_dot_code__ref__pb2.CodeReferenceBodyRequest.FromString,
+          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

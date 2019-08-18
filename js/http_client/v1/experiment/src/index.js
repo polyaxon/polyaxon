@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/ProtobufAny', 'model/V1Dict', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1KV', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/ExperimentServiceApi'], factory);
+    define(['ApiClient', 'model/ProtobufAny', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1Dict', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1KV', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/ExperimentServiceApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/ProtobufAny'), require('./model/V1Dict'), require('./model/V1Experiment'), require('./model/V1ExperimentBodyRequest'), require('./model/V1ExperimentStatus'), require('./model/V1KV'), require('./model/V1ListExperimentStatusesResponse'), require('./model/V1ListExperimentsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/ExperimentServiceApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/ProtobufAny'), require('./model/V1CodeReference'), require('./model/V1CodeReferenceBodyRequest'), require('./model/V1Dict'), require('./model/V1Experiment'), require('./model/V1ExperimentBodyRequest'), require('./model/V1ExperimentStatus'), require('./model/V1KV'), require('./model/V1ListExperimentStatusesResponse'), require('./model/V1ListExperimentsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/ExperimentServiceApi'));
   }
-}(function(ApiClient, ProtobufAny, V1Dict, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1KV, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, ExperimentServiceApi) {
+}(function(ApiClient, ProtobufAny, V1CodeReference, V1CodeReferenceBodyRequest, V1Dict, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1KV, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, ExperimentServiceApi) {
   'use strict';
 
   /**
@@ -81,6 +81,16 @@
      * @property {module:model/ProtobufAny}
      */
     ProtobufAny: ProtobufAny,
+    /**
+     * The V1CodeReference model constructor.
+     * @property {module:model/V1CodeReference}
+     */
+    V1CodeReference: V1CodeReference,
+    /**
+     * The V1CodeReferenceBodyRequest model constructor.
+     * @property {module:model/V1CodeReferenceBodyRequest}
+     */
+    V1CodeReferenceBodyRequest: V1CodeReferenceBodyRequest,
     /**
      * The V1Dict model constructor.
      * @property {module:model/V1Dict}

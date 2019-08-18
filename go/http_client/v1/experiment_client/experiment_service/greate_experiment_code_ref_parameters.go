@@ -78,22 +78,22 @@ for the greate experiment code ref operation typically these are written to a ht
 type GreateExperimentCodeRefParams struct {
 
 	/*Body*/
-	Body *experiment_model.V1OwnedEntityIDRequest
-	/*ID
+	Body *experiment_model.V1CodeReferenceBodyRequest
+	/*EntityID
 	  Unique integer identifier of the entity
 
 	*/
-	ID string
-	/*Owner
+	EntityID string
+	/*EntityOwner
 	  Owner of the namespace
 
 	*/
-	Owner string
-	/*Project
+	EntityOwner string
+	/*EntityProject
 	  Project where the experiement will be assigned
 
 	*/
-	Project string
+	EntityProject string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -134,47 +134,47 @@ func (o *GreateExperimentCodeRefParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) WithBody(body *experiment_model.V1OwnedEntityIDRequest) *GreateExperimentCodeRefParams {
+func (o *GreateExperimentCodeRefParams) WithBody(body *experiment_model.V1CodeReferenceBodyRequest) *GreateExperimentCodeRefParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) SetBody(body *experiment_model.V1OwnedEntityIDRequest) {
+func (o *GreateExperimentCodeRefParams) SetBody(body *experiment_model.V1CodeReferenceBodyRequest) {
 	o.Body = body
 }
 
-// WithID adds the id to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) WithID(id string) *GreateExperimentCodeRefParams {
-	o.SetID(id)
+// WithEntityID adds the entityID to the greate experiment code ref params
+func (o *GreateExperimentCodeRefParams) WithEntityID(entityID string) *GreateExperimentCodeRefParams {
+	o.SetEntityID(entityID)
 	return o
 }
 
-// SetID adds the id to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) SetID(id string) {
-	o.ID = id
+// SetEntityID adds the entityId to the greate experiment code ref params
+func (o *GreateExperimentCodeRefParams) SetEntityID(entityID string) {
+	o.EntityID = entityID
 }
 
-// WithOwner adds the owner to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) WithOwner(owner string) *GreateExperimentCodeRefParams {
-	o.SetOwner(owner)
+// WithEntityOwner adds the entityOwner to the greate experiment code ref params
+func (o *GreateExperimentCodeRefParams) WithEntityOwner(entityOwner string) *GreateExperimentCodeRefParams {
+	o.SetEntityOwner(entityOwner)
 	return o
 }
 
-// SetOwner adds the owner to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetEntityOwner adds the entityOwner to the greate experiment code ref params
+func (o *GreateExperimentCodeRefParams) SetEntityOwner(entityOwner string) {
+	o.EntityOwner = entityOwner
 }
 
-// WithProject adds the project to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) WithProject(project string) *GreateExperimentCodeRefParams {
-	o.SetProject(project)
+// WithEntityProject adds the entityProject to the greate experiment code ref params
+func (o *GreateExperimentCodeRefParams) WithEntityProject(entityProject string) *GreateExperimentCodeRefParams {
+	o.SetEntityProject(entityProject)
 	return o
 }
 
-// SetProject adds the project to the greate experiment code ref params
-func (o *GreateExperimentCodeRefParams) SetProject(project string) {
-	o.Project = project
+// SetEntityProject adds the entityProject to the greate experiment code ref params
+func (o *GreateExperimentCodeRefParams) SetEntityProject(entityProject string) {
+	o.EntityProject = entityProject
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -191,18 +191,18 @@ func (o *GreateExperimentCodeRefParams) WriteToRequest(r runtime.ClientRequest, 
 		}
 	}
 
-	// path param id
-	if err := r.SetPathParam("id", o.ID); err != nil {
+	// path param entity.id
+	if err := r.SetPathParam("entity.id", o.EntityID); err != nil {
 		return err
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity.owner
+	if err := r.SetPathParam("entity.owner", o.EntityOwner); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param entity.project
+	if err := r.SetPathParam("entity.project", o.EntityProject); err != nil {
 		return err
 	}
 

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteJobs**](JobServiceApi.md#deleteJobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete jobs
 [**getJob**](JobServiceApi.md#getJob) | **GET** /v1/{owner}/{project}/jobs/{id} | Get job
 [**getJobCodeRef**](JobServiceApi.md#getJobCodeRef) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
-[**greateJobCodeRef**](JobServiceApi.md#greateJobCodeRef) | **POST** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
+[**greateJobCodeRef**](JobServiceApi.md#greateJobCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
 [**listArchivedJobs**](JobServiceApi.md#listArchivedJobs) | **GET** /v1/archives/{owner}/jobs | List archived jobs
 [**listBookmarkedJobs**](JobServiceApi.md#listBookmarkedJobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked jobs
 [**listJobStatuses**](JobServiceApi.md#listJobStatuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | List job statuses
@@ -359,7 +359,7 @@ No authorization required
 
 <a name="getJobCodeRef"></a>
 # **getJobCodeRef**
-> Object getJobCodeRef(owner, project, id)
+> V1CodeReference getJobCodeRef(owner, project, id)
 
 Get job code ref
 
@@ -375,7 +375,7 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String id = "id_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.getJobCodeRef(owner, project, id);
+    V1CodeReference result = apiInstance.getJobCodeRef(owner, project, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling JobServiceApi#getJobCodeRef");
@@ -393,7 +393,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -406,7 +406,7 @@ No authorization required
 
 <a name="greateJobCodeRef"></a>
 # **greateJobCodeRef**
-> Object greateJobCodeRef(owner, project, id, body)
+> V1CodeReference greateJobCodeRef(entityOwner, entityProject, entityId, body)
 
 Get job code ref
 
@@ -418,12 +418,12 @@ Get job code ref
 
 
 JobServiceApi apiInstance = new JobServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String id = "id_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityIdRequest body = new V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+String entityOwner = "entityOwner_example"; // String | Owner of the namespace
+String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
+String entityId = "entityId_example"; // String | Unique integer identifier of the entity
+V1CodeReferenceBodyRequest body = new V1CodeReferenceBodyRequest(); // V1CodeReferenceBodyRequest | 
 try {
-    Object result = apiInstance.greateJobCodeRef(owner, project, id, body);
+    V1CodeReference result = apiInstance.greateJobCodeRef(entityOwner, entityProject, entityId, body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling JobServiceApi#greateJobCodeRef");
@@ -435,14 +435,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **id** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  |
+ **entityOwner** | **String**| Owner of the namespace |
+ **entityProject** | **String**| Project where the experiement will be assigned |
+ **entityId** | **String**| Unique integer identifier of the entity |
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  |
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

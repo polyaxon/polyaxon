@@ -28,6 +28,8 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.V1CodeReference;
+import io.swagger.client.model.V1CodeReferenceBodyRequest;
 import io.swagger.client.model.V1Experiment;
 import io.swagger.client.model.V1ExperimentBodyRequest;
 import io.swagger.client.model.V1ExperimentStatus;
@@ -192,7 +194,7 @@ public class ExperimentServiceApiTest {
         String owner = null;
         String project = null;
         String id = null;
-        Object response = api.getExperimentCodeRef(owner, project, id);
+        V1CodeReference response = api.getExperimentCodeRef(owner, project, id);
 
         // TODO: test validations
     }
@@ -207,11 +209,11 @@ public class ExperimentServiceApiTest {
      */
     @Test
     public void greateExperimentCodeRefTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String id = null;
-        V1OwnedEntityIdRequest body = null;
-        Object response = api.greateExperimentCodeRef(owner, project, id, body);
+        String entityOwner = null;
+        String entityProject = null;
+        String entityId = null;
+        V1CodeReferenceBodyRequest body = null;
+        V1CodeReference response = api.greateExperimentCodeRef(entityOwner, entityProject, entityId, body);
 
         // TODO: test validations
     }

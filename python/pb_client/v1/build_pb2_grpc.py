@@ -29,6 +29,7 @@ import grpc
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
 from v1 import build_pb2 as v1_dot_build__pb2
+from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 
 
 class BuildServiceStub(object):
@@ -134,12 +135,12 @@ class BuildServiceStub(object):
     self.GetBuildCodeRef = channel.unary_unary(
         '/v1.BuildService/GetBuildCodeRef',
         request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
     self.GreateBuildCodeRef = channel.unary_unary(
         '/v1.BuildService/GreateBuildCodeRef',
-        request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        request_serializer=v1_dot_code__ref__pb2.CodeReferenceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
 
 
@@ -275,15 +276,13 @@ class BuildServiceServicer(object):
 
   def GetBuildCodeRef(self, request, context):
     """Get build code ref
-    TODO: should be an code ref
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def GreateBuildCodeRef(self, request, context):
-    """Get build code ref
-    TODO: should be an code ref
+    """Create build code ref
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -385,12 +384,12 @@ def add_BuildServiceServicer_to_server(servicer, server):
       'GetBuildCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.GetBuildCodeRef,
           request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
       ),
       'GreateBuildCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.GreateBuildCodeRef,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          request_deserializer=v1_dot_code__ref__pb2.CodeReferenceBodyRequest.FromString,
+          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

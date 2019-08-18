@@ -83,6 +83,61 @@
         ]
       }
     },
+    "/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef": {
+      "post": {
+        "summary": "Create build code ref",
+        "operationId": "GreateBuildCodeRef",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CodeReference"
+            }
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "entity.owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity.project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity.id",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CodeReferenceBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "BuildService"
+        ]
+      }
+    },
     "/v1/{owner}/{project}/builds": {
       "get": {
         "summary": "List builds",
@@ -510,7 +565,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/v1CodeReference"
             }
           },
           "404": {
@@ -542,59 +597,6 @@
             "required": true,
             "type": "string",
             "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      },
-      "post": {
-        "summary": "Get build code ref",
-        "operationId": "GreateBuildCodeRef",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
           }
         ],
         "tags": [
@@ -1084,6 +1086,56 @@
         }
       },
       "title": "Build specification"
+    },
+    "v1CodeReference": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Unique integer identifier"
+        },
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "commit": {
+          "type": "string",
+          "title": "Optional commit of the code ref"
+        },
+        "updated_at": {
+          "type": "string",
+          "title": "Optional head of the code ref"
+        },
+        "status": {
+          "type": "string",
+          "title": "Optional branch of the code ref"
+        },
+        "git_url": {
+          "type": "string",
+          "title": "Optional git url for this code ref"
+        },
+        "is_dirty": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional whether this code ref is dirty"
+        }
+      },
+      "title": "Code Reference specification"
+    },
+    "v1CodeReferenceBodyRequest": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/v1OwnedEntityIdRequest",
+          "title": "Owner of the code ref"
+        },
+        "CodeReference": {
+          "$ref": "#/definitions/v1CodeReference",
+          "title": "Build object"
+        }
+      },
+      "title": "Request data to create/update CodeReference"
     },
     "v1Dict": {
       "type": "object",

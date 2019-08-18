@@ -1056,7 +1056,7 @@ func request_JobService_GetJobCodeRef_0(ctx context.Context, marshaler runtime.M
 }
 
 func request_JobService_GreateJobCodeRef_0(ctx context.Context, marshaler runtime.Marshaler, client JobServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityIdRequest
+	var protoReq CodeReferenceBodyRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1074,37 +1074,37 @@ func request_JobService_GreateJobCodeRef_0(ctx context.Context, marshaler runtim
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["entity.owner"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity.owner")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "entity.owner", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity.owner", err)
 	}
 
-	val, ok = pathParams["project"]
+	val, ok = pathParams["entity.project"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "project")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity.project")
 	}
 
-	protoReq.Project, err = runtime.String(val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "entity.project", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity.project", err)
 	}
 
-	val, ok = pathParams["id"]
+	val, ok = pathParams["entity.id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "entity.id")
 	}
 
-	protoReq.Id, err = runtime.Int64(val)
+	err = runtime.PopulateFieldFromPath(&protoReq, "entity.id", val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "entity.id", err)
 	}
 
 	msg, err := client.GreateJobCodeRef(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -1636,7 +1636,7 @@ var (
 
 	pattern_JobService_GetJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_GreateJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_GreateJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "entity.owner", "entity.project", "jobs", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

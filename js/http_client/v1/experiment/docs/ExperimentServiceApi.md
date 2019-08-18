@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteExperiments**](ExperimentServiceApi.md#deleteExperiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete experiments
 [**getExperiment**](ExperimentServiceApi.md#getExperiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get experiment
 [**getExperimentCodeRef**](ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-[**greateExperimentCodeRef**](ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+[**greateExperimentCodeRef**](ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
 [**listArchivedExperiments**](ExperimentServiceApi.md#listArchivedExperiments) | **GET** /v1/archives/{owner}/experiments | List archived experiments
 [**listBookmarkedExperiments**](ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked experiments
 [**listExperimentStatuses**](ExperimentServiceApi.md#listExperimentStatuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | List experiment statuses
@@ -383,7 +383,7 @@ No authorization required
 
 <a name="getExperimentCodeRef"></a>
 # **getExperimentCodeRef**
-> Object getExperimentCodeRef(owner, project, id)
+> V1CodeReference getExperimentCodeRef(owner, project, id)
 
 Get experiment code ref
 
@@ -420,7 +420,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -433,7 +433,7 @@ No authorization required
 
 <a name="greateExperimentCodeRef"></a>
 # **greateExperimentCodeRef**
-> Object greateExperimentCodeRef(owner, project, id, body)
+> V1CodeReference greateExperimentCodeRef(entity_owner, entity_project, entity_id, body)
 
 Get experiment code ref
 
@@ -443,13 +443,13 @@ var ExperimentService = require('experiment_service');
 
 var apiInstance = new ExperimentService.ExperimentServiceApi();
 
-var owner = "owner_example"; // String | Owner of the namespace
+var entity_owner = "entity_owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
 
-var id = "id_example"; // String | Unique integer identifier of the entity
+var entity_id = "entity_id_example"; // String | Unique integer identifier of the entity
 
-var body = new ExperimentService.V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+var body = new ExperimentService.V1CodeReferenceBodyRequest(); // V1CodeReferenceBodyRequest | 
 
 
 var callback = function(error, data, response) {
@@ -459,21 +459,21 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.greateExperimentCodeRef(owner, project, id, body, callback);
+apiInstance.greateExperimentCodeRef(entity_owner, entity_project, entity_id, body, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **id** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **entity_owner** | **String**| Owner of the namespace | 
+ **entity_project** | **String**| Project where the experiement will be assigned | 
+ **entity_id** | **String**| Unique integer identifier of the entity | 
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  | 
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

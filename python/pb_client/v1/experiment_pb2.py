@@ -42,6 +42,7 @@ from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
+from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -49,9 +50,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=_b('\222A\315\001\022y\n\022Experiment service\"^\n\033Polyaxon experiment service\022)https://github.com/polyaxon/polyaxon-sdks\032\024contact@polyaxon.com2\0031.0*\001\0012\020application/json:\020application/jsonR)\n\003404\022\"\n\030Resource does not exist.\022\006\n\004\232\002\001\007'),
-  serialized_pb=_b('\n\x13v1/experiment.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"\xb7\x05\n\nExperiment\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x11\n\tbuild_job\x18\x19 \x01(\t\x12\x1b\n\tdata_refs\x18\x1a \x01(\x0b\x32\x08.v1.Dict\x12\x1f\n\rartifact_refs\x18\x1b \x01(\x0b\x32\x08.v1.Dict\x12\x10\n\x08original\x18\x1c \x01(\x03\x12\x18\n\x10\x63loning_strategy\x18\x1d \x01(\t\x12\x18\n\x10\x65xperiment_group\x18\x1e \x01(\t\x12\x10\n\x08num_jobs\x18\x1f \x01(\x05\x12\x17\n\x0fhas_tensorboard\x18  \x01(\x08\x12\x1d\n\x0blast_metric\x18! \x01(\x0b\x32\x08.v1.Dict\"u\n\x10\x45xperimentStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"[\n\x15\x45xperimentBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\"\n\nexperiment\x18\x03 \x01(\x0b\x32\x0e.v1.Experiment\"i\n\x17ListExperimentsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.Experiment\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"v\n\x1eListExperimentStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12%\n\x07results\x18\x02 \x03(\x0b\x32\x14.v1.ExperimentStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t2\xae\x17\n\x11\x45xperimentService\x12q\n\x0fListExperiments\x12\x16.v1.ProjectBodyRequest\x1a\x1b.v1.ListExperimentsResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/{owner}/{project}/experiments\x12y\n\x19ListBookmarkedExperiments\x12\x14.v1.OwnerBodyRequest\x1a\x1b.v1.ListExperimentsResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/bookmarks/{owner}/experiments\x12v\n\x17ListArchivedExperiments\x12\x14.v1.OwnerBodyRequest\x1a\x1b.v1.ListExperimentsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /v1/archives/{owner}/experiments\x12k\n\x10\x43reateExperiment\x12\x19.v1.ExperimentBodyRequest\x1a\x0e.v1.Experiment\",\x82\xd3\xe4\x93\x02&\"!/v1/{owner}/{project}/experiments:\x01*\x12i\n\rGetExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x0e.v1.Experiment\".\x82\xd3\xe4\x93\x02(\x12&/v1/{owner}/{project}/experiments/{id}\x12\xb3\x01\n\x10UpdateExperiment\x12\x19.v1.ExperimentBodyRequest\x1a\x0e.v1.Experiment\"t\x82\xd3\xe4\x93\x02n\x1a\x31/v1/{owner}/{project}/experiments/{experiment.id}:\x01*Z6\x1a\x31/v1/{owner}/{project}/experiments/{experiment.id}:\x01*\x12t\n\x10\x44\x65leteExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(*&/v1/{owner}/{project}/experiments/{id}\x12z\n\x11\x44\x65leteExperiments\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-*(/v1/{owner}/{project}/experiments/delete:\x01*\x12z\n\x0eStopExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"+/v1/{owner}/{project}/experiments/{id}/stop:\x01*\x12t\n\x0fStopExperiments\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\"&/v1/{owner}/{project}/experiments/stop:\x01*\x12x\n\x11RestartExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x0e.v1.Experiment\"9\x82\xd3\xe4\x93\x02\x33\"./v1/{owner}/{project}/experiments/{id}/restart:\x01*\x12v\n\x10ResumeExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x0e.v1.Experiment\"8\x82\xd3\xe4\x93\x02\x32\"-/v1/{owner}/{project}/experiments/{id}/resume:\x01*\x12}\n\x11\x41rchiveExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./v1/{owner}/{project}/experiments/{id}/archive\x12}\n\x11RestoreExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./v1/{owner}/{project}/experiments/{id}/restore\x12\x7f\n\x12\x42ookmarkExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"7\x82\xd3\xe4\x93\x02\x31\"//v1/{owner}/{project}/experiments/{id}/bookmark\x12\x83\x01\n\x14UnBookmarkExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"9\x82\xd3\xe4\x93\x02\x33*1/v1/{owner}/{project}/experiments/{id}/unbookmark\x12\x93\x01\n\x1aStartExperimentTensorboard\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"C\x82\xd3\xe4\x93\x02=\"8/v1/{owner}/{project}/experiments/{id}/tensorboard/start:\x01*\x12\x8e\x01\n\x19StopExperimentTensorboard\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"?\x82\xd3\xe4\x93\x02\x39*7/v1/{owner}/{project}/experiments/{id}/tensorboard/stop\x12~\n\x15GetExperimentStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\x12.v1.StatusResponse\"7\x82\xd3\xe4\x93\x02\x31\x12//v1/{owner}/{project}/experiments/{id}/statuses\x12\x8f\x01\n\x16ListExperimentStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\".v1.ListExperimentStatusesResponse\"7\x82\xd3\xe4\x93\x02\x31\x12//v1/{owner}/{project}/experiments/{id}/statuses\x12\x84\x01\n\x16\x43reateExperimentStatus\x12\x18.v1.OwnedEntityIdRequest\x1a\x14.v1.ExperimentStatus\":\x82\xd3\xe4\x93\x02\x34\"//v1/{owner}/{project}/experiments/{id}/statuses:\x01*\x12\x80\x01\n\x14GetExperimentCodeRef\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\x12./v1/{owner}/{project}/experiments/{id}/coderef\x12\x86\x01\n\x17GreateExperimentCodeRef\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"9\x82\xd3\xe4\x93\x02\x33\"./v1/{owner}/{project}/experiments/{id}/coderef:\x01*B\xd1\x01\x92\x41\xcd\x01\x12y\n\x12\x45xperiment service\"^\n\x1bPolyaxon experiment service\x12)https://github.com/polyaxon/polyaxon-sdks\x1a\x14\x63ontact@polyaxon.com2\x03\x31.0*\x01\x01\x32\x10\x61pplication/json:\x10\x61pplication/jsonR)\n\x03\x34\x30\x34\x12\"\n\x18Resource does not exist.\x12\x06\n\x04\x9a\x02\x01\x07\x62\x06proto3')
+  serialized_pb=_b('\n\x13v1/experiment.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\"\xb7\x05\n\nExperiment\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x11\n\tbuild_job\x18\x19 \x01(\t\x12\x1b\n\tdata_refs\x18\x1a \x01(\x0b\x32\x08.v1.Dict\x12\x1f\n\rartifact_refs\x18\x1b \x01(\x0b\x32\x08.v1.Dict\x12\x10\n\x08original\x18\x1c \x01(\x03\x12\x18\n\x10\x63loning_strategy\x18\x1d \x01(\t\x12\x18\n\x10\x65xperiment_group\x18\x1e \x01(\t\x12\x10\n\x08num_jobs\x18\x1f \x01(\x05\x12\x17\n\x0fhas_tensorboard\x18  \x01(\x08\x12\x1d\n\x0blast_metric\x18! \x01(\x0b\x32\x08.v1.Dict\"u\n\x10\x45xperimentStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"[\n\x15\x45xperimentBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\"\n\nexperiment\x18\x03 \x01(\x0b\x32\x0e.v1.Experiment\"i\n\x17ListExperimentsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.Experiment\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"v\n\x1eListExperimentStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12%\n\x07results\x18\x02 \x03(\x0b\x32\x14.v1.ExperimentStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t2\xbc\x17\n\x11\x45xperimentService\x12q\n\x0fListExperiments\x12\x16.v1.ProjectBodyRequest\x1a\x1b.v1.ListExperimentsResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/{owner}/{project}/experiments\x12y\n\x19ListBookmarkedExperiments\x12\x14.v1.OwnerBodyRequest\x1a\x1b.v1.ListExperimentsResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/bookmarks/{owner}/experiments\x12v\n\x17ListArchivedExperiments\x12\x14.v1.OwnerBodyRequest\x1a\x1b.v1.ListExperimentsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /v1/archives/{owner}/experiments\x12k\n\x10\x43reateExperiment\x12\x19.v1.ExperimentBodyRequest\x1a\x0e.v1.Experiment\",\x82\xd3\xe4\x93\x02&\"!/v1/{owner}/{project}/experiments:\x01*\x12i\n\rGetExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x0e.v1.Experiment\".\x82\xd3\xe4\x93\x02(\x12&/v1/{owner}/{project}/experiments/{id}\x12\xb3\x01\n\x10UpdateExperiment\x12\x19.v1.ExperimentBodyRequest\x1a\x0e.v1.Experiment\"t\x82\xd3\xe4\x93\x02n\x1a\x31/v1/{owner}/{project}/experiments/{experiment.id}:\x01*Z6\x1a\x31/v1/{owner}/{project}/experiments/{experiment.id}:\x01*\x12t\n\x10\x44\x65leteExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(*&/v1/{owner}/{project}/experiments/{id}\x12z\n\x11\x44\x65leteExperiments\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-*(/v1/{owner}/{project}/experiments/delete:\x01*\x12z\n\x0eStopExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"+/v1/{owner}/{project}/experiments/{id}/stop:\x01*\x12t\n\x0fStopExperiments\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\"&/v1/{owner}/{project}/experiments/stop:\x01*\x12x\n\x11RestartExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x0e.v1.Experiment\"9\x82\xd3\xe4\x93\x02\x33\"./v1/{owner}/{project}/experiments/{id}/restart:\x01*\x12v\n\x10ResumeExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x0e.v1.Experiment\"8\x82\xd3\xe4\x93\x02\x32\"-/v1/{owner}/{project}/experiments/{id}/resume:\x01*\x12}\n\x11\x41rchiveExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./v1/{owner}/{project}/experiments/{id}/archive\x12}\n\x11RestoreExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./v1/{owner}/{project}/experiments/{id}/restore\x12\x7f\n\x12\x42ookmarkExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"7\x82\xd3\xe4\x93\x02\x31\"//v1/{owner}/{project}/experiments/{id}/bookmark\x12\x83\x01\n\x14UnBookmarkExperiment\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"9\x82\xd3\xe4\x93\x02\x33*1/v1/{owner}/{project}/experiments/{id}/unbookmark\x12\x93\x01\n\x1aStartExperimentTensorboard\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"C\x82\xd3\xe4\x93\x02=\"8/v1/{owner}/{project}/experiments/{id}/tensorboard/start:\x01*\x12\x8e\x01\n\x19StopExperimentTensorboard\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"?\x82\xd3\xe4\x93\x02\x39*7/v1/{owner}/{project}/experiments/{id}/tensorboard/stop\x12~\n\x15GetExperimentStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\x12.v1.StatusResponse\"7\x82\xd3\xe4\x93\x02\x31\x12//v1/{owner}/{project}/experiments/{id}/statuses\x12\x8f\x01\n\x16ListExperimentStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\".v1.ListExperimentStatusesResponse\"7\x82\xd3\xe4\x93\x02\x31\x12//v1/{owner}/{project}/experiments/{id}/statuses\x12\x84\x01\n\x16\x43reateExperimentStatus\x12\x18.v1.OwnedEntityIdRequest\x1a\x14.v1.ExperimentStatus\":\x82\xd3\xe4\x93\x02\x34\"//v1/{owner}/{project}/experiments/{id}/statuses:\x01*\x12{\n\x14GetExperimentCodeRef\x12\x18.v1.OwnedEntityIdRequest\x1a\x11.v1.CodeReference\"6\x82\xd3\xe4\x93\x02\x30\x12./v1/{owner}/{project}/experiments/{id}/coderef\x12\x9a\x01\n\x17GreateExperimentCodeRef\x12\x1c.v1.CodeReferenceBodyRequest\x1a\x11.v1.CodeReference\"N\x82\xd3\xe4\x93\x02H\"C/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef:\x01*B\xd1\x01\x92\x41\xcd\x01\x12y\n\x12\x45xperiment service\"^\n\x1bPolyaxon experiment service\x12)https://github.com/polyaxon/polyaxon-sdks\x1a\x14\x63ontact@polyaxon.com2\x03\x31.0*\x01\x01\x32\x10\x61pplication/json:\x10\x61pplication/jsonR)\n\x03\x34\x30\x34\x12\"\n\x18Resource does not exist.\x12\x06\n\x04\x9a\x02\x01\x07\x62\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,])
 
 
 
@@ -306,8 +307,8 @@ _EXPERIMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=148,
-  serialized_end=843,
+  serialized_start=167,
+  serialized_end=862,
 )
 
 
@@ -372,8 +373,8 @@ _EXPERIMENTSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=845,
-  serialized_end=962,
+  serialized_start=864,
+  serialized_end=981,
 )
 
 
@@ -417,8 +418,8 @@ _EXPERIMENTBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=964,
-  serialized_end=1055,
+  serialized_start=983,
+  serialized_end=1074,
 )
 
 
@@ -469,8 +470,8 @@ _LISTEXPERIMENTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1057,
-  serialized_end=1162,
+  serialized_start=1076,
+  serialized_end=1181,
 )
 
 
@@ -521,8 +522,8 @@ _LISTEXPERIMENTSTATUSESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1164,
-  serialized_end=1282,
+  serialized_start=1183,
+  serialized_end=1301,
 )
 
 _EXPERIMENT.fields_by_name['resources'].message_type = v1_dot_base__pb2._DICT
@@ -585,8 +586,8 @@ _EXPERIMENTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1285,
-  serialized_end=4275,
+  serialized_start=1304,
+  serialized_end=4308,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListExperiments',
@@ -783,7 +784,7 @@ _EXPERIMENTSERVICE = _descriptor.ServiceDescriptor(
     index=21,
     containing_service=None,
     input_type=v1_dot_base__pb2._OWNEDENTITYIDREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=v1_dot_code__ref__pb2._CODEREFERENCE,
     serialized_options=_b('\202\323\344\223\0020\022./v1/{owner}/{project}/experiments/{id}/coderef'),
   ),
   _descriptor.MethodDescriptor(
@@ -791,9 +792,9 @@ _EXPERIMENTSERVICE = _descriptor.ServiceDescriptor(
     full_name='v1.ExperimentService.GreateExperimentCodeRef',
     index=22,
     containing_service=None,
-    input_type=v1_dot_base__pb2._OWNEDENTITYIDREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=_b('\202\323\344\223\0023\"./v1/{owner}/{project}/experiments/{id}/coderef:\001*'),
+    input_type=v1_dot_code__ref__pb2._CODEREFERENCEBODYREQUEST,
+    output_type=v1_dot_code__ref__pb2._CODEREFERENCE,
+    serialized_options=_b('\202\323\344\223\002H\"C/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef:\001*'),
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_EXPERIMENTSERVICE)

@@ -31,6 +31,8 @@ import io.swagger.client.ApiException;
 import io.swagger.client.model.V1Build;
 import io.swagger.client.model.V1BuildBodyRequest;
 import io.swagger.client.model.V1BuildStatus;
+import io.swagger.client.model.V1CodeReference;
+import io.swagger.client.model.V1CodeReferenceBodyRequest;
 import io.swagger.client.model.V1ListBuildStatusesResponse;
 import io.swagger.client.model.V1ListBuildsResponse;
 import io.swagger.client.model.V1OwnedEntityIdRequest;
@@ -192,13 +194,13 @@ public class BuildServiceApiTest {
         String owner = null;
         String project = null;
         String id = null;
-        Object response = api.getBuildCodeRef(owner, project, id);
+        V1CodeReference response = api.getBuildCodeRef(owner, project, id);
 
         // TODO: test validations
     }
     
     /**
-     * Get build code ref
+     * Create build code ref
      *
      * 
      *
@@ -207,11 +209,11 @@ public class BuildServiceApiTest {
      */
     @Test
     public void greateBuildCodeRefTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String id = null;
-        V1OwnedEntityIdRequest body = null;
-        Object response = api.greateBuildCodeRef(owner, project, id, body);
+        String entityOwner = null;
+        String entityProject = null;
+        String entityId = null;
+        V1CodeReferenceBodyRequest body = null;
+        V1CodeReference response = api.greateBuildCodeRef(entityOwner, entityProject, entityId, body);
 
         // TODO: test validations
     }

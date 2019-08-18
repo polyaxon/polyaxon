@@ -7,6 +7,7 @@ import "google/protobuf/empty.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/base.proto";
+import "v1/code_ref.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
@@ -204,28 +205,28 @@ message ExperimentBodyRequest{
 // Service to manage experiments
 service ExperimentService {
     // List experiments
-    rpc ListExperiments(ProjectBodyRequest) returns (ListExperimentsResponse){
+    rpc ListExperiments(ProjectBodyRequest) returns (ListExperimentsResponse) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/experiments"
         };
     }
 
     // List bookmarked experiments
-    rpc ListBookmarkedExperiments(OwnerBodyRequest) returns (ListExperimentsResponse){
+    rpc ListBookmarkedExperiments(OwnerBodyRequest) returns (ListExperimentsResponse) {
         option (google.api.http) = {
             get: "/v1/bookmarks/{owner}/experiments"
         };
     }
 
     // List archived experiments
-    rpc ListArchivedExperiments(OwnerBodyRequest) returns (ListExperimentsResponse){
+    rpc ListArchivedExperiments(OwnerBodyRequest) returns (ListExperimentsResponse) {
         option (google.api.http) = {
             get: "/v1/archives/{owner}/experiments"
         };
     }
 
     // Create new experiment
-    rpc CreateExperiment(ExperimentBodyRequest) returns (Experiment){
+    rpc CreateExperiment(ExperimentBodyRequest) returns (Experiment) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments"
             body: "*"
@@ -233,14 +234,14 @@ service ExperimentService {
     }
 
     // Get experiment
-    rpc GetExperiment(OwnedEntityIdRequest) returns (Experiment){
+    rpc GetExperiment(OwnedEntityIdRequest) returns (Experiment) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/experiments/{id}"
         };
     }
 
     // Update experiment
-    rpc UpdateExperiment(ExperimentBodyRequest) returns (Experiment){
+    rpc UpdateExperiment(ExperimentBodyRequest) returns (Experiment) {
         option (google.api.http) = {
             put: "/v1/{owner}/{project}/experiments/{experiment.id}"
             body: "*"
@@ -253,14 +254,14 @@ service ExperimentService {
     }
 
     // Delete experiment
-    rpc DeleteExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc DeleteExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/experiments/{id}"
         };
     }
 
     // Delete experiments
-    rpc DeleteExperiments(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc DeleteExperiments(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/experiments/delete"
             body: "*"
@@ -268,7 +269,7 @@ service ExperimentService {
     }
 
     // Stop experiment
-    rpc StopExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc StopExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/stop"
             body: "*"
@@ -276,7 +277,7 @@ service ExperimentService {
     }
 
     // Stop experiments
-    rpc StopExperiments(ProjectBodyRequest) returns (google.protobuf.Empty){
+    rpc StopExperiments(ProjectBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/stop"
             body: "*"
@@ -284,7 +285,7 @@ service ExperimentService {
     }
 
     // Restart experiment
-    rpc RestartExperiment(OwnedEntityIdRequest) returns (Experiment){
+    rpc RestartExperiment(OwnedEntityIdRequest) returns (Experiment) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/restart"
             body: "*"
@@ -292,7 +293,7 @@ service ExperimentService {
     }
 
     // Resume experiment
-    rpc ResumeExperiment(OwnedEntityIdRequest) returns (Experiment){
+    rpc ResumeExperiment(OwnedEntityIdRequest) returns (Experiment) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/resume"
             body: "*"
@@ -300,35 +301,35 @@ service ExperimentService {
     }
 
     // Archive experiment
-    rpc ArchiveExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc ArchiveExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/archive"
         };
     }
 
     // Restore experiment
-    rpc RestoreExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc RestoreExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/restore"
         };
     }
 
     // Bookmark experiment
-    rpc BookmarkExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc BookmarkExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/bookmark"
         };
     }
 
     // UnBookmark experiment
-    rpc UnBookmarkExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc UnBookmarkExperiment(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/experiments/{id}/unbookmark"
         };
     }
 
     // Start experiment tensorboard
-    rpc StartExperimentTensorboard(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be a tensorboard object
+    rpc StartExperimentTensorboard(OwnedEntityIdRequest) returns (google.protobuf.Empty) {  // TODO: should be a tensorboard object
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/tensorboard/start"
             body: "*"
@@ -336,28 +337,28 @@ service ExperimentService {
     }
 
     // Stop experiment tensorboard
-    rpc StopExperimentTensorboard(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc StopExperimentTensorboard(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/experiments/{id}/tensorboard/stop"
         };
     }
 
     // Get experiment status
-    rpc GetExperimentStatuses(OwnedEntityIdRequest) returns (StatusResponse){
+    rpc GetExperimentStatuses(OwnedEntityIdRequest) returns (StatusResponse) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/experiments/{id}/statuses"
         };
     }
 
     // List experiment statuses
-    rpc ListExperimentStatuses(OwnedEntityIdRequest) returns (ListExperimentStatusesResponse){
+    rpc ListExperimentStatuses(OwnedEntityIdRequest) returns (ListExperimentStatusesResponse) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/experiments/{id}/statuses"
         };
     }
 
     // Create new experiment status
-    rpc CreateExperimentStatus(OwnedEntityIdRequest) returns (ExperimentStatus){
+    rpc CreateExperimentStatus(OwnedEntityIdRequest) returns (ExperimentStatus) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/experiments/{id}/statuses"
             body: "*"
@@ -365,16 +366,16 @@ service ExperimentService {
     }
 
     // Get experiment code ref
-    rpc GetExperimentCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+    rpc GetExperimentCodeRef(OwnedEntityIdRequest) returns (CodeReference) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/experiments/{id}/coderef"
         };
     }
 
     // Get experiment code ref
-    rpc GreateExperimentCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+    rpc GreateExperimentCodeRef(CodeReferenceBodyRequest) returns (CodeReference) {
         option (google.api.http) = {
-            post: "/v1/{owner}/{project}/experiments/{id}/coderef"
+            post: "/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef"
             body: "*"
         };
     }

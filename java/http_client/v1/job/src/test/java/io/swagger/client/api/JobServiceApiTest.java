@@ -28,6 +28,8 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.V1CodeReference;
+import io.swagger.client.model.V1CodeReferenceBodyRequest;
 import io.swagger.client.model.V1Job;
 import io.swagger.client.model.V1JobBodyRequest;
 import io.swagger.client.model.V1JobStatus;
@@ -192,7 +194,7 @@ public class JobServiceApiTest {
         String owner = null;
         String project = null;
         String id = null;
-        Object response = api.getJobCodeRef(owner, project, id);
+        V1CodeReference response = api.getJobCodeRef(owner, project, id);
 
         // TODO: test validations
     }
@@ -207,11 +209,11 @@ public class JobServiceApiTest {
      */
     @Test
     public void greateJobCodeRefTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String id = null;
-        V1OwnedEntityIdRequest body = null;
-        Object response = api.greateJobCodeRef(owner, project, id, body);
+        String entityOwner = null;
+        String entityProject = null;
+        String entityId = null;
+        V1CodeReferenceBodyRequest body = null;
+        V1CodeReference response = api.greateJobCodeRef(entityOwner, entityProject, entityId, body);
 
         // TODO: test validations
     }

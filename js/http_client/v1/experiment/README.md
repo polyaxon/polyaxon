@@ -130,7 +130,7 @@ Class | Method | HTTP request | Description
 *ExperimentService.ExperimentServiceApi* | [**deleteExperiments**](docs/ExperimentServiceApi.md#deleteExperiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete experiments
 *ExperimentService.ExperimentServiceApi* | [**getExperiment**](docs/ExperimentServiceApi.md#getExperiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get experiment
 *ExperimentService.ExperimentServiceApi* | [**getExperimentCodeRef**](docs/ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-*ExperimentService.ExperimentServiceApi* | [**greateExperimentCodeRef**](docs/ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+*ExperimentService.ExperimentServiceApi* | [**greateExperimentCodeRef**](docs/ExperimentServiceApi.md#greateExperimentCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
 *ExperimentService.ExperimentServiceApi* | [**listArchivedExperiments**](docs/ExperimentServiceApi.md#listArchivedExperiments) | **GET** /v1/archives/{owner}/experiments | List archived experiments
 *ExperimentService.ExperimentServiceApi* | [**listBookmarkedExperiments**](docs/ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked experiments
 *ExperimentService.ExperimentServiceApi* | [**listExperimentStatuses**](docs/ExperimentServiceApi.md#listExperimentStatuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | List experiment statuses
@@ -149,6 +149,8 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [ExperimentService.ProtobufAny](docs/ProtobufAny.md)
+ - [ExperimentService.V1CodeReference](docs/V1CodeReference.md)
+ - [ExperimentService.V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
  - [ExperimentService.V1Dict](docs/V1Dict.md)
  - [ExperimentService.V1Experiment](docs/V1Experiment.md)
  - [ExperimentService.V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)

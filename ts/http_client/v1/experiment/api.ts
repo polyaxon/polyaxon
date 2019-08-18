@@ -115,6 +115,76 @@ export interface ProtobufAny {
 /**
  * 
  * @export
+ * @interface V1CodeReference
+ */
+export interface V1CodeReference {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CodeReference
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CodeReference
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CodeReference
+     */
+    commit?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CodeReference
+     */
+    updated_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CodeReference
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CodeReference
+     */
+    git_url?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1CodeReference
+     */
+    is_dirty?: boolean;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1CodeReferenceBodyRequest
+ */
+export interface V1CodeReferenceBodyRequest {
+    /**
+     * 
+     * @type {V1OwnedEntityIdRequest}
+     * @memberof V1CodeReferenceBodyRequest
+     */
+    entity?: V1OwnedEntityIdRequest;
+    /**
+     * 
+     * @type {V1CodeReference}
+     * @memberof V1CodeReferenceBodyRequest
+     */
+    CodeReference?: V1CodeReference;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Dict
  */
 export interface V1Dict {
@@ -899,34 +969,34 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         /**
          * 
          * @summary Get experiment code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} entity_owner Owner of the namespace
+         * @param {string} entity_project Project where the experiement will be assigned
+         * @param {string} entity_id Unique integer identifier of the entity
+         * @param {V1CodeReferenceBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        greateExperimentCodeRef(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling greateExperimentCodeRef.');
+        greateExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'entity_owner' is not null or undefined
+            if (entity_owner === null || entity_owner === undefined) {
+                throw new RequiredError('entity_owner','Required parameter entity_owner was null or undefined when calling greateExperimentCodeRef.');
             }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling greateExperimentCodeRef.');
+            // verify required parameter 'entity_project' is not null or undefined
+            if (entity_project === null || entity_project === undefined) {
+                throw new RequiredError('entity_project','Required parameter entity_project was null or undefined when calling greateExperimentCodeRef.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling greateExperimentCodeRef.');
+            // verify required parameter 'entity_id' is not null or undefined
+            if (entity_id === null || entity_id === undefined) {
+                throw new RequiredError('entity_id','Required parameter entity_id was null or undefined when calling greateExperimentCodeRef.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling greateExperimentCodeRef.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/coderef`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarPath = `/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef`
+                .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
+                .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
+                .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -938,7 +1008,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1CodeReferenceBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -1663,7 +1733,7 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExperimentCodeRef(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        getExperimentCodeRef(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
             const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).getExperimentCodeRef(owner, project, id, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -1678,15 +1748,15 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get experiment code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} entity_owner Owner of the namespace
+         * @param {string} entity_project Project where the experiement will be assigned
+         * @param {string} entity_id Unique integer identifier of the entity
+         * @param {V1CodeReferenceBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        greateExperimentCodeRef(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).greateExperimentCodeRef(owner, project, id, body, options);
+        greateExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
+            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).greateExperimentCodeRef(entity_owner, entity_project, entity_id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2079,15 +2149,15 @@ export const ExperimentServiceApiFactory = function (configuration?: Configurati
         /**
          * 
          * @summary Get experiment code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} entity_owner Owner of the namespace
+         * @param {string} entity_project Project where the experiement will be assigned
+         * @param {string} entity_id Unique integer identifier of the entity
+         * @param {V1CodeReferenceBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        greateExperimentCodeRef(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).greateExperimentCodeRef(owner, project, id, body, options)(fetch, basePath);
+        greateExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
+            return ExperimentServiceApiFp(configuration).greateExperimentCodeRef(entity_owner, entity_project, entity_id, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -2371,16 +2441,16 @@ export class ExperimentServiceApi extends BaseAPI {
     /**
      * 
      * @summary Get experiment code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {string} entity_owner Owner of the namespace
+     * @param {string} entity_project Project where the experiement will be assigned
+     * @param {string} entity_id Unique integer identifier of the entity
+     * @param {V1CodeReferenceBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ExperimentServiceApi
      */
-    public greateExperimentCodeRef(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).greateExperimentCodeRef(owner, project, id, body, options)(this.fetch, this.basePath);
+    public greateExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
+        return ExperimentServiceApiFp(this.configuration).greateExperimentCodeRef(entity_owner, entity_project, entity_id, body, options)(this.fetch, this.basePath);
     }
 
     /**

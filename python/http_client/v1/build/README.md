@@ -81,7 +81,7 @@ Class | Method | HTTP request | Description
 *BuildServiceApi* | [**delete_builds**](docs/BuildServiceApi.md#delete_builds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
 *BuildServiceApi* | [**get_build**](docs/BuildServiceApi.md#get_build) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
 *BuildServiceApi* | [**get_build_code_ref**](docs/BuildServiceApi.md#get_build_code_ref) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-*BuildServiceApi* | [**greate_build_code_ref**](docs/BuildServiceApi.md#greate_build_code_ref) | **POST** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+*BuildServiceApi* | [**greate_build_code_ref**](docs/BuildServiceApi.md#greate_build_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
 *BuildServiceApi* | [**list_archived_builds**](docs/BuildServiceApi.md#list_archived_builds) | **GET** /v1/archives/{owner}/builds | List archived builds
 *BuildServiceApi* | [**list_bookmarked_builds**](docs/BuildServiceApi.md#list_bookmarked_builds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
 *BuildServiceApi* | [**list_build_statuses**](docs/BuildServiceApi.md#list_build_statuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
@@ -100,6 +100,8 @@ Class | Method | HTTP request | Description
  - [V1Build](docs/V1Build.md)
  - [V1BuildBodyRequest](docs/V1BuildBodyRequest.md)
  - [V1BuildStatus](docs/V1BuildStatus.md)
+ - [V1CodeReference](docs/V1CodeReference.md)
+ - [V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
  - [V1Dict](docs/V1Dict.md)
  - [V1KV](docs/V1KV.md)
  - [V1ListBuildStatusesResponse](docs/V1ListBuildStatusesResponse.md)

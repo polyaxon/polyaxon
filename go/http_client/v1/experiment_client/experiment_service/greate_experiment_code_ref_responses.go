@@ -26,6 +26,8 @@ import (
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
+
+	experiment_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/experiment_model"
 )
 
 // GreateExperimentCodeRefReader is a Reader for the GreateExperimentCodeRef structure.
@@ -64,21 +66,23 @@ func NewGreateExperimentCodeRefOK() *GreateExperimentCodeRefOK {
 A successful response.
 */
 type GreateExperimentCodeRefOK struct {
-	Payload interface{}
+	Payload *experiment_model.V1CodeReference
 }
 
 func (o *GreateExperimentCodeRefOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/coderef][%d] greateExperimentCodeRefOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] greateExperimentCodeRefOK  %+v", 200, o.Payload)
 }
 
-func (o *GreateExperimentCodeRefOK) GetPayload() interface{} {
+func (o *GreateExperimentCodeRefOK) GetPayload() *experiment_model.V1CodeReference {
 	return o.Payload
 }
 
 func (o *GreateExperimentCodeRefOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(experiment_model.V1CodeReference)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
@@ -99,7 +103,7 @@ type GreateExperimentCodeRefNotFound struct {
 }
 
 func (o *GreateExperimentCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/coderef][%d] greateExperimentCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] greateExperimentCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GreateExperimentCodeRefNotFound) GetPayload() string {

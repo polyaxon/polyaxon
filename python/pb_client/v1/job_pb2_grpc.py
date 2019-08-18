@@ -28,6 +28,7 @@ import grpc
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
+from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 from v1 import job_pb2 as v1_dot_job__pb2
 
 
@@ -139,12 +140,12 @@ class JobServiceStub(object):
     self.GetJobCodeRef = channel.unary_unary(
         '/v1.JobService/GetJobCodeRef',
         request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
     self.GreateJobCodeRef = channel.unary_unary(
         '/v1.JobService/GreateJobCodeRef',
-        request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        request_serializer=v1_dot_code__ref__pb2.CodeReferenceBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
 
 
@@ -402,12 +403,12 @@ def add_JobServiceServicer_to_server(servicer, server):
       'GetJobCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.GetJobCodeRef,
           request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
       ),
       'GreateJobCodeRef': grpc.unary_unary_rpc_method_handler(
           servicer.GreateJobCodeRef,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          request_deserializer=v1_dot_code__ref__pb2.CodeReferenceBodyRequest.FromString,
+          response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

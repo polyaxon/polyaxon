@@ -114,7 +114,7 @@ Class | Method | HTTP request | Description
 *JobServiceApi* | [**deleteJobs**](docs/JobServiceApi.md#deleteJobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete jobs
 *JobServiceApi* | [**getJob**](docs/JobServiceApi.md#getJob) | **GET** /v1/{owner}/{project}/jobs/{id} | Get job
 *JobServiceApi* | [**getJobCodeRef**](docs/JobServiceApi.md#getJobCodeRef) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
-*JobServiceApi* | [**greateJobCodeRef**](docs/JobServiceApi.md#greateJobCodeRef) | **POST** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
+*JobServiceApi* | [**greateJobCodeRef**](docs/JobServiceApi.md#greateJobCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
 *JobServiceApi* | [**listArchivedJobs**](docs/JobServiceApi.md#listArchivedJobs) | **GET** /v1/archives/{owner}/jobs | List archived jobs
 *JobServiceApi* | [**listBookmarkedJobs**](docs/JobServiceApi.md#listBookmarkedJobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked jobs
 *JobServiceApi* | [**listJobStatuses**](docs/JobServiceApi.md#listJobStatuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | List job statuses
@@ -131,6 +131,8 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [ProtobufAny](docs/ProtobufAny.md)
+ - [V1CodeReference](docs/V1CodeReference.md)
+ - [V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
  - [V1Dict](docs/V1Dict.md)
  - [V1Job](docs/V1Job.md)
  - [V1JobBodyRequest](docs/V1JobBodyRequest.md)

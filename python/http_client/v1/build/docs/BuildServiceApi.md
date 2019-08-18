@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**delete_builds**](BuildServiceApi.md#delete_builds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
 [**get_build**](BuildServiceApi.md#get_build) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
 [**get_build_code_ref**](BuildServiceApi.md#get_build_code_ref) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-[**greate_build_code_ref**](BuildServiceApi.md#greate_build_code_ref) | **POST** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+[**greate_build_code_ref**](BuildServiceApi.md#greate_build_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
 [**list_archived_builds**](BuildServiceApi.md#list_archived_builds) | **GET** /v1/archives/{owner}/builds | List archived builds
 [**list_bookmarked_builds**](BuildServiceApi.md#list_bookmarked_builds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
 [**list_build_statuses**](BuildServiceApi.md#list_build_statuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
@@ -378,7 +378,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_build_code_ref**
-> object get_build_code_ref(owner, project, id)
+> V1CodeReference get_build_code_ref(owner, project, id)
 
 Get build code ref
 
@@ -414,7 +414,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -428,9 +428,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **greate_build_code_ref**
-> object greate_build_code_ref(owner, project, id, body)
+> V1CodeReference greate_build_code_ref(entity_owner, entity_project, entity_id, body)
 
-Get build code ref
+Create build code ref
 
 ### Example
 ```python
@@ -442,14 +442,14 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.BuildServiceApi()
-owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-id = 'id_example' # str | Unique integer identifier of the entity
-body = swagger_client.V1OwnedEntityIdRequest() # V1OwnedEntityIdRequest | 
+entity_owner = 'entity_owner_example' # str | Owner of the namespace
+entity_project = 'entity_project_example' # str | Project where the experiement will be assigned
+entity_id = 'entity_id_example' # str | Unique integer identifier of the entity
+body = swagger_client.V1CodeReferenceBodyRequest() # V1CodeReferenceBodyRequest | 
 
 try:
-    # Get build code ref
-    api_response = api_instance.greate_build_code_ref(owner, project, id, body)
+    # Create build code ref
+    api_response = api_instance.greate_build_code_ref(entity_owner, entity_project, entity_id, body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling BuildServiceApi->greate_build_code_ref: %s\n" % e)
@@ -459,14 +459,14 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **id** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **entity_owner** | **str**| Owner of the namespace | 
+ **entity_project** | **str**| Project where the experiement will be assigned | 
+ **entity_id** | **str**| Unique integer identifier of the entity | 
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  | 
 
 ### Return type
 
-**object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

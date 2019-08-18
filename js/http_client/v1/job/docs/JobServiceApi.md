@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteJobs**](JobServiceApi.md#deleteJobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete jobs
 [**getJob**](JobServiceApi.md#getJob) | **GET** /v1/{owner}/{project}/jobs/{id} | Get job
 [**getJobCodeRef**](JobServiceApi.md#getJobCodeRef) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
-[**greateJobCodeRef**](JobServiceApi.md#greateJobCodeRef) | **POST** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
+[**greateJobCodeRef**](JobServiceApi.md#greateJobCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
 [**listArchivedJobs**](JobServiceApi.md#listArchivedJobs) | **GET** /v1/archives/{owner}/jobs | List archived jobs
 [**listBookmarkedJobs**](JobServiceApi.md#listBookmarkedJobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked jobs
 [**listJobStatuses**](JobServiceApi.md#listJobStatuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | List job statuses
@@ -381,7 +381,7 @@ No authorization required
 
 <a name="getJobCodeRef"></a>
 # **getJobCodeRef**
-> Object getJobCodeRef(owner, project, id)
+> V1CodeReference getJobCodeRef(owner, project, id)
 
 Get job code ref
 
@@ -418,7 +418,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -431,7 +431,7 @@ No authorization required
 
 <a name="greateJobCodeRef"></a>
 # **greateJobCodeRef**
-> Object greateJobCodeRef(owner, project, id, body)
+> V1CodeReference greateJobCodeRef(entity_owner, entity_project, entity_id, body)
 
 Get job code ref
 
@@ -441,13 +441,13 @@ var JobService = require('job_service');
 
 var apiInstance = new JobService.JobServiceApi();
 
-var owner = "owner_example"; // String | Owner of the namespace
+var entity_owner = "entity_owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
 
-var id = "id_example"; // String | Unique integer identifier of the entity
+var entity_id = "entity_id_example"; // String | Unique integer identifier of the entity
 
-var body = new JobService.V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+var body = new JobService.V1CodeReferenceBodyRequest(); // V1CodeReferenceBodyRequest | 
 
 
 var callback = function(error, data, response) {
@@ -457,21 +457,21 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.greateJobCodeRef(owner, project, id, body, callback);
+apiInstance.greateJobCodeRef(entity_owner, entity_project, entity_id, body, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **id** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **entity_owner** | **String**| Owner of the namespace | 
+ **entity_project** | **String**| Project where the experiement will be assigned | 
+ **entity_id** | **String**| Unique integer identifier of the entity | 
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  | 
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

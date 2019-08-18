@@ -7,6 +7,7 @@ import "google/protobuf/empty.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
 import "v1/base.proto";
+import "v1/code_ref.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
@@ -134,7 +135,7 @@ message BuildStatus {
 }
 
 // Request data to create/update build
-message BuildBodyRequest{
+message BuildBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -146,7 +147,7 @@ message BuildBodyRequest{
 }
 
  // Contains list builds
- message ListBuildsResponse{
+ message ListBuildsResponse {
     // Count of the entities
     int32 count = 1;
 
@@ -162,7 +163,7 @@ message BuildBodyRequest{
 
 
  // Contains list builds
- message ListBuildStatusesResponse{
+ message ListBuildStatusesResponse {
     // Count of the entities
     int32 count = 1;
 
@@ -180,28 +181,28 @@ message BuildBodyRequest{
 // Service to manage builds
 service BuildService {
     // List builds
-    rpc ListBuilds(ProjectBodyRequest) returns (ListBuildsResponse){
+    rpc ListBuilds(ProjectBodyRequest) returns (ListBuildsResponse) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/builds"
         };
     }
 
     // List bookmarked builds
-    rpc ListBookmarkedBuilds(OwnerBodyRequest) returns (ListBuildsResponse){
+    rpc ListBookmarkedBuilds(OwnerBodyRequest) returns (ListBuildsResponse) {
         option (google.api.http) = {
             get: "/v1/bookmarks/{owner}/builds"
         };
     }
 
     // List archived builds
-    rpc ListArchivedBuilds(OwnerBodyRequest) returns (ListBuildsResponse){
+    rpc ListArchivedBuilds(OwnerBodyRequest) returns (ListBuildsResponse) {
         option (google.api.http) = {
             get: "/v1/archives/{owner}/builds"
         };
     }
 
     // Create new build
-    rpc CreateBuild(BuildBodyRequest) returns (Build){
+    rpc CreateBuild(BuildBodyRequest) returns (Build) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds"
             body: "*"
@@ -209,14 +210,14 @@ service BuildService {
     }
 
     // Get build
-    rpc GetBuild(OwnedEntityIdRequest) returns (Build){
+    rpc GetBuild(OwnedEntityIdRequest) returns (Build) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/builds/{id}"
         };
     }
 
     // Update build
-    rpc UpdateBuild(BuildBodyRequest) returns (Build){
+    rpc UpdateBuild(BuildBodyRequest) returns (Build) {
         option (google.api.http) = {
             put: "/v1/{owner}/{project}/builds/{build.id}"
             body: "*"
@@ -229,14 +230,14 @@ service BuildService {
     }
 
     // Delete build
-    rpc DeleteBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc DeleteBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/builds/{id}"
         };
     }
 
     // Delete builds
-    rpc DeleteBuilds(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc DeleteBuilds(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/builds/delete"
             body: "*"
@@ -244,7 +245,7 @@ service BuildService {
     }
 
     // Stop build
-    rpc StopBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc StopBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/{id}/stop"
             body: "*"
@@ -252,7 +253,7 @@ service BuildService {
     }
 
     // Stop builds
-    rpc StopBuilds(ProjectBodyRequest) returns (google.protobuf.Empty){
+    rpc StopBuilds(ProjectBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/stop"
             body: "*"
@@ -260,7 +261,7 @@ service BuildService {
     }
 
     // Restart build
-    rpc RestartBuild(OwnedEntityIdRequest) returns (Build){
+    rpc RestartBuild(OwnedEntityIdRequest) returns (Build) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/{id}/restart"
             body: "*"
@@ -268,49 +269,49 @@ service BuildService {
     }
 
     // Archive build
-    rpc ArchiveBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc ArchiveBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/{id}/archive"
         };
     }
 
     // Restore build
-    rpc RestoreBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc RestoreBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/{id}/restore"
         };
     }
 
     // Bookmark build
-    rpc BookmarkBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc BookmarkBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/{id}/bookmark"
         };
     }
 
     // UnBookmark build
-    rpc UnBookmarkBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty){
+    rpc UnBookmarkBuild(OwnedEntityIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/{owner}/{project}/builds/{id}/unbookmark"
         };
     }
 
     // Get build status
-    rpc GetBuildStatuses(OwnedEntityIdRequest) returns (StatusResponse){
+    rpc GetBuildStatuses(OwnedEntityIdRequest) returns (StatusResponse) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/builds/{id}/statuses"
         };
     }
 
     // List build statuses
-    rpc ListBuildStatuses(OwnedEntityIdRequest) returns (ListBuildStatusesResponse){
+    rpc ListBuildStatuses(OwnedEntityIdRequest) returns (ListBuildStatusesResponse) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/builds/{id}/statuses"
         };
     }
 
     // Create new build status
-    rpc CreateBuildStatus(OwnedEntityIdRequest) returns (BuildStatus){
+    rpc CreateBuildStatus(OwnedEntityIdRequest) returns (BuildStatus) {
         option (google.api.http) = {
             post: "/v1/{owner}/{project}/builds/{id}/statuses"
             body: "*"
@@ -318,16 +319,16 @@ service BuildService {
     }
 
     // Get build code ref
-    rpc GetBuildCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+    rpc GetBuildCodeRef(OwnedEntityIdRequest) returns (CodeReference) {
         option (google.api.http) = {
             get: "/v1/{owner}/{project}/builds/{id}/coderef"
         };
     }
 
-    // Get build code ref
-    rpc GreateBuildCodeRef(OwnedEntityIdRequest) returns (google.protobuf.Empty){  // TODO: should be an code ref
+    // Create build code ref
+    rpc GreateBuildCodeRef(CodeReferenceBodyRequest) returns (CodeReference) {
         option (google.api.http) = {
-            post: "/v1/{owner}/{project}/builds/{id}/coderef"
+            post: "/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef"
             body: "*"
         };
     }

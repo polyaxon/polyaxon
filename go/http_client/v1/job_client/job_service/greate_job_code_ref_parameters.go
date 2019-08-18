@@ -78,22 +78,22 @@ for the greate job code ref operation typically these are written to a http.Requ
 type GreateJobCodeRefParams struct {
 
 	/*Body*/
-	Body *job_model.V1OwnedEntityIDRequest
-	/*ID
+	Body *job_model.V1CodeReferenceBodyRequest
+	/*EntityID
 	  Unique integer identifier of the entity
 
 	*/
-	ID string
-	/*Owner
+	EntityID string
+	/*EntityOwner
 	  Owner of the namespace
 
 	*/
-	Owner string
-	/*Project
+	EntityOwner string
+	/*EntityProject
 	  Project where the experiement will be assigned
 
 	*/
-	Project string
+	EntityProject string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -134,47 +134,47 @@ func (o *GreateJobCodeRefParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the greate job code ref params
-func (o *GreateJobCodeRefParams) WithBody(body *job_model.V1OwnedEntityIDRequest) *GreateJobCodeRefParams {
+func (o *GreateJobCodeRefParams) WithBody(body *job_model.V1CodeReferenceBodyRequest) *GreateJobCodeRefParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the greate job code ref params
-func (o *GreateJobCodeRefParams) SetBody(body *job_model.V1OwnedEntityIDRequest) {
+func (o *GreateJobCodeRefParams) SetBody(body *job_model.V1CodeReferenceBodyRequest) {
 	o.Body = body
 }
 
-// WithID adds the id to the greate job code ref params
-func (o *GreateJobCodeRefParams) WithID(id string) *GreateJobCodeRefParams {
-	o.SetID(id)
+// WithEntityID adds the entityID to the greate job code ref params
+func (o *GreateJobCodeRefParams) WithEntityID(entityID string) *GreateJobCodeRefParams {
+	o.SetEntityID(entityID)
 	return o
 }
 
-// SetID adds the id to the greate job code ref params
-func (o *GreateJobCodeRefParams) SetID(id string) {
-	o.ID = id
+// SetEntityID adds the entityId to the greate job code ref params
+func (o *GreateJobCodeRefParams) SetEntityID(entityID string) {
+	o.EntityID = entityID
 }
 
-// WithOwner adds the owner to the greate job code ref params
-func (o *GreateJobCodeRefParams) WithOwner(owner string) *GreateJobCodeRefParams {
-	o.SetOwner(owner)
+// WithEntityOwner adds the entityOwner to the greate job code ref params
+func (o *GreateJobCodeRefParams) WithEntityOwner(entityOwner string) *GreateJobCodeRefParams {
+	o.SetEntityOwner(entityOwner)
 	return o
 }
 
-// SetOwner adds the owner to the greate job code ref params
-func (o *GreateJobCodeRefParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetEntityOwner adds the entityOwner to the greate job code ref params
+func (o *GreateJobCodeRefParams) SetEntityOwner(entityOwner string) {
+	o.EntityOwner = entityOwner
 }
 
-// WithProject adds the project to the greate job code ref params
-func (o *GreateJobCodeRefParams) WithProject(project string) *GreateJobCodeRefParams {
-	o.SetProject(project)
+// WithEntityProject adds the entityProject to the greate job code ref params
+func (o *GreateJobCodeRefParams) WithEntityProject(entityProject string) *GreateJobCodeRefParams {
+	o.SetEntityProject(entityProject)
 	return o
 }
 
-// SetProject adds the project to the greate job code ref params
-func (o *GreateJobCodeRefParams) SetProject(project string) {
-	o.Project = project
+// SetEntityProject adds the entityProject to the greate job code ref params
+func (o *GreateJobCodeRefParams) SetEntityProject(entityProject string) {
+	o.EntityProject = entityProject
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -191,18 +191,18 @@ func (o *GreateJobCodeRefParams) WriteToRequest(r runtime.ClientRequest, reg str
 		}
 	}
 
-	// path param id
-	if err := r.SetPathParam("id", o.ID); err != nil {
+	// path param entity.id
+	if err := r.SetPathParam("entity.id", o.EntityID); err != nil {
 		return err
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity.owner
+	if err := r.SetPathParam("entity.owner", o.EntityOwner); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param entity.project
+	if err := r.SetPathParam("entity.project", o.EntityProject); err != nil {
 		return err
 	}
 

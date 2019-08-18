@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteBuilds**](BuildServiceApi.md#deleteBuilds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
 [**getBuild**](BuildServiceApi.md#getBuild) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
 [**getBuildCodeRef**](BuildServiceApi.md#getBuildCodeRef) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-[**greateBuildCodeRef**](BuildServiceApi.md#greateBuildCodeRef) | **POST** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+[**greateBuildCodeRef**](BuildServiceApi.md#greateBuildCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
 [**listArchivedBuilds**](BuildServiceApi.md#listArchivedBuilds) | **GET** /v1/archives/{owner}/builds | List archived builds
 [**listBookmarkedBuilds**](BuildServiceApi.md#listBookmarkedBuilds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
 [**listBuildStatuses**](BuildServiceApi.md#listBuildStatuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
@@ -380,7 +380,7 @@ No authorization required
 
 <a name="getBuildCodeRef"></a>
 # **getBuildCodeRef**
-> Object getBuildCodeRef(owner, project, id)
+> V1CodeReference getBuildCodeRef(owner, project, id)
 
 Get build code ref
 
@@ -417,7 +417,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -430,9 +430,9 @@ No authorization required
 
 <a name="greateBuildCodeRef"></a>
 # **greateBuildCodeRef**
-> Object greateBuildCodeRef(owner, project, id, body)
+> V1CodeReference greateBuildCodeRef(entity_owner, entity_project, entity_id, body)
 
-Get build code ref
+Create build code ref
 
 ### Example
 ```javascript
@@ -440,13 +440,13 @@ var BuildService = require('build_service');
 
 var apiInstance = new BuildService.BuildServiceApi();
 
-var owner = "owner_example"; // String | Owner of the namespace
+var entity_owner = "entity_owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project where the experiement will be assigned
+var entity_project = "entity_project_example"; // String | Project where the experiement will be assigned
 
-var id = "id_example"; // String | Unique integer identifier of the entity
+var entity_id = "entity_id_example"; // String | Unique integer identifier of the entity
 
-var body = new BuildService.V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+var body = new BuildService.V1CodeReferenceBodyRequest(); // V1CodeReferenceBodyRequest | 
 
 
 var callback = function(error, data, response) {
@@ -456,21 +456,21 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.greateBuildCodeRef(owner, project, id, body, callback);
+apiInstance.greateBuildCodeRef(entity_owner, entity_project, entity_id, body, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project where the experiement will be assigned | 
- **id** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **entity_owner** | **String**| Owner of the namespace | 
+ **entity_project** | **String**| Project where the experiement will be assigned | 
+ **entity_id** | **String**| Unique integer identifier of the entity | 
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  | 
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

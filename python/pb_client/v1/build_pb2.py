@@ -42,6 +42,7 @@ from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
 from v1 import base_pb2 as v1_dot_base__pb2
+from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -49,9 +50,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=_b('\222A\303\001\022o\n\rBuild service\"Y\n\026Polyaxon build service\022)https://github.com/polyaxon/polyaxon-sdks\032\024contact@polyaxon.com2\0031.0*\001\0012\020application/json:\020application/jsonR)\n\003404\022\"\n\030Resource does not exist.\022\006\n\004\232\002\001\007'),
-  serialized_pb=_b('\n\x0ev1/build.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\"\xe6\x03\n\x05\x42uild\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x13\n\x0b\x62uild_build\x18\x19 \x01(\t\"p\n\x0b\x42uildStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"L\n\x10\x42uildBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05\x62uild\x18\x03 \x01(\x0b\x32\t.v1.Build\"_\n\x12ListBuildsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Build\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"l\n\x19ListBuildStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.v1.BuildStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t2\xf8\x11\n\x0c\x42uildService\x12\x62\n\nListBuilds\x12\x16.v1.ProjectBodyRequest\x1a\x16.v1.ListBuildsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/v1/{owner}/{project}/builds\x12j\n\x14ListBookmarkedBuilds\x12\x14.v1.OwnerBodyRequest\x1a\x16.v1.ListBuildsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/v1/bookmarks/{owner}/builds\x12g\n\x12ListArchivedBuilds\x12\x14.v1.OwnerBodyRequest\x1a\x16.v1.ListBuildsResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/archives/{owner}/builds\x12W\n\x0b\x43reateBuild\x12\x14.v1.BuildBodyRequest\x1a\t.v1.Build\"\'\x82\xd3\xe4\x93\x02!\"\x1c/v1/{owner}/{project}/builds:\x01*\x12Z\n\x08GetBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\t.v1.Build\")\x82\xd3\xe4\x93\x02#\x12!/v1/{owner}/{project}/builds/{id}\x12\x90\x01\n\x0bUpdateBuild\x12\x14.v1.BuildBodyRequest\x1a\t.v1.Build\"`\x82\xd3\xe4\x93\x02Z\x1a\'/v1/{owner}/{project}/builds/{build.id}:\x01*Z,\x1a\'/v1/{owner}/{project}/builds/{build.id}:\x01*\x12j\n\x0b\x44\x65leteBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/v1/{owner}/{project}/builds/{id}\x12p\n\x0c\x44\x65leteBuilds\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(*#/v1/{owner}/{project}/builds/delete:\x01*\x12p\n\tStopBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\"&/v1/{owner}/{project}/builds/{id}/stop:\x01*\x12j\n\nStopBuilds\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&\"!/v1/{owner}/{project}/builds/stop:\x01*\x12i\n\x0cRestartBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\t.v1.Build\"4\x82\xd3\xe4\x93\x02.\")/v1/{owner}/{project}/builds/{id}/restart:\x01*\x12s\n\x0c\x41rchiveBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\")/v1/{owner}/{project}/builds/{id}/archive\x12s\n\x0cRestoreBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\")/v1/{owner}/{project}/builds/{id}/restore\x12u\n\rBookmarkBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,\"*/v1/{owner}/{project}/builds/{id}/bookmark\x12y\n\x0fUnBookmarkBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.*,/v1/{owner}/{project}/builds/{id}/unbookmark\x12t\n\x10GetBuildStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\x12.v1.StatusResponse\"2\x82\xd3\xe4\x93\x02,\x12*/v1/{owner}/{project}/builds/{id}/statuses\x12\x80\x01\n\x11ListBuildStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\x1d.v1.ListBuildStatusesResponse\"2\x82\xd3\xe4\x93\x02,\x12*/v1/{owner}/{project}/builds/{id}/statuses\x12u\n\x11\x43reateBuildStatus\x12\x18.v1.OwnedEntityIdRequest\x1a\x0f.v1.BuildStatus\"5\x82\xd3\xe4\x93\x02/\"*/v1/{owner}/{project}/builds/{id}/statuses:\x01*\x12v\n\x0fGetBuildCodeRef\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\x12)/v1/{owner}/{project}/builds/{id}/coderef\x12|\n\x12GreateBuildCodeRef\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.\")/v1/{owner}/{project}/builds/{id}/coderef:\x01*B\xc7\x01\x92\x41\xc3\x01\x12o\n\rBuild service\"Y\n\x16Polyaxon build service\x12)https://github.com/polyaxon/polyaxon-sdks\x1a\x14\x63ontact@polyaxon.com2\x03\x31.0*\x01\x01\x32\x10\x61pplication/json:\x10\x61pplication/jsonR)\n\x03\x34\x30\x34\x12\"\n\x18Resource does not exist.\x12\x06\n\x04\x9a\x02\x01\x07\x62\x06proto3')
+  serialized_pb=_b('\n\x0ev1/build.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\"\xe6\x03\n\x05\x42uild\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x13\n\x0b\x62uild_build\x18\x19 \x01(\t\"p\n\x0b\x42uildStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"L\n\x10\x42uildBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05\x62uild\x18\x03 \x01(\x0b\x32\t.v1.Build\"_\n\x12ListBuildsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Build\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"l\n\x19ListBuildStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.v1.BuildStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t2\x88\x12\n\x0c\x42uildService\x12\x62\n\nListBuilds\x12\x16.v1.ProjectBodyRequest\x1a\x16.v1.ListBuildsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/v1/{owner}/{project}/builds\x12j\n\x14ListBookmarkedBuilds\x12\x14.v1.OwnerBodyRequest\x1a\x16.v1.ListBuildsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/v1/bookmarks/{owner}/builds\x12g\n\x12ListArchivedBuilds\x12\x14.v1.OwnerBodyRequest\x1a\x16.v1.ListBuildsResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/archives/{owner}/builds\x12W\n\x0b\x43reateBuild\x12\x14.v1.BuildBodyRequest\x1a\t.v1.Build\"\'\x82\xd3\xe4\x93\x02!\"\x1c/v1/{owner}/{project}/builds:\x01*\x12Z\n\x08GetBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\t.v1.Build\")\x82\xd3\xe4\x93\x02#\x12!/v1/{owner}/{project}/builds/{id}\x12\x90\x01\n\x0bUpdateBuild\x12\x14.v1.BuildBodyRequest\x1a\t.v1.Build\"`\x82\xd3\xe4\x93\x02Z\x1a\'/v1/{owner}/{project}/builds/{build.id}:\x01*Z,\x1a\'/v1/{owner}/{project}/builds/{build.id}:\x01*\x12j\n\x0b\x44\x65leteBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/v1/{owner}/{project}/builds/{id}\x12p\n\x0c\x44\x65leteBuilds\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(*#/v1/{owner}/{project}/builds/delete:\x01*\x12p\n\tStopBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\"&/v1/{owner}/{project}/builds/{id}/stop:\x01*\x12j\n\nStopBuilds\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&\"!/v1/{owner}/{project}/builds/stop:\x01*\x12i\n\x0cRestartBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\t.v1.Build\"4\x82\xd3\xe4\x93\x02.\")/v1/{owner}/{project}/builds/{id}/restart:\x01*\x12s\n\x0c\x41rchiveBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\")/v1/{owner}/{project}/builds/{id}/archive\x12s\n\x0cRestoreBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+\")/v1/{owner}/{project}/builds/{id}/restore\x12u\n\rBookmarkBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"2\x82\xd3\xe4\x93\x02,\"*/v1/{owner}/{project}/builds/{id}/bookmark\x12y\n\x0fUnBookmarkBuild\x12\x18.v1.OwnedEntityIdRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.*,/v1/{owner}/{project}/builds/{id}/unbookmark\x12t\n\x10GetBuildStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\x12.v1.StatusResponse\"2\x82\xd3\xe4\x93\x02,\x12*/v1/{owner}/{project}/builds/{id}/statuses\x12\x80\x01\n\x11ListBuildStatuses\x12\x18.v1.OwnedEntityIdRequest\x1a\x1d.v1.ListBuildStatusesResponse\"2\x82\xd3\xe4\x93\x02,\x12*/v1/{owner}/{project}/builds/{id}/statuses\x12u\n\x11\x43reateBuildStatus\x12\x18.v1.OwnedEntityIdRequest\x1a\x0f.v1.BuildStatus\"5\x82\xd3\xe4\x93\x02/\"*/v1/{owner}/{project}/builds/{id}/statuses:\x01*\x12q\n\x0fGetBuildCodeRef\x12\x18.v1.OwnedEntityIdRequest\x1a\x11.v1.CodeReference\"1\x82\xd3\xe4\x93\x02+\x12)/v1/{owner}/{project}/builds/{id}/coderef\x12\x90\x01\n\x12GreateBuildCodeRef\x12\x1c.v1.CodeReferenceBodyRequest\x1a\x11.v1.CodeReference\"I\x82\xd3\xe4\x93\x02\x43\">/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef:\x01*B\xc7\x01\x92\x41\xc3\x01\x12o\n\rBuild service\"Y\n\x16Polyaxon build service\x12)https://github.com/polyaxon/polyaxon-sdks\x1a\x14\x63ontact@polyaxon.com2\x03\x31.0*\x01\x01\x32\x10\x61pplication/json:\x10\x61pplication/jsonR)\n\x03\x34\x30\x34\x12\"\n\x18Resource does not exist.\x12\x06\n\x04\x9a\x02\x01\x07\x62\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,])
 
 
 
@@ -250,8 +251,8 @@ _BUILD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=143,
-  serialized_end=629,
+  serialized_start=162,
+  serialized_end=648,
 )
 
 
@@ -316,8 +317,8 @@ _BUILDSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=631,
-  serialized_end=743,
+  serialized_start=650,
+  serialized_end=762,
 )
 
 
@@ -361,8 +362,8 @@ _BUILDBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=745,
-  serialized_end=821,
+  serialized_start=764,
+  serialized_end=840,
 )
 
 
@@ -413,8 +414,8 @@ _LISTBUILDSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=823,
-  serialized_end=918,
+  serialized_start=842,
+  serialized_end=937,
 )
 
 
@@ -465,8 +466,8 @@ _LISTBUILDSTATUSESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=920,
-  serialized_end=1028,
+  serialized_start=939,
+  serialized_end=1047,
 )
 
 _BUILD.fields_by_name['resources'].message_type = v1_dot_base__pb2._DICT
@@ -526,8 +527,8 @@ _BUILDSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=1031,
-  serialized_end=3327,
+  serialized_start=1050,
+  serialized_end=3362,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListBuilds',
@@ -697,7 +698,7 @@ _BUILDSERVICE = _descriptor.ServiceDescriptor(
     index=18,
     containing_service=None,
     input_type=v1_dot_base__pb2._OWNEDENTITYIDREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=v1_dot_code__ref__pb2._CODEREFERENCE,
     serialized_options=_b('\202\323\344\223\002+\022)/v1/{owner}/{project}/builds/{id}/coderef'),
   ),
   _descriptor.MethodDescriptor(
@@ -705,9 +706,9 @@ _BUILDSERVICE = _descriptor.ServiceDescriptor(
     full_name='v1.BuildService.GreateBuildCodeRef',
     index=19,
     containing_service=None,
-    input_type=v1_dot_base__pb2._OWNEDENTITYIDREQUEST,
-    output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
-    serialized_options=_b('\202\323\344\223\002.\")/v1/{owner}/{project}/builds/{id}/coderef:\001*'),
+    input_type=v1_dot_code__ref__pb2._CODEREFERENCEBODYREQUEST,
+    output_type=v1_dot_code__ref__pb2._CODEREFERENCE,
+    serialized_options=_b('\202\323\344\223\002C\">/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef:\001*'),
   ),
 ])
 _sym_db.RegisterServiceDescriptor(_BUILDSERVICE)

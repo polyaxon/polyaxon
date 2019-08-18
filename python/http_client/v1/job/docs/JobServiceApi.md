@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**delete_jobs**](JobServiceApi.md#delete_jobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete jobs
 [**get_job**](JobServiceApi.md#get_job) | **GET** /v1/{owner}/{project}/jobs/{id} | Get job
 [**get_job_code_ref**](JobServiceApi.md#get_job_code_ref) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
-[**greate_job_code_ref**](JobServiceApi.md#greate_job_code_ref) | **POST** /v1/{owner}/{project}/jobs/{id}/coderef | Get job code ref
+[**greate_job_code_ref**](JobServiceApi.md#greate_job_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
 [**list_archived_jobs**](JobServiceApi.md#list_archived_jobs) | **GET** /v1/archives/{owner}/jobs | List archived jobs
 [**list_bookmarked_jobs**](JobServiceApi.md#list_bookmarked_jobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked jobs
 [**list_job_statuses**](JobServiceApi.md#list_job_statuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | List job statuses
@@ -379,7 +379,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_job_code_ref**
-> object get_job_code_ref(owner, project, id)
+> V1CodeReference get_job_code_ref(owner, project, id)
 
 Get job code ref
 
@@ -415,7 +415,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -429,7 +429,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **greate_job_code_ref**
-> object greate_job_code_ref(owner, project, id, body)
+> V1CodeReference greate_job_code_ref(entity_owner, entity_project, entity_id, body)
 
 Get job code ref
 
@@ -443,14 +443,14 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.JobServiceApi()
-owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-id = 'id_example' # str | Unique integer identifier of the entity
-body = swagger_client.V1OwnedEntityIdRequest() # V1OwnedEntityIdRequest | 
+entity_owner = 'entity_owner_example' # str | Owner of the namespace
+entity_project = 'entity_project_example' # str | Project where the experiement will be assigned
+entity_id = 'entity_id_example' # str | Unique integer identifier of the entity
+body = swagger_client.V1CodeReferenceBodyRequest() # V1CodeReferenceBodyRequest | 
 
 try:
     # Get job code ref
-    api_response = api_instance.greate_job_code_ref(owner, project, id, body)
+    api_response = api_instance.greate_job_code_ref(entity_owner, entity_project, entity_id, body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling JobServiceApi->greate_job_code_ref: %s\n" % e)
@@ -460,14 +460,14 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **id** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **entity_owner** | **str**| Owner of the namespace | 
+ **entity_project** | **str**| Project where the experiement will be assigned | 
+ **entity_id** | **str**| Unique integer identifier of the entity | 
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  | 
 
 ### Return type
 
-**object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

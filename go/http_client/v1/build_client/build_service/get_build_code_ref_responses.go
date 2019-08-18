@@ -26,6 +26,8 @@ import (
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
+
+	build_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/build_model"
 )
 
 // GetBuildCodeRefReader is a Reader for the GetBuildCodeRef structure.
@@ -64,21 +66,23 @@ func NewGetBuildCodeRefOK() *GetBuildCodeRefOK {
 A successful response.
 */
 type GetBuildCodeRefOK struct {
-	Payload interface{}
+	Payload *build_model.V1CodeReference
 }
 
 func (o *GetBuildCodeRefOK) Error() string {
 	return fmt.Sprintf("[GET /v1/{owner}/{project}/builds/{id}/coderef][%d] getBuildCodeRefOK  %+v", 200, o.Payload)
 }
 
-func (o *GetBuildCodeRefOK) GetPayload() interface{} {
+func (o *GetBuildCodeRefOK) GetPayload() *build_model.V1CodeReference {
 	return o.Payload
 }
 
 func (o *GetBuildCodeRefOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(build_model.V1CodeReference)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

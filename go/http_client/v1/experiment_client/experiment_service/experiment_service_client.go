@@ -324,7 +324,7 @@ func (a *Client) GreateExperimentCodeRef(params *GreateExperimentCodeRefParams) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GreateExperimentCodeRef",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/coderef",
+		PathPattern:        "/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

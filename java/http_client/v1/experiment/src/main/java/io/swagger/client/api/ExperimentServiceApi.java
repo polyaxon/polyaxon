@@ -41,6 +41,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.swagger.client.model.V1CodeReference;
+import io.swagger.client.model.V1CodeReferenceBodyRequest;
 import io.swagger.client.model.V1Experiment;
 import io.swagger.client.model.V1ExperimentBodyRequest;
 import io.swagger.client.model.V1ExperimentStatus;
@@ -1166,11 +1168,11 @@ public class ExperimentServiceApi {
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param id Unique integer identifier of the entity (required)
-     * @return Object
+     * @return V1CodeReference
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object getExperimentCodeRef(String owner, String project, String id) throws ApiException {
-        ApiResponse<Object> resp = getExperimentCodeRefWithHttpInfo(owner, project, id);
+    public V1CodeReference getExperimentCodeRef(String owner, String project, String id) throws ApiException {
+        ApiResponse<V1CodeReference> resp = getExperimentCodeRefWithHttpInfo(owner, project, id);
         return resp.getData();
     }
 
@@ -1180,12 +1182,12 @@ public class ExperimentServiceApi {
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param id Unique integer identifier of the entity (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;V1CodeReference&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> getExperimentCodeRefWithHttpInfo(String owner, String project, String id) throws ApiException {
+    public ApiResponse<V1CodeReference> getExperimentCodeRefWithHttpInfo(String owner, String project, String id) throws ApiException {
         com.squareup.okhttp.Call call = getExperimentCodeRefValidateBeforeCall(owner, project, id, null, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1CodeReference>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1199,7 +1201,7 @@ public class ExperimentServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getExperimentCodeRefAsync(String owner, String project, String id, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call getExperimentCodeRefAsync(String owner, String project, String id, final ApiCallback<V1CodeReference> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1221,29 +1223,29 @@ public class ExperimentServiceApi {
         }
 
         com.squareup.okhttp.Call call = getExperimentCodeRefValidateBeforeCall(owner, project, id, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1CodeReference>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
      * Build call for greateExperimentCodeRef
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param id Unique integer identifier of the entity (required)
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project where the experiement will be assigned (required)
+     * @param entityId Unique integer identifier of the entity (required)
      * @param body  (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call greateExperimentCodeRefCall(String owner, String project, String id, V1OwnedEntityIdRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call greateExperimentCodeRefCall(String entityOwner, String entityProject, String entityId, V1CodeReferenceBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/experiments/{id}/coderef"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
-            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
-            .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+        String localVarPath = "/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef"
+            .replaceAll("\\{" + "entity.owner" + "\\}", apiClient.escapeString(entityOwner.toString()))
+            .replaceAll("\\{" + "entity.project" + "\\}", apiClient.escapeString(entityProject.toString()))
+            .replaceAll("\\{" + "entity.id" + "\\}", apiClient.escapeString(entityId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1281,21 +1283,21 @@ public class ExperimentServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call greateExperimentCodeRefValidateBeforeCall(String owner, String project, String id, V1OwnedEntityIdRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call greateExperimentCodeRefValidateBeforeCall(String entityOwner, String entityProject, String entityId, V1CodeReferenceBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling greateExperimentCodeRef(Async)");
+        // verify the required parameter 'entityOwner' is set
+        if (entityOwner == null) {
+            throw new ApiException("Missing the required parameter 'entityOwner' when calling greateExperimentCodeRef(Async)");
         }
         
-        // verify the required parameter 'project' is set
-        if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling greateExperimentCodeRef(Async)");
+        // verify the required parameter 'entityProject' is set
+        if (entityProject == null) {
+            throw new ApiException("Missing the required parameter 'entityProject' when calling greateExperimentCodeRef(Async)");
         }
         
-        // verify the required parameter 'id' is set
-        if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling greateExperimentCodeRef(Async)");
+        // verify the required parameter 'entityId' is set
+        if (entityId == null) {
+            throw new ApiException("Missing the required parameter 'entityId' when calling greateExperimentCodeRef(Async)");
         }
         
         // verify the required parameter 'body' is set
@@ -1304,7 +1306,7 @@ public class ExperimentServiceApi {
         }
         
 
-        com.squareup.okhttp.Call call = greateExperimentCodeRefCall(owner, project, id, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = greateExperimentCodeRefCall(entityOwner, entityProject, entityId, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1312,46 +1314,46 @@ public class ExperimentServiceApi {
     /**
      * Get experiment code ref
      * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param id Unique integer identifier of the entity (required)
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project where the experiement will be assigned (required)
+     * @param entityId Unique integer identifier of the entity (required)
      * @param body  (required)
-     * @return Object
+     * @return V1CodeReference
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object greateExperimentCodeRef(String owner, String project, String id, V1OwnedEntityIdRequest body) throws ApiException {
-        ApiResponse<Object> resp = greateExperimentCodeRefWithHttpInfo(owner, project, id, body);
+    public V1CodeReference greateExperimentCodeRef(String entityOwner, String entityProject, String entityId, V1CodeReferenceBodyRequest body) throws ApiException {
+        ApiResponse<V1CodeReference> resp = greateExperimentCodeRefWithHttpInfo(entityOwner, entityProject, entityId, body);
         return resp.getData();
     }
 
     /**
      * Get experiment code ref
      * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param id Unique integer identifier of the entity (required)
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project where the experiement will be assigned (required)
+     * @param entityId Unique integer identifier of the entity (required)
      * @param body  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;V1CodeReference&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> greateExperimentCodeRefWithHttpInfo(String owner, String project, String id, V1OwnedEntityIdRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = greateExperimentCodeRefValidateBeforeCall(owner, project, id, body, null, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+    public ApiResponse<V1CodeReference> greateExperimentCodeRefWithHttpInfo(String entityOwner, String entityProject, String entityId, V1CodeReferenceBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = greateExperimentCodeRefValidateBeforeCall(entityOwner, entityProject, entityId, body, null, null);
+        Type localVarReturnType = new TypeToken<V1CodeReference>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
      * Get experiment code ref (asynchronously)
      * 
-     * @param owner Owner of the namespace (required)
-     * @param project Project where the experiement will be assigned (required)
-     * @param id Unique integer identifier of the entity (required)
+     * @param entityOwner Owner of the namespace (required)
+     * @param entityProject Project where the experiement will be assigned (required)
+     * @param entityId Unique integer identifier of the entity (required)
      * @param body  (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call greateExperimentCodeRefAsync(String owner, String project, String id, V1OwnedEntityIdRequest body, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call greateExperimentCodeRefAsync(String entityOwner, String entityProject, String entityId, V1CodeReferenceBodyRequest body, final ApiCallback<V1CodeReference> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1372,8 +1374,8 @@ public class ExperimentServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = greateExperimentCodeRefValidateBeforeCall(owner, project, id, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        com.squareup.okhttp.Call call = greateExperimentCodeRefValidateBeforeCall(entityOwner, entityProject, entityId, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1CodeReference>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

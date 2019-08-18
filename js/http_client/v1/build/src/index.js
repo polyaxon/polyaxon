@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/ProtobufAny', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1Dict', 'model/V1KV', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/BuildServiceApi'], factory);
+    define(['ApiClient', 'model/ProtobufAny', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1Dict', 'model/V1KV', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/BuildServiceApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/ProtobufAny'), require('./model/V1Build'), require('./model/V1BuildBodyRequest'), require('./model/V1BuildStatus'), require('./model/V1Dict'), require('./model/V1KV'), require('./model/V1ListBuildStatusesResponse'), require('./model/V1ListBuildsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/BuildServiceApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/ProtobufAny'), require('./model/V1Build'), require('./model/V1BuildBodyRequest'), require('./model/V1BuildStatus'), require('./model/V1CodeReference'), require('./model/V1CodeReferenceBodyRequest'), require('./model/V1Dict'), require('./model/V1KV'), require('./model/V1ListBuildStatusesResponse'), require('./model/V1ListBuildsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/BuildServiceApi'));
   }
-}(function(ApiClient, ProtobufAny, V1Build, V1BuildBodyRequest, V1BuildStatus, V1Dict, V1KV, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, BuildServiceApi) {
+}(function(ApiClient, ProtobufAny, V1Build, V1BuildBodyRequest, V1BuildStatus, V1CodeReference, V1CodeReferenceBodyRequest, V1Dict, V1KV, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, BuildServiceApi) {
   'use strict';
 
   /**
@@ -96,6 +96,16 @@
      * @property {module:model/V1BuildStatus}
      */
     V1BuildStatus: V1BuildStatus,
+    /**
+     * The V1CodeReference model constructor.
+     * @property {module:model/V1CodeReference}
+     */
+    V1CodeReference: V1CodeReference,
+    /**
+     * The V1CodeReferenceBodyRequest model constructor.
+     * @property {module:model/V1CodeReferenceBodyRequest}
+     */
+    V1CodeReferenceBodyRequest: V1CodeReferenceBodyRequest,
     /**
      * The V1Dict model constructor.
      * @property {module:model/V1Dict}

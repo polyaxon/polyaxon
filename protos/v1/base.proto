@@ -14,13 +14,13 @@ message Dict {
  }
 
 // Request data with owner namespace
-message OwnerBodyRequest{
+message OwnerBodyRequest {
     // Owner of the namespace
     string owner = 1;
 }
 
 // Request data with owner/project namespace
-message ProjectBodyRequest{
+message ProjectBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -28,14 +28,8 @@ message ProjectBodyRequest{
     string project = 2;
 }
 
-// Request data for a status
-message StatusResponse{
-    // The status of the entity
-    string status = 1;
-}
-
 // Request data to get/delete entity
-message OwnedEntityIdRequest{
+message OwnedEntityIdRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -44,4 +38,10 @@ message OwnedEntityIdRequest{
 
     // Unique integer identifier of the entity
     int64 id = 3;
+}
+
+// Request data for a status
+message StatusResponse {
+    // The status of the entity
+    string status = 1;
 }

@@ -113,7 +113,7 @@ class TestBuildServiceApi(unittest.TestCase):
     def test_greate_build_code_ref(self):
         """Test case for greate_build_code_ref
 
-        Get build code ref  # noqa: E501
+        Create build code ref  # noqa: E501
         """
         pass
 

@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**delete_experiments**](ExperimentServiceApi.md#delete_experiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete experiments
 [**get_experiment**](ExperimentServiceApi.md#get_experiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get experiment
 [**get_experiment_code_ref**](ExperimentServiceApi.md#get_experiment_code_ref) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-[**greate_experiment_code_ref**](ExperimentServiceApi.md#greate_experiment_code_ref) | **POST** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+[**greate_experiment_code_ref**](ExperimentServiceApi.md#greate_experiment_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
 [**list_archived_experiments**](ExperimentServiceApi.md#list_archived_experiments) | **GET** /v1/archives/{owner}/experiments | List archived experiments
 [**list_bookmarked_experiments**](ExperimentServiceApi.md#list_bookmarked_experiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked experiments
 [**list_experiment_statuses**](ExperimentServiceApi.md#list_experiment_statuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | List experiment statuses
@@ -381,7 +381,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_experiment_code_ref**
-> object get_experiment_code_ref(owner, project, id)
+> V1CodeReference get_experiment_code_ref(owner, project, id)
 
 Get experiment code ref
 
@@ -417,7 +417,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -431,7 +431,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **greate_experiment_code_ref**
-> object greate_experiment_code_ref(owner, project, id, body)
+> V1CodeReference greate_experiment_code_ref(entity_owner, entity_project, entity_id, body)
 
 Get experiment code ref
 
@@ -445,14 +445,14 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.ExperimentServiceApi()
-owner = 'owner_example' # str | Owner of the namespace
-project = 'project_example' # str | Project where the experiement will be assigned
-id = 'id_example' # str | Unique integer identifier of the entity
-body = swagger_client.V1OwnedEntityIdRequest() # V1OwnedEntityIdRequest | 
+entity_owner = 'entity_owner_example' # str | Owner of the namespace
+entity_project = 'entity_project_example' # str | Project where the experiement will be assigned
+entity_id = 'entity_id_example' # str | Unique integer identifier of the entity
+body = swagger_client.V1CodeReferenceBodyRequest() # V1CodeReferenceBodyRequest | 
 
 try:
     # Get experiment code ref
-    api_response = api_instance.greate_experiment_code_ref(owner, project, id, body)
+    api_response = api_instance.greate_experiment_code_ref(entity_owner, entity_project, entity_id, body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ExperimentServiceApi->greate_experiment_code_ref: %s\n" % e)
@@ -462,14 +462,14 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
- **project** | **str**| Project where the experiement will be assigned | 
- **id** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **entity_owner** | **str**| Owner of the namespace | 
+ **entity_project** | **str**| Project where the experiement will be assigned | 
+ **entity_id** | **str**| Unique integer identifier of the entity | 
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  | 
 
 ### Return type
 
-**object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 

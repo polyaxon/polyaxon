@@ -324,7 +324,7 @@ func (a *Client) GreateJobCodeRef(params *GreateJobCodeRefParams) (*GreateJobCod
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GreateJobCodeRef",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/coderef",
+		PathPattern:        "/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

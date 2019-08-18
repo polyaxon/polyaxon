@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package v1;
+
+import "v1/base.proto";
+
+
+// Code Reference specification
+message CodeReference {
+    // Unique integer identifier
+    int64 id = 1;
+
+    // UUID
+    string uuid = 2;
+
+    // Optional commit of the code ref
+    string commit = 3;
+
+    // Optional head of the code ref
+    string updated_at = 4;
+
+    // Optional branch of the code ref
+    string status = 5;
+
+    // Optional git url for this code ref
+    string git_url = 6;
+
+    // Optional whether this code ref is dirty
+    bool is_dirty = 7;
+}
+
+// Request data to create/update CodeReference
+message CodeReferenceBodyRequest {
+    // Owner of the code ref
+    OwnedEntityIdRequest entity = 1;
+
+    // Build object
+    CodeReference CodeReference = 2;
+}
+

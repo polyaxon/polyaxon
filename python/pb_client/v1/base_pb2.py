@@ -46,7 +46,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1a\n\x04\x44ict\x12\x12\n\x02kv\x18\x01 \x03(\x0b\x32\x06.v1.KV\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"B\n\x14OwnedEntityIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x03\x62\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1a\n\x04\x44ict\x12\x12\n\x02kv\x18\x01 \x03(\x0b\x32\x06.v1.KV\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"B\n\x14OwnedEntityIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x03\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -191,37 +191,6 @@ _PROJECTBODYREQUEST = _descriptor.Descriptor(
 )
 
 
-_STATUSRESPONSE = _descriptor.Descriptor(
-  name='StatusResponse',
-  full_name='v1.StatusResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='status', full_name='v1.StatusResponse.status', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=221,
-  serialized_end=253,
-)
-
-
 _OWNEDENTITYIDREQUEST = _descriptor.Descriptor(
   name='OwnedEntityIdRequest',
   full_name='v1.OwnedEntityIdRequest',
@@ -262,7 +231,38 @@ _OWNEDENTITYIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=255,
+  serialized_start=221,
+  serialized_end=287,
+)
+
+
+_STATUSRESPONSE = _descriptor.Descriptor(
+  name='StatusResponse',
+  full_name='v1.StatusResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='status', full_name='v1.StatusResponse.status', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=289,
   serialized_end=321,
 )
 
@@ -272,8 +272,8 @@ DESCRIPTOR.message_types_by_name['KV'] = _KV
 DESCRIPTOR.message_types_by_name['Dict'] = _DICT
 DESCRIPTOR.message_types_by_name['OwnerBodyRequest'] = _OWNERBODYREQUEST
 DESCRIPTOR.message_types_by_name['ProjectBodyRequest'] = _PROJECTBODYREQUEST
-DESCRIPTOR.message_types_by_name['StatusResponse'] = _STATUSRESPONSE
 DESCRIPTOR.message_types_by_name['OwnedEntityIdRequest'] = _OWNEDENTITYIDREQUEST
+DESCRIPTOR.message_types_by_name['StatusResponse'] = _STATUSRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 KV = _reflection.GeneratedProtocolMessageType('KV', (_message.Message,), {
@@ -304,19 +304,19 @@ ProjectBodyRequest = _reflection.GeneratedProtocolMessageType('ProjectBodyReques
   })
 _sym_db.RegisterMessage(ProjectBodyRequest)
 
-StatusResponse = _reflection.GeneratedProtocolMessageType('StatusResponse', (_message.Message,), {
-  'DESCRIPTOR' : _STATUSRESPONSE,
-  '__module__' : 'v1.base_pb2'
-  # @@protoc_insertion_point(class_scope:v1.StatusResponse)
-  })
-_sym_db.RegisterMessage(StatusResponse)
-
 OwnedEntityIdRequest = _reflection.GeneratedProtocolMessageType('OwnedEntityIdRequest', (_message.Message,), {
   'DESCRIPTOR' : _OWNEDENTITYIDREQUEST,
   '__module__' : 'v1.base_pb2'
   # @@protoc_insertion_point(class_scope:v1.OwnedEntityIdRequest)
   })
 _sym_db.RegisterMessage(OwnedEntityIdRequest)
+
+StatusResponse = _reflection.GeneratedProtocolMessageType('StatusResponse', (_message.Message,), {
+  'DESCRIPTOR' : _STATUSRESPONSE,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.StatusResponse)
+  })
+_sym_db.RegisterMessage(StatusResponse)
 
 
 # @@protoc_insertion_point(module_scope)

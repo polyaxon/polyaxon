@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteBuilds**](BuildServiceApi.md#deleteBuilds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
 [**getBuild**](BuildServiceApi.md#getBuild) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
 [**getBuildCodeRef**](BuildServiceApi.md#getBuildCodeRef) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-[**greateBuildCodeRef**](BuildServiceApi.md#greateBuildCodeRef) | **POST** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+[**greateBuildCodeRef**](BuildServiceApi.md#greateBuildCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
 [**listArchivedBuilds**](BuildServiceApi.md#listArchivedBuilds) | **GET** /v1/archives/{owner}/builds | List archived builds
 [**listBookmarkedBuilds**](BuildServiceApi.md#listBookmarkedBuilds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
 [**listBuildStatuses**](BuildServiceApi.md#listBuildStatuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
@@ -358,7 +358,7 @@ No authorization required
 
 <a name="getBuildCodeRef"></a>
 # **getBuildCodeRef**
-> Object getBuildCodeRef(owner, project, id)
+> V1CodeReference getBuildCodeRef(owner, project, id)
 
 Get build code ref
 
@@ -374,7 +374,7 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String id = "id_example"; // String | Unique integer identifier of the entity
 try {
-    Object result = apiInstance.getBuildCodeRef(owner, project, id);
+    V1CodeReference result = apiInstance.getBuildCodeRef(owner, project, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BuildServiceApi#getBuildCodeRef");
@@ -392,7 +392,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
@@ -405,9 +405,9 @@ No authorization required
 
 <a name="greateBuildCodeRef"></a>
 # **greateBuildCodeRef**
-> Object greateBuildCodeRef(owner, project, id, body)
+> V1CodeReference greateBuildCodeRef(entityOwner, entityProject, entityId, body)
 
-Get build code ref
+Create build code ref
 
 ### Example
 ```java
@@ -417,12 +417,12 @@ Get build code ref
 
 
 BuildServiceApi apiInstance = new BuildServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project where the experiement will be assigned
-String id = "id_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityIdRequest body = new V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+String entityOwner = "entityOwner_example"; // String | Owner of the namespace
+String entityProject = "entityProject_example"; // String | Project where the experiement will be assigned
+String entityId = "entityId_example"; // String | Unique integer identifier of the entity
+V1CodeReferenceBodyRequest body = new V1CodeReferenceBodyRequest(); // V1CodeReferenceBodyRequest | 
 try {
-    Object result = apiInstance.greateBuildCodeRef(owner, project, id, body);
+    V1CodeReference result = apiInstance.greateBuildCodeRef(entityOwner, entityProject, entityId, body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BuildServiceApi#greateBuildCodeRef");
@@ -434,14 +434,14 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project where the experiement will be assigned |
- **id** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  |
+ **entityOwner** | **String**| Owner of the namespace |
+ **entityProject** | **String**| Project where the experiement will be assigned |
+ **entityId** | **String**| Unique integer identifier of the entity |
+ **body** | [**V1CodeReferenceBodyRequest**](V1CodeReferenceBodyRequest.md)|  |
 
 ### Return type
 
-**Object**
+[**V1CodeReference**](V1CodeReference.md)
 
 ### Authorization
 
