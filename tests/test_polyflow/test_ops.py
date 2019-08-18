@@ -58,7 +58,6 @@ class TestOpConfigs(TestCase):
             'dependencies': ['foo', 'bar'],
             'params': {'param1': 'foo', 'param2': 'bar'},
             'trigger': 'all_succeeded',
-            'max_retries': 4,
         }
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -76,7 +75,6 @@ class TestOpConfigs(TestCase):
             'dependencies': [{'name': 'foo'}, {'name': 'bar'}],  # Wrong
             'params': {'param1': 'foo', 'param2': 'bar'},
             'trigger': 'all_succeeded',
-            'max_retries': 4,
         }
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)

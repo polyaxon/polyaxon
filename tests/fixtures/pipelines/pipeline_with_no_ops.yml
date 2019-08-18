@@ -25,4 +25,4 @@ templates:
       node_selector: {polyaxon: experiments}
       service_account: service
       image_pull_secrets: [secret1, secret2]
-      max_restarts: 2
+      backoff_limit: 2

@@ -64,8 +64,8 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
+                        'backoff_limit': 2
                     },
-                    'max_retries': 2
                 },
                 {
                     'template': {'url': 'https://url-to-temaplte.com'},
@@ -82,8 +82,8 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
+                        'backoff_limit': 2
                     },
-                    'max_retries': 2
                 },
                 {
                     'template': {'name': 'my-template'},
@@ -99,10 +99,9 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
+                        'backoff_limit': 5,
+                        'restart_policy': 'never'
                     },
-                    'max_retries': 5,
-                    'retry_delay': 12,
-                    'retry_exp_backoff': True,
                 },
                 {
                     'template': {'path': './relative/path/to/my-template.yaml'},
@@ -115,9 +114,8 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 3
+                        'backoff_limit': 3,
                     },
-                    'max_retries': 3
                 }
             ],
         }
@@ -163,7 +161,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
                 {
@@ -198,7 +196,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
                 {
@@ -220,7 +218,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
                 {
@@ -250,7 +248,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
             ],
@@ -1624,8 +1622,8 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
+                        'backoff_limit': 3,
                     },
-                    'max_retries': 2
                 },
                 {
                     'template': {'name': 'experiment-template'},
@@ -1643,8 +1641,8 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
+                        'backoff_limit': 3,
                     },
-                    'max_retries': 2
                 },
                 {
                     'template': {'name': 'group-template'},
@@ -1660,10 +1658,8 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
+                        'backoff_limit': 5,
                     },
-                    'max_retries': 5,
-                    'retry_delay': 12,
-                    'retry_exp_backoff': True,
                 },
             ],
             'templates': [
@@ -1699,7 +1695,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
                 {
@@ -1734,7 +1730,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
                 {
@@ -1756,7 +1752,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
                 {
@@ -1786,7 +1782,7 @@ class TestPipelineConfigs(TestCase):
                         'node_selector': {'polyaxon': 'core'},
                         'service_account': 'service',
                         'image_pull_secrets': ['secret1', 'secret2'],
-                        'max_restarts': 2
+                        'backoff_limit': 2
                     },
                 },
             ],

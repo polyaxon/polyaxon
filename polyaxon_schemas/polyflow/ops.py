@@ -27,10 +27,6 @@ class OpSchema(BaseSchema):
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
     conditions = fields.Nested(ConditionSchema, allow_none=True)
-    max_retries = fields.Int(allow_none=True)
-    retry_delay = fields.Int(allow_none=True)
-    retry_exp_backoff = fields.Bool(allow_none=True)
-    max_retry_delay = fields.Int(allow_none=True)
     skip_on_upstream_skip = fields.Bool(allow_none=True)
 
     @staticmethod
@@ -56,10 +52,6 @@ class OpConfig(BaseConfig):
         'dependencies',
         'trigger',
         'conditions',
-        'max_retries',
-        'retry_delay',
-        'retry_exp_backoff',
-        'max_retry_delay',
         'skip_on_upstream_skip',
     ]
 
@@ -78,10 +70,6 @@ class OpConfig(BaseConfig):
                  dependencies=None,
                  trigger=None,
                  conditions=None,
-                 max_retries=None,
-                 retry_delay=None,
-                 retry_exp_backoff=None,
-                 max_retry_delay=None,
                  skip_on_upstream_skip=None):
         self.version = version
         self.kind = kind
@@ -97,8 +85,4 @@ class OpConfig(BaseConfig):
         self.dependencies = dependencies
         self.trigger = trigger
         self.conditions = conditions
-        self.max_retries = max_retries
-        self.retry_delay = retry_delay
-        self.retry_exp_backoff = retry_exp_backoff
-        self.max_retry_delay = max_retry_delay
         self.skip_on_upstream_skip = skip_on_upstream_skip

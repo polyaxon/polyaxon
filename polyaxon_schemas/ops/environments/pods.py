@@ -84,7 +84,10 @@ class EnvironmentSchema(BaseSchema):
     tolerations = fields.List(fields.Dict(), allow_none=True)
     service_account = fields.Str(allow_none=True)
     image_pull_secrets = fields.List(fields.Str(), allow_none=True)
-    max_restarts = fields.Int(allow_none=True)
+    max_restarts = fields.Int(allow_none=True)  # Deprecated
+    backoff_limit = fields.Int(allow_none=True)
+    restart_policy = fields.Str(allow_none=True)
+    ttl = fields.Int(allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
     secret_refs = fields.List(fields.Str(), allow_none=True)
@@ -139,7 +142,9 @@ class EnvironmentConfig(BaseConfig):
                           'tolerations',
                           'service_account',
                           'image_pull_secrets',
-                          'max_restarts',
+                          'backoff_limit',
+                          'restart_policy',
+                          'ttl',
                           'env_vars',
                           'secret_refs',
                           'config_map_refs',
@@ -159,6 +164,9 @@ class EnvironmentConfig(BaseConfig):
                  service_account=None,
                  image_pull_secrets=None,
                  max_restarts=None,
+                 backoff_limit=None,
+                 restart_policy=None,
+                 ttl=None,
                  env_vars=None,
                  secret_refs=None,
                  config_map_refs=None,
@@ -169,6 +177,10 @@ class EnvironmentConfig(BaseConfig):
                  outputs=None,
                  security_context=None,
                  ):
+        if max_restarts:
+            warnings.warn(
+                'The `max_restarts` is deprecated and has no effect, please use `backoff_limit`.',
+                DeprecationWarning)
         self.index = index
         self.resources = validate_resources({'resources': resources}).get('resources')
         self.labels = labels
@@ -178,7 +190,9 @@ class EnvironmentConfig(BaseConfig):
         self.tolerations = tolerations
         self.service_account = service_account
         self.image_pull_secrets = image_pull_secrets
-        self.max_restarts = max_restarts
+        self.backoff_limit = backoff_limit
+        self.restart_policy = restart_policy
+        self.ttl = ttl
         self.env_vars = env_vars
         self.secret_refs = secret_refs
         self.config_map_refs = validate_configmap_refs({

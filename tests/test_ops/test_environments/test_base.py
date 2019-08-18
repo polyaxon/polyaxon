@@ -97,7 +97,17 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add max_restarts
-        config_dict['max_restarts'] = 4
+        config_dict['backoff_limit'] = 4
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add restart_policy
+        config_dict['restart_policy'] = 'never'
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add ttl
+        config_dict['ttl'] = 40
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
