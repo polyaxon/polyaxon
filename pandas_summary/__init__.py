@@ -1,11 +1,11 @@
 from __future__ import division
-from six import string_types
 
 from collections import OrderedDict
 
 import numpy as np
 import pandas as pd
 from pandas.api import types
+from six import string_types
 
 
 class DataFrameSummary(object):
@@ -88,7 +88,7 @@ class DataFrameSummary(object):
         stats['types'] = ''
         columns_info = self._get_columns_info(stats)
         for ctype, columns in columns_info.items():
-            stats.ix[columns, 'types'] = ctype
+            stats.loc[columns, 'types'] = ctype
         return stats.transpose()[self.df.columns]
 
     def _get_uniques(self):
@@ -196,7 +196,7 @@ class DataFrameSummary(object):
         stats['deviating_of_median_perc'] = deviating_of_median_perc
         stats['top_correlations'] = self._get_top_correlations(column)
         return pd.concat([pd.Series(stats, name=column),
-                          self.columns_stats.ix[:, column]],
+                          self.columns_stats[column]],
                          sort=True)
 
     def _get_date_summary(self, column):
@@ -204,7 +204,7 @@ class DataFrameSummary(object):
         stats = {'min': series.min(), 'max': series.max()}
         stats['range'] = stats['max'] - stats['min']
         return pd.concat([pd.Series(stats, name=column),
-                          self.columns_stats.ix[:, column]],
+                          self.columns_stats[column]],
                          sort=True)
 
     def _get_categorical_summary(self, column):
@@ -215,7 +215,7 @@ class DataFrameSummary(object):
             'top': '{}: {}'.format(value_counts.index[0], value_counts.iloc[0]),
         }
         return pd.concat([pd.Series(stats, name=column),
-                          self.columns_stats.ix[:, column]],
+                          self.columns_stats[column]],
                          sort=True)
 
     def _get_constant_summary(self, column):
@@ -231,11 +231,11 @@ class DataFrameSummary(object):
                 self._percent(class_value / self.length))
 
         return pd.concat([pd.Series(stats, name=column),
-                          self.columns_stats.ix[:, column]],
+                          self.columns_stats[column]],
                          sort=True)
 
     def _get_unique_summary(self, column):
-        return self.columns_stats.ix[:, column]
+        return self.columns_stats[column]
 
     def _get_column_summary(self, column):
         column_type = self.columns_stats.loc['types'][column]
