@@ -60,31 +60,21 @@ compile-python:
 
 generate-go-swagger:
 	# Compile the *.swagger.json into go REST clients, see https://github.com/go-swagger/go-swagger
-	$(SWAGGER) generate client -f swagger/$(VERSION)/experiment.swagger.json -A experiment --principal models.Principal -c experiment_client -m experiment_model -t go/$(HTTP_CLIENT)/$(VERSION)
-	$(SWAGGER) generate client -f swagger/$(VERSION)/job.swagger.json -A job --principal models.Principal -c job_client -m job_model -t go/$(HTTP_CLIENT)/$(VERSION)
-	$(SWAGGER) generate client -f swagger/$(VERSION)/build.swagger.json -A build --principal models.Principal -c build_client -m build_model -t go/$(HTTP_CLIENT)/$(VERSION)
+	$(SWAGGER) generate client -f swagger/$(VERSION)/polyaxon_sdk.swagger.json -A polyaxon-sdk --principal models.Principal -c service_client -m service_model -t go/$(HTTP_CLIENT)/$(VERSION)
 	# Executes the //go:generate directives in the generated code.
 	go generate ./...
 
 generate-js-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/experiment.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION)/experiment -c swagger/config.json
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/job.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION)/job -c swagger/config.json
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/build.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION)/build -c swagger/config.json
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
 
 generate-ts-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/experiment.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION)/experiment -c swagger/config.json
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/job.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION)/job -c swagger/config.json
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/build.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION)/build -c swagger/config.json
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l typescript-fetch -o ts/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
 
 generate-java-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/experiment.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION)/experiment -c swagger/config.json -D hideGenerationTimestamp=true
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/job.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION)/job -c swagger/config.json -D hideGenerationTimestamp=true
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/build.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION)/build -c swagger/config.json -D hideGenerationTimestamp=true
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l java -o java/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json -D hideGenerationTimestamp=true
 
 generate-py-swagger:
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/experiment.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION)/experiment -c swagger/config.json
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/job.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION)/job -c swagger/config.json
-	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/build.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION)/build -c swagger/config.json
+	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l python -o python/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
 
 auto-license:
 	# Add licenses to the generated files.

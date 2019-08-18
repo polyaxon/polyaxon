@@ -1,3 +1,6 @@
 {
-  "modelPropertyNaming" : "original"
+  "modelPropertyNaming" : "original",
+  "packageName" : "polyaxon_sdk",
+  "projectName" : "polyaxon-sdk",
+  "packageVersion": "1"
 }
