@@ -63,6 +63,7 @@ base64.b64encode('_json_key:{"type": "service_account", "project_id": "my_projec
     }
 }
 ```
+You may need to update `gcr.io`key to your repository hosts `us.gcr.io`, `eu.gcr.io`, or `asia.gcr.io` if you are using not default one.
 
 ## Create a secret with config.json as a name
 
@@ -70,9 +71,12 @@ base64.b64encode('_json_key:{"type": "service_account", "project_id": "my_projec
 kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
 ```
 
+## Create a k8s_secrets in Stores
+In order to use secret that you created before, in Polyaxon's Stores > Secrets, create a new secret entry, and set name and K8S Ref to "docker-conf".
+
 ## Create a docker registry access in the UI
 
-In Polyaxon's stores, add a new entry and link to this secret, and set the host to `gcr.io/my-project`, `us.gcr.io/my-project`, `eu.gcr.io/my-project`, or `asia.gcr.io/my-project`.
+In Polyaxon's stores, add a new entry and link to secret that you created at previous step, and set the host to `gcr.io/my-project`, `us.gcr.io/my-project`, `eu.gcr.io/my-project`, or `asia.gcr.io/my-project`.
 
 ![access](../../content/images/integrations/docker-access.png)
 
