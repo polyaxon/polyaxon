@@ -42,6 +42,12 @@ func (o *StopBuildsReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewStopBuildsForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewStopBuildsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *StopBuildsOK) GetPayload() interface{} {
 }
 
 func (o *StopBuildsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewStopBuildsForbidden creates a StopBuildsForbidden with default headers values
+func NewStopBuildsForbidden() *StopBuildsForbidden {
+	return &StopBuildsForbidden{}
+}
+
+/*StopBuildsForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type StopBuildsForbidden struct {
+	Payload interface{}
+}
+
+func (o *StopBuildsForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/stop][%d] stopBuildsForbidden  %+v", 403, o.Payload)
+}
+
+func (o *StopBuildsForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *StopBuildsForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

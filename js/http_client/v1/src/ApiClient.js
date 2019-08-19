@@ -70,6 +70,7 @@
      * @type {Array.<String>}
      */
     this.authentications = {
+      'ApiKey': {type: 'apiKey', 'in': 'header', name: 'Authorization'}
     };
     /**
      * The default HTTP headers to be included for all API calls.

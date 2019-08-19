@@ -42,6 +42,12 @@ func (o *DeleteJobReader) ReadResponse(response runtime.ClientResponse, consumer
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewDeleteJobForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewDeleteJobNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *DeleteJobOK) GetPayload() interface{} {
 }
 
 func (o *DeleteJobOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteJobForbidden creates a DeleteJobForbidden with default headers values
+func NewDeleteJobForbidden() *DeleteJobForbidden {
+	return &DeleteJobForbidden{}
+}
+
+/*DeleteJobForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type DeleteJobForbidden struct {
+	Payload interface{}
+}
+
+func (o *DeleteJobForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/jobs/{id}][%d] deleteJobForbidden  %+v", 403, o.Payload)
+}
+
+func (o *DeleteJobForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteJobForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

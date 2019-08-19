@@ -10,7 +10,10 @@
     }
   },
   "schemes": [
-    "http"
+    "http",
+    "https",
+    "ws",
+    "wss"
   ],
   "consumes": [
     "application/json"
@@ -29,6 +32,10 @@
             "schema": {
               "$ref": "#/definitions/v1ListBuildsResponse"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -62,6 +69,10 @@
               "$ref": "#/definitions/v1ListExperimentsResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -93,6 +104,10 @@
             "schema": {
               "$ref": "#/definitions/v1ListJobsResponse"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -126,6 +141,10 @@
               "$ref": "#/definitions/v1ListBuildsResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -157,6 +176,10 @@
             "schema": {
               "$ref": "#/definitions/v1ListExperimentsResponse"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -190,6 +213,10 @@
               "$ref": "#/definitions/v1ListJobsResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -221,6 +248,10 @@
             "schema": {
               "$ref": "#/definitions/v1CodeReference"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -277,6 +308,10 @@
               "$ref": "#/definitions/v1CodeReference"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -331,6 +366,10 @@
             "schema": {
               "$ref": "#/definitions/v1CodeReference"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -387,6 +426,10 @@
               "$ref": "#/definitions/v1ListBuildsResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -423,6 +466,10 @@
             "schema": {
               "$ref": "#/definitions/v1Build"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -471,6 +518,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -518,6 +569,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -564,6 +619,10 @@
             "schema": {
               "$ref": "#/definitions/v1Build"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -620,6 +679,10 @@
               "$ref": "#/definitions/v1Build"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -664,6 +727,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -712,6 +779,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -758,6 +829,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -806,6 +881,10 @@
               "$ref": "#/definitions/v1CodeReference"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -852,6 +931,10 @@
             "schema": {
               "$ref": "#/definitions/v1Build"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -908,6 +991,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -955,6 +1042,10 @@
               "$ref": "#/definitions/v1ListBuildStatusesResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -999,6 +1090,10 @@
             "schema": {
               "$ref": "#/definitions/v1BuildStatus"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1055,6 +1150,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1110,6 +1209,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1157,6 +1260,10 @@
               "$ref": "#/definitions/v1ListExperimentsResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1193,6 +1300,10 @@
             "schema": {
               "$ref": "#/definitions/v1Experiment"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1241,6 +1352,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1288,6 +1403,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1334,6 +1453,10 @@
             "schema": {
               "$ref": "#/definitions/v1Experiment"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1390,6 +1513,10 @@
               "$ref": "#/definitions/v1Experiment"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1434,6 +1561,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1482,6 +1613,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1528,6 +1663,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1576,6 +1715,10 @@
               "$ref": "#/definitions/v1CodeReference"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1622,6 +1765,10 @@
             "schema": {
               "$ref": "#/definitions/v1Experiment"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1678,6 +1825,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1724,6 +1875,10 @@
             "schema": {
               "$ref": "#/definitions/v1Experiment"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1780,6 +1935,10 @@
               "$ref": "#/definitions/v1ListExperimentStatusesResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1824,6 +1983,10 @@
             "schema": {
               "$ref": "#/definitions/v1ExperimentStatus"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1880,6 +2043,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -1934,6 +2101,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -1990,6 +2161,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2036,6 +2211,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2084,6 +2263,10 @@
               "$ref": "#/definitions/v1ListJobsResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2120,6 +2303,10 @@
             "schema": {
               "$ref": "#/definitions/v1Job"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2168,6 +2355,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2214,6 +2405,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2262,6 +2457,10 @@
               "$ref": "#/definitions/v1Job"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2306,6 +2505,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2354,6 +2557,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2400,6 +2607,10 @@
             "schema": {
               "properties": {}
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2448,6 +2659,10 @@
               "$ref": "#/definitions/v1CodeReference"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2494,6 +2709,10 @@
             "schema": {
               "$ref": "#/definitions/v1Job"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2550,6 +2769,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2596,6 +2819,10 @@
             "schema": {
               "$ref": "#/definitions/v1Job"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2652,6 +2879,10 @@
               "$ref": "#/definitions/v1ListJobStatusesResponse"
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2696,6 +2927,10 @@
             "schema": {
               "$ref": "#/definitions/v1JobStatus"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -2752,6 +2987,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2807,6 +3046,10 @@
               "properties": {}
             }
           },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
           "404": {
             "description": "Resource does not exist.",
             "schema": {
@@ -2853,6 +3096,10 @@
             "schema": {
               "$ref": "#/definitions/v1Job"
             }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
           },
           "404": {
             "description": "Resource does not exist.",
@@ -3724,5 +3971,17 @@
       },
       "title": "Request data for a status"
     }
-  }
+  },
+  "securityDefinitions": {
+    "ApiKey": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "ApiKey": []
+    }
+  ]
 }

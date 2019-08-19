@@ -42,6 +42,12 @@ func (o *ArchiveExperimentReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewArchiveExperimentForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewArchiveExperimentNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *ArchiveExperimentOK) GetPayload() interface{} {
 }
 
 func (o *ArchiveExperimentOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewArchiveExperimentForbidden creates a ArchiveExperimentForbidden with default headers values
+func NewArchiveExperimentForbidden() *ArchiveExperimentForbidden {
+	return &ArchiveExperimentForbidden{}
+}
+
+/*ArchiveExperimentForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type ArchiveExperimentForbidden struct {
+	Payload interface{}
+}
+
+func (o *ArchiveExperimentForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/archive][%d] archiveExperimentForbidden  %+v", 403, o.Payload)
+}
+
+func (o *ArchiveExperimentForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ArchiveExperimentForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

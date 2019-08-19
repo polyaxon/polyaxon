@@ -44,6 +44,12 @@ func (o *UpdateJob2Reader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewUpdateJob2Forbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewUpdateJob2NotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *UpdateJob2OK) readResponse(response runtime.ClientResponse, consumer ru
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewUpdateJob2Forbidden creates a UpdateJob2Forbidden with default headers values
+func NewUpdateJob2Forbidden() *UpdateJob2Forbidden {
+	return &UpdateJob2Forbidden{}
+}
+
+/*UpdateJob2Forbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type UpdateJob2Forbidden struct {
+	Payload interface{}
+}
+
+func (o *UpdateJob2Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2Forbidden  %+v", 403, o.Payload)
+}
+
+func (o *UpdateJob2Forbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateJob2Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

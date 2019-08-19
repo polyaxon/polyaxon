@@ -43,7 +43,7 @@ type Client struct {
 /*
 ArchiveExperiment restores build
 */
-func (a *Client) ArchiveExperiment(params *ArchiveExperimentParams) (*ArchiveExperimentOK, error) {
+func (a *Client) ArchiveExperiment(params *ArchiveExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveExperimentParams()
@@ -55,9 +55,10 @@ func (a *Client) ArchiveExperiment(params *ArchiveExperimentParams) (*ArchiveExp
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ArchiveExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -77,7 +78,7 @@ func (a *Client) ArchiveExperiment(params *ArchiveExperimentParams) (*ArchiveExp
 /*
 BookmarkExperiment uns bookmark build
 */
-func (a *Client) BookmarkExperiment(params *BookmarkExperimentParams) (*BookmarkExperimentOK, error) {
+func (a *Client) BookmarkExperiment(params *BookmarkExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkExperimentParams()
@@ -89,9 +90,10 @@ func (a *Client) BookmarkExperiment(params *BookmarkExperimentParams) (*Bookmark
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &BookmarkExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -111,7 +113,7 @@ func (a *Client) BookmarkExperiment(params *BookmarkExperimentParams) (*Bookmark
 /*
 CreateExperiment creates new build
 */
-func (a *Client) CreateExperiment(params *CreateExperimentParams) (*CreateExperimentOK, error) {
+func (a *Client) CreateExperiment(params *CreateExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*CreateExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateExperimentParams()
@@ -123,9 +125,10 @@ func (a *Client) CreateExperiment(params *CreateExperimentParams) (*CreateExperi
 		PathPattern:        "/api/v1/{owner}/{project}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -145,7 +148,7 @@ func (a *Client) CreateExperiment(params *CreateExperimentParams) (*CreateExperi
 /*
 CreateExperimentCodeRef gets experiment code ref
 */
-func (a *Client) CreateExperimentCodeRef(params *CreateExperimentCodeRefParams) (*CreateExperimentCodeRefOK, error) {
+func (a *Client) CreateExperimentCodeRef(params *CreateExperimentCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*CreateExperimentCodeRefOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateExperimentCodeRefParams()
@@ -157,9 +160,10 @@ func (a *Client) CreateExperimentCodeRef(params *CreateExperimentCodeRefParams) 
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateExperimentCodeRefReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -179,7 +183,7 @@ func (a *Client) CreateExperimentCodeRef(params *CreateExperimentCodeRefParams) 
 /*
 CreateExperimentStatus gets job code ref
 */
-func (a *Client) CreateExperimentStatus(params *CreateExperimentStatusParams) (*CreateExperimentStatusOK, error) {
+func (a *Client) CreateExperimentStatus(params *CreateExperimentStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateExperimentStatusOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateExperimentStatusParams()
@@ -191,9 +195,10 @@ func (a *Client) CreateExperimentStatus(params *CreateExperimentStatusParams) (*
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateExperimentStatusReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -213,7 +218,7 @@ func (a *Client) CreateExperimentStatus(params *CreateExperimentStatusParams) (*
 /*
 DeleteExperiment deletes build
 */
-func (a *Client) DeleteExperiment(params *DeleteExperimentParams) (*DeleteExperimentOK, error) {
+func (a *Client) DeleteExperiment(params *DeleteExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteExperimentParams()
@@ -225,9 +230,10 @@ func (a *Client) DeleteExperiment(params *DeleteExperimentParams) (*DeleteExperi
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &DeleteExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -247,7 +253,7 @@ func (a *Client) DeleteExperiment(params *DeleteExperimentParams) (*DeleteExperi
 /*
 DeleteExperiments deletes builds
 */
-func (a *Client) DeleteExperiments(params *DeleteExperimentsParams) (*DeleteExperimentsOK, error) {
+func (a *Client) DeleteExperiments(params *DeleteExperimentsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteExperimentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteExperimentsParams()
@@ -259,9 +265,10 @@ func (a *Client) DeleteExperiments(params *DeleteExperimentsParams) (*DeleteExpe
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &DeleteExperimentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -281,7 +288,7 @@ func (a *Client) DeleteExperiments(params *DeleteExperimentsParams) (*DeleteExpe
 /*
 GetExperiment gets build
 */
-func (a *Client) GetExperiment(params *GetExperimentParams) (*GetExperimentOK, error) {
+func (a *Client) GetExperiment(params *GetExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*GetExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetExperimentParams()
@@ -293,9 +300,10 @@ func (a *Client) GetExperiment(params *GetExperimentParams) (*GetExperimentOK, e
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &GetExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -315,7 +323,7 @@ func (a *Client) GetExperiment(params *GetExperimentParams) (*GetExperimentOK, e
 /*
 GetExperimentCodeRef gets experiment code ref
 */
-func (a *Client) GetExperimentCodeRef(params *GetExperimentCodeRefParams) (*GetExperimentCodeRefOK, error) {
+func (a *Client) GetExperimentCodeRef(params *GetExperimentCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*GetExperimentCodeRefOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetExperimentCodeRefParams()
@@ -327,9 +335,10 @@ func (a *Client) GetExperimentCodeRef(params *GetExperimentCodeRefParams) (*GetE
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &GetExperimentCodeRefReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -349,7 +358,7 @@ func (a *Client) GetExperimentCodeRef(params *GetExperimentCodeRefParams) (*GetE
 /*
 ListArchivedExperiments lists archived builds
 */
-func (a *Client) ListArchivedExperiments(params *ListArchivedExperimentsParams) (*ListArchivedExperimentsOK, error) {
+func (a *Client) ListArchivedExperiments(params *ListArchivedExperimentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedExperimentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArchivedExperimentsParams()
@@ -361,9 +370,10 @@ func (a *Client) ListArchivedExperiments(params *ListArchivedExperimentsParams) 
 		PathPattern:        "/api/v1/archives/{owner}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListArchivedExperimentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -383,7 +393,7 @@ func (a *Client) ListArchivedExperiments(params *ListArchivedExperimentsParams) 
 /*
 ListBookmarkedExperiments lists bookmarked builds
 */
-func (a *Client) ListBookmarkedExperiments(params *ListBookmarkedExperimentsParams) (*ListBookmarkedExperimentsOK, error) {
+func (a *Client) ListBookmarkedExperiments(params *ListBookmarkedExperimentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedExperimentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBookmarkedExperimentsParams()
@@ -395,9 +405,10 @@ func (a *Client) ListBookmarkedExperiments(params *ListBookmarkedExperimentsPara
 		PathPattern:        "/api/v1/bookmarks/{owner}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListBookmarkedExperimentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -417,7 +428,7 @@ func (a *Client) ListBookmarkedExperiments(params *ListBookmarkedExperimentsPara
 /*
 ListExperimentStatuses creates build code ref
 */
-func (a *Client) ListExperimentStatuses(params *ListExperimentStatusesParams) (*ListExperimentStatusesOK, error) {
+func (a *Client) ListExperimentStatuses(params *ListExperimentStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*ListExperimentStatusesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListExperimentStatusesParams()
@@ -429,9 +440,10 @@ func (a *Client) ListExperimentStatuses(params *ListExperimentStatusesParams) (*
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListExperimentStatusesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -451,7 +463,7 @@ func (a *Client) ListExperimentStatuses(params *ListExperimentStatusesParams) (*
 /*
 ListExperiments lists builds
 */
-func (a *Client) ListExperiments(params *ListExperimentsParams) (*ListExperimentsOK, error) {
+func (a *Client) ListExperiments(params *ListExperimentsParams, authInfo runtime.ClientAuthInfoWriter) (*ListExperimentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListExperimentsParams()
@@ -463,9 +475,10 @@ func (a *Client) ListExperiments(params *ListExperimentsParams) (*ListExperiment
 		PathPattern:        "/api/v1/{owner}/{project}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListExperimentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -485,7 +498,7 @@ func (a *Client) ListExperiments(params *ListExperimentsParams) (*ListExperiment
 /*
 RestartExperiment restarts build
 */
-func (a *Client) RestartExperiment(params *RestartExperimentParams) (*RestartExperimentOK, error) {
+func (a *Client) RestartExperiment(params *RestartExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*RestartExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestartExperimentParams()
@@ -497,9 +510,10 @@ func (a *Client) RestartExperiment(params *RestartExperimentParams) (*RestartExp
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &RestartExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -519,7 +533,7 @@ func (a *Client) RestartExperiment(params *RestartExperimentParams) (*RestartExp
 /*
 RestoreExperiment bookmarks build
 */
-func (a *Client) RestoreExperiment(params *RestoreExperimentParams) (*RestoreExperimentOK, error) {
+func (a *Client) RestoreExperiment(params *RestoreExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreExperimentParams()
@@ -531,9 +545,10 @@ func (a *Client) RestoreExperiment(params *RestoreExperimentParams) (*RestoreExp
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &RestoreExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -553,7 +568,7 @@ func (a *Client) RestoreExperiment(params *RestoreExperimentParams) (*RestoreExp
 /*
 ResumeExperiment archives build
 */
-func (a *Client) ResumeExperiment(params *ResumeExperimentParams) (*ResumeExperimentOK, error) {
+func (a *Client) ResumeExperiment(params *ResumeExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewResumeExperimentParams()
@@ -565,9 +580,10 @@ func (a *Client) ResumeExperiment(params *ResumeExperimentParams) (*ResumeExperi
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ResumeExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -587,7 +603,7 @@ func (a *Client) ResumeExperiment(params *ResumeExperimentParams) (*ResumeExperi
 /*
 StartExperimentTensorboard lists build statuses
 */
-func (a *Client) StartExperimentTensorboard(params *StartExperimentTensorboardParams) (*StartExperimentTensorboardOK, error) {
+func (a *Client) StartExperimentTensorboard(params *StartExperimentTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StartExperimentTensorboardOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStartExperimentTensorboardParams()
@@ -599,9 +615,10 @@ func (a *Client) StartExperimentTensorboard(params *StartExperimentTensorboardPa
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StartExperimentTensorboardReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -621,7 +638,7 @@ func (a *Client) StartExperimentTensorboard(params *StartExperimentTensorboardPa
 /*
 StopExperiment stops build
 */
-func (a *Client) StopExperiment(params *StopExperimentParams) (*StopExperimentOK, error) {
+func (a *Client) StopExperiment(params *StopExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*StopExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopExperimentParams()
@@ -633,9 +650,10 @@ func (a *Client) StopExperiment(params *StopExperimentParams) (*StopExperimentOK
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -655,7 +673,7 @@ func (a *Client) StopExperiment(params *StopExperimentParams) (*StopExperimentOK
 /*
 StopExperimentTensorboard creates new build status
 */
-func (a *Client) StopExperimentTensorboard(params *StopExperimentTensorboardParams) (*StopExperimentTensorboardOK, error) {
+func (a *Client) StopExperimentTensorboard(params *StopExperimentTensorboardParams, authInfo runtime.ClientAuthInfoWriter) (*StopExperimentTensorboardOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopExperimentTensorboardParams()
@@ -667,9 +685,10 @@ func (a *Client) StopExperimentTensorboard(params *StopExperimentTensorboardPara
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopExperimentTensorboardReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -689,7 +708,7 @@ func (a *Client) StopExperimentTensorboard(params *StopExperimentTensorboardPara
 /*
 StopExperiments stops builds
 */
-func (a *Client) StopExperiments(params *StopExperimentsParams) (*StopExperimentsOK, error) {
+func (a *Client) StopExperiments(params *StopExperimentsParams, authInfo runtime.ClientAuthInfoWriter) (*StopExperimentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopExperimentsParams()
@@ -701,9 +720,10 @@ func (a *Client) StopExperiments(params *StopExperimentsParams) (*StopExperiment
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopExperimentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -723,7 +743,7 @@ func (a *Client) StopExperiments(params *StopExperimentsParams) (*StopExperiment
 /*
 UnBookmarkExperiment gets build status
 */
-func (a *Client) UnBookmarkExperiment(params *UnBookmarkExperimentParams) (*UnBookmarkExperimentOK, error) {
+func (a *Client) UnBookmarkExperiment(params *UnBookmarkExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*UnBookmarkExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnBookmarkExperimentParams()
@@ -735,9 +755,10 @@ func (a *Client) UnBookmarkExperiment(params *UnBookmarkExperimentParams) (*UnBo
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &UnBookmarkExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -757,7 +778,7 @@ func (a *Client) UnBookmarkExperiment(params *UnBookmarkExperimentParams) (*UnBo
 /*
 UpdateExperiment2 updates build
 */
-func (a *Client) UpdateExperiment2(params *UpdateExperiment2Params) (*UpdateExperiment2OK, error) {
+func (a *Client) UpdateExperiment2(params *UpdateExperiment2Params, authInfo runtime.ClientAuthInfoWriter) (*UpdateExperiment2OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateExperiment2Params()
@@ -769,9 +790,10 @@ func (a *Client) UpdateExperiment2(params *UpdateExperiment2Params) (*UpdateExpe
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{experiment.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &UpdateExperiment2Reader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

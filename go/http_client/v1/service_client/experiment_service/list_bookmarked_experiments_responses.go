@@ -44,6 +44,12 @@ func (o *ListBookmarkedExperimentsReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewListBookmarkedExperimentsForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewListBookmarkedExperimentsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *ListBookmarkedExperimentsOK) readResponse(response runtime.ClientRespon
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewListBookmarkedExperimentsForbidden creates a ListBookmarkedExperimentsForbidden with default headers values
+func NewListBookmarkedExperimentsForbidden() *ListBookmarkedExperimentsForbidden {
+	return &ListBookmarkedExperimentsForbidden{}
+}
+
+/*ListBookmarkedExperimentsForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type ListBookmarkedExperimentsForbidden struct {
+	Payload interface{}
+}
+
+func (o *ListBookmarkedExperimentsForbidden) Error() string {
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{owner}/experiments][%d] listBookmarkedExperimentsForbidden  %+v", 403, o.Payload)
+}
+
+func (o *ListBookmarkedExperimentsForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListBookmarkedExperimentsForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

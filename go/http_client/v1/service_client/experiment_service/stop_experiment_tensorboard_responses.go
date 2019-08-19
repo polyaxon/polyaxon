@@ -42,6 +42,12 @@ func (o *StopExperimentTensorboardReader) ReadResponse(response runtime.ClientRe
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewStopExperimentTensorboardForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewStopExperimentTensorboardNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *StopExperimentTensorboardOK) GetPayload() interface{} {
 }
 
 func (o *StopExperimentTensorboardOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewStopExperimentTensorboardForbidden creates a StopExperimentTensorboardForbidden with default headers values
+func NewStopExperimentTensorboardForbidden() *StopExperimentTensorboardForbidden {
+	return &StopExperimentTensorboardForbidden{}
+}
+
+/*StopExperimentTensorboardForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type StopExperimentTensorboardForbidden struct {
+	Payload interface{}
+}
+
+func (o *StopExperimentTensorboardForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop][%d] stopExperimentTensorboardForbidden  %+v", 403, o.Payload)
+}
+
+func (o *StopExperimentTensorboardForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *StopExperimentTensorboardForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

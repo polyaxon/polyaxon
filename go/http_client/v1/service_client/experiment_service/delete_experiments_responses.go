@@ -42,6 +42,12 @@ func (o *DeleteExperimentsReader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewDeleteExperimentsForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewDeleteExperimentsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *DeleteExperimentsOK) GetPayload() interface{} {
 }
 
 func (o *DeleteExperimentsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteExperimentsForbidden creates a DeleteExperimentsForbidden with default headers values
+func NewDeleteExperimentsForbidden() *DeleteExperimentsForbidden {
+	return &DeleteExperimentsForbidden{}
+}
+
+/*DeleteExperimentsForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type DeleteExperimentsForbidden struct {
+	Payload interface{}
+}
+
+func (o *DeleteExperimentsForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/delete][%d] deleteExperimentsForbidden  %+v", 403, o.Payload)
+}
+
+func (o *DeleteExperimentsForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteExperimentsForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

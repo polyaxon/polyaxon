@@ -44,6 +44,12 @@ func (o *UpdateExperiment2Reader) ReadResponse(response runtime.ClientResponse, 
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewUpdateExperiment2Forbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewUpdateExperiment2NotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *UpdateExperiment2OK) readResponse(response runtime.ClientResponse, cons
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewUpdateExperiment2Forbidden creates a UpdateExperiment2Forbidden with default headers values
+func NewUpdateExperiment2Forbidden() *UpdateExperiment2Forbidden {
+	return &UpdateExperiment2Forbidden{}
+}
+
+/*UpdateExperiment2Forbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type UpdateExperiment2Forbidden struct {
+	Payload interface{}
+}
+
+func (o *UpdateExperiment2Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/experiments/{experiment.id}][%d] updateExperiment2Forbidden  %+v", 403, o.Payload)
+}
+
+func (o *UpdateExperiment2Forbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateExperiment2Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

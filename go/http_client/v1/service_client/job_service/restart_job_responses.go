@@ -44,6 +44,12 @@ func (o *RestartJobReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewRestartJobForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewRestartJobNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *RestartJobOK) readResponse(response runtime.ClientResponse, consumer ru
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewRestartJobForbidden creates a RestartJobForbidden with default headers values
+func NewRestartJobForbidden() *RestartJobForbidden {
+	return &RestartJobForbidden{}
+}
+
+/*RestartJobForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type RestartJobForbidden struct {
+	Payload interface{}
+}
+
+func (o *RestartJobForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/restart][%d] restartJobForbidden  %+v", 403, o.Payload)
+}
+
+func (o *RestartJobForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *RestartJobForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

@@ -43,7 +43,7 @@ type Client struct {
 /*
 ArchiveJob restores build
 */
-func (a *Client) ArchiveJob(params *ArchiveJobParams) (*ArchiveJobOK, error) {
+func (a *Client) ArchiveJob(params *ArchiveJobParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveJobParams()
@@ -55,9 +55,10 @@ func (a *Client) ArchiveJob(params *ArchiveJobParams) (*ArchiveJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ArchiveJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -77,7 +78,7 @@ func (a *Client) ArchiveJob(params *ArchiveJobParams) (*ArchiveJobOK, error) {
 /*
 BookmarkJob uns bookmark build
 */
-func (a *Client) BookmarkJob(params *BookmarkJobParams) (*BookmarkJobOK, error) {
+func (a *Client) BookmarkJob(params *BookmarkJobParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkJobParams()
@@ -89,9 +90,10 @@ func (a *Client) BookmarkJob(params *BookmarkJobParams) (*BookmarkJobOK, error) 
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &BookmarkJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -111,7 +113,7 @@ func (a *Client) BookmarkJob(params *BookmarkJobParams) (*BookmarkJobOK, error) 
 /*
 CreateJob creates new build
 */
-func (a *Client) CreateJob(params *CreateJobParams) (*CreateJobOK, error) {
+func (a *Client) CreateJob(params *CreateJobParams, authInfo runtime.ClientAuthInfoWriter) (*CreateJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateJobParams()
@@ -123,9 +125,10 @@ func (a *Client) CreateJob(params *CreateJobParams) (*CreateJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -145,7 +148,7 @@ func (a *Client) CreateJob(params *CreateJobParams) (*CreateJobOK, error) {
 /*
 CreateJobCodeRef gets job code ref
 */
-func (a *Client) CreateJobCodeRef(params *CreateJobCodeRefParams) (*CreateJobCodeRefOK, error) {
+func (a *Client) CreateJobCodeRef(params *CreateJobCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*CreateJobCodeRefOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateJobCodeRefParams()
@@ -157,9 +160,10 @@ func (a *Client) CreateJobCodeRef(params *CreateJobCodeRefParams) (*CreateJobCod
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateJobCodeRefReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -179,7 +183,7 @@ func (a *Client) CreateJobCodeRef(params *CreateJobCodeRefParams) (*CreateJobCod
 /*
 CreateJobStatus gets build code ref
 */
-func (a *Client) CreateJobStatus(params *CreateJobStatusParams) (*CreateJobStatusOK, error) {
+func (a *Client) CreateJobStatus(params *CreateJobStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateJobStatusOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateJobStatusParams()
@@ -191,9 +195,10 @@ func (a *Client) CreateJobStatus(params *CreateJobStatusParams) (*CreateJobStatu
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateJobStatusReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -213,7 +218,7 @@ func (a *Client) CreateJobStatus(params *CreateJobStatusParams) (*CreateJobStatu
 /*
 DeleteJob deletes build
 */
-func (a *Client) DeleteJob(params *DeleteJobParams) (*DeleteJobOK, error) {
+func (a *Client) DeleteJob(params *DeleteJobParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteJobParams()
@@ -225,9 +230,10 @@ func (a *Client) DeleteJob(params *DeleteJobParams) (*DeleteJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &DeleteJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -247,7 +253,7 @@ func (a *Client) DeleteJob(params *DeleteJobParams) (*DeleteJobOK, error) {
 /*
 DeleteJobs deletes builds
 */
-func (a *Client) DeleteJobs(params *DeleteJobsParams) (*DeleteJobsOK, error) {
+func (a *Client) DeleteJobs(params *DeleteJobsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteJobsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteJobsParams()
@@ -259,9 +265,10 @@ func (a *Client) DeleteJobs(params *DeleteJobsParams) (*DeleteJobsOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &DeleteJobsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -281,7 +288,7 @@ func (a *Client) DeleteJobs(params *DeleteJobsParams) (*DeleteJobsOK, error) {
 /*
 GetJob gets build
 */
-func (a *Client) GetJob(params *GetJobParams) (*GetJobOK, error) {
+func (a *Client) GetJob(params *GetJobParams, authInfo runtime.ClientAuthInfoWriter) (*GetJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetJobParams()
@@ -293,9 +300,10 @@ func (a *Client) GetJob(params *GetJobParams) (*GetJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &GetJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -315,7 +323,7 @@ func (a *Client) GetJob(params *GetJobParams) (*GetJobOK, error) {
 /*
 GetJobCodeRef creates build code ref
 */
-func (a *Client) GetJobCodeRef(params *GetJobCodeRefParams) (*GetJobCodeRefOK, error) {
+func (a *Client) GetJobCodeRef(params *GetJobCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*GetJobCodeRefOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetJobCodeRefParams()
@@ -327,9 +335,10 @@ func (a *Client) GetJobCodeRef(params *GetJobCodeRefParams) (*GetJobCodeRefOK, e
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &GetJobCodeRefReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -349,7 +358,7 @@ func (a *Client) GetJobCodeRef(params *GetJobCodeRefParams) (*GetJobCodeRefOK, e
 /*
 ListArchivedJobs lists archived builds
 */
-func (a *Client) ListArchivedJobs(params *ListArchivedJobsParams) (*ListArchivedJobsOK, error) {
+func (a *Client) ListArchivedJobs(params *ListArchivedJobsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedJobsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArchivedJobsParams()
@@ -361,9 +370,10 @@ func (a *Client) ListArchivedJobs(params *ListArchivedJobsParams) (*ListArchived
 		PathPattern:        "/api/v1/archives/{owner}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListArchivedJobsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -383,7 +393,7 @@ func (a *Client) ListArchivedJobs(params *ListArchivedJobsParams) (*ListArchived
 /*
 ListBookmarkedJobs lists bookmarked builds
 */
-func (a *Client) ListBookmarkedJobs(params *ListBookmarkedJobsParams) (*ListBookmarkedJobsOK, error) {
+func (a *Client) ListBookmarkedJobs(params *ListBookmarkedJobsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedJobsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBookmarkedJobsParams()
@@ -395,9 +405,10 @@ func (a *Client) ListBookmarkedJobs(params *ListBookmarkedJobsParams) (*ListBook
 		PathPattern:        "/api/v1/bookmarks/{owner}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListBookmarkedJobsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -417,7 +428,7 @@ func (a *Client) ListBookmarkedJobs(params *ListBookmarkedJobsParams) (*ListBook
 /*
 ListJobStatuses creates new build status
 */
-func (a *Client) ListJobStatuses(params *ListJobStatusesParams) (*ListJobStatusesOK, error) {
+func (a *Client) ListJobStatuses(params *ListJobStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*ListJobStatusesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListJobStatusesParams()
@@ -429,9 +440,10 @@ func (a *Client) ListJobStatuses(params *ListJobStatusesParams) (*ListJobStatuse
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListJobStatusesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -451,7 +463,7 @@ func (a *Client) ListJobStatuses(params *ListJobStatusesParams) (*ListJobStatuse
 /*
 ListJobs lists builds
 */
-func (a *Client) ListJobs(params *ListJobsParams) (*ListJobsOK, error) {
+func (a *Client) ListJobs(params *ListJobsParams, authInfo runtime.ClientAuthInfoWriter) (*ListJobsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListJobsParams()
@@ -463,9 +475,10 @@ func (a *Client) ListJobs(params *ListJobsParams) (*ListJobsOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListJobsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -485,7 +498,7 @@ func (a *Client) ListJobs(params *ListJobsParams) (*ListJobsOK, error) {
 /*
 RestartJob restarts build
 */
-func (a *Client) RestartJob(params *RestartJobParams) (*RestartJobOK, error) {
+func (a *Client) RestartJob(params *RestartJobParams, authInfo runtime.ClientAuthInfoWriter) (*RestartJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestartJobParams()
@@ -497,9 +510,10 @@ func (a *Client) RestartJob(params *RestartJobParams) (*RestartJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &RestartJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -519,7 +533,7 @@ func (a *Client) RestartJob(params *RestartJobParams) (*RestartJobOK, error) {
 /*
 RestoreJob bookmarks build
 */
-func (a *Client) RestoreJob(params *RestoreJobParams) (*RestoreJobOK, error) {
+func (a *Client) RestoreJob(params *RestoreJobParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreJobParams()
@@ -531,9 +545,10 @@ func (a *Client) RestoreJob(params *RestoreJobParams) (*RestoreJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &RestoreJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -553,7 +568,7 @@ func (a *Client) RestoreJob(params *RestoreJobParams) (*RestoreJobOK, error) {
 /*
 ResumeJob archives build
 */
-func (a *Client) ResumeJob(params *ResumeJobParams) (*ResumeJobOK, error) {
+func (a *Client) ResumeJob(params *ResumeJobParams, authInfo runtime.ClientAuthInfoWriter) (*ResumeJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewResumeJobParams()
@@ -565,9 +580,10 @@ func (a *Client) ResumeJob(params *ResumeJobParams) (*ResumeJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ResumeJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -587,7 +603,7 @@ func (a *Client) ResumeJob(params *ResumeJobParams) (*ResumeJobOK, error) {
 /*
 StopJob stops build
 */
-func (a *Client) StopJob(params *StopJobParams) (*StopJobOK, error) {
+func (a *Client) StopJob(params *StopJobParams, authInfo runtime.ClientAuthInfoWriter) (*StopJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopJobParams()
@@ -599,9 +615,10 @@ func (a *Client) StopJob(params *StopJobParams) (*StopJobOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -621,7 +638,7 @@ func (a *Client) StopJob(params *StopJobParams) (*StopJobOK, error) {
 /*
 StopJobs stops builds
 */
-func (a *Client) StopJobs(params *StopJobsParams) (*StopJobsOK, error) {
+func (a *Client) StopJobs(params *StopJobsParams, authInfo runtime.ClientAuthInfoWriter) (*StopJobsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopJobsParams()
@@ -633,9 +650,10 @@ func (a *Client) StopJobs(params *StopJobsParams) (*StopJobsOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopJobsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -655,7 +673,7 @@ func (a *Client) StopJobs(params *StopJobsParams) (*StopJobsOK, error) {
 /*
 UnBookmarkJob gets build status
 */
-func (a *Client) UnBookmarkJob(params *UnBookmarkJobParams) (*UnBookmarkJobOK, error) {
+func (a *Client) UnBookmarkJob(params *UnBookmarkJobParams, authInfo runtime.ClientAuthInfoWriter) (*UnBookmarkJobOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnBookmarkJobParams()
@@ -667,9 +685,10 @@ func (a *Client) UnBookmarkJob(params *UnBookmarkJobParams) (*UnBookmarkJobOK, e
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &UnBookmarkJobReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -689,7 +708,7 @@ func (a *Client) UnBookmarkJob(params *UnBookmarkJobParams) (*UnBookmarkJobOK, e
 /*
 UpdateJob2 updates build
 */
-func (a *Client) UpdateJob2(params *UpdateJob2Params) (*UpdateJob2OK, error) {
+func (a *Client) UpdateJob2(params *UpdateJob2Params, authInfo runtime.ClientAuthInfoWriter) (*UpdateJob2OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateJob2Params()
@@ -701,9 +720,10 @@ func (a *Client) UpdateJob2(params *UpdateJob2Params) (*UpdateJob2OK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/jobs/{job.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &UpdateJob2Reader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

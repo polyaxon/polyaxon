@@ -144,7 +144,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/archive', 'POST',
@@ -257,7 +257,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/bookmark', 'POST',
@@ -370,7 +370,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs', 'POST',
@@ -491,7 +491,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef', 'POST',
@@ -612,7 +612,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/statuses', 'POST',
@@ -725,7 +725,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}', 'DELETE',
@@ -838,7 +838,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/delete', 'DELETE',
@@ -951,7 +951,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}', 'GET',
@@ -1064,7 +1064,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/coderef', 'GET',
@@ -1161,7 +1161,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/archives/{owner}/jobs', 'GET',
@@ -1258,7 +1258,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/bookmarks/{owner}/jobs', 'GET',
@@ -1371,7 +1371,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/statuses', 'GET',
@@ -1476,7 +1476,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs', 'GET',
@@ -1597,7 +1597,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/restart', 'POST',
@@ -1710,7 +1710,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/restore', 'POST',
@@ -1831,7 +1831,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/resume', 'POST',
@@ -1952,7 +1952,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/stop', 'POST',
@@ -2065,7 +2065,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/stop', 'POST',
@@ -2178,7 +2178,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{id}/unbookmark', 'DELETE',
@@ -2299,7 +2299,7 @@ class JobServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/jobs/{job.id}', 'PUT',

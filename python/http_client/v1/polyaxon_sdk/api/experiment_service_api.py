@@ -144,7 +144,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/archive', 'POST',
@@ -257,7 +257,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/bookmark', 'POST',
@@ -370,7 +370,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments', 'POST',
@@ -491,7 +491,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef', 'POST',
@@ -612,7 +612,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/statuses', 'POST',
@@ -725,7 +725,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}', 'DELETE',
@@ -838,7 +838,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/delete', 'DELETE',
@@ -951,7 +951,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}', 'GET',
@@ -1064,7 +1064,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/coderef', 'GET',
@@ -1161,7 +1161,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/archives/{owner}/experiments', 'GET',
@@ -1258,7 +1258,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/bookmarks/{owner}/experiments', 'GET',
@@ -1371,7 +1371,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/statuses', 'GET',
@@ -1476,7 +1476,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments', 'GET',
@@ -1597,7 +1597,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/restart', 'POST',
@@ -1710,7 +1710,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/restore', 'POST',
@@ -1831,7 +1831,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/resume', 'POST',
@@ -1952,7 +1952,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start', 'POST',
@@ -2073,7 +2073,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/stop', 'POST',
@@ -2186,7 +2186,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop', 'DELETE',
@@ -2299,7 +2299,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/stop', 'POST',
@@ -2412,7 +2412,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{id}/unbookmark', 'DELETE',
@@ -2533,7 +2533,7 @@ class ExperimentServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/experiments/{experiment.id}', 'PUT',

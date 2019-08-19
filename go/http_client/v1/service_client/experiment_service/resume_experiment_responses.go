@@ -44,6 +44,12 @@ func (o *ResumeExperimentReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewResumeExperimentForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewResumeExperimentNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *ResumeExperimentOK) readResponse(response runtime.ClientResponse, consu
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewResumeExperimentForbidden creates a ResumeExperimentForbidden with default headers values
+func NewResumeExperimentForbidden() *ResumeExperimentForbidden {
+	return &ResumeExperimentForbidden{}
+}
+
+/*ResumeExperimentForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type ResumeExperimentForbidden struct {
+	Payload interface{}
+}
+
+func (o *ResumeExperimentForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/resume][%d] resumeExperimentForbidden  %+v", 403, o.Payload)
+}
+
+func (o *ResumeExperimentForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ResumeExperimentForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

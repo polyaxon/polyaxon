@@ -44,6 +44,12 @@ func (o *CreateJobCodeRefReader) ReadResponse(response runtime.ClientResponse, c
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewCreateJobCodeRefForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewCreateJobCodeRefNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *CreateJobCodeRefOK) readResponse(response runtime.ClientResponse, consu
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateJobCodeRefForbidden creates a CreateJobCodeRefForbidden with default headers values
+func NewCreateJobCodeRefForbidden() *CreateJobCodeRefForbidden {
+	return &CreateJobCodeRefForbidden{}
+}
+
+/*CreateJobCodeRefForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type CreateJobCodeRefForbidden struct {
+	Payload interface{}
+}
+
+func (o *CreateJobCodeRefForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef][%d] createJobCodeRefForbidden  %+v", 403, o.Payload)
+}
+
+func (o *CreateJobCodeRefForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateJobCodeRefForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

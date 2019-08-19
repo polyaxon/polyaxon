@@ -44,6 +44,12 @@ func (o *ResumeJobReader) ReadResponse(response runtime.ClientResponse, consumer
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewResumeJobForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewResumeJobNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *ResumeJobOK) readResponse(response runtime.ClientResponse, consumer run
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewResumeJobForbidden creates a ResumeJobForbidden with default headers values
+func NewResumeJobForbidden() *ResumeJobForbidden {
+	return &ResumeJobForbidden{}
+}
+
+/*ResumeJobForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type ResumeJobForbidden struct {
+	Payload interface{}
+}
+
+func (o *ResumeJobForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/resume][%d] resumeJobForbidden  %+v", 403, o.Payload)
+}
+
+func (o *ResumeJobForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ResumeJobForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

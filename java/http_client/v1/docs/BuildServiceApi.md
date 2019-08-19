@@ -34,9 +34,19 @@ Archive build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -65,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -81,9 +91,19 @@ Bookmark build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -112,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -128,9 +148,19 @@ Create new build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -159,7 +189,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -175,9 +205,19 @@ Create build code ref
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String entityOwner = "entityOwner_example"; // String | Owner of the namespace
@@ -208,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -224,9 +264,19 @@ Create new build status
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -257,7 +307,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -273,9 +323,19 @@ Delete build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -304,7 +364,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -320,9 +380,19 @@ Delete builds
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -351,7 +421,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -367,9 +437,19 @@ Get build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -398,7 +478,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -414,9 +494,19 @@ Get build code ref
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -445,7 +535,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -461,9 +551,19 @@ List archived builds
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -488,7 +588,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -504,9 +604,19 @@ List bookmarked builds
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -531,7 +641,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -547,9 +657,19 @@ List build statuses
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -578,7 +698,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -594,9 +714,19 @@ List builds
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -623,7 +753,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -639,9 +769,19 @@ Restart build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -672,7 +812,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -688,9 +828,19 @@ Restore build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -719,7 +869,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -735,9 +885,19 @@ Stop build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -768,7 +928,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -784,9 +944,19 @@ Stop builds
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -815,7 +985,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -831,9 +1001,19 @@ UnBookmark build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -862,7 +1042,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -878,9 +1058,19 @@ Update build
 ### Example
 ```java
 // Import classes:
+//import io.swagger.client.ApiClient;
 //import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
 //import io.swagger.client.api.BuildServiceApi;
 
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
 
 BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
@@ -911,7 +1101,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 

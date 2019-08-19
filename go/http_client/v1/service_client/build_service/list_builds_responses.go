@@ -44,6 +44,12 @@ func (o *ListBuildsReader) ReadResponse(response runtime.ClientResponse, consume
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewListBuildsForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewListBuildsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *ListBuildsOK) readResponse(response runtime.ClientResponse, consumer ru
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewListBuildsForbidden creates a ListBuildsForbidden with default headers values
+func NewListBuildsForbidden() *ListBuildsForbidden {
+	return &ListBuildsForbidden{}
+}
+
+/*ListBuildsForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type ListBuildsForbidden struct {
+	Payload interface{}
+}
+
+func (o *ListBuildsForbidden) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/builds][%d] listBuildsForbidden  %+v", 403, o.Payload)
+}
+
+func (o *ListBuildsForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *ListBuildsForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

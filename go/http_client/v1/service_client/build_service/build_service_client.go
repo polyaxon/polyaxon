@@ -43,7 +43,7 @@ type Client struct {
 /*
 ArchiveBuild archives build
 */
-func (a *Client) ArchiveBuild(params *ArchiveBuildParams) (*ArchiveBuildOK, error) {
+func (a *Client) ArchiveBuild(params *ArchiveBuildParams, authInfo runtime.ClientAuthInfoWriter) (*ArchiveBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewArchiveBuildParams()
@@ -55,9 +55,10 @@ func (a *Client) ArchiveBuild(params *ArchiveBuildParams) (*ArchiveBuildOK, erro
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ArchiveBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -77,7 +78,7 @@ func (a *Client) ArchiveBuild(params *ArchiveBuildParams) (*ArchiveBuildOK, erro
 /*
 BookmarkBuild bookmarks build
 */
-func (a *Client) BookmarkBuild(params *BookmarkBuildParams) (*BookmarkBuildOK, error) {
+func (a *Client) BookmarkBuild(params *BookmarkBuildParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewBookmarkBuildParams()
@@ -89,9 +90,10 @@ func (a *Client) BookmarkBuild(params *BookmarkBuildParams) (*BookmarkBuildOK, e
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &BookmarkBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -111,7 +113,7 @@ func (a *Client) BookmarkBuild(params *BookmarkBuildParams) (*BookmarkBuildOK, e
 /*
 CreateBuild creates new build
 */
-func (a *Client) CreateBuild(params *CreateBuildParams) (*CreateBuildOK, error) {
+func (a *Client) CreateBuild(params *CreateBuildParams, authInfo runtime.ClientAuthInfoWriter) (*CreateBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateBuildParams()
@@ -123,9 +125,10 @@ func (a *Client) CreateBuild(params *CreateBuildParams) (*CreateBuildOK, error) 
 		PathPattern:        "/api/v1/{owner}/{project}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -145,7 +148,7 @@ func (a *Client) CreateBuild(params *CreateBuildParams) (*CreateBuildOK, error) 
 /*
 CreateBuildCodeRef creates build code ref
 */
-func (a *Client) CreateBuildCodeRef(params *CreateBuildCodeRefParams) (*CreateBuildCodeRefOK, error) {
+func (a *Client) CreateBuildCodeRef(params *CreateBuildCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*CreateBuildCodeRefOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateBuildCodeRefParams()
@@ -157,9 +160,10 @@ func (a *Client) CreateBuildCodeRef(params *CreateBuildCodeRefParams) (*CreateBu
 		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateBuildCodeRefReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -179,7 +183,7 @@ func (a *Client) CreateBuildCodeRef(params *CreateBuildCodeRefParams) (*CreateBu
 /*
 CreateBuildStatus creates new build status
 */
-func (a *Client) CreateBuildStatus(params *CreateBuildStatusParams) (*CreateBuildStatusOK, error) {
+func (a *Client) CreateBuildStatus(params *CreateBuildStatusParams, authInfo runtime.ClientAuthInfoWriter) (*CreateBuildStatusOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateBuildStatusParams()
@@ -191,9 +195,10 @@ func (a *Client) CreateBuildStatus(params *CreateBuildStatusParams) (*CreateBuil
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &CreateBuildStatusReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -213,7 +218,7 @@ func (a *Client) CreateBuildStatus(params *CreateBuildStatusParams) (*CreateBuil
 /*
 DeleteBuild deletes build
 */
-func (a *Client) DeleteBuild(params *DeleteBuildParams) (*DeleteBuildOK, error) {
+func (a *Client) DeleteBuild(params *DeleteBuildParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteBuildParams()
@@ -225,9 +230,10 @@ func (a *Client) DeleteBuild(params *DeleteBuildParams) (*DeleteBuildOK, error) 
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &DeleteBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -247,7 +253,7 @@ func (a *Client) DeleteBuild(params *DeleteBuildParams) (*DeleteBuildOK, error) 
 /*
 DeleteBuilds deletes builds
 */
-func (a *Client) DeleteBuilds(params *DeleteBuildsParams) (*DeleteBuildsOK, error) {
+func (a *Client) DeleteBuilds(params *DeleteBuildsParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteBuildsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteBuildsParams()
@@ -259,9 +265,10 @@ func (a *Client) DeleteBuilds(params *DeleteBuildsParams) (*DeleteBuildsOK, erro
 		PathPattern:        "/api/v1/{owner}/{project}/builds/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &DeleteBuildsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -281,7 +288,7 @@ func (a *Client) DeleteBuilds(params *DeleteBuildsParams) (*DeleteBuildsOK, erro
 /*
 GetBuild gets build
 */
-func (a *Client) GetBuild(params *GetBuildParams) (*GetBuildOK, error) {
+func (a *Client) GetBuild(params *GetBuildParams, authInfo runtime.ClientAuthInfoWriter) (*GetBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetBuildParams()
@@ -293,9 +300,10 @@ func (a *Client) GetBuild(params *GetBuildParams) (*GetBuildOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &GetBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -315,7 +323,7 @@ func (a *Client) GetBuild(params *GetBuildParams) (*GetBuildOK, error) {
 /*
 GetBuildCodeRef gets build code ref
 */
-func (a *Client) GetBuildCodeRef(params *GetBuildCodeRefParams) (*GetBuildCodeRefOK, error) {
+func (a *Client) GetBuildCodeRef(params *GetBuildCodeRefParams, authInfo runtime.ClientAuthInfoWriter) (*GetBuildCodeRefOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetBuildCodeRefParams()
@@ -327,9 +335,10 @@ func (a *Client) GetBuildCodeRef(params *GetBuildCodeRefParams) (*GetBuildCodeRe
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &GetBuildCodeRefReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -349,7 +358,7 @@ func (a *Client) GetBuildCodeRef(params *GetBuildCodeRefParams) (*GetBuildCodeRe
 /*
 ListArchivedBuilds lists archived builds
 */
-func (a *Client) ListArchivedBuilds(params *ListArchivedBuildsParams) (*ListArchivedBuildsOK, error) {
+func (a *Client) ListArchivedBuilds(params *ListArchivedBuildsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedBuildsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListArchivedBuildsParams()
@@ -361,9 +370,10 @@ func (a *Client) ListArchivedBuilds(params *ListArchivedBuildsParams) (*ListArch
 		PathPattern:        "/api/v1/archives/{owner}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListArchivedBuildsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -383,7 +393,7 @@ func (a *Client) ListArchivedBuilds(params *ListArchivedBuildsParams) (*ListArch
 /*
 ListBookmarkedBuilds lists bookmarked builds
 */
-func (a *Client) ListBookmarkedBuilds(params *ListBookmarkedBuildsParams) (*ListBookmarkedBuildsOK, error) {
+func (a *Client) ListBookmarkedBuilds(params *ListBookmarkedBuildsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedBuildsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBookmarkedBuildsParams()
@@ -395,9 +405,10 @@ func (a *Client) ListBookmarkedBuilds(params *ListBookmarkedBuildsParams) (*List
 		PathPattern:        "/api/v1/bookmarks/{owner}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListBookmarkedBuildsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -417,7 +428,7 @@ func (a *Client) ListBookmarkedBuilds(params *ListBookmarkedBuildsParams) (*List
 /*
 ListBuildStatuses lists build statuses
 */
-func (a *Client) ListBuildStatuses(params *ListBuildStatusesParams) (*ListBuildStatusesOK, error) {
+func (a *Client) ListBuildStatuses(params *ListBuildStatusesParams, authInfo runtime.ClientAuthInfoWriter) (*ListBuildStatusesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBuildStatusesParams()
@@ -429,9 +440,10 @@ func (a *Client) ListBuildStatuses(params *ListBuildStatusesParams) (*ListBuildS
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListBuildStatusesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -451,7 +463,7 @@ func (a *Client) ListBuildStatuses(params *ListBuildStatusesParams) (*ListBuildS
 /*
 ListBuilds lists builds
 */
-func (a *Client) ListBuilds(params *ListBuildsParams) (*ListBuildsOK, error) {
+func (a *Client) ListBuilds(params *ListBuildsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBuildsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListBuildsParams()
@@ -463,9 +475,10 @@ func (a *Client) ListBuilds(params *ListBuildsParams) (*ListBuildsOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &ListBuildsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -485,7 +498,7 @@ func (a *Client) ListBuilds(params *ListBuildsParams) (*ListBuildsOK, error) {
 /*
 RestartBuild restarts build
 */
-func (a *Client) RestartBuild(params *RestartBuildParams) (*RestartBuildOK, error) {
+func (a *Client) RestartBuild(params *RestartBuildParams, authInfo runtime.ClientAuthInfoWriter) (*RestartBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestartBuildParams()
@@ -497,9 +510,10 @@ func (a *Client) RestartBuild(params *RestartBuildParams) (*RestartBuildOK, erro
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &RestartBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -519,7 +533,7 @@ func (a *Client) RestartBuild(params *RestartBuildParams) (*RestartBuildOK, erro
 /*
 RestoreBuild restores build
 */
-func (a *Client) RestoreBuild(params *RestoreBuildParams) (*RestoreBuildOK, error) {
+func (a *Client) RestoreBuild(params *RestoreBuildParams, authInfo runtime.ClientAuthInfoWriter) (*RestoreBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewRestoreBuildParams()
@@ -531,9 +545,10 @@ func (a *Client) RestoreBuild(params *RestoreBuildParams) (*RestoreBuildOK, erro
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &RestoreBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -553,7 +568,7 @@ func (a *Client) RestoreBuild(params *RestoreBuildParams) (*RestoreBuildOK, erro
 /*
 StopBuild stops build
 */
-func (a *Client) StopBuild(params *StopBuildParams) (*StopBuildOK, error) {
+func (a *Client) StopBuild(params *StopBuildParams, authInfo runtime.ClientAuthInfoWriter) (*StopBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopBuildParams()
@@ -565,9 +580,10 @@ func (a *Client) StopBuild(params *StopBuildParams) (*StopBuildOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -587,7 +603,7 @@ func (a *Client) StopBuild(params *StopBuildParams) (*StopBuildOK, error) {
 /*
 StopBuilds stops builds
 */
-func (a *Client) StopBuilds(params *StopBuildsParams) (*StopBuildsOK, error) {
+func (a *Client) StopBuilds(params *StopBuildsParams, authInfo runtime.ClientAuthInfoWriter) (*StopBuildsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewStopBuildsParams()
@@ -599,9 +615,10 @@ func (a *Client) StopBuilds(params *StopBuildsParams) (*StopBuildsOK, error) {
 		PathPattern:        "/api/v1/{owner}/{project}/builds/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &StopBuildsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -621,7 +638,7 @@ func (a *Client) StopBuilds(params *StopBuildsParams) (*StopBuildsOK, error) {
 /*
 UnBookmarkBuild uns bookmark build
 */
-func (a *Client) UnBookmarkBuild(params *UnBookmarkBuildParams) (*UnBookmarkBuildOK, error) {
+func (a *Client) UnBookmarkBuild(params *UnBookmarkBuildParams, authInfo runtime.ClientAuthInfoWriter) (*UnBookmarkBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUnBookmarkBuildParams()
@@ -633,9 +650,10 @@ func (a *Client) UnBookmarkBuild(params *UnBookmarkBuildParams) (*UnBookmarkBuil
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &UnBookmarkBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -655,7 +673,7 @@ func (a *Client) UnBookmarkBuild(params *UnBookmarkBuildParams) (*UnBookmarkBuil
 /*
 UpdateBuild2 updates build
 */
-func (a *Client) UpdateBuild2(params *UpdateBuild2Params) (*UpdateBuild2OK, error) {
+func (a *Client) UpdateBuild2(params *UpdateBuild2Params, authInfo runtime.ClientAuthInfoWriter) (*UpdateBuild2OK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateBuild2Params()
@@ -667,9 +685,10 @@ func (a *Client) UpdateBuild2(params *UpdateBuild2Params) (*UpdateBuild2OK, erro
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{build.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
 		Reader:             &UpdateBuild2Reader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})

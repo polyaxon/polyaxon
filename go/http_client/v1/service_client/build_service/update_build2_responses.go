@@ -44,6 +44,12 @@ func (o *UpdateBuild2Reader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewUpdateBuild2Forbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewUpdateBuild2NotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *UpdateBuild2OK) readResponse(response runtime.ClientResponse, consumer 
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewUpdateBuild2Forbidden creates a UpdateBuild2Forbidden with default headers values
+func NewUpdateBuild2Forbidden() *UpdateBuild2Forbidden {
+	return &UpdateBuild2Forbidden{}
+}
+
+/*UpdateBuild2Forbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type UpdateBuild2Forbidden struct {
+	Payload interface{}
+}
+
+func (o *UpdateBuild2Forbidden) Error() string {
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2Forbidden  %+v", 403, o.Payload)
+}
+
+func (o *UpdateBuild2Forbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UpdateBuild2Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

@@ -44,6 +44,12 @@ func (o *GetBuildCodeRefReader) ReadResponse(response runtime.ClientResponse, co
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewGetBuildCodeRefForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewGetBuildCodeRefNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *GetBuildCodeRefOK) readResponse(response runtime.ClientResponse, consum
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewGetBuildCodeRefForbidden creates a GetBuildCodeRefForbidden with default headers values
+func NewGetBuildCodeRefForbidden() *GetBuildCodeRefForbidden {
+	return &GetBuildCodeRefForbidden{}
+}
+
+/*GetBuildCodeRefForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type GetBuildCodeRefForbidden struct {
+	Payload interface{}
+}
+
+func (o *GetBuildCodeRefForbidden) Error() string {
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/builds/{id}/coderef][%d] getBuildCodeRefForbidden  %+v", 403, o.Payload)
+}
+
+func (o *GetBuildCodeRefForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *GetBuildCodeRefForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

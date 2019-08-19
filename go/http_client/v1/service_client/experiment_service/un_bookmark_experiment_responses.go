@@ -42,6 +42,12 @@ func (o *UnBookmarkExperimentReader) ReadResponse(response runtime.ClientRespons
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewUnBookmarkExperimentForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewUnBookmarkExperimentNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *UnBookmarkExperimentOK) GetPayload() interface{} {
 }
 
 func (o *UnBookmarkExperimentOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewUnBookmarkExperimentForbidden creates a UnBookmarkExperimentForbidden with default headers values
+func NewUnBookmarkExperimentForbidden() *UnBookmarkExperimentForbidden {
+	return &UnBookmarkExperimentForbidden{}
+}
+
+/*UnBookmarkExperimentForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type UnBookmarkExperimentForbidden struct {
+	Payload interface{}
+}
+
+func (o *UnBookmarkExperimentForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/{id}/unbookmark][%d] unBookmarkExperimentForbidden  %+v", 403, o.Payload)
+}
+
+func (o *UnBookmarkExperimentForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *UnBookmarkExperimentForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

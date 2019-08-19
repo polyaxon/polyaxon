@@ -111,7 +111,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -172,7 +172,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -232,7 +232,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Build;
@@ -299,7 +299,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1CodeReference;
@@ -366,7 +366,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1BuildStatus;
@@ -427,7 +427,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -487,7 +487,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -548,7 +548,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Build;
@@ -609,7 +609,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1CodeReference;
@@ -656,7 +656,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListBuildsResponse;
@@ -703,7 +703,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListBuildsResponse;
@@ -764,7 +764,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListBuildStatusesResponse;
@@ -818,7 +818,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListBuildsResponse;
@@ -885,7 +885,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Build;
@@ -946,7 +946,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1013,7 +1013,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1073,7 +1073,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1134,7 +1134,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1201,7 +1201,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Build;

@@ -83,7 +83,14 @@ import java.util.*;
 public class BuildServiceApiExample {
 
     public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
         
+        // Configure API key authorization: ApiKey
+        ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+        ApiKey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //ApiKey.setApiKeyPrefix("Token");
+
         BuildServiceApi apiInstance = new BuildServiceApi();
         String owner = "owner_example"; // String | Owner of the namespace
         String project = "project_example"; // String | Project where the experiement will be assigned
@@ -198,8 +205,13 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Authorization
 
-All endpoints do not require authorization.
 Authentication schemes defined for the API:
+### ApiKey
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
+
 
 ## Recommendation
 

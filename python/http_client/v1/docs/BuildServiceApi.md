@@ -38,8 +38,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -66,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -88,8 +94,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -116,7 +128,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -138,8 +150,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 body = polyaxon_sdk.V1BuildBodyRequest() # V1BuildBodyRequest | 
@@ -166,7 +184,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -188,8 +206,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 entity_owner = 'entity_owner_example' # str | Owner of the namespace
 entity_project = 'entity_project_example' # str | Project where the experiement will be assigned
 entity_id = 'entity_id_example' # str | Unique integer identifier of the entity
@@ -218,7 +242,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -240,8 +264,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -270,7 +300,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -292,8 +322,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -320,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -342,8 +378,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 body = polyaxon_sdk.V1OwnedEntityIdRequest() # V1OwnedEntityIdRequest | 
@@ -370,7 +412,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -392,8 +434,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -420,7 +468,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -442,8 +490,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -470,7 +524,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -492,8 +546,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
@@ -516,7 +576,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -538,8 +598,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
@@ -562,7 +628,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -584,8 +650,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -612,7 +684,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -634,8 +706,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
@@ -660,7 +738,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -682,8 +760,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -712,7 +796,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -734,8 +818,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -762,7 +852,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -784,8 +874,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -814,7 +910,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -836,8 +932,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 body = polyaxon_sdk.V1ProjectBodyRequest() # V1ProjectBodyRequest | 
@@ -864,7 +966,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -886,8 +988,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
@@ -914,7 +1022,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -936,8 +1044,14 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
-api_instance = polyaxon_sdk.BuildServiceApi()
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 build_id = 'build_id_example' # str | Unique integer identifier
@@ -966,7 +1080,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 

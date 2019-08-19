@@ -42,6 +42,12 @@ func (o *RestoreBuildReader) ReadResponse(response runtime.ClientResponse, consu
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewRestoreBuildForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewRestoreBuildNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *RestoreBuildOK) GetPayload() interface{} {
 }
 
 func (o *RestoreBuildOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewRestoreBuildForbidden creates a RestoreBuildForbidden with default headers values
+func NewRestoreBuildForbidden() *RestoreBuildForbidden {
+	return &RestoreBuildForbidden{}
+}
+
+/*RestoreBuildForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type RestoreBuildForbidden struct {
+	Payload interface{}
+}
+
+func (o *RestoreBuildForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/restore][%d] restoreBuildForbidden  %+v", 403, o.Payload)
+}
+
+func (o *RestoreBuildForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *RestoreBuildForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

@@ -37,6 +37,13 @@ Restore build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -71,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -87,6 +94,13 @@ UnBookmark build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -121,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -137,6 +151,13 @@ Create new build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -171,7 +192,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -187,6 +208,13 @@ Get experiment code ref
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -224,7 +252,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -240,6 +268,13 @@ Get job code ref
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -277,7 +312,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -293,6 +328,13 @@ Delete build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -327,7 +369,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -343,6 +385,13 @@ Delete builds
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -377,7 +426,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -393,6 +442,13 @@ Get build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -427,7 +483,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -443,6 +499,13 @@ Get experiment code ref
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -477,7 +540,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -493,6 +556,13 @@ List archived builds
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -521,7 +591,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -537,6 +607,13 @@ List bookmarked builds
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -565,7 +642,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -581,6 +658,13 @@ Create build code ref
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -615,7 +699,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -631,6 +715,13 @@ List builds
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -662,7 +753,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -678,6 +769,13 @@ Restart build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -715,7 +813,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -731,6 +829,13 @@ Bookmark build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -765,7 +870,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -781,6 +886,13 @@ Archive build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -818,7 +930,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -834,6 +946,13 @@ List build statuses
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -871,7 +990,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -887,6 +1006,13 @@ Stop build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -924,7 +1050,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -940,6 +1066,13 @@ Create new build status
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -974,7 +1107,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -990,6 +1123,13 @@ Stop builds
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -1024,7 +1164,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -1040,6 +1180,13 @@ Get build status
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -1074,7 +1221,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 
@@ -1090,6 +1237,13 @@ Update build
 ### Example
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
 
 var apiInstance = new PolyaxonSdk.ExperimentServiceApi();
 
@@ -1127,7 +1281,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[ApiKey](../README.md#ApiKey)
 
 ### HTTP request headers
 

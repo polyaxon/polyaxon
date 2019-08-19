@@ -96,6 +96,14 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```javascript
 var PolyaxonSdk = require('polyaxon-sdk');
 
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = "YOUR API KEY"
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix['Authorization'] = "Token"
+
 var api = new PolyaxonSdk.BuildServiceApi()
 
 var owner = "owner_example"; // {String} Owner of the namespace
@@ -214,5 +222,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Authorization
 
- All endpoints do not require authorization.
+
+### ApiKey
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
 

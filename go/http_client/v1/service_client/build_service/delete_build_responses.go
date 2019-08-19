@@ -42,6 +42,12 @@ func (o *DeleteBuildReader) ReadResponse(response runtime.ClientResponse, consum
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewDeleteBuildForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewDeleteBuildNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *DeleteBuildOK) GetPayload() interface{} {
 }
 
 func (o *DeleteBuildOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewDeleteBuildForbidden creates a DeleteBuildForbidden with default headers values
+func NewDeleteBuildForbidden() *DeleteBuildForbidden {
+	return &DeleteBuildForbidden{}
+}
+
+/*DeleteBuildForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type DeleteBuildForbidden struct {
+	Payload interface{}
+}
+
+func (o *DeleteBuildForbidden) Error() string {
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/builds/{id}][%d] deleteBuildForbidden  %+v", 403, o.Payload)
+}
+
+func (o *DeleteBuildForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *DeleteBuildForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

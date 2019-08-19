@@ -42,6 +42,12 @@ func (o *BookmarkJobReader) ReadResponse(response runtime.ClientResponse, consum
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewBookmarkJobForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewBookmarkJobNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -76,6 +82,37 @@ func (o *BookmarkJobOK) GetPayload() interface{} {
 }
 
 func (o *BookmarkJobOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewBookmarkJobForbidden creates a BookmarkJobForbidden with default headers values
+func NewBookmarkJobForbidden() *BookmarkJobForbidden {
+	return &BookmarkJobForbidden{}
+}
+
+/*BookmarkJobForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type BookmarkJobForbidden struct {
+	Payload interface{}
+}
+
+func (o *BookmarkJobForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/bookmark][%d] bookmarkJobForbidden  %+v", 403, o.Payload)
+}
+
+func (o *BookmarkJobForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *BookmarkJobForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

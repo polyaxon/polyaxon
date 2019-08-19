@@ -52,6 +52,12 @@ import polyaxon_sdk
 from polyaxon_sdk.rest import ApiException
 from pprint import pprint
 
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
 # create an instance of the API class
 api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
@@ -165,7 +171,12 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
- All endpoints do not require authorization.
+
+## ApiKey
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
 
 
 ## Author

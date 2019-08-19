@@ -144,7 +144,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/archive', 'POST',
@@ -257,7 +257,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/bookmark', 'POST',
@@ -370,7 +370,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds', 'POST',
@@ -491,7 +491,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef', 'POST',
@@ -612,7 +612,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/statuses', 'POST',
@@ -725,7 +725,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}', 'DELETE',
@@ -838,7 +838,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/delete', 'DELETE',
@@ -951,7 +951,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}', 'GET',
@@ -1064,7 +1064,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/coderef', 'GET',
@@ -1161,7 +1161,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/archives/{owner}/builds', 'GET',
@@ -1258,7 +1258,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/bookmarks/{owner}/builds', 'GET',
@@ -1371,7 +1371,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/statuses', 'GET',
@@ -1476,7 +1476,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds', 'GET',
@@ -1597,7 +1597,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/restart', 'POST',
@@ -1710,7 +1710,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/restore', 'POST',
@@ -1831,7 +1831,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/stop', 'POST',
@@ -1944,7 +1944,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/stop', 'POST',
@@ -2057,7 +2057,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{id}/unbookmark', 'DELETE',
@@ -2178,7 +2178,7 @@ class BuildServiceApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = []  # noqa: E501
+        auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
             '/api/v1/{owner}/{project}/builds/{build.id}', 'PUT',

@@ -44,6 +44,12 @@ func (o *CreateExperimentCodeRefReader) ReadResponse(response runtime.ClientResp
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewCreateExperimentCodeRefForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewCreateExperimentCodeRefNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *CreateExperimentCodeRefOK) readResponse(response runtime.ClientResponse
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateExperimentCodeRefForbidden creates a CreateExperimentCodeRefForbidden with default headers values
+func NewCreateExperimentCodeRefForbidden() *CreateExperimentCodeRefForbidden {
+	return &CreateExperimentCodeRefForbidden{}
+}
+
+/*CreateExperimentCodeRefForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type CreateExperimentCodeRefForbidden struct {
+	Payload interface{}
+}
+
+func (o *CreateExperimentCodeRefForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] createExperimentCodeRefForbidden  %+v", 403, o.Payload)
+}
+
+func (o *CreateExperimentCodeRefForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateExperimentCodeRefForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

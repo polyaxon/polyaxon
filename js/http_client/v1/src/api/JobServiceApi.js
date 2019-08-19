@@ -111,7 +111,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -172,7 +172,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -232,7 +232,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Job;
@@ -299,7 +299,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1CodeReference;
@@ -366,7 +366,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1JobStatus;
@@ -427,7 +427,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -487,7 +487,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -548,7 +548,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Job;
@@ -609,7 +609,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1CodeReference;
@@ -656,7 +656,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListJobsResponse;
@@ -703,7 +703,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListJobsResponse;
@@ -764,7 +764,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListJobStatusesResponse;
@@ -818,7 +818,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1ListJobsResponse;
@@ -885,7 +885,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Job;
@@ -946,7 +946,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1013,7 +1013,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Job;
@@ -1080,7 +1080,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1140,7 +1140,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1201,7 +1201,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = Object;
@@ -1268,7 +1268,7 @@
       var formParams = {
       };
 
-      var authNames = [];
+      var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
       var returnType = V1Job;

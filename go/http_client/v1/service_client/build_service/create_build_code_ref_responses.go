@@ -44,6 +44,12 @@ func (o *CreateBuildCodeRefReader) ReadResponse(response runtime.ClientResponse,
 			return nil, err
 		}
 		return result, nil
+	case 403:
+		result := NewCreateBuildCodeRefForbidden()
+		if err := result.readResponse(response, consumer, o.formats); err != nil {
+			return nil, err
+		}
+		return nil, result
 	case 404:
 		result := NewCreateBuildCodeRefNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
@@ -83,6 +89,37 @@ func (o *CreateBuildCodeRefOK) readResponse(response runtime.ClientResponse, con
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+		return err
+	}
+
+	return nil
+}
+
+// NewCreateBuildCodeRefForbidden creates a CreateBuildCodeRefForbidden with default headers values
+func NewCreateBuildCodeRefForbidden() *CreateBuildCodeRefForbidden {
+	return &CreateBuildCodeRefForbidden{}
+}
+
+/*CreateBuildCodeRefForbidden handles this case with default header values.
+
+You don't have permission to access the resource.
+*/
+type CreateBuildCodeRefForbidden struct {
+	Payload interface{}
+}
+
+func (o *CreateBuildCodeRefForbidden) Error() string {
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef][%d] createBuildCodeRefForbidden  %+v", 403, o.Payload)
+}
+
+func (o *CreateBuildCodeRefForbidden) GetPayload() interface{} {
+	return o.Payload
+}
+
+func (o *CreateBuildCodeRefForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+
+	// response payload
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
