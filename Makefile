@@ -78,11 +78,11 @@ generate-py-swagger:
 
 auto-license:
 	# Add licenses to the generated files.
-	$(DOCKER_RUN) find ./ -name "*.go" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.js" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc -c $(LICENSE_OWNER) -l apache {} \;
-	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.go" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.py" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.ts" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.js" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
+	$(DOCKER_RUN) find ./ -name "*.java" -exec $(DOCKER_PATH_AUTOGEN) -i --no-tlc --no-code -c $(LICENSE_OWNER) -l apache {} \;
 
 clean:
 	# Clean current generated code.

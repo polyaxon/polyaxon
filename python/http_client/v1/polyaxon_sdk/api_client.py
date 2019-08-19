@@ -14,15 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
-
-
-def main(argv):
-    pass
-
-
-if __name__ == '__main__':
-    main(sys.argv)
 # coding: utf-8
 """
     Polyaxon sdk
