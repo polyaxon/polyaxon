@@ -36,10 +36,11 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1Dict;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * V1Experiment
@@ -104,7 +105,7 @@ public class V1Experiment {
   private String codeReference = null;
 
   @SerializedName("resources")
-  private V1Dict resources = null;
+  private Map<String, String> resources = null;
 
   @SerializedName("readme")
   private String readme = null;
@@ -113,19 +114,19 @@ public class V1Experiment {
   private Boolean bookmarked = null;
 
   @SerializedName("params")
-  private V1Dict params = null;
+  private Map<String, String> params = null;
 
   @SerializedName("run_env")
-  private V1Dict runEnv = null;
+  private Map<String, String> runEnv = null;
 
   @SerializedName("build_job")
   private String buildJob = null;
 
   @SerializedName("data_refs")
-  private V1Dict dataRefs = null;
+  private Map<String, String> dataRefs = null;
 
   @SerializedName("artifact_refs")
-  private V1Dict artifactRefs = null;
+  private Map<String, String> artifactRefs = null;
 
   @SerializedName("original")
   private String original = null;
@@ -143,7 +144,7 @@ public class V1Experiment {
   private Boolean hasTensorboard = null;
 
   @SerializedName("last_metric")
-  private V1Dict lastMetric = null;
+  private Map<String, Double> lastMetric = null;
 
   public V1Experiment id(String id) {
     this.id = id;
@@ -495,8 +496,16 @@ public class V1Experiment {
     this.codeReference = codeReference;
   }
 
-  public V1Experiment resources(V1Dict resources) {
+  public V1Experiment resources(Map<String, String> resources) {
     this.resources = resources;
+    return this;
+  }
+
+  public V1Experiment putResourcesItem(String key, String resourcesItem) {
+    if (this.resources == null) {
+      this.resources = new HashMap<String, String>();
+    }
+    this.resources.put(key, resourcesItem);
     return this;
   }
 
@@ -505,11 +514,11 @@ public class V1Experiment {
    * @return resources
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getResources() {
+  public Map<String, String> getResources() {
     return resources;
   }
 
-  public void setResources(V1Dict resources) {
+  public void setResources(Map<String, String> resources) {
     this.resources = resources;
   }
 
@@ -549,8 +558,16 @@ public class V1Experiment {
     this.bookmarked = bookmarked;
   }
 
-  public V1Experiment params(V1Dict params) {
+  public V1Experiment params(Map<String, String> params) {
     this.params = params;
+    return this;
+  }
+
+  public V1Experiment putParamsItem(String key, String paramsItem) {
+    if (this.params == null) {
+      this.params = new HashMap<String, String>();
+    }
+    this.params.put(key, paramsItem);
     return this;
   }
 
@@ -559,16 +576,24 @@ public class V1Experiment {
    * @return params
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getParams() {
+  public Map<String, String> getParams() {
     return params;
   }
 
-  public void setParams(V1Dict params) {
+  public void setParams(Map<String, String> params) {
     this.params = params;
   }
 
-  public V1Experiment runEnv(V1Dict runEnv) {
+  public V1Experiment runEnv(Map<String, String> runEnv) {
     this.runEnv = runEnv;
+    return this;
+  }
+
+  public V1Experiment putRunEnvItem(String key, String runEnvItem) {
+    if (this.runEnv == null) {
+      this.runEnv = new HashMap<String, String>();
+    }
+    this.runEnv.put(key, runEnvItem);
     return this;
   }
 
@@ -577,11 +602,11 @@ public class V1Experiment {
    * @return runEnv
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getRunEnv() {
+  public Map<String, String> getRunEnv() {
     return runEnv;
   }
 
-  public void setRunEnv(V1Dict runEnv) {
+  public void setRunEnv(Map<String, String> runEnv) {
     this.runEnv = runEnv;
   }
 
@@ -603,8 +628,16 @@ public class V1Experiment {
     this.buildJob = buildJob;
   }
 
-  public V1Experiment dataRefs(V1Dict dataRefs) {
+  public V1Experiment dataRefs(Map<String, String> dataRefs) {
     this.dataRefs = dataRefs;
+    return this;
+  }
+
+  public V1Experiment putDataRefsItem(String key, String dataRefsItem) {
+    if (this.dataRefs == null) {
+      this.dataRefs = new HashMap<String, String>();
+    }
+    this.dataRefs.put(key, dataRefsItem);
     return this;
   }
 
@@ -613,16 +646,24 @@ public class V1Experiment {
    * @return dataRefs
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getDataRefs() {
+  public Map<String, String> getDataRefs() {
     return dataRefs;
   }
 
-  public void setDataRefs(V1Dict dataRefs) {
+  public void setDataRefs(Map<String, String> dataRefs) {
     this.dataRefs = dataRefs;
   }
 
-  public V1Experiment artifactRefs(V1Dict artifactRefs) {
+  public V1Experiment artifactRefs(Map<String, String> artifactRefs) {
     this.artifactRefs = artifactRefs;
+    return this;
+  }
+
+  public V1Experiment putArtifactRefsItem(String key, String artifactRefsItem) {
+    if (this.artifactRefs == null) {
+      this.artifactRefs = new HashMap<String, String>();
+    }
+    this.artifactRefs.put(key, artifactRefsItem);
     return this;
   }
 
@@ -631,11 +672,11 @@ public class V1Experiment {
    * @return artifactRefs
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getArtifactRefs() {
+  public Map<String, String> getArtifactRefs() {
     return artifactRefs;
   }
 
-  public void setArtifactRefs(V1Dict artifactRefs) {
+  public void setArtifactRefs(Map<String, String> artifactRefs) {
     this.artifactRefs = artifactRefs;
   }
 
@@ -729,8 +770,16 @@ public class V1Experiment {
     this.hasTensorboard = hasTensorboard;
   }
 
-  public V1Experiment lastMetric(V1Dict lastMetric) {
+  public V1Experiment lastMetric(Map<String, Double> lastMetric) {
     this.lastMetric = lastMetric;
+    return this;
+  }
+
+  public V1Experiment putLastMetricItem(String key, Double lastMetricItem) {
+    if (this.lastMetric == null) {
+      this.lastMetric = new HashMap<String, Double>();
+    }
+    this.lastMetric.put(key, lastMetricItem);
     return this;
   }
 
@@ -739,11 +788,11 @@ public class V1Experiment {
    * @return lastMetric
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getLastMetric() {
+  public Map<String, Double> getLastMetric() {
     return lastMetric;
   }
 
-  public void setLastMetric(V1Dict lastMetric) {
+  public void setLastMetric(Map<String, Double> lastMetric) {
     this.lastMetric = lastMetric;
   }
 

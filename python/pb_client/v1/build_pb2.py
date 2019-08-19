@@ -30,10 +30,8 @@ _sym_db = _symbol_database.Default()
 
 
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
-from v1 import base_pb2 as v1_dot_base__pb2
-from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -41,12 +39,123 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0ev1/build.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\"\xe6\x03\n\x05\x42uild\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x13\n\x0b\x62uild_build\x18\x19 \x01(\t\"p\n\x0b\x42uildStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"L\n\x10\x42uildBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05\x62uild\x18\x03 \x01(\x0b\x32\t.v1.Build\"_\n\x12ListBuildsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Build\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"l\n\x19ListBuildStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.v1.BuildStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0ev1/build.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x19google/protobuf/any.proto\x1a,protoc-gen-swagger/options/annotations.proto\"\xa0\x05\n\x05\x42uild\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12+\n\tresources\x18\x14 \x03(\x0b\x32\x18.v1.Build.ResourcesEntry\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12%\n\x06params\x18\x17 \x03(\x0b\x32\x15.v1.Build.ParamsEntry\x12&\n\x07run_env\x18\x18 \x03(\x0b\x32\x15.v1.Build.RunEnvEntry\x12\x13\n\x0b\x62uild_build\x18\x19 \x01(\t\x1a\x30\n\x0eResourcesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bRunEnvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"p\n\x0b\x42uildStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"L\n\x10\x42uildBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05\x62uild\x18\x03 \x01(\x0b\x32\t.v1.Build\"_\n\x12ListBuildsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1a\n\x07results\x18\x02 \x03(\x0b\x32\t.v1.Build\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"l\n\x19ListBuildStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12 \n\x07results\x18\x02 \x03(\x0b\x32\x0f.v1.BuildStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
 
 
+
+_BUILD_RESOURCESENTRY = _descriptor.Descriptor(
+  name='ResourcesEntry',
+  full_name='v1.Build.ResourcesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Build.ResourcesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Build.ResourcesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=656,
+  serialized_end=704,
+)
+
+_BUILD_PARAMSENTRY = _descriptor.Descriptor(
+  name='ParamsEntry',
+  full_name='v1.Build.ParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Build.ParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Build.ParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=706,
+  serialized_end=751,
+)
+
+_BUILD_RUNENVENTRY = _descriptor.Descriptor(
+  name='RunEnvEntry',
+  full_name='v1.Build.RunEnvEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Build.RunEnvEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Build.RunEnvEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=753,
+  serialized_end=798,
+)
 
 _BUILD = _descriptor.Descriptor(
   name='Build',
@@ -190,8 +299,8 @@ _BUILD = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='resources', full_name='v1.Build.resources', index=19,
-      number=20, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=20, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -211,15 +320,15 @@ _BUILD = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='params', full_name='v1.Build.params', index=22,
-      number=23, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=23, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='run_env', full_name='v1.Build.run_env', index=23,
-      number=24, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=24, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -233,7 +342,7 @@ _BUILD = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_BUILD_RESOURCESENTRY, _BUILD_PARAMSENTRY, _BUILD_RUNENVENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -242,8 +351,8 @@ _BUILD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=162,
-  serialized_end=648,
+  serialized_start=126,
+  serialized_end=798,
 )
 
 
@@ -308,8 +417,8 @@ _BUILDSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=650,
-  serialized_end=762,
+  serialized_start=800,
+  serialized_end=912,
 )
 
 
@@ -353,8 +462,8 @@ _BUILDBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=764,
-  serialized_end=840,
+  serialized_start=914,
+  serialized_end=990,
 )
 
 
@@ -405,8 +514,8 @@ _LISTBUILDSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=842,
-  serialized_end=937,
+  serialized_start=992,
+  serialized_end=1087,
 )
 
 
@@ -457,13 +566,16 @@ _LISTBUILDSTATUSESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=939,
-  serialized_end=1047,
+  serialized_start=1089,
+  serialized_end=1197,
 )
 
-_BUILD.fields_by_name['resources'].message_type = v1_dot_base__pb2._DICT
-_BUILD.fields_by_name['params'].message_type = v1_dot_base__pb2._DICT
-_BUILD.fields_by_name['run_env'].message_type = v1_dot_base__pb2._DICT
+_BUILD_RESOURCESENTRY.containing_type = _BUILD
+_BUILD_PARAMSENTRY.containing_type = _BUILD
+_BUILD_RUNENVENTRY.containing_type = _BUILD
+_BUILD.fields_by_name['resources'].message_type = _BUILD_RESOURCESENTRY
+_BUILD.fields_by_name['params'].message_type = _BUILD_PARAMSENTRY
+_BUILD.fields_by_name['run_env'].message_type = _BUILD_RUNENVENTRY
 _BUILDBODYREQUEST.fields_by_name['build'].message_type = _BUILD
 _LISTBUILDSRESPONSE.fields_by_name['results'].message_type = _BUILD
 _LISTBUILDSTATUSESRESPONSE.fields_by_name['results'].message_type = _BUILDSTATUS
@@ -475,11 +587,35 @@ DESCRIPTOR.message_types_by_name['ListBuildStatusesResponse'] = _LISTBUILDSTATUS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Build = _reflection.GeneratedProtocolMessageType('Build', (_message.Message,), {
+
+  'ResourcesEntry' : _reflection.GeneratedProtocolMessageType('ResourcesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _BUILD_RESOURCESENTRY,
+    '__module__' : 'v1.build_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Build.ResourcesEntry)
+    })
+  ,
+
+  'ParamsEntry' : _reflection.GeneratedProtocolMessageType('ParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _BUILD_PARAMSENTRY,
+    '__module__' : 'v1.build_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Build.ParamsEntry)
+    })
+  ,
+
+  'RunEnvEntry' : _reflection.GeneratedProtocolMessageType('RunEnvEntry', (_message.Message,), {
+    'DESCRIPTOR' : _BUILD_RUNENVENTRY,
+    '__module__' : 'v1.build_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Build.RunEnvEntry)
+    })
+  ,
   'DESCRIPTOR' : _BUILD,
   '__module__' : 'v1.build_pb2'
   # @@protoc_insertion_point(class_scope:v1.Build)
   })
 _sym_db.RegisterMessage(Build)
+_sym_db.RegisterMessage(Build.ResourcesEntry)
+_sym_db.RegisterMessage(Build.ParamsEntry)
+_sym_db.RegisterMessage(Build.RunEnvEntry)
 
 BuildStatus = _reflection.GeneratedProtocolMessageType('BuildStatus', (_message.Message,), {
   'DESCRIPTOR' : _BUILDSTATUS,
@@ -510,4 +646,7 @@ ListBuildStatusesResponse = _reflection.GeneratedProtocolMessageType('ListBuildS
 _sym_db.RegisterMessage(ListBuildStatusesResponse)
 
 
+_BUILD_RESOURCESENTRY._options = None
+_BUILD_PARAMSENTRY._options = None
+_BUILD_RUNENVENTRY._options = None
 # @@protoc_insertion_point(module_scope)

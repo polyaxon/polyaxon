@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1a\n\x04\x44ict\x12\x12\n\x02kv\x18\x01 \x03(\x0b\x32\x06.v1.KV\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"B\n\x14OwnedEntityIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x03\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"B\n\x14OwnedEntityIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\n\n\x02id\x18\x03 \x01(\x03\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -82,37 +82,6 @@ _KV = _descriptor.Descriptor(
 )
 
 
-_DICT = _descriptor.Descriptor(
-  name='Dict',
-  full_name='v1.Dict',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='kv', full_name='v1.Dict.kv', index=0,
-      number=1, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=104,
-  serialized_end=130,
-)
-
-
 _OWNERBODYREQUEST = _descriptor.Descriptor(
   name='OwnerBodyRequest',
   full_name='v1.OwnerBodyRequest',
@@ -139,8 +108,8 @@ _OWNERBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=132,
-  serialized_end=165,
+  serialized_start=104,
+  serialized_end=137,
 )
 
 
@@ -177,8 +146,8 @@ _PROJECTBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=167,
-  serialized_end=219,
+  serialized_start=139,
+  serialized_end=191,
 )
 
 
@@ -222,8 +191,8 @@ _OWNEDENTITYIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=221,
-  serialized_end=287,
+  serialized_start=193,
+  serialized_end=259,
 )
 
 
@@ -253,14 +222,12 @@ _STATUSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=289,
-  serialized_end=321,
+  serialized_start=261,
+  serialized_end=293,
 )
 
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
-_DICT.fields_by_name['kv'].message_type = _KV
 DESCRIPTOR.message_types_by_name['KV'] = _KV
-DESCRIPTOR.message_types_by_name['Dict'] = _DICT
 DESCRIPTOR.message_types_by_name['OwnerBodyRequest'] = _OWNERBODYREQUEST
 DESCRIPTOR.message_types_by_name['ProjectBodyRequest'] = _PROJECTBODYREQUEST
 DESCRIPTOR.message_types_by_name['OwnedEntityIdRequest'] = _OWNEDENTITYIDREQUEST
@@ -273,13 +240,6 @@ KV = _reflection.GeneratedProtocolMessageType('KV', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:v1.KV)
   })
 _sym_db.RegisterMessage(KV)
-
-Dict = _reflection.GeneratedProtocolMessageType('Dict', (_message.Message,), {
-  'DESCRIPTOR' : _DICT,
-  '__module__' : 'v1.base_pb2'
-  # @@protoc_insertion_point(class_scope:v1.Dict)
-  })
-_sym_db.RegisterMessage(Dict)
 
 OwnerBodyRequest = _reflection.GeneratedProtocolMessageType('OwnerBodyRequest', (_message.Message,), {
   'DESCRIPTOR' : _OWNERBODYREQUEST,

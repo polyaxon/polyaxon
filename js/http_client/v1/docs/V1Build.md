@@ -22,11 +22,11 @@ Name | Type | Description | Notes
 **framework** | **String** |  | [optional] 
 **last_status** | **String** |  | [optional] 
 **code_reference** | **String** |  | [optional] 
-**resources** | [**V1Dict**](V1Dict.md) |  | [optional] 
+**resources** | **{String: String}** |  | [optional] 
 **readme** | **String** |  | [optional] 
 **bookmarked** | **Boolean** |  | [optional] 
-**params** | [**V1Dict**](V1Dict.md) |  | [optional] 
-**run_env** | [**V1Dict**](V1Dict.md) |  | [optional] 
+**params** | **{String: String}** |  | [optional] 
+**run_env** | **{String: String}** |  | [optional] 
 **build_build** | **String** |  | [optional] 
 
 

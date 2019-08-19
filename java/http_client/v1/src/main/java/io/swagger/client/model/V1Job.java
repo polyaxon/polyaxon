@@ -36,10 +36,11 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1Dict;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * V1Job
@@ -104,7 +105,7 @@ public class V1Job {
   private String codeReference = null;
 
   @SerializedName("resources")
-  private V1Dict resources = null;
+  private Map<String, String> resources = null;
 
   @SerializedName("readme")
   private String readme = null;
@@ -113,19 +114,19 @@ public class V1Job {
   private Boolean bookmarked = null;
 
   @SerializedName("params")
-  private V1Dict params = null;
+  private Map<String, String> params = null;
 
   @SerializedName("run_env")
-  private V1Dict runEnv = null;
+  private Map<String, String> runEnv = null;
 
   @SerializedName("build_job")
   private String buildJob = null;
 
   @SerializedName("data_refs")
-  private V1Dict dataRefs = null;
+  private Map<String, String> dataRefs = null;
 
   @SerializedName("artifact_refs")
-  private V1Dict artifactRefs = null;
+  private Map<String, String> artifactRefs = null;
 
   @SerializedName("original")
   private String original = null;
@@ -483,8 +484,16 @@ public class V1Job {
     this.codeReference = codeReference;
   }
 
-  public V1Job resources(V1Dict resources) {
+  public V1Job resources(Map<String, String> resources) {
     this.resources = resources;
+    return this;
+  }
+
+  public V1Job putResourcesItem(String key, String resourcesItem) {
+    if (this.resources == null) {
+      this.resources = new HashMap<String, String>();
+    }
+    this.resources.put(key, resourcesItem);
     return this;
   }
 
@@ -493,11 +502,11 @@ public class V1Job {
    * @return resources
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getResources() {
+  public Map<String, String> getResources() {
     return resources;
   }
 
-  public void setResources(V1Dict resources) {
+  public void setResources(Map<String, String> resources) {
     this.resources = resources;
   }
 
@@ -537,8 +546,16 @@ public class V1Job {
     this.bookmarked = bookmarked;
   }
 
-  public V1Job params(V1Dict params) {
+  public V1Job params(Map<String, String> params) {
     this.params = params;
+    return this;
+  }
+
+  public V1Job putParamsItem(String key, String paramsItem) {
+    if (this.params == null) {
+      this.params = new HashMap<String, String>();
+    }
+    this.params.put(key, paramsItem);
     return this;
   }
 
@@ -547,16 +564,24 @@ public class V1Job {
    * @return params
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getParams() {
+  public Map<String, String> getParams() {
     return params;
   }
 
-  public void setParams(V1Dict params) {
+  public void setParams(Map<String, String> params) {
     this.params = params;
   }
 
-  public V1Job runEnv(V1Dict runEnv) {
+  public V1Job runEnv(Map<String, String> runEnv) {
     this.runEnv = runEnv;
+    return this;
+  }
+
+  public V1Job putRunEnvItem(String key, String runEnvItem) {
+    if (this.runEnv == null) {
+      this.runEnv = new HashMap<String, String>();
+    }
+    this.runEnv.put(key, runEnvItem);
     return this;
   }
 
@@ -565,11 +590,11 @@ public class V1Job {
    * @return runEnv
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getRunEnv() {
+  public Map<String, String> getRunEnv() {
     return runEnv;
   }
 
-  public void setRunEnv(V1Dict runEnv) {
+  public void setRunEnv(Map<String, String> runEnv) {
     this.runEnv = runEnv;
   }
 
@@ -591,8 +616,16 @@ public class V1Job {
     this.buildJob = buildJob;
   }
 
-  public V1Job dataRefs(V1Dict dataRefs) {
+  public V1Job dataRefs(Map<String, String> dataRefs) {
     this.dataRefs = dataRefs;
+    return this;
+  }
+
+  public V1Job putDataRefsItem(String key, String dataRefsItem) {
+    if (this.dataRefs == null) {
+      this.dataRefs = new HashMap<String, String>();
+    }
+    this.dataRefs.put(key, dataRefsItem);
     return this;
   }
 
@@ -601,16 +634,24 @@ public class V1Job {
    * @return dataRefs
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getDataRefs() {
+  public Map<String, String> getDataRefs() {
     return dataRefs;
   }
 
-  public void setDataRefs(V1Dict dataRefs) {
+  public void setDataRefs(Map<String, String> dataRefs) {
     this.dataRefs = dataRefs;
   }
 
-  public V1Job artifactRefs(V1Dict artifactRefs) {
+  public V1Job artifactRefs(Map<String, String> artifactRefs) {
     this.artifactRefs = artifactRefs;
+    return this;
+  }
+
+  public V1Job putArtifactRefsItem(String key, String artifactRefsItem) {
+    if (this.artifactRefs == null) {
+      this.artifactRefs = new HashMap<String, String>();
+    }
+    this.artifactRefs.put(key, artifactRefsItem);
     return this;
   }
 
@@ -619,11 +660,11 @@ public class V1Job {
    * @return artifactRefs
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getArtifactRefs() {
+  public Map<String, String> getArtifactRefs() {
     return artifactRefs;
   }
 
-  public void setArtifactRefs(V1Dict artifactRefs) {
+  public void setArtifactRefs(Map<String, String> artifactRefs) {
     this.artifactRefs = artifactRefs;
   }
 

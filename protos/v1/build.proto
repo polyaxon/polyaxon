@@ -3,11 +3,8 @@ syntax = "proto3";
 package v1;
 
 import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
 import "protoc-gen-swagger/options/annotations.proto";
-
-import "v1/base.proto";
-import "v1/code_ref.proto";
 
 // Build specification
 message Build {
@@ -69,7 +66,7 @@ message Build {
     int64 code_reference = 19;
 
     // Optional hardware resources requested by this entity
-    Dict resources = 20;
+    map<string, string> resources = 20;
 
     // Optional a readme text describing this entity
     string readme = 21;
@@ -78,10 +75,10 @@ message Build {
     bool bookmarked = 22;
 
     // Optional params of this entity
-    Dict params = 23;
+    map<string, string> params = 23;
 
     // Optional run enivronment tracked
-    Dict run_env = 24;
+    map<string, string> run_env = 24;
 
     // Optional build build name
     string build_build = 25;

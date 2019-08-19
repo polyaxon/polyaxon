@@ -36,10 +36,11 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.V1Dict;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * V1Build
@@ -104,7 +105,7 @@ public class V1Build {
   private String codeReference = null;
 
   @SerializedName("resources")
-  private V1Dict resources = null;
+  private Map<String, String> resources = null;
 
   @SerializedName("readme")
   private String readme = null;
@@ -113,10 +114,10 @@ public class V1Build {
   private Boolean bookmarked = null;
 
   @SerializedName("params")
-  private V1Dict params = null;
+  private Map<String, String> params = null;
 
   @SerializedName("run_env")
-  private V1Dict runEnv = null;
+  private Map<String, String> runEnv = null;
 
   @SerializedName("build_build")
   private String buildBuild = null;
@@ -471,8 +472,16 @@ public class V1Build {
     this.codeReference = codeReference;
   }
 
-  public V1Build resources(V1Dict resources) {
+  public V1Build resources(Map<String, String> resources) {
     this.resources = resources;
+    return this;
+  }
+
+  public V1Build putResourcesItem(String key, String resourcesItem) {
+    if (this.resources == null) {
+      this.resources = new HashMap<String, String>();
+    }
+    this.resources.put(key, resourcesItem);
     return this;
   }
 
@@ -481,11 +490,11 @@ public class V1Build {
    * @return resources
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getResources() {
+  public Map<String, String> getResources() {
     return resources;
   }
 
-  public void setResources(V1Dict resources) {
+  public void setResources(Map<String, String> resources) {
     this.resources = resources;
   }
 
@@ -525,8 +534,16 @@ public class V1Build {
     this.bookmarked = bookmarked;
   }
 
-  public V1Build params(V1Dict params) {
+  public V1Build params(Map<String, String> params) {
     this.params = params;
+    return this;
+  }
+
+  public V1Build putParamsItem(String key, String paramsItem) {
+    if (this.params == null) {
+      this.params = new HashMap<String, String>();
+    }
+    this.params.put(key, paramsItem);
     return this;
   }
 
@@ -535,16 +552,24 @@ public class V1Build {
    * @return params
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getParams() {
+  public Map<String, String> getParams() {
     return params;
   }
 
-  public void setParams(V1Dict params) {
+  public void setParams(Map<String, String> params) {
     this.params = params;
   }
 
-  public V1Build runEnv(V1Dict runEnv) {
+  public V1Build runEnv(Map<String, String> runEnv) {
     this.runEnv = runEnv;
+    return this;
+  }
+
+  public V1Build putRunEnvItem(String key, String runEnvItem) {
+    if (this.runEnv == null) {
+      this.runEnv = new HashMap<String, String>();
+    }
+    this.runEnv.put(key, runEnvItem);
     return this;
   }
 
@@ -553,11 +578,11 @@ public class V1Build {
    * @return runEnv
   **/
   @ApiModelProperty(value = "")
-  public V1Dict getRunEnv() {
+  public Map<String, String> getRunEnv() {
     return runEnv;
   }
 
-  public void setRunEnv(V1Dict runEnv) {
+  public void setRunEnv(Map<String, String> runEnv) {
     this.runEnv = runEnv;
   }
 

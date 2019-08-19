@@ -195,20 +195,17 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
- - [PolyaxonSdk.ProtobufAny](docs/ProtobufAny.md)
  - [PolyaxonSdk.V1Build](docs/V1Build.md)
  - [PolyaxonSdk.V1BuildBodyRequest](docs/V1BuildBodyRequest.md)
  - [PolyaxonSdk.V1BuildStatus](docs/V1BuildStatus.md)
  - [PolyaxonSdk.V1CodeReference](docs/V1CodeReference.md)
  - [PolyaxonSdk.V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
- - [PolyaxonSdk.V1Dict](docs/V1Dict.md)
  - [PolyaxonSdk.V1Experiment](docs/V1Experiment.md)
  - [PolyaxonSdk.V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)
  - [PolyaxonSdk.V1ExperimentStatus](docs/V1ExperimentStatus.md)
  - [PolyaxonSdk.V1Job](docs/V1Job.md)
  - [PolyaxonSdk.V1JobBodyRequest](docs/V1JobBodyRequest.md)
  - [PolyaxonSdk.V1JobStatus](docs/V1JobStatus.md)
- - [PolyaxonSdk.V1KV](docs/V1KV.md)
  - [PolyaxonSdk.V1ListBuildStatusesResponse](docs/V1ListBuildStatusesResponse.md)
  - [PolyaxonSdk.V1ListBuildsResponse](docs/V1ListBuildsResponse.md)
  - [PolyaxonSdk.V1ListExperimentStatusesResponse](docs/V1ListExperimentStatusesResponse.md)

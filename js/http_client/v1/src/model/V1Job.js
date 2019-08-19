@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Dict'], factory);
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1Dict'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Job = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Dict);
+    root.PolyaxonSdk.V1Job = factory(root.PolyaxonSdk.ApiClient);
   }
-}(this, function(ApiClient, V1Dict) {
+}(this, function(ApiClient) {
   'use strict';
 
 
@@ -162,7 +162,7 @@
         obj['code_reference'] = ApiClient.convertToType(data['code_reference'], 'String');
       }
       if (data.hasOwnProperty('resources')) {
-        obj['resources'] = V1Dict.constructFromObject(data['resources']);
+        obj['resources'] = ApiClient.convertToType(data['resources'], {'String': 'String'});
       }
       if (data.hasOwnProperty('readme')) {
         obj['readme'] = ApiClient.convertToType(data['readme'], 'String');
@@ -171,19 +171,19 @@
         obj['bookmarked'] = ApiClient.convertToType(data['bookmarked'], 'Boolean');
       }
       if (data.hasOwnProperty('params')) {
-        obj['params'] = V1Dict.constructFromObject(data['params']);
+        obj['params'] = ApiClient.convertToType(data['params'], {'String': 'String'});
       }
       if (data.hasOwnProperty('run_env')) {
-        obj['run_env'] = V1Dict.constructFromObject(data['run_env']);
+        obj['run_env'] = ApiClient.convertToType(data['run_env'], {'String': 'String'});
       }
       if (data.hasOwnProperty('build_job')) {
         obj['build_job'] = ApiClient.convertToType(data['build_job'], 'String');
       }
       if (data.hasOwnProperty('data_refs')) {
-        obj['data_refs'] = V1Dict.constructFromObject(data['data_refs']);
+        obj['data_refs'] = ApiClient.convertToType(data['data_refs'], {'String': 'String'});
       }
       if (data.hasOwnProperty('artifact_refs')) {
-        obj['artifact_refs'] = V1Dict.constructFromObject(data['artifact_refs']);
+        obj['artifact_refs'] = ApiClient.convertToType(data['artifact_refs'], {'String': 'String'});
       }
       if (data.hasOwnProperty('original')) {
         obj['original'] = ApiClient.convertToType(data['original'], 'String');
@@ -272,7 +272,7 @@
    */
   exports.prototype['code_reference'] = undefined;
   /**
-   * @member {module:model/V1Dict} resources
+   * @member {Object.<String, String>} resources
    */
   exports.prototype['resources'] = undefined;
   /**
@@ -284,11 +284,11 @@
    */
   exports.prototype['bookmarked'] = undefined;
   /**
-   * @member {module:model/V1Dict} params
+   * @member {Object.<String, String>} params
    */
   exports.prototype['params'] = undefined;
   /**
-   * @member {module:model/V1Dict} run_env
+   * @member {Object.<String, String>} run_env
    */
   exports.prototype['run_env'] = undefined;
   /**
@@ -296,11 +296,11 @@
    */
   exports.prototype['build_job'] = undefined;
   /**
-   * @member {module:model/V1Dict} data_refs
+   * @member {Object.<String, String>} data_refs
    */
   exports.prototype['data_refs'] = undefined;
   /**
-   * @member {module:model/V1Dict} artifact_refs
+   * @member {Object.<String, String>} artifact_refs
    */
   exports.prototype['artifact_refs'] = undefined;
   /**

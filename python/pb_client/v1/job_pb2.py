@@ -30,10 +30,7 @@ _sym_db = _symbol_database.Default()
 
 
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
-from v1 import base_pb2 as v1_dot_base__pb2
-from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -41,12 +38,197 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0cv1/job.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\"\xcc\x04\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x11\n\tbuild_job\x18\x19 \x01(\t\x12\x1b\n\tdata_refs\x18\x1a \x01(\x0b\x32\x08.v1.Dict\x12\x1f\n\rartifact_refs\x18\x1b \x01(\x0b\x32\x08.v1.Dict\x12\x10\n\x08original\x18\x1c \x01(\x03\x12\x18\n\x10\x63loning_strategy\x18\x1d \x01(\t\"n\n\tJobStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"F\n\x0eJobBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03job\x18\x03 \x01(\x0b\x32\x07.v1.Job\"[\n\x10ListJobsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Job\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"h\n\x17ListJobStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1e\n\x07results\x18\x02 \x03(\x0b\x32\r.v1.JobStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x0cv1/job.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a,protoc-gen-swagger/options/annotations.proto\"\x84\x07\n\x03Job\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12)\n\tresources\x18\x14 \x03(\x0b\x32\x16.v1.Job.ResourcesEntry\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12#\n\x06params\x18\x17 \x03(\x0b\x32\x13.v1.Job.ParamsEntry\x12$\n\x07run_env\x18\x18 \x03(\x0b\x32\x13.v1.Job.RunEnvEntry\x12\x11\n\tbuild_job\x18\x19 \x01(\t\x12(\n\tdata_refs\x18\x1a \x03(\x0b\x32\x15.v1.Job.DataRefsEntry\x12\x30\n\rartifact_refs\x18\x1b \x03(\x0b\x32\x19.v1.Job.ArtifactRefsEntry\x12\x10\n\x08original\x18\x1c \x01(\x03\x12\x18\n\x10\x63loning_strategy\x18\x1d \x01(\t\x1a\x30\n\x0eResourcesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bRunEnvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rDataRefsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x33\n\x11\x41rtifactRefsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\"n\n\tJobStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"F\n\x0eJobBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x14\n\x03job\x18\x03 \x01(\x0b\x32\x07.v1.Job\"[\n\x10ListJobsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x18\n\x07results\x18\x02 \x03(\x0b\x32\x07.v1.Job\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"h\n\x17ListJobStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1e\n\x07results\x18\x02 \x03(\x0b\x32\r.v1.JobStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
 
 
+
+_JOB_RESOURCESENTRY = _descriptor.Descriptor(
+  name='ResourcesEntry',
+  full_name='v1.Job.ResourcesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Job.ResourcesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Job.ResourcesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=753,
+  serialized_end=801,
+)
+
+_JOB_PARAMSENTRY = _descriptor.Descriptor(
+  name='ParamsEntry',
+  full_name='v1.Job.ParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Job.ParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Job.ParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=803,
+  serialized_end=848,
+)
+
+_JOB_RUNENVENTRY = _descriptor.Descriptor(
+  name='RunEnvEntry',
+  full_name='v1.Job.RunEnvEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Job.RunEnvEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Job.RunEnvEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=850,
+  serialized_end=895,
+)
+
+_JOB_DATAREFSENTRY = _descriptor.Descriptor(
+  name='DataRefsEntry',
+  full_name='v1.Job.DataRefsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Job.DataRefsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Job.DataRefsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=897,
+  serialized_end=944,
+)
+
+_JOB_ARTIFACTREFSENTRY = _descriptor.Descriptor(
+  name='ArtifactRefsEntry',
+  full_name='v1.Job.ArtifactRefsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Job.ArtifactRefsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Job.ArtifactRefsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=946,
+  serialized_end=997,
+)
 
 _JOB = _descriptor.Descriptor(
   name='Job',
@@ -190,8 +372,8 @@ _JOB = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='resources', full_name='v1.Job.resources', index=19,
-      number=20, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=20, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -211,15 +393,15 @@ _JOB = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='params', full_name='v1.Job.params', index=22,
-      number=23, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=23, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='run_env', full_name='v1.Job.run_env', index=23,
-      number=24, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=24, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -232,15 +414,15 @@ _JOB = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='data_refs', full_name='v1.Job.data_refs', index=25,
-      number=26, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=26, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='artifact_refs', full_name='v1.Job.artifact_refs', index=26,
-      number=27, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=27, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -261,7 +443,7 @@ _JOB = _descriptor.Descriptor(
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_JOB_RESOURCESENTRY, _JOB_PARAMSENTRY, _JOB_RUNENVENTRY, _JOB_DATAREFSENTRY, _JOB_ARTIFACTREFSENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -270,8 +452,8 @@ _JOB = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=160,
-  serialized_end=748,
+  serialized_start=97,
+  serialized_end=997,
 )
 
 
@@ -336,8 +518,8 @@ _JOBSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=750,
-  serialized_end=860,
+  serialized_start=999,
+  serialized_end=1109,
 )
 
 
@@ -381,8 +563,8 @@ _JOBBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=862,
-  serialized_end=932,
+  serialized_start=1111,
+  serialized_end=1181,
 )
 
 
@@ -433,8 +615,8 @@ _LISTJOBSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=934,
-  serialized_end=1025,
+  serialized_start=1183,
+  serialized_end=1274,
 )
 
 
@@ -485,15 +667,20 @@ _LISTJOBSTATUSESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1027,
-  serialized_end=1131,
+  serialized_start=1276,
+  serialized_end=1380,
 )
 
-_JOB.fields_by_name['resources'].message_type = v1_dot_base__pb2._DICT
-_JOB.fields_by_name['params'].message_type = v1_dot_base__pb2._DICT
-_JOB.fields_by_name['run_env'].message_type = v1_dot_base__pb2._DICT
-_JOB.fields_by_name['data_refs'].message_type = v1_dot_base__pb2._DICT
-_JOB.fields_by_name['artifact_refs'].message_type = v1_dot_base__pb2._DICT
+_JOB_RESOURCESENTRY.containing_type = _JOB
+_JOB_PARAMSENTRY.containing_type = _JOB
+_JOB_RUNENVENTRY.containing_type = _JOB
+_JOB_DATAREFSENTRY.containing_type = _JOB
+_JOB_ARTIFACTREFSENTRY.containing_type = _JOB
+_JOB.fields_by_name['resources'].message_type = _JOB_RESOURCESENTRY
+_JOB.fields_by_name['params'].message_type = _JOB_PARAMSENTRY
+_JOB.fields_by_name['run_env'].message_type = _JOB_RUNENVENTRY
+_JOB.fields_by_name['data_refs'].message_type = _JOB_DATAREFSENTRY
+_JOB.fields_by_name['artifact_refs'].message_type = _JOB_ARTIFACTREFSENTRY
 _JOBBODYREQUEST.fields_by_name['job'].message_type = _JOB
 _LISTJOBSRESPONSE.fields_by_name['results'].message_type = _JOB
 _LISTJOBSTATUSESRESPONSE.fields_by_name['results'].message_type = _JOBSTATUS
@@ -505,11 +692,51 @@ DESCRIPTOR.message_types_by_name['ListJobStatusesResponse'] = _LISTJOBSTATUSESRE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Job = _reflection.GeneratedProtocolMessageType('Job', (_message.Message,), {
+
+  'ResourcesEntry' : _reflection.GeneratedProtocolMessageType('ResourcesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _JOB_RESOURCESENTRY,
+    '__module__' : 'v1.job_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Job.ResourcesEntry)
+    })
+  ,
+
+  'ParamsEntry' : _reflection.GeneratedProtocolMessageType('ParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _JOB_PARAMSENTRY,
+    '__module__' : 'v1.job_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Job.ParamsEntry)
+    })
+  ,
+
+  'RunEnvEntry' : _reflection.GeneratedProtocolMessageType('RunEnvEntry', (_message.Message,), {
+    'DESCRIPTOR' : _JOB_RUNENVENTRY,
+    '__module__' : 'v1.job_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Job.RunEnvEntry)
+    })
+  ,
+
+  'DataRefsEntry' : _reflection.GeneratedProtocolMessageType('DataRefsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _JOB_DATAREFSENTRY,
+    '__module__' : 'v1.job_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Job.DataRefsEntry)
+    })
+  ,
+
+  'ArtifactRefsEntry' : _reflection.GeneratedProtocolMessageType('ArtifactRefsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _JOB_ARTIFACTREFSENTRY,
+    '__module__' : 'v1.job_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Job.ArtifactRefsEntry)
+    })
+  ,
   'DESCRIPTOR' : _JOB,
   '__module__' : 'v1.job_pb2'
   # @@protoc_insertion_point(class_scope:v1.Job)
   })
 _sym_db.RegisterMessage(Job)
+_sym_db.RegisterMessage(Job.ResourcesEntry)
+_sym_db.RegisterMessage(Job.ParamsEntry)
+_sym_db.RegisterMessage(Job.RunEnvEntry)
+_sym_db.RegisterMessage(Job.DataRefsEntry)
+_sym_db.RegisterMessage(Job.ArtifactRefsEntry)
 
 JobStatus = _reflection.GeneratedProtocolMessageType('JobStatus', (_message.Message,), {
   'DESCRIPTOR' : _JOBSTATUS,
@@ -540,4 +767,9 @@ ListJobStatusesResponse = _reflection.GeneratedProtocolMessageType('ListJobStatu
 _sym_db.RegisterMessage(ListJobStatusesResponse)
 
 
+_JOB_RESOURCESENTRY._options = None
+_JOB_PARAMSENTRY._options = None
+_JOB_RUNENVENTRY._options = None
+_JOB_DATAREFSENTRY._options = None
+_JOB_ARTIFACTREFSENTRY._options = None
 # @@protoc_insertion_point(module_scope)

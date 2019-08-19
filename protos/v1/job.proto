@@ -3,11 +3,7 @@ syntax = "proto3";
 package v1;
 
 import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
 import "protoc-gen-swagger/options/annotations.proto";
-
-import "v1/base.proto";
-import "v1/code_ref.proto";
 
 // Job specification
 message Job {
@@ -69,7 +65,7 @@ message Job {
     int64 code_reference = 19;
 
     // Optional hardware resources requested by this entity
-    Dict resources = 20;
+    map<string, string> resources = 20;
 
     // Optional a readme text describing this entity
     string readme = 21;
@@ -78,19 +74,19 @@ message Job {
     bool bookmarked = 22;
 
     // Optional params of this entity
-    Dict params = 23;
+    map<string, string> params = 23;
 
     // Optional run enivronment tracked
-    Dict run_env = 24;
+    map<string,string> run_env = 24;
 
     // Optional build job name
     string build_job = 25;
 
     // Optional data references of this entity
-    Dict data_refs = 26;
+    map<string, string> data_refs = 26;
 
     // Optional artificat references of this entity
-    Dict artifact_refs = 27;
+    map<string, string> artifact_refs = 27;
 
     // Optional Id of the original job
     int64 original = 28;

@@ -30,10 +30,8 @@ _sym_db = _symbol_database.Default()
 
 
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
-from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
+from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
 from protoc_gen_swagger.options import annotations_pb2 as protoc__gen__swagger_dot_options_dot_annotations__pb2
-from v1 import base_pb2 as v1_dot_base__pb2
-from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -41,12 +39,234 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x13v1/experiment.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\"\xb7\x05\n\nExperiment\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x1b\n\tresources\x18\x14 \x01(\x0b\x32\x08.v1.Dict\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12\x18\n\x06params\x18\x17 \x01(\x0b\x32\x08.v1.Dict\x12\x19\n\x07run_env\x18\x18 \x01(\x0b\x32\x08.v1.Dict\x12\x11\n\tbuild_job\x18\x19 \x01(\t\x12\x1b\n\tdata_refs\x18\x1a \x01(\x0b\x32\x08.v1.Dict\x12\x1f\n\rartifact_refs\x18\x1b \x01(\x0b\x32\x08.v1.Dict\x12\x10\n\x08original\x18\x1c \x01(\x03\x12\x18\n\x10\x63loning_strategy\x18\x1d \x01(\t\x12\x18\n\x10\x65xperiment_group\x18\x1e \x01(\t\x12\x10\n\x08num_jobs\x18\x1f \x01(\x05\x12\x17\n\x0fhas_tensorboard\x18  \x01(\x08\x12\x1d\n\x0blast_metric\x18! \x01(\x0b\x32\x08.v1.Dict\"u\n\x10\x45xperimentStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"[\n\x15\x45xperimentBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\"\n\nexperiment\x18\x03 \x01(\x0b\x32\x0e.v1.Experiment\"i\n\x17ListExperimentsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.Experiment\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"v\n\x1eListExperimentStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12%\n\x07results\x18\x02 \x03(\x0b\x32\x14.v1.ExperimentStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x13v1/experiment.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x19google/protobuf/any.proto\x1a,protoc-gen-swagger/options/annotations.proto\"\xdb\x08\n\nExperiment\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x13\n\x0bunique_name\x18\x03 \x01(\t\x12\x0c\n\x04name\x18\x04 \x01(\t\x12\x13\n\x0b\x64\x65scription\x18\x05 \x01(\t\x12\x0c\n\x04tags\x18\x06 \x03(\t\x12\x0f\n\x07\x64\x65leted\x18\x07 \x01(\x08\x12\x0c\n\x04user\x18\x08 \x01(\t\x12\x12\n\ncreated_at\x18\t \x01(\t\x12\x12\n\nupdated_at\x18\n \x01(\t\x12\x12\n\nstarted_at\x18\x0b \x01(\t\x12\x13\n\x0b\x66inished_at\x18\x0c \x01(\t\x12\x0f\n\x07project\x18\r \x01(\t\x12\x12\n\nis_managed\x18\x0e \x01(\t\x12\x0c\n\x04spec\x18\x0f \x01(\t\x12\x0f\n\x07\x62\x61\x63kend\x18\x10 \x01(\t\x12\x11\n\tframework\x18\x11 \x01(\t\x12\x13\n\x0blast_status\x18\x12 \x01(\t\x12\x16\n\x0e\x63ode_reference\x18\x13 \x01(\x03\x12\x30\n\tresources\x18\x14 \x03(\x0b\x32\x1d.v1.Experiment.ResourcesEntry\x12\x0e\n\x06readme\x18\x15 \x01(\t\x12\x12\n\nbookmarked\x18\x16 \x01(\x08\x12*\n\x06params\x18\x17 \x03(\x0b\x32\x1a.v1.Experiment.ParamsEntry\x12+\n\x07run_env\x18\x18 \x03(\x0b\x32\x1a.v1.Experiment.RunEnvEntry\x12\x11\n\tbuild_job\x18\x19 \x01(\t\x12/\n\tdata_refs\x18\x1a \x03(\x0b\x32\x1c.v1.Experiment.DataRefsEntry\x12\x37\n\rartifact_refs\x18\x1b \x03(\x0b\x32 .v1.Experiment.ArtifactRefsEntry\x12\x10\n\x08original\x18\x1c \x01(\x03\x12\x18\n\x10\x63loning_strategy\x18\x1d \x01(\t\x12\x18\n\x10\x65xperiment_group\x18\x1e \x01(\t\x12\x10\n\x08num_jobs\x18\x1f \x01(\x05\x12\x17\n\x0fhas_tensorboard\x18  \x01(\x08\x12\x33\n\x0blast_metric\x18! \x03(\x0b\x32\x1e.v1.Experiment.LastMetricEntry\x1a\x30\n\x0eResourcesEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bParamsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a-\n\x0bRunEnvEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a/\n\rDataRefsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x33\n\x11\x41rtifactRefsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\x1a\x31\n\x0fLastMetricEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\x01:\x02\x38\x01\"u\n\x10\x45xperimentStatus\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x12\n\ncreated_at\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07message\x18\x06 \x01(\t\"[\n\x15\x45xperimentBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\"\n\nexperiment\x18\x03 \x01(\x0b\x32\x0e.v1.Experiment\"i\n\x17ListExperimentsResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\x1f\n\x07results\x18\x02 \x03(\x0b\x32\x0e.v1.Experiment\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\t\"v\n\x1eListExperimentStatusesResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12%\n\x07results\x18\x02 \x03(\x0b\x32\x14.v1.ExperimentStatus\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
-  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_any__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
 
 
+
+_EXPERIMENT_RESOURCESENTRY = _descriptor.Descriptor(
+  name='ResourcesEntry',
+  full_name='v1.Experiment.ResourcesEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Experiment.ResourcesEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Experiment.ResourcesEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=951,
+  serialized_end=999,
+)
+
+_EXPERIMENT_PARAMSENTRY = _descriptor.Descriptor(
+  name='ParamsEntry',
+  full_name='v1.Experiment.ParamsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Experiment.ParamsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Experiment.ParamsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1001,
+  serialized_end=1046,
+)
+
+_EXPERIMENT_RUNENVENTRY = _descriptor.Descriptor(
+  name='RunEnvEntry',
+  full_name='v1.Experiment.RunEnvEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Experiment.RunEnvEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Experiment.RunEnvEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1048,
+  serialized_end=1093,
+)
+
+_EXPERIMENT_DATAREFSENTRY = _descriptor.Descriptor(
+  name='DataRefsEntry',
+  full_name='v1.Experiment.DataRefsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Experiment.DataRefsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Experiment.DataRefsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1095,
+  serialized_end=1142,
+)
+
+_EXPERIMENT_ARTIFACTREFSENTRY = _descriptor.Descriptor(
+  name='ArtifactRefsEntry',
+  full_name='v1.Experiment.ArtifactRefsEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Experiment.ArtifactRefsEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Experiment.ArtifactRefsEntry.value', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1144,
+  serialized_end=1195,
+)
+
+_EXPERIMENT_LASTMETRICENTRY = _descriptor.Descriptor(
+  name='LastMetricEntry',
+  full_name='v1.Experiment.LastMetricEntry',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='key', full_name='v1.Experiment.LastMetricEntry.key', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='v1.Experiment.LastMetricEntry.value', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=_b('8\001'),
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1197,
+  serialized_end=1246,
+)
 
 _EXPERIMENT = _descriptor.Descriptor(
   name='Experiment',
@@ -190,8 +410,8 @@ _EXPERIMENT = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='resources', full_name='v1.Experiment.resources', index=19,
-      number=20, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=20, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -211,15 +431,15 @@ _EXPERIMENT = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='params', full_name='v1.Experiment.params', index=22,
-      number=23, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=23, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='run_env', full_name='v1.Experiment.run_env', index=23,
-      number=24, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=24, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -232,15 +452,15 @@ _EXPERIMENT = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='data_refs', full_name='v1.Experiment.data_refs', index=25,
-      number=26, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=26, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='artifact_refs', full_name='v1.Experiment.artifact_refs', index=26,
-      number=27, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=27, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -281,15 +501,15 @@ _EXPERIMENT = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='last_metric', full_name='v1.Experiment.last_metric', index=32,
-      number=33, type=11, cpp_type=10, label=1,
-      has_default_value=False, default_value=None,
+      number=33, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
-  nested_types=[],
+  nested_types=[_EXPERIMENT_RESOURCESENTRY, _EXPERIMENT_PARAMSENTRY, _EXPERIMENT_RUNENVENTRY, _EXPERIMENT_DATAREFSENTRY, _EXPERIMENT_ARTIFACTREFSENTRY, _EXPERIMENT_LASTMETRICENTRY, ],
   enum_types=[
   ],
   serialized_options=None,
@@ -298,8 +518,8 @@ _EXPERIMENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=167,
-  serialized_end=862,
+  serialized_start=131,
+  serialized_end=1246,
 )
 
 
@@ -364,8 +584,8 @@ _EXPERIMENTSTATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=864,
-  serialized_end=981,
+  serialized_start=1248,
+  serialized_end=1365,
 )
 
 
@@ -409,8 +629,8 @@ _EXPERIMENTBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=983,
-  serialized_end=1074,
+  serialized_start=1367,
+  serialized_end=1458,
 )
 
 
@@ -461,8 +681,8 @@ _LISTEXPERIMENTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1076,
-  serialized_end=1181,
+  serialized_start=1460,
+  serialized_end=1565,
 )
 
 
@@ -513,16 +733,22 @@ _LISTEXPERIMENTSTATUSESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1183,
-  serialized_end=1301,
+  serialized_start=1567,
+  serialized_end=1685,
 )
 
-_EXPERIMENT.fields_by_name['resources'].message_type = v1_dot_base__pb2._DICT
-_EXPERIMENT.fields_by_name['params'].message_type = v1_dot_base__pb2._DICT
-_EXPERIMENT.fields_by_name['run_env'].message_type = v1_dot_base__pb2._DICT
-_EXPERIMENT.fields_by_name['data_refs'].message_type = v1_dot_base__pb2._DICT
-_EXPERIMENT.fields_by_name['artifact_refs'].message_type = v1_dot_base__pb2._DICT
-_EXPERIMENT.fields_by_name['last_metric'].message_type = v1_dot_base__pb2._DICT
+_EXPERIMENT_RESOURCESENTRY.containing_type = _EXPERIMENT
+_EXPERIMENT_PARAMSENTRY.containing_type = _EXPERIMENT
+_EXPERIMENT_RUNENVENTRY.containing_type = _EXPERIMENT
+_EXPERIMENT_DATAREFSENTRY.containing_type = _EXPERIMENT
+_EXPERIMENT_ARTIFACTREFSENTRY.containing_type = _EXPERIMENT
+_EXPERIMENT_LASTMETRICENTRY.containing_type = _EXPERIMENT
+_EXPERIMENT.fields_by_name['resources'].message_type = _EXPERIMENT_RESOURCESENTRY
+_EXPERIMENT.fields_by_name['params'].message_type = _EXPERIMENT_PARAMSENTRY
+_EXPERIMENT.fields_by_name['run_env'].message_type = _EXPERIMENT_RUNENVENTRY
+_EXPERIMENT.fields_by_name['data_refs'].message_type = _EXPERIMENT_DATAREFSENTRY
+_EXPERIMENT.fields_by_name['artifact_refs'].message_type = _EXPERIMENT_ARTIFACTREFSENTRY
+_EXPERIMENT.fields_by_name['last_metric'].message_type = _EXPERIMENT_LASTMETRICENTRY
 _EXPERIMENTBODYREQUEST.fields_by_name['experiment'].message_type = _EXPERIMENT
 _LISTEXPERIMENTSRESPONSE.fields_by_name['results'].message_type = _EXPERIMENT
 _LISTEXPERIMENTSTATUSESRESPONSE.fields_by_name['results'].message_type = _EXPERIMENTSTATUS
@@ -534,11 +760,59 @@ DESCRIPTOR.message_types_by_name['ListExperimentStatusesResponse'] = _LISTEXPERI
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Experiment = _reflection.GeneratedProtocolMessageType('Experiment', (_message.Message,), {
+
+  'ResourcesEntry' : _reflection.GeneratedProtocolMessageType('ResourcesEntry', (_message.Message,), {
+    'DESCRIPTOR' : _EXPERIMENT_RESOURCESENTRY,
+    '__module__' : 'v1.experiment_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Experiment.ResourcesEntry)
+    })
+  ,
+
+  'ParamsEntry' : _reflection.GeneratedProtocolMessageType('ParamsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _EXPERIMENT_PARAMSENTRY,
+    '__module__' : 'v1.experiment_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Experiment.ParamsEntry)
+    })
+  ,
+
+  'RunEnvEntry' : _reflection.GeneratedProtocolMessageType('RunEnvEntry', (_message.Message,), {
+    'DESCRIPTOR' : _EXPERIMENT_RUNENVENTRY,
+    '__module__' : 'v1.experiment_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Experiment.RunEnvEntry)
+    })
+  ,
+
+  'DataRefsEntry' : _reflection.GeneratedProtocolMessageType('DataRefsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _EXPERIMENT_DATAREFSENTRY,
+    '__module__' : 'v1.experiment_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Experiment.DataRefsEntry)
+    })
+  ,
+
+  'ArtifactRefsEntry' : _reflection.GeneratedProtocolMessageType('ArtifactRefsEntry', (_message.Message,), {
+    'DESCRIPTOR' : _EXPERIMENT_ARTIFACTREFSENTRY,
+    '__module__' : 'v1.experiment_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Experiment.ArtifactRefsEntry)
+    })
+  ,
+
+  'LastMetricEntry' : _reflection.GeneratedProtocolMessageType('LastMetricEntry', (_message.Message,), {
+    'DESCRIPTOR' : _EXPERIMENT_LASTMETRICENTRY,
+    '__module__' : 'v1.experiment_pb2'
+    # @@protoc_insertion_point(class_scope:v1.Experiment.LastMetricEntry)
+    })
+  ,
   'DESCRIPTOR' : _EXPERIMENT,
   '__module__' : 'v1.experiment_pb2'
   # @@protoc_insertion_point(class_scope:v1.Experiment)
   })
 _sym_db.RegisterMessage(Experiment)
+_sym_db.RegisterMessage(Experiment.ResourcesEntry)
+_sym_db.RegisterMessage(Experiment.ParamsEntry)
+_sym_db.RegisterMessage(Experiment.RunEnvEntry)
+_sym_db.RegisterMessage(Experiment.DataRefsEntry)
+_sym_db.RegisterMessage(Experiment.ArtifactRefsEntry)
+_sym_db.RegisterMessage(Experiment.LastMetricEntry)
 
 ExperimentStatus = _reflection.GeneratedProtocolMessageType('ExperimentStatus', (_message.Message,), {
   'DESCRIPTOR' : _EXPERIMENTSTATUS,
@@ -569,4 +843,10 @@ ListExperimentStatusesResponse = _reflection.GeneratedProtocolMessageType('ListE
 _sym_db.RegisterMessage(ListExperimentStatusesResponse)
 
 
+_EXPERIMENT_RESOURCESENTRY._options = None
+_EXPERIMENT_PARAMSENTRY._options = None
+_EXPERIMENT_RUNENVENTRY._options = None
+_EXPERIMENT_DATAREFSENTRY._options = None
+_EXPERIMENT_ARTIFACTREFSENTRY._options = None
+_EXPERIMENT_LASTMETRICENTRY._options = None
 # @@protoc_insertion_point(module_scope)

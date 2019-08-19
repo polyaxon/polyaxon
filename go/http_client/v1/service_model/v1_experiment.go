@@ -22,7 +22,6 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
@@ -31,7 +30,7 @@ import (
 type V1Experiment struct {
 
 	// Optional artificat references of this entity
-	ArtifactRefs *V1Dict `json:"artifact_refs,omitempty"`
+	ArtifactRefs map[string]string `json:"artifact_refs,omitempty"`
 
 	// Optional backend value of this entity
 	Backend string `json:"backend,omitempty"`
@@ -52,7 +51,7 @@ type V1Experiment struct {
 	CreatedAt string `json:"created_at,omitempty"`
 
 	// Optional data references of this entity
-	DataRefs *V1Dict `json:"data_refs,omitempty"`
+	DataRefs map[string]string `json:"data_refs,omitempty"`
 
 	// Optional if the entity has been deleted
 	Deleted bool `json:"deleted,omitempty"`
@@ -79,7 +78,7 @@ type V1Experiment struct {
 	IsManaged string `json:"is_managed,omitempty"`
 
 	// Optional last metrics of this entity
-	LastMetric *V1Dict `json:"last_metric,omitempty"`
+	LastMetric map[string]float64 `json:"last_metric,omitempty"`
 
 	// Optional latest status of this entity
 	LastStatus string `json:"last_status,omitempty"`
@@ -94,7 +93,7 @@ type V1Experiment struct {
 	Original string `json:"original,omitempty"`
 
 	// Optional params of this entity
-	Params *V1Dict `json:"params,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 
 	// Required project name
 	Project string `json:"project,omitempty"`
@@ -103,10 +102,10 @@ type V1Experiment struct {
 	Readme string `json:"readme,omitempty"`
 
 	// Optional hardware resources requested by this entity
-	Resources *V1Dict `json:"resources,omitempty"`
+	Resources map[string]string `json:"resources,omitempty"`
 
 	// Optional run enivronment tracked
-	RunEnv *V1Dict `json:"run_env,omitempty"`
+	RunEnv map[string]string `json:"run_env,omitempty"`
 
 	// Optional content of the entity's spec
 	Spec string `json:"spec,omitempty"`
@@ -132,143 +131,6 @@ type V1Experiment struct {
 
 // Validate validates this v1 experiment
 func (m *V1Experiment) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateArtifactRefs(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateDataRefs(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateLastMetric(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateResources(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRunEnv(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *V1Experiment) validateArtifactRefs(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.ArtifactRefs) { // not required
-		return nil
-	}
-
-	if m.ArtifactRefs != nil {
-		if err := m.ArtifactRefs.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("artifact_refs")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Experiment) validateDataRefs(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.DataRefs) { // not required
-		return nil
-	}
-
-	if m.DataRefs != nil {
-		if err := m.DataRefs.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("data_refs")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Experiment) validateLastMetric(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.LastMetric) { // not required
-		return nil
-	}
-
-	if m.LastMetric != nil {
-		if err := m.LastMetric.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("last_metric")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Experiment) validateParams(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Params) { // not required
-		return nil
-	}
-
-	if m.Params != nil {
-		if err := m.Params.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("params")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Experiment) validateResources(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Resources) { // not required
-		return nil
-	}
-
-	if m.Resources != nil {
-		if err := m.Resources.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resources")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Experiment) validateRunEnv(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.RunEnv) { // not required
-		return nil
-	}
-
-	if m.RunEnv != nil {
-		if err := m.RunEnv.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("run_env")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

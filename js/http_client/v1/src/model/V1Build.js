@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Dict'], factory);
+    define(['ApiClient'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1Dict'));
+    module.exports = factory(require('../ApiClient'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1Build = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Dict);
+    root.PolyaxonSdk.V1Build = factory(root.PolyaxonSdk.ApiClient);
   }
-}(this, function(ApiClient, V1Dict) {
+}(this, function(ApiClient) {
   'use strict';
 
 
@@ -158,7 +158,7 @@
         obj['code_reference'] = ApiClient.convertToType(data['code_reference'], 'String');
       }
       if (data.hasOwnProperty('resources')) {
-        obj['resources'] = V1Dict.constructFromObject(data['resources']);
+        obj['resources'] = ApiClient.convertToType(data['resources'], {'String': 'String'});
       }
       if (data.hasOwnProperty('readme')) {
         obj['readme'] = ApiClient.convertToType(data['readme'], 'String');
@@ -167,10 +167,10 @@
         obj['bookmarked'] = ApiClient.convertToType(data['bookmarked'], 'Boolean');
       }
       if (data.hasOwnProperty('params')) {
-        obj['params'] = V1Dict.constructFromObject(data['params']);
+        obj['params'] = ApiClient.convertToType(data['params'], {'String': 'String'});
       }
       if (data.hasOwnProperty('run_env')) {
-        obj['run_env'] = V1Dict.constructFromObject(data['run_env']);
+        obj['run_env'] = ApiClient.convertToType(data['run_env'], {'String': 'String'});
       }
       if (data.hasOwnProperty('build_build')) {
         obj['build_build'] = ApiClient.convertToType(data['build_build'], 'String');
@@ -256,7 +256,7 @@
    */
   exports.prototype['code_reference'] = undefined;
   /**
-   * @member {module:model/V1Dict} resources
+   * @member {Object.<String, String>} resources
    */
   exports.prototype['resources'] = undefined;
   /**
@@ -268,11 +268,11 @@
    */
   exports.prototype['bookmarked'] = undefined;
   /**
-   * @member {module:model/V1Dict} params
+   * @member {Object.<String, String>} params
    */
   exports.prototype['params'] = undefined;
   /**
-   * @member {module:model/V1Dict} run_env
+   * @member {Object.<String, String>} run_env
    */
   exports.prototype['run_env'] = undefined;
   /**

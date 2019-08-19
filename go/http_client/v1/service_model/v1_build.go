@@ -22,7 +22,6 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
@@ -70,7 +69,7 @@ type V1Build struct {
 	Name string `json:"name,omitempty"`
 
 	// Optional params of this entity
-	Params *V1Dict `json:"params,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
 
 	// Required project name
 	Project string `json:"project,omitempty"`
@@ -79,10 +78,10 @@ type V1Build struct {
 	Readme string `json:"readme,omitempty"`
 
 	// Optional hardware resources requested by this entity
-	Resources *V1Dict `json:"resources,omitempty"`
+	Resources map[string]string `json:"resources,omitempty"`
 
 	// Optional run enivronment tracked
-	RunEnv *V1Dict `json:"run_env,omitempty"`
+	RunEnv map[string]string `json:"run_env,omitempty"`
 
 	// Optional content of the entity's spec
 	Spec string `json:"spec,omitempty"`
@@ -108,77 +107,6 @@ type V1Build struct {
 
 // Validate validates this v1 build
 func (m *V1Build) Validate(formats strfmt.Registry) error {
-	var res []error
-
-	if err := m.validateParams(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateResources(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateRunEnv(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if len(res) > 0 {
-		return errors.CompositeValidationError(res...)
-	}
-	return nil
-}
-
-func (m *V1Build) validateParams(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Params) { // not required
-		return nil
-	}
-
-	if m.Params != nil {
-		if err := m.Params.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("params")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Build) validateResources(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Resources) { // not required
-		return nil
-	}
-
-	if m.Resources != nil {
-		if err := m.Resources.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("resources")
-			}
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (m *V1Build) validateRunEnv(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.RunEnv) { // not required
-		return nil
-	}
-
-	if m.RunEnv != nil {
-		if err := m.RunEnv.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("run_env")
-			}
-			return err
-		}
-	}
-
 	return nil
 }
 

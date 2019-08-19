@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/ProtobufAny', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1Dict', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1Job', 'model/V1JobBodyRequest', 'model/V1JobStatus', 'model/V1KV', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1ListJobStatusesResponse', 'model/V1ListJobsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/BuildServiceApi', 'api/ExperimentServiceApi', 'api/JobServiceApi'], factory);
+    define(['ApiClient', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1Job', 'model/V1JobBodyRequest', 'model/V1JobStatus', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1ListJobStatusesResponse', 'model/V1ListJobsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/BuildServiceApi', 'api/ExperimentServiceApi', 'api/JobServiceApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/ProtobufAny'), require('./model/V1Build'), require('./model/V1BuildBodyRequest'), require('./model/V1BuildStatus'), require('./model/V1CodeReference'), require('./model/V1CodeReferenceBodyRequest'), require('./model/V1Dict'), require('./model/V1Experiment'), require('./model/V1ExperimentBodyRequest'), require('./model/V1ExperimentStatus'), require('./model/V1Job'), require('./model/V1JobBodyRequest'), require('./model/V1JobStatus'), require('./model/V1KV'), require('./model/V1ListBuildStatusesResponse'), require('./model/V1ListBuildsResponse'), require('./model/V1ListExperimentStatusesResponse'), require('./model/V1ListExperimentsResponse'), require('./model/V1ListJobStatusesResponse'), require('./model/V1ListJobsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/BuildServiceApi'), require('./api/ExperimentServiceApi'), require('./api/JobServiceApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/V1Build'), require('./model/V1BuildBodyRequest'), require('./model/V1BuildStatus'), require('./model/V1CodeReference'), require('./model/V1CodeReferenceBodyRequest'), require('./model/V1Experiment'), require('./model/V1ExperimentBodyRequest'), require('./model/V1ExperimentStatus'), require('./model/V1Job'), require('./model/V1JobBodyRequest'), require('./model/V1JobStatus'), require('./model/V1ListBuildStatusesResponse'), require('./model/V1ListBuildsResponse'), require('./model/V1ListExperimentStatusesResponse'), require('./model/V1ListExperimentsResponse'), require('./model/V1ListJobStatusesResponse'), require('./model/V1ListJobsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/BuildServiceApi'), require('./api/ExperimentServiceApi'), require('./api/JobServiceApi'));
   }
-}(function(ApiClient, ProtobufAny, V1Build, V1BuildBodyRequest, V1BuildStatus, V1CodeReference, V1CodeReferenceBodyRequest, V1Dict, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1Job, V1JobBodyRequest, V1JobStatus, V1KV, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1ListJobStatusesResponse, V1ListJobsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, BuildServiceApi, ExperimentServiceApi, JobServiceApi) {
+}(function(ApiClient, V1Build, V1BuildBodyRequest, V1BuildStatus, V1CodeReference, V1CodeReferenceBodyRequest, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1Job, V1JobBodyRequest, V1JobStatus, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1ListJobStatusesResponse, V1ListJobsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, BuildServiceApi, ExperimentServiceApi, JobServiceApi) {
   'use strict';
 
   /**
@@ -77,11 +77,6 @@
      */
     ApiClient: ApiClient,
     /**
-     * The ProtobufAny model constructor.
-     * @property {module:model/ProtobufAny}
-     */
-    ProtobufAny: ProtobufAny,
-    /**
      * The V1Build model constructor.
      * @property {module:model/V1Build}
      */
@@ -106,11 +101,6 @@
      * @property {module:model/V1CodeReferenceBodyRequest}
      */
     V1CodeReferenceBodyRequest: V1CodeReferenceBodyRequest,
-    /**
-     * The V1Dict model constructor.
-     * @property {module:model/V1Dict}
-     */
-    V1Dict: V1Dict,
     /**
      * The V1Experiment model constructor.
      * @property {module:model/V1Experiment}
@@ -141,11 +131,6 @@
      * @property {module:model/V1JobStatus}
      */
     V1JobStatus: V1JobStatus,
-    /**
-     * The V1KV model constructor.
-     * @property {module:model/V1KV}
-     */
-    V1KV: V1KV,
     /**
      * The V1ListBuildStatusesResponse model constructor.
      * @property {module:model/V1ListBuildStatusesResponse}

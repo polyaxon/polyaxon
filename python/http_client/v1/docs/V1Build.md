@@ -22,11 +22,11 @@ Name | Type | Description | Notes
 **framework** | **str** |  | [optional] 
 **last_status** | **str** |  | [optional] 
 **code_reference** | **str** |  | [optional] 
-**resources** | [**V1Dict**](V1Dict.md) |  | [optional] 
+**resources** | **dict(str, str)** |  | [optional] 
 **readme** | **str** |  | [optional] 
 **bookmarked** | **bool** |  | [optional] 
-**params** | [**V1Dict**](V1Dict.md) |  | [optional] 
-**run_env** | [**V1Dict**](V1Dict.md) |  | [optional] 
+**params** | **dict(str, str)** |  | [optional] 
+**run_env** | **dict(str, str)** |  | [optional] 
 **build_build** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

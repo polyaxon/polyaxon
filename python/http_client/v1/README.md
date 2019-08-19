@@ -144,20 +144,17 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [ProtobufAny](docs/ProtobufAny.md)
  - [V1Build](docs/V1Build.md)
  - [V1BuildBodyRequest](docs/V1BuildBodyRequest.md)
  - [V1BuildStatus](docs/V1BuildStatus.md)
  - [V1CodeReference](docs/V1CodeReference.md)
  - [V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
- - [V1Dict](docs/V1Dict.md)
  - [V1Experiment](docs/V1Experiment.md)
  - [V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)
  - [V1ExperimentStatus](docs/V1ExperimentStatus.md)
  - [V1Job](docs/V1Job.md)
  - [V1JobBodyRequest](docs/V1JobBodyRequest.md)
  - [V1JobStatus](docs/V1JobStatus.md)
- - [V1KV](docs/V1KV.md)
  - [V1ListBuildStatusesResponse](docs/V1ListBuildStatusesResponse.md)
  - [V1ListBuildsResponse](docs/V1ListBuildsResponse.md)
  - [V1ListExperimentStatusesResponse](docs/V1ListExperimentStatusesResponse.md)

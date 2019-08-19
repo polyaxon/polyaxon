@@ -9,10 +9,6 @@ message KV {
     google.protobuf.Any value = 2;
 }
 
-message Dict {
-    repeated KV kv = 1;
- }
-
 // Request data with owner namespace
 message OwnerBodyRequest {
     // Owner of the namespace
