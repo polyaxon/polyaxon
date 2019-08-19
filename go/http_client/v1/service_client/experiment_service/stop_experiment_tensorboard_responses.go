@@ -68,7 +68,7 @@ type StopExperimentTensorboardOK struct {
 }
 
 func (o *StopExperimentTensorboardOK) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/experiments/{id}/tensorboard/stop][%d] stopExperimentTensorboardOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop][%d] stopExperimentTensorboardOK  %+v", 200, o.Payload)
 }
 
 func (o *StopExperimentTensorboardOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type StopExperimentTensorboardNotFound struct {
 }
 
 func (o *StopExperimentTensorboardNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/experiments/{id}/tensorboard/stop][%d] stopExperimentTensorboardNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop][%d] stopExperimentTensorboardNotFound  %+v", 404, o.Payload)
 }
 
 func (o *StopExperimentTensorboardNotFound) GetPayload() string {

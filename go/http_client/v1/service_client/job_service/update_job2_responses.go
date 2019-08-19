@@ -70,7 +70,7 @@ type UpdateJob2OK struct {
 }
 
 func (o *UpdateJob2OK) Error() string {
-	return fmt.Sprintf("[PUT /v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2OK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2OK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateJob2OK) GetPayload() *service_model.V1Job {
@@ -103,7 +103,7 @@ type UpdateJob2NotFound struct {
 }
 
 func (o *UpdateJob2NotFound) Error() string {
-	return fmt.Sprintf("[PUT /v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2NotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2NotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateJob2NotFound) GetPayload() string {

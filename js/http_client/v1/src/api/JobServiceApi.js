@@ -117,7 +117,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/archive', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/archive', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -178,7 +178,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/bookmark', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/bookmark', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -238,7 +238,7 @@
       var returnType = V1Job;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs', 'POST',
+        '/api/v1/{owner}/{project}/jobs', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -305,7 +305,7 @@
       var returnType = V1CodeReference;
 
       return this.apiClient.callApi(
-        '/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef', 'POST',
+        '/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -372,7 +372,7 @@
       var returnType = V1JobStatus;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/statuses', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/statuses', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -433,7 +433,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}', 'DELETE',
+        '/api/v1/{owner}/{project}/jobs/{id}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -493,7 +493,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/delete', 'DELETE',
+        '/api/v1/{owner}/{project}/jobs/delete', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -554,7 +554,7 @@
       var returnType = V1Job;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}', 'GET',
+        '/api/v1/{owner}/{project}/jobs/{id}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -615,7 +615,7 @@
       var returnType = V1CodeReference;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/coderef', 'GET',
+        '/api/v1/{owner}/{project}/jobs/{id}/coderef', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -662,7 +662,7 @@
       var returnType = V1ListJobsResponse;
 
       return this.apiClient.callApi(
-        '/v1/archives/{owner}/jobs', 'GET',
+        '/api/v1/archives/{owner}/jobs', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -709,7 +709,7 @@
       var returnType = V1ListJobsResponse;
 
       return this.apiClient.callApi(
-        '/v1/bookmarks/{owner}/jobs', 'GET',
+        '/api/v1/bookmarks/{owner}/jobs', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -770,7 +770,7 @@
       var returnType = V1ListJobStatusesResponse;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/statuses', 'GET',
+        '/api/v1/{owner}/{project}/jobs/{id}/statuses', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -824,7 +824,7 @@
       var returnType = V1ListJobsResponse;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs', 'GET',
+        '/api/v1/{owner}/{project}/jobs', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -891,7 +891,7 @@
       var returnType = V1Job;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/restart', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/restart', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -952,7 +952,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/restore', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/restore', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1019,7 +1019,7 @@
       var returnType = V1Job;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/resume', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/resume', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1086,7 +1086,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/stop', 'POST',
+        '/api/v1/{owner}/{project}/jobs/{id}/stop', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1146,7 +1146,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/stop', 'POST',
+        '/api/v1/{owner}/{project}/jobs/stop', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1207,7 +1207,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{id}/unbookmark', 'DELETE',
+        '/api/v1/{owner}/{project}/jobs/{id}/unbookmark', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1274,7 +1274,7 @@
       var returnType = V1Job;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/jobs/{job.id}', 'PUT',
+        '/api/v1/{owner}/{project}/jobs/{job.id}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

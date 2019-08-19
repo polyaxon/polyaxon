@@ -68,7 +68,7 @@ type ArchiveBuildOK struct {
 }
 
 func (o *ArchiveBuildOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/archive][%d] archiveBuildOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/archive][%d] archiveBuildOK  %+v", 200, o.Payload)
 }
 
 func (o *ArchiveBuildOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type ArchiveBuildNotFound struct {
 }
 
 func (o *ArchiveBuildNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/archive][%d] archiveBuildNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/archive][%d] archiveBuildNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ArchiveBuildNotFound) GetPayload() string {

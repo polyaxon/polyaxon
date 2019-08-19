@@ -52,7 +52,7 @@ func (a *Client) ArchiveBuild(params *ArchiveBuildParams) (*ArchiveBuildOK, erro
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ArchiveBuild",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/archive",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -86,7 +86,7 @@ func (a *Client) BookmarkBuild(params *BookmarkBuildParams) (*BookmarkBuildOK, e
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "BookmarkBuild",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/bookmark",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -120,7 +120,7 @@ func (a *Client) CreateBuild(params *CreateBuildParams) (*CreateBuildOK, error) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateBuild",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds",
+		PathPattern:        "/api/v1/{owner}/{project}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -154,7 +154,7 @@ func (a *Client) CreateBuildCodeRef(params *CreateBuildCodeRefParams) (*CreateBu
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateBuildCodeRef",
 		Method:             "POST",
-		PathPattern:        "/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -188,7 +188,7 @@ func (a *Client) CreateBuildStatus(params *CreateBuildStatusParams) (*CreateBuil
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateBuildStatus",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/statuses",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -222,7 +222,7 @@ func (a *Client) DeleteBuild(params *DeleteBuildParams) (*DeleteBuildOK, error) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteBuild",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -256,7 +256,7 @@ func (a *Client) DeleteBuilds(params *DeleteBuildsParams) (*DeleteBuildsOK, erro
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteBuilds",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/builds/delete",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -290,7 +290,7 @@ func (a *Client) GetBuild(params *GetBuildParams) (*GetBuildOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetBuild",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -324,7 +324,7 @@ func (a *Client) GetBuildCodeRef(params *GetBuildCodeRefParams) (*GetBuildCodeRe
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetBuildCodeRef",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/coderef",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -358,7 +358,7 @@ func (a *Client) ListArchivedBuilds(params *ListArchivedBuildsParams) (*ListArch
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArchivedBuilds",
 		Method:             "GET",
-		PathPattern:        "/v1/archives/{owner}/builds",
+		PathPattern:        "/api/v1/archives/{owner}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -392,7 +392,7 @@ func (a *Client) ListBookmarkedBuilds(params *ListBookmarkedBuildsParams) (*List
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBookmarkedBuilds",
 		Method:             "GET",
-		PathPattern:        "/v1/bookmarks/{owner}/builds",
+		PathPattern:        "/api/v1/bookmarks/{owner}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -426,7 +426,7 @@ func (a *Client) ListBuildStatuses(params *ListBuildStatusesParams) (*ListBuildS
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBuildStatuses",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/statuses",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -460,7 +460,7 @@ func (a *Client) ListBuilds(params *ListBuildsParams) (*ListBuildsOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBuilds",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/builds",
+		PathPattern:        "/api/v1/{owner}/{project}/builds",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -494,7 +494,7 @@ func (a *Client) RestartBuild(params *RestartBuildParams) (*RestartBuildOK, erro
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestartBuild",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/restart",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -528,7 +528,7 @@ func (a *Client) RestoreBuild(params *RestoreBuildParams) (*RestoreBuildOK, erro
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestoreBuild",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/restore",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -562,7 +562,7 @@ func (a *Client) StopBuild(params *StopBuildParams) (*StopBuildOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopBuild",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -596,7 +596,7 @@ func (a *Client) StopBuilds(params *StopBuildsParams) (*StopBuildsOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopBuilds",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/builds/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -630,7 +630,7 @@ func (a *Client) UnBookmarkBuild(params *UnBookmarkBuildParams) (*UnBookmarkBuil
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UnBookmarkBuild",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/builds/{id}/unbookmark",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{id}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -664,7 +664,7 @@ func (a *Client) UpdateBuild2(params *UpdateBuild2Params) (*UpdateBuild2OK, erro
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateBuild2",
 		Method:             "PUT",
-		PathPattern:        "/v1/{owner}/{project}/builds/{build.id}",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{build.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

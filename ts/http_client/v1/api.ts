@@ -1253,7 +1253,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling archiveBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/archive`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/archive`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1294,7 +1294,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling bookmarkBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/bookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/bookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1335,7 +1335,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds`
+            const localVarPath = `/api/v1/{owner}/{project}/builds`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -1384,7 +1384,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createBuildCodeRef.');
             }
-            const localVarPath = `/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef`
+            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef`
                 .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
                 .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
                 .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
@@ -1434,7 +1434,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createBuildStatus.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1479,7 +1479,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling deleteBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1520,7 +1520,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling deleteBuilds.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/delete`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/delete`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -1564,7 +1564,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling getBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1605,7 +1605,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling getBuildCodeRef.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/coderef`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/coderef`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1636,7 +1636,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedBuilds.');
             }
-            const localVarPath = `/v1/archives/{owner}/builds`
+            const localVarPath = `/api/v1/archives/{owner}/builds`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -1665,7 +1665,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedBuilds.');
             }
-            const localVarPath = `/v1/bookmarks/{owner}/builds`
+            const localVarPath = `/api/v1/bookmarks/{owner}/builds`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -1704,7 +1704,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling listBuildStatuses.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1740,7 +1740,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (project === null || project === undefined) {
                 throw new RequiredError('project','Required parameter project was null or undefined when calling listBuilds.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds`
+            const localVarPath = `/api/v1/{owner}/{project}/builds`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -1785,7 +1785,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling restartBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/restart`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/restart`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1830,7 +1830,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling restoreBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/restore`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/restore`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1876,7 +1876,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling stopBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -1921,7 +1921,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling stopBuilds.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -1965,7 +1965,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling unBookmarkBuild.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{id}/unbookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/unbookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -2011,7 +2011,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling updateBuild2.');
             }
-            const localVarPath = `/v1/{owner}/{project}/builds/{build.id}`
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{build.id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"build.id"}}`, encodeURIComponent(String(build_id)));
@@ -2985,7 +2985,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling archiveExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/archive`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/archive`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3026,7 +3026,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling bookmarkExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/bookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/bookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3067,7 +3067,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3116,7 +3116,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createExperimentCodeRef.');
             }
-            const localVarPath = `/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef`
+            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef`
                 .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
                 .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
                 .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
@@ -3166,7 +3166,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createExperimentStatus.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3211,7 +3211,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling deleteExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3252,7 +3252,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling deleteExperiments.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/delete`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/delete`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3296,7 +3296,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling getExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3337,7 +3337,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling getExperimentCodeRef.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/coderef`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/coderef`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3368,7 +3368,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedExperiments.');
             }
-            const localVarPath = `/v1/archives/{owner}/experiments`
+            const localVarPath = `/api/v1/archives/{owner}/experiments`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -3397,7 +3397,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedExperiments.');
             }
-            const localVarPath = `/v1/bookmarks/{owner}/experiments`
+            const localVarPath = `/api/v1/bookmarks/{owner}/experiments`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -3436,7 +3436,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling listExperimentStatuses.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3472,7 +3472,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (project === null || project === undefined) {
                 throw new RequiredError('project','Required parameter project was null or undefined when calling listExperiments.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3517,7 +3517,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling restartExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/restart`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/restart`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3562,7 +3562,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling restoreExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/restore`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/restore`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3608,7 +3608,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling resumeExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/resume`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/resume`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3658,7 +3658,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling startExperimentTensorboard.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/tensorboard/start`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3708,7 +3708,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling stopExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3753,7 +3753,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling stopExperimentTensorboard.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/tensorboard/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3794,7 +3794,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling stopExperiments.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3838,7 +3838,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling unBookmarkExperiment.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{id}/unbookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/unbookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -3884,7 +3884,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling updateExperiment2.');
             }
-            const localVarPath = `/v1/{owner}/{project}/experiments/{experiment.id}`
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{experiment.id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"experiment.id"}}`, encodeURIComponent(String(experiment_id)));
@@ -5005,7 +5005,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling archiveJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/archive`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/archive`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5046,7 +5046,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling bookmarkJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/bookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/bookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5087,7 +5087,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -5136,7 +5136,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createJobCodeRef.');
             }
-            const localVarPath = `/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef`
+            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef`
                 .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
                 .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
                 .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
@@ -5186,7 +5186,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling createJobStatus.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5231,7 +5231,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling deleteJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5272,7 +5272,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling deleteJobs.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/delete`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/delete`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -5316,7 +5316,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling getJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5357,7 +5357,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling getJobCodeRef.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/coderef`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/coderef`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5388,7 +5388,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedJobs.');
             }
-            const localVarPath = `/v1/archives/{owner}/jobs`
+            const localVarPath = `/api/v1/archives/{owner}/jobs`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -5417,7 +5417,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedJobs.');
             }
-            const localVarPath = `/v1/bookmarks/{owner}/jobs`
+            const localVarPath = `/api/v1/bookmarks/{owner}/jobs`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
@@ -5456,7 +5456,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling listJobStatuses.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5492,7 +5492,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (project === null || project === undefined) {
                 throw new RequiredError('project','Required parameter project was null or undefined when calling listJobs.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -5537,7 +5537,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling restartJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/restart`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/restart`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5582,7 +5582,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling restoreJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/restore`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/restore`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5628,7 +5628,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling resumeJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/resume`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/resume`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5678,7 +5678,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling stopJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5723,7 +5723,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling stopJobs.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/stop`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -5767,7 +5767,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (id === null || id === undefined) {
                 throw new RequiredError('id','Required parameter id was null or undefined when calling unBookmarkJob.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{id}/unbookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/unbookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
@@ -5813,7 +5813,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             if (body === null || body === undefined) {
                 throw new RequiredError('body','Required parameter body was null or undefined when calling updateJob2.');
             }
-            const localVarPath = `/v1/{owner}/{project}/jobs/{job.id}`
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{job.id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
                 .replace(`{${"job.id"}}`, encodeURIComponent(String(job_id)));

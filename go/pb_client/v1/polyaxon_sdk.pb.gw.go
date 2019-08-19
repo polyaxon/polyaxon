@@ -3763,47 +3763,47 @@ func RegisterBuildServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 }
 
 var (
-	pattern_BuildService_ListBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "owner", "project", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_ListBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_ListBookmarkedBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "bookmarks", "owner", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_ListBookmarkedBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "owner", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_ListArchivedBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "archives", "owner", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_ListArchivedBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "owner", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_CreateBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "owner", "project", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_CreateBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "builds"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_GetBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "builds", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_GetBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_UpdateBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_UpdateBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_UpdateBuild_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_UpdateBuild_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_DeleteBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "builds", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_DeleteBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_DeleteBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "owner", "project", "builds", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_DeleteBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "builds", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_StopBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_StopBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_StopBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "owner", "project", "builds", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_StopBuilds_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "builds", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_RestartBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_RestartBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_ArchiveBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_ArchiveBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_RestoreBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_RestoreBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_BookmarkBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_BookmarkBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_UnBookmarkBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_UnBookmarkBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_GetBuildStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_GetBuildStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_ListBuildStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_ListBuildStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_CreateBuildStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_CreateBuildStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_GetBuildCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "builds", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_GetBuildCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "builds", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_CreateBuildCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "entity.owner", "entity.project", "builds", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_CreateBuildCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "entity.owner", "entity.project", "builds", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -4332,49 +4332,49 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_JobService_ListJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "owner", "project", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_ListJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_ListBookmarkedJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "bookmarks", "owner", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_ListBookmarkedJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "owner", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_ListArchivedJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "archives", "owner", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_ListArchivedJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "owner", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_CreateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "owner", "project", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_CreateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "jobs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_GetJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "jobs", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_GetJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_UpdateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_UpdateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_UpdateJob_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_UpdateJob_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_DeleteJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "jobs", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_DeleteJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_DeleteJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "owner", "project", "jobs", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_DeleteJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "jobs", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_StopJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_StopJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_StopJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "owner", "project", "jobs", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_StopJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "jobs", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_RestartJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_RestartJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_ResumeJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_ResumeJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_ArchiveJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_ArchiveJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_RestoreJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_RestoreJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_BookmarkJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_BookmarkJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_UnBookmarkJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_UnBookmarkJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_GetJobStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_GetJobStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_ListJobStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_ListJobStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_CreateJobStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_CreateJobStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_GetJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "jobs", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_GetJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "jobs", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_CreateJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "entity.owner", "entity.project", "jobs", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_CreateJobCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "entity.owner", "entity.project", "jobs", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -4945,53 +4945,53 @@ func RegisterExperimentServiceHandlerClient(ctx context.Context, mux *runtime.Se
 }
 
 var (
-	pattern_ExperimentService_ListExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "owner", "project", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_ListExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_ListBookmarkedExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "bookmarks", "owner", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_ListBookmarkedExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "owner", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_ListArchivedExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "archives", "owner", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_ListArchivedExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "owner", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_CreateExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "owner", "project", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_CreateExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "experiments"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_GetExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "experiments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_GetExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_UpdateExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_UpdateExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_UpdateExperiment_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_UpdateExperiment_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_DeleteExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "owner", "project", "experiments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_DeleteExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_DeleteExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "owner", "project", "experiments", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_DeleteExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "experiments", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_StopExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_StopExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_StopExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"v1", "owner", "project", "experiments", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_StopExperiments_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "experiments", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_RestartExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_RestartExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_ResumeExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_ResumeExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_ArchiveExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_ArchiveExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_RestoreExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_RestoreExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_BookmarkExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_BookmarkExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_UnBookmarkExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_UnBookmarkExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_StartExperimentTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"v1", "owner", "project", "experiments", "id", "tensorboard", "start"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_StartExperimentTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "owner", "project", "experiments", "id", "tensorboard", "start"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_StopExperimentTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"v1", "owner", "project", "experiments", "id", "tensorboard", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_StopExperimentTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "owner", "project", "experiments", "id", "tensorboard", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_GetExperimentStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_GetExperimentStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_ListExperimentStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_ListExperimentStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_CreateExperimentStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_CreateExperimentStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_GetExperimentCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "owner", "project", "experiments", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_GetExperimentCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "experiments", "id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_CreateExperimentCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "entity.owner", "entity.project", "experiments", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_CreateExperimentCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "entity.owner", "entity.project", "experiments", "entity.id", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

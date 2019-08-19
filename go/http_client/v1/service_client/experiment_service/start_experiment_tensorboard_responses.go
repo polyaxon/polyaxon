@@ -68,7 +68,7 @@ type StartExperimentTensorboardOK struct {
 }
 
 func (o *StartExperimentTensorboardOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/tensorboard/start][%d] startExperimentTensorboardOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/tensorboard/start][%d] startExperimentTensorboardOK  %+v", 200, o.Payload)
 }
 
 func (o *StartExperimentTensorboardOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type StartExperimentTensorboardNotFound struct {
 }
 
 func (o *StartExperimentTensorboardNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/tensorboard/start][%d] startExperimentTensorboardNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/tensorboard/start][%d] startExperimentTensorboardNotFound  %+v", 404, o.Payload)
 }
 
 func (o *StartExperimentTensorboardNotFound) GetPayload() string {

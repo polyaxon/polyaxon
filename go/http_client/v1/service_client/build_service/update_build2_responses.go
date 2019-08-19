@@ -70,7 +70,7 @@ type UpdateBuild2OK struct {
 }
 
 func (o *UpdateBuild2OK) Error() string {
-	return fmt.Sprintf("[PUT /v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2OK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2OK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateBuild2OK) GetPayload() *service_model.V1Build {
@@ -103,7 +103,7 @@ type UpdateBuild2NotFound struct {
 }
 
 func (o *UpdateBuild2NotFound) Error() string {
-	return fmt.Sprintf("[PUT /v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2NotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2NotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateBuild2NotFound) GetPayload() string {

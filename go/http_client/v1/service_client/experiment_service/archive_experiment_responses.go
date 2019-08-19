@@ -68,7 +68,7 @@ type ArchiveExperimentOK struct {
 }
 
 func (o *ArchiveExperimentOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/archive][%d] archiveExperimentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/archive][%d] archiveExperimentOK  %+v", 200, o.Payload)
 }
 
 func (o *ArchiveExperimentOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type ArchiveExperimentNotFound struct {
 }
 
 func (o *ArchiveExperimentNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/archive][%d] archiveExperimentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/archive][%d] archiveExperimentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ArchiveExperimentNotFound) GetPayload() string {

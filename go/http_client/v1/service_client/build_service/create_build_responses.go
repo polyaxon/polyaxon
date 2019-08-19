@@ -70,7 +70,7 @@ type CreateBuildOK struct {
 }
 
 func (o *CreateBuildOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds][%d] createBuildOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds][%d] createBuildOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateBuildOK) GetPayload() *service_model.V1Build {
@@ -103,7 +103,7 @@ type CreateBuildNotFound struct {
 }
 
 func (o *CreateBuildNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds][%d] createBuildNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds][%d] createBuildNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateBuildNotFound) GetPayload() string {

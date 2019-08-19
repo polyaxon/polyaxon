@@ -73,67 +73,67 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*BuildServiceApi* | [**archive_build**](docs/BuildServiceApi.md#archive_build) | **POST** /v1/{owner}/{project}/builds/{id}/archive | Archive build
-*BuildServiceApi* | [**bookmark_build**](docs/BuildServiceApi.md#bookmark_build) | **POST** /v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
-*BuildServiceApi* | [**create_build**](docs/BuildServiceApi.md#create_build) | **POST** /v1/{owner}/{project}/builds | Create new build
-*BuildServiceApi* | [**create_build_code_ref**](docs/BuildServiceApi.md#create_build_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
-*BuildServiceApi* | [**create_build_status**](docs/BuildServiceApi.md#create_build_status) | **POST** /v1/{owner}/{project}/builds/{id}/statuses | Create new build status
-*BuildServiceApi* | [**delete_build**](docs/BuildServiceApi.md#delete_build) | **DELETE** /v1/{owner}/{project}/builds/{id} | Delete build
-*BuildServiceApi* | [**delete_builds**](docs/BuildServiceApi.md#delete_builds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
-*BuildServiceApi* | [**get_build**](docs/BuildServiceApi.md#get_build) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
-*BuildServiceApi* | [**get_build_code_ref**](docs/BuildServiceApi.md#get_build_code_ref) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-*BuildServiceApi* | [**list_archived_builds**](docs/BuildServiceApi.md#list_archived_builds) | **GET** /v1/archives/{owner}/builds | List archived builds
-*BuildServiceApi* | [**list_bookmarked_builds**](docs/BuildServiceApi.md#list_bookmarked_builds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
-*BuildServiceApi* | [**list_build_statuses**](docs/BuildServiceApi.md#list_build_statuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
-*BuildServiceApi* | [**list_builds**](docs/BuildServiceApi.md#list_builds) | **GET** /v1/{owner}/{project}/builds | List builds
-*BuildServiceApi* | [**restart_build**](docs/BuildServiceApi.md#restart_build) | **POST** /v1/{owner}/{project}/builds/{id}/restart | Restart build
-*BuildServiceApi* | [**restore_build**](docs/BuildServiceApi.md#restore_build) | **POST** /v1/{owner}/{project}/builds/{id}/restore | Restore build
-*BuildServiceApi* | [**stop_build**](docs/BuildServiceApi.md#stop_build) | **POST** /v1/{owner}/{project}/builds/{id}/stop | Stop build
-*BuildServiceApi* | [**stop_builds**](docs/BuildServiceApi.md#stop_builds) | **POST** /v1/{owner}/{project}/builds/stop | Stop builds
-*BuildServiceApi* | [**un_bookmark_build**](docs/BuildServiceApi.md#un_bookmark_build) | **DELETE** /v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-*BuildServiceApi* | [**update_build2**](docs/BuildServiceApi.md#update_build2) | **PUT** /v1/{owner}/{project}/builds/{build.id} | Update build
-*ExperimentServiceApi* | [**archive_experiment**](docs/ExperimentServiceApi.md#archive_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/archive | Restore build
-*ExperimentServiceApi* | [**bookmark_experiment**](docs/ExperimentServiceApi.md#bookmark_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
-*ExperimentServiceApi* | [**create_experiment**](docs/ExperimentServiceApi.md#create_experiment) | **POST** /v1/{owner}/{project}/experiments | Create new build
-*ExperimentServiceApi* | [**create_experiment_code_ref**](docs/ExperimentServiceApi.md#create_experiment_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
-*ExperimentServiceApi* | [**create_experiment_status**](docs/ExperimentServiceApi.md#create_experiment_status) | **POST** /v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
-*ExperimentServiceApi* | [**delete_experiment**](docs/ExperimentServiceApi.md#delete_experiment) | **DELETE** /v1/{owner}/{project}/experiments/{id} | Delete build
-*ExperimentServiceApi* | [**delete_experiments**](docs/ExperimentServiceApi.md#delete_experiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete builds
-*ExperimentServiceApi* | [**get_experiment**](docs/ExperimentServiceApi.md#get_experiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get build
-*ExperimentServiceApi* | [**get_experiment_code_ref**](docs/ExperimentServiceApi.md#get_experiment_code_ref) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-*ExperimentServiceApi* | [**list_archived_experiments**](docs/ExperimentServiceApi.md#list_archived_experiments) | **GET** /v1/archives/{owner}/experiments | List archived builds
-*ExperimentServiceApi* | [**list_bookmarked_experiments**](docs/ExperimentServiceApi.md#list_bookmarked_experiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked builds
-*ExperimentServiceApi* | [**list_experiment_statuses**](docs/ExperimentServiceApi.md#list_experiment_statuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
-*ExperimentServiceApi* | [**list_experiments**](docs/ExperimentServiceApi.md#list_experiments) | **GET** /v1/{owner}/{project}/experiments | List builds
-*ExperimentServiceApi* | [**restart_experiment**](docs/ExperimentServiceApi.md#restart_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/restart | Restart build
-*ExperimentServiceApi* | [**restore_experiment**](docs/ExperimentServiceApi.md#restore_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
-*ExperimentServiceApi* | [**resume_experiment**](docs/ExperimentServiceApi.md#resume_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/resume | Archive build
-*ExperimentServiceApi* | [**start_experiment_tensorboard**](docs/ExperimentServiceApi.md#start_experiment_tensorboard) | **POST** /v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
-*ExperimentServiceApi* | [**stop_experiment**](docs/ExperimentServiceApi.md#stop_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/stop | Stop build
-*ExperimentServiceApi* | [**stop_experiment_tensorboard**](docs/ExperimentServiceApi.md#stop_experiment_tensorboard) | **DELETE** /v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
-*ExperimentServiceApi* | [**stop_experiments**](docs/ExperimentServiceApi.md#stop_experiments) | **POST** /v1/{owner}/{project}/experiments/stop | Stop builds
-*ExperimentServiceApi* | [**un_bookmark_experiment**](docs/ExperimentServiceApi.md#un_bookmark_experiment) | **DELETE** /v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
-*ExperimentServiceApi* | [**update_experiment2**](docs/ExperimentServiceApi.md#update_experiment2) | **PUT** /v1/{owner}/{project}/experiments/{experiment.id} | Update build
-*JobServiceApi* | [**archive_job**](docs/JobServiceApi.md#archive_job) | **POST** /v1/{owner}/{project}/jobs/{id}/archive | Restore build
-*JobServiceApi* | [**bookmark_job**](docs/JobServiceApi.md#bookmark_job) | **POST** /v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
-*JobServiceApi* | [**create_job**](docs/JobServiceApi.md#create_job) | **POST** /v1/{owner}/{project}/jobs | Create new build
-*JobServiceApi* | [**create_job_code_ref**](docs/JobServiceApi.md#create_job_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
-*JobServiceApi* | [**create_job_status**](docs/JobServiceApi.md#create_job_status) | **POST** /v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
-*JobServiceApi* | [**delete_job**](docs/JobServiceApi.md#delete_job) | **DELETE** /v1/{owner}/{project}/jobs/{id} | Delete build
-*JobServiceApi* | [**delete_jobs**](docs/JobServiceApi.md#delete_jobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete builds
-*JobServiceApi* | [**get_job**](docs/JobServiceApi.md#get_job) | **GET** /v1/{owner}/{project}/jobs/{id} | Get build
-*JobServiceApi* | [**get_job_code_ref**](docs/JobServiceApi.md#get_job_code_ref) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
-*JobServiceApi* | [**list_archived_jobs**](docs/JobServiceApi.md#list_archived_jobs) | **GET** /v1/archives/{owner}/jobs | List archived builds
-*JobServiceApi* | [**list_bookmarked_jobs**](docs/JobServiceApi.md#list_bookmarked_jobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked builds
-*JobServiceApi* | [**list_job_statuses**](docs/JobServiceApi.md#list_job_statuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
-*JobServiceApi* | [**list_jobs**](docs/JobServiceApi.md#list_jobs) | **GET** /v1/{owner}/{project}/jobs | List builds
-*JobServiceApi* | [**restart_job**](docs/JobServiceApi.md#restart_job) | **POST** /v1/{owner}/{project}/jobs/{id}/restart | Restart build
-*JobServiceApi* | [**restore_job**](docs/JobServiceApi.md#restore_job) | **POST** /v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
-*JobServiceApi* | [**resume_job**](docs/JobServiceApi.md#resume_job) | **POST** /v1/{owner}/{project}/jobs/{id}/resume | Archive build
-*JobServiceApi* | [**stop_job**](docs/JobServiceApi.md#stop_job) | **POST** /v1/{owner}/{project}/jobs/{id}/stop | Stop build
-*JobServiceApi* | [**stop_jobs**](docs/JobServiceApi.md#stop_jobs) | **POST** /v1/{owner}/{project}/jobs/stop | Stop builds
-*JobServiceApi* | [**un_bookmark_job**](docs/JobServiceApi.md#un_bookmark_job) | **DELETE** /v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
-*JobServiceApi* | [**update_job2**](docs/JobServiceApi.md#update_job2) | **PUT** /v1/{owner}/{project}/jobs/{job.id} | Update build
+*BuildServiceApi* | [**archive_build**](docs/BuildServiceApi.md#archive_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/archive | Archive build
+*BuildServiceApi* | [**bookmark_build**](docs/BuildServiceApi.md#bookmark_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
+*BuildServiceApi* | [**create_build**](docs/BuildServiceApi.md#create_build) | **POST** /api/v1/{owner}/{project}/builds | Create new build
+*BuildServiceApi* | [**create_build_code_ref**](docs/BuildServiceApi.md#create_build_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
+*BuildServiceApi* | [**create_build_status**](docs/BuildServiceApi.md#create_build_status) | **POST** /api/v1/{owner}/{project}/builds/{id}/statuses | Create new build status
+*BuildServiceApi* | [**delete_build**](docs/BuildServiceApi.md#delete_build) | **DELETE** /api/v1/{owner}/{project}/builds/{id} | Delete build
+*BuildServiceApi* | [**delete_builds**](docs/BuildServiceApi.md#delete_builds) | **DELETE** /api/v1/{owner}/{project}/builds/delete | Delete builds
+*BuildServiceApi* | [**get_build**](docs/BuildServiceApi.md#get_build) | **GET** /api/v1/{owner}/{project}/builds/{id} | Get build
+*BuildServiceApi* | [**get_build_code_ref**](docs/BuildServiceApi.md#get_build_code_ref) | **GET** /api/v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+*BuildServiceApi* | [**list_archived_builds**](docs/BuildServiceApi.md#list_archived_builds) | **GET** /api/v1/archives/{owner}/builds | List archived builds
+*BuildServiceApi* | [**list_bookmarked_builds**](docs/BuildServiceApi.md#list_bookmarked_builds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
+*BuildServiceApi* | [**list_build_statuses**](docs/BuildServiceApi.md#list_build_statuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
+*BuildServiceApi* | [**list_builds**](docs/BuildServiceApi.md#list_builds) | **GET** /api/v1/{owner}/{project}/builds | List builds
+*BuildServiceApi* | [**restart_build**](docs/BuildServiceApi.md#restart_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
+*BuildServiceApi* | [**restore_build**](docs/BuildServiceApi.md#restore_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
+*BuildServiceApi* | [**stop_build**](docs/BuildServiceApi.md#stop_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
+*BuildServiceApi* | [**stop_builds**](docs/BuildServiceApi.md#stop_builds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
+*BuildServiceApi* | [**un_bookmark_build**](docs/BuildServiceApi.md#un_bookmark_build) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
+*BuildServiceApi* | [**update_build2**](docs/BuildServiceApi.md#update_build2) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
+*ExperimentServiceApi* | [**archive_experiment**](docs/ExperimentServiceApi.md#archive_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/archive | Restore build
+*ExperimentServiceApi* | [**bookmark_experiment**](docs/ExperimentServiceApi.md#bookmark_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
+*ExperimentServiceApi* | [**create_experiment**](docs/ExperimentServiceApi.md#create_experiment) | **POST** /api/v1/{owner}/{project}/experiments | Create new build
+*ExperimentServiceApi* | [**create_experiment_code_ref**](docs/ExperimentServiceApi.md#create_experiment_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
+*ExperimentServiceApi* | [**create_experiment_status**](docs/ExperimentServiceApi.md#create_experiment_status) | **POST** /api/v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
+*ExperimentServiceApi* | [**delete_experiment**](docs/ExperimentServiceApi.md#delete_experiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id} | Delete build
+*ExperimentServiceApi* | [**delete_experiments**](docs/ExperimentServiceApi.md#delete_experiments) | **DELETE** /api/v1/{owner}/{project}/experiments/delete | Delete builds
+*ExperimentServiceApi* | [**get_experiment**](docs/ExperimentServiceApi.md#get_experiment) | **GET** /api/v1/{owner}/{project}/experiments/{id} | Get build
+*ExperimentServiceApi* | [**get_experiment_code_ref**](docs/ExperimentServiceApi.md#get_experiment_code_ref) | **GET** /api/v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+*ExperimentServiceApi* | [**list_archived_experiments**](docs/ExperimentServiceApi.md#list_archived_experiments) | **GET** /api/v1/archives/{owner}/experiments | List archived builds
+*ExperimentServiceApi* | [**list_bookmarked_experiments**](docs/ExperimentServiceApi.md#list_bookmarked_experiments) | **GET** /api/v1/bookmarks/{owner}/experiments | List bookmarked builds
+*ExperimentServiceApi* | [**list_experiment_statuses**](docs/ExperimentServiceApi.md#list_experiment_statuses) | **GET** /api/v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
+*ExperimentServiceApi* | [**list_experiments**](docs/ExperimentServiceApi.md#list_experiments) | **GET** /api/v1/{owner}/{project}/experiments | List builds
+*ExperimentServiceApi* | [**restart_experiment**](docs/ExperimentServiceApi.md#restart_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restart | Restart build
+*ExperimentServiceApi* | [**restore_experiment**](docs/ExperimentServiceApi.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
+*ExperimentServiceApi* | [**resume_experiment**](docs/ExperimentServiceApi.md#resume_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/resume | Archive build
+*ExperimentServiceApi* | [**start_experiment_tensorboard**](docs/ExperimentServiceApi.md#start_experiment_tensorboard) | **POST** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
+*ExperimentServiceApi* | [**stop_experiment**](docs/ExperimentServiceApi.md#stop_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/stop | Stop build
+*ExperimentServiceApi* | [**stop_experiment_tensorboard**](docs/ExperimentServiceApi.md#stop_experiment_tensorboard) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
+*ExperimentServiceApi* | [**stop_experiments**](docs/ExperimentServiceApi.md#stop_experiments) | **POST** /api/v1/{owner}/{project}/experiments/stop | Stop builds
+*ExperimentServiceApi* | [**un_bookmark_experiment**](docs/ExperimentServiceApi.md#un_bookmark_experiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
+*ExperimentServiceApi* | [**update_experiment2**](docs/ExperimentServiceApi.md#update_experiment2) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
+*JobServiceApi* | [**archive_job**](docs/JobServiceApi.md#archive_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/archive | Restore build
+*JobServiceApi* | [**bookmark_job**](docs/JobServiceApi.md#bookmark_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
+*JobServiceApi* | [**create_job**](docs/JobServiceApi.md#create_job) | **POST** /api/v1/{owner}/{project}/jobs | Create new build
+*JobServiceApi* | [**create_job_code_ref**](docs/JobServiceApi.md#create_job_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
+*JobServiceApi* | [**create_job_status**](docs/JobServiceApi.md#create_job_status) | **POST** /api/v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
+*JobServiceApi* | [**delete_job**](docs/JobServiceApi.md#delete_job) | **DELETE** /api/v1/{owner}/{project}/jobs/{id} | Delete build
+*JobServiceApi* | [**delete_jobs**](docs/JobServiceApi.md#delete_jobs) | **DELETE** /api/v1/{owner}/{project}/jobs/delete | Delete builds
+*JobServiceApi* | [**get_job**](docs/JobServiceApi.md#get_job) | **GET** /api/v1/{owner}/{project}/jobs/{id} | Get build
+*JobServiceApi* | [**get_job_code_ref**](docs/JobServiceApi.md#get_job_code_ref) | **GET** /api/v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
+*JobServiceApi* | [**list_archived_jobs**](docs/JobServiceApi.md#list_archived_jobs) | **GET** /api/v1/archives/{owner}/jobs | List archived builds
+*JobServiceApi* | [**list_bookmarked_jobs**](docs/JobServiceApi.md#list_bookmarked_jobs) | **GET** /api/v1/bookmarks/{owner}/jobs | List bookmarked builds
+*JobServiceApi* | [**list_job_statuses**](docs/JobServiceApi.md#list_job_statuses) | **GET** /api/v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
+*JobServiceApi* | [**list_jobs**](docs/JobServiceApi.md#list_jobs) | **GET** /api/v1/{owner}/{project}/jobs | List builds
+*JobServiceApi* | [**restart_job**](docs/JobServiceApi.md#restart_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restart | Restart build
+*JobServiceApi* | [**restore_job**](docs/JobServiceApi.md#restore_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
+*JobServiceApi* | [**resume_job**](docs/JobServiceApi.md#resume_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/resume | Archive build
+*JobServiceApi* | [**stop_job**](docs/JobServiceApi.md#stop_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/stop | Stop build
+*JobServiceApi* | [**stop_jobs**](docs/JobServiceApi.md#stop_jobs) | **POST** /api/v1/{owner}/{project}/jobs/stop | Stop builds
+*JobServiceApi* | [**un_bookmark_job**](docs/JobServiceApi.md#un_bookmark_job) | **DELETE** /api/v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
+*JobServiceApi* | [**update_job2**](docs/JobServiceApi.md#update_job2) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
 
 
 ## Documentation For Models

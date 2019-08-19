@@ -68,7 +68,7 @@ type BookmarkBuildOK struct {
 }
 
 func (o *BookmarkBuildOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/bookmark][%d] bookmarkBuildOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/bookmark][%d] bookmarkBuildOK  %+v", 200, o.Payload)
 }
 
 func (o *BookmarkBuildOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type BookmarkBuildNotFound struct {
 }
 
 func (o *BookmarkBuildNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/bookmark][%d] bookmarkBuildNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/bookmark][%d] bookmarkBuildNotFound  %+v", 404, o.Payload)
 }
 
 func (o *BookmarkBuildNotFound) GetPayload() string {

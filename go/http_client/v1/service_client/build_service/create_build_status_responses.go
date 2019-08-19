@@ -70,7 +70,7 @@ type CreateBuildStatusOK struct {
 }
 
 func (o *CreateBuildStatusOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/statuses][%d] createBuildStatusOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/statuses][%d] createBuildStatusOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateBuildStatusOK) GetPayload() *service_model.V1BuildStatus {
@@ -103,7 +103,7 @@ type CreateBuildStatusNotFound struct {
 }
 
 func (o *CreateBuildStatusNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/statuses][%d] createBuildStatusNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/statuses][%d] createBuildStatusNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateBuildStatusNotFound) GetPayload() string {

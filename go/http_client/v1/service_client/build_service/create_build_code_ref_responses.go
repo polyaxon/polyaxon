@@ -70,7 +70,7 @@ type CreateBuildCodeRefOK struct {
 }
 
 func (o *CreateBuildCodeRefOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef][%d] createBuildCodeRefOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef][%d] createBuildCodeRefOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateBuildCodeRefOK) GetPayload() *service_model.V1CodeReference {
@@ -103,7 +103,7 @@ type CreateBuildCodeRefNotFound struct {
 }
 
 func (o *CreateBuildCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef][%d] createBuildCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef][%d] createBuildCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateBuildCodeRefNotFound) GetPayload() string {

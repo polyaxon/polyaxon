@@ -68,7 +68,7 @@ type UnBookmarkExperimentOK struct {
 }
 
 func (o *UnBookmarkExperimentOK) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/experiments/{id}/unbookmark][%d] unBookmarkExperimentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/{id}/unbookmark][%d] unBookmarkExperimentOK  %+v", 200, o.Payload)
 }
 
 func (o *UnBookmarkExperimentOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type UnBookmarkExperimentNotFound struct {
 }
 
 func (o *UnBookmarkExperimentNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/experiments/{id}/unbookmark][%d] unBookmarkExperimentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/experiments/{id}/unbookmark][%d] unBookmarkExperimentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UnBookmarkExperimentNotFound) GetPayload() string {

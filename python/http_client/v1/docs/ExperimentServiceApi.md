@@ -4,28 +4,28 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archive_experiment**](ExperimentServiceApi.md#archive_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/archive | Restore build
-[**bookmark_experiment**](ExperimentServiceApi.md#bookmark_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
-[**create_experiment**](ExperimentServiceApi.md#create_experiment) | **POST** /v1/{owner}/{project}/experiments | Create new build
-[**create_experiment_code_ref**](ExperimentServiceApi.md#create_experiment_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
-[**create_experiment_status**](ExperimentServiceApi.md#create_experiment_status) | **POST** /v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
-[**delete_experiment**](ExperimentServiceApi.md#delete_experiment) | **DELETE** /v1/{owner}/{project}/experiments/{id} | Delete build
-[**delete_experiments**](ExperimentServiceApi.md#delete_experiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete builds
-[**get_experiment**](ExperimentServiceApi.md#get_experiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get build
-[**get_experiment_code_ref**](ExperimentServiceApi.md#get_experiment_code_ref) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-[**list_archived_experiments**](ExperimentServiceApi.md#list_archived_experiments) | **GET** /v1/archives/{owner}/experiments | List archived builds
-[**list_bookmarked_experiments**](ExperimentServiceApi.md#list_bookmarked_experiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked builds
-[**list_experiment_statuses**](ExperimentServiceApi.md#list_experiment_statuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
-[**list_experiments**](ExperimentServiceApi.md#list_experiments) | **GET** /v1/{owner}/{project}/experiments | List builds
-[**restart_experiment**](ExperimentServiceApi.md#restart_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/restart | Restart build
-[**restore_experiment**](ExperimentServiceApi.md#restore_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
-[**resume_experiment**](ExperimentServiceApi.md#resume_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/resume | Archive build
-[**start_experiment_tensorboard**](ExperimentServiceApi.md#start_experiment_tensorboard) | **POST** /v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
-[**stop_experiment**](ExperimentServiceApi.md#stop_experiment) | **POST** /v1/{owner}/{project}/experiments/{id}/stop | Stop build
-[**stop_experiment_tensorboard**](ExperimentServiceApi.md#stop_experiment_tensorboard) | **DELETE** /v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
-[**stop_experiments**](ExperimentServiceApi.md#stop_experiments) | **POST** /v1/{owner}/{project}/experiments/stop | Stop builds
-[**un_bookmark_experiment**](ExperimentServiceApi.md#un_bookmark_experiment) | **DELETE** /v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
-[**update_experiment2**](ExperimentServiceApi.md#update_experiment2) | **PUT** /v1/{owner}/{project}/experiments/{experiment.id} | Update build
+[**archive_experiment**](ExperimentServiceApi.md#archive_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/archive | Restore build
+[**bookmark_experiment**](ExperimentServiceApi.md#bookmark_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
+[**create_experiment**](ExperimentServiceApi.md#create_experiment) | **POST** /api/v1/{owner}/{project}/experiments | Create new build
+[**create_experiment_code_ref**](ExperimentServiceApi.md#create_experiment_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
+[**create_experiment_status**](ExperimentServiceApi.md#create_experiment_status) | **POST** /api/v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
+[**delete_experiment**](ExperimentServiceApi.md#delete_experiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id} | Delete build
+[**delete_experiments**](ExperimentServiceApi.md#delete_experiments) | **DELETE** /api/v1/{owner}/{project}/experiments/delete | Delete builds
+[**get_experiment**](ExperimentServiceApi.md#get_experiment) | **GET** /api/v1/{owner}/{project}/experiments/{id} | Get build
+[**get_experiment_code_ref**](ExperimentServiceApi.md#get_experiment_code_ref) | **GET** /api/v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+[**list_archived_experiments**](ExperimentServiceApi.md#list_archived_experiments) | **GET** /api/v1/archives/{owner}/experiments | List archived builds
+[**list_bookmarked_experiments**](ExperimentServiceApi.md#list_bookmarked_experiments) | **GET** /api/v1/bookmarks/{owner}/experiments | List bookmarked builds
+[**list_experiment_statuses**](ExperimentServiceApi.md#list_experiment_statuses) | **GET** /api/v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
+[**list_experiments**](ExperimentServiceApi.md#list_experiments) | **GET** /api/v1/{owner}/{project}/experiments | List builds
+[**restart_experiment**](ExperimentServiceApi.md#restart_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restart | Restart build
+[**restore_experiment**](ExperimentServiceApi.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
+[**resume_experiment**](ExperimentServiceApi.md#resume_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/resume | Archive build
+[**start_experiment_tensorboard**](ExperimentServiceApi.md#start_experiment_tensorboard) | **POST** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
+[**stop_experiment**](ExperimentServiceApi.md#stop_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/stop | Stop build
+[**stop_experiment_tensorboard**](ExperimentServiceApi.md#stop_experiment_tensorboard) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
+[**stop_experiments**](ExperimentServiceApi.md#stop_experiments) | **POST** /api/v1/{owner}/{project}/experiments/stop | Stop builds
+[**un_bookmark_experiment**](ExperimentServiceApi.md#un_bookmark_experiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
+[**update_experiment2**](ExperimentServiceApi.md#update_experiment2) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
 
 
 # **archive_experiment**

@@ -70,7 +70,7 @@ type GetJobCodeRefOK struct {
 }
 
 func (o *GetJobCodeRefOK) Error() string {
-	return fmt.Sprintf("[GET /v1/{owner}/{project}/jobs/{id}/coderef][%d] getJobCodeRefOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/jobs/{id}/coderef][%d] getJobCodeRefOK  %+v", 200, o.Payload)
 }
 
 func (o *GetJobCodeRefOK) GetPayload() *service_model.V1CodeReference {
@@ -103,7 +103,7 @@ type GetJobCodeRefNotFound struct {
 }
 
 func (o *GetJobCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/{owner}/{project}/jobs/{id}/coderef][%d] getJobCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/jobs/{id}/coderef][%d] getJobCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetJobCodeRefNotFound) GetPayload() string {

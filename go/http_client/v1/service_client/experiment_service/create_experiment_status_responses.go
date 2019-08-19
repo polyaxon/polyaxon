@@ -70,7 +70,7 @@ type CreateExperimentStatusOK struct {
 }
 
 func (o *CreateExperimentStatusOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/statuses][%d] createExperimentStatusOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/statuses][%d] createExperimentStatusOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateExperimentStatusOK) GetPayload() *service_model.V1ExperimentStatus {
@@ -103,7 +103,7 @@ type CreateExperimentStatusNotFound struct {
 }
 
 func (o *CreateExperimentStatusNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/statuses][%d] createExperimentStatusNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/statuses][%d] createExperimentStatusNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateExperimentStatusNotFound) GetPayload() string {

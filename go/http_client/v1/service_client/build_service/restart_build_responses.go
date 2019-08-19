@@ -70,7 +70,7 @@ type RestartBuildOK struct {
 }
 
 func (o *RestartBuildOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/restart][%d] restartBuildOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/restart][%d] restartBuildOK  %+v", 200, o.Payload)
 }
 
 func (o *RestartBuildOK) GetPayload() *service_model.V1Build {
@@ -103,7 +103,7 @@ type RestartBuildNotFound struct {
 }
 
 func (o *RestartBuildNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/restart][%d] restartBuildNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/restart][%d] restartBuildNotFound  %+v", 404, o.Payload)
 }
 
 func (o *RestartBuildNotFound) GetPayload() string {

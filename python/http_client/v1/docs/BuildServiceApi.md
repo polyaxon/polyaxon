@@ -4,25 +4,25 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archive_build**](BuildServiceApi.md#archive_build) | **POST** /v1/{owner}/{project}/builds/{id}/archive | Archive build
-[**bookmark_build**](BuildServiceApi.md#bookmark_build) | **POST** /v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
-[**create_build**](BuildServiceApi.md#create_build) | **POST** /v1/{owner}/{project}/builds | Create new build
-[**create_build_code_ref**](BuildServiceApi.md#create_build_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
-[**create_build_status**](BuildServiceApi.md#create_build_status) | **POST** /v1/{owner}/{project}/builds/{id}/statuses | Create new build status
-[**delete_build**](BuildServiceApi.md#delete_build) | **DELETE** /v1/{owner}/{project}/builds/{id} | Delete build
-[**delete_builds**](BuildServiceApi.md#delete_builds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
-[**get_build**](BuildServiceApi.md#get_build) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
-[**get_build_code_ref**](BuildServiceApi.md#get_build_code_ref) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-[**list_archived_builds**](BuildServiceApi.md#list_archived_builds) | **GET** /v1/archives/{owner}/builds | List archived builds
-[**list_bookmarked_builds**](BuildServiceApi.md#list_bookmarked_builds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
-[**list_build_statuses**](BuildServiceApi.md#list_build_statuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
-[**list_builds**](BuildServiceApi.md#list_builds) | **GET** /v1/{owner}/{project}/builds | List builds
-[**restart_build**](BuildServiceApi.md#restart_build) | **POST** /v1/{owner}/{project}/builds/{id}/restart | Restart build
-[**restore_build**](BuildServiceApi.md#restore_build) | **POST** /v1/{owner}/{project}/builds/{id}/restore | Restore build
-[**stop_build**](BuildServiceApi.md#stop_build) | **POST** /v1/{owner}/{project}/builds/{id}/stop | Stop build
-[**stop_builds**](BuildServiceApi.md#stop_builds) | **POST** /v1/{owner}/{project}/builds/stop | Stop builds
-[**un_bookmark_build**](BuildServiceApi.md#un_bookmark_build) | **DELETE** /v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-[**update_build2**](BuildServiceApi.md#update_build2) | **PUT** /v1/{owner}/{project}/builds/{build.id} | Update build
+[**archive_build**](BuildServiceApi.md#archive_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/archive | Archive build
+[**bookmark_build**](BuildServiceApi.md#bookmark_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
+[**create_build**](BuildServiceApi.md#create_build) | **POST** /api/v1/{owner}/{project}/builds | Create new build
+[**create_build_code_ref**](BuildServiceApi.md#create_build_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
+[**create_build_status**](BuildServiceApi.md#create_build_status) | **POST** /api/v1/{owner}/{project}/builds/{id}/statuses | Create new build status
+[**delete_build**](BuildServiceApi.md#delete_build) | **DELETE** /api/v1/{owner}/{project}/builds/{id} | Delete build
+[**delete_builds**](BuildServiceApi.md#delete_builds) | **DELETE** /api/v1/{owner}/{project}/builds/delete | Delete builds
+[**get_build**](BuildServiceApi.md#get_build) | **GET** /api/v1/{owner}/{project}/builds/{id} | Get build
+[**get_build_code_ref**](BuildServiceApi.md#get_build_code_ref) | **GET** /api/v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+[**list_archived_builds**](BuildServiceApi.md#list_archived_builds) | **GET** /api/v1/archives/{owner}/builds | List archived builds
+[**list_bookmarked_builds**](BuildServiceApi.md#list_bookmarked_builds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
+[**list_build_statuses**](BuildServiceApi.md#list_build_statuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
+[**list_builds**](BuildServiceApi.md#list_builds) | **GET** /api/v1/{owner}/{project}/builds | List builds
+[**restart_build**](BuildServiceApi.md#restart_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
+[**restore_build**](BuildServiceApi.md#restore_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
+[**stop_build**](BuildServiceApi.md#stop_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
+[**stop_builds**](BuildServiceApi.md#stop_builds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
+[**un_bookmark_build**](BuildServiceApi.md#un_bookmark_build) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
+[**update_build2**](BuildServiceApi.md#update_build2) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
 
 
 # **archive_build**

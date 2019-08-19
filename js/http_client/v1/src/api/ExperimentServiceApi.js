@@ -117,7 +117,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/archive', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/archive', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -178,7 +178,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/bookmark', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/bookmark', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -238,7 +238,7 @@
       var returnType = V1Experiment;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments', 'POST',
+        '/api/v1/{owner}/{project}/experiments', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -305,7 +305,7 @@
       var returnType = V1CodeReference;
 
       return this.apiClient.callApi(
-        '/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef', 'POST',
+        '/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -372,7 +372,7 @@
       var returnType = V1ExperimentStatus;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/statuses', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/statuses', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -433,7 +433,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}', 'DELETE',
+        '/api/v1/{owner}/{project}/experiments/{id}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -493,7 +493,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/delete', 'DELETE',
+        '/api/v1/{owner}/{project}/experiments/delete', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -554,7 +554,7 @@
       var returnType = V1Experiment;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}', 'GET',
+        '/api/v1/{owner}/{project}/experiments/{id}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -615,7 +615,7 @@
       var returnType = V1CodeReference;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/coderef', 'GET',
+        '/api/v1/{owner}/{project}/experiments/{id}/coderef', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -662,7 +662,7 @@
       var returnType = V1ListExperimentsResponse;
 
       return this.apiClient.callApi(
-        '/v1/archives/{owner}/experiments', 'GET',
+        '/api/v1/archives/{owner}/experiments', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -709,7 +709,7 @@
       var returnType = V1ListExperimentsResponse;
 
       return this.apiClient.callApi(
-        '/v1/bookmarks/{owner}/experiments', 'GET',
+        '/api/v1/bookmarks/{owner}/experiments', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -770,7 +770,7 @@
       var returnType = V1ListExperimentStatusesResponse;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/statuses', 'GET',
+        '/api/v1/{owner}/{project}/experiments/{id}/statuses', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -824,7 +824,7 @@
       var returnType = V1ListExperimentsResponse;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments', 'GET',
+        '/api/v1/{owner}/{project}/experiments', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -891,7 +891,7 @@
       var returnType = V1Experiment;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/restart', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/restart', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -952,7 +952,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/restore', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/restore', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1019,7 +1019,7 @@
       var returnType = V1Experiment;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/resume', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/resume', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1086,7 +1086,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/tensorboard/start', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1153,7 +1153,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/stop', 'POST',
+        '/api/v1/{owner}/{project}/experiments/{id}/stop', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1214,7 +1214,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/tensorboard/stop', 'DELETE',
+        '/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1274,7 +1274,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/stop', 'POST',
+        '/api/v1/{owner}/{project}/experiments/stop', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1335,7 +1335,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{id}/unbookmark', 'DELETE',
+        '/api/v1/{owner}/{project}/experiments/{id}/unbookmark', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1402,7 +1402,7 @@
       var returnType = V1Experiment;
 
       return this.apiClient.callApi(
-        '/v1/{owner}/{project}/experiments/{experiment.id}', 'PUT',
+        '/api/v1/{owner}/{project}/experiments/{experiment.id}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

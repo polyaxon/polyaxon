@@ -147,7 +147,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/archive', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/archive', 'POST',
             path_params,
             query_params,
             header_params,
@@ -260,7 +260,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/bookmark', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/bookmark', 'POST',
             path_params,
             query_params,
             header_params,
@@ -373,7 +373,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs', 'POST',
+            '/api/v1/{owner}/{project}/jobs', 'POST',
             path_params,
             query_params,
             header_params,
@@ -494,7 +494,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef', 'POST',
+            '/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef', 'POST',
             path_params,
             query_params,
             header_params,
@@ -615,7 +615,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/statuses', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/statuses', 'POST',
             path_params,
             query_params,
             header_params,
@@ -728,7 +728,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}', 'DELETE',
+            '/api/v1/{owner}/{project}/jobs/{id}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -841,7 +841,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/delete', 'DELETE',
+            '/api/v1/{owner}/{project}/jobs/delete', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -954,7 +954,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}', 'GET',
+            '/api/v1/{owner}/{project}/jobs/{id}', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1067,7 +1067,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/coderef', 'GET',
+            '/api/v1/{owner}/{project}/jobs/{id}/coderef', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1164,7 +1164,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/archives/{owner}/jobs', 'GET',
+            '/api/v1/archives/{owner}/jobs', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1261,7 +1261,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/bookmarks/{owner}/jobs', 'GET',
+            '/api/v1/bookmarks/{owner}/jobs', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1374,7 +1374,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/statuses', 'GET',
+            '/api/v1/{owner}/{project}/jobs/{id}/statuses', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1479,7 +1479,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs', 'GET',
+            '/api/v1/{owner}/{project}/jobs', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1600,7 +1600,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/restart', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/restart', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1713,7 +1713,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/restore', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/restore', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1834,7 +1834,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/resume', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/resume', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1955,7 +1955,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/stop', 'POST',
+            '/api/v1/{owner}/{project}/jobs/{id}/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2068,7 +2068,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/stop', 'POST',
+            '/api/v1/{owner}/{project}/jobs/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2181,7 +2181,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{id}/unbookmark', 'DELETE',
+            '/api/v1/{owner}/{project}/jobs/{id}/unbookmark', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -2302,7 +2302,7 @@ class JobServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/jobs/{job.id}', 'PUT',
+            '/api/v1/{owner}/{project}/jobs/{job.id}', 'PUT',
             path_params,
             query_params,
             header_params,

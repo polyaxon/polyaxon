@@ -70,7 +70,7 @@ type GetBuildCodeRefOK struct {
 }
 
 func (o *GetBuildCodeRefOK) Error() string {
-	return fmt.Sprintf("[GET /v1/{owner}/{project}/builds/{id}/coderef][%d] getBuildCodeRefOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/builds/{id}/coderef][%d] getBuildCodeRefOK  %+v", 200, o.Payload)
 }
 
 func (o *GetBuildCodeRefOK) GetPayload() *service_model.V1CodeReference {
@@ -103,7 +103,7 @@ type GetBuildCodeRefNotFound struct {
 }
 
 func (o *GetBuildCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/{owner}/{project}/builds/{id}/coderef][%d] getBuildCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/builds/{id}/coderef][%d] getBuildCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *GetBuildCodeRefNotFound) GetPayload() string {

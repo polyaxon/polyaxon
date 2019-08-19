@@ -70,7 +70,7 @@ type UpdateExperiment2OK struct {
 }
 
 func (o *UpdateExperiment2OK) Error() string {
-	return fmt.Sprintf("[PUT /v1/{owner}/{project}/experiments/{experiment.id}][%d] updateExperiment2OK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/experiments/{experiment.id}][%d] updateExperiment2OK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateExperiment2OK) GetPayload() *service_model.V1Experiment {
@@ -103,7 +103,7 @@ type UpdateExperiment2NotFound struct {
 }
 
 func (o *UpdateExperiment2NotFound) Error() string {
-	return fmt.Sprintf("[PUT /v1/{owner}/{project}/experiments/{experiment.id}][%d] updateExperiment2NotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/experiments/{experiment.id}][%d] updateExperiment2NotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateExperiment2NotFound) GetPayload() string {

@@ -52,7 +52,7 @@ func (a *Client) ArchiveJob(params *ArchiveJobParams) (*ArchiveJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ArchiveJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/archive",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -86,7 +86,7 @@ func (a *Client) BookmarkJob(params *BookmarkJobParams) (*BookmarkJobOK, error) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "BookmarkJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/bookmark",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -120,7 +120,7 @@ func (a *Client) CreateJob(params *CreateJobParams) (*CreateJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -154,7 +154,7 @@ func (a *Client) CreateJobCodeRef(params *CreateJobCodeRefParams) (*CreateJobCod
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateJobCodeRef",
 		Method:             "POST",
-		PathPattern:        "/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -188,7 +188,7 @@ func (a *Client) CreateJobStatus(params *CreateJobStatusParams) (*CreateJobStatu
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateJobStatus",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/statuses",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -222,7 +222,7 @@ func (a *Client) DeleteJob(params *DeleteJobParams) (*DeleteJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteJob",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -256,7 +256,7 @@ func (a *Client) DeleteJobs(params *DeleteJobsParams) (*DeleteJobsOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteJobs",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/jobs/delete",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -290,7 +290,7 @@ func (a *Client) GetJob(params *GetJobParams) (*GetJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetJob",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -324,7 +324,7 @@ func (a *Client) GetJobCodeRef(params *GetJobCodeRefParams) (*GetJobCodeRefOK, e
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetJobCodeRef",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/coderef",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -358,7 +358,7 @@ func (a *Client) ListArchivedJobs(params *ListArchivedJobsParams) (*ListArchived
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArchivedJobs",
 		Method:             "GET",
-		PathPattern:        "/v1/archives/{owner}/jobs",
+		PathPattern:        "/api/v1/archives/{owner}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -392,7 +392,7 @@ func (a *Client) ListBookmarkedJobs(params *ListBookmarkedJobsParams) (*ListBook
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBookmarkedJobs",
 		Method:             "GET",
-		PathPattern:        "/v1/bookmarks/{owner}/jobs",
+		PathPattern:        "/api/v1/bookmarks/{owner}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -426,7 +426,7 @@ func (a *Client) ListJobStatuses(params *ListJobStatusesParams) (*ListJobStatuse
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListJobStatuses",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/statuses",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -460,7 +460,7 @@ func (a *Client) ListJobs(params *ListJobsParams) (*ListJobsOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListJobs",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/jobs",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -494,7 +494,7 @@ func (a *Client) RestartJob(params *RestartJobParams) (*RestartJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestartJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/restart",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -528,7 +528,7 @@ func (a *Client) RestoreJob(params *RestoreJobParams) (*RestoreJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestoreJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/restore",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -562,7 +562,7 @@ func (a *Client) ResumeJob(params *ResumeJobParams) (*ResumeJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ResumeJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/resume",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -596,7 +596,7 @@ func (a *Client) StopJob(params *StopJobParams) (*StopJobOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopJob",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -630,7 +630,7 @@ func (a *Client) StopJobs(params *StopJobsParams) (*StopJobsOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopJobs",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/jobs/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -664,7 +664,7 @@ func (a *Client) UnBookmarkJob(params *UnBookmarkJobParams) (*UnBookmarkJobOK, e
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UnBookmarkJob",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{id}/unbookmark",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{id}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -698,7 +698,7 @@ func (a *Client) UpdateJob2(params *UpdateJob2Params) (*UpdateJob2OK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateJob2",
 		Method:             "PUT",
-		PathPattern:        "/v1/{owner}/{project}/jobs/{job.id}",
+		PathPattern:        "/api/v1/{owner}/{project}/jobs/{job.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

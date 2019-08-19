@@ -68,7 +68,7 @@ type StopJobsOK struct {
 }
 
 func (o *StopJobsOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs/stop][%d] stopJobsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/stop][%d] stopJobsOK  %+v", 200, o.Payload)
 }
 
 func (o *StopJobsOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type StopJobsNotFound struct {
 }
 
 func (o *StopJobsNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs/stop][%d] stopJobsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/stop][%d] stopJobsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *StopJobsNotFound) GetPayload() string {

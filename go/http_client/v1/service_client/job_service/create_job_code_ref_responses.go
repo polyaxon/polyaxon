@@ -70,7 +70,7 @@ type CreateJobCodeRefOK struct {
 }
 
 func (o *CreateJobCodeRefOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef][%d] createJobCodeRefOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef][%d] createJobCodeRefOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateJobCodeRefOK) GetPayload() *service_model.V1CodeReference {
@@ -103,7 +103,7 @@ type CreateJobCodeRefNotFound struct {
 }
 
 func (o *CreateJobCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef][%d] createJobCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef][%d] createJobCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateJobCodeRefNotFound) GetPayload() string {

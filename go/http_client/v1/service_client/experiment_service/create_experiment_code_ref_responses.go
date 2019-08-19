@@ -70,7 +70,7 @@ type CreateExperimentCodeRefOK struct {
 }
 
 func (o *CreateExperimentCodeRefOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] createExperimentCodeRefOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] createExperimentCodeRefOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateExperimentCodeRefOK) GetPayload() *service_model.V1CodeReference {
@@ -103,7 +103,7 @@ type CreateExperimentCodeRefNotFound struct {
 }
 
 func (o *CreateExperimentCodeRefNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] createExperimentCodeRefNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef][%d] createExperimentCodeRefNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateExperimentCodeRefNotFound) GetPayload() string {

@@ -68,7 +68,7 @@ type UnBookmarkBuildOK struct {
 }
 
 func (o *UnBookmarkBuildOK) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/builds/{id}/unbookmark][%d] unBookmarkBuildOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/builds/{id}/unbookmark][%d] unBookmarkBuildOK  %+v", 200, o.Payload)
 }
 
 func (o *UnBookmarkBuildOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type UnBookmarkBuildNotFound struct {
 }
 
 func (o *UnBookmarkBuildNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/builds/{id}/unbookmark][%d] unBookmarkBuildNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/builds/{id}/unbookmark][%d] unBookmarkBuildNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UnBookmarkBuildNotFound) GetPayload() string {

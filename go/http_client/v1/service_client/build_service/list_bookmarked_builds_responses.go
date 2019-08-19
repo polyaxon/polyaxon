@@ -70,7 +70,7 @@ type ListBookmarkedBuildsOK struct {
 }
 
 func (o *ListBookmarkedBuildsOK) Error() string {
-	return fmt.Sprintf("[GET /v1/bookmarks/{owner}/builds][%d] listBookmarkedBuildsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{owner}/builds][%d] listBookmarkedBuildsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListBookmarkedBuildsOK) GetPayload() *service_model.V1ListBuildsResponse {
@@ -103,7 +103,7 @@ type ListBookmarkedBuildsNotFound struct {
 }
 
 func (o *ListBookmarkedBuildsNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/bookmarks/{owner}/builds][%d] listBookmarkedBuildsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{owner}/builds][%d] listBookmarkedBuildsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListBookmarkedBuildsNotFound) GetPayload() string {

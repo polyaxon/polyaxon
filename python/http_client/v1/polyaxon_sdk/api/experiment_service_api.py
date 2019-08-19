@@ -147,7 +147,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/archive', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/archive', 'POST',
             path_params,
             query_params,
             header_params,
@@ -260,7 +260,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/bookmark', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/bookmark', 'POST',
             path_params,
             query_params,
             header_params,
@@ -373,7 +373,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments', 'POST',
+            '/api/v1/{owner}/{project}/experiments', 'POST',
             path_params,
             query_params,
             header_params,
@@ -494,7 +494,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef', 'POST',
+            '/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef', 'POST',
             path_params,
             query_params,
             header_params,
@@ -615,7 +615,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/statuses', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/statuses', 'POST',
             path_params,
             query_params,
             header_params,
@@ -728,7 +728,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}', 'DELETE',
+            '/api/v1/{owner}/{project}/experiments/{id}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -841,7 +841,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/delete', 'DELETE',
+            '/api/v1/{owner}/{project}/experiments/delete', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -954,7 +954,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}', 'GET',
+            '/api/v1/{owner}/{project}/experiments/{id}', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1067,7 +1067,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/coderef', 'GET',
+            '/api/v1/{owner}/{project}/experiments/{id}/coderef', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1164,7 +1164,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/archives/{owner}/experiments', 'GET',
+            '/api/v1/archives/{owner}/experiments', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1261,7 +1261,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/bookmarks/{owner}/experiments', 'GET',
+            '/api/v1/bookmarks/{owner}/experiments', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1374,7 +1374,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/statuses', 'GET',
+            '/api/v1/{owner}/{project}/experiments/{id}/statuses', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1479,7 +1479,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments', 'GET',
+            '/api/v1/{owner}/{project}/experiments', 'GET',
             path_params,
             query_params,
             header_params,
@@ -1600,7 +1600,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/restart', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/restart', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1713,7 +1713,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/restore', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/restore', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1834,7 +1834,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/resume', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/resume', 'POST',
             path_params,
             query_params,
             header_params,
@@ -1955,7 +1955,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/tensorboard/start', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2076,7 +2076,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/stop', 'POST',
+            '/api/v1/{owner}/{project}/experiments/{id}/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2189,7 +2189,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/tensorboard/stop', 'DELETE',
+            '/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -2302,7 +2302,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/stop', 'POST',
+            '/api/v1/{owner}/{project}/experiments/stop', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2415,7 +2415,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{id}/unbookmark', 'DELETE',
+            '/api/v1/{owner}/{project}/experiments/{id}/unbookmark', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -2536,7 +2536,7 @@ class ExperimentServiceApi(object):
         auth_settings = []  # noqa: E501
 
         return self.api_client.call_api(
-            '/v1/{owner}/{project}/experiments/{experiment.id}', 'PUT',
+            '/api/v1/{owner}/{project}/experiments/{experiment.id}', 'PUT',
             path_params,
             query_params,
             header_params,

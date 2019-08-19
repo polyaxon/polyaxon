@@ -70,7 +70,7 @@ type ListArchivedBuildsOK struct {
 }
 
 func (o *ListArchivedBuildsOK) Error() string {
-	return fmt.Sprintf("[GET /v1/archives/{owner}/builds][%d] listArchivedBuildsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{owner}/builds][%d] listArchivedBuildsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListArchivedBuildsOK) GetPayload() *service_model.V1ListBuildsResponse {
@@ -103,7 +103,7 @@ type ListArchivedBuildsNotFound struct {
 }
 
 func (o *ListArchivedBuildsNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/archives/{owner}/builds][%d] listArchivedBuildsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{owner}/builds][%d] listArchivedBuildsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListArchivedBuildsNotFound) GetPayload() string {

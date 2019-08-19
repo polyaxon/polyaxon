@@ -70,7 +70,7 @@ type CreateJobOK struct {
 }
 
 func (o *CreateJobOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs][%d] createJobOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs][%d] createJobOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateJobOK) GetPayload() *service_model.V1Job {
@@ -103,7 +103,7 @@ type CreateJobNotFound struct {
 }
 
 func (o *CreateJobNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs][%d] createJobNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs][%d] createJobNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateJobNotFound) GetPayload() string {

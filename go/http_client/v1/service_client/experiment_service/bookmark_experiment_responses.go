@@ -68,7 +68,7 @@ type BookmarkExperimentOK struct {
 }
 
 func (o *BookmarkExperimentOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/bookmark][%d] bookmarkExperimentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/bookmark][%d] bookmarkExperimentOK  %+v", 200, o.Payload)
 }
 
 func (o *BookmarkExperimentOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type BookmarkExperimentNotFound struct {
 }
 
 func (o *BookmarkExperimentNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/experiments/{id}/bookmark][%d] bookmarkExperimentNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/experiments/{id}/bookmark][%d] bookmarkExperimentNotFound  %+v", 404, o.Payload)
 }
 
 func (o *BookmarkExperimentNotFound) GetPayload() string {

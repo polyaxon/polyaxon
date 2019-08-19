@@ -70,7 +70,7 @@ type ListArchivedExperimentsOK struct {
 }
 
 func (o *ListArchivedExperimentsOK) Error() string {
-	return fmt.Sprintf("[GET /v1/archives/{owner}/experiments][%d] listArchivedExperimentsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{owner}/experiments][%d] listArchivedExperimentsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListArchivedExperimentsOK) GetPayload() *service_model.V1ListExperimentsResponse {
@@ -103,7 +103,7 @@ type ListArchivedExperimentsNotFound struct {
 }
 
 func (o *ListArchivedExperimentsNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/archives/{owner}/experiments][%d] listArchivedExperimentsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{owner}/experiments][%d] listArchivedExperimentsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListArchivedExperimentsNotFound) GetPayload() string {

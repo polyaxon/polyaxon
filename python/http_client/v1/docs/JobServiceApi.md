@@ -4,26 +4,26 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**archive_job**](JobServiceApi.md#archive_job) | **POST** /v1/{owner}/{project}/jobs/{id}/archive | Restore build
-[**bookmark_job**](JobServiceApi.md#bookmark_job) | **POST** /v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
-[**create_job**](JobServiceApi.md#create_job) | **POST** /v1/{owner}/{project}/jobs | Create new build
-[**create_job_code_ref**](JobServiceApi.md#create_job_code_ref) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
-[**create_job_status**](JobServiceApi.md#create_job_status) | **POST** /v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
-[**delete_job**](JobServiceApi.md#delete_job) | **DELETE** /v1/{owner}/{project}/jobs/{id} | Delete build
-[**delete_jobs**](JobServiceApi.md#delete_jobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete builds
-[**get_job**](JobServiceApi.md#get_job) | **GET** /v1/{owner}/{project}/jobs/{id} | Get build
-[**get_job_code_ref**](JobServiceApi.md#get_job_code_ref) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
-[**list_archived_jobs**](JobServiceApi.md#list_archived_jobs) | **GET** /v1/archives/{owner}/jobs | List archived builds
-[**list_bookmarked_jobs**](JobServiceApi.md#list_bookmarked_jobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked builds
-[**list_job_statuses**](JobServiceApi.md#list_job_statuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
-[**list_jobs**](JobServiceApi.md#list_jobs) | **GET** /v1/{owner}/{project}/jobs | List builds
-[**restart_job**](JobServiceApi.md#restart_job) | **POST** /v1/{owner}/{project}/jobs/{id}/restart | Restart build
-[**restore_job**](JobServiceApi.md#restore_job) | **POST** /v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
-[**resume_job**](JobServiceApi.md#resume_job) | **POST** /v1/{owner}/{project}/jobs/{id}/resume | Archive build
-[**stop_job**](JobServiceApi.md#stop_job) | **POST** /v1/{owner}/{project}/jobs/{id}/stop | Stop build
-[**stop_jobs**](JobServiceApi.md#stop_jobs) | **POST** /v1/{owner}/{project}/jobs/stop | Stop builds
-[**un_bookmark_job**](JobServiceApi.md#un_bookmark_job) | **DELETE** /v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
-[**update_job2**](JobServiceApi.md#update_job2) | **PUT** /v1/{owner}/{project}/jobs/{job.id} | Update build
+[**archive_job**](JobServiceApi.md#archive_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/archive | Restore build
+[**bookmark_job**](JobServiceApi.md#bookmark_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
+[**create_job**](JobServiceApi.md#create_job) | **POST** /api/v1/{owner}/{project}/jobs | Create new build
+[**create_job_code_ref**](JobServiceApi.md#create_job_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
+[**create_job_status**](JobServiceApi.md#create_job_status) | **POST** /api/v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
+[**delete_job**](JobServiceApi.md#delete_job) | **DELETE** /api/v1/{owner}/{project}/jobs/{id} | Delete build
+[**delete_jobs**](JobServiceApi.md#delete_jobs) | **DELETE** /api/v1/{owner}/{project}/jobs/delete | Delete builds
+[**get_job**](JobServiceApi.md#get_job) | **GET** /api/v1/{owner}/{project}/jobs/{id} | Get build
+[**get_job_code_ref**](JobServiceApi.md#get_job_code_ref) | **GET** /api/v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
+[**list_archived_jobs**](JobServiceApi.md#list_archived_jobs) | **GET** /api/v1/archives/{owner}/jobs | List archived builds
+[**list_bookmarked_jobs**](JobServiceApi.md#list_bookmarked_jobs) | **GET** /api/v1/bookmarks/{owner}/jobs | List bookmarked builds
+[**list_job_statuses**](JobServiceApi.md#list_job_statuses) | **GET** /api/v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
+[**list_jobs**](JobServiceApi.md#list_jobs) | **GET** /api/v1/{owner}/{project}/jobs | List builds
+[**restart_job**](JobServiceApi.md#restart_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restart | Restart build
+[**restore_job**](JobServiceApi.md#restore_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
+[**resume_job**](JobServiceApi.md#resume_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/resume | Archive build
+[**stop_job**](JobServiceApi.md#stop_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/stop | Stop build
+[**stop_jobs**](JobServiceApi.md#stop_jobs) | **POST** /api/v1/{owner}/{project}/jobs/stop | Stop builds
+[**un_bookmark_job**](JobServiceApi.md#un_bookmark_job) | **DELETE** /api/v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
+[**update_job2**](JobServiceApi.md#update_job2) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
 
 
 # **archive_job**

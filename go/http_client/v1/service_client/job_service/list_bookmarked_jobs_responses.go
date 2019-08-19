@@ -70,7 +70,7 @@ type ListBookmarkedJobsOK struct {
 }
 
 func (o *ListBookmarkedJobsOK) Error() string {
-	return fmt.Sprintf("[GET /v1/bookmarks/{owner}/jobs][%d] listBookmarkedJobsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{owner}/jobs][%d] listBookmarkedJobsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListBookmarkedJobsOK) GetPayload() *service_model.V1ListJobsResponse {
@@ -103,7 +103,7 @@ type ListBookmarkedJobsNotFound struct {
 }
 
 func (o *ListBookmarkedJobsNotFound) Error() string {
-	return fmt.Sprintf("[GET /v1/bookmarks/{owner}/jobs][%d] listBookmarkedJobsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/bookmarks/{owner}/jobs][%d] listBookmarkedJobsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListBookmarkedJobsNotFound) GetPayload() string {

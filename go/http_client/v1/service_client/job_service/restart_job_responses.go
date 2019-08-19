@@ -70,7 +70,7 @@ type RestartJobOK struct {
 }
 
 func (o *RestartJobOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs/{id}/restart][%d] restartJobOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/restart][%d] restartJobOK  %+v", 200, o.Payload)
 }
 
 func (o *RestartJobOK) GetPayload() *service_model.V1Job {
@@ -103,7 +103,7 @@ type RestartJobNotFound struct {
 }
 
 func (o *RestartJobNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs/{id}/restart][%d] restartJobNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/restart][%d] restartJobNotFound  %+v", 404, o.Payload)
 }
 
 func (o *RestartJobNotFound) GetPayload() string {

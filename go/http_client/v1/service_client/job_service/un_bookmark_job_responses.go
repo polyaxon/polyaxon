@@ -68,7 +68,7 @@ type UnBookmarkJobOK struct {
 }
 
 func (o *UnBookmarkJobOK) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/jobs/{id}/unbookmark][%d] unBookmarkJobOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/jobs/{id}/unbookmark][%d] unBookmarkJobOK  %+v", 200, o.Payload)
 }
 
 func (o *UnBookmarkJobOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type UnBookmarkJobNotFound struct {
 }
 
 func (o *UnBookmarkJobNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/jobs/{id}/unbookmark][%d] unBookmarkJobNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/jobs/{id}/unbookmark][%d] unBookmarkJobNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UnBookmarkJobNotFound) GetPayload() string {

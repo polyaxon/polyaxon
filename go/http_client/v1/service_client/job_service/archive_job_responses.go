@@ -68,7 +68,7 @@ type ArchiveJobOK struct {
 }
 
 func (o *ArchiveJobOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs/{id}/archive][%d] archiveJobOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/archive][%d] archiveJobOK  %+v", 200, o.Payload)
 }
 
 func (o *ArchiveJobOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type ArchiveJobNotFound struct {
 }
 
 func (o *ArchiveJobNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/jobs/{id}/archive][%d] archiveJobNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/jobs/{id}/archive][%d] archiveJobNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ArchiveJobNotFound) GetPayload() string {

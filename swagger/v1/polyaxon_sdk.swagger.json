@@ -19,7 +19,7 @@
     "application/json"
   ],
   "paths": {
-    "/v1/archives/{owner}/builds": {
+    "/api/v1/archives/{owner}/builds": {
       "get": {
         "summary": "List archived builds",
         "operationId": "ListArchivedBuilds",
@@ -51,7 +51,7 @@
         ]
       }
     },
-    "/v1/archives/{owner}/experiments": {
+    "/api/v1/archives/{owner}/experiments": {
       "get": {
         "summary": "List archived builds",
         "operationId": "ListArchivedExperiments",
@@ -83,7 +83,7 @@
         ]
       }
     },
-    "/v1/archives/{owner}/jobs": {
+    "/api/v1/archives/{owner}/jobs": {
       "get": {
         "summary": "List archived builds",
         "operationId": "ListArchivedJobs",
@@ -115,7 +115,7 @@
         ]
       }
     },
-    "/v1/bookmarks/{owner}/builds": {
+    "/api/v1/bookmarks/{owner}/builds": {
       "get": {
         "summary": "List bookmarked builds",
         "operationId": "ListBookmarkedBuilds",
@@ -147,7 +147,7 @@
         ]
       }
     },
-    "/v1/bookmarks/{owner}/experiments": {
+    "/api/v1/bookmarks/{owner}/experiments": {
       "get": {
         "summary": "List bookmarked builds",
         "operationId": "ListBookmarkedExperiments",
@@ -179,7 +179,7 @@
         ]
       }
     },
-    "/v1/bookmarks/{owner}/jobs": {
+    "/api/v1/bookmarks/{owner}/jobs": {
       "get": {
         "summary": "List bookmarked builds",
         "operationId": "ListBookmarkedJobs",
@@ -211,7 +211,7 @@
         ]
       }
     },
-    "/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef": {
+    "/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef": {
       "post": {
         "summary": "Create build code ref",
         "operationId": "CreateBuildCodeRef",
@@ -266,7 +266,7 @@
         ]
       }
     },
-    "/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef": {
+    "/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef": {
       "post": {
         "summary": "Get experiment code ref",
         "operationId": "CreateExperimentCodeRef",
@@ -321,7 +321,7 @@
         ]
       }
     },
-    "/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef": {
+    "/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef": {
       "post": {
         "summary": "Get job code ref",
         "operationId": "CreateJobCodeRef",
@@ -376,7 +376,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds": {
+    "/api/v1/{owner}/{project}/builds": {
       "get": {
         "summary": "List builds",
         "operationId": "ListBuilds",
@@ -460,7 +460,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/delete": {
+    "/api/v1/{owner}/{project}/builds/delete": {
       "delete": {
         "summary": "Delete builds",
         "operationId": "DeleteBuilds",
@@ -507,7 +507,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/stop": {
+    "/api/v1/{owner}/{project}/builds/stop": {
       "post": {
         "summary": "Stop builds",
         "operationId": "StopBuilds",
@@ -554,7 +554,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{build.id}": {
+    "/api/v1/{owner}/{project}/builds/{build.id}": {
       "put": {
         "summary": "Update build",
         "operationId": "UpdateBuild2",
@@ -609,7 +609,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}": {
+    "/api/v1/{owner}/{project}/builds/{id}": {
       "get": {
         "summary": "Get build",
         "operationId": "GetBuild",
@@ -701,7 +701,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/archive": {
+    "/api/v1/{owner}/{project}/builds/{id}/archive": {
       "post": {
         "summary": "Archive build",
         "operationId": "ArchiveBuild",
@@ -748,7 +748,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/bookmark": {
+    "/api/v1/{owner}/{project}/builds/{id}/bookmark": {
       "post": {
         "summary": "Bookmark build",
         "operationId": "BookmarkBuild",
@@ -795,7 +795,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/coderef": {
+    "/api/v1/{owner}/{project}/builds/{id}/coderef": {
       "get": {
         "summary": "Get build code ref",
         "operationId": "GetBuildCodeRef",
@@ -842,7 +842,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/restart": {
+    "/api/v1/{owner}/{project}/builds/{id}/restart": {
       "post": {
         "summary": "Restart build",
         "operationId": "RestartBuild",
@@ -897,7 +897,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/restore": {
+    "/api/v1/{owner}/{project}/builds/{id}/restore": {
       "post": {
         "summary": "Restore build",
         "operationId": "RestoreBuild",
@@ -944,7 +944,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/statuses": {
+    "/api/v1/{owner}/{project}/builds/{id}/statuses": {
       "get": {
         "summary": "List build statuses",
         "operationId": "ListBuildStatuses",
@@ -1044,7 +1044,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/stop": {
+    "/api/v1/{owner}/{project}/builds/{id}/stop": {
       "post": {
         "summary": "Stop build",
         "operationId": "StopBuild",
@@ -1099,7 +1099,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/builds/{id}/unbookmark": {
+    "/api/v1/{owner}/{project}/builds/{id}/unbookmark": {
       "delete": {
         "summary": "UnBookmark build",
         "operationId": "UnBookmarkBuild",
@@ -1146,7 +1146,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments": {
+    "/api/v1/{owner}/{project}/experiments": {
       "get": {
         "summary": "List builds",
         "operationId": "ListExperiments",
@@ -1230,7 +1230,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/delete": {
+    "/api/v1/{owner}/{project}/experiments/delete": {
       "delete": {
         "summary": "Delete builds",
         "operationId": "DeleteExperiments",
@@ -1277,7 +1277,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/stop": {
+    "/api/v1/{owner}/{project}/experiments/stop": {
       "post": {
         "summary": "Stop builds",
         "operationId": "StopExperiments",
@@ -1324,7 +1324,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{experiment.id}": {
+    "/api/v1/{owner}/{project}/experiments/{experiment.id}": {
       "put": {
         "summary": "Update build",
         "operationId": "UpdateExperiment2",
@@ -1379,7 +1379,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}": {
+    "/api/v1/{owner}/{project}/experiments/{id}": {
       "get": {
         "summary": "Get build",
         "operationId": "GetExperiment",
@@ -1471,7 +1471,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/archive": {
+    "/api/v1/{owner}/{project}/experiments/{id}/archive": {
       "post": {
         "summary": "Restore build",
         "operationId": "ArchiveExperiment",
@@ -1518,7 +1518,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/bookmark": {
+    "/api/v1/{owner}/{project}/experiments/{id}/bookmark": {
       "post": {
         "summary": "UnBookmark build",
         "operationId": "BookmarkExperiment",
@@ -1565,7 +1565,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/coderef": {
+    "/api/v1/{owner}/{project}/experiments/{id}/coderef": {
       "get": {
         "summary": "Get experiment code ref",
         "operationId": "GetExperimentCodeRef",
@@ -1612,7 +1612,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/restart": {
+    "/api/v1/{owner}/{project}/experiments/{id}/restart": {
       "post": {
         "summary": "Restart build",
         "operationId": "RestartExperiment",
@@ -1667,7 +1667,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/restore": {
+    "/api/v1/{owner}/{project}/experiments/{id}/restore": {
       "post": {
         "summary": "Bookmark build",
         "operationId": "RestoreExperiment",
@@ -1714,7 +1714,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/resume": {
+    "/api/v1/{owner}/{project}/experiments/{id}/resume": {
       "post": {
         "summary": "Archive build",
         "operationId": "ResumeExperiment",
@@ -1769,7 +1769,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/statuses": {
+    "/api/v1/{owner}/{project}/experiments/{id}/statuses": {
       "get": {
         "summary": "Create build code ref",
         "operationId": "ListExperimentStatuses",
@@ -1869,7 +1869,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/stop": {
+    "/api/v1/{owner}/{project}/experiments/{id}/stop": {
       "post": {
         "summary": "Stop build",
         "operationId": "StopExperiment",
@@ -1924,7 +1924,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/tensorboard/start": {
+    "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start": {
       "post": {
         "summary": "List build statuses",
         "operationId": "StartExperimentTensorboard",
@@ -1979,7 +1979,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/tensorboard/stop": {
+    "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop": {
       "delete": {
         "summary": "Create new build status",
         "operationId": "StopExperimentTensorboard",
@@ -2026,7 +2026,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/experiments/{id}/unbookmark": {
+    "/api/v1/{owner}/{project}/experiments/{id}/unbookmark": {
       "delete": {
         "summary": "Get build status",
         "operationId": "UnBookmarkExperiment",
@@ -2073,7 +2073,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs": {
+    "/api/v1/{owner}/{project}/jobs": {
       "get": {
         "summary": "List builds",
         "operationId": "ListJobs",
@@ -2157,7 +2157,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/delete": {
+    "/api/v1/{owner}/{project}/jobs/delete": {
       "delete": {
         "summary": "Delete builds",
         "operationId": "DeleteJobs",
@@ -2204,7 +2204,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/stop": {
+    "/api/v1/{owner}/{project}/jobs/stop": {
       "post": {
         "summary": "Stop builds",
         "operationId": "StopJobs",
@@ -2251,7 +2251,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}": {
+    "/api/v1/{owner}/{project}/jobs/{id}": {
       "get": {
         "summary": "Get build",
         "operationId": "GetJob",
@@ -2343,7 +2343,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/archive": {
+    "/api/v1/{owner}/{project}/jobs/{id}/archive": {
       "post": {
         "summary": "Restore build",
         "operationId": "ArchiveJob",
@@ -2390,7 +2390,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/bookmark": {
+    "/api/v1/{owner}/{project}/jobs/{id}/bookmark": {
       "post": {
         "summary": "UnBookmark build",
         "operationId": "BookmarkJob",
@@ -2437,7 +2437,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/coderef": {
+    "/api/v1/{owner}/{project}/jobs/{id}/coderef": {
       "get": {
         "summary": "Create build code ref",
         "operationId": "GetJobCodeRef",
@@ -2484,7 +2484,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/restart": {
+    "/api/v1/{owner}/{project}/jobs/{id}/restart": {
       "post": {
         "summary": "Restart build",
         "operationId": "RestartJob",
@@ -2539,7 +2539,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/restore": {
+    "/api/v1/{owner}/{project}/jobs/{id}/restore": {
       "post": {
         "summary": "Bookmark build",
         "operationId": "RestoreJob",
@@ -2586,7 +2586,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/resume": {
+    "/api/v1/{owner}/{project}/jobs/{id}/resume": {
       "post": {
         "summary": "Archive build",
         "operationId": "ResumeJob",
@@ -2641,7 +2641,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/statuses": {
+    "/api/v1/{owner}/{project}/jobs/{id}/statuses": {
       "get": {
         "summary": "Create new build status",
         "operationId": "ListJobStatuses",
@@ -2741,7 +2741,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/stop": {
+    "/api/v1/{owner}/{project}/jobs/{id}/stop": {
       "post": {
         "summary": "Stop build",
         "operationId": "StopJob",
@@ -2796,7 +2796,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{id}/unbookmark": {
+    "/api/v1/{owner}/{project}/jobs/{id}/unbookmark": {
       "delete": {
         "summary": "Get build status",
         "operationId": "UnBookmarkJob",
@@ -2843,7 +2843,7 @@
         ]
       }
     },
-    "/v1/{owner}/{project}/jobs/{job.id}": {
+    "/api/v1/{owner}/{project}/jobs/{job.id}": {
       "put": {
         "summary": "Update build",
         "operationId": "UpdateJob2",

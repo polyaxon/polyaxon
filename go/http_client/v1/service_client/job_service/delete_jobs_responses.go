@@ -68,7 +68,7 @@ type DeleteJobsOK struct {
 }
 
 func (o *DeleteJobsOK) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/jobs/delete][%d] deleteJobsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/jobs/delete][%d] deleteJobsOK  %+v", 200, o.Payload)
 }
 
 func (o *DeleteJobsOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type DeleteJobsNotFound struct {
 }
 
 func (o *DeleteJobsNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /v1/{owner}/{project}/jobs/delete][%d] deleteJobsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/jobs/delete][%d] deleteJobsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteJobsNotFound) GetPayload() string {

@@ -122,67 +122,67 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*PolyaxonSdk.BuildServiceApi* | [**archiveBuild**](docs/BuildServiceApi.md#archiveBuild) | **POST** /v1/{owner}/{project}/builds/{id}/archive | Archive build
-*PolyaxonSdk.BuildServiceApi* | [**bookmarkBuild**](docs/BuildServiceApi.md#bookmarkBuild) | **POST** /v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
-*PolyaxonSdk.BuildServiceApi* | [**createBuild**](docs/BuildServiceApi.md#createBuild) | **POST** /v1/{owner}/{project}/builds | Create new build
-*PolyaxonSdk.BuildServiceApi* | [**createBuildCodeRef**](docs/BuildServiceApi.md#createBuildCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
-*PolyaxonSdk.BuildServiceApi* | [**createBuildStatus**](docs/BuildServiceApi.md#createBuildStatus) | **POST** /v1/{owner}/{project}/builds/{id}/statuses | Create new build status
-*PolyaxonSdk.BuildServiceApi* | [**deleteBuild**](docs/BuildServiceApi.md#deleteBuild) | **DELETE** /v1/{owner}/{project}/builds/{id} | Delete build
-*PolyaxonSdk.BuildServiceApi* | [**deleteBuilds**](docs/BuildServiceApi.md#deleteBuilds) | **DELETE** /v1/{owner}/{project}/builds/delete | Delete builds
-*PolyaxonSdk.BuildServiceApi* | [**getBuild**](docs/BuildServiceApi.md#getBuild) | **GET** /v1/{owner}/{project}/builds/{id} | Get build
-*PolyaxonSdk.BuildServiceApi* | [**getBuildCodeRef**](docs/BuildServiceApi.md#getBuildCodeRef) | **GET** /v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-*PolyaxonSdk.BuildServiceApi* | [**listArchivedBuilds**](docs/BuildServiceApi.md#listArchivedBuilds) | **GET** /v1/archives/{owner}/builds | List archived builds
-*PolyaxonSdk.BuildServiceApi* | [**listBookmarkedBuilds**](docs/BuildServiceApi.md#listBookmarkedBuilds) | **GET** /v1/bookmarks/{owner}/builds | List bookmarked builds
-*PolyaxonSdk.BuildServiceApi* | [**listBuildStatuses**](docs/BuildServiceApi.md#listBuildStatuses) | **GET** /v1/{owner}/{project}/builds/{id}/statuses | List build statuses
-*PolyaxonSdk.BuildServiceApi* | [**listBuilds**](docs/BuildServiceApi.md#listBuilds) | **GET** /v1/{owner}/{project}/builds | List builds
-*PolyaxonSdk.BuildServiceApi* | [**restartBuild**](docs/BuildServiceApi.md#restartBuild) | **POST** /v1/{owner}/{project}/builds/{id}/restart | Restart build
-*PolyaxonSdk.BuildServiceApi* | [**restoreBuild**](docs/BuildServiceApi.md#restoreBuild) | **POST** /v1/{owner}/{project}/builds/{id}/restore | Restore build
-*PolyaxonSdk.BuildServiceApi* | [**stopBuild**](docs/BuildServiceApi.md#stopBuild) | **POST** /v1/{owner}/{project}/builds/{id}/stop | Stop build
-*PolyaxonSdk.BuildServiceApi* | [**stopBuilds**](docs/BuildServiceApi.md#stopBuilds) | **POST** /v1/{owner}/{project}/builds/stop | Stop builds
-*PolyaxonSdk.BuildServiceApi* | [**unBookmarkBuild**](docs/BuildServiceApi.md#unBookmarkBuild) | **DELETE** /v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-*PolyaxonSdk.BuildServiceApi* | [**updateBuild2**](docs/BuildServiceApi.md#updateBuild2) | **PUT** /v1/{owner}/{project}/builds/{build.id} | Update build
-*PolyaxonSdk.ExperimentServiceApi* | [**archiveExperiment**](docs/ExperimentServiceApi.md#archiveExperiment) | **POST** /v1/{owner}/{project}/experiments/{id}/archive | Restore build
-*PolyaxonSdk.ExperimentServiceApi* | [**bookmarkExperiment**](docs/ExperimentServiceApi.md#bookmarkExperiment) | **POST** /v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
-*PolyaxonSdk.ExperimentServiceApi* | [**createExperiment**](docs/ExperimentServiceApi.md#createExperiment) | **POST** /v1/{owner}/{project}/experiments | Create new build
-*PolyaxonSdk.ExperimentServiceApi* | [**createExperimentCodeRef**](docs/ExperimentServiceApi.md#createExperimentCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
-*PolyaxonSdk.ExperimentServiceApi* | [**createExperimentStatus**](docs/ExperimentServiceApi.md#createExperimentStatus) | **POST** /v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
-*PolyaxonSdk.ExperimentServiceApi* | [**deleteExperiment**](docs/ExperimentServiceApi.md#deleteExperiment) | **DELETE** /v1/{owner}/{project}/experiments/{id} | Delete build
-*PolyaxonSdk.ExperimentServiceApi* | [**deleteExperiments**](docs/ExperimentServiceApi.md#deleteExperiments) | **DELETE** /v1/{owner}/{project}/experiments/delete | Delete builds
-*PolyaxonSdk.ExperimentServiceApi* | [**getExperiment**](docs/ExperimentServiceApi.md#getExperiment) | **GET** /v1/{owner}/{project}/experiments/{id} | Get build
-*PolyaxonSdk.ExperimentServiceApi* | [**getExperimentCodeRef**](docs/ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-*PolyaxonSdk.ExperimentServiceApi* | [**listArchivedExperiments**](docs/ExperimentServiceApi.md#listArchivedExperiments) | **GET** /v1/archives/{owner}/experiments | List archived builds
-*PolyaxonSdk.ExperimentServiceApi* | [**listBookmarkedExperiments**](docs/ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /v1/bookmarks/{owner}/experiments | List bookmarked builds
-*PolyaxonSdk.ExperimentServiceApi* | [**listExperimentStatuses**](docs/ExperimentServiceApi.md#listExperimentStatuses) | **GET** /v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
-*PolyaxonSdk.ExperimentServiceApi* | [**listExperiments**](docs/ExperimentServiceApi.md#listExperiments) | **GET** /v1/{owner}/{project}/experiments | List builds
-*PolyaxonSdk.ExperimentServiceApi* | [**restartExperiment**](docs/ExperimentServiceApi.md#restartExperiment) | **POST** /v1/{owner}/{project}/experiments/{id}/restart | Restart build
-*PolyaxonSdk.ExperimentServiceApi* | [**restoreExperiment**](docs/ExperimentServiceApi.md#restoreExperiment) | **POST** /v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
-*PolyaxonSdk.ExperimentServiceApi* | [**resumeExperiment**](docs/ExperimentServiceApi.md#resumeExperiment) | **POST** /v1/{owner}/{project}/experiments/{id}/resume | Archive build
-*PolyaxonSdk.ExperimentServiceApi* | [**startExperimentTensorboard**](docs/ExperimentServiceApi.md#startExperimentTensorboard) | **POST** /v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
-*PolyaxonSdk.ExperimentServiceApi* | [**stopExperiment**](docs/ExperimentServiceApi.md#stopExperiment) | **POST** /v1/{owner}/{project}/experiments/{id}/stop | Stop build
-*PolyaxonSdk.ExperimentServiceApi* | [**stopExperimentTensorboard**](docs/ExperimentServiceApi.md#stopExperimentTensorboard) | **DELETE** /v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
-*PolyaxonSdk.ExperimentServiceApi* | [**stopExperiments**](docs/ExperimentServiceApi.md#stopExperiments) | **POST** /v1/{owner}/{project}/experiments/stop | Stop builds
-*PolyaxonSdk.ExperimentServiceApi* | [**unBookmarkExperiment**](docs/ExperimentServiceApi.md#unBookmarkExperiment) | **DELETE** /v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
-*PolyaxonSdk.ExperimentServiceApi* | [**updateExperiment2**](docs/ExperimentServiceApi.md#updateExperiment2) | **PUT** /v1/{owner}/{project}/experiments/{experiment.id} | Update build
-*PolyaxonSdk.JobServiceApi* | [**archiveJob**](docs/JobServiceApi.md#archiveJob) | **POST** /v1/{owner}/{project}/jobs/{id}/archive | Restore build
-*PolyaxonSdk.JobServiceApi* | [**bookmarkJob**](docs/JobServiceApi.md#bookmarkJob) | **POST** /v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
-*PolyaxonSdk.JobServiceApi* | [**createJob**](docs/JobServiceApi.md#createJob) | **POST** /v1/{owner}/{project}/jobs | Create new build
-*PolyaxonSdk.JobServiceApi* | [**createJobCodeRef**](docs/JobServiceApi.md#createJobCodeRef) | **POST** /v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
-*PolyaxonSdk.JobServiceApi* | [**createJobStatus**](docs/JobServiceApi.md#createJobStatus) | **POST** /v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
-*PolyaxonSdk.JobServiceApi* | [**deleteJob**](docs/JobServiceApi.md#deleteJob) | **DELETE** /v1/{owner}/{project}/jobs/{id} | Delete build
-*PolyaxonSdk.JobServiceApi* | [**deleteJobs**](docs/JobServiceApi.md#deleteJobs) | **DELETE** /v1/{owner}/{project}/jobs/delete | Delete builds
-*PolyaxonSdk.JobServiceApi* | [**getJob**](docs/JobServiceApi.md#getJob) | **GET** /v1/{owner}/{project}/jobs/{id} | Get build
-*PolyaxonSdk.JobServiceApi* | [**getJobCodeRef**](docs/JobServiceApi.md#getJobCodeRef) | **GET** /v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
-*PolyaxonSdk.JobServiceApi* | [**listArchivedJobs**](docs/JobServiceApi.md#listArchivedJobs) | **GET** /v1/archives/{owner}/jobs | List archived builds
-*PolyaxonSdk.JobServiceApi* | [**listBookmarkedJobs**](docs/JobServiceApi.md#listBookmarkedJobs) | **GET** /v1/bookmarks/{owner}/jobs | List bookmarked builds
-*PolyaxonSdk.JobServiceApi* | [**listJobStatuses**](docs/JobServiceApi.md#listJobStatuses) | **GET** /v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
-*PolyaxonSdk.JobServiceApi* | [**listJobs**](docs/JobServiceApi.md#listJobs) | **GET** /v1/{owner}/{project}/jobs | List builds
-*PolyaxonSdk.JobServiceApi* | [**restartJob**](docs/JobServiceApi.md#restartJob) | **POST** /v1/{owner}/{project}/jobs/{id}/restart | Restart build
-*PolyaxonSdk.JobServiceApi* | [**restoreJob**](docs/JobServiceApi.md#restoreJob) | **POST** /v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
-*PolyaxonSdk.JobServiceApi* | [**resumeJob**](docs/JobServiceApi.md#resumeJob) | **POST** /v1/{owner}/{project}/jobs/{id}/resume | Archive build
-*PolyaxonSdk.JobServiceApi* | [**stopJob**](docs/JobServiceApi.md#stopJob) | **POST** /v1/{owner}/{project}/jobs/{id}/stop | Stop build
-*PolyaxonSdk.JobServiceApi* | [**stopJobs**](docs/JobServiceApi.md#stopJobs) | **POST** /v1/{owner}/{project}/jobs/stop | Stop builds
-*PolyaxonSdk.JobServiceApi* | [**unBookmarkJob**](docs/JobServiceApi.md#unBookmarkJob) | **DELETE** /v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
-*PolyaxonSdk.JobServiceApi* | [**updateJob2**](docs/JobServiceApi.md#updateJob2) | **PUT** /v1/{owner}/{project}/jobs/{job.id} | Update build
+*PolyaxonSdk.BuildServiceApi* | [**archiveBuild**](docs/BuildServiceApi.md#archiveBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/archive | Archive build
+*PolyaxonSdk.BuildServiceApi* | [**bookmarkBuild**](docs/BuildServiceApi.md#bookmarkBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
+*PolyaxonSdk.BuildServiceApi* | [**createBuild**](docs/BuildServiceApi.md#createBuild) | **POST** /api/v1/{owner}/{project}/builds | Create new build
+*PolyaxonSdk.BuildServiceApi* | [**createBuildCodeRef**](docs/BuildServiceApi.md#createBuildCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
+*PolyaxonSdk.BuildServiceApi* | [**createBuildStatus**](docs/BuildServiceApi.md#createBuildStatus) | **POST** /api/v1/{owner}/{project}/builds/{id}/statuses | Create new build status
+*PolyaxonSdk.BuildServiceApi* | [**deleteBuild**](docs/BuildServiceApi.md#deleteBuild) | **DELETE** /api/v1/{owner}/{project}/builds/{id} | Delete build
+*PolyaxonSdk.BuildServiceApi* | [**deleteBuilds**](docs/BuildServiceApi.md#deleteBuilds) | **DELETE** /api/v1/{owner}/{project}/builds/delete | Delete builds
+*PolyaxonSdk.BuildServiceApi* | [**getBuild**](docs/BuildServiceApi.md#getBuild) | **GET** /api/v1/{owner}/{project}/builds/{id} | Get build
+*PolyaxonSdk.BuildServiceApi* | [**getBuildCodeRef**](docs/BuildServiceApi.md#getBuildCodeRef) | **GET** /api/v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
+*PolyaxonSdk.BuildServiceApi* | [**listArchivedBuilds**](docs/BuildServiceApi.md#listArchivedBuilds) | **GET** /api/v1/archives/{owner}/builds | List archived builds
+*PolyaxonSdk.BuildServiceApi* | [**listBookmarkedBuilds**](docs/BuildServiceApi.md#listBookmarkedBuilds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
+*PolyaxonSdk.BuildServiceApi* | [**listBuildStatuses**](docs/BuildServiceApi.md#listBuildStatuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
+*PolyaxonSdk.BuildServiceApi* | [**listBuilds**](docs/BuildServiceApi.md#listBuilds) | **GET** /api/v1/{owner}/{project}/builds | List builds
+*PolyaxonSdk.BuildServiceApi* | [**restartBuild**](docs/BuildServiceApi.md#restartBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
+*PolyaxonSdk.BuildServiceApi* | [**restoreBuild**](docs/BuildServiceApi.md#restoreBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
+*PolyaxonSdk.BuildServiceApi* | [**stopBuild**](docs/BuildServiceApi.md#stopBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
+*PolyaxonSdk.BuildServiceApi* | [**stopBuilds**](docs/BuildServiceApi.md#stopBuilds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
+*PolyaxonSdk.BuildServiceApi* | [**unBookmarkBuild**](docs/BuildServiceApi.md#unBookmarkBuild) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
+*PolyaxonSdk.BuildServiceApi* | [**updateBuild2**](docs/BuildServiceApi.md#updateBuild2) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
+*PolyaxonSdk.ExperimentServiceApi* | [**archiveExperiment**](docs/ExperimentServiceApi.md#archiveExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/archive | Restore build
+*PolyaxonSdk.ExperimentServiceApi* | [**bookmarkExperiment**](docs/ExperimentServiceApi.md#bookmarkExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
+*PolyaxonSdk.ExperimentServiceApi* | [**createExperiment**](docs/ExperimentServiceApi.md#createExperiment) | **POST** /api/v1/{owner}/{project}/experiments | Create new build
+*PolyaxonSdk.ExperimentServiceApi* | [**createExperimentCodeRef**](docs/ExperimentServiceApi.md#createExperimentCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
+*PolyaxonSdk.ExperimentServiceApi* | [**createExperimentStatus**](docs/ExperimentServiceApi.md#createExperimentStatus) | **POST** /api/v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
+*PolyaxonSdk.ExperimentServiceApi* | [**deleteExperiment**](docs/ExperimentServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id} | Delete build
+*PolyaxonSdk.ExperimentServiceApi* | [**deleteExperiments**](docs/ExperimentServiceApi.md#deleteExperiments) | **DELETE** /api/v1/{owner}/{project}/experiments/delete | Delete builds
+*PolyaxonSdk.ExperimentServiceApi* | [**getExperiment**](docs/ExperimentServiceApi.md#getExperiment) | **GET** /api/v1/{owner}/{project}/experiments/{id} | Get build
+*PolyaxonSdk.ExperimentServiceApi* | [**getExperimentCodeRef**](docs/ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /api/v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
+*PolyaxonSdk.ExperimentServiceApi* | [**listArchivedExperiments**](docs/ExperimentServiceApi.md#listArchivedExperiments) | **GET** /api/v1/archives/{owner}/experiments | List archived builds
+*PolyaxonSdk.ExperimentServiceApi* | [**listBookmarkedExperiments**](docs/ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /api/v1/bookmarks/{owner}/experiments | List bookmarked builds
+*PolyaxonSdk.ExperimentServiceApi* | [**listExperimentStatuses**](docs/ExperimentServiceApi.md#listExperimentStatuses) | **GET** /api/v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
+*PolyaxonSdk.ExperimentServiceApi* | [**listExperiments**](docs/ExperimentServiceApi.md#listExperiments) | **GET** /api/v1/{owner}/{project}/experiments | List builds
+*PolyaxonSdk.ExperimentServiceApi* | [**restartExperiment**](docs/ExperimentServiceApi.md#restartExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restart | Restart build
+*PolyaxonSdk.ExperimentServiceApi* | [**restoreExperiment**](docs/ExperimentServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
+*PolyaxonSdk.ExperimentServiceApi* | [**resumeExperiment**](docs/ExperimentServiceApi.md#resumeExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/resume | Archive build
+*PolyaxonSdk.ExperimentServiceApi* | [**startExperimentTensorboard**](docs/ExperimentServiceApi.md#startExperimentTensorboard) | **POST** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
+*PolyaxonSdk.ExperimentServiceApi* | [**stopExperiment**](docs/ExperimentServiceApi.md#stopExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/stop | Stop build
+*PolyaxonSdk.ExperimentServiceApi* | [**stopExperimentTensorboard**](docs/ExperimentServiceApi.md#stopExperimentTensorboard) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
+*PolyaxonSdk.ExperimentServiceApi* | [**stopExperiments**](docs/ExperimentServiceApi.md#stopExperiments) | **POST** /api/v1/{owner}/{project}/experiments/stop | Stop builds
+*PolyaxonSdk.ExperimentServiceApi* | [**unBookmarkExperiment**](docs/ExperimentServiceApi.md#unBookmarkExperiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
+*PolyaxonSdk.ExperimentServiceApi* | [**updateExperiment2**](docs/ExperimentServiceApi.md#updateExperiment2) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
+*PolyaxonSdk.JobServiceApi* | [**archiveJob**](docs/JobServiceApi.md#archiveJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/archive | Restore build
+*PolyaxonSdk.JobServiceApi* | [**bookmarkJob**](docs/JobServiceApi.md#bookmarkJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
+*PolyaxonSdk.JobServiceApi* | [**createJob**](docs/JobServiceApi.md#createJob) | **POST** /api/v1/{owner}/{project}/jobs | Create new build
+*PolyaxonSdk.JobServiceApi* | [**createJobCodeRef**](docs/JobServiceApi.md#createJobCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
+*PolyaxonSdk.JobServiceApi* | [**createJobStatus**](docs/JobServiceApi.md#createJobStatus) | **POST** /api/v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
+*PolyaxonSdk.JobServiceApi* | [**deleteJob**](docs/JobServiceApi.md#deleteJob) | **DELETE** /api/v1/{owner}/{project}/jobs/{id} | Delete build
+*PolyaxonSdk.JobServiceApi* | [**deleteJobs**](docs/JobServiceApi.md#deleteJobs) | **DELETE** /api/v1/{owner}/{project}/jobs/delete | Delete builds
+*PolyaxonSdk.JobServiceApi* | [**getJob**](docs/JobServiceApi.md#getJob) | **GET** /api/v1/{owner}/{project}/jobs/{id} | Get build
+*PolyaxonSdk.JobServiceApi* | [**getJobCodeRef**](docs/JobServiceApi.md#getJobCodeRef) | **GET** /api/v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
+*PolyaxonSdk.JobServiceApi* | [**listArchivedJobs**](docs/JobServiceApi.md#listArchivedJobs) | **GET** /api/v1/archives/{owner}/jobs | List archived builds
+*PolyaxonSdk.JobServiceApi* | [**listBookmarkedJobs**](docs/JobServiceApi.md#listBookmarkedJobs) | **GET** /api/v1/bookmarks/{owner}/jobs | List bookmarked builds
+*PolyaxonSdk.JobServiceApi* | [**listJobStatuses**](docs/JobServiceApi.md#listJobStatuses) | **GET** /api/v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
+*PolyaxonSdk.JobServiceApi* | [**listJobs**](docs/JobServiceApi.md#listJobs) | **GET** /api/v1/{owner}/{project}/jobs | List builds
+*PolyaxonSdk.JobServiceApi* | [**restartJob**](docs/JobServiceApi.md#restartJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restart | Restart build
+*PolyaxonSdk.JobServiceApi* | [**restoreJob**](docs/JobServiceApi.md#restoreJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
+*PolyaxonSdk.JobServiceApi* | [**resumeJob**](docs/JobServiceApi.md#resumeJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/resume | Archive build
+*PolyaxonSdk.JobServiceApi* | [**stopJob**](docs/JobServiceApi.md#stopJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/stop | Stop build
+*PolyaxonSdk.JobServiceApi* | [**stopJobs**](docs/JobServiceApi.md#stopJobs) | **POST** /api/v1/{owner}/{project}/jobs/stop | Stop builds
+*PolyaxonSdk.JobServiceApi* | [**unBookmarkJob**](docs/JobServiceApi.md#unBookmarkJob) | **DELETE** /api/v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
+*PolyaxonSdk.JobServiceApi* | [**updateJob2**](docs/JobServiceApi.md#updateJob2) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
 
 
 ## Documentation for Models

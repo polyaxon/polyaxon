@@ -52,7 +52,7 @@ func (a *Client) ArchiveExperiment(params *ArchiveExperimentParams) (*ArchiveExp
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ArchiveExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/archive",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/archive",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -86,7 +86,7 @@ func (a *Client) BookmarkExperiment(params *BookmarkExperimentParams) (*Bookmark
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "BookmarkExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/bookmark",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/bookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -120,7 +120,7 @@ func (a *Client) CreateExperiment(params *CreateExperimentParams) (*CreateExperi
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -154,7 +154,7 @@ func (a *Client) CreateExperimentCodeRef(params *CreateExperimentCodeRefParams) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateExperimentCodeRef",
 		Method:             "POST",
-		PathPattern:        "/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -188,7 +188,7 @@ func (a *Client) CreateExperimentStatus(params *CreateExperimentStatusParams) (*
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateExperimentStatus",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/statuses",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -222,7 +222,7 @@ func (a *Client) DeleteExperiment(params *DeleteExperimentParams) (*DeleteExperi
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteExperiment",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -256,7 +256,7 @@ func (a *Client) DeleteExperiments(params *DeleteExperimentsParams) (*DeleteExpe
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteExperiments",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/experiments/delete",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/delete",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -290,7 +290,7 @@ func (a *Client) GetExperiment(params *GetExperimentParams) (*GetExperimentOK, e
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetExperiment",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -324,7 +324,7 @@ func (a *Client) GetExperimentCodeRef(params *GetExperimentCodeRefParams) (*GetE
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetExperimentCodeRef",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/coderef",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/coderef",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -358,7 +358,7 @@ func (a *Client) ListArchivedExperiments(params *ListArchivedExperimentsParams) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArchivedExperiments",
 		Method:             "GET",
-		PathPattern:        "/v1/archives/{owner}/experiments",
+		PathPattern:        "/api/v1/archives/{owner}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -392,7 +392,7 @@ func (a *Client) ListBookmarkedExperiments(params *ListBookmarkedExperimentsPara
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBookmarkedExperiments",
 		Method:             "GET",
-		PathPattern:        "/v1/bookmarks/{owner}/experiments",
+		PathPattern:        "/api/v1/bookmarks/{owner}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -426,7 +426,7 @@ func (a *Client) ListExperimentStatuses(params *ListExperimentStatusesParams) (*
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListExperimentStatuses",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/statuses",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/statuses",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -460,7 +460,7 @@ func (a *Client) ListExperiments(params *ListExperimentsParams) (*ListExperiment
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListExperiments",
 		Method:             "GET",
-		PathPattern:        "/v1/{owner}/{project}/experiments",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -494,7 +494,7 @@ func (a *Client) RestartExperiment(params *RestartExperimentParams) (*RestartExp
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestartExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/restart",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -528,7 +528,7 @@ func (a *Client) RestoreExperiment(params *RestoreExperimentParams) (*RestoreExp
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestoreExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/restore",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/restore",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -562,7 +562,7 @@ func (a *Client) ResumeExperiment(params *ResumeExperimentParams) (*ResumeExperi
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ResumeExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/resume",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -596,7 +596,7 @@ func (a *Client) StartExperimentTensorboard(params *StartExperimentTensorboardPa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StartExperimentTensorboard",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/tensorboard/start",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -630,7 +630,7 @@ func (a *Client) StopExperiment(params *StopExperimentParams) (*StopExperimentOK
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopExperiment",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -664,7 +664,7 @@ func (a *Client) StopExperimentTensorboard(params *StopExperimentTensorboardPara
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopExperimentTensorboard",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/tensorboard/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -698,7 +698,7 @@ func (a *Client) StopExperiments(params *StopExperimentsParams) (*StopExperiment
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "StopExperiments",
 		Method:             "POST",
-		PathPattern:        "/v1/{owner}/{project}/experiments/stop",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/stop",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -732,7 +732,7 @@ func (a *Client) UnBookmarkExperiment(params *UnBookmarkExperimentParams) (*UnBo
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UnBookmarkExperiment",
 		Method:             "DELETE",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{id}/unbookmark",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{id}/unbookmark",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -766,7 +766,7 @@ func (a *Client) UpdateExperiment2(params *UpdateExperiment2Params) (*UpdateExpe
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateExperiment2",
 		Method:             "PUT",
-		PathPattern:        "/v1/{owner}/{project}/experiments/{experiment.id}",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{experiment.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},

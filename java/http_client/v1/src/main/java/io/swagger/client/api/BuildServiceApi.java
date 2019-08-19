@@ -90,7 +90,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/archive"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/archive"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -233,7 +233,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/bookmark"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/bookmark"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -376,7 +376,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds"
+        String localVarPath = "/api/v1/{owner}/{project}/builds"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
 
@@ -519,7 +519,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef"
+        String localVarPath = "/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef"
             .replaceAll("\\{" + "entity.owner" + "\\}", apiClient.escapeString(entityOwner.toString()))
             .replaceAll("\\{" + "entity.project" + "\\}", apiClient.escapeString(entityProject.toString()))
             .replaceAll("\\{" + "entity.id" + "\\}", apiClient.escapeString(entityId.toString()));
@@ -671,7 +671,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/statuses"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/statuses"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -822,7 +822,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -965,7 +965,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/delete"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/delete"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
 
@@ -1107,7 +1107,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1250,7 +1250,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/coderef"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/coderef"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1391,7 +1391,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/archives/{owner}/builds"
+        String localVarPath = "/api/v1/archives/{owner}/builds"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1514,7 +1514,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/bookmarks/{owner}/builds"
+        String localVarPath = "/api/v1/bookmarks/{owner}/builds"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1639,7 +1639,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/statuses"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/statuses"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1781,7 +1781,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds"
+        String localVarPath = "/api/v1/{owner}/{project}/builds"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
 
@@ -1916,7 +1916,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/restart"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/restart"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2067,7 +2067,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/restore"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/restore"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2211,7 +2211,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/stop"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/stop"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2362,7 +2362,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/stop"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/stop"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()));
 
@@ -2504,7 +2504,7 @@ public class BuildServiceApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{id}/unbookmark"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{id}/unbookmark"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2648,7 +2648,7 @@ public class BuildServiceApi {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/v1/{owner}/{project}/builds/{build.id}"
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{build.id}"
             .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
             .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
             .replaceAll("\\{" + "build.id" + "\\}", apiClient.escapeString(buildId.toString()));

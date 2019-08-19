@@ -68,7 +68,7 @@ type RestoreBuildOK struct {
 }
 
 func (o *RestoreBuildOK) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/restore][%d] restoreBuildOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/restore][%d] restoreBuildOK  %+v", 200, o.Payload)
 }
 
 func (o *RestoreBuildOK) GetPayload() interface{} {
@@ -99,7 +99,7 @@ type RestoreBuildNotFound struct {
 }
 
 func (o *RestoreBuildNotFound) Error() string {
-	return fmt.Sprintf("[POST /v1/{owner}/{project}/builds/{id}/restore][%d] restoreBuildNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/builds/{id}/restore][%d] restoreBuildNotFound  %+v", 404, o.Payload)
 }
 
 func (o *RestoreBuildNotFound) GetPayload() string {
