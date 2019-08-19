@@ -17,6 +17,7 @@ VERSION := v1
 DOCKER_RUN := docker run -it --rm -v ${PWD}:/polyaxon $(IMG)
 PROTOC := $(DOCKER_RUN) protoc
 PYTHON := $(DOCKER_RUN) python
+GO := $(DOCKER_RUN) go
 SWAGGER := $(DOCKER_RUN) swagger
 DOCKER_PATH_AUTOGEN := /usr/local/bin/autogen/autogen
 PATH_SWAGGER_CLI := ~/bin/swagger-codegen-cli-2.4.7.jar
@@ -62,7 +63,7 @@ generate-go-swagger:
 	# Compile the *.swagger.json into go REST clients, see https://github.com/go-swagger/go-swagger
 	$(SWAGGER) generate client -f swagger/$(VERSION)/polyaxon_sdk.swagger.json -A polyaxon-sdk --principal models.Principal -c service_client -m service_model -t go/$(HTTP_CLIENT)/$(VERSION)
 	# Executes the //go:generate directives in the generated code.
-	go generate ./...
+	$(GO) generate ./...
 
 generate-js-swagger:
 	java -jar $(PATH_SWAGGER_CLI) generate -i swagger/$(VERSION)/polyaxon_sdk.swagger.json -l javascript -o js/$(HTTP_CLIENT)/$(VERSION) -c swagger/config.json
