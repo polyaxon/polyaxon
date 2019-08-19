@@ -65,6 +65,11 @@ class BuildServiceStub(object):
         request_serializer=v1_dot_build__pb2.BuildBodyRequest.SerializeToString,
         response_deserializer=v1_dot_build__pb2.Build.FromString,
         )
+    self.PatchBuild = channel.unary_unary(
+        '/v1.BuildService/PatchBuild',
+        request_serializer=v1_dot_build__pb2.BuildBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_build__pb2.Build.FromString,
+        )
     self.DeleteBuild = channel.unary_unary(
         '/v1.BuildService/DeleteBuild',
         request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
@@ -178,6 +183,13 @@ class BuildServiceServicer(object):
 
   def UpdateBuild(self, request, context):
     """Update build
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchBuild(self, request, context):
+    """Patch build
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -314,6 +326,11 @@ def add_BuildServiceServicer_to_server(servicer, server):
           request_deserializer=v1_dot_build__pb2.BuildBodyRequest.FromString,
           response_serializer=v1_dot_build__pb2.Build.SerializeToString,
       ),
+      'PatchBuild': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchBuild,
+          request_deserializer=v1_dot_build__pb2.BuildBodyRequest.FromString,
+          response_serializer=v1_dot_build__pb2.Build.SerializeToString,
+      ),
       'DeleteBuild': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteBuild,
           request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
@@ -427,6 +444,11 @@ class JobServiceStub(object):
         )
     self.UpdateJob = channel.unary_unary(
         '/v1.JobService/UpdateJob',
+        request_serializer=v1_dot_job__pb2.JobBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_job__pb2.Job.FromString,
+        )
+    self.PatchJob = channel.unary_unary(
+        '/v1.JobService/PatchJob',
         request_serializer=v1_dot_job__pb2.JobBodyRequest.SerializeToString,
         response_deserializer=v1_dot_job__pb2.Job.FromString,
         )
@@ -548,6 +570,13 @@ class JobServiceServicer(object):
 
   def UpdateJob(self, request, context):
     """Update job
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchJob(self, request, context):
+    """Patch job
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -693,6 +722,11 @@ def add_JobServiceServicer_to_server(servicer, server):
           request_deserializer=v1_dot_job__pb2.JobBodyRequest.FromString,
           response_serializer=v1_dot_job__pb2.Job.SerializeToString,
       ),
+      'PatchJob': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchJob,
+          request_deserializer=v1_dot_job__pb2.JobBodyRequest.FromString,
+          response_serializer=v1_dot_job__pb2.Job.SerializeToString,
+      ),
       'DeleteJob': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteJob,
           request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
@@ -811,6 +845,11 @@ class ExperimentServiceStub(object):
         )
     self.UpdateExperiment = channel.unary_unary(
         '/v1.ExperimentService/UpdateExperiment',
+        request_serializer=v1_dot_experiment__pb2.ExperimentBodyRequest.SerializeToString,
+        response_deserializer=v1_dot_experiment__pb2.Experiment.FromString,
+        )
+    self.PatchExperiment = channel.unary_unary(
+        '/v1.ExperimentService/PatchExperiment',
         request_serializer=v1_dot_experiment__pb2.ExperimentBodyRequest.SerializeToString,
         response_deserializer=v1_dot_experiment__pb2.Experiment.FromString,
         )
@@ -942,6 +981,13 @@ class ExperimentServiceServicer(object):
 
   def UpdateExperiment(self, request, context):
     """Update experiment
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def PatchExperiment(self, request, context):
+    """Patch experiment
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -1097,6 +1143,11 @@ def add_ExperimentServiceServicer_to_server(servicer, server):
       ),
       'UpdateExperiment': grpc.unary_unary_rpc_method_handler(
           servicer.UpdateExperiment,
+          request_deserializer=v1_dot_experiment__pb2.ExperimentBodyRequest.FromString,
+          response_serializer=v1_dot_experiment__pb2.Experiment.SerializeToString,
+      ),
+      'PatchExperiment': grpc.unary_unary_rpc_method_handler(
+          servicer.PatchExperiment,
           request_deserializer=v1_dot_experiment__pb2.ExperimentBodyRequest.FromString,
           response_serializer=v1_dot_experiment__pb2.Experiment.SerializeToString,
       ),

@@ -30,28 +30,28 @@ import (
 	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
-// UpdateJob2Reader is a Reader for the UpdateJob2 structure.
-type UpdateJob2Reader struct {
+// PatchJobReader is a Reader for the PatchJob structure.
+type PatchJobReader struct {
 	formats strfmt.Registry
 }
 
 // ReadResponse reads a server response into the received o.
-func (o *UpdateJob2Reader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
+func (o *PatchJobReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
 	case 200:
-		result := NewUpdateJob2OK()
+		result := NewPatchJobOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
 	case 403:
-		result := NewUpdateJob2Forbidden()
+		result := NewPatchJobForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
 	case 404:
-		result := NewUpdateJob2NotFound()
+		result := NewPatchJobNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
@@ -62,28 +62,28 @@ func (o *UpdateJob2Reader) ReadResponse(response runtime.ClientResponse, consume
 	}
 }
 
-// NewUpdateJob2OK creates a UpdateJob2OK with default headers values
-func NewUpdateJob2OK() *UpdateJob2OK {
-	return &UpdateJob2OK{}
+// NewPatchJobOK creates a PatchJobOK with default headers values
+func NewPatchJobOK() *PatchJobOK {
+	return &PatchJobOK{}
 }
 
-/*UpdateJob2OK handles this case with default header values.
+/*PatchJobOK handles this case with default header values.
 
 A successful response.
 */
-type UpdateJob2OK struct {
+type PatchJobOK struct {
 	Payload *service_model.V1Job
 }
 
-func (o *UpdateJob2OK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2OK  %+v", 200, o.Payload)
+func (o *PatchJobOK) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/jobs/{job.id}][%d] patchJobOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateJob2OK) GetPayload() *service_model.V1Job {
+func (o *PatchJobOK) GetPayload() *service_model.V1Job {
 	return o.Payload
 }
 
-func (o *UpdateJob2OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *PatchJobOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(service_model.V1Job)
 
@@ -95,28 +95,28 @@ func (o *UpdateJob2OK) readResponse(response runtime.ClientResponse, consumer ru
 	return nil
 }
 
-// NewUpdateJob2Forbidden creates a UpdateJob2Forbidden with default headers values
-func NewUpdateJob2Forbidden() *UpdateJob2Forbidden {
-	return &UpdateJob2Forbidden{}
+// NewPatchJobForbidden creates a PatchJobForbidden with default headers values
+func NewPatchJobForbidden() *PatchJobForbidden {
+	return &PatchJobForbidden{}
 }
 
-/*UpdateJob2Forbidden handles this case with default header values.
+/*PatchJobForbidden handles this case with default header values.
 
 You don't have permission to access the resource.
 */
-type UpdateJob2Forbidden struct {
+type PatchJobForbidden struct {
 	Payload interface{}
 }
 
-func (o *UpdateJob2Forbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2Forbidden  %+v", 403, o.Payload)
+func (o *PatchJobForbidden) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/jobs/{job.id}][%d] patchJobForbidden  %+v", 403, o.Payload)
 }
 
-func (o *UpdateJob2Forbidden) GetPayload() interface{} {
+func (o *PatchJobForbidden) GetPayload() interface{} {
 	return o.Payload
 }
 
-func (o *UpdateJob2Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *PatchJobForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -126,28 +126,28 @@ func (o *UpdateJob2Forbidden) readResponse(response runtime.ClientResponse, cons
 	return nil
 }
 
-// NewUpdateJob2NotFound creates a UpdateJob2NotFound with default headers values
-func NewUpdateJob2NotFound() *UpdateJob2NotFound {
-	return &UpdateJob2NotFound{}
+// NewPatchJobNotFound creates a PatchJobNotFound with default headers values
+func NewPatchJobNotFound() *PatchJobNotFound {
+	return &PatchJobNotFound{}
 }
 
-/*UpdateJob2NotFound handles this case with default header values.
+/*PatchJobNotFound handles this case with default header values.
 
 Resource does not exist.
 */
-type UpdateJob2NotFound struct {
+type PatchJobNotFound struct {
 	Payload string
 }
 
-func (o *UpdateJob2NotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/jobs/{job.id}][%d] updateJob2NotFound  %+v", 404, o.Payload)
+func (o *PatchJobNotFound) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/jobs/{job.id}][%d] patchJobNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateJob2NotFound) GetPayload() string {
+func (o *PatchJobNotFound) GetPayload() string {
 	return o.Payload
 }
 
-func (o *UpdateJob2NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *PatchJobNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

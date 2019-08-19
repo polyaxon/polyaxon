@@ -30,28 +30,28 @@ import (
 	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
-// UpdateBuild2Reader is a Reader for the UpdateBuild2 structure.
-type UpdateBuild2Reader struct {
+// PatchBuildReader is a Reader for the PatchBuild structure.
+type PatchBuildReader struct {
 	formats strfmt.Registry
 }
 
 // ReadResponse reads a server response into the received o.
-func (o *UpdateBuild2Reader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
+func (o *PatchBuildReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
 	case 200:
-		result := NewUpdateBuild2OK()
+		result := NewPatchBuildOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
 	case 403:
-		result := NewUpdateBuild2Forbidden()
+		result := NewPatchBuildForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
 	case 404:
-		result := NewUpdateBuild2NotFound()
+		result := NewPatchBuildNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
@@ -62,28 +62,28 @@ func (o *UpdateBuild2Reader) ReadResponse(response runtime.ClientResponse, consu
 	}
 }
 
-// NewUpdateBuild2OK creates a UpdateBuild2OK with default headers values
-func NewUpdateBuild2OK() *UpdateBuild2OK {
-	return &UpdateBuild2OK{}
+// NewPatchBuildOK creates a PatchBuildOK with default headers values
+func NewPatchBuildOK() *PatchBuildOK {
+	return &PatchBuildOK{}
 }
 
-/*UpdateBuild2OK handles this case with default header values.
+/*PatchBuildOK handles this case with default header values.
 
 A successful response.
 */
-type UpdateBuild2OK struct {
+type PatchBuildOK struct {
 	Payload *service_model.V1Build
 }
 
-func (o *UpdateBuild2OK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2OK  %+v", 200, o.Payload)
+func (o *PatchBuildOK) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/builds/{build.id}][%d] patchBuildOK  %+v", 200, o.Payload)
 }
 
-func (o *UpdateBuild2OK) GetPayload() *service_model.V1Build {
+func (o *PatchBuildOK) GetPayload() *service_model.V1Build {
 	return o.Payload
 }
 
-func (o *UpdateBuild2OK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *PatchBuildOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	o.Payload = new(service_model.V1Build)
 
@@ -95,28 +95,28 @@ func (o *UpdateBuild2OK) readResponse(response runtime.ClientResponse, consumer 
 	return nil
 }
 
-// NewUpdateBuild2Forbidden creates a UpdateBuild2Forbidden with default headers values
-func NewUpdateBuild2Forbidden() *UpdateBuild2Forbidden {
-	return &UpdateBuild2Forbidden{}
+// NewPatchBuildForbidden creates a PatchBuildForbidden with default headers values
+func NewPatchBuildForbidden() *PatchBuildForbidden {
+	return &PatchBuildForbidden{}
 }
 
-/*UpdateBuild2Forbidden handles this case with default header values.
+/*PatchBuildForbidden handles this case with default header values.
 
 You don't have permission to access the resource.
 */
-type UpdateBuild2Forbidden struct {
+type PatchBuildForbidden struct {
 	Payload interface{}
 }
 
-func (o *UpdateBuild2Forbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2Forbidden  %+v", 403, o.Payload)
+func (o *PatchBuildForbidden) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/builds/{build.id}][%d] patchBuildForbidden  %+v", 403, o.Payload)
 }
 
-func (o *UpdateBuild2Forbidden) GetPayload() interface{} {
+func (o *PatchBuildForbidden) GetPayload() interface{} {
 	return o.Payload
 }
 
-func (o *UpdateBuild2Forbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *PatchBuildForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
@@ -126,28 +126,28 @@ func (o *UpdateBuild2Forbidden) readResponse(response runtime.ClientResponse, co
 	return nil
 }
 
-// NewUpdateBuild2NotFound creates a UpdateBuild2NotFound with default headers values
-func NewUpdateBuild2NotFound() *UpdateBuild2NotFound {
-	return &UpdateBuild2NotFound{}
+// NewPatchBuildNotFound creates a PatchBuildNotFound with default headers values
+func NewPatchBuildNotFound() *PatchBuildNotFound {
+	return &PatchBuildNotFound{}
 }
 
-/*UpdateBuild2NotFound handles this case with default header values.
+/*PatchBuildNotFound handles this case with default header values.
 
 Resource does not exist.
 */
-type UpdateBuild2NotFound struct {
+type PatchBuildNotFound struct {
 	Payload string
 }
 
-func (o *UpdateBuild2NotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/{project}/builds/{build.id}][%d] updateBuild2NotFound  %+v", 404, o.Payload)
+func (o *PatchBuildNotFound) Error() string {
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project}/builds/{build.id}][%d] patchBuildNotFound  %+v", 404, o.Payload)
 }
 
-func (o *UpdateBuild2NotFound) GetPayload() string {
+func (o *PatchBuildNotFound) GetPayload() string {
 	return o.Payload
 }
 
-func (o *UpdateBuild2NotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+func (o *PatchBuildNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
 	// response payload
 	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {

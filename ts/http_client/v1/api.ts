@@ -1810,6 +1810,64 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} build_id Unique integer identifier
+         * @param {V1BuildBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchBuild.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchBuild.');
+            }
+            // verify required parameter 'build_id' is not null or undefined
+            if (build_id === null || build_id === undefined) {
+                throw new RequiredError('build_id','Required parameter build_id was null or undefined when calling patchBuild.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchBuild.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/builds/{build.id}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"build.id"}}`, encodeURIComponent(String(build_id)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1BuildBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -2084,22 +2142,22 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateBuild2(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options: any = {}): FetchArgs {
+        updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateBuild2.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateBuild.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling updateBuild2.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateBuild.');
             }
             // verify required parameter 'build_id' is not null or undefined
             if (build_id === null || build_id === undefined) {
-                throw new RequiredError('build_id','Required parameter build_id was null or undefined when calling updateBuild2.');
+                throw new RequiredError('build_id','Required parameter build_id was null or undefined when calling updateBuild.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateBuild2.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateBuild.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/builds/{build.id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -2413,6 +2471,28 @@ export const BuildServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} build_id Unique integer identifier
+         * @param {V1BuildBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
+            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).patchBuild(owner, project, build_id, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -2528,8 +2608,8 @@ export const BuildServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateBuild2(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).updateBuild2(owner, project, build_id, body, options);
+        updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
+            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).updateBuild(owner, project, build_id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2704,6 +2784,19 @@ export const BuildServiceApiFactory = function (configuration?: Configuration, f
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} build_id Unique integer identifier
+         * @param {V1BuildBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
+            return BuildServiceApiFp(configuration).patchBuild(owner, project, build_id, body, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -2774,8 +2867,8 @@ export const BuildServiceApiFactory = function (configuration?: Configuration, f
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateBuild2(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
-            return BuildServiceApiFp(configuration).updateBuild2(owner, project, build_id, body, options)(fetch, basePath);
+        updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
+            return BuildServiceApiFp(configuration).updateBuild(owner, project, build_id, body, options)(fetch, basePath);
         },
     };
 };
@@ -2968,6 +3061,21 @@ export class BuildServiceApi extends BaseAPI {
 
     /**
      * 
+     * @summary Patch build
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} build_id Unique integer identifier
+     * @param {V1BuildBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BuildServiceApi
+     */
+    public patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
+        return BuildServiceApiFp(this.configuration).patchBuild(owner, project, build_id, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Restart build
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
@@ -3049,8 +3157,8 @@ export class BuildServiceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof BuildServiceApi
      */
-    public updateBuild2(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).updateBuild2(owner, project, build_id, body, options)(this.fetch, this.basePath);
+    public updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
+        return BuildServiceApiFp(this.configuration).updateBuild(owner, project, build_id, body, options)(this.fetch, this.basePath);
     }
 
 }
@@ -3694,6 +3802,64 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} experiment_id Unique integer identifier
+         * @param {V1ExperimentBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchExperiment.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchExperiment.');
+            }
+            // verify required parameter 'experiment_id' is not null or undefined
+            if (experiment_id === null || experiment_id === undefined) {
+                throw new RequiredError('experiment_id','Required parameter experiment_id was null or undefined when calling patchExperiment.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchExperiment.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/experiments/{experiment.id}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"experiment.id"}}`, encodeURIComponent(String(experiment_id)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ExperimentBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -4133,22 +4299,22 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExperiment2(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options: any = {}): FetchArgs {
+        updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateExperiment2.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateExperiment.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling updateExperiment2.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateExperiment.');
             }
             // verify required parameter 'experiment_id' is not null or undefined
             if (experiment_id === null || experiment_id === undefined) {
-                throw new RequiredError('experiment_id','Required parameter experiment_id was null or undefined when calling updateExperiment2.');
+                throw new RequiredError('experiment_id','Required parameter experiment_id was null or undefined when calling updateExperiment.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateExperiment2.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateExperiment.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/experiments/{experiment.id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -4462,6 +4628,28 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} experiment_id Unique integer identifier
+         * @param {V1ExperimentBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
+            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).patchExperiment(owner, project, experiment_id, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -4642,8 +4830,8 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExperiment2(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).updateExperiment2(owner, project, experiment_id, body, options);
+        updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
+            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).updateExperiment(owner, project, experiment_id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4818,6 +5006,19 @@ export const ExperimentServiceApiFactory = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} experiment_id Unique integer identifier
+         * @param {V1ExperimentBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
+            return ExperimentServiceApiFp(configuration).patchExperiment(owner, project, experiment_id, body, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -4926,8 +5127,8 @@ export const ExperimentServiceApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExperiment2(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).updateExperiment2(owner, project, experiment_id, body, options)(fetch, basePath);
+        updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
+            return ExperimentServiceApiFp(configuration).updateExperiment(owner, project, experiment_id, body, options)(fetch, basePath);
         },
     };
 };
@@ -5120,6 +5321,21 @@ export class ExperimentServiceApi extends BaseAPI {
 
     /**
      * 
+     * @summary Patch build
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} experiment_id Unique integer identifier
+     * @param {V1ExperimentBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ExperimentServiceApi
+     */
+    public patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
+        return ExperimentServiceApiFp(this.configuration).patchExperiment(owner, project, experiment_id, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Restart build
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
@@ -5245,8 +5461,8 @@ export class ExperimentServiceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ExperimentServiceApi
      */
-    public updateExperiment2(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).updateExperiment2(owner, project, experiment_id, body, options)(this.fetch, this.basePath);
+    public updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
+        return ExperimentServiceApiFp(this.configuration).updateExperiment(owner, project, experiment_id, body, options)(this.fetch, this.basePath);
     }
 
 }
@@ -5890,6 +6106,64 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} job_id Unique integer identifier
+         * @param {V1JobBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchJob.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchJob.');
+            }
+            // verify required parameter 'job_id' is not null or undefined
+            if (job_id === null || job_id === undefined) {
+                throw new RequiredError('job_id','Required parameter job_id was null or undefined when calling patchJob.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchJob.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/jobs/{job.id}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"job.id"}}`, encodeURIComponent(String(job_id)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1JobBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -6222,22 +6496,22 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateJob2(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options: any = {}): FetchArgs {
+        updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateJob2.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateJob.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling updateJob2.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateJob.');
             }
             // verify required parameter 'job_id' is not null or undefined
             if (job_id === null || job_id === undefined) {
-                throw new RequiredError('job_id','Required parameter job_id was null or undefined when calling updateJob2.');
+                throw new RequiredError('job_id','Required parameter job_id was null or undefined when calling updateJob.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateJob2.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateJob.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/jobs/{job.id}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -6551,6 +6825,28 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} job_id Unique integer identifier
+         * @param {V1JobBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
+            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).patchJob(owner, project, job_id, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -6688,8 +6984,8 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateJob2(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).updateJob2(owner, project, job_id, body, options);
+        updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
+            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).updateJob(owner, project, job_id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6864,6 +7160,19 @@ export const JobServiceApiFactory = function (configuration?: Configuration, fet
         },
         /**
          * 
+         * @summary Patch build
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} job_id Unique integer identifier
+         * @param {V1JobBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
+            return JobServiceApiFp(configuration).patchJob(owner, project, job_id, body, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Restart build
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -6947,8 +7256,8 @@ export const JobServiceApiFactory = function (configuration?: Configuration, fet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateJob2(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
-            return JobServiceApiFp(configuration).updateJob2(owner, project, job_id, body, options)(fetch, basePath);
+        updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
+            return JobServiceApiFp(configuration).updateJob(owner, project, job_id, body, options)(fetch, basePath);
         },
     };
 };
@@ -7141,6 +7450,21 @@ export class JobServiceApi extends BaseAPI {
 
     /**
      * 
+     * @summary Patch build
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} job_id Unique integer identifier
+     * @param {V1JobBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof JobServiceApi
+     */
+    public patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
+        return JobServiceApiFp(this.configuration).patchJob(owner, project, job_id, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
      * @summary Restart build
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
@@ -7237,8 +7561,8 @@ export class JobServiceApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof JobServiceApi
      */
-    public updateJob2(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).updateJob2(owner, project, job_id, body, options)(this.fetch, this.basePath);
+    public updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
+        return JobServiceApiFp(this.configuration).updateJob(owner, project, job_id, body, options)(this.fetch, this.basePath);
     }
 
 }

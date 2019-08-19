@@ -1902,6 +1902,158 @@ public class ExperimentServiceApi {
         return call;
     }
     /**
+     * Build call for patchExperiment
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param experimentId Unique integer identifier (required)
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call patchExperimentCall(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/experiments/{experiment.id}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "experiment.id" + "\\}", apiClient.escapeString(experimentId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call patchExperimentValidateBeforeCall(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling patchExperiment(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling patchExperiment(Async)");
+        }
+        
+        // verify the required parameter 'experimentId' is set
+        if (experimentId == null) {
+            throw new ApiException("Missing the required parameter 'experimentId' when calling patchExperiment(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling patchExperiment(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = patchExperimentCall(owner, project, experimentId, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Patch build
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param experimentId Unique integer identifier (required)
+     * @param body  (required)
+     * @return V1Experiment
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Experiment patchExperiment(String owner, String project, String experimentId, V1ExperimentBodyRequest body) throws ApiException {
+        ApiResponse<V1Experiment> resp = patchExperimentWithHttpInfo(owner, project, experimentId, body);
+        return resp.getData();
+    }
+
+    /**
+     * Patch build
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param experimentId Unique integer identifier (required)
+     * @param body  (required)
+     * @return ApiResponse&lt;V1Experiment&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Experiment> patchExperimentWithHttpInfo(String owner, String project, String experimentId, V1ExperimentBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = patchExperimentValidateBeforeCall(owner, project, experimentId, body, null, null);
+        Type localVarReturnType = new TypeToken<V1Experiment>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Patch build (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param experimentId Unique integer identifier (required)
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call patchExperimentAsync(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ApiCallback<V1Experiment> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = patchExperimentValidateBeforeCall(owner, project, experimentId, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Experiment>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for restartExperiment
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
@@ -3081,7 +3233,7 @@ public class ExperimentServiceApi {
         return call;
     }
     /**
-     * Build call for updateExperiment2
+     * Build call for updateExperiment
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param experimentId Unique integer identifier (required)
@@ -3091,7 +3243,7 @@ public class ExperimentServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateExperiment2Call(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateExperimentCall(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -3136,30 +3288,30 @@ public class ExperimentServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateExperiment2ValidateBeforeCall(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateExperimentValidateBeforeCall(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateExperiment2(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling updateExperiment(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling updateExperiment2(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling updateExperiment(Async)");
         }
         
         // verify the required parameter 'experimentId' is set
         if (experimentId == null) {
-            throw new ApiException("Missing the required parameter 'experimentId' when calling updateExperiment2(Async)");
+            throw new ApiException("Missing the required parameter 'experimentId' when calling updateExperiment(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateExperiment2(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling updateExperiment(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateExperiment2Call(owner, project, experimentId, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = updateExperimentCall(owner, project, experimentId, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -3174,8 +3326,8 @@ public class ExperimentServiceApi {
      * @return V1Experiment
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Experiment updateExperiment2(String owner, String project, String experimentId, V1ExperimentBodyRequest body) throws ApiException {
-        ApiResponse<V1Experiment> resp = updateExperiment2WithHttpInfo(owner, project, experimentId, body);
+    public V1Experiment updateExperiment(String owner, String project, String experimentId, V1ExperimentBodyRequest body) throws ApiException {
+        ApiResponse<V1Experiment> resp = updateExperimentWithHttpInfo(owner, project, experimentId, body);
         return resp.getData();
     }
 
@@ -3189,8 +3341,8 @@ public class ExperimentServiceApi {
      * @return ApiResponse&lt;V1Experiment&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Experiment> updateExperiment2WithHttpInfo(String owner, String project, String experimentId, V1ExperimentBodyRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = updateExperiment2ValidateBeforeCall(owner, project, experimentId, body, null, null);
+    public ApiResponse<V1Experiment> updateExperimentWithHttpInfo(String owner, String project, String experimentId, V1ExperimentBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = updateExperimentValidateBeforeCall(owner, project, experimentId, body, null, null);
         Type localVarReturnType = new TypeToken<V1Experiment>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3206,7 +3358,7 @@ public class ExperimentServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateExperiment2Async(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ApiCallback<V1Experiment> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateExperimentAsync(String owner, String project, String experimentId, V1ExperimentBodyRequest body, final ApiCallback<V1Experiment> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3227,7 +3379,7 @@ public class ExperimentServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = updateExperiment2ValidateBeforeCall(owner, project, experimentId, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = updateExperimentValidateBeforeCall(owner, project, experimentId, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Experiment>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

@@ -17,13 +17,14 @@ Method | HTTP request | Description
 [**listBookmarkedJobs**](JobServiceApi.md#listBookmarkedJobs) | **GET** /api/v1/bookmarks/{owner}/jobs | List bookmarked builds
 [**listJobStatuses**](JobServiceApi.md#listJobStatuses) | **GET** /api/v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
 [**listJobs**](JobServiceApi.md#listJobs) | **GET** /api/v1/{owner}/{project}/jobs | List builds
+[**patchJob**](JobServiceApi.md#patchJob) | **PATCH** /api/v1/{owner}/{project}/jobs/{job.id} | Patch build
 [**restartJob**](JobServiceApi.md#restartJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restart | Restart build
 [**restoreJob**](JobServiceApi.md#restoreJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
 [**resumeJob**](JobServiceApi.md#resumeJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/resume | Archive build
 [**stopJob**](JobServiceApi.md#stopJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/stop | Stop build
 [**stopJobs**](JobServiceApi.md#stopJobs) | **POST** /api/v1/{owner}/{project}/jobs/stop | Stop builds
 [**unBookmarkJob**](JobServiceApi.md#unBookmarkJob) | **DELETE** /api/v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
-[**updateJob2**](JobServiceApi.md#updateJob2) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
+[**updateJob**](JobServiceApi.md#updateJob) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
 
 
 <a name="archiveJob"></a>
@@ -758,6 +759,66 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="patchJob"></a>
+# **patchJob**
+> V1Job patchJob(owner, project, job_id, body)
+
+Patch build
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.JobServiceApi();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the experiement will be assigned
+
+var job_id = "job_id_example"; // String | Unique integer identifier
+
+var body = new PolyaxonSdk.V1JobBodyRequest(); // V1JobBodyRequest | 
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.patchJob(owner, project, job_id, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the experiement will be assigned | 
+ **job_id** | **String**| Unique integer identifier | 
+ **body** | [**V1JobBodyRequest**](V1JobBodyRequest.md)|  | 
+
+### Return type
+
+[**V1Job**](V1Job.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="restartJob"></a>
 # **restartJob**
 > V1Job restartJob(owner, project, id, body)
@@ -1109,9 +1170,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateJob2"></a>
-# **updateJob2**
-> V1Job updateJob2(owner, project, job_id, body)
+<a name="updateJob"></a>
+# **updateJob**
+> V1Job updateJob(owner, project, job_id, body)
 
 Update build
 
@@ -1144,7 +1205,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateJob2(owner, project, job_id, body, callback);
+apiInstance.updateJob(owner, project, job_id, body, callback);
 ```
 
 ### Parameters

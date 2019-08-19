@@ -17,12 +17,13 @@ Method | HTTP request | Description
 [**listBookmarkedBuilds**](BuildServiceApi.md#listBookmarkedBuilds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
 [**listBuildStatuses**](BuildServiceApi.md#listBuildStatuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
 [**listBuilds**](BuildServiceApi.md#listBuilds) | **GET** /api/v1/{owner}/{project}/builds | List builds
+[**patchBuild**](BuildServiceApi.md#patchBuild) | **PATCH** /api/v1/{owner}/{project}/builds/{build.id} | Patch build
 [**restartBuild**](BuildServiceApi.md#restartBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
 [**restoreBuild**](BuildServiceApi.md#restoreBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
 [**stopBuild**](BuildServiceApi.md#stopBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
 [**stopBuilds**](BuildServiceApi.md#stopBuilds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
 [**unBookmarkBuild**](BuildServiceApi.md#unBookmarkBuild) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-[**updateBuild2**](BuildServiceApi.md#updateBuild2) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
+[**updateBuild**](BuildServiceApi.md#updateBuild) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
 
 
 <a name="archiveBuild"></a>
@@ -757,6 +758,66 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="patchBuild"></a>
+# **patchBuild**
+> V1Build patchBuild(owner, project, build_id, body)
+
+Patch build
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.BuildServiceApi();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project where the experiement will be assigned
+
+var build_id = "build_id_example"; // String | Unique integer identifier
+
+var body = new PolyaxonSdk.V1BuildBodyRequest(); // V1BuildBodyRequest | 
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.patchBuild(owner, project, build_id, body, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project where the experiement will be assigned | 
+ **build_id** | **String**| Unique integer identifier | 
+ **body** | [**V1BuildBodyRequest**](V1BuildBodyRequest.md)|  | 
+
+### Return type
+
+[**V1Build**](V1Build.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="restartBuild"></a>
 # **restartBuild**
 > V1Build restartBuild(owner, project, id, body)
@@ -1048,9 +1109,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateBuild2"></a>
-# **updateBuild2**
-> V1Build updateBuild2(owner, project, build_id, body)
+<a name="updateBuild"></a>
+# **updateBuild**
+> V1Build updateBuild(owner, project, build_id, body)
 
 Update build
 
@@ -1083,7 +1144,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateBuild2(owner, project, build_id, body, callback);
+apiInstance.updateBuild(owner, project, build_id, body, callback);
 ```
 
 ### Parameters

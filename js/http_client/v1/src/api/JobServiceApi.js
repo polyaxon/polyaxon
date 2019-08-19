@@ -831,6 +831,73 @@
     }
 
     /**
+     * Callback function to receive the result of the patchJob operation.
+     * @callback module:api/JobServiceApi~patchJobCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Job} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Patch build
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the experiement will be assigned
+     * @param {String} job_id Unique integer identifier
+     * @param {module:model/V1JobBodyRequest} body 
+     * @param {module:api/JobServiceApi~patchJobCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Job}
+     */
+    this.patchJob = function(owner, project, job_id, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling patchJob");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling patchJob");
+      }
+
+      // verify the required parameter 'job_id' is set
+      if (job_id === undefined || job_id === null) {
+        throw new Error("Missing the required parameter 'job_id' when calling patchJob");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling patchJob");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'job.id': job_id
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Job;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/jobs/{job.id}', 'PATCH',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the restartJob operation.
      * @callback module:api/JobServiceApi~restartJobCallback
      * @param {String} error Error message, if any.
@@ -1214,8 +1281,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateJob2 operation.
-     * @callback module:api/JobServiceApi~updateJob2Callback
+     * Callback function to receive the result of the updateJob operation.
+     * @callback module:api/JobServiceApi~updateJobCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Job} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1227,30 +1294,30 @@
      * @param {String} project Project where the experiement will be assigned
      * @param {String} job_id Unique integer identifier
      * @param {module:model/V1JobBodyRequest} body 
-     * @param {module:api/JobServiceApi~updateJob2Callback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/JobServiceApi~updateJobCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Job}
      */
-    this.updateJob2 = function(owner, project, job_id, body, callback) {
+    this.updateJob = function(owner, project, job_id, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateJob2");
+        throw new Error("Missing the required parameter 'owner' when calling updateJob");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateJob2");
+        throw new Error("Missing the required parameter 'project' when calling updateJob");
       }
 
       // verify the required parameter 'job_id' is set
       if (job_id === undefined || job_id === null) {
-        throw new Error("Missing the required parameter 'job_id' when calling updateJob2");
+        throw new Error("Missing the required parameter 'job_id' when calling updateJob");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateJob2");
+        throw new Error("Missing the required parameter 'body' when calling updateJob");
       }
 
 

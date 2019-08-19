@@ -17,13 +17,14 @@ Method | HTTP request | Description
 [**list_bookmarked_jobs**](JobServiceApi.md#list_bookmarked_jobs) | **GET** /api/v1/bookmarks/{owner}/jobs | List bookmarked builds
 [**list_job_statuses**](JobServiceApi.md#list_job_statuses) | **GET** /api/v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
 [**list_jobs**](JobServiceApi.md#list_jobs) | **GET** /api/v1/{owner}/{project}/jobs | List builds
+[**patch_job**](JobServiceApi.md#patch_job) | **PATCH** /api/v1/{owner}/{project}/jobs/{job.id} | Patch build
 [**restart_job**](JobServiceApi.md#restart_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restart | Restart build
 [**restore_job**](JobServiceApi.md#restore_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
 [**resume_job**](JobServiceApi.md#resume_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/resume | Archive build
 [**stop_job**](JobServiceApi.md#stop_job) | **POST** /api/v1/{owner}/{project}/jobs/{id}/stop | Stop build
 [**stop_jobs**](JobServiceApi.md#stop_jobs) | **POST** /api/v1/{owner}/{project}/jobs/stop | Stop builds
 [**un_bookmark_job**](JobServiceApi.md#un_bookmark_job) | **DELETE** /api/v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
-[**update_job2**](JobServiceApi.md#update_job2) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
+[**update_job**](JobServiceApi.md#update_job) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
 
 
 # **archive_job**
@@ -748,6 +749,64 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patch_job**
+> V1Job patch_job(owner, project, job_id, body)
+
+Patch build
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.JobServiceApi(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+job_id = 'job_id_example' # str | Unique integer identifier
+body = polyaxon_sdk.V1JobBodyRequest() # V1JobBodyRequest | 
+
+try:
+    # Patch build
+    api_response = api_instance.patch_job(owner, project, job_id, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling JobServiceApi->patch_job: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **job_id** | **str**| Unique integer identifier | 
+ **body** | [**V1JobBodyRequest**](V1JobBodyRequest.md)|  | 
+
+### Return type
+
+[**V1Job**](V1Job.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **restart_job**
 > V1Job restart_job(owner, project, id, body)
 
@@ -1090,8 +1149,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_job2**
-> V1Job update_job2(owner, project, job_id, body)
+# **update_job**
+> V1Job update_job(owner, project, job_id, body)
 
 Update build
 
@@ -1118,10 +1177,10 @@ body = polyaxon_sdk.V1JobBodyRequest() # V1JobBodyRequest |
 
 try:
     # Update build
-    api_response = api_instance.update_job2(owner, project, job_id, body)
+    api_response = api_instance.update_job(owner, project, job_id, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling JobServiceApi->update_job2: %s\n" % e)
+    print("Exception when calling JobServiceApi->update_job: %s\n" % e)
 ```
 
 ### Parameters

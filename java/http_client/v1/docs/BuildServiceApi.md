@@ -17,12 +17,13 @@ Method | HTTP request | Description
 [**listBookmarkedBuilds**](BuildServiceApi.md#listBookmarkedBuilds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
 [**listBuildStatuses**](BuildServiceApi.md#listBuildStatuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
 [**listBuilds**](BuildServiceApi.md#listBuilds) | **GET** /api/v1/{owner}/{project}/builds | List builds
+[**patchBuild**](BuildServiceApi.md#patchBuild) | **PATCH** /api/v1/{owner}/{project}/builds/{build.id} | Patch build
 [**restartBuild**](BuildServiceApi.md#restartBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
 [**restoreBuild**](BuildServiceApi.md#restoreBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
 [**stopBuild**](BuildServiceApi.md#stopBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
 [**stopBuilds**](BuildServiceApi.md#stopBuilds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
 [**unBookmarkBuild**](BuildServiceApi.md#unBookmarkBuild) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-[**updateBuild2**](BuildServiceApi.md#updateBuild2) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
+[**updateBuild**](BuildServiceApi.md#updateBuild) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
 
 
 <a name="archiveBuild"></a>
@@ -760,6 +761,65 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="patchBuild"></a>
+# **patchBuild**
+> V1Build patchBuild(owner, project, buildId, body)
+
+Patch build
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.BuildServiceApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+BuildServiceApi apiInstance = new BuildServiceApi();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String buildId = "buildId_example"; // String | Unique integer identifier
+V1BuildBodyRequest body = new V1BuildBodyRequest(); // V1BuildBodyRequest | 
+try {
+    V1Build result = apiInstance.patchBuild(owner, project, buildId, body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling BuildServiceApi#patchBuild");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the experiement will be assigned |
+ **buildId** | **String**| Unique integer identifier |
+ **body** | [**V1BuildBodyRequest**](V1BuildBodyRequest.md)|  |
+
+### Return type
+
+[**V1Build**](V1Build.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="restartBuild"></a>
 # **restartBuild**
 > V1Build restartBuild(owner, project, id, body)
@@ -1049,9 +1109,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateBuild2"></a>
-# **updateBuild2**
-> V1Build updateBuild2(owner, project, buildId, body)
+<a name="updateBuild"></a>
+# **updateBuild**
+> V1Build updateBuild(owner, project, buildId, body)
 
 Update build
 
@@ -1078,10 +1138,10 @@ String project = "project_example"; // String | Project where the experiement wi
 String buildId = "buildId_example"; // String | Unique integer identifier
 V1BuildBodyRequest body = new V1BuildBodyRequest(); // V1BuildBodyRequest | 
 try {
-    V1Build result = apiInstance.updateBuild2(owner, project, buildId, body);
+    V1Build result = apiInstance.updateBuild(owner, project, buildId, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling BuildServiceApi#updateBuild2");
+    System.err.println("Exception when calling BuildServiceApi#updateBuild");
     e.printStackTrace();
 }
 ```

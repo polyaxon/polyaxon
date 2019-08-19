@@ -286,6 +286,25 @@ public class BuildServiceApiTest {
     }
     
     /**
+     * Patch build
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void patchBuildTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        String buildId = null;
+        V1BuildBodyRequest body = null;
+        V1Build response = api.patchBuild(owner, project, buildId, body);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Restart build
      *
      * 
@@ -386,12 +405,12 @@ public class BuildServiceApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateBuild2Test() throws ApiException {
+    public void updateBuildTest() throws ApiException {
         String owner = null;
         String project = null;
         String buildId = null;
         V1BuildBodyRequest body = null;
-        V1Build response = api.updateBuild2(owner, project, buildId, body);
+        V1Build response = api.updateBuild(owner, project, buildId, body);
 
         // TODO: test validations
     }

@@ -286,7 +286,7 @@ func request_BuildService_UpdateBuild_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func request_BuildService_UpdateBuild_1(ctx context.Context, marshaler runtime.Marshaler, client BuildServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_BuildService_PatchBuild_0(ctx context.Context, marshaler runtime.Marshaler, client BuildServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq BuildBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -338,7 +338,7 @@ func request_BuildService_UpdateBuild_1(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "build.id", err)
 	}
 
-	msg, err := client.UpdateBuild(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.PatchBuild(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -1299,7 +1299,7 @@ func request_JobService_UpdateJob_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func request_JobService_UpdateJob_1(ctx context.Context, marshaler runtime.Marshaler, client JobServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_JobService_PatchJob_0(ctx context.Context, marshaler runtime.Marshaler, client JobServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq JobBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -1351,7 +1351,7 @@ func request_JobService_UpdateJob_1(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "job.id", err)
 	}
 
-	msg, err := client.UpdateJob(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.PatchJob(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -2369,7 +2369,7 @@ func request_ExperimentService_UpdateExperiment_0(ctx context.Context, marshaler
 
 }
 
-func request_ExperimentService_UpdateExperiment_1(ctx context.Context, marshaler runtime.Marshaler, client ExperimentServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ExperimentService_PatchExperiment_0(ctx context.Context, marshaler runtime.Marshaler, client ExperimentServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ExperimentBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2421,7 +2421,7 @@ func request_ExperimentService_UpdateExperiment_1(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "experiment.id", err)
 	}
 
-	msg, err := client.UpdateExperiment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.PatchExperiment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -3459,7 +3459,7 @@ func RegisterBuildServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 
 	})
 
-	mux.Handle("PUT", pattern_BuildService_UpdateBuild_1, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_BuildService_PatchBuild_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3468,14 +3468,14 @@ func RegisterBuildServiceHandlerClient(ctx context.Context, mux *runtime.ServeMu
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_BuildService_UpdateBuild_1(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_BuildService_PatchBuild_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_BuildService_UpdateBuild_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_BuildService_PatchBuild_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -3775,7 +3775,7 @@ var (
 
 	pattern_BuildService_UpdateBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BuildService_UpdateBuild_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BuildService_PatchBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "build.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_BuildService_DeleteBuild_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "builds", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -3819,7 +3819,7 @@ var (
 
 	forward_BuildService_UpdateBuild_0 = runtime.ForwardResponseMessage
 
-	forward_BuildService_UpdateBuild_1 = runtime.ForwardResponseMessage
+	forward_BuildService_PatchBuild_0 = runtime.ForwardResponseMessage
 
 	forward_BuildService_DeleteBuild_0 = runtime.ForwardResponseMessage
 
@@ -4008,7 +4008,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("PUT", pattern_JobService_UpdateJob_1, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_JobService_PatchJob_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4017,14 +4017,14 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_JobService_UpdateJob_1(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_JobService_PatchJob_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_JobService_UpdateJob_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_JobService_PatchJob_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -4344,7 +4344,7 @@ var (
 
 	pattern_JobService_UpdateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_JobService_UpdateJob_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_JobService_PatchJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "job.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_JobService_DeleteJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "jobs", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -4390,7 +4390,7 @@ var (
 
 	forward_JobService_UpdateJob_0 = runtime.ForwardResponseMessage
 
-	forward_JobService_UpdateJob_1 = runtime.ForwardResponseMessage
+	forward_JobService_PatchJob_0 = runtime.ForwardResponseMessage
 
 	forward_JobService_DeleteJob_0 = runtime.ForwardResponseMessage
 
@@ -4581,7 +4581,7 @@ func RegisterExperimentServiceHandlerClient(ctx context.Context, mux *runtime.Se
 
 	})
 
-	mux.Handle("PUT", pattern_ExperimentService_UpdateExperiment_1, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ExperimentService_PatchExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4590,14 +4590,14 @@ func RegisterExperimentServiceHandlerClient(ctx context.Context, mux *runtime.Se
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ExperimentService_UpdateExperiment_1(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ExperimentService_PatchExperiment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ExperimentService_UpdateExperiment_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ExperimentService_PatchExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -4957,7 +4957,7 @@ var (
 
 	pattern_ExperimentService_UpdateExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ExperimentService_UpdateExperiment_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ExperimentService_PatchExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "experiment.id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ExperimentService_DeleteExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "experiments", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -5007,7 +5007,7 @@ var (
 
 	forward_ExperimentService_UpdateExperiment_0 = runtime.ForwardResponseMessage
 
-	forward_ExperimentService_UpdateExperiment_1 = runtime.ForwardResponseMessage
+	forward_ExperimentService_PatchExperiment_0 = runtime.ForwardResponseMessage
 
 	forward_ExperimentService_DeleteExperiment_0 = runtime.ForwardResponseMessage
 

@@ -195,6 +195,16 @@
         done();
       });
     });
+    describe('patchBuild', function() {
+      it('should call patchBuild successfully', function(done) {
+        //uncomment below and update the code to test patchBuild
+        //instance.patchBuild(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('restartBuild', function() {
       it('should call restartBuild successfully', function(done) {
         //uncomment below and update the code to test restartBuild
@@ -245,10 +255,10 @@
         done();
       });
     });
-    describe('updateBuild2', function() {
-      it('should call updateBuild2 successfully', function(done) {
-        //uncomment below and update the code to test updateBuild2
-        //instance.updateBuild2(function(error) {
+    describe('updateBuild', function() {
+      it('should call updateBuild successfully', function(done) {
+        //uncomment below and update the code to test updateBuild
+        //instance.updateBuild(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

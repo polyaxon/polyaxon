@@ -612,7 +612,64 @@
     "/api/v1/{owner}/{project}/builds/{build.id}": {
       "put": {
         "summary": "Update build",
-        "operationId": "UpdateBuild2",
+        "operationId": "UpdateBuild",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Build"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "build.id",
+            "description": "Unique integer identifier",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BuildBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "BuildService"
+        ]
+      },
+      "patch": {
+        "summary": "Patch build",
+        "operationId": "PatchBuild",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1446,7 +1503,64 @@
     "/api/v1/{owner}/{project}/experiments/{experiment.id}": {
       "put": {
         "summary": "Update build",
-        "operationId": "UpdateExperiment2",
+        "operationId": "UpdateExperiment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Experiment"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "experiment.id",
+            "description": "Unique integer identifier",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ExperimentBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ExperimentService"
+        ]
+      },
+      "patch": {
+        "summary": "Patch build",
+        "operationId": "PatchExperiment",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3089,7 +3203,64 @@
     "/api/v1/{owner}/{project}/jobs/{job.id}": {
       "put": {
         "summary": "Update build",
-        "operationId": "UpdateJob2",
+        "operationId": "UpdateJob",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Job"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "job.id",
+            "description": "Unique integer identifier",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1JobBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "JobService"
+        ]
+      },
+      "patch": {
+        "summary": "Patch build",
+        "operationId": "PatchJob",
         "responses": {
           "200": {
             "description": "A successful response.",

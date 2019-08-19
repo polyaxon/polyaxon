@@ -136,6 +136,13 @@ class TestExperimentServiceApi(unittest.TestCase):
         """
         pass
 
+    def test_patch_experiment(self):
+        """Test case for patch_experiment
+
+        Patch build  # noqa: E501
+        """
+        pass
+
     def test_restart_experiment(self):
         """Test case for restart_experiment
 
@@ -192,8 +199,8 @@ class TestExperimentServiceApi(unittest.TestCase):
         """
         pass
 
-    def test_update_experiment2(self):
-        """Test case for update_experiment2
+    def test_update_experiment(self):
+        """Test case for update_experiment
 
         Update build  # noqa: E501
         """

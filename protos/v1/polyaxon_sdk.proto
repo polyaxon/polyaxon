@@ -107,11 +107,14 @@ service BuildService {
         option (google.api.http) = {
             put: "/api/v1/{owner}/{project}/builds/{build.id}"
             body: "*"
+        };
+    }
 
-            additional_bindings {
-                put: "/api/v1/{owner}/{project}/builds/{build.id}"
-                body: "*"
-            }
+    // Patch build
+    rpc PatchBuild(BuildBodyRequest) returns (Build) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/{project}/builds/{build.id}"
+            body: "*"
         };
     }
 
@@ -264,11 +267,14 @@ service JobService {
         option (google.api.http) = {
             put: "/api/v1/{owner}/{project}/jobs/{job.id}"
             body: "*"
+        };
+    }
 
-            additional_bindings {
-                put: "/api/v1/{owner}/{project}/jobs/{job.id}"
-                body: "*"
-            }
+    // Patch job
+    rpc PatchJob(JobBodyRequest) returns (Job) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/{project}/jobs/{job.id}"
+            body: "*"
         };
     }
 
@@ -429,11 +435,14 @@ service ExperimentService {
         option (google.api.http) = {
             put: "/api/v1/{owner}/{project}/experiments/{experiment.id}"
             body: "*"
+        };
+    }
 
-            additional_bindings {
-                put: "/api/v1/{owner}/{project}/experiments/{experiment.id}"
-                body: "*"
-            }
+    // Patch experiment
+    rpc PatchExperiment(ExperimentBodyRequest) returns (Experiment) {
+        option (google.api.http) = {
+            patch: "/api/v1/{owner}/{project}/experiments/{experiment.id}"
+            body: "*"
         };
     }
 

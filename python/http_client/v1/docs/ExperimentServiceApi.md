@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**list_bookmarked_experiments**](ExperimentServiceApi.md#list_bookmarked_experiments) | **GET** /api/v1/bookmarks/{owner}/experiments | List bookmarked builds
 [**list_experiment_statuses**](ExperimentServiceApi.md#list_experiment_statuses) | **GET** /api/v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
 [**list_experiments**](ExperimentServiceApi.md#list_experiments) | **GET** /api/v1/{owner}/{project}/experiments | List builds
+[**patch_experiment**](ExperimentServiceApi.md#patch_experiment) | **PATCH** /api/v1/{owner}/{project}/experiments/{experiment.id} | Patch build
 [**restart_experiment**](ExperimentServiceApi.md#restart_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restart | Restart build
 [**restore_experiment**](ExperimentServiceApi.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
 [**resume_experiment**](ExperimentServiceApi.md#resume_experiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/resume | Archive build
@@ -25,7 +26,7 @@ Method | HTTP request | Description
 [**stop_experiment_tensorboard**](ExperimentServiceApi.md#stop_experiment_tensorboard) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
 [**stop_experiments**](ExperimentServiceApi.md#stop_experiments) | **POST** /api/v1/{owner}/{project}/experiments/stop | Stop builds
 [**un_bookmark_experiment**](ExperimentServiceApi.md#un_bookmark_experiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
-[**update_experiment2**](ExperimentServiceApi.md#update_experiment2) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
+[**update_experiment**](ExperimentServiceApi.md#update_experiment) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
 
 
 # **archive_experiment**
@@ -750,6 +751,64 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patch_experiment**
+> V1Experiment patch_experiment(owner, project, experiment_id, body)
+
+Patch build
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ExperimentServiceApi(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+experiment_id = 'experiment_id_example' # str | Unique integer identifier
+body = polyaxon_sdk.V1ExperimentBodyRequest() # V1ExperimentBodyRequest | 
+
+try:
+    # Patch build
+    api_response = api_instance.patch_experiment(owner, project, experiment_id, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ExperimentServiceApi->patch_experiment: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **experiment_id** | **str**| Unique integer identifier | 
+ **body** | [**V1ExperimentBodyRequest**](V1ExperimentBodyRequest.md)|  | 
+
+### Return type
+
+[**V1Experiment**](V1Experiment.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **restart_experiment**
 > V1Experiment restart_experiment(owner, project, id, body)
 
@@ -1206,8 +1265,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_experiment2**
-> V1Experiment update_experiment2(owner, project, experiment_id, body)
+# **update_experiment**
+> V1Experiment update_experiment(owner, project, experiment_id, body)
 
 Update build
 
@@ -1234,10 +1293,10 @@ body = polyaxon_sdk.V1ExperimentBodyRequest() # V1ExperimentBodyRequest |
 
 try:
     # Update build
-    api_response = api_instance.update_experiment2(owner, project, experiment_id, body)
+    api_response = api_instance.update_experiment(owner, project, experiment_id, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling ExperimentServiceApi->update_experiment2: %s\n" % e)
+    print("Exception when calling ExperimentServiceApi->update_experiment: %s\n" % e)
 ```
 
 ### Parameters

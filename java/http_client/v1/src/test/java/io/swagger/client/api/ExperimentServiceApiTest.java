@@ -286,6 +286,25 @@ public class ExperimentServiceApiTest {
     }
     
     /**
+     * Patch build
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void patchExperimentTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        String experimentId = null;
+        V1ExperimentBodyRequest body = null;
+        V1Experiment response = api.patchExperiment(owner, project, experimentId, body);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Restart build
      *
      * 
@@ -442,12 +461,12 @@ public class ExperimentServiceApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateExperiment2Test() throws ApiException {
+    public void updateExperimentTest() throws ApiException {
         String owner = null;
         String project = null;
         String experimentId = null;
         V1ExperimentBodyRequest body = null;
-        V1Experiment response = api.updateExperiment2(owner, project, experimentId, body);
+        V1Experiment response = api.updateExperiment(owner, project, experimentId, body);
 
         // TODO: test validations
     }

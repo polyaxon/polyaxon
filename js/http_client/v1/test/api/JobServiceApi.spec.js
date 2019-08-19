@@ -195,6 +195,16 @@
         done();
       });
     });
+    describe('patchJob', function() {
+      it('should call patchJob successfully', function(done) {
+        //uncomment below and update the code to test patchJob
+        //instance.patchJob(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('restartJob', function() {
       it('should call restartJob successfully', function(done) {
         //uncomment below and update the code to test restartJob
@@ -255,10 +265,10 @@
         done();
       });
     });
-    describe('updateJob2', function() {
-      it('should call updateJob2 successfully', function(done) {
-        //uncomment below and update the code to test updateJob2
-        //instance.updateJob2(function(error) {
+    describe('updateJob', function() {
+      it('should call updateJob successfully', function(done) {
+        //uncomment below and update the code to test updateJob
+        //instance.updateJob(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

@@ -1902,6 +1902,158 @@ public class BuildServiceApi {
         return call;
     }
     /**
+     * Build call for patchBuild
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param buildId Unique integer identifier (required)
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call patchBuildCall(String owner, String project, String buildId, V1BuildBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/builds/{build.id}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "build.id" + "\\}", apiClient.escapeString(buildId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call patchBuildValidateBeforeCall(String owner, String project, String buildId, V1BuildBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling patchBuild(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling patchBuild(Async)");
+        }
+        
+        // verify the required parameter 'buildId' is set
+        if (buildId == null) {
+            throw new ApiException("Missing the required parameter 'buildId' when calling patchBuild(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling patchBuild(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = patchBuildCall(owner, project, buildId, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Patch build
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param buildId Unique integer identifier (required)
+     * @param body  (required)
+     * @return V1Build
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Build patchBuild(String owner, String project, String buildId, V1BuildBodyRequest body) throws ApiException {
+        ApiResponse<V1Build> resp = patchBuildWithHttpInfo(owner, project, buildId, body);
+        return resp.getData();
+    }
+
+    /**
+     * Patch build
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param buildId Unique integer identifier (required)
+     * @param body  (required)
+     * @return ApiResponse&lt;V1Build&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Build> patchBuildWithHttpInfo(String owner, String project, String buildId, V1BuildBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = patchBuildValidateBeforeCall(owner, project, buildId, body, null, null);
+        Type localVarReturnType = new TypeToken<V1Build>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Patch build (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param buildId Unique integer identifier (required)
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call patchBuildAsync(String owner, String project, String buildId, V1BuildBodyRequest body, final ApiCallback<V1Build> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = patchBuildValidateBeforeCall(owner, project, buildId, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Build>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for restartBuild
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
@@ -2634,7 +2786,7 @@ public class BuildServiceApi {
         return call;
     }
     /**
-     * Build call for updateBuild2
+     * Build call for updateBuild
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param buildId Unique integer identifier (required)
@@ -2644,7 +2796,7 @@ public class BuildServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateBuild2Call(String owner, String project, String buildId, V1BuildBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateBuildCall(String owner, String project, String buildId, V1BuildBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -2689,30 +2841,30 @@ public class BuildServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateBuild2ValidateBeforeCall(String owner, String project, String buildId, V1BuildBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateBuildValidateBeforeCall(String owner, String project, String buildId, V1BuildBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateBuild2(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling updateBuild(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling updateBuild2(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling updateBuild(Async)");
         }
         
         // verify the required parameter 'buildId' is set
         if (buildId == null) {
-            throw new ApiException("Missing the required parameter 'buildId' when calling updateBuild2(Async)");
+            throw new ApiException("Missing the required parameter 'buildId' when calling updateBuild(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateBuild2(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling updateBuild(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateBuild2Call(owner, project, buildId, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = updateBuildCall(owner, project, buildId, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2727,8 +2879,8 @@ public class BuildServiceApi {
      * @return V1Build
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Build updateBuild2(String owner, String project, String buildId, V1BuildBodyRequest body) throws ApiException {
-        ApiResponse<V1Build> resp = updateBuild2WithHttpInfo(owner, project, buildId, body);
+    public V1Build updateBuild(String owner, String project, String buildId, V1BuildBodyRequest body) throws ApiException {
+        ApiResponse<V1Build> resp = updateBuildWithHttpInfo(owner, project, buildId, body);
         return resp.getData();
     }
 
@@ -2742,8 +2894,8 @@ public class BuildServiceApi {
      * @return ApiResponse&lt;V1Build&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Build> updateBuild2WithHttpInfo(String owner, String project, String buildId, V1BuildBodyRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = updateBuild2ValidateBeforeCall(owner, project, buildId, body, null, null);
+    public ApiResponse<V1Build> updateBuildWithHttpInfo(String owner, String project, String buildId, V1BuildBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = updateBuildValidateBeforeCall(owner, project, buildId, body, null, null);
         Type localVarReturnType = new TypeToken<V1Build>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2759,7 +2911,7 @@ public class BuildServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateBuild2Async(String owner, String project, String buildId, V1BuildBodyRequest body, final ApiCallback<V1Build> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateBuildAsync(String owner, String project, String buildId, V1BuildBodyRequest body, final ApiCallback<V1Build> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2780,7 +2932,7 @@ public class BuildServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = updateBuild2ValidateBeforeCall(owner, project, buildId, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = updateBuildValidateBeforeCall(owner, project, buildId, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Build>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

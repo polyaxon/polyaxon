@@ -136,6 +136,13 @@ class TestJobServiceApi(unittest.TestCase):
         """
         pass
 
+    def test_patch_job(self):
+        """Test case for patch_job
+
+        Patch build  # noqa: E501
+        """
+        pass
+
     def test_restart_job(self):
         """Test case for restart_job
 
@@ -178,8 +185,8 @@ class TestJobServiceApi(unittest.TestCase):
         """
         pass
 
-    def test_update_job2(self):
-        """Test case for update_job2
+    def test_update_job(self):
+        """Test case for update_job
 
         Update build  # noqa: E501
         """

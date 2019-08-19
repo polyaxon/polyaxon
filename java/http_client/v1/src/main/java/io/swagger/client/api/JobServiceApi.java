@@ -1902,6 +1902,158 @@ public class JobServiceApi {
         return call;
     }
     /**
+     * Build call for patchJob
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param jobId Unique integer identifier (required)
+     * @param body  (required)
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call patchJobCall(String owner, String project, String jobId, V1JobBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/{owner}/{project}/jobs/{job.id}"
+            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()))
+            .replaceAll("\\{" + "project" + "\\}", apiClient.escapeString(project.toString()))
+            .replaceAll("\\{" + "job.id" + "\\}", apiClient.escapeString(jobId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKey" };
+        return apiClient.buildCall(localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call patchJobValidateBeforeCall(String owner, String project, String jobId, V1JobBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'owner' is set
+        if (owner == null) {
+            throw new ApiException("Missing the required parameter 'owner' when calling patchJob(Async)");
+        }
+        
+        // verify the required parameter 'project' is set
+        if (project == null) {
+            throw new ApiException("Missing the required parameter 'project' when calling patchJob(Async)");
+        }
+        
+        // verify the required parameter 'jobId' is set
+        if (jobId == null) {
+            throw new ApiException("Missing the required parameter 'jobId' when calling patchJob(Async)");
+        }
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling patchJob(Async)");
+        }
+        
+
+        com.squareup.okhttp.Call call = patchJobCall(owner, project, jobId, body, progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Patch build
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param jobId Unique integer identifier (required)
+     * @param body  (required)
+     * @return V1Job
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public V1Job patchJob(String owner, String project, String jobId, V1JobBodyRequest body) throws ApiException {
+        ApiResponse<V1Job> resp = patchJobWithHttpInfo(owner, project, jobId, body);
+        return resp.getData();
+    }
+
+    /**
+     * Patch build
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param jobId Unique integer identifier (required)
+     * @param body  (required)
+     * @return ApiResponse&lt;V1Job&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<V1Job> patchJobWithHttpInfo(String owner, String project, String jobId, V1JobBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = patchJobValidateBeforeCall(owner, project, jobId, body, null, null);
+        Type localVarReturnType = new TypeToken<V1Job>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Patch build (asynchronously)
+     * 
+     * @param owner Owner of the namespace (required)
+     * @param project Project where the experiement will be assigned (required)
+     * @param jobId Unique integer identifier (required)
+     * @param body  (required)
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call patchJobAsync(String owner, String project, String jobId, V1JobBodyRequest body, final ApiCallback<V1Job> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = patchJobValidateBeforeCall(owner, project, jobId, body, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<V1Job>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for restartJob
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
@@ -2786,7 +2938,7 @@ public class JobServiceApi {
         return call;
     }
     /**
-     * Build call for updateJob2
+     * Build call for updateJob
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param jobId Unique integer identifier (required)
@@ -2796,7 +2948,7 @@ public class JobServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call updateJob2Call(String owner, String project, String jobId, V1JobBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call updateJobCall(String owner, String project, String jobId, V1JobBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -2841,30 +2993,30 @@ public class JobServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call updateJob2ValidateBeforeCall(String owner, String project, String jobId, V1JobBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateJobValidateBeforeCall(String owner, String project, String jobId, V1JobBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling updateJob2(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling updateJob(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling updateJob2(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling updateJob(Async)");
         }
         
         // verify the required parameter 'jobId' is set
         if (jobId == null) {
-            throw new ApiException("Missing the required parameter 'jobId' when calling updateJob2(Async)");
+            throw new ApiException("Missing the required parameter 'jobId' when calling updateJob(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateJob2(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling updateJob(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = updateJob2Call(owner, project, jobId, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = updateJobCall(owner, project, jobId, body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2879,8 +3031,8 @@ public class JobServiceApi {
      * @return V1Job
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Job updateJob2(String owner, String project, String jobId, V1JobBodyRequest body) throws ApiException {
-        ApiResponse<V1Job> resp = updateJob2WithHttpInfo(owner, project, jobId, body);
+    public V1Job updateJob(String owner, String project, String jobId, V1JobBodyRequest body) throws ApiException {
+        ApiResponse<V1Job> resp = updateJobWithHttpInfo(owner, project, jobId, body);
         return resp.getData();
     }
 
@@ -2894,8 +3046,8 @@ public class JobServiceApi {
      * @return ApiResponse&lt;V1Job&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Job> updateJob2WithHttpInfo(String owner, String project, String jobId, V1JobBodyRequest body) throws ApiException {
-        com.squareup.okhttp.Call call = updateJob2ValidateBeforeCall(owner, project, jobId, body, null, null);
+    public ApiResponse<V1Job> updateJobWithHttpInfo(String owner, String project, String jobId, V1JobBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = updateJobValidateBeforeCall(owner, project, jobId, body, null, null);
         Type localVarReturnType = new TypeToken<V1Job>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2911,7 +3063,7 @@ public class JobServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateJob2Async(String owner, String project, String jobId, V1JobBodyRequest body, final ApiCallback<V1Job> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateJobAsync(String owner, String project, String jobId, V1JobBodyRequest body, final ApiCallback<V1Job> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2932,7 +3084,7 @@ public class JobServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = updateJob2ValidateBeforeCall(owner, project, jobId, body, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = updateJobValidateBeforeCall(owner, project, jobId, body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Job>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

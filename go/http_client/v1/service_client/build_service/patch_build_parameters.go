@@ -33,49 +33,49 @@ import (
 	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateBuild2Params creates a new UpdateBuild2Params object
+// NewPatchBuildParams creates a new PatchBuildParams object
 // with the default values initialized.
-func NewUpdateBuild2Params() *UpdateBuild2Params {
+func NewPatchBuildParams() *PatchBuildParams {
 	var ()
-	return &UpdateBuild2Params{
+	return &PatchBuildParams{
 
 		timeout: cr.DefaultTimeout,
 	}
 }
 
-// NewUpdateBuild2ParamsWithTimeout creates a new UpdateBuild2Params object
+// NewPatchBuildParamsWithTimeout creates a new PatchBuildParams object
 // with the default values initialized, and the ability to set a timeout on a request
-func NewUpdateBuild2ParamsWithTimeout(timeout time.Duration) *UpdateBuild2Params {
+func NewPatchBuildParamsWithTimeout(timeout time.Duration) *PatchBuildParams {
 	var ()
-	return &UpdateBuild2Params{
+	return &PatchBuildParams{
 
 		timeout: timeout,
 	}
 }
 
-// NewUpdateBuild2ParamsWithContext creates a new UpdateBuild2Params object
+// NewPatchBuildParamsWithContext creates a new PatchBuildParams object
 // with the default values initialized, and the ability to set a context for a request
-func NewUpdateBuild2ParamsWithContext(ctx context.Context) *UpdateBuild2Params {
+func NewPatchBuildParamsWithContext(ctx context.Context) *PatchBuildParams {
 	var ()
-	return &UpdateBuild2Params{
+	return &PatchBuildParams{
 
 		Context: ctx,
 	}
 }
 
-// NewUpdateBuild2ParamsWithHTTPClient creates a new UpdateBuild2Params object
+// NewPatchBuildParamsWithHTTPClient creates a new PatchBuildParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
-func NewUpdateBuild2ParamsWithHTTPClient(client *http.Client) *UpdateBuild2Params {
+func NewPatchBuildParamsWithHTTPClient(client *http.Client) *PatchBuildParams {
 	var ()
-	return &UpdateBuild2Params{
+	return &PatchBuildParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateBuild2Params contains all the parameters to send to the API endpoint
-for the update build2 operation typically these are written to a http.Request
+/*PatchBuildParams contains all the parameters to send to the API endpoint
+for the patch build operation typically these are written to a http.Request
 */
-type UpdateBuild2Params struct {
+type PatchBuildParams struct {
 
 	/*Body*/
 	Body *service_model.V1BuildBodyRequest
@@ -100,85 +100,85 @@ type UpdateBuild2Params struct {
 	HTTPClient *http.Client
 }
 
-// WithTimeout adds the timeout to the update build2 params
-func (o *UpdateBuild2Params) WithTimeout(timeout time.Duration) *UpdateBuild2Params {
+// WithTimeout adds the timeout to the patch build params
+func (o *PatchBuildParams) WithTimeout(timeout time.Duration) *PatchBuildParams {
 	o.SetTimeout(timeout)
 	return o
 }
 
-// SetTimeout adds the timeout to the update build2 params
-func (o *UpdateBuild2Params) SetTimeout(timeout time.Duration) {
+// SetTimeout adds the timeout to the patch build params
+func (o *PatchBuildParams) SetTimeout(timeout time.Duration) {
 	o.timeout = timeout
 }
 
-// WithContext adds the context to the update build2 params
-func (o *UpdateBuild2Params) WithContext(ctx context.Context) *UpdateBuild2Params {
+// WithContext adds the context to the patch build params
+func (o *PatchBuildParams) WithContext(ctx context.Context) *PatchBuildParams {
 	o.SetContext(ctx)
 	return o
 }
 
-// SetContext adds the context to the update build2 params
-func (o *UpdateBuild2Params) SetContext(ctx context.Context) {
+// SetContext adds the context to the patch build params
+func (o *PatchBuildParams) SetContext(ctx context.Context) {
 	o.Context = ctx
 }
 
-// WithHTTPClient adds the HTTPClient to the update build2 params
-func (o *UpdateBuild2Params) WithHTTPClient(client *http.Client) *UpdateBuild2Params {
+// WithHTTPClient adds the HTTPClient to the patch build params
+func (o *PatchBuildParams) WithHTTPClient(client *http.Client) *PatchBuildParams {
 	o.SetHTTPClient(client)
 	return o
 }
 
-// SetHTTPClient adds the HTTPClient to the update build2 params
-func (o *UpdateBuild2Params) SetHTTPClient(client *http.Client) {
+// SetHTTPClient adds the HTTPClient to the patch build params
+func (o *PatchBuildParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithBody adds the body to the update build2 params
-func (o *UpdateBuild2Params) WithBody(body *service_model.V1BuildBodyRequest) *UpdateBuild2Params {
+// WithBody adds the body to the patch build params
+func (o *PatchBuildParams) WithBody(body *service_model.V1BuildBodyRequest) *PatchBuildParams {
 	o.SetBody(body)
 	return o
 }
 
-// SetBody adds the body to the update build2 params
-func (o *UpdateBuild2Params) SetBody(body *service_model.V1BuildBodyRequest) {
+// SetBody adds the body to the patch build params
+func (o *PatchBuildParams) SetBody(body *service_model.V1BuildBodyRequest) {
 	o.Body = body
 }
 
-// WithBuildID adds the buildID to the update build2 params
-func (o *UpdateBuild2Params) WithBuildID(buildID string) *UpdateBuild2Params {
+// WithBuildID adds the buildID to the patch build params
+func (o *PatchBuildParams) WithBuildID(buildID string) *PatchBuildParams {
 	o.SetBuildID(buildID)
 	return o
 }
 
-// SetBuildID adds the buildId to the update build2 params
-func (o *UpdateBuild2Params) SetBuildID(buildID string) {
+// SetBuildID adds the buildId to the patch build params
+func (o *PatchBuildParams) SetBuildID(buildID string) {
 	o.BuildID = buildID
 }
 
-// WithOwner adds the owner to the update build2 params
-func (o *UpdateBuild2Params) WithOwner(owner string) *UpdateBuild2Params {
+// WithOwner adds the owner to the patch build params
+func (o *PatchBuildParams) WithOwner(owner string) *PatchBuildParams {
 	o.SetOwner(owner)
 	return o
 }
 
-// SetOwner adds the owner to the update build2 params
-func (o *UpdateBuild2Params) SetOwner(owner string) {
+// SetOwner adds the owner to the patch build params
+func (o *PatchBuildParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the update build2 params
-func (o *UpdateBuild2Params) WithProject(project string) *UpdateBuild2Params {
+// WithProject adds the project to the patch build params
+func (o *PatchBuildParams) WithProject(project string) *PatchBuildParams {
 	o.SetProject(project)
 	return o
 }
 
-// SetProject adds the project to the update build2 params
-func (o *UpdateBuild2Params) SetProject(project string) {
+// SetProject adds the project to the patch build params
+func (o *PatchBuildParams) SetProject(project string) {
 	o.Project = project
 }
 
 // WriteToRequest writes these params to a swagger request
-func (o *UpdateBuild2Params) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
+func (o *PatchBuildParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
 	if err := r.SetTimeout(o.timeout); err != nil {
 		return err

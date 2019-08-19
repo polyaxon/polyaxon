@@ -831,6 +831,73 @@
     }
 
     /**
+     * Callback function to receive the result of the patchBuild operation.
+     * @callback module:api/BuildServiceApi~patchBuildCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Build} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Patch build
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the experiement will be assigned
+     * @param {String} build_id Unique integer identifier
+     * @param {module:model/V1BuildBodyRequest} body 
+     * @param {module:api/BuildServiceApi~patchBuildCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Build}
+     */
+    this.patchBuild = function(owner, project, build_id, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling patchBuild");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling patchBuild");
+      }
+
+      // verify the required parameter 'build_id' is set
+      if (build_id === undefined || build_id === null) {
+        throw new Error("Missing the required parameter 'build_id' when calling patchBuild");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling patchBuild");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'build.id': build_id
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Build;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/builds/{build.id}', 'PATCH',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the restartBuild operation.
      * @callback module:api/BuildServiceApi~restartBuildCallback
      * @param {String} error Error message, if any.
@@ -1147,8 +1214,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateBuild2 operation.
-     * @callback module:api/BuildServiceApi~updateBuild2Callback
+     * Callback function to receive the result of the updateBuild operation.
+     * @callback module:api/BuildServiceApi~updateBuildCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Build} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1160,30 +1227,30 @@
      * @param {String} project Project where the experiement will be assigned
      * @param {String} build_id Unique integer identifier
      * @param {module:model/V1BuildBodyRequest} body 
-     * @param {module:api/BuildServiceApi~updateBuild2Callback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/BuildServiceApi~updateBuildCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Build}
      */
-    this.updateBuild2 = function(owner, project, build_id, body, callback) {
+    this.updateBuild = function(owner, project, build_id, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateBuild2");
+        throw new Error("Missing the required parameter 'owner' when calling updateBuild");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateBuild2");
+        throw new Error("Missing the required parameter 'project' when calling updateBuild");
       }
 
       // verify the required parameter 'build_id' is set
       if (build_id === undefined || build_id === null) {
-        throw new Error("Missing the required parameter 'build_id' when calling updateBuild2");
+        throw new Error("Missing the required parameter 'build_id' when calling updateBuild");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateBuild2");
+        throw new Error("Missing the required parameter 'body' when calling updateBuild");
       }
 
 

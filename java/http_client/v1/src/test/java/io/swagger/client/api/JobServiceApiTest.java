@@ -286,6 +286,25 @@ public class JobServiceApiTest {
     }
     
     /**
+     * Patch build
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void patchJobTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        String jobId = null;
+        V1JobBodyRequest body = null;
+        V1Job response = api.patchJob(owner, project, jobId, body);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Restart build
      *
      * 
@@ -405,12 +424,12 @@ public class JobServiceApiTest {
      *          if the Api call fails
      */
     @Test
-    public void updateJob2Test() throws ApiException {
+    public void updateJobTest() throws ApiException {
         String owner = null;
         String project = null;
         String jobId = null;
         V1JobBodyRequest body = null;
-        V1Job response = api.updateJob2(owner, project, jobId, body);
+        V1Job response = api.updateJob(owner, project, jobId, body);
 
         // TODO: test validations
     }

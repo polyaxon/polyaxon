@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**listBookmarkedExperiments**](ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /api/v1/bookmarks/{owner}/experiments | List bookmarked builds
 [**listExperimentStatuses**](ExperimentServiceApi.md#listExperimentStatuses) | **GET** /api/v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
 [**listExperiments**](ExperimentServiceApi.md#listExperiments) | **GET** /api/v1/{owner}/{project}/experiments | List builds
+[**patchExperiment**](ExperimentServiceApi.md#patchExperiment) | **PATCH** /api/v1/{owner}/{project}/experiments/{experiment.id} | Patch build
 [**restartExperiment**](ExperimentServiceApi.md#restartExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restart | Restart build
 [**restoreExperiment**](ExperimentServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
 [**resumeExperiment**](ExperimentServiceApi.md#resumeExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/resume | Archive build
@@ -25,7 +26,7 @@ Method | HTTP request | Description
 [**stopExperimentTensorboard**](ExperimentServiceApi.md#stopExperimentTensorboard) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
 [**stopExperiments**](ExperimentServiceApi.md#stopExperiments) | **POST** /api/v1/{owner}/{project}/experiments/stop | Stop builds
 [**unBookmarkExperiment**](ExperimentServiceApi.md#unBookmarkExperiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
-[**updateExperiment2**](ExperimentServiceApi.md#updateExperiment2) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
+[**updateExperiment**](ExperimentServiceApi.md#updateExperiment) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
 
 
 <a name="archiveExperiment"></a>
@@ -763,6 +764,65 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="patchExperiment"></a>
+# **patchExperiment**
+> V1Experiment patchExperiment(owner, project, experimentId, body)
+
+Patch build
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.ExperimentServiceApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+ExperimentServiceApi apiInstance = new ExperimentServiceApi();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String experimentId = "experimentId_example"; // String | Unique integer identifier
+V1ExperimentBodyRequest body = new V1ExperimentBodyRequest(); // V1ExperimentBodyRequest | 
+try {
+    V1Experiment result = apiInstance.patchExperiment(owner, project, experimentId, body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ExperimentServiceApi#patchExperiment");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the experiement will be assigned |
+ **experimentId** | **String**| Unique integer identifier |
+ **body** | [**V1ExperimentBodyRequest**](V1ExperimentBodyRequest.md)|  |
+
+### Return type
+
+[**V1Experiment**](V1Experiment.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="restartExperiment"></a>
 # **restartExperiment**
 > V1Experiment restartExperiment(owner, project, id, body)
@@ -1227,9 +1287,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="updateExperiment2"></a>
-# **updateExperiment2**
-> V1Experiment updateExperiment2(owner, project, experimentId, body)
+<a name="updateExperiment"></a>
+# **updateExperiment**
+> V1Experiment updateExperiment(owner, project, experimentId, body)
 
 Update build
 
@@ -1256,10 +1316,10 @@ String project = "project_example"; // String | Project where the experiement wi
 String experimentId = "experimentId_example"; // String | Unique integer identifier
 V1ExperimentBodyRequest body = new V1ExperimentBodyRequest(); // V1ExperimentBodyRequest | 
 try {
-    V1Experiment result = apiInstance.updateExperiment2(owner, project, experimentId, body);
+    V1Experiment result = apiInstance.updateExperiment(owner, project, experimentId, body);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ExperimentServiceApi#updateExperiment2");
+    System.err.println("Exception when calling ExperimentServiceApi#updateExperiment");
     e.printStackTrace();
 }
 ```

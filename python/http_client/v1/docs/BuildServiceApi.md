@@ -17,12 +17,13 @@ Method | HTTP request | Description
 [**list_bookmarked_builds**](BuildServiceApi.md#list_bookmarked_builds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
 [**list_build_statuses**](BuildServiceApi.md#list_build_statuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
 [**list_builds**](BuildServiceApi.md#list_builds) | **GET** /api/v1/{owner}/{project}/builds | List builds
+[**patch_build**](BuildServiceApi.md#patch_build) | **PATCH** /api/v1/{owner}/{project}/builds/{build.id} | Patch build
 [**restart_build**](BuildServiceApi.md#restart_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
 [**restore_build**](BuildServiceApi.md#restore_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
 [**stop_build**](BuildServiceApi.md#stop_build) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
 [**stop_builds**](BuildServiceApi.md#stop_builds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
 [**un_bookmark_build**](BuildServiceApi.md#un_bookmark_build) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-[**update_build2**](BuildServiceApi.md#update_build2) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
+[**update_build**](BuildServiceApi.md#update_build) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
 
 
 # **archive_build**
@@ -747,6 +748,64 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **patch_build**
+> V1Build patch_build(owner, project, build_id, body)
+
+Patch build
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.BuildServiceApi(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project where the experiement will be assigned
+build_id = 'build_id_example' # str | Unique integer identifier
+body = polyaxon_sdk.V1BuildBodyRequest() # V1BuildBodyRequest | 
+
+try:
+    # Patch build
+    api_response = api_instance.patch_build(owner, project, build_id, body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling BuildServiceApi->patch_build: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project where the experiement will be assigned | 
+ **build_id** | **str**| Unique integer identifier | 
+ **body** | [**V1BuildBodyRequest**](V1BuildBodyRequest.md)|  | 
+
+### Return type
+
+[**V1Build**](V1Build.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **restart_build**
 > V1Build restart_build(owner, project, id, body)
 
@@ -1031,8 +1090,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **update_build2**
-> V1Build update_build2(owner, project, build_id, body)
+# **update_build**
+> V1Build update_build(owner, project, build_id, body)
 
 Update build
 
@@ -1059,10 +1118,10 @@ body = polyaxon_sdk.V1BuildBodyRequest() # V1BuildBodyRequest |
 
 try:
     # Update build
-    api_response = api_instance.update_build2(owner, project, build_id, body)
+    api_response = api_instance.update_build(owner, project, build_id, body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling BuildServiceApi->update_build2: %s\n" % e)
+    print("Exception when calling BuildServiceApi->update_build: %s\n" % e)
 ```
 
 ### Parameters

@@ -496,6 +496,41 @@ func (a *Client) ListBuilds(params *ListBuildsParams, authInfo runtime.ClientAut
 }
 
 /*
+PatchBuild patches build
+*/
+func (a *Client) PatchBuild(params *PatchBuildParams, authInfo runtime.ClientAuthInfoWriter) (*PatchBuildOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchBuildParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchBuild",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/{owner}/{project}/builds/{build.id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
+		Params:             params,
+		Reader:             &PatchBuildReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*PatchBuildOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for PatchBuild: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
 RestartBuild restarts build
 */
 func (a *Client) RestartBuild(params *RestartBuildParams, authInfo runtime.ClientAuthInfoWriter) (*RestartBuildOK, error) {
@@ -671,23 +706,23 @@ func (a *Client) UnBookmarkBuild(params *UnBookmarkBuildParams, authInfo runtime
 }
 
 /*
-UpdateBuild2 updates build
+UpdateBuild updates build
 */
-func (a *Client) UpdateBuild2(params *UpdateBuild2Params, authInfo runtime.ClientAuthInfoWriter) (*UpdateBuild2OK, error) {
+func (a *Client) UpdateBuild(params *UpdateBuildParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateBuildOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateBuild2Params()
+		params = NewUpdateBuildParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateBuild2",
+		ID:                 "UpdateBuild",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/builds/{build.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
-		Reader:             &UpdateBuild2Reader{formats: a.formats},
+		Reader:             &UpdateBuildReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -695,13 +730,13 @@ func (a *Client) UpdateBuild2(params *UpdateBuild2Params, authInfo runtime.Clien
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*UpdateBuild2OK)
+	success, ok := result.(*UpdateBuildOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateBuild2: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for UpdateBuild: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

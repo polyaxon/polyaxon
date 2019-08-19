@@ -195,6 +195,16 @@
         done();
       });
     });
+    describe('patchExperiment', function() {
+      it('should call patchExperiment successfully', function(done) {
+        //uncomment below and update the code to test patchExperiment
+        //instance.patchExperiment(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('restartExperiment', function() {
       it('should call restartExperiment successfully', function(done) {
         //uncomment below and update the code to test restartExperiment
@@ -275,10 +285,10 @@
         done();
       });
     });
-    describe('updateExperiment2', function() {
-      it('should call updateExperiment2 successfully', function(done) {
-        //uncomment below and update the code to test updateExperiment2
-        //instance.updateExperiment2(function(error) {
+    describe('updateExperiment', function() {
+      it('should call updateExperiment successfully', function(done) {
+        //uncomment below and update the code to test updateExperiment
+        //instance.updateExperiment(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

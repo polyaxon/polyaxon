@@ -831,6 +831,73 @@
     }
 
     /**
+     * Callback function to receive the result of the patchExperiment operation.
+     * @callback module:api/ExperimentServiceApi~patchExperimentCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Experiment} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Patch build
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the experiement will be assigned
+     * @param {String} experiment_id Unique integer identifier
+     * @param {module:model/V1ExperimentBodyRequest} body 
+     * @param {module:api/ExperimentServiceApi~patchExperimentCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Experiment}
+     */
+    this.patchExperiment = function(owner, project, experiment_id, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling patchExperiment");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling patchExperiment");
+      }
+
+      // verify the required parameter 'experiment_id' is set
+      if (experiment_id === undefined || experiment_id === null) {
+        throw new Error("Missing the required parameter 'experiment_id' when calling patchExperiment");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling patchExperiment");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'experiment.id': experiment_id
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Experiment;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/experiments/{experiment.id}', 'PATCH',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the restartExperiment operation.
      * @callback module:api/ExperimentServiceApi~restartExperimentCallback
      * @param {String} error Error message, if any.
@@ -1342,8 +1409,8 @@
     }
 
     /**
-     * Callback function to receive the result of the updateExperiment2 operation.
-     * @callback module:api/ExperimentServiceApi~updateExperiment2Callback
+     * Callback function to receive the result of the updateExperiment operation.
+     * @callback module:api/ExperimentServiceApi~updateExperimentCallback
      * @param {String} error Error message, if any.
      * @param {module:model/V1Experiment} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -1355,30 +1422,30 @@
      * @param {String} project Project where the experiement will be assigned
      * @param {String} experiment_id Unique integer identifier
      * @param {module:model/V1ExperimentBodyRequest} body 
-     * @param {module:api/ExperimentServiceApi~updateExperiment2Callback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ExperimentServiceApi~updateExperimentCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Experiment}
      */
-    this.updateExperiment2 = function(owner, project, experiment_id, body, callback) {
+    this.updateExperiment = function(owner, project, experiment_id, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling updateExperiment2");
+        throw new Error("Missing the required parameter 'owner' when calling updateExperiment");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateExperiment2");
+        throw new Error("Missing the required parameter 'project' when calling updateExperiment");
       }
 
       // verify the required parameter 'experiment_id' is set
       if (experiment_id === undefined || experiment_id === null) {
-        throw new Error("Missing the required parameter 'experiment_id' when calling updateExperiment2");
+        throw new Error("Missing the required parameter 'experiment_id' when calling updateExperiment");
       }
 
       // verify the required parameter 'body' is set
       if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling updateExperiment2");
+        throw new Error("Missing the required parameter 'body' when calling updateExperiment");
       }
 
 

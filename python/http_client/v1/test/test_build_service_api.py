@@ -136,6 +136,13 @@ class TestBuildServiceApi(unittest.TestCase):
         """
         pass
 
+    def test_patch_build(self):
+        """Test case for patch_build
+
+        Patch build  # noqa: E501
+        """
+        pass
+
     def test_restart_build(self):
         """Test case for restart_build
 
@@ -171,8 +178,8 @@ class TestBuildServiceApi(unittest.TestCase):
         """
         pass
 
-    def test_update_build2(self):
-        """Test case for update_build2
+    def test_update_build(self):
+        """Test case for update_build
 
         Update build  # noqa: E501
         """

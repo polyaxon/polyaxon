@@ -496,6 +496,41 @@ func (a *Client) ListExperiments(params *ListExperimentsParams, authInfo runtime
 }
 
 /*
+PatchExperiment patches build
+*/
+func (a *Client) PatchExperiment(params *PatchExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*PatchExperimentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewPatchExperimentParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "PatchExperiment",
+		Method:             "PATCH",
+		PathPattern:        "/api/v1/{owner}/{project}/experiments/{experiment.id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
+		Params:             params,
+		Reader:             &PatchExperimentReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*PatchExperimentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for PatchExperiment: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
 RestartExperiment restarts build
 */
 func (a *Client) RestartExperiment(params *RestartExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*RestartExperimentOK, error) {
@@ -776,23 +811,23 @@ func (a *Client) UnBookmarkExperiment(params *UnBookmarkExperimentParams, authIn
 }
 
 /*
-UpdateExperiment2 updates build
+UpdateExperiment updates build
 */
-func (a *Client) UpdateExperiment2(params *UpdateExperiment2Params, authInfo runtime.ClientAuthInfoWriter) (*UpdateExperiment2OK, error) {
+func (a *Client) UpdateExperiment(params *UpdateExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateExperimentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewUpdateExperiment2Params()
+		params = NewUpdateExperimentParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "UpdateExperiment2",
+		ID:                 "UpdateExperiment",
 		Method:             "PUT",
 		PathPattern:        "/api/v1/{owner}/{project}/experiments/{experiment.id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
-		Reader:             &UpdateExperiment2Reader{formats: a.formats},
+		Reader:             &UpdateExperimentReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -800,13 +835,13 @@ func (a *Client) UpdateExperiment2(params *UpdateExperiment2Params, authInfo run
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*UpdateExperiment2OK)
+	success, ok := result.(*UpdateExperimentOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for UpdateExperiment2: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for UpdateExperiment: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

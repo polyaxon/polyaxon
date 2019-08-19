@@ -33,49 +33,49 @@ import (
 	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
-// NewUpdateJob2Params creates a new UpdateJob2Params object
+// NewUpdateJobParams creates a new UpdateJobParams object
 // with the default values initialized.
-func NewUpdateJob2Params() *UpdateJob2Params {
+func NewUpdateJobParams() *UpdateJobParams {
 	var ()
-	return &UpdateJob2Params{
+	return &UpdateJobParams{
 
 		timeout: cr.DefaultTimeout,
 	}
 }
 
-// NewUpdateJob2ParamsWithTimeout creates a new UpdateJob2Params object
+// NewUpdateJobParamsWithTimeout creates a new UpdateJobParams object
 // with the default values initialized, and the ability to set a timeout on a request
-func NewUpdateJob2ParamsWithTimeout(timeout time.Duration) *UpdateJob2Params {
+func NewUpdateJobParamsWithTimeout(timeout time.Duration) *UpdateJobParams {
 	var ()
-	return &UpdateJob2Params{
+	return &UpdateJobParams{
 
 		timeout: timeout,
 	}
 }
 
-// NewUpdateJob2ParamsWithContext creates a new UpdateJob2Params object
+// NewUpdateJobParamsWithContext creates a new UpdateJobParams object
 // with the default values initialized, and the ability to set a context for a request
-func NewUpdateJob2ParamsWithContext(ctx context.Context) *UpdateJob2Params {
+func NewUpdateJobParamsWithContext(ctx context.Context) *UpdateJobParams {
 	var ()
-	return &UpdateJob2Params{
+	return &UpdateJobParams{
 
 		Context: ctx,
 	}
 }
 
-// NewUpdateJob2ParamsWithHTTPClient creates a new UpdateJob2Params object
+// NewUpdateJobParamsWithHTTPClient creates a new UpdateJobParams object
 // with the default values initialized, and the ability to set a custom HTTPClient for a request
-func NewUpdateJob2ParamsWithHTTPClient(client *http.Client) *UpdateJob2Params {
+func NewUpdateJobParamsWithHTTPClient(client *http.Client) *UpdateJobParams {
 	var ()
-	return &UpdateJob2Params{
+	return &UpdateJobParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateJob2Params contains all the parameters to send to the API endpoint
-for the update job2 operation typically these are written to a http.Request
+/*UpdateJobParams contains all the parameters to send to the API endpoint
+for the update job operation typically these are written to a http.Request
 */
-type UpdateJob2Params struct {
+type UpdateJobParams struct {
 
 	/*Body*/
 	Body *service_model.V1JobBodyRequest
@@ -100,85 +100,85 @@ type UpdateJob2Params struct {
 	HTTPClient *http.Client
 }
 
-// WithTimeout adds the timeout to the update job2 params
-func (o *UpdateJob2Params) WithTimeout(timeout time.Duration) *UpdateJob2Params {
+// WithTimeout adds the timeout to the update job params
+func (o *UpdateJobParams) WithTimeout(timeout time.Duration) *UpdateJobParams {
 	o.SetTimeout(timeout)
 	return o
 }
 
-// SetTimeout adds the timeout to the update job2 params
-func (o *UpdateJob2Params) SetTimeout(timeout time.Duration) {
+// SetTimeout adds the timeout to the update job params
+func (o *UpdateJobParams) SetTimeout(timeout time.Duration) {
 	o.timeout = timeout
 }
 
-// WithContext adds the context to the update job2 params
-func (o *UpdateJob2Params) WithContext(ctx context.Context) *UpdateJob2Params {
+// WithContext adds the context to the update job params
+func (o *UpdateJobParams) WithContext(ctx context.Context) *UpdateJobParams {
 	o.SetContext(ctx)
 	return o
 }
 
-// SetContext adds the context to the update job2 params
-func (o *UpdateJob2Params) SetContext(ctx context.Context) {
+// SetContext adds the context to the update job params
+func (o *UpdateJobParams) SetContext(ctx context.Context) {
 	o.Context = ctx
 }
 
-// WithHTTPClient adds the HTTPClient to the update job2 params
-func (o *UpdateJob2Params) WithHTTPClient(client *http.Client) *UpdateJob2Params {
+// WithHTTPClient adds the HTTPClient to the update job params
+func (o *UpdateJobParams) WithHTTPClient(client *http.Client) *UpdateJobParams {
 	o.SetHTTPClient(client)
 	return o
 }
 
-// SetHTTPClient adds the HTTPClient to the update job2 params
-func (o *UpdateJob2Params) SetHTTPClient(client *http.Client) {
+// SetHTTPClient adds the HTTPClient to the update job params
+func (o *UpdateJobParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithBody adds the body to the update job2 params
-func (o *UpdateJob2Params) WithBody(body *service_model.V1JobBodyRequest) *UpdateJob2Params {
+// WithBody adds the body to the update job params
+func (o *UpdateJobParams) WithBody(body *service_model.V1JobBodyRequest) *UpdateJobParams {
 	o.SetBody(body)
 	return o
 }
 
-// SetBody adds the body to the update job2 params
-func (o *UpdateJob2Params) SetBody(body *service_model.V1JobBodyRequest) {
+// SetBody adds the body to the update job params
+func (o *UpdateJobParams) SetBody(body *service_model.V1JobBodyRequest) {
 	o.Body = body
 }
 
-// WithJobID adds the jobID to the update job2 params
-func (o *UpdateJob2Params) WithJobID(jobID string) *UpdateJob2Params {
+// WithJobID adds the jobID to the update job params
+func (o *UpdateJobParams) WithJobID(jobID string) *UpdateJobParams {
 	o.SetJobID(jobID)
 	return o
 }
 
-// SetJobID adds the jobId to the update job2 params
-func (o *UpdateJob2Params) SetJobID(jobID string) {
+// SetJobID adds the jobId to the update job params
+func (o *UpdateJobParams) SetJobID(jobID string) {
 	o.JobID = jobID
 }
 
-// WithOwner adds the owner to the update job2 params
-func (o *UpdateJob2Params) WithOwner(owner string) *UpdateJob2Params {
+// WithOwner adds the owner to the update job params
+func (o *UpdateJobParams) WithOwner(owner string) *UpdateJobParams {
 	o.SetOwner(owner)
 	return o
 }
 
-// SetOwner adds the owner to the update job2 params
-func (o *UpdateJob2Params) SetOwner(owner string) {
+// SetOwner adds the owner to the update job params
+func (o *UpdateJobParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the update job2 params
-func (o *UpdateJob2Params) WithProject(project string) *UpdateJob2Params {
+// WithProject adds the project to the update job params
+func (o *UpdateJobParams) WithProject(project string) *UpdateJobParams {
 	o.SetProject(project)
 	return o
 }
 
-// SetProject adds the project to the update job2 params
-func (o *UpdateJob2Params) SetProject(project string) {
+// SetProject adds the project to the update job params
+func (o *UpdateJobParams) SetProject(project string) {
 	o.Project = project
 }
 
 // WriteToRequest writes these params to a swagger request
-func (o *UpdateJob2Params) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
+func (o *UpdateJobParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
 	if err := r.SetTimeout(o.timeout); err != nil {
 		return err
