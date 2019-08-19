@@ -106,7 +106,7 @@ helm repo update
 You can validate that your deployment `config.yml` file is compatible with the version you are trying to deploy:
 
 ```bash
-polyaxon deploy -f config.yml --check
+polyaxon admin deploy -f config.yml --check
 ```
 
 ### Deploy
@@ -116,7 +116,7 @@ Now you can install Polyaxon with your `config.yml` file
 You can use Polyaxon CLI to manage the deployment
 
 ```bash
-polyaxon deploy -f config.yml
+polyaxon admin deploy -f config.yml
 ```
 
 Or you can use Helm to do the same:
@@ -178,7 +178,7 @@ To upgrade Polyaxon to a newer version, you can simply run the following command
 
 ```bash
 helm update
-polyaxon deploy -f config.yml --upgrade
+polyaxon admin upgrade -f config.yml
 ```
 
 Or using Helm
