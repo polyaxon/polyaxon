@@ -113,6 +113,10 @@ base64.b64encode('principal_id:password}'.encode())
 ```bash
 kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
 ```
+
+## Add the secret to the k8s_secrets catalog in Stores
+
+In order to use secret that you created before, in Polyaxon's Stores > Secrets, create a new secret entry, and set name and K8S Ref to "docker-conf".
   
 ## Make this access as default
 

@@ -37,6 +37,10 @@ In order to use private images hosted on ECR, you need to grant the build access
 kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
 ```
 
+## Add the secret to the k8s_secrets catalog in Stores
+
+In order to use secret that you created before, in Polyaxon's Stores > Secrets, create a new secret entry, and set name and K8S Ref to "docker-conf".
+
 ## Create a docker registry access in the UI
 
 In Polyaxon's stores, add a new entry and link to this secret, and set the host to your ECR.

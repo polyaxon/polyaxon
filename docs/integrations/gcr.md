@@ -71,7 +71,8 @@ You may need to update `gcr.io`key to your repository hosts `us.gcr.io`, `eu.gcr
 kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
 ```
 
-## Create a k8s_secrets in Stores
+## Add the secret to the k8s_secrets catalog in Stores
+
 In order to use secret that you created before, in Polyaxon's Stores > Secrets, create a new secret entry, and set name and K8S Ref to "docker-conf".
 
 ## Create a docker registry access in the UI
