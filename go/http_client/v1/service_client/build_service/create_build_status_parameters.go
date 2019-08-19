@@ -78,7 +78,7 @@ for the create build status operation typically these are written to a http.Requ
 type CreateBuildStatusParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityIDRequest
+	Body *service_model.V1EntityStatusRequest
 	/*ID
 	  Unique integer identifier of the entity
 
@@ -134,13 +134,13 @@ func (o *CreateBuildStatusParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create build status params
-func (o *CreateBuildStatusParams) WithBody(body *service_model.V1OwnedEntityIDRequest) *CreateBuildStatusParams {
+func (o *CreateBuildStatusParams) WithBody(body *service_model.V1EntityStatusRequest) *CreateBuildStatusParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create build status params
-func (o *CreateBuildStatusParams) SetBody(body *service_model.V1OwnedEntityIDRequest) {
+func (o *CreateBuildStatusParams) SetBody(body *service_model.V1EntityStatusRequest) {
 	o.Body = body
 }
 

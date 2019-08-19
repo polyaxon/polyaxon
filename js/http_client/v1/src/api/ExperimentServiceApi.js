@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest'], factory);
+    define(['ApiClient', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1EntityStatusRequest', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1CodeReference'), require('../model/V1CodeReferenceBodyRequest'), require('../model/V1Experiment'), require('../model/V1ExperimentBodyRequest'), require('../model/V1ExperimentStatus'), require('../model/V1ListExperimentStatusesResponse'), require('../model/V1ListExperimentsResponse'), require('../model/V1OwnedEntityIdRequest'), require('../model/V1ProjectBodyRequest'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1CodeReference'), require('../model/V1CodeReferenceBodyRequest'), require('../model/V1EntityStatusRequest'), require('../model/V1Experiment'), require('../model/V1ExperimentBodyRequest'), require('../model/V1ExperimentStatus'), require('../model/V1ListExperimentStatusesResponse'), require('../model/V1ListExperimentsResponse'), require('../model/V1OwnedEntityIdRequest'), require('../model/V1ProjectBodyRequest'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.ExperimentServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1CodeReferenceBodyRequest, root.PolyaxonSdk.V1Experiment, root.PolyaxonSdk.V1ExperimentBodyRequest, root.PolyaxonSdk.V1ExperimentStatus, root.PolyaxonSdk.V1ListExperimentStatusesResponse, root.PolyaxonSdk.V1ListExperimentsResponse, root.PolyaxonSdk.V1OwnedEntityIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest);
+    root.PolyaxonSdk.ExperimentServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1CodeReferenceBodyRequest, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1Experiment, root.PolyaxonSdk.V1ExperimentBodyRequest, root.PolyaxonSdk.V1ExperimentStatus, root.PolyaxonSdk.V1ListExperimentStatusesResponse, root.PolyaxonSdk.V1ListExperimentsResponse, root.PolyaxonSdk.V1OwnedEntityIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest);
   }
-}(this, function(ApiClient, V1CodeReference, V1CodeReferenceBodyRequest, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest) {
+}(this, function(ApiClient, V1CodeReference, V1CodeReferenceBodyRequest, V1EntityStatusRequest, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest) {
   'use strict';
 
   /**
@@ -324,7 +324,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} id Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityIdRequest} body 
+     * @param {module:model/V1EntityStatusRequest} body 
      * @param {module:api/ExperimentServiceApi~createExperimentStatusCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ExperimentStatus}
      */

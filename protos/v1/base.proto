@@ -41,3 +41,18 @@ message StatusResponse {
     // The status of the entity
     string status = 1;
 }
+
+// Request data to create/update entity status
+message EntityStatusRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Unique integer identifier of the entity
+    int64 id = 3;
+
+    // Status: TODO: add one of validation and body information details once decided for all entities
+    string status = 4;
+}

@@ -78,7 +78,7 @@ for the create experiment status operation typically these are written to a http
 type CreateExperimentStatusParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityIDRequest
+	Body *service_model.V1EntityStatusRequest
 	/*ID
 	  Unique integer identifier of the entity
 
@@ -134,13 +134,13 @@ func (o *CreateExperimentStatusParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create experiment status params
-func (o *CreateExperimentStatusParams) WithBody(body *service_model.V1OwnedEntityIDRequest) *CreateExperimentStatusParams {
+func (o *CreateExperimentStatusParams) WithBody(body *service_model.V1EntityStatusRequest) *CreateExperimentStatusParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create experiment status params
-func (o *CreateExperimentStatusParams) SetBody(body *service_model.V1OwnedEntityIDRequest) {
+func (o *CreateExperimentStatusParams) SetBody(body *service_model.V1EntityStatusRequest) {
 	o.Body = body
 }
 

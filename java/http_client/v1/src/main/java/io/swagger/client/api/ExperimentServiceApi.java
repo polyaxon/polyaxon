@@ -43,6 +43,7 @@ import java.io.IOException;
 
 import io.swagger.client.model.V1CodeReference;
 import io.swagger.client.model.V1CodeReferenceBodyRequest;
+import io.swagger.client.model.V1EntityStatusRequest;
 import io.swagger.client.model.V1Experiment;
 import io.swagger.client.model.V1ExperimentBodyRequest;
 import io.swagger.client.model.V1ExperimentStatus;
@@ -667,7 +668,7 @@ public class ExperimentServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createExperimentStatusCall(String owner, String project, String id, V1OwnedEntityIdRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createExperimentStatusCall(String owner, String project, String id, V1EntityStatusRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -712,7 +713,7 @@ public class ExperimentServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createExperimentStatusValidateBeforeCall(String owner, String project, String id, V1OwnedEntityIdRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createExperimentStatusValidateBeforeCall(String owner, String project, String id, V1EntityStatusRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -750,7 +751,7 @@ public class ExperimentServiceApi {
      * @return V1ExperimentStatus
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ExperimentStatus createExperimentStatus(String owner, String project, String id, V1OwnedEntityIdRequest body) throws ApiException {
+    public V1ExperimentStatus createExperimentStatus(String owner, String project, String id, V1EntityStatusRequest body) throws ApiException {
         ApiResponse<V1ExperimentStatus> resp = createExperimentStatusWithHttpInfo(owner, project, id, body);
         return resp.getData();
     }
@@ -765,7 +766,7 @@ public class ExperimentServiceApi {
      * @return ApiResponse&lt;V1ExperimentStatus&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ExperimentStatus> createExperimentStatusWithHttpInfo(String owner, String project, String id, V1OwnedEntityIdRequest body) throws ApiException {
+    public ApiResponse<V1ExperimentStatus> createExperimentStatusWithHttpInfo(String owner, String project, String id, V1EntityStatusRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createExperimentStatusValidateBeforeCall(owner, project, id, body, null, null);
         Type localVarReturnType = new TypeToken<V1ExperimentStatus>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -782,7 +783,7 @@ public class ExperimentServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createExperimentStatusAsync(String owner, String project, String id, V1OwnedEntityIdRequest body, final ApiCallback<V1ExperimentStatus> callback) throws ApiException {
+    public com.squareup.okhttp.Call createExperimentStatusAsync(String owner, String project, String id, V1EntityStatusRequest body, final ApiCallback<V1ExperimentStatus> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

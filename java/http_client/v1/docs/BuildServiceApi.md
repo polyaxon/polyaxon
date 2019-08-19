@@ -283,7 +283,7 @@ BuildServiceApi apiInstance = new BuildServiceApi();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String id = "id_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityIdRequest body = new V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+V1EntityStatusRequest body = new V1EntityStatusRequest(); // V1EntityStatusRequest | 
 try {
     V1BuildStatus result = apiInstance.createBuildStatus(owner, project, id, body);
     System.out.println(result);
@@ -300,7 +300,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **id** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  |
+ **body** | [**V1EntityStatusRequest**](V1EntityStatusRequest.md)|  |
 
 ### Return type
 

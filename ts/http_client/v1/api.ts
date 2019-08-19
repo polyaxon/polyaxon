@@ -393,6 +393,38 @@ export interface V1CodeReferenceBodyRequest {
 /**
  * 
  * @export
+ * @interface V1EntityStatusRequest
+ */
+export interface V1EntityStatusRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1EntityStatusRequest
+     */
+    owner?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1EntityStatusRequest
+     */
+    project?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1EntityStatusRequest
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1EntityStatusRequest
+     */
+    status?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface V1Experiment
  */
 export interface V1Experiment {
@@ -1391,11 +1423,11 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBuildStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
+        createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling createBuildStatus.');
@@ -1435,7 +1467,7 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1EntityStatusRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -2290,11 +2322,11 @@ export const BuildServiceApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBuildStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1BuildStatus> {
+        createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1BuildStatus> {
             const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).createBuildStatus(owner, project, id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -2684,11 +2716,11 @@ export const BuildServiceApiFactory = function (configuration?: Configuration, f
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createBuildStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
+        createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
             return BuildServiceApiFp(configuration).createBuildStatus(owner, project, id, body, options)(fetch, basePath);
         },
         /**
@@ -2943,12 +2975,12 @@ export class BuildServiceApi extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {V1EntityStatusRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BuildServiceApi
      */
-    public createBuildStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
+    public createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
         return BuildServiceApiFp(this.configuration).createBuildStatus(owner, project, id, body, options)(this.fetch, this.basePath);
     }
 
@@ -3383,11 +3415,11 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExperimentStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
+        createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling createExperimentStatus.');
@@ -3427,7 +3459,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1EntityStatusRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -4447,11 +4479,11 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExperimentStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ExperimentStatus> {
+        createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ExperimentStatus> {
             const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).createExperimentStatus(owner, project, id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4906,11 +4938,11 @@ export const ExperimentServiceApiFactory = function (configuration?: Configurati
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExperimentStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
+        createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
             return ExperimentServiceApiFp(configuration).createExperimentStatus(owner, project, id, body, options)(fetch, basePath);
         },
         /**
@@ -5203,12 +5235,12 @@ export class ExperimentServiceApi extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {V1EntityStatusRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ExperimentServiceApi
      */
-    public createExperimentStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
+    public createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
         return ExperimentServiceApiFp(this.configuration).createExperimentStatus(owner, project, id, body, options)(this.fetch, this.basePath);
     }
 
@@ -5687,11 +5719,11 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
+        createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling createJobStatus.');
@@ -5731,7 +5763,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1EntityStatusRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -6644,11 +6676,11 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1JobStatus> {
+        createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1JobStatus> {
             const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).createJobStatus(owner, project, id, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -7060,11 +7092,11 @@ export const JobServiceApiFactory = function (configuration?: Configuration, fet
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
+        createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
             return JobServiceApiFp(configuration).createJobStatus(owner, project, id, body, options)(fetch, basePath);
         },
         /**
@@ -7332,12 +7364,12 @@ export class JobServiceApi extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {V1EntityStatusRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof JobServiceApi
      */
-    public createJobStatus(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
+    public createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
         return JobServiceApiFp(this.configuration).createJobStatus(owner, project, id, body, options)(this.fetch, this.basePath);
     }
 

@@ -1187,7 +1187,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
+              "$ref": "#/definitions/v1EntityStatusRequest"
             }
           }
         ],
@@ -2137,7 +2137,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
+              "$ref": "#/definitions/v1EntityStatusRequest"
             }
           }
         ],
@@ -3081,7 +3081,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
+              "$ref": "#/definitions/v1EntityStatusRequest"
             }
           }
         ],
@@ -3538,6 +3538,29 @@
         }
       },
       "title": "Request data to create/update CodeReference"
+    },
+    "v1EntityStatusRequest": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "title": "Owner of the namespace"
+        },
+        "project": {
+          "type": "string",
+          "title": "Project where the experiement will be assigned"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Unique integer identifier of the entity"
+        },
+        "status": {
+          "type": "string",
+          "title": "Status: TODO: add one of validation and body information details once decided for all entities"
+        }
+      },
+      "title": "Request data to create/update entity status"
     },
     "v1Experiment": {
       "type": "object",

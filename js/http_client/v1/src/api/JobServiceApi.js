@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1Job', 'model/V1JobBodyRequest', 'model/V1JobStatus', 'model/V1ListJobStatusesResponse', 'model/V1ListJobsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest'], factory);
+    define(['ApiClient', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1EntityStatusRequest', 'model/V1Job', 'model/V1JobBodyRequest', 'model/V1JobStatus', 'model/V1ListJobStatusesResponse', 'model/V1ListJobsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1CodeReference'), require('../model/V1CodeReferenceBodyRequest'), require('../model/V1Job'), require('../model/V1JobBodyRequest'), require('../model/V1JobStatus'), require('../model/V1ListJobStatusesResponse'), require('../model/V1ListJobsResponse'), require('../model/V1OwnedEntityIdRequest'), require('../model/V1ProjectBodyRequest'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1CodeReference'), require('../model/V1CodeReferenceBodyRequest'), require('../model/V1EntityStatusRequest'), require('../model/V1Job'), require('../model/V1JobBodyRequest'), require('../model/V1JobStatus'), require('../model/V1ListJobStatusesResponse'), require('../model/V1ListJobsResponse'), require('../model/V1OwnedEntityIdRequest'), require('../model/V1ProjectBodyRequest'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.JobServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1CodeReferenceBodyRequest, root.PolyaxonSdk.V1Job, root.PolyaxonSdk.V1JobBodyRequest, root.PolyaxonSdk.V1JobStatus, root.PolyaxonSdk.V1ListJobStatusesResponse, root.PolyaxonSdk.V1ListJobsResponse, root.PolyaxonSdk.V1OwnedEntityIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest);
+    root.PolyaxonSdk.JobServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1CodeReferenceBodyRequest, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1Job, root.PolyaxonSdk.V1JobBodyRequest, root.PolyaxonSdk.V1JobStatus, root.PolyaxonSdk.V1ListJobStatusesResponse, root.PolyaxonSdk.V1ListJobsResponse, root.PolyaxonSdk.V1OwnedEntityIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest);
   }
-}(this, function(ApiClient, V1CodeReference, V1CodeReferenceBodyRequest, V1Job, V1JobBodyRequest, V1JobStatus, V1ListJobStatusesResponse, V1ListJobsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest) {
+}(this, function(ApiClient, V1CodeReference, V1CodeReferenceBodyRequest, V1EntityStatusRequest, V1Job, V1JobBodyRequest, V1JobStatus, V1ListJobStatusesResponse, V1ListJobsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest) {
   'use strict';
 
   /**
@@ -324,7 +324,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} id Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityIdRequest} body 
+     * @param {module:model/V1EntityStatusRequest} body 
      * @param {module:api/JobServiceApi~createJobStatusCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1JobStatus}
      */

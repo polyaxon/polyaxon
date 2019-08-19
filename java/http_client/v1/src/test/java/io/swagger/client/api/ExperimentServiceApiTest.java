@@ -30,6 +30,7 @@ package io.swagger.client.api;
 import io.swagger.client.ApiException;
 import io.swagger.client.model.V1CodeReference;
 import io.swagger.client.model.V1CodeReferenceBodyRequest;
+import io.swagger.client.model.V1EntityStatusRequest;
 import io.swagger.client.model.V1Experiment;
 import io.swagger.client.model.V1ExperimentBodyRequest;
 import io.swagger.client.model.V1ExperimentStatus;
@@ -140,7 +141,7 @@ public class ExperimentServiceApiTest {
         String owner = null;
         String project = null;
         String id = null;
-        V1OwnedEntityIdRequest body = null;
+        V1EntityStatusRequest body = null;
         V1ExperimentStatus response = api.createExperimentStatus(owner, project, id, body);
 
         // TODO: test validations

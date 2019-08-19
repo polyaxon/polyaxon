@@ -200,7 +200,7 @@ service BuildService {
     }
 
     // Create new build status
-    rpc CreateBuildStatus(OwnedEntityIdRequest) returns (BuildStatus) {
+    rpc CreateBuildStatus(EntityStatusRequest) returns (BuildStatus) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/builds/{id}/statuses"
             body: "*"
@@ -368,7 +368,7 @@ service JobService {
     }
 
     // Create new job status
-    rpc CreateJobStatus(OwnedEntityIdRequest) returns (JobStatus) {
+    rpc CreateJobStatus(EntityStatusRequest) returns (JobStatus) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/jobs/{id}/statuses"
             body: "*"
@@ -551,7 +551,7 @@ service ExperimentService {
     }
 
     // Create new experiment status
-    rpc CreateExperimentStatus(OwnedEntityIdRequest) returns (ExperimentStatus) {
+    rpc CreateExperimentStatus(EntityStatusRequest) returns (ExperimentStatus) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/experiments/{id}/statuses"
             body: "*"

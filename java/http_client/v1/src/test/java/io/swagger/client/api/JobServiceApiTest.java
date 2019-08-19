@@ -30,6 +30,7 @@ package io.swagger.client.api;
 import io.swagger.client.ApiException;
 import io.swagger.client.model.V1CodeReference;
 import io.swagger.client.model.V1CodeReferenceBodyRequest;
+import io.swagger.client.model.V1EntityStatusRequest;
 import io.swagger.client.model.V1Job;
 import io.swagger.client.model.V1JobBodyRequest;
 import io.swagger.client.model.V1JobStatus;
@@ -140,7 +141,7 @@ public class JobServiceApiTest {
         String owner = null;
         String project = null;
         String id = null;
-        V1OwnedEntityIdRequest body = null;
+        V1EntityStatusRequest body = null;
         V1JobStatus response = api.createJobStatus(owner, project, id, body);
 
         // TODO: test validations

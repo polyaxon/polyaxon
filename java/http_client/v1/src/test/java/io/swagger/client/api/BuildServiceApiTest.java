@@ -33,6 +33,7 @@ import io.swagger.client.model.V1BuildBodyRequest;
 import io.swagger.client.model.V1BuildStatus;
 import io.swagger.client.model.V1CodeReference;
 import io.swagger.client.model.V1CodeReferenceBodyRequest;
+import io.swagger.client.model.V1EntityStatusRequest;
 import io.swagger.client.model.V1ListBuildStatusesResponse;
 import io.swagger.client.model.V1ListBuildsResponse;
 import io.swagger.client.model.V1OwnedEntityIdRequest;
@@ -140,7 +141,7 @@ public class BuildServiceApiTest {
         String owner = null;
         String project = null;
         String id = null;
-        V1OwnedEntityIdRequest body = null;
+        V1EntityStatusRequest body = null;
         V1BuildStatus response = api.createBuildStatus(owner, project, id, body);
 
         // TODO: test validations

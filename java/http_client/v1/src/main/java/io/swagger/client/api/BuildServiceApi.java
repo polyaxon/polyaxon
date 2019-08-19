@@ -46,6 +46,7 @@ import io.swagger.client.model.V1BuildBodyRequest;
 import io.swagger.client.model.V1BuildStatus;
 import io.swagger.client.model.V1CodeReference;
 import io.swagger.client.model.V1CodeReferenceBodyRequest;
+import io.swagger.client.model.V1EntityStatusRequest;
 import io.swagger.client.model.V1ListBuildStatusesResponse;
 import io.swagger.client.model.V1ListBuildsResponse;
 import io.swagger.client.model.V1OwnedEntityIdRequest;
@@ -667,7 +668,7 @@ public class BuildServiceApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createBuildStatusCall(String owner, String project, String id, V1OwnedEntityIdRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createBuildStatusCall(String owner, String project, String id, V1EntityStatusRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -712,7 +713,7 @@ public class BuildServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createBuildStatusValidateBeforeCall(String owner, String project, String id, V1OwnedEntityIdRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createBuildStatusValidateBeforeCall(String owner, String project, String id, V1EntityStatusRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -750,7 +751,7 @@ public class BuildServiceApi {
      * @return V1BuildStatus
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1BuildStatus createBuildStatus(String owner, String project, String id, V1OwnedEntityIdRequest body) throws ApiException {
+    public V1BuildStatus createBuildStatus(String owner, String project, String id, V1EntityStatusRequest body) throws ApiException {
         ApiResponse<V1BuildStatus> resp = createBuildStatusWithHttpInfo(owner, project, id, body);
         return resp.getData();
     }
@@ -765,7 +766,7 @@ public class BuildServiceApi {
      * @return ApiResponse&lt;V1BuildStatus&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1BuildStatus> createBuildStatusWithHttpInfo(String owner, String project, String id, V1OwnedEntityIdRequest body) throws ApiException {
+    public ApiResponse<V1BuildStatus> createBuildStatusWithHttpInfo(String owner, String project, String id, V1EntityStatusRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createBuildStatusValidateBeforeCall(owner, project, id, body, null, null);
         Type localVarReturnType = new TypeToken<V1BuildStatus>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -782,7 +783,7 @@ public class BuildServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createBuildStatusAsync(String owner, String project, String id, V1OwnedEntityIdRequest body, final ApiCallback<V1BuildStatus> callback) throws ApiException {
+    public com.squareup.okhttp.Call createBuildStatusAsync(String owner, String project, String id, V1EntityStatusRequest body, final ApiCallback<V1BuildStatus> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

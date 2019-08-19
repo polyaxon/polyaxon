@@ -152,6 +152,7 @@ Class | Method | HTTP request | Description
  - [V1BuildStatus](docs/V1BuildStatus.md)
  - [V1CodeReference](docs/V1CodeReference.md)
  - [V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
+ - [V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
  - [V1Experiment](docs/V1Experiment.md)
  - [V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)
  - [V1ExperimentStatus](docs/V1ExperimentStatus.md)

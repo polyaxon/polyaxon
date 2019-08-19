@@ -203,6 +203,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1BuildStatus](docs/V1BuildStatus.md)
  - [PolyaxonSdk.V1CodeReference](docs/V1CodeReference.md)
  - [PolyaxonSdk.V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
+ - [PolyaxonSdk.V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
  - [PolyaxonSdk.V1Experiment](docs/V1Experiment.md)
  - [PolyaxonSdk.V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)
  - [PolyaxonSdk.V1ExperimentStatus](docs/V1ExperimentStatus.md)

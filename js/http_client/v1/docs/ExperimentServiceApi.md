@@ -285,7 +285,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var id = "id_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityIdRequest(); // V1OwnedEntityIdRequest | 
+var body = new PolyaxonSdk.V1EntityStatusRequest(); // V1EntityStatusRequest | 
 
 
 var callback = function(error, data, response) {
@@ -305,7 +305,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **id** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **body** | [**V1EntityStatusRequest**](V1EntityStatusRequest.md)|  | 
 
 ### Return type
 

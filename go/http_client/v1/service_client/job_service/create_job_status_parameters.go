@@ -78,7 +78,7 @@ for the create job status operation typically these are written to a http.Reques
 type CreateJobStatusParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityIDRequest
+	Body *service_model.V1EntityStatusRequest
 	/*ID
 	  Unique integer identifier of the entity
 
@@ -134,13 +134,13 @@ func (o *CreateJobStatusParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create job status params
-func (o *CreateJobStatusParams) WithBody(body *service_model.V1OwnedEntityIDRequest) *CreateJobStatusParams {
+func (o *CreateJobStatusParams) WithBody(body *service_model.V1EntityStatusRequest) *CreateJobStatusParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create job status params
-func (o *CreateJobStatusParams) SetBody(body *service_model.V1OwnedEntityIDRequest) {
+func (o *CreateJobStatusParams) SetBody(body *service_model.V1EntityStatusRequest) {
 	o.Body = body
 }
 

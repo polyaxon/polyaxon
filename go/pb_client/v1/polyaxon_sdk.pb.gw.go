@@ -893,7 +893,7 @@ func request_BuildService_ListBuildStatuses_0(ctx context.Context, marshaler run
 }
 
 func request_BuildService_CreateBuildStatus_0(ctx context.Context, marshaler runtime.Marshaler, client BuildServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityIdRequest
+	var protoReq EntityStatusRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1963,7 +1963,7 @@ func request_JobService_ListJobStatuses_0(ctx context.Context, marshaler runtime
 }
 
 func request_JobService_CreateJobStatus_0(ctx context.Context, marshaler runtime.Marshaler, client JobServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityIdRequest
+	var protoReq EntityStatusRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -3139,7 +3139,7 @@ func request_ExperimentService_ListExperimentStatuses_0(ctx context.Context, mar
 }
 
 func request_ExperimentService_CreateExperimentStatus_0(ctx context.Context, marshaler runtime.Marshaler, client ExperimentServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityIdRequest
+	var protoReq EntityStatusRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

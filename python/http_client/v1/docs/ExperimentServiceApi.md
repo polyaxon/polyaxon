@@ -279,7 +279,7 @@ api_instance = polyaxon_sdk.ExperimentServiceApi(polyaxon_sdk.ApiClient(configur
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 id = 'id_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityIdRequest() # V1OwnedEntityIdRequest | 
+body = polyaxon_sdk.V1EntityStatusRequest() # V1EntityStatusRequest | 
 
 try:
     # Get job code ref
@@ -296,7 +296,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **id** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityIdRequest**](V1OwnedEntityIdRequest.md)|  | 
+ **body** | [**V1EntityStatusRequest**](V1EntityStatusRequest.md)|  | 
 
 ### Return type
 

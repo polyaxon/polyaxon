@@ -45,6 +45,7 @@ from polyaxon_sdk.models.v1_build_body_request import V1BuildBodyRequest
 from polyaxon_sdk.models.v1_build_status import V1BuildStatus
 from polyaxon_sdk.models.v1_code_reference import V1CodeReference
 from polyaxon_sdk.models.v1_code_reference_body_request import V1CodeReferenceBodyRequest
+from polyaxon_sdk.models.v1_entity_status_request import V1EntityStatusRequest
 from polyaxon_sdk.models.v1_experiment import V1Experiment
 from polyaxon_sdk.models.v1_experiment_body_request import V1ExperimentBodyRequest
 from polyaxon_sdk.models.v1_experiment_status import V1ExperimentStatus

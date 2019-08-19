@@ -521,7 +521,7 @@ class BuildServiceApi(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str id: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityIdRequest body: (required)
+        :param V1EntityStatusRequest body: (required)
         :return: V1BuildStatus
                  If the method is called asynchronously,
                  returns the request thread.
@@ -545,7 +545,7 @@ class BuildServiceApi(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str id: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityIdRequest body: (required)
+        :param V1EntityStatusRequest body: (required)
         :return: V1BuildStatus
                  If the method is called asynchronously,
                  returns the request thread.

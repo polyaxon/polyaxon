@@ -127,7 +127,7 @@ class BuildServiceStub(object):
         )
     self.CreateBuildStatus = channel.unary_unary(
         '/v1.BuildService/CreateBuildStatus',
-        request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.EntityStatusRequest.SerializeToString,
         response_deserializer=v1_dot_build__pb2.BuildStatus.FromString,
         )
     self.GetBuildCodeRef = channel.unary_unary(
@@ -388,7 +388,7 @@ def add_BuildServiceServicer_to_server(servicer, server):
       ),
       'CreateBuildStatus': grpc.unary_unary_rpc_method_handler(
           servicer.CreateBuildStatus,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.EntityStatusRequest.FromString,
           response_serializer=v1_dot_build__pb2.BuildStatus.SerializeToString,
       ),
       'GetBuildCodeRef': grpc.unary_unary_rpc_method_handler(
@@ -514,7 +514,7 @@ class JobServiceStub(object):
         )
     self.CreateJobStatus = channel.unary_unary(
         '/v1.JobService/CreateJobStatus',
-        request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.EntityStatusRequest.SerializeToString,
         response_deserializer=v1_dot_job__pb2.JobStatus.FromString,
         )
     self.GetJobCodeRef = channel.unary_unary(
@@ -789,7 +789,7 @@ def add_JobServiceServicer_to_server(servicer, server):
       ),
       'CreateJobStatus': grpc.unary_unary_rpc_method_handler(
           servicer.CreateJobStatus,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.EntityStatusRequest.FromString,
           response_serializer=v1_dot_job__pb2.JobStatus.SerializeToString,
       ),
       'GetJobCodeRef': grpc.unary_unary_rpc_method_handler(
@@ -925,7 +925,7 @@ class ExperimentServiceStub(object):
         )
     self.CreateExperimentStatus = channel.unary_unary(
         '/v1.ExperimentService/CreateExperimentStatus',
-        request_serializer=v1_dot_base__pb2.OwnedEntityIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.EntityStatusRequest.SerializeToString,
         response_deserializer=v1_dot_experiment__pb2.ExperimentStatus.FromString,
         )
     self.GetExperimentCodeRef = channel.unary_unary(
@@ -1223,7 +1223,7 @@ def add_ExperimentServiceServicer_to_server(servicer, server):
       ),
       'CreateExperimentStatus': grpc.unary_unary_rpc_method_handler(
           servicer.CreateExperimentStatus,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.EntityStatusRequest.FromString,
           response_serializer=v1_dot_experiment__pb2.ExperimentStatus.SerializeToString,
       ),
       'GetExperimentCodeRef': grpc.unary_unary_rpc_method_handler(
