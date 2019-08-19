@@ -31,6 +31,9 @@ import (
 	"github.com/go-logr/logr"
 	corev1alpha1 "github.com/polyaxon/polyaxon-operator/api/v1alpha1"
 	"github.com/polyaxon/polyaxon-operator/controllers/utils"
+
+	openapiRuntime "github.com/go-openapi/runtime"
+	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
 )
 
 const (
@@ -43,8 +46,10 @@ const (
 // PolyaxonNotebookReconciler reconciles a PolyaxonNotebook object
 type PolyaxonNotebookReconciler struct {
 	client.Client
-	Log    logr.Logger
-	Scheme *runtime.Scheme
+	Log       logr.Logger
+	Scheme    *runtime.Scheme
+	PlxClient *polyaxonSDK.PolyaxonSdk
+	PlxToken  openapiRuntime.ClientAuthInfoWriter
 }
 
 // +kubebuilder:rbac:groups=core.polyaxon.com,resources=polyaxonnotebooks,verbs=get;list;watch;create;update;patch;delete

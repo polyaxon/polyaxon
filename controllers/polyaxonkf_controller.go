@@ -35,13 +35,18 @@ import (
 	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
 	kfcommonv1 "github.com/kubeflow/tf-operator/pkg/apis/common/v1"
 	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
+
+	openapiRuntime "github.com/go-openapi/runtime"
+	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
 )
 
 // PolyaxonKFReconciler reconciles a PolyaxonKF object
 type PolyaxonKFReconciler struct {
 	client.Client
-	Log    logr.Logger
-	Scheme *runtime.Scheme
+	Log       logr.Logger
+	Scheme    *runtime.Scheme
+	PlxClient *polyaxonSDK.PolyaxonSdk
+	PlxToken  openapiRuntime.ClientAuthInfoWriter
 }
 
 // +kubebuilder:rbac:groups=core.polyaxon.com,resources=polyaxonkfs,verbs=get;list;watch;create;update;patch;delete

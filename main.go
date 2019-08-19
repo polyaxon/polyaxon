@@ -34,7 +34,12 @@ import (
 	mpijobv1 "github.com/kubeflow/mpi-operator/pkg/apis/kubeflow/v1alpha2"
 	pytorchjobv1 "github.com/kubeflow/pytorch-operator/pkg/apis/pytorch/v1"
 	tfjobv1 "github.com/kubeflow/tf-operator/pkg/apis/tensorflow/v1"
+
 	// mxnetjobv1 "github.com/kubeflow/mxnet-operator/pkg/apis/mxnet/v1"
+
+	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
+	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -59,9 +64,15 @@ func init() {
 func main() {
 	var metricsAddr string
 	var enableLeaderElection bool
+	var host string
+	var token string
 	flag.StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	flag.BoolVar(&enableLeaderElection, "enable-leader-election", false,
 		"Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.")
+	flag.StringVar(&host, "host", "http://localhost",
+		"Polyaxon host.")
+	flag.StringVar(&token, "token", "USerToken",
+		"Polyaxon token.")
 	flag.Parse()
 
 	ctrl.SetLogger(zap.Logger(true))
@@ -76,50 +87,65 @@ func main() {
 		os.Exit(1)
 	}
 
+	plxClient := polyaxonSDK.New(httptransport.New(host, "", nil), strfmt.Default)
+	plxToken := httptransport.BearerToken(token)
+
 	if err = (&controllers.PolyaxonNotebookReconciler{
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonNotebook"),
-		Scheme: mgr.GetScheme(),
+		Client:    mgr.GetClient(),
+		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonNotebook"),
+		Scheme:    mgr.GetScheme(),
+		PlxClient: plxClient,
+		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonNotebook")
 		os.Exit(1)
 	}
 	if err = (&controllers.PolyaxonTensorboardReconciler{
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonTensorboard"),
-		Scheme: mgr.GetScheme(),
+		Client:    mgr.GetClient(),
+		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonTensorboard"),
+		Scheme:    mgr.GetScheme(),
+		PlxClient: plxClient,
+		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonTensorboard")
 		os.Exit(1)
 	}
 	if err = (&controllers.PolyaxonExperimentReconciler{
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonExperiment"),
-		Scheme: mgr.GetScheme(),
+		Client:    mgr.GetClient(),
+		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonExperiment"),
+		Scheme:    mgr.GetScheme(),
+		PlxClient: plxClient,
+		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonExperiment")
 		os.Exit(1)
 	}
 	if err = (&controllers.PolyaxonJobReconciler{
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonJob"),
-		Scheme: mgr.GetScheme(),
+		Client:    mgr.GetClient(),
+		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonJob"),
+		Scheme:    mgr.GetScheme(),
+		PlxClient: plxClient,
+		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonJob")
 		os.Exit(1)
 	}
 	if err = (&controllers.PolyaxonBuildReconciler{
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonBuild"),
-		Scheme: mgr.GetScheme(),
+		Client:    mgr.GetClient(),
+		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonBuild"),
+		Scheme:    mgr.GetScheme(),
+		PlxClient: plxClient,
+		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonBuild")
 		os.Exit(1)
 	}
 	if err = (&controllers.PolyaxonKFReconciler{
-		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("PolyaxonKF"),
-		Scheme: mgr.GetScheme(),
+		Client:    mgr.GetClient(),
+		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonKF"),
+		Scheme:    mgr.GetScheme(),
+		PlxClient: plxClient,
+		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonKF")
 		os.Exit(1)
