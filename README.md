@@ -1,6 +1,6 @@
 # Polyaxon Language SDKs
 
-This project contains the Polyaxon low level SDKs for:
+This project contains Polyaxon SDKs for:
 
  * Python
  * GoLang
