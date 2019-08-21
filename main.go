@@ -37,11 +37,20 @@ import (
 
 	// mxnetjobv1 "github.com/kubeflow/mxnet-operator/pkg/apis/mxnet/v1"
 
+	httpRuntime "github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 	polyaxonSDK "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client"
 	// +kubebuilder:scaffold:imports
 )
+
+// PolyaxonAuth provides a custom auth info writer
+// TODO: Move to sdk
+func PolyaxonAuth(name, value string) httpRuntime.ClientAuthInfoWriter {
+	return httpRuntime.ClientAuthInfoWriterFunc(func(r httpRuntime.ClientRequest, _ strfmt.Registry) error {
+		return r.SetHeaderParam("Authorization", name+" "+value)
+	})
+}
 
 var (
 	scheme   = runtime.NewScheme()
@@ -87,8 +96,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	plxClient := polyaxonSDK.New(httptransport.New(host, "", nil), strfmt.Default)
-	plxToken := httptransport.BearerToken(token)
+	plxClient := polyaxonSDK.New(httptransport.New(host, "", []string{"http"}), strfmt.Default)
+	plxToken := PolyaxonAuth("Token", token)
 
 	if err = (&controllers.PolyaxonNotebookReconciler{
 		Client:    mgr.GetClient(),

@@ -164,6 +164,10 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/polyaxon/polyaxon-sdks v0.0.0-20190819113418-6ab4b411ef48 h1:pjN1l6WjbxBPK3zWZn5qtbsf2D/8jElRwajnOYpJcDM=
 github.com/polyaxon/polyaxon-sdks v0.0.0-20190819113418-6ab4b411ef48/go.mod h1:X2FUhe5p2BTFlae/kwoOq7a5POXANjIlJyxqETmSb18=
+github.com/polyaxon/polyaxon-sdks v0.0.0-20190819215319-01f9fbfcd32c h1:rzcGpb7BB+O1HIz6JYuTFOsSfYU6RXVNuzGnewlznPs=
+github.com/polyaxon/polyaxon-sdks v0.0.0-20190819215319-01f9fbfcd32c/go.mod h1:X2FUhe5p2BTFlae/kwoOq7a5POXANjIlJyxqETmSb18=
+github.com/polyaxon/polyaxon-sdks v0.0.0-20190819220629-1a36239c4568 h1:V5sIWQsSiU8BuVhybfASjOJ+OnN+hWxvEF0joyoL7Bk=
+github.com/polyaxon/polyaxon-sdks v0.0.0-20190819220629-1a36239c4568/go.mod h1:X2FUhe5p2BTFlae/kwoOq7a5POXANjIlJyxqETmSb18=
 github.com/prometheus/client_golang v0.9.0 h1:tXuTFVHC03mW0D+Ua1Q2d1EAVqLTuggX50V0VLICCzY=
 github.com/prometheus/client_golang v0.9.0/go.mod h1:7SWBe2y4D6OKWSNQJUaRYU/AaXPKyh/dDVn+NZz0KFw=
 github.com/prometheus/client_model v0.0.0-20180712105110-5c3871d89910 h1:idejC8f05m9MGOsuEi1ATq9shN03HrxNkD/luQvxCv8=

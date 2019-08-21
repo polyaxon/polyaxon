@@ -108,43 +108,45 @@ func (instance *PolyaxonBuild) removeCondition(conditionType PolyaxonBaseJobCond
 	instance.Status.Conditions = newConditions
 }
 
-func (instance *PolyaxonBuild) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) {
+func (instance *PolyaxonBuild) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) bool {
 	currentCond := getPlxBaseJobConditionFromStatus(instance.Status, condType)
 	cond := getOrUpdatePlxBaseJobCondition(currentCond, condType, status, reason, message)
 	if cond != nil {
 		instance.removeCondition(condType)
 		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
+		return true
 	}
+	return false
 }
 
 // LogStarting sets PolyaxonBuild to statrting
-func (instance *PolyaxonBuild) LogStarting() {
-	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonBuildStarted", "Build is starting")
+func (instance *PolyaxonBuild) LogStarting() bool {
+	return instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonBuildStarted", "Build is starting")
 }
 
 // LogRunning sets PolyaxonBuild to running
-func (instance *PolyaxonBuild) LogRunning() {
-	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonBuildRunning", "Build is running")
+func (instance *PolyaxonBuild) LogRunning() bool {
+	return instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonBuildRunning", "Build is running")
 }
 
 // LogWarning sets PolyaxonBuild to Warning
-func (instance *PolyaxonBuild) LogWarning(reason, message string) {
-	instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
+func (instance *PolyaxonBuild) LogWarning(reason, message string) bool {
+	return instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
 }
 
 // LogSucceeded sets PolyaxonBuild to succeeded
-func (instance *PolyaxonBuild) LogSucceeded() {
-	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonBuildSucceeded", "Build has succeded")
+func (instance *PolyaxonBuild) LogSucceeded() bool {
+	return instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonBuildSucceeded", "Build has succeded")
 }
 
 // LogFailed sets PolyaxonBuild to failed
-func (instance *PolyaxonBuild) LogFailed(reason, message string) {
-	instance.logCondition(JobFailed, corev1.ConditionFalse, reason, message)
+func (instance *PolyaxonBuild) LogFailed(reason, message string) bool {
+	return instance.logCondition(JobFailed, corev1.ConditionTrue, reason, message)
 }
 
 // LogStopped sets PolyaxonBuild to stopped
-func (instance *PolyaxonBuild) LogStopped(reason, message string) {
-	instance.logCondition(JobStopped, corev1.ConditionFalse, reason, message)
+func (instance *PolyaxonBuild) LogStopped(reason, message string) bool {
+	return instance.logCondition(JobStopped, corev1.ConditionTrue, reason, message)
 }
 
 // +kubebuilder:object:root=true

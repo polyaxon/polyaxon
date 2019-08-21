@@ -63,26 +63,25 @@ func (r *PolyaxonBuildReconciler) Reconcile(req ctrl.Request) (ctrl.Result, erro
 
 	// Finalizer
 	if instance.IsBeingDeleted() {
-		if err := r.handleFinalizer(instance); err != nil {
-			return ctrl.Result{}, err
-		}
+		return ctrl.Result{}, r.handleFinalizer(ctx, instance)
 	} else if !instance.HasFinalizer() {
-		if err := r.addFinalizer(instance); err != nil {
+		if err := r.addFinalizer(ctx, instance); err != nil {
 			return ctrl.Result{}, err
 		}
+	} else if instance.IsDone() {
+		return ctrl.Result{}, r.cleanUp(ctx, instance)
 	}
 
 	// Reconcile the underlaying job
-	if err := r.reconcileJob(instance); err != nil {
+	if err := r.reconcileJob(ctx, instance); err != nil {
 		return ctrl.Result{}, err
 	}
 
 	return ctrl.Result{}, nil
 }
 
-func (r *PolyaxonBuildReconciler) reconcileJob(instance *corev1alpha1.PolyaxonBuild) error {
+func (r *PolyaxonBuildReconciler) reconcileJob(ctx context.Context, instance *corev1alpha1.PolyaxonBuild) error {
 	log := r.Log
-	ctx := context.Background()
 
 	plxJob := utils.GeneratePlxJob(
 		instance.Name,
@@ -130,6 +129,7 @@ func (r *PolyaxonBuildReconciler) reconcileJob(instance *corev1alpha1.PolyaxonBu
 		if err != nil {
 			return err
 		}
+		r.syncStatus(instance)
 	}
 
 	return nil
@@ -141,13 +141,15 @@ func (r *PolyaxonBuildReconciler) reconcileJobStatus(instance *corev1alpha1.Poly
 
 	if len(job.Status.Conditions) == 0 {
 		if job.Status.Failed > 0 {
-			instance.LogWarning("", "")
-			log.V(1).Info("Build Logging Status Warning")
-			return true
+			if updated := instance.LogWarning("", ""); updated {
+				log.V(1).Info("Build Logging Status Warning")
+				return true
+			}
 		} else if job.Status.Active > 0 {
-			instance.LogRunning()
-			log.V(1).Info("Build Logging Status Running")
-			return true
+			if updated := instance.LogRunning(); updated {
+				log.V(1).Info("Build Logging Status Running")
+				return true
+			}
 		}
 		return false
 	}
@@ -155,19 +157,47 @@ func (r *PolyaxonBuildReconciler) reconcileJobStatus(instance *corev1alpha1.Poly
 	newJobCond := job.Status.Conditions[len(job.Status.Conditions)-1]
 
 	if job.Status.Active == 0 && job.Status.Succeeded > 0 && utils.IsPlxJobSucceded(newJobCond) {
-		instance.LogSucceeded()
-		instance.Status.CompletionTime = &now
-		log.V(1).Info("Build Logging Status Succeeded")
-		return true
+		if updated := instance.LogSucceeded(); updated {
+			instance.Status.CompletionTime = &now
+			log.V(1).Info("Build Logging Status Succeeded")
+			return true
+		}
 	}
 
 	if job.Status.Failed > 0 && utils.IsPlxJobFailed(newJobCond) {
-		instance.LogFailed(newJobCond.Reason, newJobCond.Message)
-		instance.Status.CompletionTime = &now
-		log.V(1).Info("Build Logging Status Failed")
-		return true
+		if updated := instance.LogFailed(newJobCond.Reason, newJobCond.Message); updated {
+			instance.Status.CompletionTime = &now
+			log.V(1).Info("Build Logging Status Failed")
+			return true
+		}
 	}
 	return false
+}
+
+func (r *PolyaxonBuildReconciler) cleanUp(ctx context.Context, instance *corev1alpha1.PolyaxonBuild) error {
+	log := r.Log
+
+	// currentTime := metav1.Now()
+	// ttl := instance.Spec.TTLSecondsAfterFinished
+	// if ttl == nil {
+	// 	// do nothing if the cleanup delay is not set
+	// 	return nil
+	// }
+	// duration := time.Second * time.Duration(*ttl)
+	// if currentTime.After(instance.Status.CompletionTime.Add(duration)) {
+	// 	err := r.Delete(ctx, instance)
+	// 	if err != nil {
+	// 		log.V(1).Info("Cleanup Build Job", "Error", err)
+	// 		return err
+	// 	}
+	// }
+	err := r.Delete(ctx, instance)
+	if err != nil {
+		log.V(1).Info("Cleanup Build Job", "Error", err)
+		return err
+	}
+	log.V(1).Info("Build Job is done, cleanup", "namespace", instance.Namespace, "name", instance.Name)
+	return nil
 }
 
 // SetupWithManager register the reconciliation logic

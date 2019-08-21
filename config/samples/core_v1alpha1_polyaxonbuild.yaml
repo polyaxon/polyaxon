@@ -17,7 +17,7 @@ metadata:
     role: polyaxon-workers
     type: polyaxon-runner
 spec:
-  maxRetries: 4
+  maxRetries: 2
   template:
     spec:
       containers:
