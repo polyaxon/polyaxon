@@ -1,5 +1,5 @@
 apiVersion: core.polyaxon.com/v1alpha1
-kind: PolyaxonExperiment
+kind: PolyaxonJob
 metadata:
   name: polyaxonexperiment-sample
   labels:

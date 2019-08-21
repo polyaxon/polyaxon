@@ -1,5 +1,5 @@
 apiVersion: core.polyaxon.com/v1alpha1
-kind: PolyaxonBuild
+kind: PolyaxonJob
 metadata:
   name: polyaxonbuild-sample
   labels:
@@ -17,7 +17,6 @@ metadata:
     role: polyaxon-workers
     type: polyaxon-runner
 spec:
-  maxRetries: 2
   template:
     spec:
       containers:

@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/name: polyaxon-dockerizer
     app.kubernetes.io/part-of: polyaxon-runner
     app.kubernetes.io/version: 0.5.4
-    job_name: root.quick-start.builds.811653
+    job_name: root.quick-start.experiments.811653
     job_uuid: 6c3906d4b732467c8ac27fc0ce6a0sdf
     project_name: root.quick-start
     project_uuid: d8b9a24c5167407ab16211f939acb901

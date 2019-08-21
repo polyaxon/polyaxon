@@ -119,16 +119,6 @@ func main() {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonTensorboard")
 		os.Exit(1)
 	}
-	if err = (&controllers.PolyaxonExperimentReconciler{
-		Client:    mgr.GetClient(),
-		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonExperiment"),
-		Scheme:    mgr.GetScheme(),
-		PlxClient: plxClient,
-		PlxToken:  plxToken,
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonExperiment")
-		os.Exit(1)
-	}
 	if err = (&controllers.PolyaxonJobReconciler{
 		Client:    mgr.GetClient(),
 		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonJob"),
@@ -137,16 +127,6 @@ func main() {
 		PlxToken:  plxToken,
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonJob")
-		os.Exit(1)
-	}
-	if err = (&controllers.PolyaxonBuildReconciler{
-		Client:    mgr.GetClient(),
-		Log:       ctrl.Log.WithName("controllers").WithName("PolyaxonBuild"),
-		Scheme:    mgr.GetScheme(),
-		PlxClient: plxClient,
-		PlxToken:  plxToken,
-	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "PolyaxonBuild")
 		os.Exit(1)
 	}
 	if err = (&controllers.PolyaxonKFReconciler{

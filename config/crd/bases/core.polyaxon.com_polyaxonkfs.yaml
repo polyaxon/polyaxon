@@ -43,6 +43,11 @@ spec:
                 is OnFailure or Always.
               format: int64
               type: integer
+            backoffLimit:
+              description: Specifies the number of retries before marking this job
+                failed.
+              format: int32
+              type: integer
             cleanPodPolicy:
               description: Defines the policy for cleaning up pods after the Job completes.
                 Defaults to Running.
@@ -50,11 +55,6 @@ spec:
             kfKind:
               description: Specifies the Kubeflow kind opertor to use
               type: string
-            maxRetries:
-              description: Specifies the number of retries before marking this job
-                failed.
-              format: int32
-              type: integer
             replicaSpecs:
               additionalProperties:
                 description: ReplicaSpec is a description of the job replica.

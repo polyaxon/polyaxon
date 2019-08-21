@@ -10,13 +10,7 @@ resources:
   kind: PolyaxonTensorboard
 - group: core
   version: v1alpha1
-  kind: PolyaxonExperiment
-- group: core
-  version: v1alpha1
   kind: PolyaxonJob
-- group: core
-  version: v1alpha1
-  kind: PolyaxonBuild
 - group: core
   version: v1alpha1
   kind: PolyaxonKF

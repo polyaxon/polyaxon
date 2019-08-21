@@ -11,7 +11,7 @@ spec:
     kind: PolyaxonJob
     plural: polyaxonjobs
     shortNames:
-    - plxj
+    - plxjob
   scope: Namespaced
   subresources:
     status: {}
@@ -32,7 +32,7 @@ spec:
         metadata:
           type: object
         spec:
-          description: PolyaxonBaseJobSpec defines the desired state of PolyaxonPod
+          description: Specification of the desired behavior of a job.
           properties:
             activeDeadlineSeconds:
               description: Specifies the duration (in seconds) since startTime during
@@ -41,9 +41,9 @@ spec:
                 is OnFailure or Always.
               format: int64
               type: integer
-            maxRetries:
+            backoffLimit:
               description: Specifies the number of retries before marking this job
-                failed.
+                failed. Defaults to 1
               format: int32
               type: integer
             template:
@@ -4175,15 +4175,23 @@ spec:
                   type: object
               type: object
             ttlSecondsAfterFinished:
-              description: Defines the TTL for cleaning up finished Jobs (temporary
-                before kubernetes adds the cleanup controller)
+              description: ttlSecondsAfterFinished limits the lifetime of a Job that
+                has finished execution (either Complete or Failed). If this field
+                is set, ttlSecondsAfterFinished after the Job finishes, it is eligible
+                to be automatically deleted. When the Job is being deleted, its lifecycle
+                guarantees (e.g. finalizers) will be honored. If this field is unset,
+                the Job won't be automatically deleted. If this field is set to zero,
+                the Job becomes eligible to be deleted immediately after it finishes.
+                This field is alpha-level and is only honored by servers that enable
+                the TTLAfterFinished feature. Defines the TTL for cleaning up finished
+                Jobs (temporary before kubernetes adds the cleanup controller)
               format: int32
               type: integer
           required:
           - template
           type: object
         status:
-          description: PolyaxonBaseJobStatus defines the observed state of PolyaxonBaseJob
+          description: Current status of a job.
           properties:
             completionTime:
               description: Represents the time when the job was completed. It is not

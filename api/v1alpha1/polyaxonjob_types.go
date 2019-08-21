@@ -27,13 +27,17 @@ import (
 
 // PolyaxonJob is the Schema for the polyaxonjobs API
 // +k8s:openapi-gen=true
-// +kubebuilder:resource:shortName=plxj
+// +kubebuilder:resource:shortName=plxjob
 // +kubebuilder:subresource:status
 type PolyaxonJob struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   PolyaxonBaseJobSpec   `json:"spec,omitempty"`
+	// Specification of the desired behavior of a job.
+	// +optional
+	Spec PolyaxonBaseJobSpec `json:"spec,omitempty"`
+	// Current status of a job.
+	// +optional
 	Status PolyaxonBaseJobStatus `json:"status,omitempty"`
 }
 
@@ -108,43 +112,51 @@ func (instance *PolyaxonJob) removeCondition(conditionType PolyaxonBaseJobCondit
 	instance.Status.Conditions = newConditions
 }
 
-func (instance *PolyaxonJob) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) {
+func (instance *PolyaxonJob) logCondition(condType PolyaxonBaseJobConditionType, status corev1.ConditionStatus, reason, message string) bool {
 	currentCond := getPlxBaseJobConditionFromStatus(instance.Status, condType)
 	cond := getOrUpdatePlxBaseJobCondition(currentCond, condType, status, reason, message)
 	if cond != nil {
 		instance.removeCondition(condType)
 		instance.Status.Conditions = append(instance.Status.Conditions, *cond)
+		return true
 	}
+	return false
 }
 
 // LogStarting sets PolyaxonJob to statrting
-func (instance *PolyaxonJob) LogStarting() {
-	instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonJobStarted", "Job is starting")
+func (instance *PolyaxonJob) LogStarting() bool {
+	return instance.logCondition(JobStarting, corev1.ConditionTrue, "PolyaxonJobStarted", "Job is starting")
 }
 
 // LogRunning sets PolyaxonJob to running
-func (instance *PolyaxonJob) LogRunning() {
-	instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonJobRunning", "Job is running")
+func (instance *PolyaxonJob) LogRunning() bool {
+	return instance.logCondition(JobRunning, corev1.ConditionTrue, "PolyaxonJobRunning", "Job is running")
 }
 
 // LogWarning sets PolyaxonJob to succeeded
-func (instance *PolyaxonJob) LogWarning(reason, message string) {
-	instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
+func (instance *PolyaxonJob) LogWarning(reason, message string) bool {
+	if reason == "" {
+		reason = "PolyaxonJobWarning"
+	}
+	if message == "" {
+		message = "Underlaying job has an issue"
+	}
+	return instance.logCondition(JobWarning, corev1.ConditionTrue, reason, message)
 }
 
 // LogSucceeded sets PolyaxonJob to succeeded
-func (instance *PolyaxonJob) LogSucceeded() {
-	instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonJobSucceeded", "Job has succeded")
+func (instance *PolyaxonJob) LogSucceeded() bool {
+	return instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonJobSucceeded", "Job has succeded")
 }
 
 // LogFailed sets PolyaxonJob to failed
-func (instance *PolyaxonJob) LogFailed(reason, message string) {
-	instance.logCondition(JobFailed, corev1.ConditionTrue, reason, message)
+func (instance *PolyaxonJob) LogFailed(reason, message string) bool {
+	return instance.logCondition(JobFailed, corev1.ConditionTrue, reason, message)
 }
 
 // LogStopped sets PolyaxonJob to stopped
-func (instance *PolyaxonJob) LogStopped(reason, message string) {
-	instance.logCondition(JobStopped, corev1.ConditionTrue, reason, message)
+func (instance *PolyaxonJob) LogStopped(reason, message string) bool {
+	return instance.logCondition(JobStopped, corev1.ConditionTrue, reason, message)
 }
 
 // +kubebuilder:object:root=true

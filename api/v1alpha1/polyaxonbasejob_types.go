@@ -27,21 +27,32 @@ import (
 // PolyaxonBaseJobSpec defines the desired state of PolyaxonPod
 type PolyaxonBaseJobSpec struct {
 	// Specifies the number of retries before marking this job failed.
+	// Defaults to 1
 	// +optional
-	BackoffLimit *int32 `json:"maxRetries,omitempty" default:"1" protobuf:"varint,1,opt,name=replicas"`
+	BackoffLimit *int32 `json:"backoffLimit,omitempty" default:"1" protobuf:"varint,1,opt,name=backoffLimit"`
 
 	// Specifies the duration (in seconds) since startTime during which the job can remain active
 	// before it is terminated. Must be a positive integer.
 	// This setting applies only to pods where restartPolicy is OnFailure or Always.
 	// +optional
-	ActiveDeadlineSeconds *int64 `json:"activeDeadlineSeconds,omitempty"`
+	ActiveDeadlineSeconds *int64 `json:"activeDeadlineSeconds,omitempty" protobuf:"varint,2,opt,name=activeDeadlineSeconds"`
 
+	// ttlSecondsAfterFinished limits the lifetime of a Job that has finished
+	// execution (either Complete or Failed). If this field is set,
+	// ttlSecondsAfterFinished after the Job finishes, it is eligible to be
+	// automatically deleted. When the Job is being deleted, its lifecycle
+	// guarantees (e.g. finalizers) will be honored. If this field is unset,
+	// the Job won't be automatically deleted. If this field is set to zero,
+	// the Job becomes eligible to be deleted immediately after it finishes.
+	// This field is alpha-level and is only honored by servers that enable the
+	// TTLAfterFinished feature.
 	// Defines the TTL for cleaning up finished Jobs (temporary
 	// before kubernetes adds the cleanup controller)
-	TTLSecondsAfterFinished *int32 `json:"ttlSecondsAfterFinished,omitempty"`
+	// +optional
+	TTLSecondsAfterFinished *int32 `json:"ttlSecondsAfterFinished,omitempty" protobuf:"varint,3,opt,name=ttlSecondsAfterFinished"`
 
 	// Template describes the pods that will be created.
-	Template corev1.PodTemplateSpec `json:"template" protobuf:"bytes,3,opt,name=template"`
+	Template corev1.PodTemplateSpec `json:"template" protobuf:"bytes,4,opt,name=template"`
 }
 
 // PolyaxonBaseJobStatus defines the observed state of PolyaxonBaseJob

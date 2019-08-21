@@ -4,9 +4,7 @@
 resources:
 - bases/core.polyaxon.com_polyaxonnotebooks.yaml
 - bases/core.polyaxon.com_polyaxontensorboards.yaml
-- bases/core.polyaxon.com_polyaxonexperiments.yaml
 - bases/core.polyaxon.com_polyaxonjobs.yaml
-- bases/core.polyaxon.com_polyaxonbuilds.yaml
 - bases/core.polyaxon.com_polyaxonkfs.yaml
 # +kubebuilder:scaffold:crdkustomizeresource
 
@@ -15,9 +13,7 @@ patches:
 # patches here are for enabling the conversion webhook for each CRD
 #- patches/webhook_in_polyaxonnotebooks.yaml
 #- patches/webhook_in_polyaxontensorboards.yaml
-#- patches/webhook_in_polyaxonexperiments.yaml
 #- patches/webhook_in_polyaxonjobs.yaml
-#- patches/webhook_in_polyaxonbuilds.yaml
 #- patches/webhook_in_polyaxonkfs.yaml
 # +kubebuilder:scaffold:crdkustomizewebhookpatch
 
@@ -25,9 +21,7 @@ patches:
 # patches here are for enabling the CA injection for each CRD
 #- patches/cainjection_in_polyaxonnotebooks.yaml
 #- patches/cainjection_in_polyaxontensorboards.yaml
-#- patches/cainjection_in_polyaxonexperiments.yaml
 #- patches/cainjection_in_polyaxonjobs.yaml
-#- patches/cainjection_in_polyaxonbuilds.yaml
 #- patches/cainjection_in_polyaxonkfs.yaml
 # +kubebuilder:scaffold:crdkustomizecainjectionpatch
 
