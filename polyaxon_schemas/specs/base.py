@@ -354,8 +354,8 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.image_pull_secrets if self.environment else None
 
     @property
-    def backoff_limit(self):
-        return self.environment.backoff_limit if self.environment else None
+    def max_retries(self):
+        return self.environment.max_retries if self.environment else None
 
     @property
     def restart_policy(self):

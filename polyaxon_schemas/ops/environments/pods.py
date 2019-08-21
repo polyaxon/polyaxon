@@ -85,7 +85,7 @@ class EnvironmentSchema(BaseSchema):
     service_account = fields.Str(allow_none=True)
     image_pull_secrets = fields.List(fields.Str(), allow_none=True)
     max_restarts = fields.Int(allow_none=True)  # Deprecated
-    backoff_limit = fields.Int(allow_none=True)
+    max_retries = fields.Int(allow_none=True)
     restart_policy = fields.Str(allow_none=True)
     ttl = fields.Int(allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
@@ -142,7 +142,7 @@ class EnvironmentConfig(BaseConfig):
                           'tolerations',
                           'service_account',
                           'image_pull_secrets',
-                          'backoff_limit',
+                          'max_retries',
                           'restart_policy',
                           'ttl',
                           'env_vars',
@@ -164,7 +164,7 @@ class EnvironmentConfig(BaseConfig):
                  service_account=None,
                  image_pull_secrets=None,
                  max_restarts=None,
-                 backoff_limit=None,
+                 max_retries=None,
                  restart_policy=None,
                  ttl=None,
                  env_vars=None,
@@ -179,7 +179,7 @@ class EnvironmentConfig(BaseConfig):
                  ):
         if max_restarts:
             warnings.warn(
-                'The `max_restarts` is deprecated and has no effect, please use `backoff_limit`.',
+                'The `max_restarts` is deprecated and has no effect, please use `max_retries`.',
                 DeprecationWarning)
         self.index = index
         self.resources = validate_resources({'resources': resources}).get('resources')
@@ -190,7 +190,7 @@ class EnvironmentConfig(BaseConfig):
         self.tolerations = tolerations
         self.service_account = service_account
         self.image_pull_secrets = image_pull_secrets
-        self.backoff_limit = backoff_limit
+        self.max_retries = max_retries
         self.restart_policy = restart_policy
         self.ttl = ttl
         self.env_vars = env_vars
