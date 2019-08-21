@@ -134,17 +134,17 @@ func (instance *PolyaxonNotebook) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonNotebook to succeeded
 func (instance *PolyaxonNotebook) LogSucceeded() {
-	instance.logCondition(DeploymentSucceeded, corev1.ConditionFalse, "PolyaxonNotebookSucceeded", "Notebook has succeded")
+	instance.logCondition(DeploymentSucceeded, corev1.ConditionTrue, "PolyaxonNotebookSucceeded", "Notebook has succeded")
 }
 
 // LogFailed sets PolyaxonNotebook to failed
 func (instance *PolyaxonNotebook) LogFailed(reason, message string) {
-	instance.logCondition(DeploymentFailed, corev1.ConditionFalse, reason, message)
+	instance.logCondition(DeploymentFailed, corev1.ConditionTrue, reason, message)
 }
 
 // LogStopped sets PolyaxonNotebook to stopped
 func (instance *PolyaxonNotebook) LogStopped(reason, message string) {
-	instance.logCondition(DeploymentStopped, corev1.ConditionFalse, reason, message)
+	instance.logCondition(DeploymentStopped, corev1.ConditionTrue, reason, message)
 }
 
 // +kubebuilder:object:root=true

@@ -134,17 +134,17 @@ func (instance *PolyaxonTensorboard) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonTensorboard to succeeded
 func (instance *PolyaxonTensorboard) LogSucceeded() {
-	instance.logCondition(DeploymentSucceeded, corev1.ConditionFalse, "PolyaxonTensorboardSucceeded", "Tensorboard has succeded")
+	instance.logCondition(DeploymentSucceeded, corev1.ConditionTrue, "PolyaxonTensorboardSucceeded", "Tensorboard has succeded")
 }
 
 // LogFailed sets PolyaxonTensorboard to failed
 func (instance *PolyaxonTensorboard) LogFailed(reason, message string) {
-	instance.logCondition(DeploymentFailed, corev1.ConditionFalse, reason, message)
+	instance.logCondition(DeploymentFailed, corev1.ConditionTrue, reason, message)
 }
 
 // LogStopped sets PolyaxonTensorboard to stopped
 func (instance *PolyaxonTensorboard) LogStopped(reason, message string) {
-	instance.logCondition(DeploymentStopped, corev1.ConditionFalse, reason, message)
+	instance.logCondition(DeploymentStopped, corev1.ConditionTrue, reason, message)
 }
 
 // +kubebuilder:object:root=true

@@ -140,17 +140,17 @@ func (instance *PolyaxonExperiment) LogWarning(reason, message string) {
 
 // LogSucceeded sets PolyaxonExperiment to succeeded
 func (instance *PolyaxonExperiment) LogSucceeded() {
-	instance.logCondition(JobSucceeded, corev1.ConditionFalse, "PolyaxonExperimentSucceeded", "Experiment has succeded")
+	instance.logCondition(JobSucceeded, corev1.ConditionTrue, "PolyaxonExperimentSucceeded", "Experiment has succeded")
 }
 
 // LogFailed sets PolyaxonExperiment to failed
 func (instance *PolyaxonExperiment) LogFailed(reason, message string) {
-	instance.logCondition(JobFailed, corev1.ConditionFalse, reason, message)
+	instance.logCondition(JobFailed, corev1.ConditionTrue, reason, message)
 }
 
 // LogStopped sets PolyaxonExperiment to stopped
 func (instance *PolyaxonExperiment) LogStopped(reason, message string) {
-	instance.logCondition(JobStopped, corev1.ConditionFalse, reason, message)
+	instance.logCondition(JobStopped, corev1.ConditionTrue, reason, message)
 }
 
 // +kubebuilder:object:root=true
