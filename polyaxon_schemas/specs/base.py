@@ -358,6 +358,10 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.max_retries if self.environment else None
 
     @property
+    def timeout(self):
+        return self.environment.timeout if self.environment else None
+
+    @property
     def restart_policy(self):
         return self.environment.restart_policy if self.environment else None
 

@@ -101,6 +101,11 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
+        # Add timeout
+        config_dict['timeout'] = 4
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
         # Add restart_policy
         config_dict['restart_policy'] = 'never'
         config = EnvironmentConfig.from_dict(config_dict)

@@ -26,3 +26,4 @@ templates:
       service_account: service
       image_pull_secrets: [secret1, secret2]
       max_retries: 2
+      timeout: 3600

@@ -88,6 +88,7 @@ class EnvironmentSchema(BaseSchema):
     max_retries = fields.Int(allow_none=True)
     restart_policy = fields.Str(allow_none=True)
     ttl = fields.Int(allow_none=True)
+    timeout = fields.Int(allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
     secret_refs = fields.List(fields.Str(), allow_none=True)
@@ -143,6 +144,7 @@ class EnvironmentConfig(BaseConfig):
                           'service_account',
                           'image_pull_secrets',
                           'max_retries',
+                          'timeout',
                           'restart_policy',
                           'ttl',
                           'env_vars',
@@ -165,6 +167,7 @@ class EnvironmentConfig(BaseConfig):
                  image_pull_secrets=None,
                  max_restarts=None,
                  max_retries=None,
+                 timeout=None,
                  restart_policy=None,
                  ttl=None,
                  env_vars=None,
@@ -191,6 +194,7 @@ class EnvironmentConfig(BaseConfig):
         self.service_account = service_account
         self.image_pull_secrets = image_pull_secrets
         self.max_retries = max_retries
+        self.timeout = timeout
         self.restart_policy = restart_policy
         self.ttl = ttl
         self.env_vars = env_vars
