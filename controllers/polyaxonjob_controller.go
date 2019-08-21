@@ -18,6 +18,7 @@ package controllers
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-logr/logr"
 	batchv1 "k8s.io/api/batch/v1"
@@ -69,7 +70,7 @@ func (r *PolyaxonJobReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error)
 			return ctrl.Result{}, err
 		}
 	} else if instance.IsDone() {
-		return ctrl.Result{}, r.cleanUp(ctx, instance)
+		return r.cleanUp(ctx, instance)
 	}
 
 	// Reconcile the underlaying job
@@ -88,6 +89,8 @@ func (r *PolyaxonJobReconciler) reconcileJob(ctx context.Context, instance *core
 		instance.Namespace,
 		instance.Labels,
 		instance.Spec.BackoffLimit,
+		instance.Spec.ActiveDeadlineSeconds,
+		instance.Spec.TTLSecondsAfterFinished,
 		instance.Spec.Template.Spec,
 	)
 	if err := ctrl.SetControllerReference(instance, plxJob, r.Scheme); err != nil {
@@ -176,23 +179,29 @@ func (r *PolyaxonJobReconciler) reconcileJobStatus(instance *corev1alpha1.Polyax
 	return false
 }
 
-func (r *PolyaxonJobReconciler) cleanUp(ctx context.Context, instance *corev1alpha1.PolyaxonJob) error {
+func (r *PolyaxonJobReconciler) cleanUp(ctx context.Context, instance *corev1alpha1.PolyaxonJob) (ctrl.Result, error) {
 	log := r.Log
 
-	// currentTime := metav1.Now()
-	// ttl := instance.Spec.TTLSecondsAfterFinished
-	// if ttl == nil {
-	// 	// do nothing if the cleanup delay is not set
-	// 	return nil
-	// }
-	// duration := time.Second * time.Duration(*ttl)
-	// if currentTime.After(instance.Status.CompletionTime.Add(duration)) {
-	// 	err := r.Delete(ctx, instance)
-	// 	if err != nil {
-	// 		log.V(1).Info("Cleanup Build Job", "Error", err)
-	// 		return err
-	// 	}
-	// }
+	currentTime := time.Now()
+	ttl := instance.Spec.TTLSecondsAfterFinished
+	if ttl == nil {
+		// We clean right away
+		return ctrl.Result{}, r.delete(ctx, instance)
+	}
+	duration := time.Second * time.Duration(*ttl)
+	futureTime := instance.Status.CompletionTime.Add(duration)
+	if currentTime.After(futureTime) {
+		return ctrl.Result{}, r.delete(ctx, instance)
+	}
+	// Reschedule another check
+	requeueAfter := futureTime.Sub(currentTime)
+	log.V(1).Info("Requeue reconciliation", "After", requeueAfter)
+	return ctrl.Result{Requeue: true, RequeueAfter: requeueAfter}, nil
+}
+
+func (r *PolyaxonJobReconciler) delete(ctx context.Context, instance *corev1alpha1.PolyaxonJob) error {
+	log := r.Log
+
 	err := r.Delete(ctx, instance)
 	if err != nil {
 		log.V(1).Info("Cleanup Job", "Error", err)

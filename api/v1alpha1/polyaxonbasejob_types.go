@@ -46,8 +46,7 @@ type PolyaxonBaseJobSpec struct {
 	// the Job becomes eligible to be deleted immediately after it finishes.
 	// This field is alpha-level and is only honored by servers that enable the
 	// TTLAfterFinished feature.
-	// Defines the TTL for cleaning up finished Jobs (temporary
-	// before kubernetes adds the cleanup controller)
+	// TODO:(Mourad) (Cleanup logic once kubernetes adds the cleanup controller)
 	// +optional
 	TTLSecondsAfterFinished *int32 `json:"ttlSecondsAfterFinished,omitempty" protobuf:"varint,3,opt,name=ttlSecondsAfterFinished"`
 

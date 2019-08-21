@@ -81,11 +81,14 @@ func GeneratePlxJob(
 	namespace string,
 	labels map[string]string,
 	backoffLimit *int32,
+	activeDeadlineSeconds *int64,
+	ttlSecondsAfterFinished *int32,
 	podSpec corev1.PodSpec,
 ) *batchv1.Job {
-	jobBackoffLimit := int32(DefaultBackoffLimit)
-	if backoffLimit != nil {
-		jobBackoffLimit = *backoffLimit
+	jobBackoffLimit := backoffLimit
+	if backoffLimit == nil {
+		defaultBackoffLimit := int32(DefaultBackoffLimit)
+		jobBackoffLimit = &defaultBackoffLimit
 	}
 
 	if podSpec.RestartPolicy == "" {
@@ -99,7 +102,9 @@ func GeneratePlxJob(
 			Labels:    labels,
 		},
 		Spec: batchv1.JobSpec{
-			BackoffLimit: &jobBackoffLimit,
+			BackoffLimit:            jobBackoffLimit,
+			ActiveDeadlineSeconds:   activeDeadlineSeconds,
+			TTLSecondsAfterFinished: ttlSecondsAfterFinished,
 			Template: corev1.PodTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{Labels: map[string]string{}},
 				Spec:       podSpec,
