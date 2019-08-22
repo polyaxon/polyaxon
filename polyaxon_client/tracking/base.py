@@ -167,12 +167,12 @@ class BaseTracker(object):
 
     @check_no_op
     def log_output(self, filename, **kwargs):
-        """DEPRECATED: use log_succeeded instead"""
+        """DEPRECATED: use log_artifact instead"""
         self.log_artifact(filename)
 
     @check_no_op
     def log_outputs(self, dirname, **kwargs):
-        """DEPRECATED: use log_succeeded instead"""
+        """DEPRECATED: use log_artifacts instead"""
         self.log_artifacts(dirname)
 
     @check_no_op
