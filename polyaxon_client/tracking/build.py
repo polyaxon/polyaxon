@@ -6,6 +6,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.handlers.conf import setup_logging
 from polyaxon_client.tracking.job import BaseJob
 from polyaxon_client.tracking.no_op import check_no_op
+from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.utils.backend import OTHER_BACKEND
 
 
@@ -44,17 +45,21 @@ class BuildJob(BaseJob):
             build_config['backend'] = backend
         if description:
             build_config['description'] = description
-        if content:
-            build_config['content'] = self.client.project.validate_content(content=content)
         build_config['is_managed'] = settings.IS_MANAGED
 
-        build = self.client.project.create_build(
-            username=self.username,
-            project_name=self.project_name,
-            build_config=build_config,
-        )
-        if not build:
-            raise PolyaxonClientException('Could not create build.')
+        build = None
+
+        if self.client:
+            if content:
+                build_config['content'] = self.client.project.validate_content(content=content)
+
+                build = self.client.project.create_build(
+                    username=self.username,
+                    project_name=self.project_name,
+                    build_config=build_config,
+                )
+                if not build:
+                    raise PolyaxonClientException('Could not create build.')
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.job_id = self._get_entity_id(build)
@@ -70,13 +75,14 @@ class BuildJob(BaseJob):
 
         return self
 
+    @check_offline
     def _update(self, patch_dict):
-        self.client.build_job.update_build(username=self.username,
-                                           project_name=self.project_name,
-                                           job_id=self.job_id,
-                                           patch_dict=patch_dict,
-                                           background=True)
+        if self.client:
+            self.client.build_job.update_build(
+                username=self.username, project_name=self.project_name,
+                job_id=self.job_id, patch_dict=patch_dict, background=True)
 
     @check_no_op
+    @check_offline
     def log_dockerfile(self, dockerfile):
         self._update({'dockerfile': dockerfile})

@@ -14,6 +14,7 @@ from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.logger import logger
 from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
+from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.paths import get_outputs_path
 from polyaxon_client.tracking.utils.env import get_run_env
 from polyaxon_client.tracking.utils.hashing import hash_value
@@ -39,13 +40,14 @@ class BaseTracker(object):
             project = job_info['project_name']
 
         self.last_status = None
-        self.client = client or PolyaxonClient()
-        if settings.IS_MANAGED:
-            self.user = None
-        else:
+        self.client = client
+        self.user = None
+        if not (self.client or settings.IS_OFFLINE):
+            self.client = PolyaxonClient()
+        if self.client and not settings.IS_MANAGED:
             self.user = (self.client.auth.get_user().username
-                         if self.client.api_config.schema_response
-                         else self.client.auth.get_user().get('username'))
+                        if self.client.api_config.schema_response
+                        else self.client.auth.get_user().get('username'))
 
         username, project_name = get_project_info(current_user=self.user, project=project)
         self.track_logs = track_logs
@@ -63,7 +65,10 @@ class BaseTracker(object):
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
 
     def _get_entity_id(self, entity):
-        return entity.id if self.client.api_config.schema_response else entity.get('id')
+        if self.client:
+            return entity.id if self.client.api_config.schema_response else entity.get('id')
+        else:
+            return int(time.time())
 
     @check_no_op
     def get_notebook_job_info(self):
@@ -100,6 +105,7 @@ class BaseTracker(object):
         raise NotImplementedError
 
     @check_no_op
+    @check_offline
     def _start(self):
         atexit.register(self._end)
         self.start()
@@ -112,15 +118,18 @@ class BaseTracker(object):
         sys.excepthook = excepthook
 
     @check_no_op
+    @check_offline
     def _end(self):
         self.log_succeeded()
 
     @check_no_op
+    @check_offline
     def start(self):
         self.log_status('running')
         self.last_status = 'running'
 
     @check_no_op
+    @check_offline
     def end(self, status, message=None, traceback=None):
         if self.last_status in ['succeeded', 'failed', 'stopped']:
             return
@@ -130,29 +139,35 @@ class BaseTracker(object):
         self._unset_health_url()
 
     @check_no_op
+    @check_offline
     def succeeded(self):
         """DEPRECATED: use log_succeeded instead"""
         self.log_succeeded()
 
     @check_no_op
+    @check_offline
     def log_succeeded(self):
         self.end('succeeded')
 
     @check_no_op
+    @check_offline
     def stop(self):
         """DEPRECATED: use log_stopped instead"""
         self.log_stopped()
 
     @check_no_op
+    @check_offline
     def log_stopped(self):
         self.end('stopped')
 
     @check_no_op
+    @check_offline
     def failed(self, message=None, traceback=None):
         """DEPRECATED: use log_failed instead"""
         self.log_failed(message=message, traceback=traceback)
 
     @check_no_op
+    @check_offline
     def log_failed(self, message=None, traceback=None):
         self.end(status='failed', message=message, traceback=traceback)
 
@@ -184,14 +199,17 @@ class BaseTracker(object):
         self.outputs_store.upload_dir(dirname=dir_path)
 
     @check_no_op
+    @check_offline
     def log_build(self, build_id=None):
         self._update({'build_id': build_id()})
 
     @check_no_op
+    @check_offline
     def log_run_env(self):
         self._update({'run_env': get_run_env()})
 
     @check_no_op
+    @check_offline
     def log_tags(self, tags, reset=False):
         patch_dict = {'tags': validate_tags(tags)}
         if reset is False:
@@ -199,11 +217,13 @@ class BaseTracker(object):
         self._update(patch_dict)
 
     @check_no_op
+    @check_offline
     def log_backend(self, backend):
         patch_dict = {'backend': backend}
         self._update(patch_dict)
 
     @check_no_op
+    @check_offline
     def log_params(self, reset=False, **params):
         patch_dict = {'params': params}
         if reset is False:
@@ -211,14 +231,17 @@ class BaseTracker(object):
         self._update(patch_dict)
 
     @check_no_op
+    @check_offline
     def set_description(self, description):
         self._update({'description': description})
 
     @check_no_op
+    @check_offline
     def set_name(self, name):
         self._update({'name': name})
 
     @check_no_op
+    @check_offline
     def log_data_ref(self, data, data_name='data', reset=False):
         try:
             params = {
