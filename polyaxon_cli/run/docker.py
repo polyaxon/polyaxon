@@ -6,6 +6,7 @@ import os
 import shutil
 import sys
 import tempfile
+import time
 
 from hestia.user_path import polyaxon_user_path
 from polyaxon_deploy.operators.docker import DockerOperator
@@ -30,10 +31,10 @@ from polyaxon_cli.schemas import BuildSpecification
 from polyaxon_cli.utils.formatting import Printer
 
 POLYAXON_DOCKERFILE_NAME = 'Dockerfile'
-POLYAXON_DATA_PATH = os.path.join(TMP_POLYAXON_PATH, 'data')
+POLYAXON_DATA_PATH = '/tmp/data'
 
 
-def _get_env_vars(project, experiment_id):
+def _get_env_vars(project, experiment_id, params, data_paths=None):
     env_vars = [
         ('POLYAXON_IS_MANAGED', 'true'),
         ('POLYAXON_IS_LOCAL', 'true'),
@@ -42,11 +43,16 @@ def _get_env_vars(project, experiment_id):
             'experiment_name': '{}.{}'.format(project, experiment_id)})),
     ]
     if POLYAXON_NO_OP_KEY in os.environ:
-        env_vars += [('POLYAXON_NO_OP', 'true')]
+        env_vars += [(POLYAXON_NO_OP_KEY, 'true')]
 
-    # TODO: use user's (data/outputs) paths
-    env_vars += [('POLYAXON_RUN_DATA_PATHS', json.dumps({'local': '/tmp'}))]
-    env_vars += [('POLYAXON_RUN_OUTPUTS_PATH', '/tmp')]
+    paths = {'local': '/tmp'}
+
+    if data_paths:
+        paths.update(data_paths)
+
+    env_vars += [('POLYAXON_PARAMS', json.dumps(params))]
+    env_vars += [('POLYAXON_RUN_DATA_PATHS', json.dumps(paths))]
+    env_vars += [('POLYAXON_RUN_OUTPUTS_PATH', '/tmp/outputs')]
 
     return env_vars
 
@@ -55,11 +61,37 @@ def _get_config_volume():
     return ['-v', '{}:{}'.format(polyaxon_user_path(), TMP_POLYAXON_PATH)]
 
 
-def _get_data_volumes(data_path):
-    return ['-v', '{}:{}'.format(data_path, POLYAXON_DATA_PATH)]
+def _get_data_bind_mounts(mount_refs=None):
+    data_paths = {}
+    bind_mounts = {}
+
+    if not mount_refs:
+        return data_paths, bind_mounts
+
+    for dpath in mount_refs:
+        parts = dpath.split(':')
+        if len(parts) >= 2:
+            ref = parts[1]
+            data_ref_path = os.path.join(POLYAXON_DATA_PATH, ref)
+            host_path = os.path.abspath(os.path.expanduser(parts[0]))
+            data_paths[ref] = data_ref_path
+            bind_mounts[host_path] = data_ref_path
+        else:
+            # we have just data ref name
+            ref = parts[0]
+            data_ref_path = os.path.join(POLYAXON_DATA_PATH, ref)
+            data_paths[ref] = data_ref_path
+    return data_paths, bind_mounts
 
 
-def _create_docker_build(build_job, build_config):
+def _get_data_volumes(bind_mounts):
+    result = []
+    for host_path, mount_path in bind_mounts.items():
+        result += ['-v', '{}:{}'.format(host_path, mount_path)]
+    return result
+
+
+def _create_docker_build(build_job, build_config, project):
     directory = tempfile.mkdtemp()
     build_context = build_config.context or '.'
     try:
@@ -92,7 +124,13 @@ def _create_docker_build(build_job, build_config):
             raise PolyaxonShouldExitError('')
 
         image_tag = hash_value(rendered_dockerfile)
-        image_name = build_job.job['unique_name'].replace('.', '-')
+        if POLYAXON_NO_OP_KEY not in os.environ:
+            job_name = build_job.job['unique_name']
+        else:
+            job_name = "{project}-builds-local-{timestamp}".format(
+                project=project, timestamp=int(time.time()))
+
+        image_name = job_name.replace('.', '-')
 
         dockerizer_build(build_context=directory,
                          image_tag=image_tag,
@@ -120,7 +158,7 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
                      description=description,
                      tags=tags,
                      content=build_spec.raw_data)
-    image = _create_docker_build(build_job, build_config)
+    image = _create_docker_build(build_job, build_config, project)
 
     experiment = Experiment(project=project, track_logs=False)
     experiment.create(name=name,
@@ -130,9 +168,15 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
                       content=specification.raw_data)
 
     cmd_args = ['run', '--rm']
-    for key, value in _get_env_vars(project=project, experiment_id=experiment.experiment_id):
+    data_paths, bind_mounts = _get_data_bind_mounts(specification.data_refs)
+    for key, value in _get_env_vars(
+            project=project,
+            experiment_id=experiment.experiment_id,
+            params=specification.params,
+            data_paths=data_paths):
         cmd_args += ['-e', '{key}={value}'.format(key=key, value=value)]
     cmd_args += _get_config_volume()
+    cmd_args += _get_data_volumes(bind_mounts)
     cmd_args += [image]
 
     # Add cmd.run
