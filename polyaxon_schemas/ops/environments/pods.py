@@ -3,10 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 import warnings
 
+import six
 from hestia.list_utils import to_list
 from marshmallow import ValidationError, fields, validates_schema, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields import DictOrStr
 from polyaxon_schemas.ops.environments.outputs import OutputsSchema
 from polyaxon_schemas.ops.environments.persistence import PersistenceSchema
 from polyaxon_schemas.ops.environments.resources import (
@@ -43,6 +45,16 @@ def validate_persistence(values, is_schema=False):
         values['data_refs'] = values.get('data_refs', persistence.data)
         values['artifact_refs'] = to_list(values.get('artifact_refs', persistence.outputs),
                                           check_none=True)
+
+    def validate_field(field):
+        field_value = values.get(field)
+        if not field_value:
+            return field_value
+        return [{'name': v, 'init': True} if isinstance(v, six.string_types) else v
+                for v in field_value]
+
+    values['data_refs'] = validate_field('data_refs')
+    values['artifact_refs'] = validate_field('artifact_refs')
     return values
 
 
@@ -91,13 +103,13 @@ class EnvironmentSchema(BaseSchema):
     timeout = fields.Int(allow_none=True)
     env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
                            allow_none=True)
-    secret_refs = fields.List(fields.Str(), allow_none=True)
-    config_map_refs = fields.List(fields.Str(), allow_none=True)
+    secret_refs = fields.List(DictOrStr(), allow_none=True)
+    config_map_refs = fields.List(DictOrStr(), allow_none=True)
     configmap_refs = fields.List(fields.Str(), allow_none=True)  # Deprecated
-    data_refs = fields.List(fields.Str(), allow_none=True)
-    artifact_refs = fields.List(fields.Str(), allow_none=True)
+    data_refs = fields.List(DictOrStr(), allow_none=True)
+    artifact_refs = fields.List(DictOrStr(), allow_none=True)
     outputs = fields.Nested(OutputsSchema, allow_none=True)  # Deprecated
-    persistence = fields.Nested(PersistenceSchema, allow_none=True)
+    persistence = fields.Nested(PersistenceSchema, allow_none=True)  # Deprecated
     security_context = fields.Dict(allow_none=True)
 
     @staticmethod

@@ -53,12 +53,7 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
-        # Add persistence
-        config_dict['data_refs'] = ['data1', 'data2']
-        config_dict['artifact_refs'] = ['outputs1']
-        config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
+        # Outputs
         config_dict['outputs'] = {
             'jobs': ['data1.dfs', 34, 'data2'],
             'experiments': [1, 'outputs1', 2, 3],
@@ -117,11 +112,23 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add data_refs
-        config_dict['data_refs'] = ['data1', 'data2']
+        config_dict['data_refs'] = [
+            'data1',
+            {'name': 'data2', 'mount': True},
+            {'name': 'data3', 'paths': ['/subpath1', 'subpath2'], 'init': True}]
         config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        # We remove this from the dict because the value is mutated every time it's parsed
+        data_refs = config_dict.pop('data_refs')
+        data_refs[0] = {'name': 'data1', 'init': True}
+        assert data_refs == config.to_dict()['data_refs']
 
         # Add artifact_refs
-        config_dict['artifact_refs'] = ['artifact1', 'artifact2']
+        config_dict['artifact_refs'] = [
+            'artifact1',
+            {'name': 'artifact2', 'paths': ['/subpath1', 'subpath2'], 'init': True}
+        ]
         config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        # We remove this from the dict because the value is mutated every time it's parsed
+        artifact_refs = config_dict.pop('artifact_refs')
+        artifact_refs[0] = {'name': 'artifact1', 'init': True}
+        assert artifact_refs == config.to_dict()['artifact_refs']

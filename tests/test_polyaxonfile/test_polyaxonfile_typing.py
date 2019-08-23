@@ -160,8 +160,8 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == ['outputs1']
-        assert spec.data_refs == ['data1', 'data2']
+        assert spec.artifact_refs == [{'ref': 'outputs1', 'init': True}]
+        assert spec.data_refs == [{'ref': 'data1', 'init': True}, {'ref': 'data2', 'init': True}]
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.config_map_refs == ['config_map1', 'config_map2']
 

@@ -173,8 +173,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.artifact_refs == ['outputs1']
-        assert spec.data_refs == ['data1', 'data2']
+        assert spec.artifact_refs == [{'ref': 'outputs1', 'init': True}]
+        assert spec.data_refs == [{'ref': 'data1', 'init': True}, {'ref': 'data2', 'init': True}]
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.config_map_refs == ['config_map1', 'config_map2']
         assert spec.config.tensorflow.n_workers == 5
@@ -299,8 +299,8 @@ class TestPolyaxonfile(TestCase):
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         spec.apply_context()
         assert spec.environment is not None
-        assert spec.artifact_refs == ['outputs1']
-        assert spec.data_refs == ['data1', 'data2']
+        assert spec.artifact_refs == [{'ref': 'outputs1', 'init': True}]
+        assert spec.data_refs == [{'ref': 'data1', 'init': True}, {'ref': 'data2', 'init': True}]
         # TODO
         # assert spec.outputs.jobs == [111]
         assert spec.framework is None
@@ -1266,8 +1266,8 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == ['outputs1']
-        assert spec.data_refs == ['data1', 'data2']
+        assert spec.artifact_refs == [{'ref': 'outputs1', 'init': True}]
+        assert spec.data_refs == [{'ref': 'data1', 'init': True}, {'ref': 'data2', 'init': True}]
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.config_map_refs == ['config_map1', 'config_map2']
 
@@ -1306,8 +1306,8 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == ['outputs1']
-        assert spec.data_refs == ['data1', 'data2']
+        assert spec.artifact_refs == [{'ref': 'outputs1', 'init': True}]
+        assert spec.data_refs == [{'ref': 'data1', 'init': True}, {'ref': 'data2', 'init': True}]
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.config_map_refs == ['config_map1', 'config_map2']
 
@@ -1387,8 +1387,8 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == ['outputs1']
-        assert spec.data_refs == ['data1', 'data2']
+        assert spec.artifact_refs == [{'ref': 'outputs1', 'init': True}]
+        assert spec.data_refs == [{'ref': 'data1', 'init': True}, {'ref': 'data2', 'init': True}]
         assert spec.secret_refs == ['secret1', 'secret2']
         assert spec.config_map_refs == ['config_map1', 'config_map2']
 
