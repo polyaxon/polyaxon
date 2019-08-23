@@ -17,13 +17,13 @@ from polyaxon_schemas.ops.environments.resources import (
 )
 
 
-class PathSchema(Schema):
+class StoreRefSchema(Schema):
     name = fields.Str()
     init = fields.Bool(allow_none=True)
     paths = fields.List(fields.Str(), allow_none=True)
 
 
-class ResourceSchema(Schema):
+class K8SResourceRefSchema(Schema):
     name = fields.Str()
     mount_path = fields.Str(allow_none=True)
     items = fields.List(fields.Str(), allow_none=True)
@@ -54,7 +54,7 @@ def validate_resource_refs(values):
                        for v in field_value]
         for v in field_value:
             try:
-                ResourceSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
+                K8SResourceRefSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
             except ValidationError:
                 raise ValidationError('K8S Resource field `{}` is not value.'.format(v))
         return field_value
@@ -87,7 +87,7 @@ def validate_persistence(values, is_schema=False):
                        for v in field_value]
         for v in field_value:
             try:
-                PathSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
+                StoreRefSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
             except ValidationError:
                 raise ValidationError('Persistence field `{}` is not value.'.format(v))
         return field_value
