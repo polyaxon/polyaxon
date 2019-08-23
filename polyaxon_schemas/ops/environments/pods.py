@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import six
 import warnings
 
-import six
 from hestia.list_utils import to_list
-from marshmallow import ValidationError, fields, validates_schema, validate, Schema
+from marshmallow import Schema, ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.fields import DictOrStr

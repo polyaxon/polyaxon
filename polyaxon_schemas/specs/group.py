@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import six
+
 from hestia.list_utils import to_list
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
