@@ -160,10 +160,14 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.secret_refs == [{'name': 'secret1'}, {'name': 'secret2'}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1',
+                                                                    'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
+                                                                 {'name': 'secret2'}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.environment.node_selector == node_selector

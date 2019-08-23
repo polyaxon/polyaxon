@@ -5,7 +5,7 @@ import six
 import warnings
 
 from hestia.list_utils import to_list
-from marshmallow import Schema, ValidationError, fields, validate, validates_schema
+from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.fields import DictOrStr
@@ -17,19 +17,64 @@ from polyaxon_schemas.ops.environments.resources import (
 )
 
 
-class StoreRefSchema(Schema):
-    name = fields.Str()
+class StoreRefSchema(BaseSchema):
+    name = fields.Str(allow_none=True)
     init = fields.Bool(allow_none=True)
     paths = fields.List(fields.Str(), allow_none=True)
 
+    @staticmethod
+    def schema_config():
+        return StoreRefConfig
 
-class K8SResourceRefSchema(Schema):
+
+class StoreRefConfig(BaseConfig):
+    IDENTIFIER = 'store_ref'
+    SCHEMA = StoreRefSchema
+    REDUCED_ATTRIBUTES = ['name', 'init', 'paths']
+
+    def __init__(self, name, init=None, paths=None):
+        self.name = name
+        self.init = init
+        self.paths = paths
+
+
+class K8SResourceRefSchema(BaseSchema):
     name = fields.Str()
     mount_path = fields.Str(allow_none=True)
     items = fields.List(fields.Str(), allow_none=True)
 
+    @staticmethod
+    def schema_config():
+        return K8SResourceRefConfig
 
-def validate_configmap_refs(values):
+
+class K8SResourceRefConfig(BaseConfig):
+    IDENTIFIER = 'k8s_resource_ref'
+    SCHEMA = K8SResourceRefSchema
+    REDUCED_ATTRIBUTES = ['name', 'mount_path', 'items']
+
+    def __init__(self, name, mount_path=None, items=None):
+        self.name = name
+        self.mount_path = mount_path
+        self.items = items
+
+
+def validate_resource_refs(values, field):
+    field_value = values.get(field)
+    if not field_value:
+        return values
+    field_value = [{'name': v} if isinstance(v, six.string_types) else v
+                   for v in field_value]
+    for v in field_value:
+        try:
+            K8SResourceRefSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
+        except ValidationError:
+            raise ValidationError('K8S Resource field `{}` is not a valid value.'.format(v))
+    values[field] = field_value
+    return values
+
+
+def validate_config_map_refs(values):
     if values.get('config_map_refs') and values.get('configmap_refs'):
         raise ValidationError('You should only use `config_map_refs`.')
 
@@ -40,36 +85,19 @@ def validate_configmap_refs(values):
             DeprecationWarning)
         values['config_map_refs'] = values.pop('configmap_refs')
 
-    return values
+    return validate_resource_refs(values=values, field='config_map_refs')
 
 
-def validate_resource_refs(values):
-    validate_configmap_refs(values)
-
-    def validate_field(field):
-        field_value = values.get(field)
-        if not field_value:
-            return field_value
-        field_value = [{'name': v} if isinstance(v, six.string_types) else v
-                       for v in field_value]
-        for v in field_value:
-            try:
-                K8SResourceRefSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
-            except ValidationError:
-                raise ValidationError('K8S Resource field `{}` is not value.'.format(v))
-        return field_value
-
-    values['config_map_refs'] = validate_field('config_map_refs')
-    values['secret_refs'] = validate_field('secret_refs')
-    return values
+def validate_secret_refs(values):
+    return validate_resource_refs(values=values, field='secret_refs')
 
 
-def validate_persistence(values, is_schema=False):
+def validate_persistence(values):
     if values.get('persistence') and (values.get('data_refs') or
                                       values.get('artifact_refs')):
         raise ValidationError('You cannot use `persistence` and  `data_refs` or `artifact_refs`.')
 
-    if values.get('persistence') and is_schema:
+    if values.get('persistence'):
         warnings.warn(
             'The `persistence` parameter is deprecated and will be removed in next release, '
             'please use `data_refs` and/or `artifact_refs` instead.',
@@ -78,23 +106,32 @@ def validate_persistence(values, is_schema=False):
         values['data_refs'] = values.get('data_refs', persistence.data)
         values['artifact_refs'] = to_list(values.get('artifact_refs', persistence.outputs),
                                           check_none=True)
+        return values
 
-    def validate_field(field):
-        field_value = values.get(field)
-        if not field_value:
-            return field_value
-        field_value = [{'name': v, 'init': True} if isinstance(v, six.string_types) else v
-                       for v in field_value]
-        for v in field_value:
-            try:
-                StoreRefSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
-            except ValidationError:
-                raise ValidationError('Persistence field `{}` is not value.'.format(v))
-        return field_value
-
-    values['data_refs'] = validate_field('data_refs')
-    values['artifact_refs'] = validate_field('artifact_refs')
     return values
+
+
+def validate_store_ref(values, field):
+    field_value = values.get(field)
+    if not field_value:
+        return values
+    field_value = [{'name': v, 'init': True} if isinstance(v, six.string_types) else v
+                   for v in field_value]
+    for v in field_value:
+        try:
+            StoreRefSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
+        except ValidationError:
+            raise ValidationError('Persistence field `{}` is not value.'.format(v))
+    values[field] = field_value
+    return values
+
+
+def validate_data_refs(values):
+    return validate_store_ref(values, 'data_refs')
+
+
+def validate_artifact_refs(values):
+    return validate_store_ref(values, 'artifact_refs')
 
 
 def validate_outputs(values, is_schema=False):
@@ -115,7 +152,7 @@ def validate_resources(values):
     try:  # Check deprecated resources
         resources = PodResourcesConfig.from_dict(resources)
         warnings.warn(
-            'The `resources` parameter should specify a k8s compliant format.',
+            'The `resources` parameter should specify a k8s valid format.',
             DeprecationWarning)
         values['resources'] = K8SContainerResourcesConfig.from_resources_entry(resources)
     except ValidationError:
@@ -156,12 +193,18 @@ class EnvironmentSchema(BaseSchema):
         return EnvironmentConfig
 
     @validates_schema
-    def validate_configmap_refs(self, values):
-        validate_resource_refs(values)
+    def validate_config_map_refs(self, values):
+        validate_config_map_refs(values)
+
+    @validates_schema
+    def validate_secret_refs(self, values):
+        validate_secret_refs(values)
 
     @validates_schema
     def validate_persistence(self, values):
-        validate_persistence(values, is_schema=True)
+        validate_persistence(values)
+        validate_data_refs(values)
+        validate_artifact_refs(values)
 
     @validates_schema
     def validate_resources(self, values):
@@ -250,21 +293,19 @@ class EnvironmentConfig(BaseConfig):
         self.ttl = ttl
         self.env_vars = env_vars
 
-        resource_refs = validate_resource_refs({
+        self.secret_refs = validate_secret_refs({'secret_refs': secret_refs}).get('secret_refs')
+        self.config_map_refs = validate_config_map_refs({
             'config_map_refs': config_map_refs,
             'configmap_refs': configmap_refs,
-            'secret_refs': secret_refs
-        })
-        self.secret_refs = resource_refs.get('secret_refs')
-        self.config_map_refs = resource_refs.get('config_map_refs')
+        }).get('config_map_refs')
 
         persistence_values = validate_persistence({
             'persistence': persistence,
             'data_refs': data_refs,
             'artifact_refs': artifact_refs
         })
-        self.data_refs = persistence_values.get('data_refs')
-        self.artifact_refs = persistence_values.get('artifact_refs')
+        self.data_refs = validate_data_refs(persistence_values).get('data_refs')
+        self.artifact_refs = validate_artifact_refs(persistence_values).get('artifact_refs')
         # validate_outputs({'outputs': outputs})
         self.outputs = outputs
         self.security_context = security_context

@@ -173,10 +173,14 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.secret_refs == [{'name': 'secret1'}, {'name': 'secret2'}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
+                                                                 {'name': 'secret2'}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
         assert spec.config.tensorflow.n_workers == 5
         assert spec.config.tensorflow.n_ps == 10
 
@@ -299,8 +303,10 @@ class TestPolyaxonfile(TestCase):
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         spec.apply_context()
         assert spec.environment is not None
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
         # TODO
         # assert spec.outputs.jobs == [111]
         assert spec.framework is None
@@ -1266,10 +1272,14 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.secret_refs == [{'name': 'secret1'}, {'name': 'secret2'}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
+                                                                 {'name': 'secret2'}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.environment.node_selector == node_selector
@@ -1306,10 +1316,14 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.secret_refs == [{'name': 'secret1'}, {'name': 'secret2'}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
+                                                                 {'name': 'secret2'}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         labels = {"key1": "value1", "key2": "value2"}
@@ -1387,10 +1401,14 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.secret_refs == [{'name': 'secret1'}, {'name': 'secret2'}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
+                                                                 {'name': 'secret2'}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
 
         node_selector = {'polyaxon.com': 'node_for_jobs'}
         assert spec.environment.node_selector == node_selector

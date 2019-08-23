@@ -318,17 +318,22 @@ class TestSpecifications(TestCase):
         content['environment'] = {'config_map_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.config_map_refs == [{'name': 'foo'}, {'name': 'boo'}]
+        assert spec.config_map_refs is not None
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'foo'},
+                                                                     {'name': 'boo'}]
         assert spec.secret_refs is None
 
-        content['environment'] = {'secret_refs': [{'name': 'foo'}, {'name': 'boo'}]}
+        content['environment'] = {'secret_refs': ['foo', {'name': 'boo'}]}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
         assert spec.config_map_refs is None
-        assert spec.secret_refs == [{'name': 'foo'}, {'name': 'boo'}]
+        assert spec.secret_refs is not None
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'foo'}, {'name': 'boo'}]
 
         content['environment'] = {'secret_refs': ['foo', 'boo'], 'config_map_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.config_map_refs == [{'name': 'foo'}, {'name': 'boo'}]
-        assert spec.secret_refs == [{'name': 'foo'}, {'name': 'boo'}]
+        assert spec.config_map_refs is not None
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'foo'},
+                                                                     {'name': 'boo'}]
+        assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'foo'}, {'name': 'boo'}]

@@ -77,9 +77,12 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
 
         node_selector = {'polyaxon.com': 'node_for_notebook_jobs'}
         assert spec.environment.node_selector == node_selector
@@ -113,9 +116,12 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.artifact_refs == [{'name': 'outputs1', 'init': True}]
-        assert spec.data_refs == [{'name': 'data1', 'init': True}, {'name': 'data2', 'init': True}]
-        assert spec.config_map_refs == [{'name': 'config_map1'}, {'name': 'config_map2'}]
+        assert [r.to_light_dict() for r in spec.artifact_refs] == [
+            {'name': 'outputs1', 'init': True}]
+        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1', 'init': True},
+                                                               {'name': 'data2', 'init': True}]
+        assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
+                                                                     {'name': 'config_map2'}]
         assert spec.config.tensorflow.n_workers == 5
         assert spec.config.tensorflow.n_ps == 10
 

@@ -15,7 +15,8 @@ from marshmallow import EXCLUDE, ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
+from polyaxon_schemas.ops.environments.pods import EnvironmentConfig, K8SResourceRefConfig, \
+    StoreRefConfig
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.libs import validator
@@ -315,19 +316,27 @@ class EnvironmentSpecificationMixin(object):
 
     @property
     def artifact_refs(self):
-        return self.environment.artifact_refs if self.environment else None
+        if not self.environment or not self.environment.artifact_refs:
+            return None
+        return [StoreRefConfig.from_dict(s) for s in self.environment.artifact_refs]
 
     @property
     def data_refs(self):
-        return self.environment.data_refs if self.environment else None
+        if not self.environment or not self.environment.data_refs:
+            return None
+        return [StoreRefConfig.from_dict(s) for s in self.environment.data_refs]
 
     @property
     def secret_refs(self):
-        return self.environment.secret_refs if self.environment else None
+        if not self.environment or not self.environment.secret_refs:
+            return None
+        return [K8SResourceRefConfig.from_dict(s) for s in self.environment.secret_refs]
 
     @property
     def config_map_refs(self):
-        return self.environment.config_map_refs if self.environment else None
+        if not self.environment or not self.environment.config_map_refs:
+            return None
+        return [K8SResourceRefConfig.from_dict(s) for s in self.environment.config_map_refs]
 
     @property
     def node_selector(self):
