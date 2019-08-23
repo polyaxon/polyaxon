@@ -314,6 +314,26 @@ class EnvironmentSpecificationMixin(object):
     def annotations(self):
         return self.environment.annotations if self.environment else None
 
+    @staticmethod
+    def _get_refs_names(refs_raw):
+        if refs_raw:
+            return [r.get('name') for r in refs_raw]
+
+    @staticmethod
+    def _get_refs_by_names(refs):
+        if refs:
+            return {r.name: r for r in refs}
+
+    @staticmethod
+    def _get_store_refs(refs_raw):
+        if refs_raw:
+            return [StoreRefConfig.from_dict(s) for s in refs_raw]
+
+    @staticmethod
+    def _get_k8s_resource_refs(refs_raw):
+        if refs_raw:
+            return [K8SResourceRefConfig.from_dict(s) for s in refs_raw]
+
     @property
     def artifact_refs_raw(self):
         if not self.environment or not self.environment.artifact_refs:
@@ -321,11 +341,16 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.artifact_refs
 
     @property
+    def artifact_refs_name(self):
+        return self._get_refs_names(self.artifact_refs_raw)
+
+    @property
     def artifact_refs(self):
-        artifact_refs_raw = self.artifact_refs_raw
-        if artifact_refs_raw:
-            return [StoreRefConfig.from_dict(s) for s in artifact_refs_raw]
-        return artifact_refs_raw
+        return self._get_store_refs(self.artifact_refs_raw)
+
+    @property
+    def artifact_refs_by_names(self):
+        return self._get_refs_by_names(self.artifact_refs)
 
     @property
     def data_refs_raw(self):
@@ -334,11 +359,16 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.data_refs
 
     @property
+    def data_ref_names(self):
+        return self._get_refs_names(self.data_refs_raw)
+
+    @property
     def data_refs(self):
-        data_refs_raw = self.data_refs_raw
-        if data_refs_raw:
-            return [StoreRefConfig.from_dict(s) for s in self.data_refs_raw]
-        return data_refs_raw
+        return self._get_store_refs(self.data_refs_raw)
+
+    @property
+    def data_refs_by_names(self):
+        return self._get_refs_by_names(self.data_refs)
 
     @property
     def secret_refs_raw(self):
@@ -347,11 +377,16 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.secret_refs
 
     @property
+    def secret_refs_names(self):
+        return self._get_refs_names(self.secret_refs_raw)
+
+    @property
     def secret_refs(self):
-        secret_refs_raw = self.secret_refs_raw
-        if secret_refs_raw:
-            return [K8SResourceRefConfig.from_dict(s) for s in secret_refs_raw]
-        return secret_refs_raw
+        return self._get_k8s_resource_refs(self.secret_refs_raw)
+
+    @property
+    def secret_refs_by_names(self):
+        return self._get_refs_by_names(self.secret_refs)
 
     @property
     def config_map_refs_raw(self):
@@ -360,11 +395,16 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.config_map_refs
 
     @property
+    def config_map_refs_names(self):
+        return self._get_refs_names(self.config_map_refs_raw)
+
+    @property
     def config_map_refs(self):
-        config_map_refs_raw = self.config_map_refs_raw
-        if config_map_refs_raw:
-            return [K8SResourceRefConfig.from_dict(s) for s in config_map_refs_raw]
-        return config_map_refs_raw
+        return self._get_k8s_resource_refs(self.config_map_refs_raw)
+
+    @property
+    def config_map_refs_by_names(self):
+        return self._get_refs_by_names(self.config_map_refs)
 
     @property
     def node_selector(self):
