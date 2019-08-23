@@ -43,7 +43,7 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
             'experiment_name': '{}.{}'.format(project, experiment_id)})),
     ]
     if POLYAXON_NO_OP_KEY in os.environ:
-        env_vars += [('POLYAXON_NO_OP', 'true')]
+        env_vars += [(POLYAXON_NO_OP_KEY, 'true')]
 
     paths = {'local': '/tmp'}
 
