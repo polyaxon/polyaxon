@@ -62,12 +62,12 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add secrets
-        config_dict['secret_refs'] = ['secret1', 'secret2']
+        config_dict['secret_refs'] = [{'name': 'secret1'}, {'name': 'secret2'}]
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add config_maps
-        config_dict['config_map_refs'] = ['config_map1', 'config_map2']
+        config_dict['config_map_refs'] = [{'name': 'config_map1'}, {'name': 'config_map2'}]
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
@@ -114,7 +114,7 @@ class TestEnvironmentsConfigs(TestCase):
         # Add data_refs
         config_dict['data_refs'] = [
             'data1',
-            {'name': 'data2', 'mount': True},
+            {'name': 'data2', 'init': False},
             {'name': 'data3', 'paths': ['/subpath1', 'subpath2'], 'init': True}]
         config = EnvironmentConfig.from_dict(config_dict)
         # We remove this from the dict because the value is mutated every time it's parsed

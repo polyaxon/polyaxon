@@ -5,7 +5,7 @@ import warnings
 
 import six
 from hestia.list_utils import to_list
-from marshmallow import ValidationError, fields, validates_schema, validate
+from marshmallow import ValidationError, fields, validates_schema, validate, Schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.fields import DictOrStr
@@ -17,17 +17,50 @@ from polyaxon_schemas.ops.environments.resources import (
 )
 
 
-def validate_configmap_refs(values, is_schema=False):
+class PathSchema(Schema):
+    name = fields.Str()
+    init = fields.Bool(allow_none=True)
+    paths = fields.List(fields.Str(), allow_none=True)
+
+
+class ResourceSchema(Schema):
+    name = fields.Str()
+    mount_path = fields.Str(allow_none=True)
+    items = fields.List(fields.Str(), allow_none=True)
+
+
+def validate_configmap_refs(values):
     if values.get('config_map_refs') and values.get('configmap_refs'):
         raise ValidationError('You should only use `config_map_refs`.')
 
-    if values.get('configmap_refs') and is_schema:
+    if values.get('configmap_refs'):
         warnings.warn(
             'The `configmap_refs` parameter is deprecated and will be removed in next release, '
             'please use `config_map_refs` instead.',
             DeprecationWarning)
         values['config_map_refs'] = values.pop('configmap_refs')
 
+    return values
+
+
+def validate_resource_refs(values):
+    validate_configmap_refs(values)
+
+    def validate_field(field):
+        field_value = values.get(field)
+        if not field_value:
+            return field_value
+        field_value = [{'name': v} if isinstance(v, six.string_types) else v
+                       for v in field_value]
+        for v in field_value:
+            try:
+                ResourceSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
+            except ValidationError:
+                raise ValidationError('K8S Resource field `{}` is not value.'.format(v))
+        return field_value
+
+    values['config_map_refs'] = validate_field('config_map_refs')
+    values['secret_refs'] = validate_field('secret_refs')
     return values
 
 
@@ -50,8 +83,14 @@ def validate_persistence(values, is_schema=False):
         field_value = values.get(field)
         if not field_value:
             return field_value
-        return [{'name': v, 'init': True} if isinstance(v, six.string_types) else v
-                for v in field_value]
+        field_value = [{'name': v, 'init': True} if isinstance(v, six.string_types) else v
+                       for v in field_value]
+        for v in field_value:
+            try:
+                PathSchema(unknown=BaseConfig.UNKNOWN_BEHAVIOUR).load(v)
+            except ValidationError:
+                raise ValidationError('Persistence field `{}` is not value.'.format(v))
+        return field_value
 
     values['data_refs'] = validate_field('data_refs')
     values['artifact_refs'] = validate_field('artifact_refs')
@@ -118,7 +157,7 @@ class EnvironmentSchema(BaseSchema):
 
     @validates_schema
     def validate_configmap_refs(self, values):
-        validate_configmap_refs(values, is_schema=True)
+        validate_resource_refs(values)
 
     @validates_schema
     def validate_persistence(self, values):
@@ -210,11 +249,15 @@ class EnvironmentConfig(BaseConfig):
         self.restart_policy = restart_policy
         self.ttl = ttl
         self.env_vars = env_vars
-        self.secret_refs = secret_refs
-        self.config_map_refs = validate_configmap_refs({
+
+        resource_refs = validate_resource_refs({
             'config_map_refs': config_map_refs,
-            'configmap_refs': configmap_refs
-        }).get('config_map_refs')
+            'configmap_refs': configmap_refs,
+            'secret_refs': secret_refs
+        })
+        self.secret_refs = resource_refs.get('secret_refs')
+        self.config_map_refs = resource_refs.get('config_map_refs')
+
         persistence_values = validate_persistence({
             'persistence': persistence,
             'data_refs': data_refs,

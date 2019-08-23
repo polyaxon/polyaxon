@@ -127,16 +127,18 @@ class TestSpecifications(TestCase):
         assert 'config_map_refs' not in config
         assert 'secret_refs' not in config
 
-        config = BuildSpecification.create_specification(run_config, config_map_refs=['foo'])
+        config = BuildSpecification.create_specification(run_config,
+                                                         config_map_refs=[{'name': 'foo'}])
         spec = BuildSpecification.read(config)
         spec.apply_context()
         assert spec.parsed_data == config
-        assert config['environment']['config_map_refs'] == ['foo']
-        config = BuildSpecification.create_specification(run_config, secret_refs=['foo'])
+        assert config['environment']['config_map_refs'] == [{'name': 'foo'}]
+        config = BuildSpecification.create_specification(run_config,
+                                                         secret_refs=[{'name': 'foo'}])
         spec = BuildSpecification.read(config)
         spec.apply_context()
         assert spec.parsed_data == config
-        assert config['environment']['secret_refs'] == ['foo']
+        assert config['environment']['secret_refs'] == [{'name': 'foo'}]
 
         assert config['image'] == 'blabla'
         spec = BuildSpecification.create_specification(run_config, to_dict=False)
@@ -145,13 +147,13 @@ class TestSpecifications(TestCase):
 
         assert config['image'] == 'blabla'
         spec = BuildSpecification.create_specification(run_config,
-                                                       config_map_refs=['foo'],
-                                                       secret_refs=['foo'],
+                                                       config_map_refs=[{'name': 'foo'}],
+                                                       secret_refs=[{'name': 'foo'}],
                                                        to_dict=False)
         spec.apply_context()
         assert spec.config.image == run_config['image']
-        assert spec.environment.secret_refs == ['foo']
-        assert spec.environment.config_map_refs == ['foo']
+        assert spec.environment.secret_refs == [{'name': 'foo'}]
+        assert spec.environment.config_map_refs == [{'name': 'foo'}]
 
     def test_create_job_specification(self):
         build_config = {'image': 'blabla'}
@@ -316,17 +318,17 @@ class TestSpecifications(TestCase):
         content['environment'] = {'config_map_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.config_map_refs == ['foo', 'boo']
+        assert spec.config_map_refs == [{'name': 'foo'}, {'name': 'boo'}]
         assert spec.secret_refs is None
 
-        content['environment'] = {'secret_refs': ['foo', 'boo']}
+        content['environment'] = {'secret_refs': [{'name': 'foo'}, {'name': 'boo'}]}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
         assert spec.config_map_refs is None
-        assert spec.secret_refs == ['foo', 'boo']
+        assert spec.secret_refs == [{'name': 'foo'}, {'name': 'boo'}]
 
         content['environment'] = {'secret_refs': ['foo', 'boo'], 'config_map_refs': ['foo', 'boo']}
         spec = GroupSpecification.read(content)
         assert spec.environment is not None
-        assert spec.config_map_refs == ['foo', 'boo']
-        assert spec.secret_refs == ['foo', 'boo']
+        assert spec.config_map_refs == [{'name': 'foo'}, {'name': 'boo'}]
+        assert spec.secret_refs == [{'name': 'foo'}, {'name': 'boo'}]
