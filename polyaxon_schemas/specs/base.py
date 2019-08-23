@@ -315,28 +315,56 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.annotations if self.environment else None
 
     @property
-    def artifact_refs(self):
+    def artifact_refs_raw(self):
         if not self.environment or not self.environment.artifact_refs:
             return None
-        return [StoreRefConfig.from_dict(s) for s in self.environment.artifact_refs]
+        return self.environment.artifact_refs
+
+    @property
+    def artifact_refs(self):
+        artifact_refs_raw = self.artifact_refs_raw
+        if artifact_refs_raw:
+            return [StoreRefConfig.from_dict(s) for s in artifact_refs_raw]
+        return artifact_refs_raw
+
+    @property
+    def data_refs_raw(self):
+        if not self.environment or not self.environment.data_refs:
+            return None
+        return self.environment.data_refs
 
     @property
     def data_refs(self):
-        if not self.environment or not self.environment.data_refs:
+        data_refs_raw = self.data_refs_raw
+        if data_refs_raw:
+            return [StoreRefConfig.from_dict(s) for s in self.data_refs_raw]
+        return data_refs_raw
+
+    @property
+    def secret_refs_raw(self):
+        if not self.environment or not self.environment.secret_refs:
             return None
-        return [StoreRefConfig.from_dict(s) for s in self.environment.data_refs]
+        return self.environment.secret_refs
 
     @property
     def secret_refs(self):
-        if not self.environment or not self.environment.secret_refs:
+        secret_refs_raw = self.secret_refs_raw
+        if secret_refs_raw:
+            return [K8SResourceRefConfig.from_dict(s) for s in secret_refs_raw]
+        return secret_refs_raw
+
+    @property
+    def config_map_refs_raw(self):
+        if not self.environment or not self.environment.config_map_refs:
             return None
-        return [K8SResourceRefConfig.from_dict(s) for s in self.environment.secret_refs]
+        return self.environment.config_map_refs
 
     @property
     def config_map_refs(self):
-        if not self.environment or not self.environment.config_map_refs:
-            return None
-        return [K8SResourceRefConfig.from_dict(s) for s in self.environment.config_map_refs]
+        config_map_refs_raw = self.config_map_refs_raw
+        if config_map_refs_raw:
+            return [K8SResourceRefConfig.from_dict(s) for s in config_map_refs_raw]
+        return config_map_refs_raw
 
     @property
     def node_selector(self):

@@ -119,7 +119,7 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         # We remove this from the dict because the value is mutated every time it's parsed
         data_refs = config_dict.pop('data_refs')
-        data_refs[0] = {'name': 'data1', 'init': True}
+        data_refs[0] = {'name': 'data1'}
         assert data_refs == config.to_dict()['data_refs']
 
         # Add artifact_refs
@@ -130,5 +130,5 @@ class TestEnvironmentsConfigs(TestCase):
         config = EnvironmentConfig.from_dict(config_dict)
         # We remove this from the dict because the value is mutated every time it's parsed
         artifact_refs = config_dict.pop('artifact_refs')
-        artifact_refs[0] = {'name': 'artifact1', 'init': True}
+        artifact_refs[0] = {'name': 'artifact1'}
         assert artifact_refs == config.to_dict()['artifact_refs']

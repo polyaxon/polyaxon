@@ -115,7 +115,7 @@ def validate_store_ref(values, field):
     field_value = values.get(field)
     if not field_value:
         return values
-    field_value = [{'name': v, 'init': True} if isinstance(v, six.string_types) else v
+    field_value = [{'name': v} if isinstance(v, six.string_types) else v
                    for v in field_value]
     for v in field_value:
         try:
