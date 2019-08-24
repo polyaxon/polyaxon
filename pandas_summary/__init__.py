@@ -20,7 +20,7 @@ class DataFrameSummary(object):
     TYPE_CONSTANT = 'constant'
     TYPE_UNIQUE = 'unique'
 
-    def __init__(self, df, plot=True):
+    def __init__(self, df, plot=False):
         self.df = df
         self.length = len(df)
         self.columns_stats = self._get_stats()
