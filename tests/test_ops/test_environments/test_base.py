@@ -59,7 +59,8 @@ class TestEnvironmentsConfigs(TestCase):
             'experiments': [1, 'outputs1', 2, 3],
         }
         config = EnvironmentConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
+        assert config.to_dict().get('outputs') is None
+        config_dict.pop('outputs')
 
         # Add secrets
         config_dict['secret_refs'] = [{'name': 'secret1'}, {'name': 'secret2'}]

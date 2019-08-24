@@ -134,14 +134,13 @@ def validate_artifact_refs(values):
     return validate_store_ref(values, 'artifact_refs')
 
 
-def validate_outputs(values, is_schema=False):
-    if values.get('outputs'):
+def validate_outputs(values):
+    outputs = values.pop('outputs', None)
+    if outputs:
         warnings.warn(
             'The `outputs` parameter is deprecated and will be removed in next release, '
             'please notice that it will be ignored.',
             DeprecationWarning)
-        if is_schema:
-            values.pop('outputs')
 
 
 def validate_resources(values):
@@ -209,10 +208,10 @@ class EnvironmentSchema(BaseSchema):
     @validates_schema
     def validate_resources(self, values):
         validate_resources(values)
-    #
-    # @validates_schema
-    # def validate_outputs(self, values):
-    #     validate_outputs(values, is_schema=True)
+
+    @validates_schema
+    def validate_outputs(self, values):
+        validate_outputs(values)
 
 
 class EnvironmentConfig(BaseConfig):
@@ -246,7 +245,6 @@ class EnvironmentConfig(BaseConfig):
                           'config_map_refs',
                           'data_refs',
                           'artifact_refs',
-                          'outputs',
                           'security_context']
 
     def __init__(self,
@@ -306,6 +304,5 @@ class EnvironmentConfig(BaseConfig):
         })
         self.data_refs = validate_data_refs(persistence_values).get('data_refs')
         self.artifact_refs = validate_artifact_refs(persistence_values).get('artifact_refs')
-        # validate_outputs({'outputs': outputs})
-        self.outputs = outputs
+        validate_outputs({'outputs': outputs})
         self.security_context = security_context
