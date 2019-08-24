@@ -20,11 +20,12 @@ class DataFrameSummary(object):
     TYPE_CONSTANT = 'constant'
     TYPE_UNIQUE = 'unique'
 
-    def __init__(self, df):
+    def __init__(self, df, plot=False):
         self.df = df
         self.length = len(df)
         self.columns_stats = self._get_stats()
         self.corr = df.corr()
+        self.plot = plot
 
     def __getitem__(self, column):
         if isinstance(column, str) and self._clean_column(column):
@@ -159,10 +160,10 @@ class DataFrameSummary(object):
         return ', '.join('{}: {}'.format(col, self._percent(val)) for
                          col, val in correlations.items())
 
-    def _get_numeric_summary(self, column, plot=True):
+    def _get_numeric_summary(self, column):
         series = self.df[column]
 
-        if plot:
+        if self.plot:
             try:
                 series.hist()
             except ImportError:
