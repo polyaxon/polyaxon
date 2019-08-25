@@ -19,7 +19,7 @@ from polyaxon_schemas.ops.environments.resources import (
 
 class StoreRefSchema(BaseSchema):
     name = fields.Str(allow_none=True)
-    init = fields.Bool(allow_none=True)
+    is_managed = fields.Bool(allow_none=True)
     paths = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
@@ -30,11 +30,11 @@ class StoreRefSchema(BaseSchema):
 class StoreRefConfig(BaseConfig):
     IDENTIFIER = 'store_ref'
     SCHEMA = StoreRefSchema
-    REDUCED_ATTRIBUTES = ['name', 'init', 'paths']
+    REDUCED_ATTRIBUTES = ['name', 'is_managed', 'paths']
 
-    def __init__(self, name, init=None, paths=None):
+    def __init__(self, name, is_managed=None, paths=None):
         self.name = name
-        self.init = init
+        self.is_managed = is_managed
         self.paths = paths
 
 
@@ -103,11 +103,13 @@ def validate_persistence(values):
             'please use `data_refs` and/or `artifact_refs` instead.',
             DeprecationWarning)
         persistence = values.pop('persistence')
-        values['data_refs'] = values.get('data_refs', persistence.data)
+        values['data_refs'] = to_list(values.get('data_refs', persistence.data), check_none=True)
         values['artifact_refs'] = to_list(values.get('artifact_refs', persistence.outputs),
                                           check_none=True)
-        return values
-
+    if values.get('data_refs'):
+        artifact_refs = to_list(values.get('artifact_refs', []), check_none=True)
+        data_refs = to_list(values.pop('data_refs', []), check_none=True)
+        values['artifact_refs'] = artifact_refs + data_refs
     return values
 
 
@@ -124,10 +126,6 @@ def validate_store_ref(values, field):
             raise ValidationError('Persistence field `{}` is not value.'.format(v))
     values[field] = field_value
     return values
-
-
-def validate_data_refs(values):
-    return validate_store_ref(values, 'data_refs')
 
 
 def validate_artifact_refs(values):
@@ -181,7 +179,7 @@ class EnvironmentSchema(BaseSchema):
     secret_refs = fields.List(DictOrStr(), allow_none=True)
     config_map_refs = fields.List(DictOrStr(), allow_none=True)
     configmap_refs = fields.List(fields.Str(), allow_none=True)  # Deprecated
-    data_refs = fields.List(DictOrStr(), allow_none=True)
+    data_refs = fields.List(DictOrStr(), allow_none=True)  # Deprecated, use artifacts with readonly
     artifact_refs = fields.List(DictOrStr(), allow_none=True)
     outputs = fields.Nested(OutputsSchema, allow_none=True)  # Deprecated
     persistence = fields.Nested(PersistenceSchema, allow_none=True)  # Deprecated
@@ -202,7 +200,6 @@ class EnvironmentSchema(BaseSchema):
     @validates_schema
     def validate_persistence(self, values):
         validate_persistence(values)
-        validate_data_refs(values)
         validate_artifact_refs(values)
 
     @validates_schema
@@ -243,7 +240,6 @@ class EnvironmentConfig(BaseConfig):
                           'env_vars',
                           'secret_refs',
                           'config_map_refs',
-                          'data_refs',
                           'artifact_refs',
                           'security_context']
 
@@ -302,7 +298,6 @@ class EnvironmentConfig(BaseConfig):
             'data_refs': data_refs,
             'artifact_refs': artifact_refs
         })
-        self.data_refs = validate_data_refs(persistence_values).get('data_refs')
         self.artifact_refs = validate_artifact_refs(persistence_values).get('artifact_refs')
         validate_outputs({'outputs': outputs})
         self.security_context = security_context

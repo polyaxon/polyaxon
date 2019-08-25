@@ -15,8 +15,11 @@ from marshmallow import EXCLUDE, ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.environments.pods import EnvironmentConfig, K8SResourceRefConfig, \
+from polyaxon_schemas.ops.environments.pods import (
+    EnvironmentConfig,
+    K8SResourceRefConfig,
     StoreRefConfig
+)
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.libs import validator
@@ -341,7 +344,7 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.artifact_refs
 
     @property
-    def artifact_refs_name(self):
+    def artifact_refs_names(self):
         return self._get_refs_names(self.artifact_refs_raw)
 
     @property
@@ -351,24 +354,6 @@ class EnvironmentSpecificationMixin(object):
     @property
     def artifact_refs_by_names(self):
         return self._get_refs_by_names(self.artifact_refs)
-
-    @property
-    def data_refs_raw(self):
-        if not self.environment or not self.environment.data_refs:
-            return None
-        return self.environment.data_refs
-
-    @property
-    def data_ref_names(self):
-        return self._get_refs_names(self.data_refs_raw)
-
-    @property
-    def data_refs(self):
-        return self._get_store_refs(self.data_refs_raw)
-
-    @property
-    def data_refs_by_names(self):
-        return self._get_refs_by_names(self.data_refs)
 
     @property
     def secret_refs_raw(self):

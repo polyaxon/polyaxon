@@ -115,18 +115,18 @@ class TestEnvironmentsConfigs(TestCase):
         # Add data_refs
         config_dict['data_refs'] = [
             'data1',
-            {'name': 'data2', 'init': False},
-            {'name': 'data3', 'paths': ['/subpath1', 'subpath2'], 'init': True}]
+            {'name': 'data2', 'is_managed': False},
+            {'name': 'data3', 'paths': ['/subpath1', 'subpath2'], 'is_managed': True}]
         config = EnvironmentConfig.from_dict(config_dict)
         # We remove this from the dict because the value is mutated every time it's parsed
         data_refs = config_dict.pop('data_refs')
         data_refs[0] = {'name': 'data1'}
-        assert data_refs == config.to_dict()['data_refs']
+        assert data_refs == config.to_dict()['artifact_refs']
 
         # Add artifact_refs
         config_dict['artifact_refs'] = [
             'artifact1',
-            {'name': 'artifact2', 'paths': ['/subpath1', 'subpath2'], 'init': True}
+            {'name': 'artifact2', 'paths': ['/subpath1', 'subpath2'], 'is_managed': True}
         ]
         config = EnvironmentConfig.from_dict(config_dict)
         # We remove this from the dict because the value is mutated every time it's parsed

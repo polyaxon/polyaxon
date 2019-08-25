@@ -76,8 +76,9 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'}, {'name': 'data2'}]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
                                                                      {'name': 'config_map2'}]
 
@@ -113,8 +114,9 @@ class TestPolyaxonfileDeprecation(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'}, {'name': 'data2'}]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
                                                                      {'name': 'config_map2'}]
         assert spec.config.tensorflow.n_workers == 5

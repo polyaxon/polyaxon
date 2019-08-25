@@ -173,9 +173,9 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_experiment
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'},
-                                                               {'name': 'data2'}]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
                                                                  {'name': 'secret2'}]
         assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
@@ -302,10 +302,9 @@ class TestPolyaxonfile(TestCase):
         spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
         spec.apply_context()
         assert spec.environment is not None
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'}, {'name': 'data2'}]
-        # TODO
-        # assert spec.outputs.jobs == [111]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert spec.framework is None
         assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
         assert spec.run.cmd == 'train --lr={lr} --loss={loss}'.format(
@@ -1269,8 +1268,9 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'}, {'name': 'data2'}]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
                                                                  {'name': 'secret2'}]
         assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
@@ -1311,8 +1311,9 @@ class TestPolyaxonfile(TestCase):
         assert sorted(spec.tags) == sorted(['foo', 'bar'])
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'}, {'name': 'data2'}]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
                                                                  {'name': 'secret2'}]
         assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
@@ -1394,8 +1395,9 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.build, BuildConfig)
         assert isinstance(spec.run, RunConfig)
         assert isinstance(spec.environment, EnvironmentConfig)
-        assert [r.to_light_dict() for r in spec.artifact_refs] == [{'name': 'outputs1'}]
-        assert [r.to_light_dict() for r in spec.data_refs] == [{'name': 'data1'}, {'name': 'data2'}]
+        artifact_refs = [r.to_light_dict()['name'] for r in spec.artifact_refs]
+        assert len(artifact_refs) == 3
+        assert set(artifact_refs) == {'data1', 'data2', 'outputs1'}
         assert [r.to_light_dict() for r in spec.secret_refs] == [{'name': 'secret1'},
                                                                  {'name': 'secret2'}]
         assert [r.to_light_dict() for r in spec.config_map_refs] == [{'name': 'config_map1'},
