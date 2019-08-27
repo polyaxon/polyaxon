@@ -7,8 +7,8 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
 class Optimization(object):
-    MAXIMIZE = 'maximize'
-    MINIMIZE = 'minimize'
+    MAXIMIZE = "maximize"
+    MINIMIZE = "minimize"
 
     MAXIMIZE_VALUES = [MAXIMIZE, MAXIMIZE.upper(), MAXIMIZE.capitalize()]
     MINIMIZE_VALUES = [MINIMIZE, MINIMIZE.upper(), MINIMIZE.capitalize()]
@@ -26,7 +26,9 @@ class Optimization(object):
 
 class SearchMetricSchema(BaseSchema):
     name = fields.Str()
-    optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
+    optimization = fields.Str(
+        allow_none=True, validate=validate.OneOf(Optimization.VALUES)
+    )
 
     @staticmethod
     def schema_config():
@@ -35,10 +37,8 @@ class SearchMetricSchema(BaseSchema):
 
 class SearchMetricConfig(BaseConfig):
     SCHEMA = SearchMetricSchema
-    IDENTIFIER = 'search_metric'
+    IDENTIFIER = "search_metric"
 
-    def __init__(self,
-                 name,
-                 optimization=Optimization.MAXIMIZE):
+    def __init__(self, name, optimization=Optimization.MAXIMIZE):
         self.name = name
         self.optimization = optimization

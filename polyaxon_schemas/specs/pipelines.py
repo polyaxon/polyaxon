@@ -18,23 +18,32 @@ class PipelineSpecification(BaseSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
+
     _SPEC_KIND = kinds.PIPELINE
 
-    TEMPLATES = 'templates'
-    OPS = 'ops'
-    SCHEDULE = 'schedule'
-    CONCURRENCY = 'concurrency'
+    TEMPLATES = "templates"
+    OPS = "ops"
+    SCHEDULE = "schedule"
+    CONCURRENCY = "concurrency"
 
     SECTIONS = BaseSpecification.SECTIONS + (TEMPLATES, OPS, SCHEDULE, CONCURRENCY)
 
     OP_PARSING_SECTIONS = BaseSpecification.OP_PARSING_SECTIONS + (
-        TEMPLATES, OPS, SCHEDULE, CONCURRENCY)
+        TEMPLATES,
+        OPS,
+        SCHEDULE,
+        CONCURRENCY,
+    )
 
     HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND,)
 
     POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.BACKEND, BaseSpecification.ENVIRONMENT,
-        TEMPLATES, OPS, SCHEDULE, CONCURRENCY
+        BaseSpecification.BACKEND,
+        BaseSpecification.ENVIRONMENT,
+        TEMPLATES,
+        OPS,
+        SCHEDULE,
+        CONCURRENCY,
     )
 
     CONFIG = PipelineConfig

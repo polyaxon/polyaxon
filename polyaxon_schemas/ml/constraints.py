@@ -76,7 +76,8 @@ class MaxNormConfig(BaseConfig):
           max_value: 3
     ```
     """
-    IDENTIFIER = 'MaxNorm'
+
+    IDENTIFIER = "MaxNorm"
     SCHEMA = MaxNormSchema
 
     def __init__(self, max_value=2, axis=0):
@@ -113,7 +114,8 @@ class NonNegConfig(BaseConfig):
           w: 0.2
     ```
     """
-    IDENTIFIER = 'NonNeg'
+
+    IDENTIFIER = "NonNeg"
     SCHEMA = NonNegSchema
 
     def __init__(self, w):
@@ -179,7 +181,8 @@ class UnitNormConfig(BaseConfig):
           axis: 1
     ```
     """
-    IDENTIFIER = 'UnitNorm'
+
+    IDENTIFIER = "UnitNorm"
     SCHEMA = UnitNormSchema
 
     def __init__(self, axis=0):
@@ -187,9 +190,9 @@ class UnitNormConfig(BaseConfig):
 
 
 class MinMaxNormSchema(BaseSchema):
-    min_value = fields.Float(default=0., missing=0.)
-    max_value = fields.Float(default=1., missing=1.)
-    rate = fields.Float(default=1., missing=1.)
+    min_value = fields.Float(default=0.0, missing=0.0)
+    max_value = fields.Float(default=1.0, missing=1.0)
+    rate = fields.Float(default=1.0, missing=1.0)
     axis = fields.Int(default=0, missing=0)
 
     @staticmethod
@@ -266,7 +269,8 @@ class MinMaxNormConfig(BaseConfig):
           axis: 0
     ```
     """
-    IDENTIFIER = 'MinMaxNorm'
+
+    IDENTIFIER = "MinMaxNorm"
     SCHEMA = MinMaxNormSchema
 
     def __init__(self, min_value=0.0, max_value=1.0, rate=1.0, axis=0):
@@ -277,7 +281,7 @@ class MinMaxNormConfig(BaseConfig):
 
 
 class ConstraintSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'constraint'
+    __multi_schema_name__ = "constraint"
     __configs__ = {
         MaxNormConfig.IDENTIFIER: MaxNormConfig,
         NonNegConfig.IDENTIFIER: NonNegConfig,

@@ -9,7 +9,7 @@ from polyaxon_schemas.ml.fields import DType
 from polyaxon_schemas.ml.initializations import (
     GlorotNormalInitializerConfig,
     InitializerSchema,
-    ZerosInitializerConfig
+    ZerosInitializerConfig,
 )
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
@@ -57,10 +57,11 @@ class MaskingConfig(BaseLayerConfig):
       mask_value: 0
     ```
     """
-    IDENTIFIER = 'Masking'
+
+    IDENTIFIER = "Masking"
     SCHEMA = MaskingSchema
 
-    def __init__(self, mask_value=0., **kwargs):
+    def __init__(self, mask_value=0.0, **kwargs):
         super(MaskingConfig, self).__init__(**kwargs)
         self.mask_value = mask_value
 
@@ -99,7 +100,8 @@ class DropoutConfig(BaseLayerConfig):
       rate: 0.5
     ```
     """
-    IDENTIFIER = 'Dropout'
+
+    IDENTIFIER = "Dropout"
     SCHEMA = DropoutSchema
 
     def __init__(self, rate, noise_shape=None, seed=None, **kwargs):
@@ -110,7 +112,6 @@ class DropoutConfig(BaseLayerConfig):
 
 
 class SpatialDropout1DSchema(DropoutSchema):
-
     @staticmethod
     def schema_config():
         return SpatialDropout1DConfig
@@ -148,13 +149,17 @@ class SpatialDropout1DConfig(DropoutConfig):
       rate: 0.5
     ```
     """
-    IDENTIFIER = 'SpatialDropout1D'
+
+    IDENTIFIER = "SpatialDropout1D"
     SCHEMA = SpatialDropout1DSchema
 
 
 class SpatialDropout2DSchema(DropoutSchema):
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -200,7 +205,8 @@ class SpatialDropout2DConfig(DropoutConfig):
       rate: 0.5
     ```
     """
-    IDENTIFIER = 'SpatialDropout2D'
+
+    IDENTIFIER = "SpatialDropout2D"
     SCHEMA = SpatialDropout2DSchema
 
     def __init__(self, rate, data_format=None, **kwargs):
@@ -209,8 +215,11 @@ class SpatialDropout2DConfig(DropoutConfig):
 
 
 class SpatialDropout3DSchema(DropoutSchema):
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -255,7 +264,8 @@ class SpatialDropout3DConfig(DropoutConfig):
       rate: 0.5
     ```
     """
-    IDENTIFIER = 'SpatialDropout3D'
+
+    IDENTIFIER = "SpatialDropout3D"
     SCHEMA = SpatialDropout3DSchema
 
     def __init__(self, rate, data_format=None, **kwargs):
@@ -292,7 +302,8 @@ class ActivationConfig(BaseLayerConfig):
       activation: tanh
     ```
     """
-    IDENTIFIER = 'Activation'
+
+    IDENTIFIER = "Activation"
     SCHEMA = ActivationSchema
 
     def __init__(self, activation, **kwargs):
@@ -344,7 +355,8 @@ class ReshapeConfig(BaseLayerConfig):
       target_shape: [-1, 2, 2]
     ```
     """
-    IDENTIFIER = 'Reshape'
+
+    IDENTIFIER = "Reshape"
     SCHEMA = ReshapeSchema
 
     def __init__(self, target_shape, **kwargs):
@@ -395,7 +407,8 @@ class PermuteConfig(BaseLayerConfig):
       target_shape: [-1, 2, 2]
     ```
     """
-    IDENTIFIER = 'Permute'
+
+    IDENTIFIER = "Permute"
     SCHEMA = PermuteSchema
 
     def __init__(self, dims, **kwargs):
@@ -430,7 +443,8 @@ class FlattenConfig(BaseLayerConfig):
     Flatten:
     ```
     """
-    IDENTIFIER = 'Flatten'
+
+    IDENTIFIER = "Flatten"
     SCHEMA = FlattenSchema
 
 
@@ -472,7 +486,8 @@ class RepeatVectorConfig(BaseLayerConfig):
       n: 32
     ```
     """
-    IDENTIFIER = 'RepeatVector'
+
+    IDENTIFIER = "RepeatVector"
     SCHEMA = RepeatVectorSchema
 
     def __init__(self, n, **kwargs):
@@ -557,21 +572,24 @@ class DenseConfig(BaseLayerConfig):
       activation: sigmoid
     ```
     """
-    IDENTIFIER = 'Dense'
+
+    IDENTIFIER = "Dense"
     SCHEMA = DenseSchema
 
-    def __init__(self,
-                 units,
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        units,
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(DenseConfig, self).__init__(**kwargs)
         self.units = units
         self.activation = activation
@@ -617,10 +635,11 @@ class ActivityRegularizationConfig(BaseLayerConfig):
       l2: 0.2
     ```
     """
-    IDENTIFIER = 'ActivityRegularization'
+
+    IDENTIFIER = "ActivityRegularization"
     SCHEMA = ActivityRegularizationSchema
 
-    def __init__(self, l1=0., l2=0., **kwargs):
+    def __init__(self, l1=0.0, l2=0.0, **kwargs):
         super(ActivityRegularizationConfig, self).__init__(**kwargs)
         self.l1 = l1
         self.l2 = l2
@@ -665,7 +684,8 @@ class CastConfig(BaseLayerConfig):
       dtype: float32
     ```
     """
-    IDENTIFIER = 'Cast'
+
+    IDENTIFIER = "Cast"
     SCHEMA = CastSchema
 
     def __init__(self, dtype, **kwargs):

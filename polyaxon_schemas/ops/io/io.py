@@ -17,28 +17,35 @@ def validate_io(name, iotype, default, is_optional, is_list, is_flag):
                 is_list=is_list,
                 is_optional=is_optional,
                 default=None,
-                options=None)
+                options=None,
+            )
 
         except RheaError as e:
-            raise ValidationError('IO `%s` Could not parse default value `%s`, '
-                                  'an error was encountered: %s' % (name, default, e))
+            raise ValidationError(
+                "IO `%s` Could not parse default value `%s`, "
+                "an error was encountered: %s" % (name, default, e)
+            )
 
     if not is_optional and default:
-        raise ValidationError('IO `%s` is not optional and has default value `%s`. '
-                              'Please either make it optional or remove the default value.')
+        raise ValidationError(
+            "IO `%s` is not optional and has default value `%s`. "
+            "Please either make it optional or remove the default value."
+        )
 
     if is_flag and iotype != IOTypes.BOOL:
-        raise ValidationError('IO type `{}` cannot be a flag, iut must be a `{}`'.format(
-            iotype, IOTypes.BOOL
-        ))
+        raise ValidationError(
+            "IO type `{}` cannot be a flag, iut must be a `{}`".format(
+                iotype, IOTypes.BOOL
+            )
+        )
 
 
 class IOSchema(BaseSchema):
     name = fields.Str()
     description = fields.Str(allow_none=True)
-    iotype = fields.Str(allow_none=True,
-                        data_key="type",
-                        validate=validate.OneOf(IOTypes.VALUES))
+    iotype = fields.Str(
+        allow_none=True, data_key="type", validate=validate.OneOf(IOTypes.VALUES)
+    )
     default = fields.Raw(allow_none=True)
     is_optional = fields.Bool(allow_none=True)
     is_list = fields.Bool(allow_none=True)
@@ -51,41 +58,48 @@ class IOSchema(BaseSchema):
 
     @validates_schema
     def validate_io(self, values):
-        validate_io(name=values.get('name'),
-                    iotype=values.get('iotype'),
-                    default=values.get('default'),
-                    is_list=values.get('is_list'),
-                    is_optional=values.get('is_optional'),
-                    is_flag=values.get('is_flag'))
+        validate_io(
+            name=values.get("name"),
+            iotype=values.get("iotype"),
+            default=values.get("default"),
+            is_list=values.get("is_list"),
+            is_optional=values.get("is_optional"),
+            is_flag=values.get("is_flag"),
+        )
 
 
 class IOConfig(BaseConfig):
     SCHEMA = IOSchema
-    IDENTIFIER = 'io'
+    IDENTIFIER = "io"
     REDUCED_ATTRIBUTES = [
-        'description',
-        'type',
-        'default',
-        'is_optional',
-        'is_flag',
-        'is_list',
-        'options']
+        "description",
+        "type",
+        "default",
+        "is_optional",
+        "is_flag",
+        "is_list",
+        "options",
+    ]
 
-    def __init__(self,
-                 name,
-                 description=None,
-                 iotype=None,
-                 default=None,
-                 is_optional=None,
-                 is_list=None,
-                 is_flag=None,
-                 options=None):
-        validate_io(name=name,
-                    iotype=iotype,
-                    default=default,
-                    is_optional=is_optional,
-                    is_list=is_list,
-                    is_flag=is_flag)
+    def __init__(
+        self,
+        name,
+        description=None,
+        iotype=None,
+        default=None,
+        is_optional=None,
+        is_list=None,
+        is_flag=None,
+        options=None,
+    ):
+        validate_io(
+            name=name,
+            iotype=iotype,
+            default=default,
+            is_optional=is_optional,
+            is_list=is_list,
+            is_flag=is_flag,
+        )
 
         self.name = name
         self.description = description
@@ -107,7 +121,10 @@ class IOConfig(BaseConfig):
                 is_list=self.is_list,
                 is_optional=self.is_optional,
                 default=self.default,
-                options=self.options)
+                options=self.options,
+            )
         except RheaError as e:
-            raise ValidationError('Could not parse value `%s`, '
-                                  'an error was encountered: %s' % (value, e))
+            raise ValidationError(
+                "Could not parse value `%s`, "
+                "an error was encountered: %s" % (value, e)
+            )

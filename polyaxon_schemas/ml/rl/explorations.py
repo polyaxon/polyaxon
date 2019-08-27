@@ -28,7 +28,7 @@ class ConstantExplorationSchema(BaseExplorationSchema):
 
 
 class ConstantExplorationConfig(BaseExplorationConfig):
-    IDENTIFIER = 'Constant'
+    IDENTIFIER = "Constant"
     SCHEMA = ConstantExplorationSchema
 
     def __init__(self, value=0.5, is_continuous=False):
@@ -37,34 +37,41 @@ class ConstantExplorationConfig(BaseExplorationConfig):
 
 
 class GreedyExplorationSchema(BaseExplorationSchema):
-
     @staticmethod
     def schema_config():
         return GreedyExplorationConfig
 
 
 class GreedyExplorationConfig(BaseExplorationConfig):
-    IDENTIFIER = 'Greedy'
+    IDENTIFIER = "Greedy"
     SCHEMA = GreedyExplorationSchema
 
 
 class RandomExplorationSchema(BaseExplorationSchema):
-
     @staticmethod
     def schema_config():
         return RandomExplorationConfig
 
 
 class RandomExplorationConfig(BaseExplorationConfig):
-    IDENTIFIER = 'Random'
+    IDENTIFIER = "Random"
     SCHEMA = RandomExplorationSchema
 
 
 class DecayExplorationSchema(BaseExplorationSchema):
     exploration_rate = fields.Float(allow_none=True)
-    decay_type = fields.Str(allow_none=True, validate=validate.OneOf(
-        ['exponential_decay', 'inverse_time_decay', 'natural_exp_decay', 'piecewise_constant',
-         'polynomial_decay']))
+    decay_type = fields.Str(
+        allow_none=True,
+        validate=validate.OneOf(
+            [
+                "exponential_decay",
+                "inverse_time_decay",
+                "natural_exp_decay",
+                "piecewise_constant",
+                "polynomial_decay",
+            ]
+        ),
+    )
     start_decay_at = fields.Int(allow_none=True)
     stop_decay_at = fields.Int(allow_none=True)
     decay_rate = fields.Float(allow_none=True)
@@ -78,19 +85,21 @@ class DecayExplorationSchema(BaseExplorationSchema):
 
 
 class DecayExplorationConfig(BaseExplorationConfig):
-    IDENTIFIER = 'Decay'
+    IDENTIFIER = "Decay"
     SCHEMA = DecayExplorationSchema
 
-    def __init__(self,
-                 is_continuous=False,
-                 exploration_rate=0.15,
-                 decay_type='polynomial_decay',
-                 start_decay_at=0,
-                 stop_decay_at=1e9,
-                 decay_rate=0.,
-                 staircase=False,
-                 decay_steps=100000,
-                 min_exploration_rate=0):
+    def __init__(
+        self,
+        is_continuous=False,
+        exploration_rate=0.15,
+        decay_type="polynomial_decay",
+        start_decay_at=0,
+        stop_decay_at=1e9,
+        decay_rate=0.0,
+        staircase=False,
+        decay_steps=100000,
+        min_exploration_rate=0,
+    ):
         self.exploration_rate = exploration_rate
         self.decay_type = decay_type
         self.start_decay_at = start_decay_at
@@ -104,9 +113,18 @@ class DecayExplorationConfig(BaseExplorationConfig):
 
 class RandomDecayExplorationSchema(BaseExplorationSchema):
     num_actions = fields.Int(allow_none=True)
-    decay_type = fields.Str(allow_none=True, validate=validate.OneOf(
-        ['exponential_decay', 'inverse_time_decay', 'natural_exp_decay', 'piecewise_constant',
-         'polynomial_decay']))
+    decay_type = fields.Str(
+        allow_none=True,
+        validate=validate.OneOf(
+            [
+                "exponential_decay",
+                "inverse_time_decay",
+                "natural_exp_decay",
+                "piecewise_constant",
+                "polynomial_decay",
+            ]
+        ),
+    )
     start_decay_at = fields.Int(allow_none=True)
     stop_decay_at = fields.Int(allow_none=True)
     decay_rate = fields.Float(allow_none=True)
@@ -120,19 +138,21 @@ class RandomDecayExplorationSchema(BaseExplorationSchema):
 
 
 class RandomDecayExplorationConfig(BaseExplorationConfig):
-    IDENTIFIER = 'RandomDecay'
+    IDENTIFIER = "RandomDecay"
     SCHEMA = RandomDecayExplorationSchema
 
-    def __init__(self,
-                 is_continuous=False,
-                 num_actions=None,
-                 decay_type='polynomial_decay',
-                 start_decay_at=0,
-                 stop_decay_at=1e9,
-                 decay_rate=0.,
-                 staircase=False,
-                 decay_steps=10000,
-                 min_exploration_rate=0):
+    def __init__(
+        self,
+        is_continuous=False,
+        num_actions=None,
+        decay_type="polynomial_decay",
+        start_decay_at=0,
+        stop_decay_at=1e9,
+        decay_rate=0.0,
+        staircase=False,
+        decay_steps=10000,
+        min_exploration_rate=0,
+    ):
         self.num_actions = num_actions
         self.decay_type = decay_type
         self.start_decay_at = start_decay_at
@@ -156,7 +176,7 @@ class OrnsteinUhlenbeckExplorationSchema(BaseExplorationSchema):
 
 
 class OrnsteinUhlenbeckExplorationConfig(BaseExplorationConfig):
-    IDENTIFIER = 'OrnsteinUhlenbeck'
+    IDENTIFIER = "OrnsteinUhlenbeck"
     SCHEMA = OrnsteinUhlenbeckExplorationSchema
 
     def __init__(self, num_actions, sigma=0.3, mu=0, theta=0.15, **kwargs):
@@ -168,12 +188,12 @@ class OrnsteinUhlenbeckExplorationConfig(BaseExplorationConfig):
 
 
 class RegularizerSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'exploration'
+    __multi_schema_name__ = "exploration"
     __configs__ = {
         ConstantExplorationConfig.IDENTIFIER: ConstantExplorationConfig,
         GreedyExplorationConfig.IDENTIFIER: GreedyExplorationConfig,
         RandomExplorationConfig.IDENTIFIER: RandomExplorationConfig,
         DecayExplorationConfig.IDENTIFIER: DecayExplorationConfig,
         RandomDecayExplorationConfig.IDENTIFIER: RandomDecayExplorationConfig,
-        OrnsteinUhlenbeckExplorationConfig.IDENTIFIER: OrnsteinUhlenbeckExplorationConfig
+        OrnsteinUhlenbeckExplorationConfig.IDENTIFIER: OrnsteinUhlenbeckExplorationConfig,
     }

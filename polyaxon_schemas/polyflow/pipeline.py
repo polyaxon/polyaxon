@@ -18,7 +18,6 @@ from polyaxon_schemas.polyflow.template import TemplateSchema
 
 
 class DagOpSpec(namedtuple("DagOpSpec", "op upstream downstream")):
-
     def items(self):
         return self._asdict().items()
 
@@ -28,9 +27,11 @@ class DagOpSpec(namedtuple("DagOpSpec", "op upstream downstream")):
 
 class PipelineSchema(ExecutableSchema):
     version = fields.Int(allow_none=True)
-    kind = fields.Str(allow_none=True, validate=validate.Equal('pipeline'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("pipeline"))
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
-    description = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
+    description = fields.Str(
+        validate=validate.Regexp(regex=NAME_REGEX), allow_none=True
+    )
     logging = fields.Nested(LoggingSchema, allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     backend = fields.Str(allow_none=True)
@@ -46,35 +47,37 @@ class PipelineSchema(ExecutableSchema):
 
 class PipelineConfig(ExecutableConfig):
     SCHEMA = PipelineSchema
-    IDENTIFIER = 'pipeline'
+    IDENTIFIER = "pipeline"
     REDUCED_ATTRIBUTES = ExecutableConfig.REDUCED_ATTRIBUTES + [
-        'kind',
-        'version',
-        'name',
-        'description',
-        'logging',
-        'tags',
-        'backend',
-        'ops',
-        'concurrency',
-        'schedule',
-        'templates',
+        "kind",
+        "version",
+        "name",
+        "description",
+        "logging",
+        "tags",
+        "backend",
+        "ops",
+        "concurrency",
+        "schedule",
+        "templates",
     ]
 
-    def __init__(self,
-                 kind=None,
-                 version=None,
-                 name=None,
-                 description=None,
-                 logging=None,
-                 tags=None,
-                 backend=None,
-                 ops=None,
-                 concurrency=None,
-                 schedule=None,
-                 templates=None,
-                 execute_at=None,
-                 timeout=None):
+    def __init__(
+        self,
+        kind=None,
+        version=None,
+        name=None,
+        description=None,
+        logging=None,
+        tags=None,
+        backend=None,
+        ops=None,
+        concurrency=None,
+        schedule=None,
+        templates=None,
+        execute_at=None,
+        timeout=None,
+    ):
         super(PipelineConfig, self).__init__(execute_at=execute_at, timeout=timeout)
         self.kind = kind
         self.version = version
@@ -100,8 +103,10 @@ class PipelineConfig(ExecutableConfig):
         dag = dag or self.dag
         orphan_ops = self.get_orphan_ops(dag=dag)
         if orphan_ops:
-            raise PolyaxonSchemaError('Pipeline has a non valid dag, the dag contains orphan ops: '
-                                      '`{}`'.format(orphan_ops))
+            raise PolyaxonSchemaError(
+                "Pipeline has a non valid dag, the dag contains orphan ops: "
+                "`{}`".format(orphan_ops)
+            )
         self.sort_topologically(dag=dag)
 
     def _get_op_upstream(self, op):
@@ -111,10 +116,9 @@ class PipelineConfig(ExecutableConfig):
             return upstream
 
         for param in op.params:
-            param_ref = ops_params.get_param(name=param,
-                                             value=op.params[param],
-                                             iotype=None,
-                                             is_flag=None)
+            param_ref = ops_params.get_param(
+                name=param, value=op.params[param], iotype=None, is_flag=None
+            )
             if param_ref and param_ref.entity == ops_params.OPS:
                 upstream.add(param_ref.entity_ref)
 
@@ -129,7 +133,9 @@ class PipelineConfig(ExecutableConfig):
             self._dag[op_name].upstream.update(upstream)
             self._dag[op_name].downstream.update(downstream)
         else:
-            self._dag[op_name] = DagOpSpec(op=op, upstream=upstream, downstream=downstream)
+            self._dag[op_name] = DagOpSpec(
+                op=op, upstream=upstream, downstream=downstream
+            )
 
     def _process_op(self, op):
         upstream = self._get_op_upstream(op=op)
@@ -154,8 +160,11 @@ class PipelineConfig(ExecutableConfig):
         """Get a list of all node in the graph with no dependencies."""
         dag = dag or self.dag
         ops = set(six.iterkeys(dag))
-        dependent_nodes = {op_downstream for op in six.itervalues(dag)
-                           for op_downstream in op.downstream}
+        dependent_nodes = {
+            op_downstream
+            for op in six.itervalues(dag)
+            for op_downstream in op.downstream
+        }
         return ops - dependent_nodes
 
     def get_orphan_ops(self, dag=None):
@@ -174,6 +183,7 @@ class PipelineConfig(ExecutableConfig):
         Raises:
              an error if this is not possible (graph is not valid).
         """
+
         def get_independent_ops():
             if current_independent_ops:
                 return current_independent_ops.pop()
@@ -216,18 +226,23 @@ class PipelineConfig(ExecutableConfig):
 
     def process_templates(self):
         if not self.templates:
-            raise PolyaxonSchemaError('Pipeline is not valid, '
-                                      'it has no templates to validate operations.')
+            raise PolyaxonSchemaError(
+                "Pipeline is not valid, " "it has no templates to validate operations."
+            )
 
         if not self.ops:
-            raise PolyaxonSchemaError('Pipeline is not valid, '
-                                      'it has no ops to validate operations.')
+            raise PolyaxonSchemaError(
+                "Pipeline is not valid, " "it has no ops to validate operations."
+            )
 
         for template in self.templates:
             template_name = template.name
             if template_name in self._template_by_names:
                 raise PolyaxonSchemaError(
-                    'Pipeline has multiple templates with the same name `{}`'.format(template_name))
+                    "Pipeline has multiple templates with the same name `{}`".format(
+                        template_name
+                    )
+                )
             self._template_by_names[template_name] = template
 
         for op in self.ops:
@@ -235,25 +250,31 @@ class PipelineConfig(ExecutableConfig):
             template_name = op.template.name
             if op_name in self._op_template_mapping:
                 raise PolyaxonSchemaError(
-                    'Pipeline has multiple ops with the same name `{}`'.format(op_name))
+                    "Pipeline has multiple ops with the same name `{}`".format(op_name)
+                )
 
             if template_name not in self._template_by_names:
                 raise PolyaxonSchemaError(
-                    'Pipeline op with name `{}` requires a template with name `{}`, '
-                    'which is not defined on this pipeline.'.format(op_name, template_name))
+                    "Pipeline op with name `{}` requires a template with name `{}`, "
+                    "which is not defined on this pipeline.".format(
+                        op_name, template_name
+                    )
+                )
 
             self._op_template_mapping[op_name] = template_name
             outputs = self._template_by_names[template_name].outputs
             if not outputs:
                 continue
             for output in outputs:
-                self._context['ops.{}.outputs.{}'.format(op_name, output.name)] = output
+                self._context["ops.{}.outputs.{}".format(op_name, output.name)] = output
 
         for op in self.ops:
             template = self._template_by_names[self._op_template_mapping[op.name]]
-            ops_params.validate_params(params=op.params,
-                                       inputs=template.inputs,
-                                       outputs=template.outputs,
-                                       context=self._context,
-                                       is_template=False,
-                                       is_run=False)
+            ops_params.validate_params(
+                params=op.params,
+                inputs=template.inputs,
+                outputs=template.outputs,
+                context=self._context,
+                is_template=False,
+                is_run=False,
+            )

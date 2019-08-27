@@ -39,35 +39,44 @@ class ProjectSchema(BaseSchema):
 
 class ProjectConfig(BaseConfig):
     SCHEMA = ProjectSchema
-    IDENTIFIER = 'project'
+    IDENTIFIER = "project"
     DEFAULT_EXCLUDE_ATTRIBUTES = [
-        'id', 'uuid', 'description', 'updated_at',
-        'experiment_groups', 'experiments', 'has_code', 'owner', 'user'
+        "id",
+        "uuid",
+        "description",
+        "updated_at",
+        "experiment_groups",
+        "experiments",
+        "has_code",
+        "owner",
+        "user",
     ]
-    DATETIME_ATTRIBUTES = ['created_at', 'updated_at']
+    DATETIME_ATTRIBUTES = ["created_at", "updated_at"]
 
-    def __init__(self,
-                 name,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 owner=None,
-                 unique_name=None,
-                 uuid=None,
-                 description=None,
-                 is_public=True,
-                 tags=None,
-                 has_code=False,
-                 has_tensorboard=False,
-                 has_notebook=False,
-                 created_at=None,
-                 updated_at=None,
-                 num_experiments=0,
-                 num_experiment_groups=0,
-                 num_independent_experiments=0,
-                 num_jobs=0,
-                 num_builds=0,
-                 experiments=None,
-                 experiment_groups=None):
+    def __init__(
+        self,
+        name,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        owner=None,
+        unique_name=None,
+        uuid=None,
+        description=None,
+        is_public=True,
+        tags=None,
+        has_code=False,
+        has_tensorboard=False,
+        has_notebook=False,
+        created_at=None,
+        updated_at=None,
+        num_experiments=0,
+        num_experiment_groups=0,
+        num_independent_experiments=0,
+        num_jobs=0,
+        num_builds=0,
+        experiments=None,
+        experiment_groups=None,
+    ):
         self.name = name
         self.id = id
         self.user = user

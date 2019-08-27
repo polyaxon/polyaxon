@@ -23,16 +23,24 @@ class BaseMetricSchema(BaseSchema):
 
 
 class BaseMetricConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['input_layer', 'output_layer', 'weights',
-                          'metrics_collections', 'updates_collections', 'name']
+    REDUCED_ATTRIBUTES = [
+        "input_layer",
+        "output_layer",
+        "weights",
+        "metrics_collections",
+        "updates_collections",
+        "name",
+    ]
 
-    def __init__(self,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=None,
-                 metrics_collections=None,
-                 updates_collections=None,
-                 name=None):
+    def __init__(
+        self,
+        input_layer=None,
+        output_layer=None,
+        weights=None,
+        metrics_collections=None,
+        updates_collections=None,
+        name=None,
+    ):
         self.input_layer = input_layer
         self.output_layer = output_layer
         self.weights = weights
@@ -54,14 +62,21 @@ class BaseTensorMetricSchema(BaseSchema):
 
 
 class BaseTensorMetricConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['weights', 'metrics_collections', 'updates_collections', 'name']
+    REDUCED_ATTRIBUTES = [
+        "weights",
+        "metrics_collections",
+        "updates_collections",
+        "name",
+    ]
 
-    def __init__(self,
-                 values,
-                 weights=None,
-                 metrics_collections=None,
-                 updates_collections=None,
-                 name=None):
+    def __init__(
+        self,
+        values,
+        weights=None,
+        metrics_collections=None,
+        updates_collections=None,
+        name=None,
+    ):
         self.values = values
         self.weights = weights
         self.metrics_collections = metrics_collections
@@ -70,7 +85,6 @@ class BaseTensorMetricConfig(BaseConfig):
 
 
 class TruePositivesSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return TruePositivesConfig
@@ -115,12 +129,12 @@ class TruePositivesConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'TruePositives'
+
+    IDENTIFIER = "TruePositives"
     SCHEMA = TruePositivesSchema
 
 
 class TrueNegativesSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return TrueNegativesConfig
@@ -168,12 +182,12 @@ class TrueNegativesConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'TrueNegatives'
+
+    IDENTIFIER = "TrueNegatives"
     SCHEMA = TrueNegativesSchema
 
 
 class FalsePositivesSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return FalsePositivesConfig
@@ -217,12 +231,12 @@ class FalsePositivesConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'FalsePositives'
+
+    IDENTIFIER = "FalsePositives"
     SCHEMA = FalsePositivesSchema
 
 
 class FalseNegativesSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return FalseNegativesConfig
@@ -270,12 +284,12 @@ class FalseNegativesConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'FalseNegatives'
+
+    IDENTIFIER = "FalseNegatives"
     SCHEMA = FalseNegativesSchema
 
 
 class MeanSchema(BaseTensorMetricSchema):
-
     @staticmethod
     def schema_config():
         return MeanConfig
@@ -328,12 +342,12 @@ class MeanConfig(BaseTensorMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Mean'
+
+    IDENTIFIER = "Mean"
     SCHEMA = MeanSchema
 
 
 class MeanTensorSchema(BaseTensorMetricSchema):
-
     @staticmethod
     def schema_config():
         return MeanTensorConfig
@@ -390,12 +404,12 @@ class MeanTensorConfig(BaseTensorMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanTensor'
+
+    IDENTIFIER = "MeanTensor"
     SCHEMA = MeanTensorSchema
 
 
 class AccuracySchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return AccuracyConfig
@@ -457,12 +471,12 @@ class AccuracyConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Accuracy'
+
+    IDENTIFIER = "Accuracy"
     SCHEMA = AccuracySchema
 
 
 class PrecisionSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return PrecisionConfig
@@ -521,12 +535,12 @@ class PrecisionConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Precision'
+
+    IDENTIFIER = "Precision"
     SCHEMA = PrecisionSchema
 
 
 class RecallSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return RecallConfig
@@ -584,7 +598,8 @@ class RecallConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Recall'
+
+    IDENTIFIER = "Recall"
     SCHEMA = RecallSchema
 
 
@@ -663,17 +678,18 @@ class AUCConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'AUC'
+
+    IDENTIFIER = "AUC"
     SCHEMA = AUCSchema
 
-    def __init__(self, num_thresholds=200, curve='ROC', **kwargs):
+    def __init__(self, num_thresholds=200, curve="ROC", **kwargs):
         super(AUCConfig, self).__init__(**kwargs)
         self.num_thresholds = num_thresholds
         self.curve = curve
 
 
 class SpecificityAtSensitivitySchema(BaseMetricSchema):
-    sensitivity = fields.Float(validate=validate.Range(min=0., max=1.))
+    sensitivity = fields.Float(validate=validate.Range(min=0.0, max=1.0))
     num_thresholds = fields.Int(allow_none=True)
 
     @staticmethod
@@ -741,7 +757,8 @@ class SpecificityAtSensitivityConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SpecificityAtSensitivity'
+
+    IDENTIFIER = "SpecificityAtSensitivity"
     SCHEMA = SpecificityAtSensitivitySchema
 
     def __init__(self, sensitivity, num_thresholds=200, **kwargs):
@@ -751,7 +768,7 @@ class SpecificityAtSensitivityConfig(BaseMetricConfig):
 
 
 class SensitivityAtSpecificitySchema(BaseMetricSchema):
-    specificity = fields.Float(validate=validate.Range(min=0., max=1.))
+    specificity = fields.Float(validate=validate.Range(min=0.0, max=1.0))
     num_thresholds = fields.Int(allow_none=True)
 
     @staticmethod
@@ -819,7 +836,8 @@ class SensitivityAtSpecificityConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SensitivityAtSpecificity'
+
+    IDENTIFIER = "SensitivityAtSpecificity"
     SCHEMA = SensitivityAtSpecificitySchema
 
     def __init__(self, specificity, num_thresholds=200, **kwargs):
@@ -829,7 +847,7 @@ class SensitivityAtSpecificityConfig(BaseMetricConfig):
 
 
 class PrecisionAtThresholdsSchema(BaseMetricSchema):
-    thresholds = fields.List(fields.Float(validate=validate.Range(min=0., max=1.)))
+    thresholds = fields.List(fields.Float(validate=validate.Range(min=0.0, max=1.0)))
 
     @staticmethod
     def schema_config():
@@ -890,7 +908,8 @@ class PrecisionAtThresholdsConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'PrecisionAtThresholds'
+
+    IDENTIFIER = "PrecisionAtThresholds"
     SCHEMA = PrecisionAtThresholdsSchema
 
     def __init__(self, thresholds, **kwargs):
@@ -899,7 +918,7 @@ class PrecisionAtThresholdsConfig(BaseMetricConfig):
 
 
 class RecallAtThresholdsSchema(BaseMetricSchema):
-    thresholds = fields.List(fields.Float(validate=validate.Range(min=0., max=1.)))
+    thresholds = fields.List(fields.Float(validate=validate.Range(min=0.0, max=1.0)))
 
     @staticmethod
     def schema_config():
@@ -958,7 +977,8 @@ class RecallAtThresholdsConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'RecallAtThresholds'
+
+    IDENTIFIER = "RecallAtThresholds"
     SCHEMA = RecallAtThresholdsSchema
 
     def __init__(self, thresholds, **kwargs):
@@ -1048,7 +1068,8 @@ class SparseRecallAtKConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SparseRecallAtK'
+
+    IDENTIFIER = "SparseRecallAtK"
     SCHEMA = SparseRecallAtKSchema
 
     def __init__(self, k, class_id=None, **kwargs):
@@ -1142,7 +1163,8 @@ class SparsePrecisionAtKConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SparsePrecisionAtK'
+
+    IDENTIFIER = "SparsePrecisionAtK"
     SCHEMA = SparsePrecisionAtKSchema
 
     def __init__(self, k, class_id, **kwargs):
@@ -1152,7 +1174,6 @@ class SparsePrecisionAtKConfig(BaseMetricConfig):
 
 
 class MeanAbsoluteErrorSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return MeanAbsoluteErrorConfig
@@ -1210,7 +1231,8 @@ class MeanAbsoluteErrorConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanAbsoluteError'
+
+    IDENTIFIER = "MeanAbsoluteError"
     SCHEMA = MeanAbsoluteErrorSchema
 
 
@@ -1275,7 +1297,8 @@ class MeanRelativeErrorConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanRelativeError'
+
+    IDENTIFIER = "MeanRelativeError"
     SCHEMA = MeanRelativeErrorSchema
 
     def __init__(self, normalizer, **kwargs):
@@ -1284,7 +1307,6 @@ class MeanRelativeErrorConfig(BaseMetricConfig):
 
 
 class MeanSquaredErrorSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return MeanSquaredErrorConfig
@@ -1343,12 +1365,12 @@ class MeanSquaredErrorConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanSquaredError'
+
+    IDENTIFIER = "MeanSquaredError"
     SCHEMA = MeanSquaredErrorSchema
 
 
 class RootMeanSquaredErrorSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return RootMeanSquaredErrorConfig
@@ -1406,12 +1428,12 @@ class RootMeanSquaredErrorConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'RootMeanSquaredError'
+
+    IDENTIFIER = "RootMeanSquaredError"
     SCHEMA = RootMeanSquaredErrorSchema
 
 
 class CovarianceSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return CovarianceConfig
@@ -1474,12 +1496,12 @@ class CovarianceConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Covariance'
+
+    IDENTIFIER = "Covariance"
     SCHEMA = CovarianceSchema
 
 
 class PearsonCorrelationSchema(BaseMetricSchema):
-
     @staticmethod
     def schema_config():
         return PearsonCorrelationConfig
@@ -1539,7 +1561,8 @@ class PearsonCorrelationConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'PearsonCorrelation'
+
+    IDENTIFIER = "PearsonCorrelation"
     SCHEMA = PearsonCorrelationSchema
 
 
@@ -1598,7 +1621,8 @@ class MeanCosineDistanceConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanCosineDistance'
+
+    IDENTIFIER = "MeanCosineDistance"
     SCHEMA = MeanCosineDistanceSchema
 
     def __init__(self, dim, **kwargs):
@@ -1660,7 +1684,8 @@ class PercentageLessConfig(BaseTensorMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'PercentageLess'
+
+    IDENTIFIER = "PercentageLess"
     SCHEMA = PercentageLessSchema
 
     def __init__(self, values, threshold, **kwargs):
@@ -1726,7 +1751,8 @@ class MeanIOUConfig(BaseMetricConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanIOU'
+
+    IDENTIFIER = "MeanIOU"
     SCHEMA = MeanIOUSchema
 
     def __init__(self, num_classes, **kwargs):
@@ -1735,7 +1761,7 @@ class MeanIOUConfig(BaseMetricConfig):
 
 
 class MetricSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'Metric'
+    __multi_schema_name__ = "Metric"
     __configs__ = {
         TruePositivesConfig.IDENTIFIER: TruePositivesConfig,
         TrueNegativesConfig.IDENTIFIER: TrueNegativesConfig,

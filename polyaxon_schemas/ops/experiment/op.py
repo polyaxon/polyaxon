@@ -11,7 +11,7 @@ from polyaxon_schemas.ops.experiment.environment import (
     MPIConfig,
     MXNetConfig,
     PytorchConfig,
-    TensorflowConfig
+    TensorflowConfig,
 )
 from polyaxon_schemas.ops.experiment.frameworks import ExperimentFramework
 from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema, RunSchema
@@ -19,36 +19,40 @@ from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema, RunSchema
 
 def validate_backend(backend):
     if backend and backend not in ExperimentBackend.VALUES:
-        raise ValidationError('Experiment backend `{}` not supported'.format(backend))
+        raise ValidationError("Experiment backend `{}` not supported".format(backend))
 
 
 def validate_replicas(framework, replicas):
     if replicas and framework and framework not in ExperimentFramework.VALUES:
         raise ValidationError(
-            'Distributed Experiment framework `{}` not supported'.format(framework))
+            "Distributed Experiment framework `{}` not supported".format(framework)
+        )
 
     if replicas and not framework:
         raise ValidationError(
-            'You must specify which framework to use for distributed experiments.')
+            "You must specify which framework to use for distributed experiments."
+        )
 
     config = replicas.to_light_dict() if isinstance(replicas, BaseConfig) else replicas
 
-    if framework == 'tensorflow':
+    if framework == "tensorflow":
         TensorflowConfig.from_dict(config)
-    if framework == 'horovod':
+    if framework == "horovod":
         HorovodConfig.from_dict(config)
-    if framework == 'mpi':
+    if framework == "mpi":
         MPIConfig.from_dict(config)
-    if framework == 'mxnet':
+    if framework == "mxnet":
         MXNetConfig.from_dict(config)
-    if framework == 'pytorch':
+    if framework == "pytorch":
         PytorchConfig.from_dict(config)
 
 
 class ExperimentSchema(BaseRunSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('experiment'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("experiment"))
     environment = fields.Nested(ExperimentEnvironmentSchema, allow_none=True)
-    backend = fields.Str(allow_none=True, validate=validate.OneOf(ExperimentBackend.VALUES))
+    backend = fields.Str(
+        allow_none=True, validate=validate.OneOf(ExperimentBackend.VALUES)
+    )
     framework = fields.Str(allow_none=True)
     run = fields.Nested(RunSchema, allow_none=True)
 
@@ -59,42 +63,43 @@ class ExperimentSchema(BaseRunSchema):
     @validates_schema
     def validate_backend(self, data):
         """Validate backend"""
-        validate_backend(data.get('backend'))
+        validate_backend(data.get("backend"))
 
     @validates_schema
     def validate_replicas(self, data):
         """Validate distributed experiment"""
-        environment = data.get('environment')
+        environment = data.get("environment")
         if environment and environment.replicas:
-            validate_replicas(data.get('framework'), environment.replicas)
+            validate_replicas(data.get("framework"), environment.replicas)
 
 
 class ExperimentConfig(BaseRunConfig):
     SCHEMA = ExperimentSchema
-    IDENTIFIER = 'experiment'
+    IDENTIFIER = "experiment"
     REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + [
-        'backend',
-        'framework',
-        'run',
+        "backend",
+        "framework",
+        "run",
     ]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 environment=None,
-                 params=None,
-                 declarations=None,
-                 inputs=None,
-                 outputs=None,
-                 build=None,
-                 backend=None,
-                 framework=None,
-                 run=None,
-                 ):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        environment=None,
+        params=None,
+        declarations=None,
+        inputs=None,
+        outputs=None,
+        build=None,
+        backend=None,
+        framework=None,
+        run=None,
+    ):
         validate_backend(backend)
         self.replicas = None
         if framework and environment and environment.replicas:
@@ -113,7 +118,7 @@ class ExperimentConfig(BaseRunConfig):
             declarations=declarations,
             inputs=inputs,
             outputs=outputs,
-            build=build
+            build=build,
         )
         self.backend = backend
         self.framework = framework
@@ -126,9 +131,9 @@ class ExperimentConfig(BaseRunConfig):
 
     def has_framework(self, framework):
         return (
-            self.framework == framework and
-            self.replicas and
-            self.backend != ExperimentBackend.MPI
+            self.framework == framework
+            and self.replicas
+            and self.backend != ExperimentBackend.MPI
         )
 
     def get_tensorflow(self):

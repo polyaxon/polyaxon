@@ -13,7 +13,7 @@ class BaseBridgeSchema(BaseSchema):
 
 
 class BaseBridgeConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['name']
+    REDUCED_ATTRIBUTES = ["name"]
 
     def __init__(self, state_size=None, name=None):
         self.state_size = state_size
@@ -80,10 +80,11 @@ class LatentBridgeConfig(BaseBridgeConfig):
                 units: 784
     ```
     """
-    IDENTIFIER = 'LatentBridge'
+
+    IDENTIFIER = "LatentBridge"
     SCHEMA = LatentBridgeSchema
 
-    def __init__(self, latent_dim=1, mean=0., stddev=1., **kwargs):
+    def __init__(self, latent_dim=1, mean=0.0, stddev=1.0, **kwargs):
         super(LatentBridgeConfig, self).__init__(**kwargs)
         self.latent_dim = latent_dim
         self.mean = mean
@@ -91,7 +92,6 @@ class LatentBridgeConfig(BaseBridgeConfig):
 
 
 class NoOpBridgeSchema(BaseBridgeSchema):
-
     @staticmethod
     def schema_config():
         return NoOpBridgeConfig
@@ -143,12 +143,13 @@ class NoOpBridgeConfig(BaseBridgeConfig):
                 units: 784
     ```
     """
-    IDENTIFIER = 'NoOpBridge'
+
+    IDENTIFIER = "NoOpBridge"
     SCHEMA = NoOpBridgeSchema
 
 
 class BridgeSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'bridge'
+    __multi_schema_name__ = "bridge"
     __configs__ = {
         LatentBridgeConfig.IDENTIFIER: LatentBridgeConfig,
         NoOpBridgeConfig.IDENTIFIER: NoOpBridgeConfig,

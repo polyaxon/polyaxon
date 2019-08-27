@@ -20,9 +20,11 @@ class BaseLossSchema(BaseSchema):
 
 
 class BaseLossConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['input_layer', 'output_layer', 'name']
+    REDUCED_ATTRIBUTES = ["input_layer", "output_layer", "name"]
 
-    def __init__(self, input_layer=None, output_layer=None, weights=1.0, name=None, collect=True):
+    def __init__(
+        self, input_layer=None, output_layer=None, weights=1.0, name=None, collect=True
+    ):
         self.input_layer = input_layer
         self.output_layer = output_layer
         self.weights = weights
@@ -31,7 +33,6 @@ class BaseLossConfig(BaseConfig):
 
 
 class AbsoluteDifferenceSchema(BaseLossSchema):
-
     @staticmethod
     def schema_config():
         return AbsoluteDifferenceConfig
@@ -83,12 +84,12 @@ class AbsoluteDifferenceConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'AbsoluteDifference'
+
+    IDENTIFIER = "AbsoluteDifference"
     SCHEMA = AbsoluteDifferenceSchema
 
 
 class MeanSquaredErrorSchema(BaseLossSchema):
-
     @staticmethod
     def schema_config():
         return MeanSquaredErrorConfig
@@ -135,7 +136,8 @@ class MeanSquaredErrorConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'MeanSquaredError'
+
+    IDENTIFIER = "MeanSquaredError"
     SCHEMA = MeanSquaredErrorSchema
 
 
@@ -189,22 +191,27 @@ class LogLossConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'LogLoss'
+
+    IDENTIFIER = "LogLoss"
     SCHEMA = LogLossSchema
 
-    def __init__(self,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0,
-                 epsilon=1e-7,
-                 name=None,
-                 collect=True):
-        super(LogLossConfig, self).__init__(input_layer, output_layer, weights, name, collect)
+    def __init__(
+        self,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        epsilon=1e-7,
+        name=None,
+        collect=True,
+    ):
+        super(LogLossConfig, self).__init__(
+            input_layer, output_layer, weights, name, collect
+        )
         self.epsilon = epsilon
 
 
 class HuberLossSchema(BaseLossSchema):
-    clip = fields.Float(default=0., missing=0.)
+    clip = fields.Float(default=0.0, missing=0.0)
 
     @staticmethod
     def schema_config():
@@ -254,23 +261,28 @@ class HuberLossConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'HuberLoss'
+
+    IDENTIFIER = "HuberLoss"
     SCHEMA = HuberLossSchema
 
-    def __init__(self,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0,
-                 clip=0.,
-                 name=None,
-                 collect=True):
-        super(HuberLossConfig, self).__init__(input_layer, output_layer, weights, name, collect)
+    def __init__(
+        self,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        clip=0.0,
+        name=None,
+        collect=True,
+    ):
+        super(HuberLossConfig, self).__init__(
+            input_layer, output_layer, weights, name, collect
+        )
         self.clip = clip
 
 
 class ClippedDeltaLossSchema(BaseLossSchema):
-    clip_value_min = fields.Float(default=-1., missing=-1.)
-    clip_value_max = fields.Float(default=-1., missing=-1.)
+    clip_value_min = fields.Float(default=-1.0, missing=-1.0)
+    clip_value_max = fields.Float(default=-1.0, missing=-1.0)
 
     @staticmethod
     def schema_config():
@@ -322,25 +334,29 @@ class ClippedDeltaLossConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'ClippedDeltaLoss'
+
+    IDENTIFIER = "ClippedDeltaLoss"
     SCHEMA = ClippedDeltaLossSchema
 
-    def __init__(self,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0,
-                 clip_value_min=-1.,
-                 clip_value_max=1.,
-                 name=None,
-                 collect=True):
+    def __init__(
+        self,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        clip_value_min=-1.0,
+        clip_value_max=1.0,
+        name=None,
+        collect=True,
+    ):
         super(ClippedDeltaLossConfig, self).__init__(
-            input_layer, output_layer, weights, name, collect)
+            input_layer, output_layer, weights, name, collect
+        )
         self.clip_value_min = clip_value_min
         self.clip_value_max = clip_value_max
 
 
 class SoftmaxCrossEntropySchema(BaseLossSchema):
-    label_smoothing = fields.Float(default=0., missing=0.)
+    label_smoothing = fields.Float(default=0.0, missing=0.0)
 
     @staticmethod
     def schema_config():
@@ -405,23 +421,27 @@ class SoftmaxCrossEntropyConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SoftmaxCrossEntropy'
+
+    IDENTIFIER = "SoftmaxCrossEntropy"
     SCHEMA = SoftmaxCrossEntropySchema
 
-    def __init__(self,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0,
-                 label_smoothing=0.,
-                 name=None,
-                 collect=True):
+    def __init__(
+        self,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        label_smoothing=0.0,
+        name=None,
+        collect=True,
+    ):
         super(SoftmaxCrossEntropyConfig, self).__init__(
-            input_layer, output_layer, weights, name, collect)
+            input_layer, output_layer, weights, name, collect
+        )
         self.label_smoothing = label_smoothing
 
 
 class SigmoidCrossEntropySchema(BaseLossSchema):
-    label_smoothing = fields.Float(default=0., missing=0.)
+    label_smoothing = fields.Float(default=0.0, missing=0.0)
 
     @staticmethod
     def schema_config():
@@ -487,18 +507,22 @@ class SigmoidCrossEntropyConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SigmoidCrossEntropy'
+
+    IDENTIFIER = "SigmoidCrossEntropy"
     SCHEMA = SigmoidCrossEntropySchema
 
-    def __init__(self,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0,
-                 label_smoothing=0.,
-                 name=None,
-                 collect=True):
+    def __init__(
+        self,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        label_smoothing=0.0,
+        name=None,
+        collect=True,
+    ):
         super(SigmoidCrossEntropyConfig, self).__init__(
-            input_layer, output_layer, weights, name, collect)
+            input_layer, output_layer, weights, name, collect
+        )
         self.label_smoothing = label_smoothing
 
 
@@ -537,7 +561,8 @@ class HingeLossConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'HingeLoss'
+
+    IDENTIFIER = "HingeLoss"
     SCHEMA = HingeLossSchema
 
 
@@ -586,19 +611,23 @@ class CosineDistanceConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'CosineDistance'
+
+    IDENTIFIER = "CosineDistance"
     SCHEMA = CosineDistanceSchema
 
-    def __init__(self,
-                 dim,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0,
-                 name=None,
-                 collect=True):
+    def __init__(
+        self,
+        dim,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        name=None,
+        collect=True,
+    ):
         self.dim = dim
         super(CosineDistanceConfig, self).__init__(
-            input_layer, output_layer, weights, name, collect)
+            input_layer, output_layer, weights, name, collect
+        )
 
 
 class PoissonLossSchema(BaseLossSchema):
@@ -636,7 +665,8 @@ class PoissonLossConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'PoissonLoss'
+
+    IDENTIFIER = "PoissonLoss"
     SCHEMA = PoissonLossSchema
 
 
@@ -677,22 +707,27 @@ class KullbackLeiberDivergenceConfig(BaseLossConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'KullbackLeiberDivergence'
+
+    IDENTIFIER = "KullbackLeiberDivergence"
     SCHEMA = KullbackLeiberDivergenceSchema
 
-    def __init__(self,
-                 dim,
-                 input_layer=None,
-                 output_layer=None,
-                 weights=1.0, name='KullbackLeiberDivergence',
-                 collect=True):
+    def __init__(
+        self,
+        dim,
+        input_layer=None,
+        output_layer=None,
+        weights=1.0,
+        name="KullbackLeiberDivergence",
+        collect=True,
+    ):
         self.dim = dim
         super(KullbackLeiberDivergenceConfig, self).__init__(
-            input_layer, output_layer, weights, name, collect)
+            input_layer, output_layer, weights, name, collect
+        )
 
 
 class LossSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'loss'
+    __multi_schema_name__ = "loss"
     __configs__ = {
         AbsoluteDifferenceConfig.IDENTIFIER: AbsoluteDifferenceConfig,
         MeanSquaredErrorConfig.IDENTIFIER: MeanSquaredErrorConfig,

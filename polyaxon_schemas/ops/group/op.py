@@ -8,7 +8,7 @@ from polyaxon_schemas.ops.group.hptuning import HPTuningSchema
 
 
 class GroupSchema(ExperimentSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('group'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("group"))
     hptuning = fields.Nested(HPTuningSchema, allow_none=True)
 
     @staticmethod
@@ -18,27 +18,28 @@ class GroupSchema(ExperimentSchema):
 
 class GroupConfig(ExperimentConfig):
     SCHEMA = GroupSchema
-    IDENTIFIER = 'group'
-    REDUCED_ATTRIBUTES = ExperimentConfig.REDUCED_ATTRIBUTES + ['hptuning']
+    IDENTIFIER = "group"
+    REDUCED_ATTRIBUTES = ExperimentConfig.REDUCED_ATTRIBUTES + ["hptuning"]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 environment=None,
-                 params=None,
-                 declarations=None,
-                 inputs=None,
-                 outputs=None,
-                 build=None,
-                 backend=None,
-                 framework=None,
-                 run=None,
-                 hptuning=None,
-                 ):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        environment=None,
+        params=None,
+        declarations=None,
+        inputs=None,
+        outputs=None,
+        build=None,
+        backend=None,
+        framework=None,
+        run=None,
+        hptuning=None,
+    ):
         super(GroupConfig, self).__init__(
             version=version,
             kind=kind,

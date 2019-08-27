@@ -16,7 +16,7 @@ class BaseMemorySchema(BaseSchema):
 
 
 class BaseMemoryConfig(BaseConfig):
-    IDENTIFIER = 'Memory'
+    IDENTIFIER = "Memory"
     SCHEMA = BaseMemorySchema
 
     def __init__(self, size=5000, batch_size=5000):
@@ -25,19 +25,18 @@ class BaseMemoryConfig(BaseConfig):
 
 
 class BatchMemorySchema(BaseMemorySchema):
-
     @staticmethod
     def schema_config():
         return BatchMemoryConfig
 
 
 class BatchMemoryConfig(BaseMemoryConfig):
-    IDENTIFIER = 'BatchMemory'
+    IDENTIFIER = "BatchMemory"
     SCHEMA = BatchMemorySchema
 
 
 class MemorySchema(BaseMultiSchema):
-    __multi_schema_name__ = 'memory'
+    __multi_schema_name__ = "memory"
     __configs__ = {
         BaseMemoryConfig.IDENTIFIER: BaseMemoryConfig,
         BatchMemoryConfig.IDENTIFIER: BatchMemoryConfig,

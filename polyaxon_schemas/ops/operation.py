@@ -13,19 +13,20 @@ from polyaxon_schemas.ops.io import IOSchema
 from polyaxon_schemas.ops.logging import LoggingSchema
 from polyaxon_schemas.ops.params import get_param_display_value
 
-PARAM_REGEX = re.compile(r'{{\s*([^\s]*)\s*}}')
+PARAM_REGEX = re.compile(r"{{\s*([^\s]*)\s*}}")
 
 
 def validate_declarations(values):
-    if values.get('declarations') and values.get('params'):
-        raise ValidationError('You should only use `params`.')
+    if values.get("declarations") and values.get("params"):
+        raise ValidationError("You should only use `params`.")
 
-    if values.get('declarations'):
+    if values.get("declarations"):
         warnings.warn(
-            'The `declarations` parameter is deprecated and will be removed in next release, '
-            'please use `params` instead',
-            DeprecationWarning)
-        values['params'] = values.pop('declarations')
+            "The `declarations` parameter is deprecated and will be removed in next release, "
+            "please use `params` instead",
+            DeprecationWarning,
+        )
+        values["params"] = values.pop("declarations")
 
     return values
 
@@ -53,41 +54,45 @@ class BaseOpSchema(BaseSchema):
 
     @validates_schema
     def validate_params(self, values):
-        ops_params.validate_params(params=values.get('params'),
-                                   inputs=values.get('inputs'),
-                                   outputs=values.get('outputs'),
-                                   is_template=True,
-                                   is_run=True)
+        ops_params.validate_params(
+            params=values.get("params"),
+            inputs=values.get("inputs"),
+            outputs=values.get("outputs"),
+            is_template=True,
+            is_run=True,
+        )
 
 
 class BaseOpConfig(BaseConfig):
     SCHEMA = BaseOpSchema
-    IDENTIFIER = 'operation'
+    IDENTIFIER = "operation"
     REDUCED_ATTRIBUTES = [
-        'version',
-        'kind',
-        'logging',
-        'name',
-        'description',
-        'tags',
-        'environment',
-        'params',
-        'inputs',
-        'outputs',
+        "version",
+        "kind",
+        "logging",
+        "name",
+        "description",
+        "tags",
+        "environment",
+        "params",
+        "inputs",
+        "outputs",
     ]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 environment=None,
-                 params=None,
-                 declarations=None,
-                 inputs=None,
-                 outputs=None):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        environment=None,
+        params=None,
+        declarations=None,
+        inputs=None,
+        outputs=None,
+    ):
         self.version = version
         self.kind = kind
         self.logging = logging
@@ -95,13 +100,15 @@ class BaseOpConfig(BaseConfig):
         self.description = description
         self.tags = tags
         self.environment = environment
-        validate_declarations({'params': params, 'declarations': declarations})
+        validate_declarations({"params": params, "declarations": declarations})
         self.params = params or declarations
-        self._validated_params = ops_params.validate_params(params=self.params,
-                                                            inputs=inputs,
-                                                            outputs=outputs,
-                                                            is_template=True,
-                                                            is_run=True)
+        self._validated_params = ops_params.validate_params(
+            params=self.params,
+            inputs=inputs,
+            outputs=outputs,
+            is_template=True,
+            is_run=True,
+        )
         self.inputs = inputs
         self.outputs = outputs
 
@@ -115,7 +122,7 @@ class BaseOpConfig(BaseConfig):
             if not param.entity_ref:
                 value = param.value
             else:
-                value = context[param.value.replace('.', '__')]
+                value = context[param.value.replace(".", "__")]
             params[param.name] = get_param_display_value(param=param, value=value)
 
         return params

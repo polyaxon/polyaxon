@@ -24,8 +24,9 @@ class AccessTokenConfig(BaseConfig):
         username: `str`. The user's username.
         token: `str`. The user's token.
     """
+
     SCHEMA = AccessTokenSchema
-    IDENTIFIER = 'token'
+    IDENTIFIER = "token"
 
     def __init__(self, username, token):
         self.username = username
@@ -50,8 +51,9 @@ class CredentialsConfig(BaseConfig):
         username: `str`. The user's username.
         password: `str`. The user's password.
     """
+
     SCHEMA = CredentialsSchema
-    IDENTIFIER = 'credentials'
+    IDENTIFIER = "credentials"
 
     def __init__(self, username, password):
         self.username = username

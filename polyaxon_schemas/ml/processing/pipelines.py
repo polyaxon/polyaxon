@@ -51,22 +51,25 @@ class BasePipelineConfig(BaseConfig):
         capacity: `int`, The maximum number of minibatches in the top queue,
             and also the maximum number of elements within each bucket.
     """
-    IDENTIFIER = 'BasePipeline'
-    SCHEMA = BasePipelineSchema
-    REDUCED_ATTRIBUTES = ['feature_processors']
 
-    def __init__(self,
-                 name='Pipeline',
-                 feature_processors=None,
-                 shuffle=True,
-                 num_epochs=1,
-                 batch_size=64,
-                 bucket_boundaries=None,
-                 allow_smaller_final_batch=True,
-                 dynamic_pad=False,
-                 min_after_dequeue=5000,
-                 num_threads=3,
-                 capacity=None):
+    IDENTIFIER = "BasePipeline"
+    SCHEMA = BasePipelineSchema
+    REDUCED_ATTRIBUTES = ["feature_processors"]
+
+    def __init__(
+        self,
+        name="Pipeline",
+        feature_processors=None,
+        shuffle=True,
+        num_epochs=1,
+        batch_size=64,
+        bucket_boundaries=None,
+        allow_smaller_final_batch=True,
+        dynamic_pad=False,
+        min_after_dequeue=5000,
+        num_threads=3,
+        capacity=None,
+    ):
         self.name = name
         self.feature_processors = feature_processors
         self.shuffle = shuffle
@@ -133,10 +136,13 @@ class TFRecordImagePipelineConfig(BasePipelineConfig):
                 dtype: float32
     ```
     """
-    IDENTIFIER = 'TFRecordImagePipeline'
+
+    IDENTIFIER = "TFRecordImagePipeline"
     SCHEMA = TFRecordImagePipelineSchema
 
-    def __init__(self, data_files, meta_data_file, name='TFRecordImagePipeline', **kwargs):
+    def __init__(
+        self, data_files, meta_data_file, name="TFRecordImagePipeline", **kwargs
+    ):
         super(TFRecordImagePipelineConfig, self).__init__(name=name, **kwargs)
         self.data_files = data_files
         self.meta_data_file = meta_data_file
@@ -200,10 +206,13 @@ class TFRecordSequencePipelineConfig(BasePipelineConfig):
                 dtype: float32
     ```
     """
-    IDENTIFIER = 'TFRecordSequencePipeline'
+
+    IDENTIFIER = "TFRecordSequencePipeline"
     SCHEMA = TFRecordSequencePipelineSchema
 
-    def __init__(self, data_files, meta_data_file, name='TFRecordSequencePipeline', **kwargs):
+    def __init__(
+        self, data_files, meta_data_file, name="TFRecordSequencePipeline", **kwargs
+    ):
         super(TFRecordSequencePipelineConfig, self).__init__(name=name, **kwargs)
         self.data_files = data_files
         self.meta_data_file = meta_data_file
@@ -251,16 +260,19 @@ class ParallelTextPipelineConfig(BasePipelineConfig):
           empty string.
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
-    IDENTIFIER = 'ParallelTextPipeline'
+
+    IDENTIFIER = "ParallelTextPipeline"
     SCHEMA = ParallelTextPipelineSchema
 
-    def __init__(self,
-                 source_files=None,
-                 target_files=None,
-                 source_delimiter="",
-                 target_delimiter="",
-                 name='ParallelTextPipeline',
-                 **kwargs):
+    def __init__(
+        self,
+        source_files=None,
+        target_files=None,
+        source_delimiter="",
+        target_delimiter="",
+        name="ParallelTextPipeline",
+        **kwargs
+    ):
         super(ParallelTextPipelineConfig, self).__init__(name=name, **kwargs)
         self.source_files = source_files
         self.target_files = target_files
@@ -310,17 +322,20 @@ class TFRecordSourceSequencePipelineConfig(BasePipelineConfig):
           empty string.
         target_delimiter: Same as `source_delimiter` but for the target text.
     """
-    IDENTIFIER = 'TFRecordSourceSequencePipeline'
+
+    IDENTIFIER = "TFRecordSourceSequencePipeline"
     SCHEMA = TFRecordSourceSequencePipelineSchema
 
-    def __init__(self,
-                 files=None,
-                 source_field='source',
-                 target_field='target',
-                 source_delimiter="",
-                 target_delimiter="",
-                 name='TFRecordSourceSequencePipeline',
-                 **kwargs):
+    def __init__(
+        self,
+        files=None,
+        source_field="source",
+        target_field="target",
+        source_delimiter="",
+        target_delimiter="",
+        name="TFRecordSourceSequencePipeline",
+        **kwargs
+    ):
         super(TFRecordSourceSequencePipelineConfig, self).__init__(name=name, **kwargs)
         self.files = files
         self.source_field = source_field
@@ -370,17 +385,20 @@ class ImageCaptioningPipelineConfig(BasePipelineConfig):
         caption_ids_field: The caption ids field.
         caption_tokens_field: the caption tokends field.
     """
-    IDENTIFIER = 'ImageCaptioningPipeline'
+
+    IDENTIFIER = "ImageCaptioningPipeline"
     SCHEMA = ImageCaptioningPipelineSchema
 
-    def __init__(self,
-                 files=None,
-                 image_field="image/data",
-                 image_format='jpg',
-                 caption_ids_field="image/caption_ids",
-                 caption_tokens_field="image/caption",
-                 name='ImageCaptioningPipeline',
-                 **kwargs):
+    def __init__(
+        self,
+        files=None,
+        image_field="image/data",
+        image_format="jpg",
+        caption_ids_field="image/caption_ids",
+        caption_tokens_field="image/caption",
+        name="ImageCaptioningPipeline",
+        **kwargs
+    ):
         super(ImageCaptioningPipelineConfig, self).__init__(name=name, **kwargs)
         self.files = files
         self.image_field = image_field
@@ -390,7 +408,7 @@ class ImageCaptioningPipelineConfig(BasePipelineConfig):
 
 
 class PipelineSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'pipeline'
+    __multi_schema_name__ = "pipeline"
     __configs__ = {
         TFRecordImagePipelineConfig.IDENTIFIER: TFRecordImagePipelineConfig,
         TFRecordSequencePipelineConfig.IDENTIFIER: TFRecordSequencePipelineConfig,
@@ -402,5 +420,5 @@ class PipelineSchema(BaseMultiSchema):
 
 class PipelineConfig(BaseConfig):
     SCHEMA = PipelineSchema
-    IDENTIFIER = 'pipeline'
+    IDENTIFIER = "pipeline"
     UNKNOWN_BEHAVIOUR = EXCLUDE

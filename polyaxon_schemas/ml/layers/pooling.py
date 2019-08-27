@@ -10,8 +10,9 @@ from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 class MaxPooling1DSchema(BaseLayerSchema):
     pool_size = fields.Int(default=2, missing=2, allow_none=True)
     strides = fields.Int(default=None, missing=None)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
 
     @staticmethod
     def schema_config():
@@ -41,10 +42,11 @@ class MaxPooling1DConfig(BaseLayerConfig):
       pool_size: 2
     ```
     """
-    IDENTIFIER = 'MaxPooling1D'
+
+    IDENTIFIER = "MaxPooling1D"
     SCHEMA = MaxPooling1DSchema
 
-    def __init__(self, pool_size=2, strides=None, padding='valid', **kwargs):
+    def __init__(self, pool_size=2, strides=None, padding="valid", **kwargs):
         super(MaxPooling1DConfig, self).__init__(**kwargs)
         self.pool_size = pool_size
         self.strides = strides
@@ -54,8 +56,9 @@ class MaxPooling1DConfig(BaseLayerConfig):
 class AveragePooling1DSchema(BaseLayerSchema):
     pool_size = fields.Int(default=2, missing=2, allow_none=True)
     strides = fields.Int(default=None, missing=None)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
 
     @staticmethod
     def schema_config():
@@ -85,10 +88,11 @@ class AveragePooling1DConfig(BaseLayerConfig):
       pool_size: 2
     ```
     """
-    IDENTIFIER = 'AveragePooling1D'
+
+    IDENTIFIER = "AveragePooling1D"
     SCHEMA = AveragePooling1DSchema
 
-    def __init__(self, pool_size=2, strides=None, padding='valid', **kwargs):
+    def __init__(self, pool_size=2, strides=None, padding="valid", **kwargs):
         super(AveragePooling1DConfig, self).__init__(**kwargs)
         self.pool_size = pool_size
         self.strides = strides
@@ -96,12 +100,18 @@ class AveragePooling1DConfig(BaseLayerConfig):
 
 
 class MaxPooling2DSchema(BaseLayerSchema):
-    pool_size = ObjectOrListObject(fields.Int, min=2, max=2, default=(2, 2), missing=(2, 2))
+    pool_size = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(2, 2), missing=(2, 2)
+    )
     strides = ObjectOrListObject(fields.Int, min=2, max=2, default=None, missing=None)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -153,10 +163,18 @@ class MaxPooling2DConfig(BaseLayerConfig):
       pool_size: [2, 2]
     ```
     """
-    IDENTIFIER = 'MaxPooling2D'
+
+    IDENTIFIER = "MaxPooling2D"
     SCHEMA = MaxPooling2DSchema
 
-    def __init__(self, pool_size=(2, 2), strides=None, padding='valid', data_format=None, **kwargs):
+    def __init__(
+        self,
+        pool_size=(2, 2),
+        strides=None,
+        padding="valid",
+        data_format=None,
+        **kwargs
+    ):
         super(MaxPooling2DConfig, self).__init__(**kwargs)
         self.pool_size = pool_size
         self.strides = strides
@@ -165,12 +183,18 @@ class MaxPooling2DConfig(BaseLayerConfig):
 
 
 class AveragePooling2DSchema(BaseLayerSchema):
-    pool_size = ObjectOrListObject(fields.Int, min=2, max=2, default=(2, 2), missing=(2, 2))
+    pool_size = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(2, 2), missing=(2, 2)
+    )
     strides = ObjectOrListObject(fields.Int, min=2, max=2, default=None, missing=None)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -222,10 +246,18 @@ class AveragePooling2DConfig(BaseLayerConfig):
       pool_size: [2, 2]
     ```
     """
-    IDENTIFIER = 'AveragePooling2D'
+
+    IDENTIFIER = "AveragePooling2D"
     SCHEMA = AveragePooling2DSchema
 
-    def __init__(self, pool_size=(2, 2), strides=None, padding='valid', data_format=None, **kwargs):
+    def __init__(
+        self,
+        pool_size=(2, 2),
+        strides=None,
+        padding="valid",
+        data_format=None,
+        **kwargs
+    ):
         super(AveragePooling2DConfig, self).__init__(**kwargs)
         self.pool_size = pool_size
         self.strides = strides
@@ -234,12 +266,18 @@ class AveragePooling2DConfig(BaseLayerConfig):
 
 
 class MaxPooling3DSchema(BaseLayerSchema):
-    pool_size = ObjectOrListObject(fields.Int, min=3, max=3, default=(2, 2, 2), missing=(2, 2, 2))
+    pool_size = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(2, 2, 2), missing=(2, 2, 2)
+    )
     strides = ObjectOrListObject(fields.Int, min=3, max=3, default=None, missing=None)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -287,11 +325,18 @@ class MaxPooling3DConfig(BaseLayerConfig):
       pool_size: [2, 2, 2]
     ```
     """
-    IDENTIFIER = 'MaxPooling3D'
+
+    IDENTIFIER = "MaxPooling3D"
     SCHEMA = MaxPooling3DSchema
 
-    def __init__(self, pool_size=(2, 2, 2), strides=None, padding='valid', data_format=None,
-                 **kwargs):
+    def __init__(
+        self,
+        pool_size=(2, 2, 2),
+        strides=None,
+        padding="valid",
+        data_format=None,
+        **kwargs
+    ):
         super(MaxPooling3DConfig, self).__init__(**kwargs)
         self.pool_size = pool_size
         self.strides = strides
@@ -300,12 +345,18 @@ class MaxPooling3DConfig(BaseLayerConfig):
 
 
 class AveragePooling3DSchema(BaseLayerSchema):
-    pool_size = ObjectOrListObject(fields.Int, min=3, max=3, default=(2, 2, 2), missing=(2, 2, 2))
+    pool_size = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(2, 2, 2), missing=(2, 2, 2)
+    )
     strides = ObjectOrListObject(fields.Int, min=3, max=3, default=None, missing=None)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -353,11 +404,18 @@ class AveragePooling3DConfig(BaseLayerConfig):
       pool_size: [2, 2, 2]
     ```
     """
-    IDENTIFIER = 'AveragePooling3D'
+
+    IDENTIFIER = "AveragePooling3D"
     SCHEMA = AveragePooling3DSchema
 
-    def __init__(self, pool_size=(2, 2, 2), strides=None, padding='valid', data_format=None,
-                 **kwargs):
+    def __init__(
+        self,
+        pool_size=(2, 2, 2),
+        strides=None,
+        padding="valid",
+        data_format=None,
+        **kwargs
+    ):
         super(AveragePooling3DConfig, self).__init__(**kwargs)
         self.pool_size = pool_size
         self.strides = strides
@@ -387,7 +445,8 @@ class GlobalAveragePooling1DConfig(BaseLayerConfig):
     GlobalAveragePooling1D:
     ```
     """
-    IDENTIFIER = 'GlobalAveragePooling1D'
+
+    IDENTIFIER = "GlobalAveragePooling1D"
     SCHEMA = GlobalAveragePooling1DSchema
 
 
@@ -413,13 +472,17 @@ class GlobalMaxPooling1DConfig(BaseLayerConfig):
     GlobalMaxPooling1D:
     ```
     """
-    IDENTIFIER = 'GlobalMaxPooling1D'
+
+    IDENTIFIER = "GlobalMaxPooling1D"
     SCHEMA = GlobalMaxPooling1DSchema
 
 
 class GlobalAveragePooling2DSchema(BaseLayerSchema):
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -457,7 +520,8 @@ class GlobalAveragePooling2DConfig(BaseLayerConfig):
     GlobalAveragePooling2D:
     ```
     """
-    IDENTIFIER = 'GlobalAveragePooling2D'
+
+    IDENTIFIER = "GlobalAveragePooling2D"
     SCHEMA = GlobalAveragePooling2DSchema
 
     def __init__(self, data_format=None, **kwargs):
@@ -466,8 +530,11 @@ class GlobalAveragePooling2DConfig(BaseLayerConfig):
 
 
 class GlobalMaxPooling2DSchema(BaseLayerSchema):
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -505,7 +572,8 @@ class GlobalMaxPooling2DConfig(BaseLayerConfig):
     GlobalMaxPooling2D:
     ```
     """
-    IDENTIFIER = 'GlobalMaxPooling2D'
+
+    IDENTIFIER = "GlobalMaxPooling2D"
     SCHEMA = GlobalMaxPooling2DSchema
 
     def __init__(self, data_format=None, **kwargs):
@@ -514,8 +582,11 @@ class GlobalMaxPooling2DConfig(BaseLayerConfig):
 
 
 class GlobalAveragePooling3DSchema(BaseLayerSchema):
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -553,7 +624,8 @@ class GlobalAveragePooling3DConfig(BaseLayerConfig):
     GlobalAveragePooling3D:
     ```
     """
-    IDENTIFIER = 'GlobalAveragePooling3D'
+
+    IDENTIFIER = "GlobalAveragePooling3D"
     SCHEMA = GlobalAveragePooling3DSchema
 
     def __init__(self, data_format=None, **kwargs):
@@ -562,8 +634,11 @@ class GlobalAveragePooling3DConfig(BaseLayerConfig):
 
 
 class GlobalMaxPooling3DSchema(BaseLayerSchema):
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -601,7 +676,8 @@ class GlobalMaxPooling3DConfig(BaseLayerConfig):
     GlobalMaxPooling3D:
     ```
     """
-    IDENTIFIER = 'GlobalMaxPooling3D'
+
+    IDENTIFIER = "GlobalMaxPooling3D"
     SCHEMA = GlobalMaxPooling3DSchema
 
     def __init__(self, data_format=None, **kwargs):

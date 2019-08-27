@@ -24,10 +24,10 @@ class BaseLayerSchema(BaseSchema):
 
 
 class BaseLayerConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['name']
+    REDUCED_ATTRIBUTES = ["name"]
     UNKNOWN_BEHAVIOUR = EXCLUDE
 
-    def __init__(self, name=None, trainable=True, dtype='float32', inbound_nodes=None):
+    def __init__(self, name=None, trainable=True, dtype="float32", inbound_nodes=None):
         self.name = name
         self.trainable = trainable
         self.dtype = dtype

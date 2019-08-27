@@ -26,7 +26,8 @@ class TensorflowClusterConfig(BaseConfig):
         worker: list(str). The list of worker host in a tensorflow cluster.
         ps: list(str). The list of ps host in a tensorflow cluster.
     """
-    IDENTIFIER = 'tensorflow_cluster'
+
+    IDENTIFIER = "tensorflow_cluster"
     SCHEMA = TensorflowClusterSchema
 
     def __init__(self, master=None, worker=None, ps=None):
@@ -52,7 +53,8 @@ class HorovodClusterConfig(BaseConfig):
         master: list(str). The list of master host in a Horovod cluster.
         worker: list(str). The list of worker host in a Horovod cluster.
     """
-    IDENTIFIER = 'horovod_cluster'
+
+    IDENTIFIER = "horovod_cluster"
     SCHEMA = HorovodClusterSchema
 
     def __init__(self, master=None, worker=None):
@@ -77,7 +79,8 @@ class PytorchClusterConfig(BaseConfig):
         master: list(str). The list of master host in a Pytorch cluster.
         worker: list(str). The list of worker host in a Pytorch cluster.
     """
-    IDENTIFIER = 'pytorch_cluster'
+
+    IDENTIFIER = "pytorch_cluster"
     SCHEMA = PytorchClusterSchema
 
     def __init__(self, master=None, worker=None):
@@ -100,7 +103,8 @@ class MPIClusterConfig(BaseConfig):
     Args:
         worker: list(str). The list of worker host in a Horovod cluster.
     """
-    IDENTIFIER = 'mpi_cluster'
+
+    IDENTIFIER = "mpi_cluster"
     SCHEMA = MPIClusterSchema
 
     def __init__(self, worker=None):
@@ -126,7 +130,8 @@ class MXNetClusterConfig(BaseConfig):
         worker: list(str). The list of worker host in a mxnet cluster.
         server: list(str). The list of server host in a mxnet cluster.
     """
-    IDENTIFIER = 'mxnet_cluster'
+
+    IDENTIFIER = "mxnet_cluster"
     SCHEMA = MXNetClusterSchema
 
     def __init__(self, master=None, worker=None, server=None):
@@ -204,27 +209,39 @@ class FrameworkEnvironmentMixin(object):
 
     @property
     def worker_labels(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.labels)
+        return self._get_env_indexed_property(
+            obj=self.worker, getter=lambda o: o.labels
+        )
 
     @property
     def worker_annotations(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.annotations)
+        return self._get_env_indexed_property(
+            obj=self.worker, getter=lambda o: o.annotations
+        )
 
     @property
     def worker_resources(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.resources)
+        return self._get_env_indexed_property(
+            obj=self.worker, getter=lambda o: o.resources
+        )
 
     @property
     def worker_node_selectors(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.node_selector)
+        return self._get_env_indexed_property(
+            obj=self.worker, getter=lambda o: o.node_selector
+        )
 
     @property
     def worker_affinities(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.affinity)
+        return self._get_env_indexed_property(
+            obj=self.worker, getter=lambda o: o.affinity
+        )
 
     @property
     def worker_tolerations(self):
-        return self._get_env_indexed_property(obj=self.worker, getter=lambda o: o.tolerations)
+        return self._get_env_indexed_property(
+            obj=self.worker, getter=lambda o: o.tolerations
+        )
 
     # @property
     # def ps_configs(self):
@@ -236,7 +253,9 @@ class FrameworkEnvironmentMixin(object):
 
     @property
     def ps_annotations(self):
-        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.annotations)
+        return self._get_env_indexed_property(
+            obj=self.ps, getter=lambda o: o.annotations
+        )
 
     @property
     def ps_resources(self):
@@ -244,7 +263,9 @@ class FrameworkEnvironmentMixin(object):
 
     @property
     def ps_node_selectors(self):
-        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.node_selector)
+        return self._get_env_indexed_property(
+            obj=self.ps, getter=lambda o: o.node_selector
+        )
 
     @property
     def ps_affinities(self):
@@ -252,7 +273,9 @@ class FrameworkEnvironmentMixin(object):
 
     @property
     def ps_tolerations(self):
-        return self._get_env_indexed_property(obj=self.ps, getter=lambda o: o.tolerations)
+        return self._get_env_indexed_property(
+            obj=self.ps, getter=lambda o: o.tolerations
+        )
 
 
 class TensorflowSchema(BaseSchema):
@@ -283,19 +306,21 @@ class TensorflowConfig(BaseConfig, FrameworkEnvironmentMixin):
         ps: `list(PodEnvironment)`. The pod environment with index specified to use
             for the specific ps.
     """
-    IDENTIFIER = 'tensorflow'
+
+    IDENTIFIER = "tensorflow"
     SCHEMA = TensorflowSchema
 
-    def __init__(self,
-                 n_workers=0,
-                 n_ps=0,
-                 delay_workers_by_global_step=False,
-                 run_config=None,
-                 default_worker=None,
-                 default_ps=None,
-                 worker=None,
-                 ps=None,
-                 ):
+    def __init__(
+        self,
+        n_workers=0,
+        n_ps=0,
+        delay_workers_by_global_step=False,
+        run_config=None,
+        default_worker=None,
+        default_ps=None,
+        worker=None,
+        ps=None,
+    ):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.delay_workers_by_global_step = delay_workers_by_global_step
@@ -326,14 +351,11 @@ class HorovodConfig(BaseConfig, FrameworkEnvironmentMixin):
         worker: `list(PodEnvironment)`. The pod environment with index specified to use
             for the specific worker.
     """
-    IDENTIFIER = 'horovod'
+
+    IDENTIFIER = "horovod"
     SCHEMA = HorovodSchema
 
-    def __init__(self,
-                 n_workers=0,
-                 default_worker=None,
-                 worker=None,
-                 ):
+    def __init__(self, n_workers=0, default_worker=None, worker=None):
         self.n_workers = n_workers
         self.default_worker = default_worker
         self.worker = worker
@@ -356,13 +378,11 @@ class MPIConfig(BaseConfig, FrameworkEnvironmentMixin):
         n_workers: `int`. The number of workers requested for training the model.
         default_worker: `PodEnvironment`. The default pod environment to use for all workers.
     """
-    IDENTIFIER = 'mpi'
+
+    IDENTIFIER = "mpi"
     SCHEMA = MPISchema
 
-    def __init__(self,
-                 n_workers=0,
-                 default_worker=None,
-                 ):
+    def __init__(self, n_workers=0, default_worker=None):
         self.n_workers = n_workers
         self.default_worker = default_worker
         self.worker = None
@@ -388,14 +408,11 @@ class PytorchConfig(BaseConfig, FrameworkEnvironmentMixin):
         worker: `list(PodEnvironment)`. The pod environment with index specified to use
             for the specific worker.
     """
-    IDENTIFIER = 'pytorch'
+
+    IDENTIFIER = "pytorch"
     SCHEMA = PytorchSchema
 
-    def __init__(self,
-                 n_workers=0,
-                 default_worker=None,
-                 worker=None,
-                 ):
+    def __init__(self, n_workers=0, default_worker=None, worker=None):
         self.n_workers = n_workers
         self.default_worker = default_worker
         self.worker = worker
@@ -428,17 +445,19 @@ class MXNetConfig(BaseConfig, FrameworkEnvironmentMixin):
         ps: `list(PodEnvironment)`. The pod environment with index specified to use
             for the specific ps.
     """
-    IDENTIFIER = 'mxnet'
+
+    IDENTIFIER = "mxnet"
     SCHEMA = MXNetSchema
 
-    def __init__(self,
-                 n_workers=0,
-                 n_ps=0,
-                 default_worker=None,
-                 default_ps=None,
-                 worker=None,
-                 ps=None,
-                 ):
+    def __init__(
+        self,
+        n_workers=0,
+        n_ps=0,
+        default_worker=None,
+        default_ps=None,
+        worker=None,
+        ps=None,
+    ):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.default_worker = default_worker
@@ -474,18 +493,27 @@ class ReplicasConfig(BaseConfig):
         ps: `list(PodEnvironment)`. The pod environment with index specified to use
             for the specific ps.
     """
-    IDENTIFIER = 'replicas'
-    SCHEMA = ReplicasSchema
-    REDUCED_ATTRIBUTES = ['n_workers', 'n_ps', 'default_worker', 'default_ps', 'worker', 'ps']
 
-    def __init__(self,
-                 n_workers=None,
-                 n_ps=None,
-                 default_worker=None,
-                 default_ps=None,
-                 worker=None,
-                 ps=None,
-                 ):
+    IDENTIFIER = "replicas"
+    SCHEMA = ReplicasSchema
+    REDUCED_ATTRIBUTES = [
+        "n_workers",
+        "n_ps",
+        "default_worker",
+        "default_ps",
+        "worker",
+        "ps",
+    ]
+
+    def __init__(
+        self,
+        n_workers=None,
+        n_ps=None,
+        default_worker=None,
+        default_ps=None,
+        worker=None,
+        ps=None,
+    ):
         self.n_workers = n_workers
         self.n_ps = n_ps
         self.default_worker = default_worker
@@ -513,34 +541,37 @@ class ExperimentEnvironmentConfig(EnvironmentConfig):
         tolerations: `list(dict)`.
         replicas: `ReplicasConfig`.
     """
-    IDENTIFIER = 'environment'
-    SCHEMA = ExperimentEnvironmentSchema
-    REDUCED_ATTRIBUTES = EnvironmentConfig.REDUCED_ATTRIBUTES + ['replicas']
 
-    def __init__(self,
-                 index=None,
-                 resources=None,
-                 labels=None,
-                 annotations=None,
-                 node_selector=None,
-                 affinity=None,
-                 tolerations=None,
-                 service_account=None,
-                 image_pull_secrets=None,
-                 max_restarts=None,
-                 max_retries=None,
-                 timeout=None,
-                 restart_policy=None,
-                 ttl=None,
-                 env_vars=None,
-                 secret_refs=None,
-                 config_map_refs=None,
-                 configmap_refs=None,
-                 data_refs=None,
-                 artifact_refs=None,
-                 outputs=None,
-                 persistence=None,
-                 replicas=None):
+    IDENTIFIER = "environment"
+    SCHEMA = ExperimentEnvironmentSchema
+    REDUCED_ATTRIBUTES = EnvironmentConfig.REDUCED_ATTRIBUTES + ["replicas"]
+
+    def __init__(
+        self,
+        index=None,
+        resources=None,
+        labels=None,
+        annotations=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        service_account=None,
+        image_pull_secrets=None,
+        max_restarts=None,
+        max_retries=None,
+        timeout=None,
+        restart_policy=None,
+        ttl=None,
+        env_vars=None,
+        secret_refs=None,
+        config_map_refs=None,
+        configmap_refs=None,
+        data_refs=None,
+        artifact_refs=None,
+        outputs=None,
+        persistence=None,
+        replicas=None,
+    ):
         super(ExperimentEnvironmentConfig, self).__init__(
             index=index,
             resources=resources,

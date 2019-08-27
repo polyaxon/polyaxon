@@ -20,7 +20,7 @@ class LogHandlerSchema(BaseSchema):
 
 class LogHandlerConfig(BaseConfig):
     SCHEMA = LogHandlerSchema
-    IDENTIFIER = 'log_handler'
+    IDENTIFIER = "log_handler"
 
     def __init__(self, environment, tags, dsn=None):
         self.dsn = dsn
@@ -30,4 +30,4 @@ class LogHandlerConfig(BaseConfig):
     @property
     def decoded_dsn(self):
         if self.dsn:
-            return base64.b64decode(self.dsn.encode('utf-8')).decode('utf-8')
+            return base64.b64decode(self.dsn.encode("utf-8")).decode("utf-8")

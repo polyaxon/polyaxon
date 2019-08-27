@@ -11,7 +11,7 @@ from polyaxon_schemas.ops.tensorboard import TensorboardConfig, TensorboardSchem
 
 
 class TemplateSchema(BaseOneOfSchema):
-    TYPE_FIELD = 'kind'
+    TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
         BuildConfig.IDENTIFIER: BuildSchema,

@@ -152,12 +152,13 @@ class GraphConfig(BaseConfig):
       output_layers: dense_out
     ```
     """
+
     SCHEMA = GraphSchema
-    IDENTIFIER = 'graph'
-    REDUCED_ATTRIBUTES = ['name']
+    IDENTIFIER = "graph"
+    REDUCED_ATTRIBUTES = ["name"]
     UNKNOWN_BEHAVIOUR = EXCLUDE
 
-    def __init__(self, input_layers, output_layers, layers, name='graph'):
+    def __init__(self, input_layers, output_layers, layers, name="graph"):
         self.input_layers = input_layers
         self.output_layers = output_layers
         self.layers = layers

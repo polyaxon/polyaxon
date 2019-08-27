@@ -21,30 +21,61 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
+
     _SPEC_KIND = kinds.BUILD
 
-    BUILD_STEPS = 'build_steps'
-    ENV_VARS = 'env_vars'
-    NOCACHE = 'nocache'
-    BRANCH = 'branch'
-    COMMIT = 'commit'
-    CONTEXT = 'context'
-    DOCKERFILE = 'dockerfile'
-    LANG_ENV = 'lang_env'
-    IMAGE = 'image'
-    REF = 'ref'
+    BUILD_STEPS = "build_steps"
+    ENV_VARS = "env_vars"
+    NOCACHE = "nocache"
+    BRANCH = "branch"
+    COMMIT = "commit"
+    CONTEXT = "context"
+    DOCKERFILE = "dockerfile"
+    LANG_ENV = "lang_env"
+    IMAGE = "image"
+    REF = "ref"
 
     SECTIONS = BaseSpecification.SECTIONS + (
-        BUILD_STEPS, ENV_VARS, NOCACHE, BRANCH, COMMIT, CONTEXT, DOCKERFILE, LANG_ENV, IMAGE, REF)
+        BUILD_STEPS,
+        ENV_VARS,
+        NOCACHE,
+        BRANCH,
+        COMMIT,
+        CONTEXT,
+        DOCKERFILE,
+        LANG_ENV,
+        IMAGE,
+        REF,
+    )
 
     OP_PARSING_SECTIONS = BaseSpecification.OP_PARSING_SECTIONS + (
-        BUILD_STEPS, ENV_VARS, NOCACHE, BRANCH, COMMIT, CONTEXT, DOCKERFILE, LANG_ENV, IMAGE, REF)
+        BUILD_STEPS,
+        ENV_VARS,
+        NOCACHE,
+        BRANCH,
+        COMMIT,
+        CONTEXT,
+        DOCKERFILE,
+        LANG_ENV,
+        IMAGE,
+        REF,
+    )
 
-    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND, )
+    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND,)
 
     POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.BACKEND, BaseSpecification.ENVIRONMENT,
-        BUILD_STEPS, ENV_VARS, NOCACHE, BRANCH, COMMIT, CONTEXT, DOCKERFILE, LANG_ENV, IMAGE, REF
+        BaseSpecification.BACKEND,
+        BaseSpecification.ENVIRONMENT,
+        BUILD_STEPS,
+        ENV_VARS,
+        NOCACHE,
+        BRANCH,
+        COMMIT,
+        CONTEXT,
+        DOCKERFILE,
+        LANG_ENV,
+        IMAGE,
+        REF,
     )
 
     CONFIG = BuildConfig
@@ -54,11 +85,9 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         return self.raw_config.backend
 
     @classmethod
-    def create_specification(cls,
-                             build_config,
-                             secret_refs=None,
-                             config_map_refs=None,
-                             to_dict=True):
+    def create_specification(
+        cls, build_config, secret_refs=None, config_map_refs=None, to_dict=True
+    ):
         if isinstance(build_config, BuildConfig):
             config = build_config.to_light_dict()
         elif isinstance(build_config, Mapping):
@@ -68,19 +97,17 @@ class BuildSpecification(BaseSpecification, EnvironmentSpecificationMixin):
             config = config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of BuildConfig.')
+                "Create specification expects a dict or an instance of BuildConfig."
+            )
 
-        specification = {
-            cls.VERSION: 1,
-            cls.KIND: cls._SPEC_KIND,
-        }
+        specification = {cls.VERSION: 1, cls.KIND: cls._SPEC_KIND}
         specification.update(config)
 
         env = {}
         if secret_refs:
-            env['secret_refs'] = secret_refs
+            env["secret_refs"] = secret_refs
         if config_map_refs:
-            env['config_map_refs'] = config_map_refs
+            env["config_map_refs"] = config_map_refs
         if env:
             specification[cls.ENVIRONMENT] = env
 

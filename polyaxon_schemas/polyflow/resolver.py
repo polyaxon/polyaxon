@@ -6,6 +6,6 @@ from polyaxon_schemas.registry import SchemaRegistry
 
 
 class OpResolverSchema(BaseOneOfSchema):
-    TYPE_FIELD = 'kind'
+    TYPE_FIELD = "kind"
     TYPE_FIELD_remove = False
     SCHEMAS = SchemaRegistry(base_operations={}, polyflow_operations={})

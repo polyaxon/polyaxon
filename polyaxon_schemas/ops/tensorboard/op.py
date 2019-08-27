@@ -7,7 +7,7 @@ from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema
 
 
 class TensorboardSchema(BaseRunSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('tensorboard'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("tensorboard"))
 
     @staticmethod
     def schema_config():
@@ -15,5 +15,5 @@ class TensorboardSchema(BaseRunSchema):
 
 
 class TensorboardConfig(BaseRunConfig):
-    IDENTIFIER = 'tensorboard'
+    IDENTIFIER = "tensorboard"
     SCHEMA = TensorboardSchema

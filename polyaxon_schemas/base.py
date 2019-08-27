@@ -49,16 +49,19 @@ class BaseConfig(object):
     ROUNDING = 2
     UNKNOWN_BEHAVIOUR = RAISE
 
-    def to_light_dict(self,
-                      humanize_values=False,
-                      include_attrs=None,
-                      exclude_attrs=None,
-                      unknown=None):
+    def to_light_dict(
+        self,
+        humanize_values=False,
+        include_attrs=None,
+        exclude_attrs=None,
+        unknown=None,
+    ):
         unknown = unknown or self.UNKNOWN_BEHAVIOUR
         obj_dict = self.to_dict(humanize_values=humanize_values, unknown=unknown)
         if all([include_attrs, exclude_attrs]):
             raise PolyaxonSchemaError(
-                'Only one value `include_attrs` or `exclude_attrs` is allowed.')
+                "Only one value `include_attrs` or `exclude_attrs` is allowed."
+            )
         if not any([include_attrs, exclude_attrs]):  # Use Default setup attrs
             include_attrs = self.DEFAULT_INCLUDE_ATTRIBUTES
             exclude_attrs = self.DEFAULT_EXCLUDE_ATTRIBUTES
@@ -92,7 +95,9 @@ class BaseConfig(object):
     def obj_to_dict(cls, obj, humanize_values=False, unknown=None):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
         humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
-        data_dict = cls.SCHEMA(unknown=unknown).dump(obj)  # pylint: disable=not-callable
+        data_dict = cls.SCHEMA(unknown=unknown).dump(  # pylint: disable=not-callable
+            obj
+        )
 
         for k, v in six.iteritems(humanized_attrs):
             data_dict[k] = v
@@ -142,7 +147,8 @@ class BaseOneOfSchema(Schema):
     schema and adds an extra "type" field with name of object type.
     Deserialization is reverse.
     """
-    TYPE_FIELD = 'type'
+
+    TYPE_FIELD = "type"
     TYPE_FIELD_REMOVE = True
     SCHEMAS = {}
 
@@ -180,18 +186,18 @@ class BaseOneOfSchema(Schema):
     def _dump(self, obj):
         obj_type = self.get_obj_type(obj)
         if not obj_type:
-            return None, {'_schema': 'Unknown object class: %s' % obj.__class__.__name__}
+            return (
+                None,
+                {"_schema": "Unknown object class: %s" % obj.__class__.__name__},
+            )
 
         type_schema = self.SCHEMAS.get(obj_type)
         if not type_schema:
-            return None, {'_schema': 'Unsupported object type: %s' % obj_type}
+            return None, {"_schema": "Unsupported object type: %s" % obj_type}
 
-        schema = (
-            type_schema if isinstance(type_schema, Schema)
-            else type_schema()
-        )
+        schema = type_schema if isinstance(type_schema, Schema) else type_schema()
 
-        schema.context.update(getattr(self, 'context', {}))
+        schema.context.update(getattr(self, "context", {}))
 
         result = schema.dump(obj, many=False)
         if result is not None:
@@ -230,7 +236,7 @@ class BaseOneOfSchema(Schema):
 
     def _load(self, data, partial=None, unknown=None):
         if not isinstance(data, dict):
-            raise ValidationError({'_schema': 'Invalid data type: %s' % data})
+            raise ValidationError({"_schema": "Invalid data type: %s" % data})
 
         data = dict(data)
         unknown = unknown or self.unknown
@@ -240,27 +246,23 @@ class BaseOneOfSchema(Schema):
             data.pop(self.TYPE_FIELD)
 
         if not data_type:
-            raise ValidationError({
-                self.TYPE_FIELD: ['Missing data for required field.']
-            })
+            raise ValidationError(
+                {self.TYPE_FIELD: ["Missing data for required field."]}
+            )
 
         try:
             type_schema = self.SCHEMAS.get(data_type)
         except TypeError:
             # data_type could be unhashable
-            raise ValidationError({
-                self.TYPE_FIELD: ['Invalid value: %s' % data_type]
-            })
+            raise ValidationError({self.TYPE_FIELD: ["Invalid value: %s" % data_type]})
         if not type_schema:
-            raise ValidationError({
-                self.TYPE_FIELD: ['Unsupported value: %s' % data_type],
-            })
+            raise ValidationError(
+                {self.TYPE_FIELD: ["Unsupported value: %s" % data_type]}
+            )
 
-        schema = (
-            type_schema if isinstance(type_schema, Schema) else type_schema()
-        )
+        schema = type_schema if isinstance(type_schema, Schema) else type_schema()
 
-        schema.context.update(getattr(self, 'context', {}))
+        schema.context.update(getattr(self, "context", {}))
 
         return schema.load(data, many=False, partial=partial, unknown=unknown)
 
@@ -284,7 +286,7 @@ class BaseMultiSchema(Schema):
     @post_dump(pass_original=True, pass_many=True)
     def handle_multi_schema_dump(self, data, pass_many, original):
         def handle_item(item):
-            if hasattr(item, 'get_config'):
+            if hasattr(item, "get_config"):
                 return self.__configs__[item.__class__.__name__].obj_to_schema(item)
             return item.to_schema()
 
@@ -298,21 +300,27 @@ class BaseMultiSchema(Schema):
         def make(key, val=None):
             key = to_camel_case(key) if self.__support_snake_case__ else key
             try:
-                return (self.__configs__[key].from_dict(val, unknown=EXCLUDE) if val else
-                        self.__configs__[key]())
+                return (
+                    self.__configs__[key].from_dict(val, unknown=EXCLUDE)
+                    if val
+                    else self.__configs__[key]()
+                )
             except KeyError:
-                raise ValidationError("`{}` is not a valid value for schema `{}`".format(
-                    key, self.__multi_schema_name__))
+                raise ValidationError(
+                    "`{}` is not a valid value for schema `{}`".format(
+                        key, self.__multi_schema_name__
+                    )
+                )
 
         def handle_item(item):
             if isinstance(item, six.string_types):
                 return make(item)
 
             if isinstance(item, Mapping):
-                if 'class_name' in item:
-                    return make(item['class_name'], item['config'])
-                if 'model_type' in item:
-                    return make(item.pop('model_type'), item)
+                if "class_name" in item:
+                    return make(item["class_name"], item["config"])
+                if "model_type" in item:
+                    return make(item.pop("model_type"), item)
                 assert len(item) == 1
                 key, val = list(six.iteritems(item))[0]
                 return make(key, val)
@@ -323,4 +331,4 @@ class BaseMultiSchema(Schema):
         return handle_item(original)
 
 
-NAME_REGEX = r'^[-a-zA-Z0-9_]+\Z'
+NAME_REGEX = r"^[-a-zA-Z0-9_]+\Z"

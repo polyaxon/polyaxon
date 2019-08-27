@@ -36,41 +36,43 @@ class OpSchema(BaseSchema):
 
 class OpConfig(BaseConfig):
     SCHEMA = OpSchema
-    IDENTIFIER = 'op'
+    IDENTIFIER = "op"
     REDUCED_ATTRIBUTES = [
-        'version',
-        'kind',
-        'template',
-        'logging',
-        'name',
-        'description',
-        'tags',
-        'params',
-        'environment',
-        'build',
-        'concurrency',
-        'dependencies',
-        'trigger',
-        'conditions',
-        'skip_on_upstream_skip',
+        "version",
+        "kind",
+        "template",
+        "logging",
+        "name",
+        "description",
+        "tags",
+        "params",
+        "environment",
+        "build",
+        "concurrency",
+        "dependencies",
+        "trigger",
+        "conditions",
+        "skip_on_upstream_skip",
     ]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 template=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 params=None,
-                 environment=None,
-                 build=None,
-                 concurrency=None,
-                 dependencies=None,
-                 trigger=None,
-                 conditions=None,
-                 skip_on_upstream_skip=None):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        template=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        params=None,
+        environment=None,
+        build=None,
+        concurrency=None,
+        dependencies=None,
+        trigger=None,
+        conditions=None,
+        skip_on_upstream_skip=None,
+    ):
         self.version = version
         self.kind = kind
         self.template = template

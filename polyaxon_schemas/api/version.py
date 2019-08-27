@@ -29,8 +29,9 @@ class CliVersionConfig(BaseVersionConfig):
         latest_version: the newest cli available on PIP.
         min_version: the version below which cli should fail.
     """
+
     SCHEMA = CliVersionSchema
-    IDENTIFIER = 'cli_version'
+    IDENTIFIER = "cli_version"
 
 
 class PlatformVersionSchema(BaseVersionSchema):
@@ -45,8 +46,9 @@ class PlatformVersionConfig(BaseVersionConfig):
         latest_version: the newest platform available on helm.
         min_version: the version below which platform should fail.
     """
+
     SCHEMA = PlatformVersionSchema
-    IDENTIFIER = 'platform_version'
+    IDENTIFIER = "platform_version"
 
 
 class LibVersionSchema(BaseVersionSchema):
@@ -61,8 +63,9 @@ class LibVersionConfig(BaseVersionConfig):
         latest_version: the newest lib available on PIP.
         min_version: the version below which lib should fail.
     """
+
     SCHEMA = LibVersionSchema
-    IDENTIFIER = 'lib_version'
+    IDENTIFIER = "lib_version"
 
 
 class ChartVersionSchema(BaseSchema):
@@ -78,8 +81,9 @@ class ChartVersionConfig(BaseConfig):
     Args:
         version: the current installed chart version.
     """
+
     SCHEMA = ChartVersionSchema
-    IDENTIFIER = 'chart_version'
+    IDENTIFIER = "chart_version"
 
     def __init__(self, version):
         self.version = version

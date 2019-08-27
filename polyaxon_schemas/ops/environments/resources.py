@@ -23,7 +23,7 @@ class K8SResourcesEntrySchema(BaseSchema):
 
 class K8SResourcesEntryConfig(BaseConfig):
     SCHEMA = K8SResourcesEntrySchema
-    REDUCED_ATTRIBUTES = ['cpu', 'memory', 'gpu', 'tpu']
+    REDUCED_ATTRIBUTES = ["cpu", "memory", "gpu", "tpu"]
 
     def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu
@@ -49,9 +49,10 @@ class K8SContainerResourcesConfig(BaseConfig):
         limits: `K8SResourcesEntry`.
         requests: `K8SResourcesEntry`.
     """
-    IDENTIFIER = 'resources'
+
+    IDENTIFIER = "resources"
     SCHEMA = K8SContainerResourcesSchema
-    REDUCED_ATTRIBUTES = ['limits', 'requests']
+    REDUCED_ATTRIBUTES = ["limits", "requests"]
 
     def __init__(self, limits=None, requests=None):
         self.limits = limits
@@ -66,35 +67,35 @@ class K8SContainerResourcesConfig(BaseConfig):
         requests = {}
         if resources.cpu:
             if resources.cpu.limits:
-                limits['cpu'] = resources.cpu.limits
+                limits["cpu"] = resources.cpu.limits
             if resources.cpu.requests:
-                requests['cpu'] = resources.cpu.requests
+                requests["cpu"] = resources.cpu.requests
         if resources.memory:
             if resources.memory.limits:
                 memory = int(resources.memory.limits)
                 if memory != resources.memory.limits:
                     memory = resources.memory.limits
-                limits['memory'] = '{}Mi'.format(memory)
+                limits["memory"] = "{}Mi".format(memory)
             if resources.memory.requests:
                 memory = int(resources.memory.requests)
                 if memory != resources.memory.requests:
                     memory = resources.memory.requests
-                requests['memory'] = '{}Mi'.format(memory)
+                requests["memory"] = "{}Mi".format(memory)
         if resources.gpu:
             if resources.gpu.limits:
-                limits['gpu'] = int(resources.gpu.limits)
+                limits["gpu"] = int(resources.gpu.limits)
             if resources.gpu.requests:
-                requests['gpu'] = int(resources.gpu.requests)
+                requests["gpu"] = int(resources.gpu.requests)
         if resources.tpu:
             if resources.tpu.limits:
-                limits['tpu'] = int(resources.tpu.limits)
+                limits["tpu"] = int(resources.tpu.limits)
             if resources.tpu.requests:
-                requests['tpu'] = int(resources.tpu.requests)
+                requests["tpu"] = int(resources.tpu.requests)
         resource_results = {}
         if limits:
-            resource_results['limits'] = limits
+            resource_results["limits"] = limits
         if requests:
-            resource_results['requests'] = requests
+            resource_results["requests"] = requests
         return resource_results
 
 
@@ -115,9 +116,10 @@ class K8SResourcesConfig(BaseConfig):
         limits: `float`.
         requests: `float`.
     """
-    IDENTIFIER = 'resources'
+
+    IDENTIFIER = "resources"
     SCHEMA = K8SResourcesSchema
-    REDUCED_ATTRIBUTES = ['limits', 'requests']
+    REDUCED_ATTRIBUTES = ["limits", "requests"]
 
     def __init__(self, limits=None, requests=None):
         self.limits = limits
@@ -163,9 +165,10 @@ class PodResourcesConfig(BaseConfig):
         gpu: `K8SResourcesConfig`.
         tpu: `K8SResourcesConfig`.
     """
-    IDENTIFIER = 'pod_resources'
+
+    IDENTIFIER = "pod_resources"
     SCHEMA = PodResourcesSchema
-    REDUCED_ATTRIBUTES = ['cpu', 'memory', 'gpu', 'tpu']
+    REDUCED_ATTRIBUTES = ["cpu", "memory", "gpu", "tpu"]
 
     def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu

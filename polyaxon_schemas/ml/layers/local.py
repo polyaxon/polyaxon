@@ -7,7 +7,7 @@ from polyaxon_schemas.fields import ObjectOrListObject, StrOrFct
 from polyaxon_schemas.ml.initializations import (
     GlorotUniformInitializerConfig,
     InitializerSchema,
-    ZerosInitializerConfig
+    ZerosInitializerConfig,
 )
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
@@ -18,10 +18,14 @@ class LocallyConnected1DSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=1, max=1)
     strides = ObjectOrListObject(fields.Int, min=1, max=1, default=1, missing=1)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
@@ -97,25 +101,28 @@ class LocallyConnected1DConfig(BaseLayerConfig):
       kernel_size: 32
     ```
     """
-    IDENTIFIER = 'LocallyConnected1D'
+
+    IDENTIFIER = "LocallyConnected1D"
     SCHEMA = LocallyConnected1DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=1,
-                 padding='valid',
-                 data_format=None,
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotUniformInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=1,
+        padding="valid",
+        data_format=None,
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotUniformInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(LocallyConnected1DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -136,11 +143,17 @@ class LocallyConnected1DConfig(BaseLayerConfig):
 class LocallyConnected2DSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=2, max=2)
-    strides = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    strides = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
@@ -236,25 +249,28 @@ class LocallyConnected2DConfig(BaseLayerConfig):
       kernel_size: 3 or [3, 3]
     ```
     """
-    IDENTIFIER = 'LocallyConnected2D'
+
+    IDENTIFIER = "LocallyConnected2D"
     SCHEMA = LocallyConnected2DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1),
-                 padding='valid',
-                 data_format=None,
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotUniformInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1),
+        padding="valid",
+        data_format=None,
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotUniformInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(LocallyConnected2DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size

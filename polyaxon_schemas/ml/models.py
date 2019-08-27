@@ -29,18 +29,20 @@ class BaseModelSchema(BaseSchema):
 
 class BaseModelConfig(BaseConfig):
     SCHEMA = BaseModelSchema
-    IDENTIFIER = 'Model'
-    REDUCED_ATTRIBUTES = ['name', 'summaries']
+    IDENTIFIER = "Model"
+    REDUCED_ATTRIBUTES = ["name", "summaries"]
 
-    def __init__(self,
-                 graph,
-                 loss=None,
-                 optimizer=None,
-                 metrics=None,
-                 summaries=None,
-                 clip_gradients=0.5,
-                 clip_embed_gradients=0.,
-                 name=None):
+    def __init__(
+        self,
+        graph,
+        loss=None,
+        optimizer=None,
+        metrics=None,
+        summaries=None,
+        clip_gradients=0.5,
+        clip_embed_gradients=0.0,
+        name=None,
+    ):
         self.graph = graph
         self.loss = loss
         self.optimizer = optimizer
@@ -190,20 +192,23 @@ class ClassifierConfig(BaseModelConfig):
              units: 10
     ```
     """
-    SCHEMA = ClassifierSchema
-    IDENTIFIER = 'Classifier'
 
-    def __init__(self,
-                 graph,
-                 loss=None,
-                 optimizer=None,
-                 metrics=None,
-                 summaries=None,
-                 clip_gradients=0.5,
-                 clip_embed_gradients=0.,
-                 one_hot_encode=None,
-                 n_classes=None,
-                 name=None,):
+    SCHEMA = ClassifierSchema
+    IDENTIFIER = "Classifier"
+
+    def __init__(
+        self,
+        graph,
+        loss=None,
+        optimizer=None,
+        metrics=None,
+        summaries=None,
+        clip_gradients=0.5,
+        clip_embed_gradients=0.0,
+        one_hot_encode=None,
+        n_classes=None,
+        name=None,
+    ):
         super(ClassifierConfig, self).__init__(
             graph=graph,
             loss=loss,
@@ -212,13 +217,13 @@ class ClassifierConfig(BaseModelConfig):
             summaries=summaries,
             clip_gradients=clip_gradients,
             clip_embed_gradients=clip_embed_gradients,
-            name=name)
+            name=name,
+        )
         self.one_hot_encode = one_hot_encode
         self.n_classes = n_classes
 
 
 class RegressorSchema(BaseModelSchema):
-
     @staticmethod
     def schema_config():
         return RegressorConfig
@@ -312,8 +317,9 @@ class RegressorConfig(BaseModelConfig):
               units: 1
     ```
     """
+
     SCHEMA = RegressorSchema
-    IDENTIFIER = 'Regressor'
+    IDENTIFIER = "Regressor"
 
 
 class GeneratorSchema(BaseModelSchema):
@@ -323,7 +329,7 @@ class GeneratorSchema(BaseModelSchema):
 
     class Meta:
         ordered = True
-        exclude = ('graph',)
+        exclude = ("graph",)
 
     @staticmethod
     def schema_config():
@@ -457,20 +463,23 @@ class GeneratorConfig(BaseModelConfig):
               units: 784
     ```
     """
-    SCHEMA = GeneratorSchema
-    IDENTIFIER = 'Generator'
 
-    def __init__(self,
-                 encoder,
-                 decoder,
-                 bridge,
-                 loss=None,
-                 optimizer=None,
-                 metrics=None,
-                 summaries=None,
-                 clip_gradients=0.5,
-                 clip_embed_gradients=0.,
-                 name=None,):
+    SCHEMA = GeneratorSchema
+    IDENTIFIER = "Generator"
+
+    def __init__(
+        self,
+        encoder,
+        decoder,
+        bridge,
+        loss=None,
+        optimizer=None,
+        metrics=None,
+        summaries=None,
+        clip_gradients=0.5,
+        clip_embed_gradients=0.0,
+        name=None,
+    ):
         super(GeneratorConfig, self).__init__(
             graph=None,
             loss=loss,
@@ -479,7 +488,8 @@ class GeneratorConfig(BaseModelConfig):
             summaries=summaries,
             clip_gradients=clip_gradients,
             clip_embed_gradients=clip_embed_gradients,
-            name=name)
+            name=name,
+        )
 
         self.encoder = encoder
         self.decoder = decoder
@@ -487,7 +497,7 @@ class GeneratorConfig(BaseModelConfig):
 
 
 class ModelSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'model'
+    __multi_schema_name__ = "model"
     __configs__ = {
         BaseModelConfig.IDENTIFIER: BaseModelConfig,
         ClassifierConfig.IDENTIFIER: ClassifierConfig,
@@ -499,5 +509,5 @@ class ModelSchema(BaseMultiSchema):
 
 class ModelConfig(BaseConfig):
     SCHEMA = ModelSchema
-    IDENTIFIER = 'model'
+    IDENTIFIER = "model"
     UNKNOWN_BEHAVIOUR = EXCLUDE

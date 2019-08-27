@@ -18,7 +18,7 @@ from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.environments.pods import (
     EnvironmentConfig,
     K8SResourceRefConfig,
-    StoreRefConfig
+    StoreRefConfig,
 )
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs import kinds
@@ -35,51 +35,63 @@ class BaseSpecification(object):
     MAX_VERSION = 1  # Max Polyaxonfile specification version this CLI supports
     MIN_VERSION = 1  # Min Polyaxonfile specification version this CLI supports
 
-    VERSION = 'version'
-    KIND = 'kind'
-    LOGGING = 'logging'
-    NAME = 'name'
-    DESCRIPTION = 'description'
-    TAGS = 'tags'
-    INPUTS = 'inputs'
-    OUTPUTS = 'outputs'
-    BACKEND = 'backend'
-    FRAMEWORK = 'framework'
-    HP_TUNING = 'hptuning'
-    DECLARATIONS = 'declarations'
-    PARAMS = 'params'
-    ENVIRONMENT = 'environment'
-    RUN = 'run'
-    BUILD = 'build'
+    VERSION = "version"
+    KIND = "kind"
+    LOGGING = "logging"
+    NAME = "name"
+    DESCRIPTION = "description"
+    TAGS = "tags"
+    INPUTS = "inputs"
+    OUTPUTS = "outputs"
+    BACKEND = "backend"
+    FRAMEWORK = "framework"
+    HP_TUNING = "hptuning"
+    DECLARATIONS = "declarations"
+    PARAMS = "params"
+    ENVIRONMENT = "environment"
+    RUN = "run"
+    BUILD = "build"
 
     SECTIONS = (
-        VERSION, KIND, NAME, DESCRIPTION, LOGGING, TAGS,
-        INPUTS, OUTPUTS, DECLARATIONS, PARAMS,
-        BACKEND, FRAMEWORK, ENVIRONMENT,
-        HP_TUNING, BUILD, RUN
+        VERSION,
+        KIND,
+        NAME,
+        DESCRIPTION,
+        LOGGING,
+        TAGS,
+        INPUTS,
+        OUTPUTS,
+        DECLARATIONS,
+        PARAMS,
+        BACKEND,
+        FRAMEWORK,
+        ENVIRONMENT,
+        HP_TUNING,
+        BUILD,
+        RUN,
     )
 
     STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS)
-    OP_PARSING_SECTIONS = (BUILD, RUN, )
+    OP_PARSING_SECTIONS = (BUILD, RUN)
 
-    HEADER_SECTIONS = (
-        VERSION, KIND, NAME, DESCRIPTION, LOGGING, TAGS,
-    )
+    HEADER_SECTIONS = (VERSION, KIND, NAME, DESCRIPTION, LOGGING, TAGS)
 
     GRAPH_SECTIONS = []
 
-    REQUIRED_SECTIONS = (
-        VERSION, KIND
-    )
+    REQUIRED_SECTIONS = (VERSION, KIND)
 
     POSSIBLE_SECTIONS = (
-        VERSION, KIND, LOGGING, TAGS, NAME, DESCRIPTION, INPUTS, OUTPUTS
+        VERSION,
+        KIND,
+        LOGGING,
+        TAGS,
+        NAME,
+        DESCRIPTION,
+        INPUTS,
+        OUTPUTS,
     )
 
-    OPERATORS = {
-        ForConfig.IDENTIFIER: ForConfig,
-        IfConfig.IDENTIFIER: IfConfig,
-    }
+    OPERATORS = {ForConfig.IDENTIFIER: ForConfig, IfConfig.IDENTIFIER: IfConfig}
 
     ENVIRONMENT_CONFIG = EnvironmentConfig
     CONFIG = None
@@ -118,11 +130,13 @@ class BaseSpecification(object):
 
     def _get_config(self, data):
         config = self.CONFIG.from_dict(copy.deepcopy(data))
-        ops_params.validate_params(params=config.params,
-                                   inputs=config.inputs,
-                                   outputs=config.outputs,
-                                   is_template=False,
-                                   is_run=True)
+        ops_params.validate_params(
+            params=config.params,
+            inputs=config.inputs,
+            outputs=config.outputs,
+            is_template=False,
+            is_run=True,
+        )
         return config
 
     def parse_data(self, context=None):
@@ -146,7 +160,9 @@ class BaseSpecification(object):
                 "Your CLI support Polyaxonfile versions between: {} <= v <= {}."
                 "You can run `polyaxon upgrade` and "
                 "check documentation for the specification.".format(
-                    cls.MIN_VERSION, cls.MAX_VERSION))
+                    cls.MIN_VERSION, cls.MAX_VERSION
+                )
+            )
 
     @classmethod
     def check_kind(cls, data):
@@ -155,7 +171,10 @@ class BaseSpecification(object):
 
         if data[cls.KIND] not in kinds.KINDS:
             raise PolyaxonfileError(
-                "The Polyaxonfile with kind `{}` is not a supported value.".format(data[cls.KIND]))
+                "The Polyaxonfile with kind `{}` is not a supported value.".format(
+                    data[cls.KIND]
+                )
+            )
 
     def check_data(self, data=None):
         data = data or self._data
@@ -164,23 +183,28 @@ class BaseSpecification(object):
         if data[self.KIND] != self._SPEC_KIND:
             raise PolyaxonfileError(
                 "The specification used `{}` is incompatible with the kind `{}`.".format(
-                    self.__class__.__name__, data[self.KIND]))
+                    self.__class__.__name__, data[self.KIND]
+                )
+            )
         for key in set(six.iterkeys(data)) - set(self.SECTIONS):
             raise PolyaxonfileError(
                 "Unexpected section `{}` in Polyaxonfile version `{}`. "
                 "Please check the Polyaxonfile specification "
-                "for this version.".format(key, data[self.VERSION]))
+                "for this version.".format(key, data[self.VERSION])
+            )
 
         for key in set(six.iterkeys(data)) - set(self.POSSIBLE_SECTIONS):
             raise PolyaxonfileError(
                 "Unexpected section `{}` for specification kind `{}` version `{}`. "
                 "Please check the Polyaxonfile specification "
-                "for this version.".format(key, self._SPEC_KIND, data[self.VERSION]))
+                "for this version.".format(key, self._SPEC_KIND, data[self.VERSION])
+            )
 
         for key in self.REQUIRED_SECTIONS:
             if key not in data:
-                raise PolyaxonfileError("{} is a required section for a valid Polyaxonfile".format(
-                    key))
+                raise PolyaxonfileError(
+                    "{} is a required section for a valid Polyaxonfile".format(key)
+                )
 
     def patch(self, values):
         values = [self._parsed_data] + to_list(values)
@@ -291,7 +315,7 @@ class BaseSpecification(object):
     def log_level(self):
         if self.logging:
             return self.logging.level
-        return 'INFO'
+        return "INFO"
 
     @property
     def tags(self):
@@ -300,7 +324,6 @@ class BaseSpecification(object):
 
 
 class EnvironmentSpecificationMixin(object):
-
     @property
     def environment(self):
         return self._config_data.environment
@@ -320,7 +343,7 @@ class EnvironmentSpecificationMixin(object):
     @staticmethod
     def _get_refs_names(refs_raw):
         if refs_raw:
-            return [r.get('name') for r in refs_raw]
+            return [r.get("name") for r in refs_raw]
 
     @staticmethod
     def _get_refs_by_names(refs):
@@ -450,12 +473,15 @@ class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
+
     _SPEC_KIND = kinds.BUILD
 
-    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND, )
+    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND,)
 
     POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.ENVIRONMENT, BaseSpecification.BUILD, BaseSpecification.BACKEND,
+        BaseSpecification.ENVIRONMENT,
+        BaseSpecification.BUILD,
+        BaseSpecification.BACKEND,
     )
 
     @property
@@ -463,9 +489,9 @@ class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
         return self.config.build
 
     @classmethod
-    def create_specification(cls,  # pylint:disable=arguments-differ
-                             build_config,
-                             to_dict=True):
+    def create_specification(
+        cls, build_config, to_dict=True  # pylint:disable=arguments-differ
+    ):
         from polyaxon_schemas.ops.build_job import BuildConfig
 
         if isinstance(build_config, BuildConfig):
@@ -477,13 +503,10 @@ class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
             b_config = b_config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of BuildConfig.')
+                "Create specification expects a dict or an instance of BuildConfig."
+            )
 
-        specification = {
-            cls.VERSION: 1,
-            cls.KIND: cls._SPEC_KIND,
-            cls.BUILD: b_config,
-        }
+        specification = {cls.VERSION: 1, cls.KIND: cls._SPEC_KIND, cls.BUILD: b_config}
 
         if to_dict:
             return specification

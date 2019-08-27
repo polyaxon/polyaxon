@@ -11,21 +11,16 @@ from polyaxon_schemas.polyflow.executable import ExecutableConfig
 
 class TestExecutableConfigs(TestCase):
     def test_executable(self):
-        config_dict = {'start_at': 'foo'}
+        config_dict = {"start_at": "foo"}
         with self.assertRaises(ValidationError):
             ExecutableConfig.from_dict(config_dict)
 
-        config_dict = {'execute_at': 'foo'}
+        config_dict = {"execute_at": "foo"}
         with self.assertRaises(ValidationError):
             ExecutableConfig.from_dict(config_dict)
 
-        config_dict = {
-            'timeout': 2,
-            'execute_at': local_now().isoformat()
-        }
+        config_dict = {"timeout": 2, "execute_at": local_now().isoformat()}
         ExecutableConfig.from_dict(config_dict)
 
-        config_dict = {
-            'timeout': 2,
-        }
+        config_dict = {"timeout": 2}
         ExecutableConfig.from_dict(config_dict)

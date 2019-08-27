@@ -8,8 +8,8 @@ from marshmallow import fields
 
 class DictOrStr(fields.Str):
     default_error_messages = {
-        'invalid': 'Not a valid string or dict.',
-        'invalid_utf8': 'Not a valid utf-8 string.'
+        "invalid": "Not a valid string or dict.",
+        "invalid_utf8": "Not a valid utf-8 string.",
     }
 
     def _serialize(self, value, attr, obj, **kwargs):

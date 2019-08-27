@@ -42,7 +42,8 @@ class GaussianNoiseConfig(BaseLayerConfig):
       stddev: 0.5
     ```
     """
-    IDENTIFIER = 'GaussianNoise'
+
+    IDENTIFIER = "GaussianNoise"
     SCHEMA = GaussianNoiseSchema
 
     def __init__(self, stddev, **kwargs):
@@ -88,7 +89,8 @@ class GaussianDropoutConfig(BaseLayerConfig):
       rate: 0.7
     ```
     """
-    IDENTIFIER = 'GaussianDropout'
+
+    IDENTIFIER = "GaussianDropout"
     SCHEMA = GaussianDropoutSchema
 
     def __init__(self, rate, **kwargs):
@@ -139,7 +141,8 @@ class AlphaDropoutConfig(BaseLayerConfig):
       rate: 0.7
     ```
     """
-    IDENTIFIER = 'AlphaDropout'
+
+    IDENTIFIER = "AlphaDropout"
     SCHEMA = AlphaDropoutSchema
 
     def __init__(self, rate, noise_shape=None, seed=None, **kwargs):

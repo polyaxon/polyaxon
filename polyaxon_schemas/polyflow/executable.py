@@ -17,8 +17,8 @@ class ExecutableSchema(BaseSchema):
 
 class ExecutableConfig(BaseConfig):
     SCHEMA = ExecutableSchema
-    IDENTIFIER = 'executable'
-    REDUCED_ATTRIBUTES = ['execute_at', 'timeout']
+    IDENTIFIER = "executable"
+    REDUCED_ATTRIBUTES = ["execute_at", "timeout"]
 
     def __init__(self, execute_at=None, timeout=None):
         self.execute_at = execute_at
