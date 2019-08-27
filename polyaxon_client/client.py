@@ -22,35 +22,39 @@ from polyaxon_client.transport import Transport
 
 
 class PolyaxonClient(object):
-    def __init__(self,
-                 api_config=None,
-                 host=None,
-                 token=None,
-                 port=None,
-                 http_port=None,
-                 ws_port=None,
-                 use_https=None,
-                 verify_ssl=None,
-                 is_managed=None,
-                 authentication_type=None,
-                 api_version=None,
-                 reraise=False,
-                 schema_response=None,
-                 timeout=None):
+    def __init__(
+        self,
+        api_config=None,
+        host=None,
+        token=None,
+        port=None,
+        http_port=None,
+        ws_port=None,
+        use_https=None,
+        verify_ssl=None,
+        is_managed=None,
+        authentication_type=None,
+        api_version=None,
+        reraise=False,
+        schema_response=None,
+        timeout=None,
+    ):
 
-        self._api_config = api_config or ApiConfig(host=host,
-                                                   port=port,
-                                                   http_port=http_port,
-                                                   ws_port=ws_port,
-                                                   token=token,
-                                                   authentication_type=authentication_type,
-                                                   version=api_version,
-                                                   use_https=use_https,
-                                                   verify_ssl=verify_ssl,
-                                                   is_managed=is_managed,
-                                                   schema_response=schema_response,
-                                                   reraise=reraise,
-                                                   timeout=timeout)
+        self._api_config = api_config or ApiConfig(
+            host=host,
+            port=port,
+            http_port=http_port,
+            ws_port=ws_port,
+            token=token,
+            authentication_type=authentication_type,
+            version=api_version,
+            use_https=use_https,
+            verify_ssl=verify_ssl,
+            is_managed=is_managed,
+            schema_response=schema_response,
+            reraise=reraise,
+            timeout=timeout,
+        )
 
         self._transport = None
         self._auth_api = None
@@ -172,13 +176,22 @@ class PolyaxonClient(object):
     def set_internal_health_check(self):
         if settings.INTERNAL_HEALTH_CHECK_URL:
             self.set_health_check(
-                self.auth.build_url(self.api_config.base_url, settings.INTERNAL_HEALTH_CHECK_URL))
+                self.auth.build_url(
+                    self.api_config.base_url, settings.INTERNAL_HEALTH_CHECK_URL
+                )
+            )
 
     def reconcile(self, status):
         if settings.INTERNAL_RECONCILE_URL:
             self.transport.post(
-                url=self.auth.build_url(self.api_config.base_url, settings.INTERNAL_RECONCILE_URL),
-                json_data={'status': status, 'created_at': str(utc.localize(datetime.utcnow()))})
+                url=self.auth.build_url(
+                    self.api_config.base_url, settings.INTERNAL_RECONCILE_URL
+                ),
+                json_data={
+                    "status": status,
+                    "created_at": str(utc.localize(datetime.utcnow())),
+                },
+            )
 
     @property
     def transport(self):
@@ -193,76 +206,81 @@ class PolyaxonClient(object):
     @property
     def auth(self):
         if not self._auth_api:
-            self._auth_api = AuthApi(transport=self.transport,
-                                     config=self.api_config)
+            self._auth_api = AuthApi(transport=self.transport, config=self.api_config)
         return self._auth_api
 
     @property
     def cluster(self):
         if not self._cluster_api:
-            self._cluster_api = ClusterApi(transport=self.transport,
-                                           config=self.api_config)
+            self._cluster_api = ClusterApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._cluster_api
 
     @property
     def version(self):
         if not self._version_api:
-            self._version_api = VersionApi(transport=self.transport,
-                                           config=self.api_config)
+            self._version_api = VersionApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._version_api
 
     @property
     def project(self):
         if not self._project_api:
-            self._project_api = ProjectApi(transport=self.transport,
-                                           config=self.api_config)
+            self._project_api = ProjectApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._project_api
 
     @property
     def experiment_group(self):
         if not self._experiment_group_api:
-            self._experiment_group_api = ExperimentGroupApi(transport=self.transport,
-                                                            config=self.api_config)
+            self._experiment_group_api = ExperimentGroupApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._experiment_group_api
 
     @property
     def experiment(self):
         if not self._experiment_api:
-            self._experiment_api = ExperimentApi(transport=self.transport,
-                                                 config=self.api_config)
+            self._experiment_api = ExperimentApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._experiment_api
 
     @property
     def experiment_job(self):
         if not self._experiment_job_api:
-            self._experiment_job_api = ExperimentJobApi(transport=self.transport,
-                                                        config=self.api_config)
+            self._experiment_job_api = ExperimentJobApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._experiment_job_api
 
     @property
     def job(self):
         if not self._job_api:
-            self._job_api = JobApi(transport=self.transport,
-                                   config=self.api_config)
+            self._job_api = JobApi(transport=self.transport, config=self.api_config)
         return self._job_api
 
     @property
     def build_job(self):
         if not self._build_job_api:
-            self._build_job_api = BuildJobApi(transport=self.transport,
-                                              config=self.api_config)
+            self._build_job_api = BuildJobApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._build_job_api
 
     @property
     def user(self):
         if not self._user_api:
-            self._user_api = UserApi(transport=self.transport,
-                                     config=self.api_config)
+            self._user_api = UserApi(transport=self.transport, config=self.api_config)
         return self._user_api
 
     @property
     def bookmark(self):
         if not self._bookmark_api:
-            self._bookmark_api = BookmarkApi(transport=self.transport,
-                                             config=self.api_config)
+            self._bookmark_api = BookmarkApi(
+                transport=self.transport, config=self.api_config
+            )
         return self._bookmark_api

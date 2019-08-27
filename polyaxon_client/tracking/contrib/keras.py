@@ -16,11 +16,10 @@ except ImportError:
         from tensorflow.keras.callbacks import Callback
         from tensorflow.python.keras.callbacks import ModelCheckpoint
     except ImportError:
-        raise PolyaxonClientException('Keras is required to use PolyaxonKeras')
+        raise PolyaxonClientException("Keras is required to use PolyaxonKeras")
 
 
 class PolyaxonKeras(Callback):
-
     def __init__(self, experiment=None, metrics=None):
         self.experiment = experiment
         if settings.IS_MANAGED:
@@ -31,7 +30,9 @@ class PolyaxonKeras(Callback):
         if not logs or not self.experiment:
             return
         if self.metrics:
-            metrics = {metric: logs[metric] for metric in self.metrics if metric in logs}
+            metrics = {
+                metric: logs[metric] for metric in self.metrics if metric in logs
+            }
         else:
             metrics = logs  # Log all metrics
 

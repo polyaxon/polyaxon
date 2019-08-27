@@ -14,10 +14,10 @@ def run_command(cmd, data, location, chw):
     if location is not None and chw is True:
         cwd = location
     elif location is not None and chw is False:
-        cmd = '{0} {1}'.format(cmd, location)
+        cmd = "{0} {1}".format(cmd, location)
     r = Popen(shlex.split(cmd), stdout=PIPE, stdin=PIPE, stderr=PIPE, cwd=cwd)
     if data is None:
-        output = r.communicate()[0].decode('utf-8')
+        output = r.communicate()[0].decode("utf-8")
     else:
         output = r.communicate(input=data)[0]
     return output

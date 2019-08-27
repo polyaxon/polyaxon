@@ -10,7 +10,6 @@ from polyaxon_client.api.user import UserApi
 
 
 class TestUserApi(TestBaseApi):
-
     def setUp(self):
         super(TestUserApi, self).setUp()
         self.api_handler = UserApi(transport=self.transport, config=self.api_config)
@@ -20,15 +19,13 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
-                '/users',
-                'activate',
-                'test-username'
+                self.api_config.base_url, "/users", "activate", "test-username"
             ),
-            content_type='application/json',
-            status=200)
+            content_type="application/json",
+            status=200,
+        )
 
-        response = self.api_handler.activate_user('test-username')
+        response = self.api_handler.activate_user("test-username")
         assert response.status_code == 200
 
     @httpretty.activate
@@ -36,15 +33,13 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.DELETE,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
-                '/users',
-                'delete',
-                'test-username'
+                self.api_config.base_url, "/users", "delete", "test-username"
             ),
-            content_type='application/json',
-            status=204)
+            content_type="application/json",
+            status=204,
+        )
 
-        response = self.api_handler.delete_user('test-username')
+        response = self.api_handler.delete_user("test-username")
         assert response.status_code == 204
 
     @httpretty.activate
@@ -52,15 +47,13 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
-                '/superusers',
-                'grant',
-                'test-username'
+                self.api_config.base_url, "/superusers", "grant", "test-username"
             ),
-            content_type='application/json',
-            status=200)
+            content_type="application/json",
+            status=200,
+        )
 
-        response = self.api_handler.grant_superuser('test-username')
+        response = self.api_handler.grant_superuser("test-username")
         assert response.status_code == 200
 
     @httpretty.activate
@@ -68,13 +61,11 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
-                '/superusers',
-                'revoke',
-                'test-username'
+                self.api_config.base_url, "/superusers", "revoke", "test-username"
             ),
-            content_type='application/json',
-            status=200)
+            content_type="application/json",
+            status=200,
+        )
 
-        response = self.api_handler.revoke_superuser('test-username')
+        response = self.api_handler.revoke_superuser("test-username")
         assert response.status_code == 200

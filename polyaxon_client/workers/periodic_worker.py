@@ -12,16 +12,22 @@ from polyaxon_client.workers.queue_worker import QueueWorker
 
 
 class PeriodicWorker(QueueWorker):
-    NAME = 'polyaxon.PeriodicWorker'
+    NAME = "polyaxon.PeriodicWorker"
 
-    def __init__(self,
-                 callback,
-                 worker_interval=None,
-                 worker_timeout=None,
-                 queue_size=None,
-                 kwargs=None):
-        super(PeriodicWorker, self).__init__(timeout=worker_timeout, queue_size=queue_size)
-        self._interval = worker_interval if worker_interval is not None else settings.INTERVAL
+    def __init__(
+        self,
+        callback,
+        worker_interval=None,
+        worker_timeout=None,
+        queue_size=None,
+        kwargs=None,
+    ):
+        super(PeriodicWorker, self).__init__(
+            timeout=worker_timeout, queue_size=queue_size
+        )
+        self._interval = (
+            worker_interval if worker_interval is not None else settings.INTERVAL
+        )
         self._callback = callback
         self._kwargs = kwargs
         self._health_urls = []
@@ -46,7 +52,7 @@ class PeriodicWorker(QueueWorker):
             kwargs.update(queue_kwargs)
             self._callback(url=url, **kwargs)
         except Exception:
-            logger.error('Failed processing job', exc_info=True)
+            logger.error("Failed processing job", exc_info=True)
 
     def _extend_url_kwargs(self, url_kwargs, kwargs):
         for k, v in six.iteritems(kwargs):
@@ -89,7 +95,8 @@ class PeriodicWorker(QueueWorker):
                     if record is self.END_EVENT:
                         break
                     queue_kwargs, messages = self._extend_queue_kwargs(
-                        queue_kwargs, record, messages)
+                        queue_kwargs, record, messages
+                    )
                 finally:
                     self._queue.task_done()
 

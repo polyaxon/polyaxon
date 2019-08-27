@@ -15,7 +15,7 @@ class QueueWorker(BaseWorker):
     TIMEOUT_ATTEMPTS = 5
     QUEUE_SIZE = -1  # inf
     END_EVENT = object()
-    NAME = 'polyaxon.QueueWorker'
+    NAME = "polyaxon.QueueWorker"
 
     def __init__(self, timeout=None, queue_size=None):
         super(QueueWorker, self).__init__()
@@ -55,23 +55,29 @@ class QueueWorker(BaseWorker):
                 size = self._queue.qsize()
 
                 if not settings.IS_MANAGED:
-                    print('Polyaxon %s is attempting to send %i pending messages' %
-                          (self.NAME, size))
-                    print('Waiting up to {} seconds'.format(self._timeout))
-                    if os.name == 'nt':
-                        print('Press Ctrl-Break to quit')
+                    print(
+                        "Polyaxon %s is attempting to send %i pending messages"
+                        % (self.NAME, size)
+                    )
+                    print("Waiting up to {} seconds".format(self._timeout))
+                    if os.name == "nt":
+                        print("Press Ctrl-Break to quit")
                     else:
-                        print('Press Ctrl-C to quit')
+                        print("Press Ctrl-C to quit")
 
             sleep(settings.MIN_TIMEOUT)  # Allow tasks to get executed
             while timeout > 0 and not timeout_join(timeout=timeout, queue=self._queue):
-                timeout = min(timeout + self._timeout / self.TIMEOUT_ATTEMPTS,
-                              self._timeout - timeout)
+                timeout = min(
+                    timeout + self._timeout / self.TIMEOUT_ATTEMPTS,
+                    self._timeout - timeout,
+                )
 
             size = self._queue.qsize()
             if size > 0:
-                print('Polyaxon %s timed out and did not manage to send %i messages' %
-                      (self.NAME, size))
+                print(
+                    "Polyaxon %s timed out and did not manage to send %i messages"
+                    % (self.NAME, size)
+                )
 
             self._thread = None
 
@@ -97,7 +103,7 @@ class QueueWorker(BaseWorker):
                 try:
                     callback(*args, **kwargs)
                 except Exception:
-                    logger.error('Failed processing job', exc_info=True)
+                    logger.error("Failed processing job", exc_info=True)
             finally:
                 self._queue.task_done()
 

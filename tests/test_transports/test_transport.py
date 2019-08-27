@@ -16,23 +16,25 @@ class TestTransport(BaseTestCaseTransport):
 
     def test_get_headers(self):
         assert self.transport._get_headers() == {}
-        assert self.transport._get_headers({'foo': 'bar'}) == {'foo': 'bar'}
+        assert self.transport._get_headers({"foo": "bar"}) == {"foo": "bar"}
 
-        self.transport.config = ApiConfig(token='token', host='host')
+        self.transport.config = ApiConfig(token="token", host="host")
 
         assert self.transport._get_headers() == {
-            'Authorization': "{} {}".format(AuthenticationTypes.TOKEN, 'token')
+            "Authorization": "{} {}".format(AuthenticationTypes.TOKEN, "token")
         }
-        assert self.transport._get_headers({'foo': 'bar'}) == {
-            'foo': 'bar',
-            'Authorization': "{} {}".format(AuthenticationTypes.TOKEN, 'token')
+        assert self.transport._get_headers({"foo": "bar"}) == {
+            "foo": "bar",
+            "Authorization": "{} {}".format(AuthenticationTypes.TOKEN, "token"),
         }
 
         self.transport.config.authentication_type = AuthenticationTypes.INTERNAL_TOKEN
         assert self.transport._get_headers() == {
-            'Authorization': "{} {}".format(AuthenticationTypes.INTERNAL_TOKEN, 'token')
+            "Authorization": "{} {}".format(AuthenticationTypes.INTERNAL_TOKEN, "token")
         }
-        assert self.transport._get_headers({'foo': 'bar'}) == {
-            'foo': 'bar',
-            'Authorization': "{} {}".format(AuthenticationTypes.INTERNAL_TOKEN, 'token')
+        assert self.transport._get_headers({"foo": "bar"}) == {
+            "foo": "bar",
+            "Authorization": "{} {}".format(
+                AuthenticationTypes.INTERNAL_TOKEN, "token"
+            ),
         }

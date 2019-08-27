@@ -3,10 +3,7 @@ import logging
 from polyaxon_client import settings
 from polyaxon_client.handlers.handler import PolyaxonHandler
 
-EXCLUDE_DEFAULT_LOGGERS = (
-    'polyaxon.client',
-    'polyaxon.cli',
-)
+EXCLUDE_DEFAULT_LOGGERS = ("polyaxon.client", "polyaxon.cli")
 
 
 def setup_logging(send_logs, exclude=EXCLUDE_DEFAULT_LOGGERS):

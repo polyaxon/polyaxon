@@ -24,10 +24,11 @@ from polyaxon_client.transport import Transport
 
 
 class TestPolyaxonClient(TestCase):
-
     def setUp(self):
         super(TestPolyaxonClient, self).setUp()
-        settings.CONTEXT_AUTH_TOKEN_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.authtoken')
+        settings.CONTEXT_AUTH_TOKEN_PATH = "{}/{}".format(
+            tempfile.mkdtemp(), ".authtoken"
+        )
 
     def test_client(self):
         settings.SECRET_USER_TOKEN = None
@@ -56,21 +57,21 @@ class TestPolyaxonClient(TestCase):
         assert isinstance(client.user, UserApi)
 
     def test_from_config(self):
-        settings.SECRET_USER_TOKEN = 'token'  # noqa
-        settings.API_HOST = 'localhost'
+        settings.SECRET_USER_TOKEN = "token"  # noqa
+        settings.API_HOST = "localhost"
         client = PolyaxonClient(api_config=ApiConfig())
         assert client.is_managed is False
-        assert client.host == 'localhost'
+        assert client.host == "localhost"
         assert client.http_port == 80
         assert client.ws_port == 80
         assert client.use_https is False
-        assert client.token == 'token'
-        assert client.api_config.http_host == 'http://localhost:80'
-        assert client.api_config.ws_host == 'ws://localhost:80'
+        assert client.token == "token"
+        assert client.api_config.http_host == "http://localhost:80"
+        assert client.api_config.ws_host == "ws://localhost:80"
 
         settings.IS_MANAGED = True
-        settings.API_HTTP_HOST = 'api_host'
-        settings.API_WS_HOST = 'ws_host'
+        settings.API_HTTP_HOST = "api_host"
+        settings.API_WS_HOST = "ws_host"
         settings.API_HOST = None
         client = PolyaxonClient(api_config=ApiConfig())
         assert client.is_managed is True
@@ -78,30 +79,30 @@ class TestPolyaxonClient(TestCase):
         assert client.http_port == 80
         assert client.ws_port == 80
         assert client.use_https is False
-        assert client.token == 'token'
-        assert client.api_config.http_host == 'api_host'
-        assert client.api_config.ws_host == 'ws_host'
+        assert client.token == "token"
+        assert client.api_config.http_host == "api_host"
+        assert client.api_config.ws_host == "ws_host"
 
     def test_from_env(self):
         settings.IS_MANAGED = False
         with self.assertRaises(PolyaxonClientException):
             PolyaxonClient()
 
-        settings.SECRET_USER_TOKEN = 'token'  # noqa
-        settings.API_HOST = 'localhost'
+        settings.SECRET_USER_TOKEN = "token"  # noqa
+        settings.API_HOST = "localhost"
         client = PolyaxonClient()
         assert client.is_managed is False
-        assert client.host == 'localhost'
+        assert client.host == "localhost"
         assert client.http_port == 80
         assert client.ws_port == 80
         assert client.use_https is False
-        assert client.token == 'token'
-        assert client.api_config.http_host == 'http://localhost:80'
-        assert client.api_config.ws_host == 'ws://localhost:80'
+        assert client.token == "token"
+        assert client.api_config.http_host == "http://localhost:80"
+        assert client.api_config.ws_host == "ws://localhost:80"
 
         settings.IS_MANAGED = True
-        settings.API_HTTP_HOST = 'api_host'
-        settings.API_WS_HOST = 'ws_host'
+        settings.API_HTTP_HOST = "api_host"
+        settings.API_WS_HOST = "ws_host"
         settings.API_HOST = None
         client = PolyaxonClient()
         assert client.is_managed is True
@@ -109,6 +110,6 @@ class TestPolyaxonClient(TestCase):
         assert client.http_port == 80
         assert client.ws_port == 80
         assert client.use_https is False
-        assert client.token == 'token'
-        assert client.api_config.http_host == 'api_host'
-        assert client.api_config.ws_host == 'ws_host'
+        assert client.token == "token"
+        assert client.api_config.http_host == "api_host"
+        assert client.api_config.ws_host == "ws_host"

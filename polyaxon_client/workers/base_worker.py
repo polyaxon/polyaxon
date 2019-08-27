@@ -10,8 +10,9 @@ class BaseWorker(object):
     NAME = None
 
     def __init__(self):
-        assert self.NAME, 'Worker class `{}` must have a valid name.'.format(
-            self.__class__.__name__)
+        assert self.NAME, "Worker class `{}` must have a valid name.".format(
+            self.__class__.__name__
+        )
         self._lock = threading.Lock()
         self._thread = None
         self._thread_for_pid = None
@@ -39,7 +40,7 @@ class BaseWorker(object):
             atexit.register(self.atexit)
 
     def atexit(self):
-        raise NotImplementedError('Worker must implement `atexit` function.')
+        raise NotImplementedError("Worker must implement `atexit` function.")
 
     def _target(self):
-        raise NotImplementedError('Worker must implement `target` function.')
+        raise NotImplementedError("Worker must implement `target` function.")

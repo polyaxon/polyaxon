@@ -1,1 +1,1 @@
-OTHER_BACKEND = 'other'
+OTHER_BACKEND = "other"

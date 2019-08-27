@@ -26,18 +26,20 @@ class BaseTracker(object):
     REQUIRES_OUTPUTS = True
 
     @check_no_op
-    def __init__(self,
-                 project=None,
-                 client=None,
-                 track_logs=True,
-                 track_code=True,
-                 track_env=True,
-                 outputs_store=None):
+    def __init__(
+        self,
+        project=None,
+        client=None,
+        track_logs=True,
+        track_code=True,
+        track_env=True,
+        outputs_store=None,
+    ):
         if not settings.IS_MANAGED and project is None:
-            raise PolyaxonClientException('Please provide a valid project.')
+            raise PolyaxonClientException("Please provide a valid project.")
         elif self.is_notebook_job:
             job_info = self.get_notebook_job_info()
-            project = job_info['project_name']
+            project = job_info["project_name"]
 
         self.last_status = None
         self.client = client
@@ -73,12 +75,14 @@ class BaseTracker(object):
     def get_notebook_job_info(self):
         ensure_is_managed()
 
-        info = os.getenv('POLYAXON_NOTEBOOK_INFO', None)
+        info = os.getenv("POLYAXON_NOTEBOOK_INFO", None)
         try:
             return json.loads(info) if info else None
         except (ValueError, TypeError):
-            print('Could get experiment info, '
-                  'please make sure this is running inside a polyaxon job.')
+            print(
+                "Could get experiment info, "
+                "please make sure this is running inside a polyaxon job."
+            )
             return None
 
     @property
@@ -86,7 +90,7 @@ class BaseTracker(object):
         if settings.NO_OP:
             return None
 
-        return settings.IS_MANAGED and 'POLYAXON_NOTEBOOK_INFO' in os.environ
+        return settings.IS_MANAGED and "POLYAXON_NOTEBOOK_INFO" in os.environ
 
     def _update(self, patch_dict):
         raise NotImplementedError
@@ -110,7 +114,7 @@ class BaseTracker(object):
         self.start()
 
         def excepthook(exception, value, tb):
-            self.log_failed(message='Type: {}, Value: {}'.format(exception, value))
+            self.log_failed(message="Type: {}, Value: {}".format(exception, value))
             # Resume normal work
             sys.__excepthook__(exception, value, tb)
 
@@ -124,17 +128,19 @@ class BaseTracker(object):
     @check_no_op
     @check_offline
     def start(self):
-        self.log_status('running')
-        self.last_status = 'running'
+        self.log_status("running")
+        self.last_status = "running"
 
     @check_no_op
     @check_offline
     def end(self, status, message=None, traceback=None):
-        if self.last_status in ['succeeded', 'failed', 'stopped']:
+        if self.last_status in ["succeeded", "failed", "stopped"]:
             return
         self.log_status(status=status, message=message, traceback=traceback)
         self.last_status = status
-        time.sleep(0.1)  # Just to give the opportunity to the worker to pick the message
+        time.sleep(
+            0.1
+        )  # Just to give the opportunity to the worker to pick the message
         self._unset_health_url()
 
     @check_no_op
@@ -146,7 +152,7 @@ class BaseTracker(object):
     @check_no_op
     @check_offline
     def log_succeeded(self):
-        self.end('succeeded')
+        self.end("succeeded")
 
     @check_no_op
     @check_offline
@@ -157,7 +163,7 @@ class BaseTracker(object):
     @check_no_op
     @check_offline
     def log_stopped(self):
-        self.end('stopped')
+        self.end("stopped")
 
     @check_no_op
     @check_offline
@@ -168,13 +174,16 @@ class BaseTracker(object):
     @check_no_op
     @check_offline
     def log_failed(self, message=None, traceback=None):
-        self.end(status='failed', message=message, traceback=traceback)
+        self.end(status="failed", message=message, traceback=traceback)
 
     @check_no_op
-    def set_outputs_store(self, outputs_store=None, outputs_path=None, set_env_vars=False):
+    def set_outputs_store(
+        self, outputs_store=None, outputs_path=None, set_env_vars=False
+    ):
         if not any([outputs_store, outputs_path]):
             raise PolyaxonClientException(
-                'An Store instance or and outputs path is required.')
+                "An Store instance or and outputs path is required."
+            )
         self.outputs_store = outputs_store or StoreManager(path=outputs_path)
         if self.outputs_store and set_env_vars:
             self.outputs_store.set_env_vars()
@@ -200,55 +209,53 @@ class BaseTracker(object):
     @check_no_op
     @check_offline
     def log_build(self, build_id=None):
-        self._update({'build_id': build_id()})
+        self._update({"build_id": build_id()})
 
     @check_no_op
     @check_offline
     def log_run_env(self):
-        self._update({'run_env': get_run_env()})
+        self._update({"run_env": get_run_env()})
 
     @check_no_op
     @check_offline
     def log_tags(self, tags, reset=False):
-        patch_dict = {'tags': validate_tags(tags)}
+        patch_dict = {"tags": validate_tags(tags)}
         if reset is False:
-            patch_dict['merge'] = True
+            patch_dict["merge"] = True
         self._update(patch_dict)
 
     @check_no_op
     @check_offline
     def log_backend(self, backend):
-        patch_dict = {'backend': backend}
+        patch_dict = {"backend": backend}
         self._update(patch_dict)
 
     @check_no_op
     @check_offline
     def log_params(self, reset=False, **params):
-        patch_dict = {'params': params}
+        patch_dict = {"params": params}
         if reset is False:
-            patch_dict['merge'] = True
+            patch_dict["merge"] = True
         self._update(patch_dict)
 
     @check_no_op
     @check_offline
     def set_description(self, description):
-        self._update({'description': description})
+        self._update({"description": description})
 
     @check_no_op
     @check_offline
     def set_name(self, name):
-        self._update({'name': name})
+        self._update({"name": name})
 
     @check_no_op
     @check_offline
-    def log_data_ref(self, data, data_name='data', reset=False):
+    def log_data_ref(self, data, data_name="data", reset=False):
         try:
-            params = {
-                data_name: hash_value(data)
-            }
-            patch_dict = {'data_refs': params}
+            params = {data_name: hash_value(data)}
+            patch_dict = {"data_refs": params}
             if reset is False:
-                patch_dict['merge'] = True
+                patch_dict["merge"] = True
             self._update(patch_dict)
         except Exception as e:
-            logger.warning('Could create data hash %s', e)
+            logger.warning("Could create data hash %s", e)

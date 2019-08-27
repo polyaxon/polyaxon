@@ -17,16 +17,17 @@ from polyaxon_client.transport.utils import Bar, progress_bar
 
 class HttpTransportMixin(object):
     """HTTP operations transport."""
+
     @property
     def session(self):
-        if not hasattr(self, '_session'):
+        if not hasattr(self, "_session"):
             self._session = requests.Session()
         return self._session
 
     @staticmethod
     def create_progress_callback(encoder):
         encoder_len = encoder.len
-        callback_bar = Bar(expected_size=encoder_len, filled_char='=')
+        callback_bar = Bar(expected_size=encoder_len, filled_char="=")
 
         def callback(monitor):
             callback_bar.show(monitor.bytes_read)
@@ -34,26 +35,28 @@ class HttpTransportMixin(object):
         return callback, callback_bar
 
     @staticmethod
-    def format_sizeof(num, suffix='B'):
+    def format_sizeof(num, suffix="B"):
         """
         Print in human friendly format
         """
-        for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
+        for unit in ["", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
             if abs(num) < 1024.0:
                 return "%3.1f%s%s" % (num, unit, suffix)
             num /= 1024.0
-        return "%.1f%s%s" % (num, 'Yi', suffix)
+        return "%.1f%s%s" % (num, "Yi", suffix)
 
-    def request(self,
-                method,
-                url,
-                params=None,
-                data=None,
-                files=None,
-                json=None,  # noqa
-                timeout=None,
-                headers=None,
-                session=None):
+    def request(
+        self,
+        method,
+        url,
+        params=None,
+        data=None,
+        files=None,
+        json=None,  # noqa
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
         """Send a request with the given data as json to the given URL.
 
         Args:
@@ -72,26 +75,31 @@ class HttpTransportMixin(object):
         Raises:
             PolyaxonHTTPError or one of its subclasses.
         """
-        logger.debug("Starting request to url: %s with params: %s, data: %s",
-                     url, params, data)
+        logger.debug(
+            "Starting request to url: %s with params: %s, data: %s", url, params, data
+        )
 
         request_headers = self._get_headers(headers=headers)
         timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
         session = session or self.session
 
         try:
-            response = session.request(method,
-                                       url,
-                                       params=params,
-                                       data=data,
-                                       json=json,
-                                       headers=request_headers,
-                                       files=files,
-                                       timeout=timeout,
-                                       verify=self.config.verify_ssl)
-        except (requests.exceptions.RequestException,
-                requests.exceptions.Timeout,
-                requests.exceptions.HTTPError) as exception:
+            response = session.request(
+                method,
+                url,
+                params=params,
+                data=data,
+                json=json,
+                headers=request_headers,
+                files=files,
+                timeout=timeout,
+                verify=self.config.verify_ssl,
+            )
+        except (
+            requests.exceptions.RequestException,
+            requests.exceptions.Timeout,
+            requests.exceptions.HTTPError,
+        ) as exception:
             try:
                 logger.debug("Exception: %s", exception, exc_info=True)
             except TypeError:
@@ -100,21 +108,26 @@ class HttpTransportMixin(object):
                 "Error connecting to Polyaxon server on `{}`.\n"
                 "An Error `{}` occurred.\n"
                 "Check your host and ports configuration "
-                "and your internet connection.".format(url, exception))
+                "and your internet connection.".format(url, exception)
+            )
 
-        logger.debug("Response Content: %s, Headers: %s", response.content, response.headers)
+        logger.debug(
+            "Response Content: %s, Headers: %s", response.content, response.headers
+        )
         self.check_response_status(response, url)
         return response
 
-    def upload(self,
-               url,
-               files,
-               files_size,
-               params=None,
-               json_data=None,
-               timeout=None,
-               headers=None,
-               session=None):
+    def upload(
+        self,
+        url,
+        files,
+        files_size,
+        params=None,
+        json_data=None,
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
 
         if files_size > settings.WARN_UPLOAD_SIZE:
             logger.warning(
@@ -124,7 +137,8 @@ class HttpTransportMixin(object):
                 "add them directly to your data volume, or upload them "
                 "separately using `polyaxon data` command and remove them from here.\n",
                 self.format_sizeof(settings.WARN_UPLOAD_SIZE),
-                self.format_sizeof(settings.MAX_UPLOAD_SIZE))
+                self.format_sizeof(settings.MAX_UPLOAD_SIZE),
+            )
 
         if files_size > settings.MAX_UPLOAD_SIZE:
             raise PolyaxonShouldExitError(
@@ -132,47 +146,55 @@ class HttpTransportMixin(object):
                 "If you have data files in the current directory, "
                 "please add them directly to your data volume, or upload them "
                 "separately using `polyaxon data` command and remove them from here.\n".format(
-                    self.format_sizeof(settings.MAX_UPLOAD_SIZE)))
+                    self.format_sizeof(settings.MAX_UPLOAD_SIZE)
+                )
+            )
 
         files = to_list(files)
         if json_data:
-            files.append(('json', json.dumps(json_data)))
+            files.append(("json", json.dumps(json_data)))
 
-        multipart_encoder = MultipartEncoder(
-            fields=files
-        )
+        multipart_encoder = MultipartEncoder(fields=files)
         request_headers = headers or {}
         request_headers.update({"Content-Type": multipart_encoder.content_type})
 
         # Attach progress bar
-        progress_callback, callback_bar = self.create_progress_callback(multipart_encoder)
-        multipart_encoder_monitor = MultipartEncoderMonitor(multipart_encoder, progress_callback)
+        progress_callback, callback_bar = self.create_progress_callback(
+            multipart_encoder
+        )
+        multipart_encoder_monitor = MultipartEncoderMonitor(
+            multipart_encoder, progress_callback
+        )
 
         timeout = timeout if timeout is not None else settings.LONG_REQUEST_TIMEOUT
 
         try:
-            response = self.put(url=url,
-                                params=params,
-                                data=multipart_encoder_monitor,
-                                headers=request_headers,
-                                timeout=timeout,
-                                session=session)
+            response = self.put(
+                url=url,
+                params=params,
+                data=multipart_encoder_monitor,
+                headers=request_headers,
+                timeout=timeout,
+                session=session,
+            )
         finally:
             # always make sure we clear the console
             callback_bar.done()
 
         return response
 
-    def download(self,
-                 url,
-                 filename,
-                 params=None,
-                 headers=None,
-                 timeout=None,
-                 session=None,
-                 untar=False,
-                 delete_tar=True,
-                 extract_path=None):
+    def download(
+        self,
+        url,
+        filename,
+        params=None,
+        headers=None,
+        timeout=None,
+        session=None,
+        untar=False,
+        delete_tar=True,
+        extract_path=None,
+    ):
         """
         Download the file from the given url at the current path
         """
@@ -183,21 +205,25 @@ class HttpTransportMixin(object):
         session = session or self.session
 
         try:
-            response = session.get(url,
-                                   params=params,
-                                   headers=request_headers,
-                                   timeout=timeout,
-                                   stream=True)
+            response = session.get(
+                url,
+                params=params,
+                headers=request_headers,
+                timeout=timeout,
+                stream=True,
+            )
             self.check_response_status(response, url)
-            with open(filename, 'wb') as f:
+            with open(filename, "wb") as f:
                 # chunk mode response doesn't have content-length so we are
                 # using a custom header here
-                content_length = response.headers.get('x-polyaxon-content-length')
+                content_length = response.headers.get("x-polyaxon-content-length")
                 if not content_length:
-                    content_length = response.headers.get('content-length')
+                    content_length = response.headers.get("content-length")
                 if content_length:
-                    for chunk in progress_bar(response.iter_content(chunk_size=1024),
-                                              expected_size=(int(content_length) / 1024) + 1):
+                    for chunk in progress_bar(
+                        response.iter_content(chunk_size=1024),
+                        expected_size=(int(content_length) / 1024) + 1,
+                    ):
                         if chunk:
                             f.write(chunk)
                 else:
@@ -206,14 +232,16 @@ class HttpTransportMixin(object):
                             f.write(chunk)
 
             if untar:
-                filename = self.untar(filename=filename,
-                                      delete_tar=delete_tar,
-                                      extract_path=extract_path)
+                filename = self.untar(
+                    filename=filename, delete_tar=delete_tar, extract_path=extract_path
+                )
             return filename
-        except (requests.exceptions.ConnectionError,
-                requests.exceptions.RequestException,
-                requests.exceptions.Timeout,
-                requests.exceptions.HTTPError) as exception:
+        except (
+            requests.exceptions.ConnectionError,
+            requests.exceptions.RequestException,
+            requests.exceptions.Timeout,
+            requests.exceptions.HTTPError,
+        ) as exception:
             try:
                 logger.debug("Exception: %s", exception)
             except TypeError:
@@ -223,10 +251,11 @@ class HttpTransportMixin(object):
                 "Error connecting to Polyaxon server on `{}`.\n"
                 "An Error `{}` occurred.\n"
                 "Check your host and ports configuration "
-                "and your internet connection.".format(url, exception))
+                "and your internet connection.".format(url, exception)
+            )
 
     def untar(self, filename, delete_tar=True, extract_path=None):
-        extract_path = extract_path or '.'
+        extract_path = extract_path or "."
         logger.info("Untarring the contents of the file ...")
         tar = tarfile.open(filename)
         tar.extractall(extract_path)
@@ -244,113 +273,138 @@ class HttpTransportMixin(object):
 
         try:
             logger.error(
-                "Request to %s failed with status code %s. \n"
-                "Reason: %s", endpoint, response.status_code, response.text)
+                "Request to %s failed with status code %s. \n" "Reason: %s",
+                endpoint,
+                response.status_code,
+                response.text,
+            )
         except TypeError:
             logger.error("Request to %s failed with status code", endpoint)
 
-        exception = ERRORS_MAPPING.get(response.status_code, ERRORS_MAPPING['http'])
-        raise exception(endpoint=endpoint,
-                        response=response,
-                        message=response.text,
-                        status_code=response.status_code)
+        exception = ERRORS_MAPPING.get(response.status_code, ERRORS_MAPPING["http"])
+        raise exception(
+            endpoint=endpoint,
+            response=response,
+            message=response.text,
+            status_code=response.status_code,
+        )
 
-    def get(self,
-            url,
-            params=None,
-            data=None,
-            files=None,
-            json_data=None,
-            timeout=None,
-            headers=None,
-            session=None):
+    def get(
+        self,
+        url,
+        params=None,
+        data=None,
+        files=None,
+        json_data=None,
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
         """Call request with a get."""
-        return self.request('GET',
-                            url=url,
-                            params=params,
-                            data=data,
-                            files=files,
-                            json=json_data,
-                            timeout=timeout,
-                            headers=headers,
-                            session=session)
+        return self.request(
+            "GET",
+            url=url,
+            params=params,
+            data=data,
+            files=files,
+            json=json_data,
+            timeout=timeout,
+            headers=headers,
+            session=session,
+        )
 
-    def post(self,
-             url,
-             params=None,
-             data=None,
-             files=None,
-             json_data=None,
-             timeout=None,
-             headers=None,
-             session=None):
+    def post(
+        self,
+        url,
+        params=None,
+        data=None,
+        files=None,
+        json_data=None,
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
         """Call request with a post."""
-        return self.request('POST',
-                            url=url,
-                            params=params,
-                            data=data,
-                            files=files,
-                            json=json_data,
-                            timeout=timeout,
-                            headers=headers,
-                            session=session)
+        return self.request(
+            "POST",
+            url=url,
+            params=params,
+            data=data,
+            files=files,
+            json=json_data,
+            timeout=timeout,
+            headers=headers,
+            session=session,
+        )
 
-    def patch(self,
-              url,
-              params=None,
-              data=None,
-              files=None,
-              json_data=None,
-              timeout=None,
-              headers=None,
-              session=None):
+    def patch(
+        self,
+        url,
+        params=None,
+        data=None,
+        files=None,
+        json_data=None,
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
         """Call request with a patch."""
-        return self.request('PATCH',
-                            url=url,
-                            params=params,
-                            data=data,
-                            files=files,
-                            json=json_data,
-                            timeout=timeout,
-                            headers=headers,
-                            session=session)
+        return self.request(
+            "PATCH",
+            url=url,
+            params=params,
+            data=data,
+            files=files,
+            json=json_data,
+            timeout=timeout,
+            headers=headers,
+            session=session,
+        )
 
-    def delete(self,
-               url,
-               params=None,
-               data=None,
-               files=None,
-               json_data=None,
-               timeout=None,
-               headers=None,
-               session=None):
+    def delete(
+        self,
+        url,
+        params=None,
+        data=None,
+        files=None,
+        json_data=None,
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
         """Call request with a delete."""
-        return self.request('DELETE',
-                            url=url,
-                            params=params,
-                            data=data,
-                            files=files,
-                            json=json_data,
-                            timeout=timeout,
-                            headers=headers,
-                            session=session)
+        return self.request(
+            "DELETE",
+            url=url,
+            params=params,
+            data=data,
+            files=files,
+            json=json_data,
+            timeout=timeout,
+            headers=headers,
+            session=session,
+        )
 
-    def put(self,
-            url,
-            params=None,
-            data=None,
-            files=None,
-            json_data=None,
-            timeout=None,
-            headers=None,
-            session=None):
+    def put(
+        self,
+        url,
+        params=None,
+        data=None,
+        files=None,
+        json_data=None,
+        timeout=None,
+        headers=None,
+        session=None,
+    ):
         """Call request with a put."""
-        return self.request('PUT',
-                            url=url,
-                            params=params,
-                            data=data,
-                            files=files,
-                            json=json_data,
-                            timeout=timeout,
-                            headers=headers,
-                            session=session)
+        return self.request(
+            "PUT",
+            url=url,
+            params=params,
+            data=data,
+            files=files,
+            json=json_data,
+            timeout=timeout,
+            headers=headers,
+            session=session,
+        )

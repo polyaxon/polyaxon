@@ -11,22 +11,24 @@ class ApiConfig(object):
     PAGE_SIZE = 20
     BASE_URL = "{}/api/{}"
 
-    def __init__(self,
-                 host=None,
-                 port=None,
-                 http_port=None,
-                 ws_port=None,
-                 token=None,
-                 version=None,
-                 authentication_type=None,
-                 use_https=None,
-                 verify_ssl=None,
-                 is_managed=None,
-                 is_local=None,
-                 schema_response=None,
-                 reraise=False,
-                 timeout=None,
-                 interval=None):
+    def __init__(
+        self,
+        host=None,
+        port=None,
+        http_port=None,
+        ws_port=None,
+        token=None,
+        version=None,
+        authentication_type=None,
+        use_https=None,
+        verify_ssl=None,
+        is_managed=None,
+        is_local=None,
+        schema_response=None,
+        reraise=False,
+        timeout=None,
+        interval=None,
+    ):
 
         self.token = token or settings.SECRET_USER_TOKEN
         self.host = host or settings.API_HOST
@@ -37,46 +39,59 @@ class ApiConfig(object):
 
         if not self.host and not self.is_managed:
             raise PolyaxonClientException(
-                'Api config requires at least a host if not running in-cluster.')
+                "Api config requires at least a host if not running in-cluster."
+            )
 
         self.port = port
         if port:
             self.http_port = port
             self.ws_port = port
         else:
-            self.http_port = http_port or settings.HTTP_PORT or (settings.DEFAULT_HTTPS_PORT
-                                                                 if self.use_https
-                                                                 else settings.DEFAULT_HTTP_PORT)
+            self.http_port = (
+                http_port
+                or settings.HTTP_PORT
+                or (
+                    settings.DEFAULT_HTTPS_PORT
+                    if self.use_https
+                    else settings.DEFAULT_HTTP_PORT
+                )
+            )
             self.ws_port = ws_port or settings.WS_PORT or self.http_port
         self.version = version or settings.API_VERSION
         self.service_header = None
 
         if self.is_managed and not self.is_local:
             if not settings.API_HTTP_HOST:
-                print('Could get api host info, '
-                      'please make sure this is running inside a polyaxon job.')
+                print(
+                    "Could get api host info, "
+                    "please make sure this is running inside a polyaxon job."
+                )
             self.http_host = settings.API_HTTP_HOST
             self.ws_host = settings.API_WS_HOST
             if all([settings.HEADER, settings.HEADER_SERVICE]):
                 self.service_header = {settings.HEADER: settings.HEADER_SERVICE}
 
             internal_token_cond = (
-                self.service_header and
-                not self.token and
-                settings.SECRET_INTERNAL_TOKEN
+                self.service_header
+                and not self.token
+                and settings.SECRET_INTERNAL_TOKEN
             )
             if internal_token_cond:
                 self.token = settings.SECRET_INTERNAL_TOKEN
         else:
-            http_protocol = 'https' if self.use_https else 'http'
-            ws_protocol = 'wss' if self.use_https else 'ws'
-            self.http_host = '{}://{}:{}'.format(http_protocol, self.host, self.http_port)
-            self.ws_host = '{}://{}:{}'.format(ws_protocol, self.host, self.ws_port)
+            http_protocol = "https" if self.use_https else "http"
+            ws_protocol = "wss" if self.use_https else "ws"
+            self.http_host = "{}://{}:{}".format(
+                http_protocol, self.host, self.http_port
+            )
+            self.ws_host = "{}://{}:{}".format(ws_protocol, self.host, self.ws_port)
         self.base_url = self.BASE_URL.format(self.http_host, self.version)
         self.base_ws_url = self.BASE_URL.format(self.ws_host, self.version)
-        self.authentication_type = (authentication_type or
-                                    settings.AUTHENTICATION_TYPE or
-                                    AuthenticationTypes.TOKEN)
+        self.authentication_type = (
+            authentication_type
+            or settings.AUTHENTICATION_TYPE
+            or AuthenticationTypes.TOKEN
+        )
         self.schema_response = self._get_bool(schema_response, settings.SCHEMA_RESPONSE)
         self.reraise = reraise
         self.timeout = timeout if timeout is not None else settings.TIMEOUT

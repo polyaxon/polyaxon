@@ -15,23 +15,25 @@ from polyaxon_client.transport import Transport
 
 class TestBaseApi(TestCase):
     def setUp(self):
-        self.host = 'localhost'
+        self.host = "localhost"
         self.http_port = 8000
         self.ws_port = 1337
-        self.api_config = ApiConfig(host=self.host,
-                                    http_port=self.http_port,
-                                    ws_port=self.ws_port,
-                                    version='v1',
-                                    token='token',
-                                    reraise=True,
-                                    use_https=False,
-                                    is_managed=False,
-                                    interval=0,
-                                    timeout=0.01,
-                                    schema_response=True)
+        self.api_config = ApiConfig(
+            host=self.host,
+            http_port=self.http_port,
+            ws_port=self.ws_port,
+            version="v1",
+            token="token",
+            reraise=True,
+            use_https=False,
+            is_managed=False,
+            interval=0,
+            timeout=0.01,
+            schema_response=True,
+        )
         self.transport = Transport(config=self.api_config)
-        settings.TMP_AUTH_TOKEN_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
-        settings.USER_CLIENT_CONFIG_PATH = '{}/{}'.format(tempfile.mkdtemp(), '.plx')
+        settings.TMP_AUTH_TOKEN_PATH = "{}/{}".format(tempfile.mkdtemp(), ".plx")
+        settings.USER_CLIENT_CONFIG_PATH = "{}/{}".format(tempfile.mkdtemp(), ".plx")
 
     def set_raw_response(self):
         self.api_config.schema_response = False

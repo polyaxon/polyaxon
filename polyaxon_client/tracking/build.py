@@ -14,35 +14,30 @@ class BuildJob(BaseJob):
     REQUIRES_OUTPUTS = False
 
     @check_no_op
-    def __init__(self,
-                 project=None,
-                 job_id=None,
-                 client=None,
-                 track_logs=True,
-                 track_code=True):
+    def __init__(
+        self, project=None, job_id=None, client=None, track_logs=True, track_code=True
+    ):
         super(BuildJob, self).__init__(
             project=project,
             job_id=job_id,
-            job_type='builds',
+            job_type="builds",
             client=client,
             track_logs=track_logs,
-            track_code=track_code)
+            track_code=track_code,
+        )
 
     @check_no_op
-    def create(self,
-               name=None,
-               backend=None,
-               tags=None,
-               description=None,
-               content=None):
+    def create(
+        self, name=None, backend=None, tags=None, description=None, content=None
+    ):
         build_config = {}
         if name:
-            build_config['name'] = name
+            build_config["name"] = name
         if tags:
-            build_config['tags'] = tags
-        build_config['backend'] = OTHER_BACKEND
+            build_config["tags"] = tags
+        build_config["backend"] = OTHER_BACKEND
         if backend:
-            build_config['backend'] = backend
+            build_config["backend"] = backend
         if description:
             build_config['description'] = description
         build_config['is_managed'] = settings.IS_MANAGED
@@ -52,6 +47,7 @@ class BuildJob(BaseJob):
         if self.client:
             if content:
                 build_config['content'] = self.client.project.validate_content(content=content)
+            build_config["is_managed"] = settings.IS_MANAGED
 
             build = self.client.project.create_build(
                 username=self.username,
@@ -60,11 +56,12 @@ class BuildJob(BaseJob):
             )
             if not build:
                 raise PolyaxonClientException('Could not create build.')
+
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.job_id = self._get_entity_id(build)
         self.job = build
-        self.last_status = 'created'
+        self.last_status = "created"
 
         if self.track_code:
             self.log_code_ref()
@@ -78,10 +75,14 @@ class BuildJob(BaseJob):
     @check_offline
     def _update(self, patch_dict):
         self.client.build_job.update_build(
-            username=self.username, project_name=self.project_name,
-            job_id=self.job_id, patch_dict=patch_dict, background=True)
+            username=self.username,
+            project_name=self.project_name,
+            job_id=self.job_id,
+            patch_dict=patch_dict,
+            background=True,
+        )
 
     @check_no_op
     @check_offline
     def log_dockerfile(self, dockerfile):
-        self._update({'dockerfile': dockerfile})
+        self._update({"dockerfile": dockerfile})

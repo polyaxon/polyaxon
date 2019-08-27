@@ -21,10 +21,10 @@ class TestJobTracking(TestEnvVarsCase):
             Job.get_job_info()
 
     def test_empty_job_info(self):
-        self.check_empty_value('POLYAXON_JOB_INFO', Job.get_job_info)
+        self.check_empty_value("POLYAXON_JOB_INFO", Job.get_job_info)
 
     def test_non_dict_job_info(self):
-        self.check_non_dict_value('POLYAXON_JOB_INFO', Job.get_job_info)
+        self.check_non_dict_value("POLYAXON_JOB_INFO", Job.get_job_info)
 
     def test_dict_job_info(self):
         job_info = {
@@ -33,6 +33,4 @@ class TestJobTracking(TestEnvVarsCase):
             "project_uuid": uuid.uuid4().hex,
             "job_uuid": uuid.uuid4().hex,
         }
-        self.check_valid_dict_value('POLYAXON_JOB_INFO',
-                                    Job.get_job_info,
-                                    job_info)
+        self.check_valid_dict_value("POLYAXON_JOB_INFO", Job.get_job_info, job_info)

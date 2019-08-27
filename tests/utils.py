@@ -14,7 +14,7 @@ class TestEnvVarsCase(TestCase):
         assert expected_function() is None
 
     @staticmethod
-    def check_non_dict_value(key, expected_function, value='non dict random value'):
+    def check_non_dict_value(key, expected_function, value="non dict random value"):
         os.environ[key] = value
         assert expected_function() is None
 

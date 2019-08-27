@@ -20,12 +20,13 @@ class PolyaxonHTTPError(PolyaxonClientException):
         super(PolyaxonHTTPError, self).__init__()
         self.endpoint = endpoint
         self.response = response
-        self.message = getattr(self, 'message', message)
-        self.status_code = getattr(self, 'status_code', status_code)
+        self.message = getattr(self, "message", message)
+        self.status_code = getattr(self, "status_code", status_code)
 
     def __str__(self):
-        return '{status_code} on {endpoint}.'.format(status_code=self.status_code,
-                                                     endpoint=self.endpoint)
+        return "{status_code} on {endpoint}.".format(
+            status_code=self.status_code, endpoint=self.endpoint
+        )
 
 
 class BadRequestError(PolyaxonHTTPError):
@@ -78,8 +79,8 @@ class SSLHandshakeError(PolyaxonHTTPError):
 
 
 ERRORS_MAPPING = {
-    'base': PolyaxonClientException,
-    'http': PolyaxonHTTPError,
+    "base": PolyaxonClientException,
+    "http": PolyaxonHTTPError,
     400: BadRequestError,
     401: AuthenticationError,
     403: AuthorizationError,

@@ -4,11 +4,13 @@ from __future__ import absolute_import, division, print_function
 import logging
 import sys
 
-logger = logging.getLogger('polyaxon.client')
+logger = logging.getLogger("polyaxon.client")
 
 
 def configure_logger(verbose):
     log_level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(format='%(levelname)s: %(asctime)s %(message)s',
-                        level=log_level,
-                        stream=sys.stdout)
+    logging.basicConfig(
+        format="%(levelname)s: %(asctime)s %(message)s",
+        level=log_level,
+        stream=sys.stdout,
+    )

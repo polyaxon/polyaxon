@@ -6,7 +6,7 @@ from polyaxon_client.exceptions import (
     AuthenticationError,
     BadRequestError,
     NotFoundError,
-    PolyaxonClientException
+    PolyaxonClientException,
 )
 from polyaxon_client.logger import logger
 from polyaxon_client.schemas import DatasetConfig
@@ -16,6 +16,7 @@ class DatasetApi(BaseApiHandler):
     """
     Api handler to get datasets from the server.
     """
+
     ENDPOINT = "/datasets"
 
     def get_datasets(self, page=1):
@@ -34,7 +35,9 @@ class DatasetApi(BaseApiHandler):
         request_url = self._get_http_url(request_url)
         try:
             response = self.transport.get(request_url)
-            return self.prepare_results(response_json=response.json(), config=DatasetConfig)
+            return self.prepare_results(
+                response_json=response.json(), config=DatasetConfig
+            )
         except NotFoundError:
             return None
 
@@ -49,10 +52,10 @@ class DatasetApi(BaseApiHandler):
             response = self.transport.post(self._get_http_url(), json_data=post_body)
             return response.json()
         except BadRequestError as e:
-            logger.error('Could not create data %s', e.message)
+            logger.error("Could not create data %s", e.message)
             return None
         except PolyaxonClientException as e:
-            logger.error('Could not create data %s', e.message)
+            logger.error("Could not create data %s", e.message)
             return None
 
     def delete_dataset(self, data_uuid, background=False):
@@ -65,5 +68,5 @@ class DatasetApi(BaseApiHandler):
         try:
             return self.transport.delete(request_url, timeout=60)
         except PolyaxonClientException as e:
-            logger.error('Could not create data %s', e.message)
+            logger.error("Could not create data %s", e.message)
             return False

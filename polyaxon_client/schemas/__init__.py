@@ -11,14 +11,14 @@ from polyaxon_schemas.api.experiment import (
     ExperimentJobConfig,
     ExperimentJobStatusConfig,
     ExperimentMetricConfig,
-    ExperimentStatusConfig
+    ExperimentStatusConfig,
 )
 from polyaxon_schemas.api.group import GroupConfig, GroupStatusConfig
 from polyaxon_schemas.api.job import (
     BuildJobConfig,
     JobConfig,
     JobStatusConfig,
-    TensorboardJobConfig
+    TensorboardJobConfig,
 )
 from polyaxon_schemas.api.log_handler import LogHandlerConfig
 from polyaxon_schemas.api.project import ProjectConfig
@@ -27,6 +27,6 @@ from polyaxon_schemas.api.version import (
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,
-    PlatformVersionConfig
+    PlatformVersionConfig,
 )
 from polyaxon_schemas.specs.base import BaseSpecification

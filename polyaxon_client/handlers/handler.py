@@ -7,20 +7,20 @@ from polyaxon_client.logger import logger
 
 
 class PolyaxonHandler(logging.Handler):
-
     def __init__(self, send_logs, **kwargs):
         self._send_logs = send_logs
-        logging.Handler.__init__(self,
-                                 level=kwargs.get('level', settings.LOGS_LEVEL or logging.NOTSET))
+        logging.Handler.__init__(
+            self, level=kwargs.get("level", settings.LOGS_LEVEL or logging.NOTSET)
+        )
 
     def set_send_logs(self, send_logs):
         self._send_logs = send_logs
 
     def can_record(self, record):
         return not (
-            record.name == 'polyaxon.client' or
-            record.name == 'polyaxon.cli' or
-            record.name.startswith('polyaxon')
+            record.name == "polyaxon.client"
+            or record.name == "polyaxon.cli"
+            or record.name.startswith("polyaxon")
         )
 
     def format_record(self, record):
