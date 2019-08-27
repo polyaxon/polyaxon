@@ -29,8 +29,8 @@ class Transport(HttpTransportMixin,
             if 'Authorization' not in request_headers and self.config.token:
                 request_headers.update({'Authorization': '{} {}'.format(
                     self.config.authentication_type, self.config.token)})
-            if self.config.internal_header:
-                request_headers.update(self.config.internal_header)
+            if self.config.service_header:
+                request_headers.update(self.config.service_header)
         return request_headers
 
     def handle_exception(self, e, log_message=None):

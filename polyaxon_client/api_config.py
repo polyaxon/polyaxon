@@ -49,7 +49,7 @@ class ApiConfig(object):
                                                                  else settings.DEFAULT_HTTP_PORT)
             self.ws_port = ws_port or settings.WS_PORT or self.http_port
         self.version = version or settings.API_VERSION
-        self.internal_header = None
+        self.service_header = None
 
         if self.is_managed and not self.is_local:
             if not settings.API_HTTP_HOST:
@@ -57,11 +57,11 @@ class ApiConfig(object):
                       'please make sure this is running inside a polyaxon job.')
             self.http_host = settings.API_HTTP_HOST
             self.ws_host = settings.API_WS_HOST
-            if all([settings.INTERNAL_HEADER, settings.INTERNAL_HEADER_SERVICE]):
-                self.internal_header = {settings.INTERNAL_HEADER: settings.INTERNAL_HEADER_SERVICE}
+            if all([settings.HEADER, settings.HEADER_SERVICE]):
+                self.service_header = {settings.HEADER: settings.HEADER_SERVICE}
 
             internal_token_cond = (
-                self.internal_header and
+                self.service_header and
                 not self.token and
                 settings.SECRET_INTERNAL_TOKEN
             )

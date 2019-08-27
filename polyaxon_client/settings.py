@@ -6,6 +6,12 @@ import os
 import rhea
 
 from hestia.auth import AuthenticationTypes
+from hestia.env_var_keys import (
+    POLYAXON_KEYS_AUTHENTICATION_TYPE,
+    POLYAXON_KEYS_HEADER,
+    POLYAXON_KEYS_HEADER_SERVICE,
+    POLYAXON_KEYS_LOGS_LEVEL
+)
 from hestia.user_path import polyaxon_user_path
 from marshmallow import EXCLUDE, RAISE
 from rhea import RheaError  # noqa
@@ -103,7 +109,7 @@ SECRET_EPHEMERAL_TOKEN = config.get_string(SECRET_EPHEMERAL_TOKEN_KEY,
 INTERNAL_TOKEN_KEY = 'POLYAXON_SECRET_INTERNAL_TOKEN'  # noqa
 SECRET_INTERNAL_TOKEN = config.get_string(INTERNAL_TOKEN_KEY,
                                           is_optional=True)
-AUTHENTICATION_TYPE = config.get_string('POLYAXON_AUTHENTICATION_TYPE',
+AUTHENTICATION_TYPE = config.get_string(POLYAXON_KEYS_AUTHENTICATION_TYPE,
                                         is_optional=True,
                                         default=AuthenticationTypes.TOKEN)
 API_VERSION = config.get_string('POLYAXON_API_VERSION',
@@ -112,10 +118,10 @@ API_VERSION = config.get_string('POLYAXON_API_VERSION',
 HASH_LENGTH = config.get_int('POLYAXON_HASH_LENGTH',
                              is_optional=True,
                              default=12)
-INTERNAL_HEADER = config.get_string('POLYAXON_INTERNAL_HEADER',
-                                    is_optional=True)
-INTERNAL_HEADER_SERVICE = config.get_string('POLYAXON_INTERNAL_HEADER_SERVICE',
-                                            is_optional=True)
+HEADER = config.get_string(POLYAXON_KEYS_HEADER,
+                           is_optional=True)
+HEADER_SERVICE = config.get_string(POLYAXON_KEYS_HEADER_SERVICE,
+                                   is_optional=True)
 SCHEMA_RESPONSE = config.get_boolean('POLYAXON_SCHEMA_RESPONSE',
                                      is_optional=True,
                                      default=False)
@@ -147,7 +153,7 @@ HEALTH_CHECK_INTERVAL = config.get_int('HEALTH_CHECK_INTERVAL',
 QUEUE_CALL = config.get_int('POLYAXON_INTERVAL',
                             is_optional=True,
                             default=200)
-LOGS_LEVEL = config.get_int('POLYAXON_LOGS_LEVEL',
+LOGS_LEVEL = config.get_int(POLYAXON_KEYS_LOGS_LEVEL,
                             is_optional=True)
 RECEPTION_UNKNOWN_BEHAVIOUR = config.get_string('POLYAXON_RECEPTION_UNKNOWN_BEHAVIOUR',
                                                 is_optional=True,

@@ -1,3 +1,4 @@
 -r requirements-base.txt
 
--e git+https://github.com/polyaxon/polyaxon-schemas.git@master#egg=polyaxon-schemas==0.5.6
+-e git+https://github.com/polyaxon/polyaxon-schemas.git@0.6a#egg=polyaxon-schemas==0.5.6
+-e git+https://github.com/polyaxon/polyaxon-sdks.git@master#egg=polyaxon-sdk==1.0&subdirectory=python/http_client/v1
