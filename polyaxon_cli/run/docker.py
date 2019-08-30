@@ -44,6 +44,8 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
     ]
     if POLYAXON_NO_OP_KEY in os.environ:
         env_vars += [(POLYAXON_NO_OP_KEY, 'true')]
+    if 'POLYAXON_IS_OFFLINE' in os.environ:
+        env_vars += [('POLYAXON_IS_OFFLINE', 'true')]
 
     paths = {'local': '/tmp'}
 
@@ -124,7 +126,7 @@ def _create_docker_build(build_job, build_config, project):
             raise PolyaxonShouldExitError('')
 
         image_tag = hash_value(rendered_dockerfile)
-        if POLYAXON_NO_OP_KEY not in os.environ:
+        if 'POLYAXON_IS_OFFLINE' not in os.environ:
             job_name = build_job.job['unique_name']
         else:
             job_name = "{project}-builds-local-{timestamp}".format(
