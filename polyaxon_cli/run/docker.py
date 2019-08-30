@@ -9,7 +9,6 @@ import tempfile
 import time
 
 from hestia.user_path import polyaxon_user_path
-from polyaxon_client import settings
 from polyaxon_deploy.operators.docker import DockerOperator
 from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
@@ -30,6 +29,7 @@ from polyaxon_cli.client.tracking import (
 from polyaxon_cli.exceptions import PolyaxonConfigurationError
 from polyaxon_cli.schemas import BuildSpecification
 from polyaxon_cli.utils.formatting import Printer
+from polyaxon_client import settings
 
 POLYAXON_DOCKERFILE_NAME = 'Dockerfile'
 POLYAXON_DATA_PATH = '/tmp/data'
