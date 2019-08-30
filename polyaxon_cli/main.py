@@ -67,7 +67,7 @@ def cli(context, verbose, offline):
     context.obj["offline"] = offline
     if offline:
         os.environ['POLYAXON_IS_OFFLINE'] = 'true'
-        settings.IS_OFFLINE = 'true'
+        settings.IS_OFFLINE = True
     if not (context.invoked_subcommand in non_check_cmds or offline):
         check_cli_version()
 
