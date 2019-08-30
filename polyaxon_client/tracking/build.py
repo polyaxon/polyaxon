@@ -77,10 +77,9 @@ class BuildJob(BaseJob):
 
     @check_offline
     def _update(self, patch_dict):
-        if self.client:
-            self.client.build_job.update_build(
-                username=self.username, project_name=self.project_name,
-                job_id=self.job_id, patch_dict=patch_dict, background=True)
+        self.client.build_job.update_build(
+            username=self.username, project_name=self.project_name,
+            job_id=self.job_id, patch_dict=patch_dict, background=True)
 
     @check_no_op
     @check_offline
