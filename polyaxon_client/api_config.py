@@ -61,13 +61,6 @@ class ApiConfig(object):
         self.service_header = None
 
         if self.is_managed and not self.is_local:
-            if not settings.API_HTTP_HOST:
-                print(
-                    "Could get api host info, "
-                    "please make sure this is running inside a polyaxon job."
-                )
-            self.http_host = settings.API_HTTP_HOST
-            self.ws_host = settings.API_WS_HOST
             if all([settings.HEADER, settings.HEADER_SERVICE]):
                 self.service_header = {settings.HEADER: settings.HEADER_SERVICE}
 
@@ -78,13 +71,11 @@ class ApiConfig(object):
             )
             if internal_token_cond:
                 self.token = settings.SECRET_INTERNAL_TOKEN
-        else:
-            http_protocol = "https" if self.use_https else "http"
-            ws_protocol = "wss" if self.use_https else "ws"
-            self.http_host = "{}://{}:{}".format(
-                http_protocol, self.host, self.http_port
-            )
-            self.ws_host = "{}://{}:{}".format(ws_protocol, self.host, self.ws_port)
+
+        http_protocol = "https" if self.use_https else "http"
+        ws_protocol = "wss" if self.use_https else "ws"
+        self.http_host = "{}://{}:{}".format(http_protocol, self.host, self.http_port)
+        self.ws_host = "{}://{}:{}".format(ws_protocol, self.host, self.ws_port)
         self.base_url = self.BASE_URL.format(self.http_host, self.version)
         self.base_ws_url = self.BASE_URL.format(self.ws_host, self.version)
         self.authentication_type = (

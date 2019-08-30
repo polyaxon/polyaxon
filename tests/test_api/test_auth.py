@@ -8,7 +8,6 @@ import tempfile
 import uuid
 
 from hestia.env_var_keys import POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN
-
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client import settings

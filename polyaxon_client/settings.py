@@ -8,8 +8,8 @@ import rhea
 from hestia.auth import AuthenticationTypes
 from hestia.env_var_keys import (
     POLYAXON_KEYS_API_HOST,
-    POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_API_PORT,
+    POLYAXON_KEYS_API_VERSION,
     POLYAXON_KEYS_AUTHENTICATION_TYPE,
     POLYAXON_KEYS_HASH_LENGTH,
     POLYAXON_KEYS_HEADER,
@@ -102,8 +102,6 @@ if VERIFY_SSL is None:  # Check global config config
         VERIFY_SSL = global_config.get_boolean("verify_ssl", is_optional=True)
     except RheaError:
         VERIFY_SSL = False
-API_HTTP_HOST = config.get_string("POLYAXON_API_HTTP_HOST", is_optional=True)
-API_WS_HOST = config.get_string("POLYAXON_API_WS_HOST", is_optional=True)
 SECRET_USER_TOKEN_KEY = "POLYAXON_SECRET_USER_TOKEN"  # noqa
 SECRET_USER_TOKEN = config.get_string(SECRET_USER_TOKEN_KEY, is_optional=True)
 if not SECRET_USER_TOKEN:  # Check global config
@@ -131,9 +129,7 @@ SCHEMA_RESPONSE = config.get_boolean(
     "POLYAXON_SCHEMA_RESPONSE", is_optional=True, default=False
 )
 HEALTH_CHECK_URL = config.get_string(POLYAXON_KEYS_HEALTH_CHECK_URL, is_optional=True)
-RECONCILE_URL = config.get_string(
-    POLYAXON_KEYS_RECONCILE_URL, is_optional=True
-)
+RECONCILE_URL = config.get_string(POLYAXON_KEYS_RECONCILE_URL, is_optional=True)
 
 DEFAULT_HTTP_PORT = 80
 DEFAULT_HTTPS_PORT = 443

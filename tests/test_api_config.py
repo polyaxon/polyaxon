@@ -35,11 +35,10 @@ class TestApiConfig(TestCase):
         )
 
     def test_is_managed(self):
-        settings.API_HTTP_HOST = "api_host"
-        settings.API_WS_HOST = "ws_host"
+        settings.API_HOST = "api_host"
         api_config = ApiConfig(host=None, http_port=None, ws_port=None, is_managed=True)
         assert api_config.version == "v1"
-        assert api_config.http_host == "api_host"
-        assert api_config.ws_host == "ws_host"
-        assert api_config.base_url == "api_host/api/v1"
-        assert api_config.base_ws_url == "ws_host/api/v1"
+        assert api_config.http_host == "http://api_host:80"
+        assert api_config.ws_host == "ws://api_host:80"
+        assert api_config.base_url == "http://api_host:80/api/v1"
+        assert api_config.base_ws_url == "ws://api_host:80/api/v1"
