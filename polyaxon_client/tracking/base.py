@@ -45,9 +45,9 @@ class BaseTracker(object):
         if not (self.client or settings.IS_OFFLINE):
             self.client = PolyaxonClient()
         if self.client and not settings.IS_MANAGED:
-            self.user = (self.client.auth.get_user().username
-                        if self.client.api_config.schema_response
-                        else self.client.auth.get_user().get('username'))
+            self.user = (self.client.auth.get_user().username if
+                         self.client.api_config.schema_response else
+                         self.client.auth.get_user().get('username'))
 
         username, project_name = get_project_info(current_user=self.user, project=project)
         self.track_logs = track_logs
@@ -67,8 +67,7 @@ class BaseTracker(object):
     def _get_entity_id(self, entity):
         if self.client:
             return entity.id if self.client.api_config.schema_response else entity.get('id')
-        else:
-            return int(time.time())
+        return int(time.time())
 
     @check_no_op
     def get_notebook_job_info(self):

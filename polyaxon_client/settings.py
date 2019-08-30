@@ -43,9 +43,7 @@ config = rhea.Rhea.read_configs([
 IS_LOCAL = config.get_boolean('POLYAXON_IS_LOCAL',
                               is_optional=True,
                               default=False)
-IS_OFFLINE = config.get_boolean('POLYAXON_IS_OFFLINE',
-                              is_optional=True,
-                              default=False)
+IS_OFFLINE = config.get_boolean('POLYAXON_IS_OFFLINE', is_optional=True, default=False)
 IN_CLUSTER = config.get_boolean('POLYAXON_IN_CLUSTER',
                                 is_optional=True,
                                 default=False)
