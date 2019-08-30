@@ -53,13 +53,13 @@ class BuildJob(BaseJob):
             if content:
                 build_config['content'] = self.client.project.validate_content(content=content)
 
-                build = self.client.project.create_build(
-                    username=self.username,
-                    project_name=self.project_name,
-                    build_config=build_config,
-                )
-                if not build:
-                    raise PolyaxonClientException('Could not create build.')
+            build = self.client.project.create_build(
+                username=self.username,
+                project_name=self.project_name,
+                build_config=build_config,
+            )
+            if not build:
+                raise PolyaxonClientException('Could not create build.')
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.job_id = self._get_entity_id(build)
