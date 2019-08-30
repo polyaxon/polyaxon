@@ -13,6 +13,7 @@ from polyaxon_client.logger import logger
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
+from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.paths import (
     get_base_outputs_path,
     get_data_paths,
@@ -54,6 +55,9 @@ class Experiment(BaseTracker):
         self.experiment_id = experiment_id
         self.group_id = group_id
         self.experiment = None
+
+        if settings.IS_OFFLINE:
+            return
 
         # Check if there's an ephemeral token
         check_ephemeral_token = (settings.IS_MANAGED and
@@ -107,20 +111,24 @@ class Experiment(BaseTracker):
             experiment_config['backend'] = backend
         if description:
             experiment_config['description'] = description
-        if content:
-            experiment_config['content'] = self.client.project.validate_content(content=content)
         if build_id:
             experiment_config['build_job'] = str(build_id)
         experiment_config['is_managed'] = settings.IS_MANAGED
 
-        experiment = self.client.project.create_experiment(
-            username=self.username,
-            project_name=self.project_name,
-            experiment_config=experiment_config,
-            group=self.group_id,
-        )
-        if not experiment:
-            raise PolyaxonClientException('Could not create experiment.')
+        experiment = None
+
+        if self.client:
+            if content:
+                experiment_config['content'] = self.client.project.validate_content(content=content)
+
+            experiment = self.client.project.create_experiment(
+                username=self.username,
+                project_name=self.project_name,
+                experiment_config=experiment_config,
+                group=self.group_id,
+            )
+            if not experiment:
+                raise PolyaxonClientException('Could not create experiment.')
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.experiment_id = self._get_entity_id(experiment)
@@ -151,6 +159,7 @@ class Experiment(BaseTracker):
 
         return self
 
+    @check_offline
     def _update(self, patch_dict):
         self.client.experiment.update_experiment(username=self.username,
                                                  project_name=self.project_name,
@@ -159,6 +168,7 @@ class Experiment(BaseTracker):
                                                  background=True)
 
     @check_no_op
+    @check_offline
     def _set_health_url(self):
         health_url = self.client.experiment.get_heartbeat_url(
             username=self.username,
@@ -168,6 +178,7 @@ class Experiment(BaseTracker):
         self._health_is_running = True
 
     @check_no_op
+    @check_offline
     def _unset_health_url(self):
         health_url = self.client.experiment.get_heartbeat_url(
             username=self.username,
@@ -177,6 +188,7 @@ class Experiment(BaseTracker):
         self._health_is_running = False
 
     @check_no_op
+    @check_offline
     def send_logs(self, log_line):
         self.client.experiment.send_logs(username=self.username,
                                          project_name=self.project_name,
@@ -185,6 +197,7 @@ class Experiment(BaseTracker):
                                          periodic=True)
 
     @check_no_op
+    @check_offline
     def log_status(self, status, message=None, traceback=None):
         self.client.experiment.create_status(username=self.username,
                                              project_name=self.project_name,
@@ -195,6 +208,7 @@ class Experiment(BaseTracker):
                                              background=True)
 
     @check_no_op
+    @check_offline
     def log_code_ref(self):
         self.client.experiment.create_code_reference(username=self.username,
                                                      project_name=self.project_name,
@@ -203,6 +217,7 @@ class Experiment(BaseTracker):
                                                      background=True)
 
     @check_no_op
+    @check_offline
     def log_metrics(self, **metrics):
         self.client.experiment.create_metric(username=self.username,
                                              project_name=self.project_name,
@@ -212,6 +227,7 @@ class Experiment(BaseTracker):
                                              periodic=True)
 
     @check_no_op
+    @check_offline
     def log_framework(self, framework):
         self._update({'framework': framework})
 

@@ -10,6 +10,7 @@ from polyaxon_client.handlers.conf import setup_logging
 from polyaxon_client.tracking.base import BaseTracker
 from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
+from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.paths import (
     get_base_outputs_path,
     get_data_paths,
@@ -51,6 +52,7 @@ class BaseJob(BaseTracker):
         self.last_status = None
 
     @check_no_op
+    @check_offline
     def get_entity_data(self):
         if self.job_type == 'jobs':
             self._entity_data = self.client_backend.get_job(
@@ -78,6 +80,7 @@ class BaseJob(BaseTracker):
         raise PolyaxonClientException('Job type {} not supported'.format(self.job_type))
 
     @check_no_op
+    @check_offline
     def _set_health_url(self):
         health_url = self.client_backend.get_heartbeat_url(
             username=self.username,
@@ -87,6 +90,7 @@ class BaseJob(BaseTracker):
         self._health_is_running = True
 
     @check_no_op
+    @check_offline
     def _unset_health_url(self):
         health_url = self.client_backend.get_heartbeat_url(
             username=self.username,
@@ -120,6 +124,7 @@ class BaseJob(BaseTracker):
             return None
 
     @check_no_op
+    @check_offline
     def log_status(self, status, message=None, traceback=None):
         self.client_backend.create_status(username=self.username,
                                           project_name=self.project_name,
@@ -130,6 +135,7 @@ class BaseJob(BaseTracker):
                                           background=True)
 
     @check_no_op
+    @check_offline
     def send_logs(self, log_line):
         self.client_backend.send_logs(username=self.username,
                                       project_name=self.project_name,
@@ -138,6 +144,7 @@ class BaseJob(BaseTracker):
                                       periodic=True)
 
     @check_no_op
+    @check_offline
     def log_code_ref(self):
         self.client_backend.create_code_reference(username=self.username,
                                                   project_name=self.project_name,
@@ -184,19 +191,21 @@ class Job(BaseJob):
             job_config['backend'] = backend
         if description:
             job_config['description'] = description
-        if content:
-            job_config['content'] = self.client.project.validate_content(content=content)
         if build_id:
             job_config['build_job'] = str(build_id)
         job_config['is_managed'] = settings.IS_MANAGED
 
-        job = self.client.project.create_job(
-            username=self.username,
-            project_name=self.project_name,
-            job_config=job_config,
-        )
-        if not job:
-            raise PolyaxonClientException('Could not create job.')
+        job = None
+        if self.client:
+            if content:
+                job_config['content'] = self.client.project.validate_content(content=content)
+            job = self.client.project.create_job(
+                username=self.username,
+                project_name=self.project_name,
+                job_config=job_config,
+            )
+            if not job:
+                raise PolyaxonClientException('Could not create job.')
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.job_id = self._get_entity_id(job)
@@ -219,6 +228,7 @@ class Job(BaseJob):
 
         return self
 
+    @check_offline
     def _update(self, patch_dict):
         self.client.job.update_job(username=self.username,
                                    project_name=self.project_name,
