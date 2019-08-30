@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
+
 import click
 import click_completion
 
@@ -30,6 +32,7 @@ from polyaxon_cli.cli.user import user
 from polyaxon_cli.cli.version import check_cli_version, upgrade, version
 from polyaxon_cli.logger import clean_outputs, configure_logger
 from polyaxon_cli.managers.config import GlobalConfigManager
+from polyaxon_client import settings
 
 click_completion.init()
 
@@ -62,6 +65,9 @@ def cli(context, verbose, offline):
     ]
     context.obj = context.obj or {}
     context.obj["offline"] = offline
+    if offline:
+        os.environ['POLYAXON_IS_OFFLINE'] = 'true'
+        settings.IS_OFFLINE = 'true'
     if not (context.invoked_subcommand in non_check_cmds or offline):
         check_cli_version()
 

@@ -29,7 +29,6 @@ from polyaxon_cli.client.tracking import (
 from polyaxon_cli.exceptions import PolyaxonConfigurationError
 from polyaxon_cli.schemas import BuildSpecification
 from polyaxon_cli.utils.formatting import Printer
-from polyaxon_client import settings
 
 POLYAXON_DOCKERFILE_NAME = 'Dockerfile'
 POLYAXON_DATA_PATH = '/tmp/data'
@@ -127,7 +126,7 @@ def _create_docker_build(build_job, build_config, project):
             raise PolyaxonShouldExitError('')
 
         image_tag = hash_value(rendered_dockerfile)
-        if not settings.IS_OFFLINE:
+        if 'POLYAXON_IS_OFFLINE' not in os.environ:
             job_name = build_job.job['unique_name']
         else:
             job_name = "{project}-builds-local-{timestamp}".format(
