@@ -36,9 +36,12 @@ click_completion.init()
 
 @click.group()
 @click.option('-v', '--verbose', is_flag=True, default=False, help='Turn on debug logging')
+@click.option('--offline', is_flag=True, default=False,
+              help='Run command in offline mode if supported. '
+              'Currently used for run command in --local mode.')
 @click.pass_context
 @clean_outputs
-def cli(context, verbose):
+def cli(context, verbose, offline):
     """ Polyaxon CLI tool to:
 
         * Parse, Validate, and Check Polyaxonfiles.
@@ -57,7 +60,9 @@ def cli(context, verbose):
     non_check_cmds = [
         'completion', 'config', 'version', 'login', 'logout', 'deploy', 'admin', 'teardown'
     ]
-    if context.invoked_subcommand not in non_check_cmds:
+    context.obj = context.obj or {}
+    context.obj["offline"] = offline
+    if not (context.invoked_subcommand in non_check_cmds or offline):
         check_cli_version()
 
 

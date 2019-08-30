@@ -9,6 +9,7 @@ import tempfile
 import time
 
 from hestia.user_path import polyaxon_user_path
+from polyaxon_client import settings
 from polyaxon_deploy.operators.docker import DockerOperator
 from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
@@ -44,6 +45,8 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
     ]
     if POLYAXON_NO_OP_KEY in os.environ:
         env_vars += [(POLYAXON_NO_OP_KEY, 'true')]
+    if 'POLYAXON_IS_OFFLINE' in os.environ:
+        env_vars += [('POLYAXON_IS_OFFLINE', 'true')]
 
     paths = {'local': '/tmp'}
 
@@ -124,7 +127,7 @@ def _create_docker_build(build_job, build_config, project):
             raise PolyaxonShouldExitError('')
 
         image_tag = hash_value(rendered_dockerfile)
-        if POLYAXON_NO_OP_KEY not in os.environ:
+        if not settings.IS_OFFLINE:
             job_name = build_job.job['unique_name']
         else:
             job_name = "{project}-builds-local-{timestamp}".format(

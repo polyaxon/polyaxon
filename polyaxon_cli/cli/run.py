@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import os
 import sys
 
 import click
 
+from polyaxon_client import settings
 from polyaxon_cli.cli.check import check_polyaxonfile
 from polyaxon_cli.cli.getters.project import get_project_or_local
 from polyaxon_cli.logger import clean_outputs
@@ -135,6 +137,9 @@ def run(ctx,
     tags = validate_tags(tags)
 
     if local:
+        if ctx.obj["offline"]:
+            os.environ['POLYAXON_IS_OFFLINE'] = 'true'
+            settings.IS_OFFLINE = True
         try:
             specification.apply_context()
         except PolyaxonSchemaError:
