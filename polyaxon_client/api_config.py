@@ -49,7 +49,7 @@ class ApiConfig(object):
         else:
             self.http_port = (
                 http_port
-                or settings.HTTP_PORT
+                or settings.API_PORT
                 or (
                     settings.DEFAULT_HTTPS_PORT
                     if self.use_https

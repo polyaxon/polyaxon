@@ -174,18 +174,16 @@ class PolyaxonClient(object):
         self.transport.unset_health_check(url)
 
     def set_internal_health_check(self):
-        if settings.INTERNAL_HEALTH_CHECK_URL:
+        if settings.HEALTH_CHECK_URL:
             self.set_health_check(
-                self.auth.build_url(
-                    self.api_config.base_url, settings.INTERNAL_HEALTH_CHECK_URL
-                )
+                self.auth.build_url(self.api_config.base_url, settings.HEALTH_CHECK_URL)
             )
 
     def reconcile(self, status):
-        if settings.INTERNAL_RECONCILE_URL:
+        if settings.RECONCILE_URL:
             self.transport.post(
                 url=self.auth.build_url(
-                    self.api_config.base_url, settings.INTERNAL_RECONCILE_URL
+                    self.api_config.base_url, settings.RECONCILE_URL
                 ),
                 json_data={
                     "status": status,

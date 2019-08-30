@@ -7,6 +7,8 @@ import os
 import tempfile
 import uuid
 
+from hestia.env_var_keys import POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN
+
 from tests.test_api.utils import TestBaseApi
 
 from polyaxon_client import settings
@@ -116,12 +118,12 @@ class TestAuthApi(TestBaseApi):
         assert os.path.exists(settings.TMP_AUTH_TOKEN_PATH) is True
 
         # Login remove ephemeral token from env var and settings
-        os.environ[settings.SECRET_EPHEMERAL_TOKEN_KEY] = "value"
+        os.environ[POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN] = "value"
         settings.SECRET_EPHEMERAL_TOKEN = "eph_token"  # noqa
         if os.path.exists(settings.TMP_AUTH_TOKEN_PATH):
             os.remove(settings.TMP_AUTH_TOKEN_PATH)
         assert self.api_config.token == token
-        assert os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY) == "value"
+        assert os.environ.get(POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN) == "value"
         assert settings.SECRET_EPHEMERAL_TOKEN == "eph_token"
         assert token == self.api_handler.login_experiment_ephemeral_token(
             username="user",
@@ -133,7 +135,7 @@ class TestAuthApi(TestBaseApi):
         )
         assert self.api_config.token == token
         assert os.path.exists(settings.TMP_AUTH_TOKEN_PATH) is True
-        assert os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY) is None
+        assert os.environ.get(POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN) is None
         assert not hasattr(settings, "SECRET_EPHEMERAL_TOKEN")
 
         assert token == self.api_handler.login_experiment_ephemeral_token(

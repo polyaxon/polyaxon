@@ -6,6 +6,7 @@ import os
 import requests
 
 from hestia.auth import AuthenticationTypes
+from hestia.env_var_keys import POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN
 
 from polyaxon_client import settings
 from polyaxon_client.api.base import BaseApiHandler
@@ -140,8 +141,8 @@ class AuthApi(BaseApiHandler):
             token_path=settings.TMP_AUTH_TOKEN_PATH,
         )
         # Destroy ephemeral token
-        if os.environ.get(settings.SECRET_EPHEMERAL_TOKEN_KEY):
-            del os.environ[settings.SECRET_EPHEMERAL_TOKEN_KEY]
+        if os.environ.get(POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN):
+            del os.environ[POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN]
         if (
             hasattr(settings, "SECRET_EPHEMERAL_TOKEN")
             and settings.SECRET_EPHEMERAL_TOKEN
