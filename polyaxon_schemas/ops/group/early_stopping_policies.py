@@ -8,7 +8,7 @@ from polyaxon_schemas.ops.group.metrics import Optimization
 
 
 class MedianStoppingPolicySchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('median'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("median"))
     evaluation_interval = fields.Int()
 
     @staticmethod
@@ -26,18 +26,16 @@ class MedianStoppingPolicyConfig(BaseConfig):
         evaluation_interval: `int`. Frequency for applying the policy.
     """
 
-    IDENTIFIER = 'median'
+    IDENTIFIER = "median"
     SCHEMA = MedianStoppingPolicySchema
 
-    def __init__(self,
-                 evaluation_interval,
-                 kind='median'):
+    def __init__(self, evaluation_interval, kind="median"):
         self.kind = kind
         self.evaluation_interval = evaluation_interval
 
 
 class AverageStoppingPolicySchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('average'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("average"))
     evaluation_interval = fields.Int()
 
     @staticmethod
@@ -55,18 +53,16 @@ class AverageStoppingPolicyConfig(BaseConfig):
         evaluation_interval: `int`. Frequency for applying the policy.
     """
 
-    IDENTIFIER = 'average'
+    IDENTIFIER = "average"
     SCHEMA = AverageStoppingPolicySchema
 
-    def __init__(self,
-                 evaluation_interval,
-                 kind='average'):
+    def __init__(self, evaluation_interval, kind="average"):
         self.kind = kind
         self.evaluation_interval = evaluation_interval
 
 
 class TruncationStoppingPolicySchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('truncation'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("truncation"))
     percent = fields.Int()
     evaluation_interval = fields.Int()
 
@@ -86,20 +82,17 @@ class TruncationStoppingPolicyConfig(BaseConfig):
         evaluation_interval: `int`. Frequency for applying the policy.
     """
 
-    IDENTIFIER = 'truncation'
+    IDENTIFIER = "truncation"
     SCHEMA = TruncationStoppingPolicySchema
 
-    def __init__(self,
-                 percent,
-                 evaluation_interval,
-                 kind='truncation'):
+    def __init__(self, percent, evaluation_interval, kind="truncation"):
         self.kind = kind
         self.percent = percent
         self.evaluation_interval = evaluation_interval
 
 
 class StoppingPolicySchema(BaseOneOfSchema):
-    TYPE_FIELD = 'kind'
+    TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
         MedianStoppingPolicyConfig.IDENTIFIER: MedianStoppingPolicySchema,
@@ -111,7 +104,9 @@ class StoppingPolicySchema(BaseOneOfSchema):
 class EarlyStoppingSchema(BaseSchema):
     metric = fields.Str()
     value = fields.Float()
-    optimization = fields.Str(allow_none=True, validate=validate.OneOf(Optimization.VALUES))
+    optimization = fields.Str(
+        allow_none=True, validate=validate.OneOf(Optimization.VALUES)
+    )
     policy = fields.Nested(StoppingPolicySchema, allow_none=True)
 
     @staticmethod
@@ -129,14 +124,13 @@ class EarlyStoppingConfig(BaseConfig):
         optimization: `string`. The optimization to do: maximize or minimize.
         policy: `Dict`. Optional, the termination policy to use.
     """
-    SCHEMA = EarlyStoppingSchema
-    IDENTIFIER = 'early_stopping_metric'
 
-    def __init__(self,
-                 metric,
-                 value=None,
-                 optimization=Optimization.MAXIMIZE,
-                 policy=None):
+    SCHEMA = EarlyStoppingSchema
+    IDENTIFIER = "early_stopping_metric"
+
+    def __init__(
+        self, metric, value=None, optimization=Optimization.MAXIMIZE, policy=None
+    ):
         self.metric = metric
         self.value = value
         self.optimization = optimization

@@ -18,6 +18,7 @@ class NotebookSpecification(BaseRunSpecification):
         ENVIRONMENT: defines the run environment for experiment.
         BUILD: defines the build step where the user can set a docker image definition
     """
+
     _SPEC_KIND = kinds.NOTEBOOK
 
     REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (

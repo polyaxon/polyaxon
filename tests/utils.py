@@ -36,17 +36,17 @@ def assert_tensors(tensor1, tensor2):
 
 
 def assert_equal_graphs(result_graph, expected_graph):
-    for i, input_layer in enumerate(expected_graph['input_layers']):
-        assert_tensors(input_layer, result_graph['input_layers'][i])
+    for i, input_layer in enumerate(expected_graph["input_layers"]):
+        assert_tensors(input_layer, result_graph["input_layers"][i])
 
-    for i, output_layer in enumerate(expected_graph['output_layers']):
-        assert_tensors(output_layer, result_graph['output_layers'][i])
+    for i, output_layer in enumerate(expected_graph["output_layers"]):
+        assert_tensors(output_layer, result_graph["output_layers"][i])
 
-    for layer_i, layer in enumerate(result_graph['layers']):
+    for layer_i, layer in enumerate(result_graph["layers"]):
         layer_name, layer_data = list(six.iteritems(layer))[0]
-        assert layer_name in expected_graph['layers'][layer_i]
+        assert layer_name in expected_graph["layers"][layer_i]
         for k, v in six.iteritems(layer_data):
-            assert v == expected_graph['layers'][layer_i][layer_name][k]
+            assert v == expected_graph["layers"][layer_i][layer_name][k]
 
 
 def assert_equal_layers(config, expected_layer):

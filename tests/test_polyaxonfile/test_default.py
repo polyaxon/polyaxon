@@ -8,7 +8,7 @@ from unittest import TestCase
 from polyaxon_schemas.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
-    PolyaxonFile
+    PolyaxonFile,
 )
 
 
@@ -19,8 +19,8 @@ class TestDefaultFile(TestCase):
 
     def test_polyaxon_found(self):
         def create_file(path, filename, ext):
-            fpath = '{}/{}.{}'.format(path, filename, ext)
-            open(fpath, 'w')
+            fpath = "{}/{}.{}".format(path, filename, ext)
+            open(fpath, "w")
 
         for filename in DEFAULT_POLYAXON_FILE_NAME:
             for ext in DEFAULT_POLYAXON_FILE_EXTENSION:

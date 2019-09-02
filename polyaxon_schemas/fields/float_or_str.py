@@ -6,8 +6,8 @@ from marshmallow import fields
 
 class FloatOrStr(fields.Str):
     default_error_messages = {
-        'invalid': 'Not a valid string or float.',
-        'invalid_utf8': 'Not a valid utf-8 string.'
+        "invalid": "Not a valid string or float.",
+        "invalid_utf8": "Not a valid utf-8 string.",
     }
 
     def _serialize(self, value, attr, obj, **kwargs):

@@ -17,23 +17,24 @@ class BaseRunSchema(BaseOpSchema):
 
 class BaseRunConfig(BaseOpConfig):
     SCHEMA = BaseRunSchema
-    IDENTIFIER = 'run'
-    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ['build']
+    IDENTIFIER = "run"
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["build"]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 environment=None,
-                 params=None,
-                 declarations=None,
-                 inputs=None,
-                 outputs=None,
-                 build=None,
-                 ):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        environment=None,
+        params=None,
+        declarations=None,
+        inputs=None,
+        outputs=None,
+        build=None,
+    ):
         super(BaseRunConfig, self).__init__(
             version=version,
             kind=kind,

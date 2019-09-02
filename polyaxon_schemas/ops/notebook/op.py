@@ -9,12 +9,14 @@ from polyaxon_schemas.ops.run import BaseRunConfig, BaseRunSchema
 
 def validate_notebook_backend(backend):
     if backend and backend not in NotebookBackend.VALUES:
-        raise ValidationError('Notebook backend `{}` not supported'.format(backend))
+        raise ValidationError("Notebook backend `{}` not supported".format(backend))
 
 
 class NotebookSchema(BaseRunSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('notebook'))
-    backend = fields.Str(allow_none=True, validate=validate.OneOf(NotebookBackend.VALUES))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("notebook"))
+    backend = fields.Str(
+        allow_none=True, validate=validate.OneOf(NotebookBackend.VALUES)
+    )
 
     @staticmethod
     def schema_config():
@@ -26,25 +28,26 @@ class NotebookSchema(BaseRunSchema):
 
 
 class NotebookConfig(BaseRunConfig):
-    IDENTIFIER = 'notebook'
+    IDENTIFIER = "notebook"
     SCHEMA = NotebookSchema
-    REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ['backend']
+    REDUCED_ATTRIBUTES = BaseRunConfig.REDUCED_ATTRIBUTES + ["backend"]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 environment=None,
-                 params=None,
-                 declarations=None,
-                 inputs=None,
-                 outputs=None,
-                 build=None,
-                 backend=None,
-                 ):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        environment=None,
+        params=None,
+        declarations=None,
+        inputs=None,
+        outputs=None,
+        build=None,
+        backend=None,
+    ):
         super(NotebookConfig, self).__init__(
             version=version,
             kind=kind,
@@ -57,7 +60,7 @@ class NotebookConfig(BaseRunConfig):
             declarations=declarations,
             inputs=inputs,
             outputs=outputs,
-            build=build
+            build=build,
         )
         validate_notebook_backend(backend)
         self.backend = backend

@@ -19,7 +19,7 @@ class DataDetailsSchema(BaseSchema):
 
 class DataDetailsConfig(BaseConfig):
     SCHEMA = DataDetailsSchema
-    IDENTIFIER = 'data_details'
+    IDENTIFIER = "data_details"
 
     def __init__(self, state, size, uri):
         self.state = state
@@ -43,17 +43,19 @@ class DataSchema(BaseSchema):
 
 class DataConfig(BaseConfig):
     SCHEMA = DataSchema
-    IDENTIFIER = 'data'
-    DATETIME_ATTRIBUTES = ['created_at']
+    IDENTIFIER = "data"
+    DATETIME_ATTRIBUTES = ["created_at"]
 
-    def __init__(self,
-                 uuid,
-                 name,
-                 created_at,
-                 description,
-                 details,
-                 version=None,
-                 resource_id=None):
+    def __init__(
+        self,
+        uuid,
+        name,
+        created_at,
+        description,
+        details,
+        version=None,
+        resource_id=None,
+    ):
         self.uuid = uuid
         self.name = name
         self.created_at = self.localize_date(created_at)
@@ -76,7 +78,7 @@ class DatasetSchema(BaseSchema):
 
 class DatasetConfig(BaseConfig):
     SCHEMA = DatasetSchema
-    IDENTIFIER = 'dataset'
+    IDENTIFIER = "dataset"
 
     def __init__(self, uuid, name, description, is_public):
         self.uuid = uuid

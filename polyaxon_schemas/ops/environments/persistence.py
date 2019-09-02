@@ -25,7 +25,8 @@ class PersistenceConfig(BaseConfig):
         data: `list(str)`. The list of the names of data persistence to mount.
         outputs: `list(str)`. The list of the names of outputs persistence to mount.
     """
-    IDENTIFIER = 'persistence'
+
+    IDENTIFIER = "persistence"
     SCHEMA = PersistenceSchema
 
     def __init__(self, data=None, outputs=None):

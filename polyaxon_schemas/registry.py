@@ -13,8 +13,9 @@ class SchemaRegistry(object):
     def __init__(self, base_operations, polyflow_operations):
         self.base_operations = base_operations
         self.polyflow_operations = self._setup_polyflow(polyflow_operations)
-        self._schemas = self._setup(base_operations=base_operations,
-                                    polyflow_operations=polyflow_operations)
+        self._schemas = self._setup(
+            base_operations=base_operations, polyflow_operations=polyflow_operations
+        )
 
     def _setup(self, base_operations, polyflow_operations):
         schemas = copy(base_operations)
@@ -29,8 +30,10 @@ class SchemaRegistry(object):
             schema = import_string(schema_path)
             if not issubclass(schema, BaseOpSchema):
                 raise PolyaxonConfigurationError(
-                    'Schema {} at path: {} is not a valid operation.'.format(
-                        schema_name, schema_path))
+                    "Schema {} at path: {} is not a valid operation.".format(
+                        schema_name, schema_path
+                    )
+                )
             ops[schema_name] = schema
 
         return ops

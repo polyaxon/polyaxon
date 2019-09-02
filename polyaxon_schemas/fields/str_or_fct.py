@@ -7,7 +7,7 @@ from marshmallow import fields
 class StrOrFct(fields.Str):
     def serialize(self, attr, obj, accessor=None, **kwargs):
         value = getattr(obj, attr)
-        if hasattr(value, '__call__') and hasattr(value, '__name__'):
+        if hasattr(value, "__call__") and hasattr(value, "__name__"):
             return value.__name__
 
         return super(StrOrFct, self).serialize(attr, obj, accessor)

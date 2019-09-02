@@ -8,13 +8,11 @@ from polyaxon_schemas.api.authentication import AccessTokenConfig, CredentialsCo
 
 class TestAccessConfigs(TestCase):
     def test_access_token_config(self):
-        config_dict = {'username': 'username',
-                       'token': 'sdfsdf098sdf80s9dSDF800'}
+        config_dict = {"username": "username", "token": "sdfsdf098sdf80s9dSDF800"}
         config = AccessTokenConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
     def test_credentials_config(self):
-        config_dict = {'username': 'username',
-                       'password': 'super-secret'}
+        config_dict = {"username": "username", "password": "super-secret"}
         config = CredentialsConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

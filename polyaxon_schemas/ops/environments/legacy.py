@@ -19,13 +19,15 @@ class GPUOptionsSchema(BaseSchema):
 
 
 class GPUOptionsConfig(BaseConfig):
-    IDENTIFIER = 'session'
+    IDENTIFIER = "session"
     SCHEMA = GPUOptionsSchema
 
-    def __init__(self,
-                 gpu_memory_fraction=None,
-                 allow_growth=True,
-                 per_process_gpu_memory_fraction=None):
+    def __init__(
+        self,
+        gpu_memory_fraction=None,
+        allow_growth=True,
+        per_process_gpu_memory_fraction=None,
+    ):
         self.gpu_memory_fraction = gpu_memory_fraction
         self.allow_growth = allow_growth
         self.per_process_gpu_memory_fraction = per_process_gpu_memory_fraction
@@ -44,15 +46,17 @@ class SessionSchema(BaseSchema):
 
 
 class SessionConfig(BaseConfig):
-    IDENTIFIER = 'session'
+    IDENTIFIER = "session"
     SCHEMA = SessionSchema
 
-    def __init__(self,
-                 log_device_placement=True,
-                 gpu_options=GPUOptionsConfig(),
-                 allow_soft_placement=True,
-                 intra_op_parallelism_threads=None,
-                 inter_op_parallelism_threads=None):
+    def __init__(
+        self,
+        log_device_placement=True,
+        gpu_options=GPUOptionsConfig(),
+        allow_soft_placement=True,
+        intra_op_parallelism_threads=None,
+        inter_op_parallelism_threads=None,
+    ):
         self.gpu_options = gpu_options
         self.log_device_placement = log_device_placement
         self.allow_soft_placement = allow_soft_placement
@@ -77,18 +81,20 @@ class TFRunSchema(BaseSchema):
 
 
 class TFRunConfig(BaseConfig):
-    IDENTIFIER = 'run'
+    IDENTIFIER = "run"
     SCHEMA = TFRunSchema
 
-    def __init__(self,
-                 tf_random_seed=None,
-                 save_summary_steps=100,
-                 save_checkpoints_secs=None,
-                 save_checkpoints_steps=None,
-                 keep_checkpoint_max=5,
-                 keep_checkpoint_every_n_hours=10000,
-                 session=None,
-                 cluster=None):
+    def __init__(
+        self,
+        tf_random_seed=None,
+        save_summary_steps=100,
+        save_checkpoints_secs=None,
+        save_checkpoints_steps=None,
+        keep_checkpoint_max=5,
+        keep_checkpoint_every_n_hours=10000,
+        session=None,
+        cluster=None,
+    ):
         self.tf_random_seed = tf_random_seed
         self.save_summary_steps = save_summary_steps
         self.save_checkpoints_secs = save_checkpoints_secs
@@ -108,18 +114,19 @@ class TensorflowPodEnvironmentSchema(EnvironmentSchema):
 
 
 class TensorflowPodEnvironmentConfig(EnvironmentConfig):
-    IDENTIFIER = 'pod_environment'
+    IDENTIFIER = "pod_environment"
     SCHEMA = TensorflowPodEnvironmentSchema
-    REDUCED_ATTRIBUTES = EnvironmentConfig.REDUCED_ATTRIBUTES + ['config']
+    REDUCED_ATTRIBUTES = EnvironmentConfig.REDUCED_ATTRIBUTES + ["config"]
 
-    def __init__(self,
-                 index=None,
-                 config=None,
-                 resources=None,
-                 node_selector=None,
-                 affinity=None,
-                 tolerations=None,
-                 ):
+    def __init__(
+        self,
+        index=None,
+        config=None,
+        resources=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+    ):
         self.config = config
         super(TensorflowPodEnvironmentConfig, self).__init__(
             index=index,

@@ -18,7 +18,7 @@ class UserSchema(BaseSchema):
 
 class UserConfig(BaseConfig):
     SCHEMA = UserSchema
-    IDENTIFIER = 'user'
+    IDENTIFIER = "user"
 
     def __init__(self, username, email, is_superuser=False):
         self.username = username

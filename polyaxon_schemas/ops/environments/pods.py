@@ -13,44 +13,51 @@ from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
 
 
 def validate_configmap_refs(values, is_schema=False):
-    if values.get('config_map_refs') and values.get('configmap_refs'):
-        raise ValidationError('You should only use `config_map_refs`.')
+    if values.get("config_map_refs") and values.get("configmap_refs"):
+        raise ValidationError("You should only use `config_map_refs`.")
 
-    if values.get('configmap_refs') and is_schema:
+    if values.get("configmap_refs") and is_schema:
         warnings.warn(
-            'The `configmap_refs` parameter is deprecated and will be removed in next release, '
-            'please use `config_map_refs` instead.',
-            DeprecationWarning)
-        values['config_map_refs'] = values.pop('configmap_refs')
+            "The `configmap_refs` parameter is deprecated and will be removed in next release, "
+            "please use `config_map_refs` instead.",
+            DeprecationWarning,
+        )
+        values["config_map_refs"] = values.pop("configmap_refs")
 
     return values
 
 
 def validate_persistence(values, is_schema=False):
-    if values.get('persistence') and (values.get('data_refs') or
-                                      values.get('artifact_refs')):
-        raise ValidationError('You cannot use `persistence` and  `data_refs` or `artifact_refs`.')
+    if values.get("persistence") and (
+        values.get("data_refs") or values.get("artifact_refs")
+    ):
+        raise ValidationError(
+            "You cannot use `persistence` and  `data_refs` or `artifact_refs`."
+        )
 
-    if values.get('persistence') and is_schema:
+    if values.get("persistence") and is_schema:
         warnings.warn(
-            'The `persistence` parameter is deprecated and will be removed in next release, '
-            'please use `data_refs` and/or `artifact_refs` instead.',
-            DeprecationWarning)
-        persistence = values.pop('persistence')
-        values['data_refs'] = values.get('data_refs', persistence.data)
-        values['artifact_refs'] = to_list(values.get('artifact_refs', persistence.outputs),
-                                          check_none=True)
+            "The `persistence` parameter is deprecated and will be removed in next release, "
+            "please use `data_refs` and/or `artifact_refs` instead.",
+            DeprecationWarning,
+        )
+        persistence = values.pop("persistence")
+        values["data_refs"] = values.get("data_refs", persistence.data)
+        values["artifact_refs"] = to_list(
+            values.get("artifact_refs", persistence.outputs), check_none=True
+        )
         return values
 
 
 def validate_outputs(values, is_schema=False):
-    if values.get('outputs'):
+    if values.get("outputs"):
         warnings.warn(
-            'The `outputs` parameter is deprecated and will be removed in next release, '
-            'please notice that it will be ignored.',
-            DeprecationWarning)
+            "The `outputs` parameter is deprecated and will be removed in next release, "
+            "please notice that it will be ignored.",
+            DeprecationWarning,
+        )
         if is_schema:
-            values.pop('outputs')
+            values.pop("outputs")
 
 
 class EnvironmentSchema(BaseSchema):
@@ -84,6 +91,7 @@ class EnvironmentSchema(BaseSchema):
     @validates_schema
     def validate_persistence(self, values):
         validate_persistence(values, is_schema=True)
+
     #
     # @validates_schema
     # def validate_outputs(self, values):
@@ -101,43 +109,47 @@ class EnvironmentConfig(BaseConfig):
         affinity: `dict`.
         tolerations: `list(dict)`.
     """
-    IDENTIFIER = 'environment'
-    SCHEMA = EnvironmentSchema
-    REDUCED_ATTRIBUTES = ['index',
-                          'resources',
-                          'labels',
-                          'annotations',
-                          'node_selector',
-                          'affinity',
-                          'tolerations',
-                          'service_account',
-                          'image_pull_secrets',
-                          'max_restarts',
-                          'secret_refs',
-                          'config_map_refs',
-                          'data_refs',
-                          'artifact_refs',
-                          'outputs']
 
-    def __init__(self,
-                 index=None,
-                 resources=None,
-                 labels=None,
-                 annotations=None,
-                 node_selector=None,
-                 affinity=None,
-                 tolerations=None,
-                 service_account=None,
-                 image_pull_secrets=None,
-                 max_restarts=None,
-                 secret_refs=None,
-                 config_map_refs=None,
-                 configmap_refs=None,
-                 data_refs=None,
-                 artifact_refs=None,
-                 persistence=None,
-                 outputs=None,
-                 ):
+    IDENTIFIER = "environment"
+    SCHEMA = EnvironmentSchema
+    REDUCED_ATTRIBUTES = [
+        "index",
+        "resources",
+        "labels",
+        "annotations",
+        "node_selector",
+        "affinity",
+        "tolerations",
+        "service_account",
+        "image_pull_secrets",
+        "max_restarts",
+        "secret_refs",
+        "config_map_refs",
+        "data_refs",
+        "artifact_refs",
+        "outputs",
+    ]
+
+    def __init__(
+        self,
+        index=None,
+        resources=None,
+        labels=None,
+        annotations=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        service_account=None,
+        image_pull_secrets=None,
+        max_restarts=None,
+        secret_refs=None,
+        config_map_refs=None,
+        configmap_refs=None,
+        data_refs=None,
+        artifact_refs=None,
+        persistence=None,
+        outputs=None,
+    ):
         self.index = index
         self.resources = resources
         self.labels = labels
@@ -149,12 +161,17 @@ class EnvironmentConfig(BaseConfig):
         self.image_pull_secrets = image_pull_secrets
         self.max_restarts = max_restarts
         self.secret_refs = secret_refs
-        validate_configmap_refs({'config_map_refs': config_map_refs,
-                                 'configmap_refs': configmap_refs})
+        validate_configmap_refs(
+            {"config_map_refs": config_map_refs, "configmap_refs": configmap_refs}
+        )
         self.config_map_refs = config_map_refs or configmap_refs
-        validate_persistence({'persistence': persistence,
-                              'data_refs': data_refs,
-                              'artifact_refs': artifact_refs})
+        validate_persistence(
+            {
+                "persistence": persistence,
+                "data_refs": data_refs,
+                "artifact_refs": artifact_refs,
+            }
+        )
         self.data_refs = data_refs
         self.artifact_refs = artifact_refs
         # validate_outputs({'outputs': outputs})

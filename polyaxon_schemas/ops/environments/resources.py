@@ -20,7 +20,7 @@ class K8SResourcesEntrySchema(BaseSchema):
 
 class K8SResourcesEntryConfig(BaseConfig):
     SCHEMA = K8SResourcesEntrySchema
-    REDUCED_ATTRIBUTES = ['cpu', 'memory', 'gpu', 'tpu']
+    REDUCED_ATTRIBUTES = ["cpu", "memory", "gpu", "tpu"]
 
     def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu
@@ -46,9 +46,10 @@ class K8SContainerResourcesConfig(BaseConfig):
         limits: `K8SResourcesEntry`.
         requests: `K8SResourcesEntry`.
     """
-    IDENTIFIER = 'resources'
+
+    IDENTIFIER = "resources"
     SCHEMA = K8SContainerResourcesSchema
-    REDUCED_ATTRIBUTES = ['limits', 'requests']
+    REDUCED_ATTRIBUTES = ["limits", "requests"]
 
     def __init__(self, limits=None, requests=None):
         self.limits = limits
@@ -72,9 +73,10 @@ class K8SResourcesConfig(BaseConfig):
         limits: `float`.
         requests: `float`.
     """
-    IDENTIFIER = 'resources'
+
+    IDENTIFIER = "resources"
     SCHEMA = K8SResourcesSchema
-    REDUCED_ATTRIBUTES = ['limits', 'requests']
+    REDUCED_ATTRIBUTES = ["limits", "requests"]
 
     def __init__(self, limits=None, requests=None):
         self.limits = limits
@@ -120,9 +122,10 @@ class PodResourcesConfig(BaseConfig):
         gpu: `K8SResourcesConfig`.
         tpu: `K8SResourcesConfig`.
     """
-    IDENTIFIER = 'pod_resources'
+
+    IDENTIFIER = "pod_resources"
     SCHEMA = PodResourcesSchema
-    REDUCED_ATTRIBUTES = ['cpu', 'memory', 'gpu', 'tpu']
+    REDUCED_ATTRIBUTES = ["cpu", "memory", "gpu", "tpu"]
 
     def __init__(self, cpu=None, memory=None, gpu=None, tpu=None):
         self.cpu = cpu

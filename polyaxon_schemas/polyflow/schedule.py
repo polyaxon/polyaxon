@@ -20,9 +20,11 @@ class IntervalScheduleSchema(BaseSchema):
 
 class IntervalScheduleConfig(BaseConfig):
     SCHEMA = IntervalScheduleSchema
-    IDENTIFIER = 'interval'
+    IDENTIFIER = "interval"
 
-    def __init__(self, frequency, start_at, end_at=None, depends_on_past=None, kind=None):
+    def __init__(
+        self, frequency, start_at, end_at=None, depends_on_past=None, kind=None
+    ):
         self.frequency = frequency
         self.start_at = start_at
         self.end_at = end_at
@@ -44,9 +46,11 @@ class CronScheduleSchema(BaseSchema):
 
 class CronScheduleConfig(BaseConfig):
     SCHEMA = CronScheduleSchema
-    IDENTIFIER = 'cron'
+    IDENTIFIER = "cron"
 
-    def __init__(self, cron, start_at=None, end_at=None, depends_on_past=None, kind=None):
+    def __init__(
+        self, cron, start_at=None, end_at=None, depends_on_past=None, kind=None
+    ):
         self.cron = cron
         self.start_at = start_at
         self.end_at = end_at
@@ -55,7 +59,7 @@ class CronScheduleConfig(BaseConfig):
 
 
 class ScheduleSchema(BaseOneOfSchema):
-    TYPE_FIELD = 'kind'
+    TYPE_FIELD = "kind"
     TYPE_FIELD_REMOVE = False
     SCHEMAS = {
         IntervalScheduleConfig.IDENTIFIER: IntervalScheduleSchema,

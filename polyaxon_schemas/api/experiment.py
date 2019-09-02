@@ -33,26 +33,34 @@ class ExperimentJobSchema(BaseSchema):
 
 class ExperimentJobConfig(BaseConfig):
     SCHEMA = ExperimentJobSchema
-    IDENTIFIER = 'ExperimentJob'
+    IDENTIFIER = "ExperimentJob"
     DEFAULT_EXCLUDE_ATTRIBUTES = [
-        'uuid', 'definition', 'experiment', 'unique_name', 'updated_at', 'resources']
-    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
+        "uuid",
+        "definition",
+        "experiment",
+        "unique_name",
+        "updated_at",
+        "resources",
+    ]
+    DATETIME_ATTRIBUTES = ["created_at", "updated_at", "started_at", "finished_at"]
 
-    def __init__(self,
-                 uuid,
-                 experiment,
-                 created_at,
-                 updated_at,
-                 definition=None,
-                 unique_name=None,
-                 pod_id=None,
-                 id=None,  # pylint:disable=redefined-builtin
-                 role=None,
-                 last_status=None,
-                 started_at=None,
-                 finished_at=None,
-                 resources=None,
-                 total_run=None):
+    def __init__(
+        self,
+        uuid,
+        experiment,
+        created_at,
+        updated_at,
+        definition=None,
+        unique_name=None,
+        pod_id=None,
+        id=None,  # pylint:disable=redefined-builtin
+        role=None,
+        last_status=None,
+        started_at=None,
+        finished_at=None,
+        resources=None,
+        total_run=None,
+    ):
         self.uuid = uuid
         self.unique_name = unique_name
         self.pod_id = pod_id
@@ -68,7 +76,9 @@ class ExperimentJobConfig(BaseConfig):
         self.resources = resources
         self.total_run = total_run
         if all([self.started_at, self.finished_at]):
-            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
+            self.total_run = humanize_timedelta(
+                (self.finished_at - self.started_at).seconds
+            )
 
 
 class ExperimentSchema(BaseSchema):
@@ -109,43 +119,53 @@ class ExperimentSchema(BaseSchema):
 
 class ExperimentConfig(BaseConfig):
     SCHEMA = ExperimentSchema
-    IDENTIFIER = 'Experiment'
+    IDENTIFIER = "Experiment"
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'experiment_group', 'build_job', 'last_status',
-        'created_at', 'started_at', 'finished_at', 'total_run'
+        "id",
+        "unique_name",
+        "user",
+        "experiment_group",
+        "build_job",
+        "last_status",
+        "created_at",
+        "started_at",
+        "finished_at",
+        "total_run",
     ]
-    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
+    DATETIME_ATTRIBUTES = ["created_at", "updated_at", "started_at", "finished_at"]
 
-    def __init__(self,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 uuid=None,
-                 name=None,
-                 unique_name=None,
-                 project=None,
-                 experiment_group=None,
-                 build_job=None,
-                 description=None,
-                 last_status=None,
-                 last_metric=None,
-                 created_at=None,
-                 updated_at=None,
-                 started_at=None,
-                 finished_at=None,
-                 is_clone=None,
-                 has_tensorboard=False,
-                 content=None,
-                 num_jobs=0,
-                 params=None,
-                 tags=None,
-                 resources=None,
-                 is_managed=None,
-                 run_env=None,
-                 jobs=None,
-                 ttl=None,
-                 backend=None,
-                 framework=None,
-                 total_run=None):
+    def __init__(
+        self,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        uuid=None,
+        name=None,
+        unique_name=None,
+        project=None,
+        experiment_group=None,
+        build_job=None,
+        description=None,
+        last_status=None,
+        last_metric=None,
+        created_at=None,
+        updated_at=None,
+        started_at=None,
+        finished_at=None,
+        is_clone=None,
+        has_tensorboard=False,
+        content=None,
+        num_jobs=0,
+        params=None,
+        tags=None,
+        resources=None,
+        is_managed=None,
+        run_env=None,
+        jobs=None,
+        ttl=None,
+        backend=None,
+        framework=None,
+        total_run=None,
+    ):
         self.id = id
         self.user = user
         self.uuid = uuid
@@ -176,7 +196,9 @@ class ExperimentConfig(BaseConfig):
         self.framework = framework
         self.total_run = None
         if all([self.started_at, self.finished_at]):
-            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
+            self.total_run = humanize_timedelta(
+                (self.finished_at - self.started_at).seconds
+            )
 
 
 class ExperimentStatusSchema(BaseSchema):
@@ -195,18 +217,20 @@ class ExperimentStatusSchema(BaseSchema):
 
 class ExperimentStatusConfig(BaseConfig):
     SCHEMA = ExperimentStatusSchema
-    IDENTIFIER = 'ExperimentStatus'
-    DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid', 'traceback']
+    IDENTIFIER = "ExperimentStatus"
+    DATETIME_ATTRIBUTES = ["created_at"]
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["experiment", "uuid", "traceback"]
 
-    def __init__(self,
-                 id,  # pylint:disable=redefined-builtin
-                 uuid,
-                 experiment,
-                 created_at,
-                 status,
-                 message=None,
-                 traceback=None):
+    def __init__(
+        self,
+        id,  # pylint:disable=redefined-builtin
+        uuid,
+        experiment,
+        created_at,
+        status,
+        message=None,
+        traceback=None,
+    ):
         self.id = id
         self.uuid = uuid
         self.experiment = experiment
@@ -230,16 +254,18 @@ class ExperimentMetricSchema(BaseSchema):
 
 class ExperimentMetricConfig(BaseConfig):
     SCHEMA = ExperimentMetricSchema
-    IDENTIFIER = 'ExperimentMetric'
-    DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment', 'uuid']
+    IDENTIFIER = "ExperimentMetric"
+    DATETIME_ATTRIBUTES = ["created_at"]
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["experiment", "uuid"]
 
-    def __init__(self,
-                 id,  # pylint:disable=redefined-builtin
-                 uuid,
-                 experiment,
-                 created_at,
-                 values):
+    def __init__(
+        self,
+        id,  # pylint:disable=redefined-builtin
+        uuid,
+        experiment,
+        created_at,
+        values,
+    ):
         self.id = id
         self.uuid = uuid
         self.experiment = experiment
@@ -263,18 +289,20 @@ class ExperimentJobStatusSchema(BaseSchema):
 
 class ExperimentJobStatusConfig(BaseConfig):
     SCHEMA = ExperimentJobStatusSchema
-    IDENTIFIER = 'ExperimentJobStatus'
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'details', 'uuid']
-    DATETIME_ATTRIBUTES = ['created_at']
+    IDENTIFIER = "ExperimentJobStatus"
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["job", "details", "uuid"]
+    DATETIME_ATTRIBUTES = ["created_at"]
 
-    def __init__(self,
-                 id,  # pylint:disable=redefined-builtin
-                 uuid,
-                 job,
-                 created_at,
-                 status,
-                 message=None,
-                 details=None):
+    def __init__(
+        self,
+        id,  # pylint:disable=redefined-builtin
+        uuid,
+        job,
+        created_at,
+        status,
+        message=None,
+        details=None,
+    ):
         self.id = id
         self.uuid = uuid
         self.job = job
@@ -308,25 +336,27 @@ class ContainerGPUResourcesSchema(BaseSchema):
 
 class ContainerGPUResourcesConfig(BaseConfig):
     SCHEMA = ContainerGPUResourcesSchema
-    IDENTIFIER = 'ContainerGPUResources'
-    MEM_SIZE_ATTRIBUTES = ['memory_free', 'memory_used', 'memory_total']
+    IDENTIFIER = "ContainerGPUResources"
+    MEM_SIZE_ATTRIBUTES = ["memory_free", "memory_used", "memory_total"]
 
-    def __init__(self,
-                 index,
-                 uuid,
-                 name,
-                 minor,
-                 bus_id,
-                 serial,
-                 temperature_gpu,
-                 utilization_gpu,
-                 power_draw,
-                 power_limit,
-                 memory_free,
-                 memory_used,
-                 memory_total,
-                 memory_utilization,
-                 processes=None):
+    def __init__(
+        self,
+        index,
+        uuid,
+        name,
+        minor,
+        bus_id,
+        serial,
+        temperature_gpu,
+        utilization_gpu,
+        power_draw,
+        power_limit,
+        memory_free,
+        memory_used,
+        memory_total,
+        memory_utilization,
+        processes=None,
+    ):
         self.index = index
         self.uuid = uuid
         self.name = name
@@ -354,7 +384,9 @@ class ContainerResourcesSchema(BaseSchema):
     percpu_percentage = fields.List(fields.Float(), allow_none=True)
     memory_used = fields.Int()
     memory_limit = fields.Int()
-    gpu_resources = fields.Nested(ContainerGPUResourcesSchema, many=True, allow_none=True)
+    gpu_resources = fields.Nested(
+        ContainerGPUResourcesSchema, many=True, allow_none=True
+    )
 
     @staticmethod
     def schema_config():
@@ -363,21 +395,23 @@ class ContainerResourcesSchema(BaseSchema):
 
 class ContainerResourcesConfig(BaseConfig):
     SCHEMA = ContainerResourcesSchema
-    IDENTIFIER = 'ContainerResources'
-    PERCENT_ATTRIBUTES = ['cpu_percentage']
-    MEM_SIZE_ATTRIBUTES = ['memory_used', 'memory_limit']
+    IDENTIFIER = "ContainerResources"
+    PERCENT_ATTRIBUTES = ["cpu_percentage"]
+    MEM_SIZE_ATTRIBUTES = ["memory_used", "memory_limit"]
 
-    def __init__(self,
-                 job_uuid,
-                 experiment_uuid,
-                 job_name,
-                 container_id,
-                 n_cpus,
-                 cpu_percentage,
-                 percpu_percentage,
-                 memory_used,
-                 memory_limit,
-                 gpu_resources=None):
+    def __init__(
+        self,
+        job_uuid,
+        experiment_uuid,
+        job_name,
+        container_id,
+        n_cpus,
+        cpu_percentage,
+        percpu_percentage,
+        memory_used,
+        memory_limit,
+        gpu_resources=None,
+    ):
         self.job_uuid = job_uuid
         self.experiment_uuid = experiment_uuid
         self.job_name = job_name

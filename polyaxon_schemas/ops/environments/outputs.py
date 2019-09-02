@@ -28,7 +28,8 @@ class OutputsConfig(BaseConfig):
         experiments: `list(str)`. The list of the names of experiments
             to make available for the current run.
     """
-    IDENTIFIER = 'outputs'
+
+    IDENTIFIER = "outputs"
     SCHEMA = OutputsSchema
 
     def __init__(self, jobs=None, experiments=None):

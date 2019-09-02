@@ -2,11 +2,11 @@ from hestia.unknown import UNKNOWN
 
 
 class PodLifeCycle(object):
-    CONTAINER_CREATING = 'ContainerCreating'
-    PENDING = 'Pending'
-    RUNNING = 'Running'
-    SUCCEEDED = 'Succeeded'
-    FAILED = 'Failed'
+    CONTAINER_CREATING = "ContainerCreating"
+    PENDING = "Pending"
+    RUNNING = "Running"
+    SUCCEEDED = "Succeeded"
+    FAILED = "Failed"
     UNKNOWN = UNKNOWN
 
     CHOICES = (

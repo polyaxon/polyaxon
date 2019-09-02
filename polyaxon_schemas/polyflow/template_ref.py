@@ -9,10 +9,11 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
 def validate_template(**kwargs):
-    if len([i for i in six.itervalues(kwargs) if i is not None and i != '']) != 1:
+    if len([i for i in six.itervalues(kwargs) if i is not None and i != ""]) != 1:
         raise ValidationError(
-            'Template requires one and only one param: '
-            'name, url, path, action, or event.')
+            "Template requires one and only one param: "
+            "name, url, path, action, or event."
+        )
 
 
 class TemplateRefSchema(BaseSchema):
@@ -37,8 +38,8 @@ class TemplateRefSchema(BaseSchema):
 
 class TemplateRefConfig(BaseConfig):
     SCHEMA = TemplateRefSchema
-    IDENTIFIER = 'template'
-    REDUCED_ATTRIBUTES = ['name', 'url', 'path', 'action', 'event']
+    IDENTIFIER = "template"
+    REDUCED_ATTRIBUTES = ["name", "url", "path", "action", "event"]
 
     def __init__(self, name=None, url=None, path=None, action=None, event=None):
         validate_template(name=name, url=url, path=path, action=action, event=event)

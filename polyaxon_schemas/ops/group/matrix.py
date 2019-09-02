@@ -25,18 +25,25 @@ class PValue(fields.Field):
 
 
 class Range(fields.Field):
-    REQUIRED_KEYS = ['start', 'stop', 'step']
+    REQUIRED_KEYS = ["start", "stop", "step"]
     OPTIONAL_KEY = None
     KEYS = REQUIRED_KEYS
     CHECK_ORDER = True
 
-    def _deserialize(self, value, attr, data, **kwargs):  # pylint:disable=too-many-branches
+    def _deserialize(
+        self, value, attr, data, **kwargs
+    ):  # pylint:disable=too-many-branches
         if isinstance(value, six.string_types):
-            value = value.split(':')
+            value = value.split(":")
         elif isinstance(value, Mapping):
             if set(self.REQUIRED_KEYS) - set(six.iterkeys(value)):
-                raise ValidationError("{} dict must have {} keys {}.".format(
-                    self.__class__.__name__, len(self.REQUIRED_KEYS), self.REQUIRED_KEYS))
+                raise ValidationError(
+                    "{} dict must have {} keys {}.".format(
+                        self.__class__.__name__,
+                        len(self.REQUIRED_KEYS),
+                        self.REQUIRED_KEYS,
+                    )
+                )
             if len(value) == len(self.REQUIRED_KEYS):
                 value = [value[k] for k in self.REQUIRED_KEYS]
             elif len(value) == len(self.KEYS):
@@ -48,17 +55,26 @@ class Range(fields.Field):
                 " * dict: {}\n"
                 " * list: {}".format(
                     self.__class__.__name__,
-                    ':'.join(self.REQUIRED_KEYS),
-                    dict(zip(self.REQUIRED_KEYS,
-                             ['v{}'.format(i) for i in range(len(self.REQUIRED_KEYS))])),
-                    self.REQUIRED_KEYS))
+                    ":".join(self.REQUIRED_KEYS),
+                    dict(
+                        zip(
+                            self.REQUIRED_KEYS,
+                            ["v{}".format(i) for i in range(len(self.REQUIRED_KEYS))],
+                        )
+                    ),
+                    self.REQUIRED_KEYS,
+                )
+            )
 
         if len(value) != len(self.REQUIRED_KEYS) and len(value) != len(self.KEYS):
-            raise ValidationError("{} requires {} or {} elements received {}".format(
-                self.__class__.__name__,
-                len(self.REQUIRED_KEYS),
-                len(self.KEYS),
-                len(value)))
+            raise ValidationError(
+                "{} requires {} or {} elements received {}".format(
+                    self.__class__.__name__,
+                    len(self.REQUIRED_KEYS),
+                    len(self.KEYS),
+                    len(value),
+                )
+            )
 
         for i, v in enumerate(value):
             try:
@@ -67,7 +83,8 @@ class Range(fields.Field):
                 raise ValidationError(
                     "{}: {} must of type int or float, received instead {}".format(
                         self.__class__.__name__, self.REQUIRED_KEYS[i], v
-                    ))
+                    )
+                )
             if not isinstance(v, (int, float)):
                 value[i] = ast.literal_eval(v)
 
@@ -79,7 +96,9 @@ class Range(fields.Field):
                     key1=self.REQUIRED_KEYS[0],
                     key2=self.REQUIRED_KEYS[1],
                     val1=value[0],
-                    val2=value[1]))
+                    val2=value[1],
+                )
+            )
         if len(self.REQUIRED_KEYS) == 3 and value[2] == 0:
             raise ValidationError("{} cannot be 0".format(self.REQUIRED_KEYS[2]))
 
@@ -88,18 +107,18 @@ class Range(fields.Field):
 
 
 class LinSpace(Range):
-    REQUIRED_KEYS = ['start', 'stop', 'num']
+    REQUIRED_KEYS = ["start", "stop", "num"]
     KEYS = REQUIRED_KEYS
 
 
 class GeomSpace(Range):
-    REQUIRED_KEYS = ['start', 'stop', 'num']
+    REQUIRED_KEYS = ["start", "stop", "num"]
     KEYS = REQUIRED_KEYS
 
 
 class LogSpace(Range):
-    REQUIRED_KEYS = ['start', 'stop', 'num']
-    OPTIONAL_KEYS = ['base']
+    REQUIRED_KEYS = ["start", "stop", "num"]
+    OPTIONAL_KEYS = ["base"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
@@ -146,7 +165,7 @@ def qlognormal(loc, scale, q, size=None, rand_generator=None):
 def validate_pvalues(values):
     dists = [v for v in values if v]
     if sum(dists) > 1:
-        raise ValidationError('The distribution of different outcomes should sum to 1.')
+        raise ValidationError("The distribution of different outcomes should sum to 1.")
 
 
 def pvalues(values, size=None, rand_generator=None):
@@ -165,57 +184,59 @@ class Dist(Range):
 
 
 class Uniform(Dist):
-    REQUIRED_KEYS = ['low', 'high']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["low", "high"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QUniform(Dist):
-    REQUIRED_KEYS = ['low', 'high', 'q']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["low", "high", "q"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class LogUniform(Dist):
-    REQUIRED_KEYS = ['low', 'high']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["low", "high"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QLogUniform(Dist):
-    REQUIRED_KEYS = ['low', 'high', 'q']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["low", "high", "q"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class Normal(Dist):
-    REQUIRED_KEYS = ['loc', 'scale']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["loc", "scale"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QNormal(Dist):
-    REQUIRED_KEYS = ['loc', 'scale', 'q']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["loc", "scale", "q"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class LogNormal(Dist):
-    REQUIRED_KEYS = ['loc', 'scale']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["loc", "scale"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 class QLogNormal(Dist):
-    REQUIRED_KEYS = ['loc', 'scale', 'q']
-    OPTIONAL_KEYS = ['size']
+    REQUIRED_KEYS = ["loc", "scale", "q"]
+    OPTIONAL_KEYS = ["size"]
     KEYS = REQUIRED_KEYS + OPTIONAL_KEYS
 
 
 def validate_matrix(values):
     v = sum(map(lambda x: 1 if x else 0, values))
     if v == 0 or v > 1:
-        raise ValidationError("Matrix element is not valid, one and only one option is required.")
+        raise ValidationError(
+            "Matrix element is not valid, one and only one option is required."
+        )
 
 
 class MatrixSchema(BaseSchema):
@@ -266,59 +287,82 @@ class MatrixSchema(BaseSchema):
 
 
 class MatrixConfig(BaseConfig):
-    IDENTIFIER = 'matrix'
+    IDENTIFIER = "matrix"
     SCHEMA = MatrixSchema
     REDUCED_ATTRIBUTES = [
-        'values', 'pvalues', 'range', 'linspace', 'logspace', 'geomspace',
-        'uniform', 'quniform', 'loguniform', 'qloguniform',
-        'normal', 'qnormal', 'lognormal', 'qlognormal'
+        "values",
+        "pvalues",
+        "range",
+        "linspace",
+        "logspace",
+        "geomspace",
+        "uniform",
+        "quniform",
+        "loguniform",
+        "qloguniform",
+        "normal",
+        "qnormal",
+        "lognormal",
+        "qlognormal",
     ]
 
     NUMPY_MAPPING = {
-        'range': np.arange,
-        'linspace': np.linspace,
-        'logspace': np.logspace,
-        'geomspace': np.geomspace,
-        'uniform': uniform,
-        'quniform': quniform,
-        'loguniform': loguniform,
-        'qloguniform': qloguniform,
-        'normal': normal,
-        'qnormal': qnormal,
-        'lognormal': lognormal,
-        'qlognormal': qlognormal,
+        "range": np.arange,
+        "linspace": np.linspace,
+        "logspace": np.logspace,
+        "geomspace": np.geomspace,
+        "uniform": uniform,
+        "quniform": quniform,
+        "loguniform": loguniform,
+        "qloguniform": qloguniform,
+        "normal": normal,
+        "qnormal": qnormal,
+        "lognormal": lognormal,
+        "qlognormal": qlognormal,
     }
 
-    RANGES = {
-        'range', 'linspace', 'logspace', 'geomspace'
-    }
+    RANGES = {"range", "linspace", "logspace", "geomspace"}
 
     CONTINUOUS = {
-        'uniform', 'quniform', 'loguniform', 'qloguniform',
-        'normal', 'qnormal', 'lognormal', 'qlognormal'
+        "uniform",
+        "quniform",
+        "loguniform",
+        "qloguniform",
+        "normal",
+        "qnormal",
+        "lognormal",
+        "qlognormal",
     }
 
     DISTRIBUTIONS = {
-        'pvalues',
-        'uniform', 'quniform', 'loguniform', 'qloguniform',
-        'normal', 'qnormal', 'lognormal', 'qlognormal'
+        "pvalues",
+        "uniform",
+        "quniform",
+        "loguniform",
+        "qloguniform",
+        "normal",
+        "qnormal",
+        "lognormal",
+        "qlognormal",
     }
 
-    def __init__(self,
-                 values=None,
-                 pvalues=None,
-                 range=None,  # noqa
-                 linspace=None,
-                 logspace=None,
-                 geomspace=None,
-                 uniform=None,
-                 quniform=None,
-                 loguniform=None,
-                 qloguniform=None,
-                 normal=None,
-                 qnormal=None,
-                 lognormal=None,
-                 qlognormal=None):
+    def __init__(
+        self,
+        values=None,
+        pvalues=None,
+        range=None,  # noqa
+        linspace=None,
+        logspace=None,
+        geomspace=None,
+        uniform=None,
+        quniform=None,
+        loguniform=None,
+        qloguniform=None,
+        normal=None,
+        qnormal=None,
+        lognormal=None,
+        qlognormal=None,
+    ):
         self.values = values
         self.pvalues = pvalues
         self.range = range
@@ -334,9 +378,24 @@ class MatrixConfig(BaseConfig):
         self.lognormal = lognormal
         self.qlognormal = qlognormal
 
-        validate_matrix([
-            values, pvalues, range, linspace, logspace, geomspace, uniform, quniform,
-            loguniform, qloguniform, normal, qnormal, lognormal, qlognormal])
+        validate_matrix(
+            [
+                values,
+                pvalues,
+                range,
+                linspace,
+                logspace,
+                geomspace,
+                uniform,
+                quniform,
+                loguniform,
+                qloguniform,
+                normal,
+                qnormal,
+                lognormal,
+                qlognormal,
+            ]
+        )
 
     @property
     def is_distribution(self):
@@ -360,16 +419,21 @@ class MatrixConfig(BaseConfig):
     @property
     def is_categorical(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
-        if key != 'values':
+        if key != "values":
             return False
 
-        return any([v for v in value
-                    if not isinstance(v, (int, float, complex, np.integer, np.floating))])
+        return any(
+            [
+                v
+                for v in value
+                if not isinstance(v, (int, float, complex, np.integer, np.floating))
+            ]
+        )
 
     @property
     def is_uniform(self):
         key = list(six.iterkeys(self.to_dict()))[0]
-        return key == 'uniform'
+        return key == "uniform"
 
     @property
     def min(self):
@@ -378,14 +442,14 @@ class MatrixConfig(BaseConfig):
 
         if self.is_range:
             value = list(six.itervalues(self.to_dict()))[0]
-            return value.get('start')
+            return value.get("start")
 
         if self.is_discrete and not self.is_distribution:
             return min(self.to_numpy())
 
         if self.is_uniform:
             value = list(six.itervalues(self.to_dict()))[0]
-            return value.get('low')
+            return value.get("low")
 
         return None
 
@@ -396,37 +460,41 @@ class MatrixConfig(BaseConfig):
 
         if self.is_range:
             value = list(six.itervalues(self.to_dict()))[0]
-            return value.get('stop')
+            return value.get("stop")
 
         if self.is_discrete and not self.is_distribution:
             return max(self.to_numpy())
 
         if self.is_uniform:
             value = list(six.itervalues(self.to_dict()))[0]
-            return value.get('high')
+            return value.get("high")
 
         return None
 
     @property
     def length(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
-        if key in ['values', 'pvalues']:
+        if key in ["values", "pvalues"]:
             return len(value)
 
         if key in self.DISTRIBUTIONS:
-            raise ValidationError('Distribution should not call `to_numpy`, '
-                                  'instead it should call `sample`.')
+            raise ValidationError(
+                "Distribution should not call `to_numpy`, "
+                "instead it should call `sample`."
+            )
 
         return len(self.NUMPY_MAPPING[key](**value))
 
     def to_numpy(self):
         key, value = list(six.iteritems(self.to_dict()))[0]
-        if key == 'values':
+        if key == "values":
             return value
 
         if key in self.DISTRIBUTIONS:
-            raise ValidationError('Distribution should not call `to_numpy`, '
-                                  'instead it should call `sample`.')
+            raise ValidationError(
+                "Distribution should not call `to_numpy`, "
+                "instead it should call `sample`."
+            )
 
         return self.NUMPY_MAPPING[key](**value)
 
@@ -434,7 +502,7 @@ class MatrixConfig(BaseConfig):
         size = None if size == 1 else size
         key, value = list(six.iteritems(self.to_dict()))[0]
         value = copy.deepcopy(value)
-        if key in {'values', 'range', 'linspace', 'logspace', 'geomspace'}:
+        if key in {"values", "range", "linspace", "logspace", "geomspace"}:
             value = self.to_numpy()
             rand_generator = rand_generator or np.random
             try:
@@ -443,9 +511,9 @@ class MatrixConfig(BaseConfig):
                 idx = rand_generator.randint(0, len(value))
                 return value[idx]
 
-        if key == 'pvalues':
+        if key == "pvalues":
             return pvalues(values=value, size=size, rand_generator=rand_generator)
 
-        value['size'] = size
-        value['rand_generator'] = rand_generator
+        value["size"] = size
+        value["rand_generator"] = rand_generator
         return self.NUMPY_MAPPING[key](**value)

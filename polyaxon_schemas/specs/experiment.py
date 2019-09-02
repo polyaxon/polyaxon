@@ -17,7 +17,7 @@ from polyaxon_schemas.specs.frameworks import (
     MPISpecification,
     MXNetSpecification,
     PytorchSpecification,
-    TensorflowSpecification
+    TensorflowSpecification,
 )
 from polyaxon_schemas.utils import TaskType
 
@@ -34,6 +34,7 @@ class ExperimentSpecification(BaseRunSpecification):
         BUILD: defines the build step where the user can set a docker image definition
         RUN: defines the run step where the user can run a command
     """
+
     _SPEC_KIND = kinds.EXPERIMENT  # pylint:disable=protected-access
 
     SECTIONS = BaseRunSpecification.SECTIONS
@@ -70,9 +71,7 @@ class ExperimentSpecification(BaseRunSpecification):
 
     @cached_property
     def cluster_def(self):
-        cluster = {
-            TaskType.MASTER: 1,
-        }
+        cluster = {TaskType.MASTER: 1}
         is_distributed = False
         environment = self.environment
 
@@ -81,24 +80,24 @@ class ExperimentSpecification(BaseRunSpecification):
 
         if self.config.tensorflow:
             return TensorflowSpecification.get_cluster_def(
-                cluster=cluster,
-                framework_config=self.config.tensorflow)
+                cluster=cluster, framework_config=self.config.tensorflow
+            )
         if self.config.horovod:
             return HorovodSpecification.get_cluster_def(
-                cluster=cluster,
-                framework_config=self.config.horovod)
+                cluster=cluster, framework_config=self.config.horovod
+            )
         if self.config.mxnet:
             return MXNetSpecification.get_cluster_def(
-                cluster=cluster,
-                framework_config=self.config.mxnet)
+                cluster=cluster, framework_config=self.config.mxnet
+            )
         if self.config.pytorch:
             return PytorchSpecification.get_cluster_def(
-                cluster=cluster,
-                framework_config=self.config.pytorch)
+                cluster=cluster, framework_config=self.config.pytorch
+            )
         if self.config.mpi:
             return MPISpecification.get_cluster_def(
-                cluster={},
-                framework_config=self.config.mpi)
+                cluster={}, framework_config=self.config.mpi
+            )
 
         # No specified framework, It should return default standalone mode cluster definition
         return cluster, is_distributed
@@ -118,7 +117,7 @@ class ExperimentSpecification(BaseRunSpecification):
                 master_resources=self.master_resources,
                 environment=self.config.tensorflow,
                 cluster=cluster,
-                is_distributed=is_distributed
+                is_distributed=is_distributed,
             )
 
         if self.config.horovod:
@@ -126,7 +125,7 @@ class ExperimentSpecification(BaseRunSpecification):
                 master_resources=self.master_resources,
                 environment=self.config.horovod,
                 cluster=cluster,
-                is_distributed=is_distributed
+                is_distributed=is_distributed,
             )
 
         if self.config.mxnet:
@@ -134,7 +133,7 @@ class ExperimentSpecification(BaseRunSpecification):
                 master_resources=self.master_resources,
                 environment=self.config.mxnet,
                 cluster=cluster,
-                is_distributed=is_distributed
+                is_distributed=is_distributed,
             )
 
         if self.config.pytorch:
@@ -142,7 +141,7 @@ class ExperimentSpecification(BaseRunSpecification):
                 master_resources=self.master_resources,
                 environment=self.config.pytorch,
                 cluster=cluster,
-                is_distributed=is_distributed
+                is_distributed=is_distributed,
             )
 
         if self.config.mpi:
@@ -150,7 +149,7 @@ class ExperimentSpecification(BaseRunSpecification):
                 master_resources=self.master_resources,
                 environment=self.config.mpi,
                 cluster=cluster,
-                is_distributed=is_distributed
+                is_distributed=is_distributed,
             )
 
         # default value is the master resources
@@ -181,16 +180,17 @@ class ExperimentSpecification(BaseRunSpecification):
         return self.environment.tolerations if self.environment else None
 
     @classmethod
-    def create_specification(cls,  # pylint:disable=arguments-differ
-                             build_config,
-                             run_config,
-                             to_dict=True):
+    def create_specification(
+        cls, build_config, run_config, to_dict=True  # pylint:disable=arguments-differ
+    ):
         try:
             specification = BaseRunSpecification.create_specification(
-                build_config=build_config, to_dict=True)
+                build_config=build_config, to_dict=True
+            )
         except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of BuildConfig.')
+                "Create specification expects a dict or an instance of BuildConfig."
+            )
 
         if isinstance(run_config, RunConfig):
             r_config = run_config.to_light_dict()
@@ -199,7 +199,8 @@ class ExperimentSpecification(BaseRunSpecification):
             r_config = r_config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of RunConfig.')
+                "Create specification expects a dict or an instance of RunConfig."
+            )
 
         specification[cls.KIND] = cls._SPEC_KIND
         specification[cls.RUN] = r_config

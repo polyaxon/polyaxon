@@ -12,24 +12,21 @@ from polyaxon_schemas.api.data import DataConfig, DataDetailsConfig, DatasetConf
 
 class TestDataConfigs(TestCase):
     def test_data_details_config(self):
-        config_dict = {
-            'state': 'state',
-            'size': 1.4,
-            'uri': 'http://www.foo.com/data'
-        }
+        config_dict = {"state": "state", "size": 1.4, "uri": "http://www.foo.com/data"}
         config = DataDetailsConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
     def test_data_config(self):
         config_dict = {
-            'uuid': uuid.uuid4().hex,
-            'name': 'foo',
-            'created_at': local_now().isoformat(),
-            'description': 'foo data',
-            'details': DataDetailsConfig(
-                state='state', size=1.4, uri='http://www.foo.com/data').to_dict(),
-            'version': None,
-            'resource_id': '1'
+            "uuid": uuid.uuid4().hex,
+            "name": "foo",
+            "created_at": local_now().isoformat(),
+            "description": "foo data",
+            "details": DataDetailsConfig(
+                state="state", size=1.4, uri="http://www.foo.com/data"
+            ).to_dict(),
+            "version": None,
+            "resource_id": "1",
         }
         config = DataConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
@@ -37,10 +34,10 @@ class TestDataConfigs(TestCase):
 
     def test_dataset_config(self):
         config_dict = {
-            'uuid': uuid.uuid4().hex,
-            'name': 'foo',
-            'description': 'foo data',
-            'is_public': True
+            "uuid": uuid.uuid4().hex,
+            "name": "foo",
+            "description": "foo data",
+            "is_public": True,
         }
         config = DatasetConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

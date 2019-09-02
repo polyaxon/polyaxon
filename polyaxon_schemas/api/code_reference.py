@@ -21,17 +21,18 @@ class CodeReferenceSchema(BaseSchema):
 
 class CodeReferenceConfig(BaseConfig):
     SCHEMA = CodeReferenceSchema
-    IDENTIFIER = 'CodeReference'
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['id']
+    IDENTIFIER = "CodeReference"
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["id"]
 
-    def __init__(self,
-                 id=None,  # pylint:disable=redefined-builtin
-                 commit=None,
-                 head=None,
-                 branch=None,
-                 git_url=None,
-                 is_dirty=None,
-                 ):
+    def __init__(
+        self,
+        id=None,  # pylint:disable=redefined-builtin
+        commit=None,
+        head=None,
+        branch=None,
+        git_url=None,
+        is_dirty=None,
+    ):
         self.id = id
         self.commit = commit
         self.head = head

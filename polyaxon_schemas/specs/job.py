@@ -24,10 +24,12 @@ class JobSpecification(BaseRunSpecification):
         BUILD: defines the build step where the user can set a docker image definition
         RUN: defines the run step where the user can run a command
     """
+
     _SPEC_KIND = kinds.JOB
 
     REQUIRED_SECTIONS = BaseRunSpecification.REQUIRED_SECTIONS + (
-        BaseSpecification.BUILD, BaseSpecification.RUN,
+        BaseSpecification.BUILD,
+        BaseSpecification.RUN,
     )
 
     POSSIBLE_SECTIONS = BaseRunSpecification.POSSIBLE_SECTIONS + (
@@ -42,16 +44,17 @@ class JobSpecification(BaseRunSpecification):
         return self.config.run
 
     @classmethod
-    def create_specification(cls,  # pylint:disable=arguments-differ
-                             build_config,
-                             run_config,
-                             to_dict=True):
+    def create_specification(
+        cls, build_config, run_config, to_dict=True  # pylint:disable=arguments-differ
+    ):
         try:
             specification = BaseRunSpecification.create_specification(
-                build_config=build_config, to_dict=True)
+                build_config=build_config, to_dict=True
+            )
         except PolyaxonConfigurationError:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of BuildConfig.')
+                "Create specification expects a dict or an instance of BuildConfig."
+            )
 
         if isinstance(run_config, RunConfig):
             r_config = run_config.to_light_dict()
@@ -60,7 +63,8 @@ class JobSpecification(BaseRunSpecification):
             r_config = r_config.to_light_dict()
         else:
             raise PolyaxonConfigurationError(
-                'Create specification expects a dict or an instance of RunConfig.')
+                "Create specification expects a dict or an instance of RunConfig."
+            )
 
         specification[cls.KIND] = cls._SPEC_KIND
         specification[cls.RUN] = r_config

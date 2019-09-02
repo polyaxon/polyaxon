@@ -13,28 +13,31 @@ from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 def validate_image(image):
     if not image:
         return image
-    if ' ' in image:
-        raise ValidationError('Invalid docker image `{}`'.format(image))
-    tagged_image = image.split(':')
+    if " " in image:
+        raise ValidationError("Invalid docker image `{}`".format(image))
+    tagged_image = image.split(":")
     if len(tagged_image) > 3:
-        raise ValidationError('Invalid docker image `{}`'.format(image))
-    if len(tagged_image) == 3 and ('/' not in tagged_image[1] or tagged_image[1].startswith('/')):
-        raise ValidationError('Invalid docker image `{}`'.format(image))
+        raise ValidationError("Invalid docker image `{}`".format(image))
+    if len(tagged_image) == 3 and (
+        "/" not in tagged_image[1] or tagged_image[1].startswith("/")
+    ):
+        raise ValidationError("Invalid docker image `{}`".format(image))
 
 
 def validate_backend(backend):
     if backend and backend not in BuildBackend.VALUES:
-        raise ValidationError('Build backend `{}` not supported'.format(backend))
+        raise ValidationError("Build backend `{}` not supported".format(backend))
 
 
 def validate_build(**kwargs):
-    if len([i for i in six.itervalues(kwargs) if i is not None and i != '']) != 1:
+    if len([i for i in six.itervalues(kwargs) if i is not None and i != ""]) != 1:
         raise ValidationError(
-            'Invalid Build, only a a dockerfile, an image, or a reference is required.')
+            "Invalid Build, only a a dockerfile, an image, or a reference is required."
+        )
 
 
 class BuildSchema(BaseOpSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('build'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("build"))
     ref = IntOrStr(allow_none=True)
     backend = fields.Str(allow_none=True, validate=validate.OneOf(BuildBackend.VALUES))
     dockerfile = fields.Str(allow_none=True)
@@ -42,8 +45,9 @@ class BuildSchema(BaseOpSchema):
     image = fields.Str(allow_none=True)
     build_steps = fields.List(fields.Str(), allow_none=True)
     lang_env = fields.Str(allow_none=True)
-    env_vars = fields.List(fields.List(fields.Raw(), validate=validate.Length(equal=2)),
-                           allow_none=True)
+    env_vars = fields.List(
+        fields.List(fields.Raw(), validate=validate.Length(equal=2)), allow_none=True
+    )
     commit = fields.Str(allow_none=True)
     branch = fields.Str(allow_none=True)
     nocache = fields.Boolean(allow_none=True)
@@ -55,12 +59,12 @@ class BuildSchema(BaseOpSchema):
     @validates_schema
     def validate_image(self, data):
         """Validates docker image structure"""
-        validate_image(data.get('image'))
+        validate_image(data.get("image"))
 
     @validates_schema
     def validate_backend(self, data):
         """Validate backend"""
-        validate_backend(data.get('backend'))
+        validate_backend(data.get("backend"))
 
     @validates_schema
     def validate_config(self, data):
@@ -71,43 +75,45 @@ class BuildSchema(BaseOpSchema):
 
 class BuildConfig(BaseOpConfig):
     SCHEMA = BuildSchema
-    IDENTIFIER = 'build'
+    IDENTIFIER = "build"
     REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + [
-        'ref',
-        'nocache',
-        'branch',
-        'build_steps',
-        'env_vars',
-        'lang_env',
-        'commit',
-        'backend',
-        'context',
-        'dockerfile',
-        'image'
+        "ref",
+        "nocache",
+        "branch",
+        "build_steps",
+        "env_vars",
+        "lang_env",
+        "commit",
+        "backend",
+        "context",
+        "dockerfile",
+        "image",
     ]
 
-    def __init__(self,
-                 version=None,
-                 kind=None,
-                 logging=None,
-                 name=None,
-                 description=None,
-                 tags=None,
-                 environment=None,
-                 params=None,
-                 inputs=None,
-                 outputs=None,
-                 ref=None,
-                 dockerfile=None,
-                 image=None,
-                 context=None,
-                 backend=None,
-                 build_steps=None,
-                 env_vars=None,
-                 lang_env=None,
-                 nocache=None,
-                 commit=None,
-                 branch=None):
+    def __init__(
+        self,
+        version=None,
+        kind=None,
+        logging=None,
+        name=None,
+        description=None,
+        tags=None,
+        environment=None,
+        params=None,
+        inputs=None,
+        outputs=None,
+        ref=None,
+        dockerfile=None,
+        image=None,
+        context=None,
+        backend=None,
+        build_steps=None,
+        env_vars=None,
+        lang_env=None,
+        nocache=None,
+        commit=None,
+        branch=None,
+    ):
         super(BuildConfig, self).__init__(
             version=version,
             kind=kind,
@@ -139,10 +145,10 @@ class BuildConfig(BaseOpConfig):
     def image_tag(self):
         if not self.image:
             return None
-        tagged_image = self.image.split(':')
+        tagged_image = self.image.split(":")
         if len(tagged_image) == 1:
-            return 'latest'
+            return "latest"
         if len(tagged_image) == 2:
-            return 'latest' if '/' in tagged_image[-1] else tagged_image[-1]
+            return "latest" if "/" in tagged_image[-1] else tagged_image[-1]
         if len(tagged_image) == 3:
             return tagged_image[-1]

@@ -32,9 +32,10 @@ class NodeGPUConfig(BaseConfig):
         serial: `str`. The serial of the gpu.
         cluster_node: `UUID`. the uuid of the cluster node.
     """
+
     SCHEMA = NodeGPUSchema
-    IDENTIFIER = 'NodeGPU'
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['uuid', 'cluster_node']
+    IDENTIFIER = "NodeGPU"
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["uuid", "cluster_node"]
 
     def __init__(self, index, name, uuid, memory, serial, cluster_node):
         self.uuid = uuid
@@ -90,29 +91,39 @@ class ClusterNodeConfig(BaseConfig):
         status: `str`. The status of the node (ready or ...)
         gpus: `list(NodeGPUConfig)`. The node gpus.
     """
+
     SCHEMA = ClusterNodeSchema
-    IDENTIFIER = 'ClusterNode'
+    IDENTIFIER = "ClusterNode"
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'sequence', 'name', 'hostname', 'role', 'memory', 'cpu', 'n_gpus', 'status'
+        "sequence",
+        "name",
+        "hostname",
+        "role",
+        "memory",
+        "cpu",
+        "n_gpus",
+        "status",
     ]
 
-    def __init__(self,
-                 uuid,
-                 sequence=None,
-                 name=None,
-                 hostname=None,
-                 role=None,
-                 docker_version=None,
-                 kubelet_version=None,
-                 os_image=None,
-                 kernel_version=None,
-                 schedulable_taints=None,
-                 schedulable_state=None,
-                 memory=None,
-                 cpu=None,
-                 n_gpus=None,
-                 status=None,
-                 gpus=None):
+    def __init__(
+        self,
+        uuid,
+        sequence=None,
+        name=None,
+        hostname=None,
+        role=None,
+        docker_version=None,
+        kubelet_version=None,
+        os_image=None,
+        kernel_version=None,
+        schedulable_taints=None,
+        schedulable_state=None,
+        memory=None,
+        cpu=None,
+        n_gpus=None,
+        status=None,
+        gpus=None,
+    ):
         self.uuid = uuid
         self.sequence = sequence
         self.name = name
@@ -148,8 +159,9 @@ class PolyaxonClusterConfig(BaseConfig):
         version_api: `dict`. The cluster's version api.
         nodes: list(ClusterNodeConfig). The nodes in the cluster.
     """
+
     SCHEMA = PolyaxonClusterSchema
-    IDENTIFIER = 'PolyaxonCluster'
+    IDENTIFIER = "PolyaxonCluster"
 
     def __init__(self, version_api, nodes=None):
         self.version_api = version_api

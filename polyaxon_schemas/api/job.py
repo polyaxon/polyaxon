@@ -40,38 +40,46 @@ class BaseJobSchema(BaseSchema):
 
 class BaseJobConfig(BaseConfig):
     SCHEMA = BaseJobSchema
-    IDENTIFIER = 'Job'
+    IDENTIFIER = "Job"
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'last_status',
-        'created_at', 'started_at', 'finished_at', 'total_run',
+        "id",
+        "unique_name",
+        "user",
+        "last_status",
+        "created_at",
+        "started_at",
+        "finished_at",
+        "total_run",
     ]
-    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
+    DATETIME_ATTRIBUTES = ["created_at", "updated_at", "started_at", "finished_at"]
 
-    def __init__(self,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 uuid=None,
-                 name=None,
-                 unique_name=None,
-                 pod_id=None,
-                 project=None,
-                 build_job=None,
-                 description=None,
-                 tags=None,
-                 last_status=None,
-                 definition=None,
-                 created_at=None,
-                 updated_at=None,
-                 started_at=None,
-                 finished_at=None,
-                 is_clone=None,
-                 content=None,
-                 is_managed=None,
-                 num_jobs=0,
-                 resources=None,
-                 ttl=None,
-                 jobs=None,
-                 total_run=None):
+    def __init__(
+        self,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        uuid=None,
+        name=None,
+        unique_name=None,
+        pod_id=None,
+        project=None,
+        build_job=None,
+        description=None,
+        tags=None,
+        last_status=None,
+        definition=None,
+        created_at=None,
+        updated_at=None,
+        started_at=None,
+        finished_at=None,
+        is_clone=None,
+        content=None,
+        is_managed=None,
+        num_jobs=0,
+        resources=None,
+        ttl=None,
+        jobs=None,
+        total_run=None,
+    ):
         self.id = id
         self.user = user
         self.uuid = uuid
@@ -97,7 +105,9 @@ class BaseJobConfig(BaseConfig):
         self.jobs = jobs
         self.total_run = None
         if all([self.started_at, self.finished_at]):
-            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
+            self.total_run = humanize_timedelta(
+                (self.finished_at - self.started_at).seconds
+            )
 
 
 class JobSchema(BaseJobSchema):
@@ -110,36 +120,38 @@ class JobSchema(BaseJobSchema):
 
 class JobConfig(BaseJobConfig):
     SCHEMA = JobSchema
-    IDENTIFIER = 'Job'
-    DEFAULT_INCLUDE_ATTRIBUTES = BaseJobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ['backend']
+    IDENTIFIER = "Job"
+    DEFAULT_INCLUDE_ATTRIBUTES = BaseJobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ["backend"]
 
-    def __init__(self,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 uuid=None,
-                 name=None,
-                 unique_name=None,
-                 pod_id=None,
-                 project=None,
-                 build_job=None,
-                 description=None,
-                 tags=None,
-                 last_status=None,
-                 definition=None,
-                 created_at=None,
-                 updated_at=None,
-                 started_at=None,
-                 finished_at=None,
-                 is_clone=None,
-                 content=None,
-                 is_managed=None,
-                 num_jobs=0,
-                 resources=None,
-                 ttl=None,
-                 jobs=None,
-                 dockerfile=None,
-                 backend=None,
-                 total_run=None):
+    def __init__(
+        self,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        uuid=None,
+        name=None,
+        unique_name=None,
+        pod_id=None,
+        project=None,
+        build_job=None,
+        description=None,
+        tags=None,
+        last_status=None,
+        definition=None,
+        created_at=None,
+        updated_at=None,
+        started_at=None,
+        finished_at=None,
+        is_clone=None,
+        content=None,
+        is_managed=None,
+        num_jobs=0,
+        resources=None,
+        ttl=None,
+        jobs=None,
+        dockerfile=None,
+        backend=None,
+        total_run=None,
+    ):
         super(JobConfig, self).__init__(
             id=id,
             user=user,
@@ -181,36 +193,38 @@ class BuildJobSchema(BaseJobSchema):
 
 class BuildJobConfig(BaseJobConfig):
     SCHEMA = BuildJobSchema
-    IDENTIFIER = 'BuildJob'
-    DEFAULT_INCLUDE_ATTRIBUTES = BaseJobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ['backend']
+    IDENTIFIER = "BuildJob"
+    DEFAULT_INCLUDE_ATTRIBUTES = BaseJobConfig.DEFAULT_INCLUDE_ATTRIBUTES + ["backend"]
 
-    def __init__(self,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 uuid=None,
-                 name=None,
-                 unique_name=None,
-                 pod_id=None,
-                 project=None,
-                 build_job=None,
-                 description=None,
-                 tags=None,
-                 last_status=None,
-                 definition=None,
-                 created_at=None,
-                 updated_at=None,
-                 started_at=None,
-                 finished_at=None,
-                 is_clone=None,
-                 content=None,
-                 is_managed=None,
-                 num_jobs=0,
-                 resources=None,
-                 ttl=None,
-                 jobs=None,
-                 dockerfile=None,
-                 backend=None,
-                 total_run=None):
+    def __init__(
+        self,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        uuid=None,
+        name=None,
+        unique_name=None,
+        pod_id=None,
+        project=None,
+        build_job=None,
+        description=None,
+        tags=None,
+        last_status=None,
+        definition=None,
+        created_at=None,
+        updated_at=None,
+        started_at=None,
+        finished_at=None,
+        is_clone=None,
+        content=None,
+        is_managed=None,
+        num_jobs=0,
+        resources=None,
+        ttl=None,
+        jobs=None,
+        dockerfile=None,
+        backend=None,
+        total_run=None,
+    ):
         super(BuildJobConfig, self).__init__(
             id=id,
             user=user,
@@ -252,39 +266,50 @@ class TensorboardJobSchema(BaseJobSchema):
 
 class TensorboardJobConfig(BaseJobConfig):
     SCHEMA = TensorboardJobSchema
-    IDENTIFIER = 'TensorboardJob'
+    IDENTIFIER = "TensorboardJob"
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'last_status', 'experiment', 'experiment_group',
-        'created_at', 'started_at', 'finished_at', 'total_run', 'pod_id'
+        "id",
+        "unique_name",
+        "user",
+        "last_status",
+        "experiment",
+        "experiment_group",
+        "created_at",
+        "started_at",
+        "finished_at",
+        "total_run",
+        "pod_id",
     ]
 
-    def __init__(self,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 uuid=None,
-                 name=None,
-                 unique_name=None,
-                 pod_id=None,
-                 project=None,
-                 experiment=None,
-                 experiment_group=None,
-                 build_job=None,
-                 description=None,
-                 tags=None,
-                 last_status=None,
-                 definition=None,
-                 created_at=None,
-                 updated_at=None,
-                 started_at=None,
-                 finished_at=None,
-                 is_clone=None,
-                 content=None,
-                 is_managed=None,
-                 num_jobs=0,
-                 resources=None,
-                 ttl=None,
-                 jobs=None,
-                 total_run=None):
+    def __init__(
+        self,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        uuid=None,
+        name=None,
+        unique_name=None,
+        pod_id=None,
+        project=None,
+        experiment=None,
+        experiment_group=None,
+        build_job=None,
+        description=None,
+        tags=None,
+        last_status=None,
+        definition=None,
+        created_at=None,
+        updated_at=None,
+        started_at=None,
+        finished_at=None,
+        is_clone=None,
+        content=None,
+        is_managed=None,
+        num_jobs=0,
+        resources=None,
+        ttl=None,
+        jobs=None,
+        total_run=None,
+    ):
         super(TensorboardJobConfig, self).__init__(
             id=id,
             user=user,
@@ -332,19 +357,21 @@ class JobStatusSchema(BaseSchema):
 
 class JobStatusConfig(BaseConfig):
     SCHEMA = JobStatusSchema
-    IDENTIFIER = 'JobStatus'
-    DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['job', 'uuid', 'details', 'traceback']
+    IDENTIFIER = "JobStatus"
+    DATETIME_ATTRIBUTES = ["created_at"]
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["job", "uuid", "details", "traceback"]
 
-    def __init__(self,
-                 id,  # pylint:disable=redefined-builtin
-                 uuid,
-                 job,
-                 created_at,
-                 status,
-                 message=None,
-                 traceback=None,
-                 details=None):
+    def __init__(
+        self,
+        id,  # pylint:disable=redefined-builtin
+        uuid,
+        job,
+        created_at,
+        status,
+        message=None,
+        traceback=None,
+        details=None,
+    ):
         self.id = id
         self.uuid = uuid
         self.job = job
@@ -377,28 +404,36 @@ class JobLabelSchema(BaseSchema):
 
 class JobLabelConfig(BaseConfig):
     SCHEMA = JobLabelSchema
-    IDENTIFIER = 'JobLabel'
+    IDENTIFIER = "JobLabel"
     REDUCED_ATTRIBUTES = [
-        'app', 'experiment_name', 'job_name', 'experiment_uuid',
-        'experiment_group_name', 'experiment_group_uuid',
-        'task_type', 'task_idx', 'job_uuid'
+        "app",
+        "experiment_name",
+        "job_name",
+        "experiment_uuid",
+        "experiment_group_name",
+        "experiment_group_uuid",
+        "task_type",
+        "task_idx",
+        "job_uuid",
     ]
 
-    def __init__(self,
-                 project_name,
-                 project_uuid,
-                 role,
-                 type,  # pylint:disable=redefined-builtin
-                 experiment_name=None,
-                 experiment_uuid=None,
-                 app=None,
-                 task_type=None,
-                 task_idx=None,
-                 job_name=None,
-                 job_uuid=None,
-                 experiment_group_name=None,
-                 experiment_group_uuid=None,
-                 **kwargs):
+    def __init__(
+        self,
+        project_name,
+        project_uuid,
+        role,
+        type,  # pylint:disable=redefined-builtin
+        experiment_name=None,
+        experiment_uuid=None,
+        app=None,
+        task_type=None,
+        task_idx=None,
+        job_name=None,
+        job_uuid=None,
+        experiment_group_name=None,
+        experiment_group_uuid=None,
+        **kwargs
+    ):
         self.project_name = project_name
         self.experiment_group_name = experiment_group_name
         self.experiment_name = experiment_name

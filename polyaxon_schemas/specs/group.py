@@ -30,9 +30,7 @@ class GroupSpecification(BaseRunSpecification):
 
     _SPEC_KIND = kinds.GROUP
 
-    SECTIONS = ExperimentSpecification.SECTIONS + (
-        BaseRunSpecification.HP_TUNING,
-    )
+    SECTIONS = ExperimentSpecification.SECTIONS + (BaseRunSpecification.HP_TUNING,)
 
     STD_PARSING_SECTIONS = ExperimentSpecification.STD_PARSING_SECTIONS + (
         BaseRunSpecification.HP_TUNING,
@@ -54,11 +52,14 @@ class GroupSpecification(BaseRunSpecification):
     def _extra_validation(self):
         if not self.matrix:
             raise PolyaxonConfigurationError(
-                'A matrix definition is required for group specification.')
+                "A matrix definition is required for group specification."
+            )
 
     def apply_context(self, context=None):
         params = self._config_data.get_params(context=context)
-        parsed_data = Parser.parse(self, self._config_data, params, self.matrix_declaration_test)
+        parsed_data = Parser.parse(
+            self, self._config_data, params, self.matrix_declaration_test
+        )
         validator.validate(spec=self, data=parsed_data)
         self._config = self._config_data
         return parsed_data
@@ -68,7 +69,7 @@ class GroupSpecification(BaseRunSpecification):
         params = self._config_data.get_params(context=matrix_declaration)
         parsed_data = Parser.parse(self, self._config_data, params, matrix_declaration)
         del parsed_data[self.HP_TUNING]
-        return ExperimentSpecification(values=[parsed_data, {'kind': kinds.EXPERIMENT}])
+        return ExperimentSpecification(values=[parsed_data, {"kind": kinds.EXPERIMENT}])
 
     @cached_property
     def hptuning(self):
@@ -112,16 +113,19 @@ class GroupSpecification(BaseRunSpecification):
     @cached_property
     def experiments_def(self):
         definition = {
-            'search_algorithm': self.search_algorithm,
-            'early_stopping': True if self.early_stopping else False,
-            'concurrency': self.concurrency
+            "search_algorithm": self.search_algorithm,
+            "early_stopping": True if self.early_stopping else False,
+            "concurrency": self.concurrency,
         }
         if SearchAlgorithms.is_grid(self.search_algorithm):
             if self.hptuning.grid_search and self.hptuning.grid_search.n_experiments:
-                definition['n_experiments'] = self.hptuning.grid_search.n_experiments
+                definition["n_experiments"] = self.hptuning.grid_search.n_experiments
         if SearchAlgorithms.is_random(self.search_algorithm):
-            if self.hptuning.random_search and self.hptuning.random_search.n_experiments:
-                definition['n_experiments'] = self.hptuning.random_search.n_experiments
+            if (
+                self.hptuning.random_search
+                and self.hptuning.random_search.n_experiments
+            ):
+                definition["n_experiments"] = self.hptuning.random_search.n_experiments
 
         return definition
 

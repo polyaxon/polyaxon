@@ -11,7 +11,7 @@ from polyaxon_schemas.specs.utils import (
     get_task_job_labels,
     get_task_job_node_selectors,
     get_task_job_resources,
-    get_task_job_tolerations
+    get_task_job_tolerations,
 )
 from polyaxon_schemas.utils import TaskType
 
@@ -37,22 +37,26 @@ class DistributedSpecificationInterface(object):
         if not environment:
             return {}
 
-        return get_task_configs(cluster=cluster,
-                                is_distributed=is_distributed,
-                                configs=environment.worker_configs,
-                                default_config=environment.default_worker_config,
-                                task_type=cls.TASK_WORKER)
+        return get_task_configs(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            configs=environment.worker_configs,
+            default_config=environment.default_worker_config,
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_configs(cls, environment, cluster, is_distributed):
         if not environment:
             return {}
 
-        return get_task_configs(cluster=cluster,
-                                is_distributed=is_distributed,
-                                configs=environment.ps_configs,
-                                default_config=environment.default_ps_config,
-                                task_type=cls.TASK_PS)
+        return get_task_configs(
+            cluster=cluster,
+            is_distributed=is_distributed,
+            configs=environment.ps_configs,
+            default_config=environment.default_ps_config,
+            task_type=cls.TASK_PS,
+        )
 
     @classmethod
     def get_worker_resources(cls, environment, cluster, is_distributed):
@@ -64,7 +68,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             resources=environment.worker_resources,
             default_resources=environment.default_worker_resources,
-            task_type=cls.TASK_WORKER)
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_resources(cls, environment, cluster, is_distributed):
@@ -75,10 +80,13 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             resources=environment.ps_resources,
             default_resources=environment.default_ps_resources,
-            task_type=cls.TASK_PS)
+            task_type=cls.TASK_PS,
+        )
 
     @classmethod
-    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+    def get_total_resources(
+        cls, master_resources, environment, cluster, is_distributed
+    ):
         pass
 
     @classmethod
@@ -91,7 +99,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             labels=environment.worker_labels,
             default_labels=environment.default_worker_labels,
-            task_type=cls.TASK_WORKER)
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_labels(cls, environment, cluster, is_distributed):
@@ -103,7 +112,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             labels=environment.ps_labels,
             default_labels=environment.default_ps_labels,
-            task_type=cls.TASK_PS)
+            task_type=cls.TASK_PS,
+        )
 
     @classmethod
     def get_worker_annotations(cls, environment, cluster, is_distributed):
@@ -115,7 +125,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             annotations=environment.worker_annotations,
             default_annotations=environment.default_worker_annotations,
-            task_type=cls.TASK_WORKER)
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_annotations(cls, environment, cluster, is_distributed):
@@ -127,7 +138,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             annotations=environment.ps_annotations,
             default_annotations=environment.default_ps_annotations,
-            task_type=cls.TASK_PS)
+            task_type=cls.TASK_PS,
+        )
 
     @classmethod
     def get_worker_node_selectors(cls, environment, cluster, is_distributed):
@@ -139,7 +151,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             node_selectors=environment.worker_node_selectors,
             default_node_selector=environment.default_worker_node_selector,
-            task_type=cls.TASK_WORKER)
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_node_selectors(cls, environment, cluster, is_distributed):
@@ -151,7 +164,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             node_selectors=environment.ps_node_selectors,
             default_node_selector=environment.default_ps_node_selector,
-            task_type=cls.TASK_PS)
+            task_type=cls.TASK_PS,
+        )
 
     @classmethod
     def get_worker_tolerations(cls, environment, cluster, is_distributed):
@@ -163,7 +177,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             tolerations=environment.worker_tolerations,
             default_tolerations=environment.default_worker_tolerations,
-            task_type=cls.TASK_WORKER)
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_tolerations(cls, environment, cluster, is_distributed):
@@ -175,7 +190,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             tolerations=environment.ps_tolerations,
             default_tolerations=environment.default_ps_tolerations,
-            task_type=cls.TASK_PS)
+            task_type=cls.TASK_PS,
+        )
 
     @classmethod
     def get_worker_affinities(cls, environment, cluster, is_distributed):
@@ -187,7 +203,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             affinities=environment.worker_affinities,
             default_affinity=environment.default_worker_affinity,
-            task_type=cls.TASK_WORKER)
+            task_type=cls.TASK_WORKER,
+        )
 
     @classmethod
     def get_ps_affinities(cls, environment, cluster, is_distributed):
@@ -199,7 +216,8 @@ class DistributedSpecificationInterface(object):
             is_distributed=is_distributed,
             affinities=environment.ps_affinities,
             default_affinity=environment.default_ps_affinity,
-            task_type=cls.TASK_PS)
+            task_type=cls.TASK_PS,
+        )
 
 
 class TensorflowSpecification(DistributedSpecificationInterface):
@@ -227,16 +245,14 @@ class TensorflowSpecification(DistributedSpecificationInterface):
         return cluster, is_distributed
 
     @classmethod
-    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+    def get_total_resources(
+        cls, master_resources, environment, cluster, is_distributed
+    ):
         worker_resources = cls.get_worker_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
         ps_resources = cls.get_ps_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
         if not any([master_resources, worker_resources, ps_resources]):
             return None
@@ -279,11 +295,11 @@ class HorovodSpecification(DistributedSpecificationInterface):
         return cluster, is_distributed
 
     @classmethod
-    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+    def get_total_resources(
+        cls, master_resources, environment, cluster, is_distributed
+    ):
         worker_resources = cls.get_worker_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
 
         if not any([master_resources, worker_resources]):
@@ -324,11 +340,11 @@ class PytorchSpecification(DistributedSpecificationInterface):
         return cluster, is_distributed
 
     @classmethod
-    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+    def get_total_resources(
+        cls, master_resources, environment, cluster, is_distributed
+    ):
         worker_resources = cls.get_worker_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
 
         if not any([master_resources, worker_resources]):
@@ -372,16 +388,14 @@ class MXNetSpecification(DistributedSpecificationInterface):
         return cluster, is_distributed
 
     @classmethod
-    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+    def get_total_resources(
+        cls, master_resources, environment, cluster, is_distributed
+    ):
         worker_resources = cls.get_worker_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
         ps_resources = cls.get_ps_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
         if not any([master_resources, worker_resources, ps_resources]):
             return None
@@ -424,11 +438,11 @@ class MPISpecification(DistributedSpecificationInterface):
         return cluster, is_distributed
 
     @classmethod
-    def get_total_resources(cls, master_resources, environment, cluster, is_distributed):
+    def get_total_resources(
+        cls, master_resources, environment, cluster, is_distributed
+    ):
         worker_resources = cls.get_worker_resources(
-            environment=environment,
-            cluster=cluster,
-            is_distributed=is_distributed,
+            environment=environment, cluster=cluster, is_distributed=is_distributed
         )
 
         if not any([master_resources, worker_resources]):

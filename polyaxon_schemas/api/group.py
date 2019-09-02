@@ -47,43 +47,54 @@ class GroupSchema(BaseSchema):
 
 class GroupConfig(BaseConfig):
     SCHEMA = GroupSchema
-    IDENTIFIER = 'experiment_group'
+    IDENTIFIER = "experiment_group"
     DEFAULT_INCLUDE_ATTRIBUTES = [
-        'id', 'unique_name', 'user', 'concurrency', 'created_at', 'last_status',
-        'started_at', 'finished_at', 'total_run', 'group_type', 'search_algorithm'
+        "id",
+        "unique_name",
+        "user",
+        "concurrency",
+        "created_at",
+        "last_status",
+        "started_at",
+        "finished_at",
+        "total_run",
+        "group_type",
+        "search_algorithm",
     ]
-    DATETIME_ATTRIBUTES = ['created_at', 'updated_at', 'started_at', 'finished_at']
+    DATETIME_ATTRIBUTES = ["created_at", "updated_at", "started_at", "finished_at"]
 
-    def __init__(self,
-                 unique_name=None,
-                 id=None,  # pylint:disable=redefined-builtin
-                 user=None,
-                 name=None,
-                 description=None,
-                 content=None,
-                 uuid=None,
-                 project=None,
-                 num_experiments=None,
-                 tags=None,
-                 group_type=None,
-                 search_algorithm=None,
-                 num_scheduled_experiments=None,
-                 num_pending_experiments=None,
-                 num_running_experiments=None,
-                 num_succeeded_experiments=None,
-                 num_failed_experiments=None,
-                 num_stopped_experiments=None,
-                 last_status=None,
-                 has_tensorboard=False,
-                 created_at=None,
-                 updated_at=None,
-                 started_at=None,
-                 finished_at=None,
-                 concurrency=None,
-                 experiments=None,
-                 backend=None,
-                 is_managed=None,
-                 total_run=None):
+    def __init__(
+        self,
+        unique_name=None,
+        id=None,  # pylint:disable=redefined-builtin
+        user=None,
+        name=None,
+        description=None,
+        content=None,
+        uuid=None,
+        project=None,
+        num_experiments=None,
+        tags=None,
+        group_type=None,
+        search_algorithm=None,
+        num_scheduled_experiments=None,
+        num_pending_experiments=None,
+        num_running_experiments=None,
+        num_succeeded_experiments=None,
+        num_failed_experiments=None,
+        num_stopped_experiments=None,
+        last_status=None,
+        has_tensorboard=False,
+        created_at=None,
+        updated_at=None,
+        started_at=None,
+        finished_at=None,
+        concurrency=None,
+        experiments=None,
+        backend=None,
+        is_managed=None,
+        total_run=None,
+    ):
         self.unique_name = unique_name
         self.id = id
         self.user = user
@@ -113,7 +124,9 @@ class GroupConfig(BaseConfig):
         self.backend = backend
         self.is_managed = is_managed
         if all([self.started_at, self.finished_at]):
-            self.total_run = humanize_timedelta((self.finished_at - self.started_at).seconds)
+            self.total_run = humanize_timedelta(
+                (self.finished_at - self.started_at).seconds
+            )
 
 
 class GroupStatusSchema(BaseSchema):
@@ -132,18 +145,20 @@ class GroupStatusSchema(BaseSchema):
 
 class GroupStatusConfig(BaseConfig):
     SCHEMA = GroupStatusSchema
-    IDENTIFIER = 'GroupStatus'
-    DATETIME_ATTRIBUTES = ['created_at']
-    DEFAULT_EXCLUDE_ATTRIBUTES = ['experiment_group', 'uuid', 'details']
+    IDENTIFIER = "GroupStatus"
+    DATETIME_ATTRIBUTES = ["created_at"]
+    DEFAULT_EXCLUDE_ATTRIBUTES = ["experiment_group", "uuid", "details"]
 
-    def __init__(self,
-                 id,  # pylint:disable=redefined-builtin
-                 uuid,
-                 experiment_group,
-                 created_at,
-                 status,
-                 message=None,
-                 details=None):
+    def __init__(
+        self,
+        id,  # pylint:disable=redefined-builtin
+        uuid,
+        experiment_group,
+        created_at,
+        status,
+        message=None,
+        details=None,
+    ):
         self.id = id
         self.uuid = uuid
         self.experiment_group = experiment_group
