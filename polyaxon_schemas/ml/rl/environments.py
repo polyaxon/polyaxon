@@ -20,19 +20,16 @@ class BaseEnvironmentConfig(BaseConfig):
 
 
 class GymEnvironmentSchema(BaseEnvironmentSchema):
-
     @staticmethod
     def schema_config():
         return GymEnvironmentConfig
 
 
 class GymEnvironmentConfig(BaseEnvironmentConfig):
-    IDENTIFIER = 'Gym'
+    IDENTIFIER = "Gym"
     SCHEMA = GymEnvironmentSchema
 
 
 class RegularizerSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'environment'
-    __configs__ = {
-        GymEnvironmentConfig.IDENTIFIER: GymEnvironmentConfig,
-    }
+    __multi_schema_name__ = "environment"
+    __configs__ = {GymEnvironmentConfig.IDENTIFIER: GymEnvironmentConfig}

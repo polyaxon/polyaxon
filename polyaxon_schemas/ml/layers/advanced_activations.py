@@ -5,7 +5,10 @@ from marshmallow import fields
 
 from polyaxon_schemas.fields import ObjectOrListObject
 from polyaxon_schemas.ml.constraints import ConstraintSchema
-from polyaxon_schemas.ml.initializations import InitializerSchema, ZerosInitializerConfig
+from polyaxon_schemas.ml.initializations import (
+    InitializerSchema,
+    ZerosInitializerConfig,
+)
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
 
@@ -43,7 +46,8 @@ class LeakyReLUConfig(BaseLayerConfig):
         alpha: 0.2
     ```
     """
-    IDENTIFIER = 'LeakyReLU'
+
+    IDENTIFIER = "LeakyReLU"
     SCHEMA = LeakyReLUSchema
 
     def __init__(self, alpha=0.3, **kwargs):
@@ -103,15 +107,18 @@ class PReLUConfig(BaseLayerConfig):
       shared_axes: [1, 2]
     ```
     """
-    IDENTIFIER = 'PReLU'
+
+    IDENTIFIER = "PReLU"
     SCHEMA = PReLUSchema
 
-    def __init__(self,
-                 alpha_initializer=ZerosInitializerConfig(),
-                 alpha_regularizer=None,
-                 alpha_constraint=None,
-                 shared_axes=None,
-                 **kwargs):
+    def __init__(
+        self,
+        alpha_initializer=ZerosInitializerConfig(),
+        alpha_regularizer=None,
+        alpha_constraint=None,
+        shared_axes=None,
+        **kwargs
+    ):
         super(PReLUConfig, self).__init__(**kwargs)
         self.alpha_initializer = alpha_initializer
         self.alpha_regularizer = alpha_regularizer
@@ -152,7 +159,8 @@ class ELUConfig(BaseLayerConfig):
       alpha:0.1
     ```
     """
-    IDENTIFIER = 'ELU'
+
+    IDENTIFIER = "ELU"
     SCHEMA = ELUSchema
 
     def __init__(self, alpha=0.1, **kwargs):
@@ -193,7 +201,8 @@ class ThresholdedReLUConfig(BaseLayerConfig):
       theta:0.1
     ```
     """
-    IDENTIFIER = 'ThresholdedReLU'
+
+    IDENTIFIER = "ThresholdedReLU"
     SCHEMA = ThresholdedReLUSchema
 
     def __init__(self, theta=1.0, **kwargs):

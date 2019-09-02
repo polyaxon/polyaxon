@@ -14,12 +14,18 @@ from polyaxon_schemas.ml.utils import ACTIVATION_VALUES
 class ConvRecurrent2DSchema(RecurrentSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=2, max=2)
-    strides = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(allow_none=True,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
-    dilation_rate = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
+    strides = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        allow_none=True, validate=validate.OneOf("channels_first", "channels_last")
+    )
+    dilation_rate = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
     return_sequences = fields.Bool(default=False, missing=False)
     go_backwards = fields.Bool(default=False, missing=False)
     stateful = fields.Bool(default=False, missing=False)
@@ -97,20 +103,23 @@ class ConvRecurrent2DConfig(RecurrentConfig):
         To reset the states of your model, call `.reset_states()` on either
         a specific layer, or on your entire model.
     """
-    IDENTIFIER = 'ConvRecurrent2D'
+
+    IDENTIFIER = "ConvRecurrent2D"
     SCHEMA = ConvRecurrent2DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1),
-                 padding='valid',
-                 data_format=None,
-                 dilation_rate=(1, 1),
-                 return_sequences=False,
-                 go_backwards=False,
-                 stateful=False,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1),
+        padding="valid",
+        data_format=None,
+        dilation_rate=(1, 1),
+        return_sequences=False,
+        go_backwards=False,
+        stateful=False,
+        **kwargs
+    ):
         super(ConvRecurrent2DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -125,7 +134,9 @@ class ConvRecurrent2DConfig(RecurrentConfig):
 
 class ConvLSTM2DSchema(ConvRecurrent2DSchema):
     activation = fields.Str(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
-    recurrent_activation = fields.Str(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
+    recurrent_activation = fields.Str(
+        allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES)
+    )
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, allow_none=True)
     recurrent_initializer = fields.Nested(InitializerSchema, allow_none=True)
@@ -138,8 +149,10 @@ class ConvLSTM2DSchema(ConvRecurrent2DSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     recurrent_constraint = fields.Nested(ConstraintSchema, allow_none=True)
     bias_constraint = fields.Nested(ConstraintSchema, allow_none=True)
-    dropout = fields.Float(default=0., missing=0., validate=validate.Range(0., 1.))
-    recurrent_dropout = fields.Float(default=0., missing=0., validate=validate.Range(0., 1.))
+    dropout = fields.Float(default=0.0, missing=0.0, validate=validate.Range(0.0, 1.0))
+    recurrent_dropout = fields.Float(
+        default=0.0, missing=0.0, validate=validate.Range(0.0, 1.0)
+    )
 
     @staticmethod
     def schema_config():
@@ -262,36 +275,39 @@ class ConvLSTM2DConfig(ConvRecurrent2DConfig):
       padding: valid
     ```
     """
-    IDENTIFIER = 'ConvLSTM2D'
+
+    IDENTIFIER = "ConvLSTM2D"
     SCHEMA = ConvLSTM2DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1),
-                 padding='valid',
-                 data_format=None,
-                 dilation_rate=(1, 1),
-                 activation='tanh',
-                 recurrent_activation='hard_sigmoid',
-                 use_bias=True,
-                 kernel_initializer='glorot_uniform',
-                 recurrent_initializer='orthogonal',
-                 bias_initializer='zeros',
-                 unit_forget_bias=True,
-                 kernel_regularizer=None,
-                 recurrent_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 recurrent_constraint=None,
-                 bias_constraint=None,
-                 return_sequences=False,
-                 go_backwards=False,
-                 stateful=False,
-                 dropout=0.,
-                 recurrent_dropout=0.,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1),
+        padding="valid",
+        data_format=None,
+        dilation_rate=(1, 1),
+        activation="tanh",
+        recurrent_activation="hard_sigmoid",
+        use_bias=True,
+        kernel_initializer="glorot_uniform",
+        recurrent_initializer="orthogonal",
+        bias_initializer="zeros",
+        unit_forget_bias=True,
+        kernel_regularizer=None,
+        recurrent_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        recurrent_constraint=None,
+        bias_constraint=None,
+        return_sequences=False,
+        go_backwards=False,
+        stateful=False,
+        dropout=0.0,
+        recurrent_dropout=0.0,
+        **kwargs
+    ):
         super(ConvLSTM2DConfig, self).__init__(
             filters,
             kernel_size,
@@ -302,7 +318,8 @@ class ConvLSTM2DConfig(ConvRecurrent2DConfig):
             return_sequences=return_sequences,
             go_backwards=go_backwards,
             stateful=stateful,
-            **kwargs)
+            **kwargs
+        )
         self.activation = activation
         self.recurrent_activation = recurrent_activation
         self.use_bias = use_bias

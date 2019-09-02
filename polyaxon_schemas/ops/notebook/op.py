@@ -24,7 +24,7 @@ class NotebookSchema(BaseRunSchema):
 
     @validates_schema
     def validate_backend(self, data):
-        validate_notebook_backend(data.get('backend'))
+        validate_notebook_backend(data.get("backend"))
 
 
 class NotebookConfig(BaseRunConfig):

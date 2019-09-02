@@ -7,7 +7,7 @@ from polyaxon_schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
 
 
 class IntervalScheduleSchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('interval'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("interval"))
     start_at = fields.LocalDateTime(required=True)
     end_at = fields.LocalDateTime(allow_none=True)
     frequency = fields.Int(precision="microseconds", required=True)
@@ -33,7 +33,7 @@ class IntervalScheduleConfig(BaseConfig):
 
 
 class CronScheduleSchema(BaseSchema):
-    kind = fields.Str(allow_none=True, validate=validate.Equal('cron'))
+    kind = fields.Str(allow_none=True, validate=validate.Equal("cron"))
     start_at = fields.LocalDateTime(allow_none=True)
     end_at = fields.LocalDateTime(allow_none=True)
     cron = fields.String(required=True)

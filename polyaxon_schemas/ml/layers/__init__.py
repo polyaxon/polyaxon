@@ -6,7 +6,7 @@ from polyaxon_schemas.ml.layers.advanced_activations import (
     ELUConfig,
     LeakyReLUConfig,
     PReLUConfig,
-    ThresholdedReLUConfig
+    ThresholdedReLUConfig,
 )
 from polyaxon_schemas.ml.layers.convolutional import (
     Conv1DConfig,
@@ -23,11 +23,11 @@ from polyaxon_schemas.ml.layers.convolutional import (
     UpSampling3DConfig,
     ZeroPadding1DConfig,
     ZeroPadding2DConfig,
-    ZeroPadding3DConfig
+    ZeroPadding3DConfig,
 )
 from polyaxon_schemas.ml.layers.convolutional_recurrent import (
     ConvLSTM2DConfig,
-    ConvRecurrent2DConfig
+    ConvRecurrent2DConfig,
 )
 from polyaxon_schemas.ml.layers.core import (
     ActivationConfig,
@@ -42,15 +42,18 @@ from polyaxon_schemas.ml.layers.core import (
     ReshapeConfig,
     SpatialDropout1DConfig,
     SpatialDropout2DConfig,
-    SpatialDropout3DConfig
+    SpatialDropout3DConfig,
 )
 from polyaxon_schemas.ml.layers.embeddings import EmbeddingConfig
-from polyaxon_schemas.ml.layers.local import LocallyConnected1DConfig, LocallyConnected2DConfig
+from polyaxon_schemas.ml.layers.local import (
+    LocallyConnected1DConfig,
+    LocallyConnected2DConfig,
+)
 from polyaxon_schemas.ml.layers.merge import MergeConfig
 from polyaxon_schemas.ml.layers.noise import (
     AlphaDropoutConfig,
     GaussianDropoutConfig,
-    GaussianNoiseConfig
+    GaussianNoiseConfig,
 )
 from polyaxon_schemas.ml.layers.normalization import BatchNormalizationConfig
 from polyaxon_schemas.ml.layers.pooling import (
@@ -65,18 +68,18 @@ from polyaxon_schemas.ml.layers.pooling import (
     GlobalMaxPooling3DConfig,
     MaxPooling1DConfig,
     MaxPooling2DConfig,
-    MaxPooling3DConfig
+    MaxPooling3DConfig,
 )
 from polyaxon_schemas.ml.layers.recurrent import (
     GRUConfig,
     LSTMConfig,
     RecurrentConfig,
-    SimpleRNNConfig
+    SimpleRNNConfig,
 )
 from polyaxon_schemas.ml.layers.wrappers import (
     BidirectionalConfig,
     TimeDistributedConfig,
-    WrapperConfig
+    WrapperConfig,
 )
 from polyaxon_schemas.ml.processing.image import (
     AdjustBrightnessConfig,
@@ -96,12 +99,12 @@ from polyaxon_schemas.ml.processing.image import (
     StandardizationConfig,
     ToBoundingBoxConfig,
     TotalVariationConfig,
-    TransposeConfig
+    TransposeConfig,
 )
 
 
 class LayerSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'layer'
+    __multi_schema_name__ = "layer"
     __configs__ = {
         LeakyReLUConfig.IDENTIFIER: LeakyReLUConfig,
         PReLUConfig.IDENTIFIER: PReLUConfig,
@@ -164,7 +167,6 @@ class LayerSchema(BaseMultiSchema):
         WrapperConfig.IDENTIFIER: WrapperConfig,
         TimeDistributedConfig.IDENTIFIER: TimeDistributedConfig,
         BidirectionalConfig.IDENTIFIER: BidirectionalConfig,
-
         # Processors
         ResizeConfig.IDENTIFIER: ResizeConfig,
         CentralCropConfig.IDENTIFIER: CentralCropConfig,

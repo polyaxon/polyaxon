@@ -68,9 +68,11 @@ class BuildSchema(BaseOpSchema):
 
     @validates_schema
     def validate_config(self, data):
-        validate_build(ref=data.get('ref'),
-                       image=data.get('image'),
-                       dockerfile=data.get('dockerfile'))
+        validate_build(
+            ref=data.get("ref"),
+            image=data.get("image"),
+            dockerfile=data.get("dockerfile"),
+        )
 
 
 class BuildConfig(BaseOpConfig):

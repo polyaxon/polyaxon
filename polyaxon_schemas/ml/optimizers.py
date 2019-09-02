@@ -25,20 +25,22 @@ class BaseOptimizerSchema(BaseSchema):
 
 
 class BaseOptimizerConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['name']
+    REDUCED_ATTRIBUTES = ["name"]
 
-    def __init__(self,
-                 learning_rate=0.001,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=100,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='optimizer'):
+    def __init__(
+        self,
+        learning_rate=0.001,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=100,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="optimizer",
+    ):
         self.learning_rate = learning_rate
         self.decay_type = decay_type
         self.decay_rate = decay_rate
@@ -104,24 +106,37 @@ class SGDConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'SGD'
+
+    IDENTIFIER = "SGD"
     SCHEMA = SGDSchema
 
-    def __init__(self,  # pylint: disable=useless-super-delegation
-                 learning_rate=0.01,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=100,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='SGD'):
-        super(SGDConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                        start_decay_at, stop_decay_at, min_learning_rate,
-                                        staircase, global_step, use_locking, name)
+    def __init__(
+        self,  # pylint: disable=useless-super-delegation
+        learning_rate=0.01,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=100,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="SGD",
+    ):
+        super(SGDConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class MomentumSchema(BaseOptimizerSchema):
@@ -188,26 +203,39 @@ class MomentumConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Momentum'
+
+    IDENTIFIER = "Momentum"
     SCHEMA = MomentumSchema
 
-    def __init__(self,
-                 learning_rate=0.001,
-                 momentum=0.9,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='Momentum'):
+    def __init__(
+        self,
+        learning_rate=0.001,
+        momentum=0.9,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="Momentum",
+    ):
         self.momentum = momentum
-        super(MomentumConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                             start_decay_at, stop_decay_at, min_learning_rate,
-                                             staircase, global_step, use_locking, name)
+        super(MomentumConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class NestrovSchema(BaseOptimizerSchema):
@@ -271,26 +299,39 @@ class NestrovConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Nestrov'
+
+    IDENTIFIER = "Nestrov"
     SCHEMA = NestrovSchema
 
-    def __init__(self,
-                 learning_rate=0.001,
-                 momentum=0.9,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 use_locking=False,
-                 global_step=None,
-                 name='Nestrov'):
+    def __init__(
+        self,
+        learning_rate=0.001,
+        momentum=0.9,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        use_locking=False,
+        global_step=None,
+        name="Nestrov",
+    ):
         self.momentum = momentum
-        super(NestrovConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                            start_decay_at, stop_decay_at, min_learning_rate,
-                                            staircase, global_step, use_locking, name)
+        super(NestrovConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class RMSPropSchema(BaseOptimizerSchema):
@@ -355,30 +396,43 @@ class RMSPropConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'RMSProp'
+
+    IDENTIFIER = "RMSProp"
     SCHEMA = RMSPropSchema
 
-    def __init__(self,
-                 learning_rate=0.001,
-                 decay=0.9,
-                 momentum=0.0,
-                 epsilon=1e-10,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='RMSProp'):
+    def __init__(
+        self,
+        learning_rate=0.001,
+        decay=0.9,
+        momentum=0.0,
+        epsilon=1e-10,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="RMSProp",
+    ):
         self.decay = decay
         self.momentum = momentum
         self.epsilon = epsilon
-        super(RMSPropConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                            start_decay_at, stop_decay_at, min_learning_rate,
-                                            staircase, global_step, use_locking, name)
+        super(RMSPropConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class AdamSchema(BaseOptimizerSchema):
@@ -445,30 +499,43 @@ class AdamConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Adam'
+
+    IDENTIFIER = "Adam"
     SCHEMA = AdamSchema
 
-    def __init__(self,
-                 learning_rate=0.001,
-                 beta1=0.9,
-                 beta2=0.999,
-                 epsilon=1e-8,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='Adam'):
+    def __init__(
+        self,
+        learning_rate=0.001,
+        beta1=0.9,
+        beta2=0.999,
+        epsilon=1e-8,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="Adam",
+    ):
         self.beta1 = beta1
         self.beta2 = beta2
         self.epsilon = epsilon
-        super(AdamConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                         start_decay_at, stop_decay_at, min_learning_rate,
-                                         staircase, global_step, use_locking, name)
+        super(AdamConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class AdagradSchema(BaseOptimizerSchema):
@@ -527,26 +594,39 @@ class AdagradConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Adagrad'
+
+    IDENTIFIER = "Adagrad"
     SCHEMA = AdagradSchema
 
-    def __init__(self,
-                 learning_rate=0.01,
-                 initial_accumulator_value=0.1,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='Adagrad'):
+    def __init__(
+        self,
+        learning_rate=0.01,
+        initial_accumulator_value=0.1,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="Adagrad",
+    ):
         self.initial_accumulator_value = initial_accumulator_value
-        super(AdagradConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                            start_decay_at, stop_decay_at, min_learning_rate,
-                                            staircase, global_step, use_locking, name)
+        super(AdagradConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class AdadeltaSchema(BaseOptimizerSchema):
@@ -618,28 +698,41 @@ class AdadeltaConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Adadelta'
+
+    IDENTIFIER = "Adadelta"
     SCHEMA = AdadeltaSchema
 
-    def __init__(self,
-                 learning_rate=0.99,
-                 rho=0.95,
-                 epsilon=1e-08,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='Adadelta'):
+    def __init__(
+        self,
+        learning_rate=0.99,
+        rho=0.95,
+        epsilon=1e-08,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="Adadelta",
+    ):
         self.rho = rho
         self.epsilon = epsilon
-        super(AdadeltaConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                             start_decay_at, stop_decay_at, min_learning_rate,
-                                             staircase, global_step, use_locking, name)
+        super(AdadeltaConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class FtrlSchema(BaseOptimizerSchema):
@@ -702,36 +795,49 @@ class FtrlConfig(BaseOptimizerConfig):
       # other model properties
     ```
     """
-    IDENTIFIER = 'Ftrl'
+
+    IDENTIFIER = "Ftrl"
     SCHEMA = FtrlSchema
 
-    def __init__(self,
-                 learning_rate=3.0,
-                 learning_rate_power=-0.5,
-                 initial_accumulator_value=0.1,
-                 l1_regularization_strength=0.0,
-                 l2_regularization_strength=0.0,
-                 decay_type="",
-                 decay_rate=0.,
-                 decay_steps=10000,
-                 start_decay_at=0,
-                 stop_decay_at=1e10,
-                 min_learning_rate=1e-12,
-                 staircase=False,
-                 global_step=None,
-                 use_locking=False,
-                 name='Ftrl'):
+    def __init__(
+        self,
+        learning_rate=3.0,
+        learning_rate_power=-0.5,
+        initial_accumulator_value=0.1,
+        l1_regularization_strength=0.0,
+        l2_regularization_strength=0.0,
+        decay_type="",
+        decay_rate=0.0,
+        decay_steps=10000,
+        start_decay_at=0,
+        stop_decay_at=1e10,
+        min_learning_rate=1e-12,
+        staircase=False,
+        global_step=None,
+        use_locking=False,
+        name="Ftrl",
+    ):
         self.learning_rate_power = learning_rate_power
         self.initial_accumulator_value = initial_accumulator_value
         self.l1_regularization_strength = l1_regularization_strength
         self.l2_regularization_strength = l2_regularization_strength
-        super(FtrlConfig, self).__init__(learning_rate, decay_type, decay_rate, decay_steps,
-                                         start_decay_at, stop_decay_at, min_learning_rate,
-                                         staircase, global_step, use_locking, name)
+        super(FtrlConfig, self).__init__(
+            learning_rate,
+            decay_type,
+            decay_rate,
+            decay_steps,
+            start_decay_at,
+            stop_decay_at,
+            min_learning_rate,
+            staircase,
+            global_step,
+            use_locking,
+            name,
+        )
 
 
 class OptimizerSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'optimizer'
+    __multi_schema_name__ = "optimizer"
     __configs__ = {
         SGDConfig.IDENTIFIER: SGDConfig,
         MomentumConfig.IDENTIFIER: MomentumConfig,

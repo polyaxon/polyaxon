@@ -7,7 +7,7 @@ from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 
 
 class WrapperSchema(BaseLayerSchema):
-    layer = fields.Nested('LayerSchema')
+    layer = fields.Nested("LayerSchema")
 
     @staticmethod
     def schema_config():
@@ -24,7 +24,8 @@ class WrapperConfig(BaseLayerConfig):
     Args:
         layer: The layer to be wrapped.
     """
-    IDENTIFIER = 'Wrapper'
+
+    IDENTIFIER = "Wrapper"
     SCHEMA = WrapperSchema
 
     def __init__(self, layer, **kwargs):
@@ -88,12 +89,12 @@ class TimeDistributedConfig(WrapperConfig):
           units: 2
     ```
     """
-    IDENTIFIER = 'TimeDistributed'
+
+    IDENTIFIER = "TimeDistributed"
     SCHEMA = TimeDistributedSchema
 
 
 class BidirectionalSchema(WrapperSchema):
-
     @staticmethod
     def schema_config():
         return BidirectionalConfig
@@ -130,5 +131,6 @@ class BidirectionalConfig(WrapperConfig):
           recurrent_dropout: 0.2
     ```
     """
-    IDENTIFIER = 'Bidirectional'
+
+    IDENTIFIER = "Bidirectional"
     SCHEMA = BidirectionalSchema

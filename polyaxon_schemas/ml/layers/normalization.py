@@ -7,7 +7,7 @@ from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
     InitializerSchema,
     OnesInitializerConfig,
-    ZerosInitializerConfig
+    ZerosInitializerConfig,
 )
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
@@ -83,24 +83,27 @@ class BatchNormalizationConfig(BaseLayerConfig):
       momentum: 0.7
     ```
     """
-    IDENTIFIER = 'BatchNormalization'
+
+    IDENTIFIER = "BatchNormalization"
     SCHEMA = BatchNormalizationSchema
 
-    def __init__(self,
-                 axis=-1,
-                 momentum=0.99,
-                 epsilon=1e-3,
-                 center=True,
-                 scale=True,
-                 beta_initializer=ZerosInitializerConfig(),
-                 gamma_initializer=OnesInitializerConfig(),
-                 moving_mean_initializer=ZerosInitializerConfig(),
-                 moving_variance_initializer=OnesInitializerConfig(),
-                 beta_regularizer=None,
-                 gamma_regularizer=None,
-                 beta_constraint=None,
-                 gamma_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        axis=-1,
+        momentum=0.99,
+        epsilon=1e-3,
+        center=True,
+        scale=True,
+        beta_initializer=ZerosInitializerConfig(),
+        gamma_initializer=OnesInitializerConfig(),
+        moving_mean_initializer=ZerosInitializerConfig(),
+        moving_variance_initializer=OnesInitializerConfig(),
+        beta_regularizer=None,
+        gamma_regularizer=None,
+        beta_constraint=None,
+        gamma_constraint=None,
+        **kwargs
+    ):
         super(BatchNormalizationConfig, self).__init__(**kwargs)
         self.axis = axis
         self.momentum = momentum

@@ -8,7 +8,7 @@ from polyaxon_schemas.ml.constraints import ConstraintSchema
 from polyaxon_schemas.ml.initializations import (
     GlorotNormalInitializerConfig,
     InitializerSchema,
-    ZerosInitializerConfig
+    ZerosInitializerConfig,
 )
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
@@ -21,8 +21,9 @@ class Conv1DSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=1, max=1)
     strides = ObjectOrListObject(fields.Int, min=1, max=1, default=1, missing=1)
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
     dilation_rate = ObjectOrListObject(fields.Int, min=1, max=1, default=1, missing=1)
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
@@ -105,25 +106,28 @@ class Conv1DConfig(BaseLayerConfig):
       padding: same
     ```
     """
-    IDENTIFIER = 'Conv1D'
+
+    IDENTIFIER = "Conv1D"
     SCHEMA = Conv1DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=1,
-                 padding='valid',
-                 dilation_rate=1,
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=1,
+        padding="valid",
+        dilation_rate=1,
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(Conv1DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -144,12 +148,20 @@ class Conv1DConfig(BaseLayerConfig):
 class Conv2DSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=2, max=2)
-    strides = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
-    dilation_rate = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
+    strides = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
+    dilation_rate = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, allow_none=True)
@@ -274,26 +286,29 @@ class Conv2DConfig(BaseLayerConfig):
         Ones: {dtype: float32}
     ```
     """
-    IDENTIFIER = 'Conv2D'
+
+    IDENTIFIER = "Conv2D"
     SCHEMA = Conv2DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1),
-                 padding='valid',
-                 data_format=None,
-                 dilation_rate=(1, 1),
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1),
+        padding="valid",
+        data_format=None,
+        dilation_rate=(1, 1),
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(Conv2DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -315,13 +330,20 @@ class Conv2DConfig(BaseLayerConfig):
 class Conv3DSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=3, max=3)
-    strides = ObjectOrListObject(fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
-    dilation_rate = ObjectOrListObject(fields.Int, min=3, max=3,
-                                       default=(1, 1, 1), missing=(1, 1, 1))
+    strides = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
+    dilation_rate = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1)
+    )
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, allow_none=True)
@@ -426,26 +448,29 @@ class Conv3DConfig(BaseLayerConfig):
       kernel_initializer: Ones
     ```
     """
-    IDENTIFIER = 'Conv3D'
+
+    IDENTIFIER = "Conv3D"
     SCHEMA = Conv3DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1, 1),
-                 padding='valid',
-                 data_format=None,
-                 dilation_rate=(1, 1, 1),
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1, 1),
+        padding="valid",
+        data_format=None,
+        dilation_rate=(1, 1, 1),
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(Conv3DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -467,12 +492,20 @@ class Conv3DConfig(BaseLayerConfig):
 class Conv2DTransposeSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=2, max=2)
-    strides = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
-    dilation_rate = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
+    strides = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
+    dilation_rate = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, allow_none=True)
@@ -573,26 +606,29 @@ class Conv2DTransposeConfig(BaseLayerConfig):
       kernel_soze: [4, 4]
     ```
     """
-    IDENTIFIER = 'Conv2DTranspose'
+
+    IDENTIFIER = "Conv2DTranspose"
     SCHEMA = Conv2DTransposeSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1),
-                 padding='valid',
-                 data_format=None,
-                 dilation_rate=(1, 1),
-                 activation=None,
-                 use_bias=True,
-                 kernel_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1),
+        padding="valid",
+        data_format=None,
+        dilation_rate=(1, 1),
+        activation=None,
+        use_bias=True,
+        kernel_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(Conv2DTransposeConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -614,14 +650,21 @@ class Conv2DTransposeConfig(BaseLayerConfig):
 class Conv3DTransposeSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=3, max=3)
-    strides = ObjectOrListObject(fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    strides = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
-    dilation_rate = ObjectOrListObject(fields.Int, min=3, max=3,
-                                       default=(1, 1, 1), missing=(1, 1, 1))
+    dilation_rate = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1)
+    )
     use_bias = fields.Bool(default=True, missing=True)
     kernel_initializer = fields.Nested(InitializerSchema, allow_none=True)
     bias_initializer = fields.Nested(InitializerSchema, allow_none=True)
@@ -724,26 +767,29 @@ class Conv3DTransposeConfig(BaseLayerConfig):
       kernel_size: 3 or [3, 3, 3]
     ```
     """
-    IDENTIFIER = 'Conv3DTranspose'
+
+    IDENTIFIER = "Conv3DTranspose"
     SCHEMA = Conv3DTransposeSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1, 1),
-                 padding='valid',
-                 data_format=None,
-                 activation=None,
-                 dilation_rate=(1, 1, 1),
-                 use_bias=True,
-                 kernel_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1, 1),
+        padding="valid",
+        data_format=None,
+        activation=None,
+        dilation_rate=(1, 1, 1),
+        use_bias=True,
+        kernel_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(Conv3DTransposeConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -765,11 +811,17 @@ class Conv3DTransposeConfig(BaseLayerConfig):
 class SeparableConv2DSchema(BaseLayerSchema):
     filters = fields.Int()
     kernel_size = ObjectOrListObject(fields.Int, min=2, max=2)
-    strides = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
-    padding = fields.Str(default='valid', missing='valid',
-                         validate=validate.OneOf(['same', 'valid']))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    strides = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
+    padding = fields.Str(
+        default="valid", missing="valid", validate=validate.OneOf(["same", "valid"])
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
     depth_multiplier = fields.Int(default=1, missing=1)
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
@@ -870,29 +922,32 @@ class SeparableConv2DConfig(BaseLayerConfig):
       kernel_size: 2 or [2, 2]
     ```
     """
-    IDENTIFIER = 'SeparableConv2D'
+
+    IDENTIFIER = "SeparableConv2D"
     SCHEMA = SeparableConv2DSchema
 
-    def __init__(self,
-                 filters,
-                 kernel_size,
-                 strides=(1, 1),
-                 padding='valid',
-                 data_format=None,
-                 depth_multiplier=1,
-                 activation=None,
-                 use_bias=True,
-                 depthwise_initializer=GlorotNormalInitializerConfig(),
-                 pointwise_initializer=GlorotNormalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 depthwise_regularizer=None,
-                 pointwise_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 depthwise_constraint=None,
-                 pointwise_constraint=None,
-                 bias_constraint=None,
-                 **kwargs):
+    def __init__(
+        self,
+        filters,
+        kernel_size,
+        strides=(1, 1),
+        padding="valid",
+        data_format=None,
+        depth_multiplier=1,
+        activation=None,
+        use_bias=True,
+        depthwise_initializer=GlorotNormalInitializerConfig(),
+        pointwise_initializer=GlorotNormalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        depthwise_regularizer=None,
+        pointwise_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        depthwise_constraint=None,
+        pointwise_constraint=None,
+        bias_constraint=None,
+        **kwargs
+    ):
         super(SeparableConv2DConfig, self).__init__(**kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
@@ -955,7 +1010,8 @@ class UpSampling1DConfig(BaseLayerConfig):
     UpSampling1D: {size: 2}
     ```
     """
-    IDENTIFIER = 'UpSampling1D'
+
+    IDENTIFIER = "UpSampling1D"
     SCHEMA = UpSampling1DSchema
 
     def __init__(self, size=2, **kwargs):
@@ -965,8 +1021,11 @@ class UpSampling1DConfig(BaseLayerConfig):
 
 class UpSampling2DSchema(BaseLayerSchema):
     size = ObjectOrListObject(fields.Int, min=2, max=2, default=(2, 2), missing=(2, 2))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -1018,7 +1077,8 @@ class UpSampling2DConfig(BaseLayerConfig):
         size: 2 or [2, 2]
     ```
     """
-    IDENTIFIER = 'UpSampling2D'
+
+    IDENTIFIER = "UpSampling2D"
     SCHEMA = UpSampling2DSchema
 
     def __init__(self, size=(2, 2), data_format=None, **kwargs):
@@ -1028,9 +1088,14 @@ class UpSampling2DConfig(BaseLayerConfig):
 
 
 class UpSampling3DSchema(BaseLayerSchema):
-    size = ObjectOrListObject(fields.Int, min=3, max=3, default=(2, 2, 2), missing=(2, 2, 2))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    size = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(2, 2, 2), missing=(2, 2, 2)
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -1082,7 +1147,8 @@ class UpSampling3DConfig(BaseLayerConfig):
         size: 2 or [2, 2, 2]
     ```
     """
-    IDENTIFIER = 'UpSampling3D'
+
+    IDENTIFIER = "UpSampling3D"
     SCHEMA = UpSampling3DSchema
 
     def __init__(self, size=(2, 2, 2), data_format=None, **kwargs):
@@ -1130,7 +1196,8 @@ class ZeroPadding1DConfig(BaseLayerConfig):
         padding: 1
     ```
     """
-    IDENTIFIER = 'ZeroPadding1D'
+
+    IDENTIFIER = "ZeroPadding1D"
     SCHEMA = ZeroPadding1DSchema
 
     def __init__(self, padding=1, **kwargs):
@@ -1139,9 +1206,14 @@ class ZeroPadding1DConfig(BaseLayerConfig):
 
 
 class ZeroPadding2DSchema(BaseLayerSchema):
-    padding = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -1201,7 +1273,8 @@ class ZeroPadding2DConfig(BaseLayerConfig):
         padding: 1 or [1, 1]
     ```
     """
-    IDENTIFIER = 'ZeroPadding2D'
+
+    IDENTIFIER = "ZeroPadding2D"
     SCHEMA = ZeroPadding2DSchema
 
     def __init__(self, padding=(1, 1), data_format=None, **kwargs):
@@ -1211,9 +1284,14 @@ class ZeroPadding2DConfig(BaseLayerConfig):
 
 
 class ZeroPadding3DSchema(BaseLayerSchema):
-    padding = ObjectOrListObject(fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    padding = ObjectOrListObject(
+        fields.Int, min=3, max=3, default=(1, 1, 1), missing=(1, 1, 1)
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -1275,7 +1353,8 @@ class ZeroPadding3DConfig(BaseLayerConfig):
         padding: 1 or [1, 1, 1]
     ```
     """
-    IDENTIFIER = 'ZeroPadding3D'
+
+    IDENTIFIER = "ZeroPadding3D"
     SCHEMA = ZeroPadding3DSchema
 
     def __init__(self, padding=(1, 1, 1), data_format=None, **kwargs):
@@ -1285,7 +1364,9 @@ class ZeroPadding3DConfig(BaseLayerConfig):
 
 
 class Cropping1DSchema(BaseLayerSchema):
-    cropping = ObjectOrListObject(fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1))
+    cropping = ObjectOrListObject(
+        fields.Int, min=2, max=2, default=(1, 1), missing=(1, 1)
+    )
 
     @staticmethod
     def schema_config():
@@ -1323,7 +1404,8 @@ class Cropping1DConfig(BaseLayerConfig):
         cropping: 1 or [1, 1]
     ```
     """
-    IDENTIFIER = 'Cropping1D'
+
+    IDENTIFIER = "Cropping1D"
     SCHEMA = Cropping1DSchema
 
     def __init__(self, cropping=(1, 1), **kwargs):
@@ -1332,10 +1414,18 @@ class Cropping1DConfig(BaseLayerConfig):
 
 
 class Cropping2DSchema(BaseLayerSchema):
-    cropping = ObjectOrListObject(ObjectOrListObject(fields.Int, min=2, max=2), min=2, max=2,
-                                  default=((0, 0), (0, 0)), missing=((0, 0), (0, 0)))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    cropping = ObjectOrListObject(
+        ObjectOrListObject(fields.Int, min=2, max=2),
+        min=2,
+        max=2,
+        default=((0, 0), (0, 0)),
+        missing=((0, 0), (0, 0)),
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -1399,7 +1489,8 @@ class Cropping2DConfig(BaseLayerConfig):
       cropping=[[2, 2], [4, 4]]
     ```
     """
-    IDENTIFIER = 'Cropping2D'
+
+    IDENTIFIER = "Cropping2D"
     SCHEMA = Cropping2DSchema
 
     def __init__(self, cropping=((0, 0), (0, 0)), data_format=None, **kwargs):
@@ -1409,11 +1500,18 @@ class Cropping2DConfig(BaseLayerConfig):
 
 
 class Cropping3DSchema(BaseLayerSchema):
-    cropping = ObjectOrListObject(ObjectOrListObject(fields.Int, min=2, max=2), min=3, max=3,
-                                  default=((1, 1), (1, 1), (1, 1)),
-                                  missing=((1, 1), (1, 1), (1, 1)))
-    data_format = fields.Str(default=None, missing=None,
-                             validate=validate.OneOf('channels_first', 'channels_last'))
+    cropping = ObjectOrListObject(
+        ObjectOrListObject(fields.Int, min=2, max=2),
+        min=3,
+        max=3,
+        default=((1, 1), (1, 1), (1, 1)),
+        missing=((1, 1), (1, 1), (1, 1)),
+    )
+    data_format = fields.Str(
+        default=None,
+        missing=None,
+        validate=validate.OneOf("channels_first", "channels_last"),
+    )
 
     @staticmethod
     def schema_config():
@@ -1471,7 +1569,8 @@ class Cropping3DConfig(BaseLayerConfig):
       cropping=[[2, 2], [4, 4], [2, 2]]
     ```
     """
-    IDENTIFIER = 'Cropping3D'
+
+    IDENTIFIER = "Cropping3D"
     SCHEMA = Cropping3DSchema
 
     def __init__(self, cropping=((1, 1), (1, 1), (1, 1)), data_format=None, **kwargs):

@@ -20,7 +20,7 @@ class TrainSchema(BaseSchema):
 
 class TrainConfig(BaseConfig):
     SCHEMA = TrainSchema
-    IDENTIFIER = 'train'
+    IDENTIFIER = "train"
 
     def __init__(self, data_pipeline, steps=100, hooks=None):
         self.data_pipeline = data_pipeline

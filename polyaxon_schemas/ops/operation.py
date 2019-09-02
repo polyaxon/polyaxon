@@ -54,11 +54,13 @@ class BaseOpSchema(BaseSchema):
 
     @validates_schema
     def validate_params(self, values):
-        ops_params.validate_params(params=values.get('params'),
-                                   inputs=values.get('inputs'),
-                                   outputs=values.get('outputs'),
-                                   is_template=True,
-                                   is_run=True)
+        ops_params.validate_params(
+            params=values.get("params"),
+            inputs=values.get("inputs"),
+            outputs=values.get("outputs"),
+            is_template=True,
+            is_run=True,
+        )
 
 
 class BaseOpConfig(BaseConfig):

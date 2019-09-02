@@ -22,14 +22,16 @@ class EvalSchema(BaseSchema):
 
 class EvalConfig(BaseConfig):
     SCHEMA = EvalSchema
-    IDENTIFIER = 'eval'
+    IDENTIFIER = "eval"
 
-    def __init__(self,
-                 data_pipeline,
-                 steps=10,
-                 hooks=None,
-                 delay_secs=0,
-                 continuous_eval_throttle_secs=60):
+    def __init__(
+        self,
+        data_pipeline,
+        steps=10,
+        hooks=None,
+        delay_secs=0,
+        continuous_eval_throttle_secs=60,
+    ):
         self.data_pipeline = data_pipeline
         self.steps = steps
         self.hooks = hooks

@@ -50,10 +50,11 @@ class ZerosInitializerConfig(BaseConfig):
       kernel_initializer: Zeros
     ```
     """
-    IDENTIFIER = 'Zeros'
+
+    IDENTIFIER = "Zeros"
     SCHEMA = ZerosInitializerSchema
 
-    def __init__(self, dtype='float32'):
+    def __init__(self, dtype="float32"):
         self.dtype = dtype
 
 
@@ -98,10 +99,11 @@ class OnesInitializerConfig(BaseConfig):
       kernel_initializer: Ones
     ```
     """
-    IDENTIFIER = 'Ones'
+
+    IDENTIFIER = "Ones"
     SCHEMA = OnesInitializerSchema
 
-    def __init__(self, dtype='float32'):
+    def __init__(self, dtype="float32"):
         self.dtype = dtype
 
 
@@ -158,10 +160,11 @@ class ConstantInitializerConfig(BaseConfig):
           value: 3
     ```
     """
-    IDENTIFIER = 'Constant'
+
+    IDENTIFIER = "Constant"
     SCHEMA = ConstantInitializerSchema
 
-    def __init__(self, value=0, dtype='float32'):
+    def __init__(self, value=0, dtype="float32"):
         self.dtype = dtype
         self.value = value
 
@@ -220,10 +223,11 @@ class UniformInitializerConfig(BaseConfig):
           minval: 1
     ```
     """
-    IDENTIFIER = 'Uniform'
+
+    IDENTIFIER = "Uniform"
     SCHEMA = UniformInitializerSchema
 
-    def __init__(self, minval=0, maxval=None, seed=None, dtype='float32'):
+    def __init__(self, minval=0, maxval=None, seed=None, dtype="float32"):
         self.seed = seed
         self.dtype = dtype
         self.minval = minval
@@ -283,10 +287,11 @@ class NormalInitializerConfig(BaseConfig):
           mean: 1.
     ```
     """
-    IDENTIFIER = 'Normal'
+
+    IDENTIFIER = "Normal"
     SCHEMA = NormalInitializerSchema
 
-    def __init__(self, mean=0., stddev=1., seed=None, dtype='float32'):
+    def __init__(self, mean=0.0, stddev=1.0, seed=None, dtype="float32"):
         self.seed = seed
         self.dtype = dtype
         self.mean = mean
@@ -349,10 +354,11 @@ class TruncatedNormalInitializerConfig(BaseConfig):
           mean: 1.
     ```
     """
-    IDENTIFIER = 'TruncatedNormal'
+
+    IDENTIFIER = "TruncatedNormal"
     SCHEMA = TruncatedNormalInitializerSchema
 
-    def __init__(self, mean=0., stddev=1., seed=None, dtype='float32'):
+    def __init__(self, mean=0.0, stddev=1.0, seed=None, dtype="float32"):
         self.seed = seed
         self.dtype = dtype
         self.mean = mean
@@ -361,7 +367,9 @@ class TruncatedNormalInitializerConfig(BaseConfig):
 
 class VarianceScalingInitializerSchema(BaseSchema):
     scale = fields.Float(allow_none=True)
-    mode = fields.Str(allow_none=True, validate=validate.OneOf(['fan_in', 'fan_out', 'fan_avg']))
+    mode = fields.Str(
+        allow_none=True, validate=validate.OneOf(["fan_in", "fan_out", "fan_avg"])
+    )
     distribution = fields.Str(allow_none=True)
     dtype = DType(allow_none=True)
 
@@ -425,10 +433,13 @@ class VarianceScalingInitializerConfig(BaseConfig):
           mode: fan_out
     ```
     """
-    IDENTIFIER = 'VarianceScaling'
+
+    IDENTIFIER = "VarianceScaling"
     SCHEMA = VarianceScalingInitializerSchema
 
-    def __init__(self, scale=1., mode='fan_in', distribution="normal", dtype='float32'):
+    def __init__(
+        self, scale=1.0, mode="fan_in", distribution="normal", dtype="float32"
+    ):
         self.scale = scale
         self.mode = mode
         self.distribution = distribution
@@ -482,10 +493,11 @@ class IdentityInitializerConfig(BaseConfig):
           gain: 0.5
     ```
     """
-    IDENTIFIER = 'Identity'
+
+    IDENTIFIER = "Identity"
     SCHEMA = IdentityInitializerSchema
 
-    def __init__(self, gain=1.):
+    def __init__(self, gain=1.0):
         self.gain = gain
 
 
@@ -549,10 +561,11 @@ class OrthogonalInitializerConfig(BaseConfig):
           gain: 0.5
     ```
     """
-    IDENTIFIER = 'Orthogonal'
+
+    IDENTIFIER = "Orthogonal"
     SCHEMA = OrthogonalInitializerSchema
 
-    def __init__(self, gain=1., seed=None, dtype='float32'):
+    def __init__(self, gain=1.0, seed=None, dtype="float32"):
         self.seed = seed
         self.dtype = dtype
         self.gain = gain
@@ -608,7 +621,8 @@ class GlorotUniformInitializerConfig(BaseConfig):
       kernel_initializer: GlorotUniform
     ```
     """
-    IDENTIFIER = 'GlorotUniform'
+
+    IDENTIFIER = "GlorotUniform"
     SCHEMA = GlorotUniformInitializerSchema
 
     def __init__(self, seed=None):
@@ -665,7 +679,8 @@ class GlorotNormalInitializerConfig(BaseConfig):
       kernel_initializer: GlorotNormal
     ```
     """
-    IDENTIFIER = 'GlorotNormal'
+
+    IDENTIFIER = "GlorotNormal"
     SCHEMA = GlorotNormalInitializerSchema
 
     def __init__(self, seed=None):
@@ -720,7 +735,8 @@ class HeUniformInitializerConfig(BaseConfig):
       kernel_initializer: HeUniform
     ```
     """
-    IDENTIFIER = 'HeUniform'
+
+    IDENTIFIER = "HeUniform"
     SCHEMA = HeUniformInitializerSchema
 
     def __init__(self, seed=None):
@@ -775,7 +791,8 @@ class HeNormalInitializerConfig(BaseConfig):
       kernel_initializer: HeNormal
     ```
     """
-    IDENTIFIER = 'HeNormal'
+
+    IDENTIFIER = "HeNormal"
     SCHEMA = HeNormalInitializerSchema
 
     def __init__(self, seed=None):
@@ -831,7 +848,8 @@ class LecunUniformInitializerConfig(BaseConfig):
       kernel_initializer: LecunUniform
     ```
     """
-    IDENTIFIER = 'LecunUniform'
+
+    IDENTIFIER = "LecunUniform"
     SCHEMA = LecunUniformInitializerSchema
 
     def __init__(self, seed=None):
@@ -888,7 +906,8 @@ class LecunNormalInitializerConfig(BaseConfig):
       kernel_initializer: LecunNormal
     ```
     """
-    IDENTIFIER = 'LecunNormal'
+
+    IDENTIFIER = "LecunNormal"
     SCHEMA = LecunNormalInitializerSchema
 
     def __init__(self, seed=None):
@@ -896,7 +915,7 @@ class LecunNormalInitializerConfig(BaseConfig):
 
 
 class InitializerSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'initializer'
+    __multi_schema_name__ = "initializer"
     __configs__ = {
         ZerosInitializerConfig.IDENTIFIER: ZerosInitializerConfig,
         OnesInitializerConfig.IDENTIFIER: OnesInitializerConfig,

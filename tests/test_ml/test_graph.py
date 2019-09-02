@@ -11,20 +11,20 @@ from polyaxon_schemas.ml.graph import GraphConfig
 class TestGraphConfigs(TestCase):
     def test_graph_config(self):
         config_dict = {
-            'input_layers': ['image'],
-            'output_layers': [['dense_0', 0, 0]],
-            'layers': [
+            "input_layers": ["image"],
+            "output_layers": [["dense_0", 0, 0]],
+            "layers": [
                 {
-                    'Conv2D': {
-                        'filters': 64,
-                        'strides': [1, 1],
-                        'kernel_size': [2, 2],
-                        'activation': 'relu',
-                        'name': 'convolution_1',
+                    "Conv2D": {
+                        "filters": 64,
+                        "strides": [1, 1],
+                        "kernel_size": [2, 2],
+                        "activation": "relu",
+                        "name": "convolution_1",
                     }
                 },
-                {'Dense': {'units': 17, 'name': 'dense_0'}}
-            ]
+                {"Dense": {"units": 17, "name": "dense_0"}},
+            ],
         }
         config = GraphConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()

@@ -9,7 +9,6 @@ from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 
 
 class AddSchema(BaseLayerSchema):
-
     @staticmethod
     def schema_config():
         return AddConfig
@@ -40,12 +39,12 @@ class AddConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Add'
+
+    IDENTIFIER = "Add"
     SCHEMA = AddSchema
 
 
 class SubtractSchema(BaseLayerSchema):
-
     @staticmethod
     def schema_config():
         return SubtractConfig
@@ -86,12 +85,12 @@ class SubtractConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Subtract'
+
+    IDENTIFIER = "Subtract"
     SCHEMA = SubtractSchema
 
 
 class MultiplySchema(BaseLayerSchema):
-
     @staticmethod
     def schema_config():
         return MultiplyConfig
@@ -122,12 +121,12 @@ class MultiplyConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Multiply'
+
+    IDENTIFIER = "Multiply"
     SCHEMA = MultiplySchema
 
 
 class AverageSchema(BaseLayerSchema):
-
     @staticmethod
     def schema_config():
         return AverageConfig
@@ -158,12 +157,12 @@ class AverageConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Average'
+
+    IDENTIFIER = "Average"
     SCHEMA = AverageSchema
 
 
 class MaximumSchema(BaseLayerSchema):
-
     @staticmethod
     def schema_config():
         return MaximumConfig
@@ -194,7 +193,8 @@ class MaximumConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Maximum'
+
+    IDENTIFIER = "Maximum"
     SCHEMA = MaximumSchema
 
 
@@ -236,7 +236,8 @@ class ConcatenateConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Concatenate'
+
+    IDENTIFIER = "Concatenate"
     SCHEMA = ConcatenateSchema
 
     def __init__(self, axis=-1, **kwargs):
@@ -289,7 +290,8 @@ class DotConfig(BaseLayerConfig):
           inbound_nodes: [dense1, dense2]
     ```
     """
-    IDENTIFIER = 'Dot'
+
+    IDENTIFIER = "Dot"
     SCHEMA = DotSchema
 
     def __init__(self, axes, normalize=False, **kwargs):
@@ -299,7 +301,7 @@ class DotConfig(BaseLayerConfig):
 
 
 class MergeSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'Merge'
+    __multi_schema_name__ = "Merge"
     __configs__ = {
         AddConfig.IDENTIFIER: AddConfig,
         MultiplyConfig.IDENTIFIER: MultiplyConfig,
@@ -311,5 +313,5 @@ class MergeSchema(BaseMultiSchema):
 
 
 class MergeConfig(BaseLayerConfig):
-    IDENTIFIER = 'Merge'
+    IDENTIFIER = "Merge"
     SCHEMA = MergeSchema

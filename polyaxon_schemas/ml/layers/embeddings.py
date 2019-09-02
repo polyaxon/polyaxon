@@ -4,7 +4,10 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon_schemas.ml.constraints import ConstraintSchema
-from polyaxon_schemas.ml.initializations import InitializerSchema, UniformInitializerConfig
+from polyaxon_schemas.ml.initializations import (
+    InitializerSchema,
+    UniformInitializerConfig,
+)
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
 
@@ -84,19 +87,22 @@ class EmbeddingConfig(BaseLayerConfig):
       output_dim: 32
     ```
     """
-    IDENTIFIER = 'Embedding'
+
+    IDENTIFIER = "Embedding"
     SCHEMA = EmbeddingSchema
 
-    def __init__(self,
-                 input_dim,
-                 output_dim,
-                 embeddings_initializer=UniformInitializerConfig(),
-                 embeddings_regularizer=None,
-                 activity_regularizer=None,
-                 embeddings_constraint=None,
-                 mask_zero=False,
-                 input_length=None,
-                 **kwargs):
+    def __init__(
+        self,
+        input_dim,
+        output_dim,
+        embeddings_initializer=UniformInitializerConfig(),
+        embeddings_regularizer=None,
+        activity_regularizer=None,
+        embeddings_constraint=None,
+        mask_zero=False,
+        input_length=None,
+        **kwargs
+    ):
         super(EmbeddingConfig, self).__init__(**kwargs)
         self.input_dim = input_dim
         self.output_dim = output_dim

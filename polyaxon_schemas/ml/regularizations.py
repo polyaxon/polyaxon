@@ -16,7 +16,7 @@ class BaseRegularizerSchema(BaseSchema):
 
 
 class BaseRegularizerConfig(BaseConfig):
-    REDUCED_ATTRIBUTES = ['name']
+    REDUCED_ATTRIBUTES = ["name"]
 
     def __init__(self, name, collect=True):
         self.name = name
@@ -64,10 +64,11 @@ class L1RegularizerConfig(BaseRegularizerConfig):
         L1: {l: 0.2}
     ```
     """
-    IDENTIFIER = 'L1'
+
+    IDENTIFIER = "L1"
     SCHEMA = L1RegularizerSchema
 
-    def __init__(self, l=0.01, name='L1Regularizer', collect=True):  # noqa
+    def __init__(self, l=0.01, name="L1Regularizer", collect=True):  # noqa
         self.l = l  # noqa
         super(L1RegularizerConfig, self).__init__(name, collect)
 
@@ -113,10 +114,11 @@ class L2RegularizerConfig(BaseRegularizerConfig):
         L2: {l: 0.2}
     ```
     """
-    IDENTIFIER = 'L2'
+
+    IDENTIFIER = "L2"
     SCHEMA = L2RegularizerSchema
 
-    def __init__(self, l=0.01, name='L2Regularizer', collect=True):  # noqa
+    def __init__(self, l=0.01, name="L2Regularizer", collect=True):  # noqa
         self.l = l  # noqa
         super(L2RegularizerConfig, self).__init__(name, collect)
 
@@ -165,17 +167,18 @@ class L1L2RegularizerConfig(BaseRegularizerConfig):
         L1L2: {l1: 0.2, l2: 0.1}
     ```
     """
-    IDENTIFIER = 'L1L2'
+
+    IDENTIFIER = "L1L2"
     SCHEMA = L1L2RegularizerSchema
 
-    def __init__(self, l1=0.01, l2=0.01, name='L1L2Regularizer', collect=True):
+    def __init__(self, l1=0.01, l2=0.01, name="L1L2Regularizer", collect=True):
         self.l1 = l1
         self.l2 = l2
         super(L1L2RegularizerConfig, self).__init__(name, collect)
 
 
 class RegularizerSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'regularizer'
+    __multi_schema_name__ = "regularizer"
     __configs__ = {
         L1RegularizerConfig.IDENTIFIER: L1RegularizerConfig,
         L2RegularizerConfig.IDENTIFIER: L2RegularizerConfig,

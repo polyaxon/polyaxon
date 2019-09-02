@@ -9,7 +9,7 @@ from polyaxon_schemas.ml.initializations import (
     GlorotUniformInitializerConfig,
     InitializerSchema,
     OrthogonalInitializerConfig,
-    ZerosInitializerConfig
+    ZerosInitializerConfig,
 )
 from polyaxon_schemas.ml.layers.base import BaseLayerConfig, BaseLayerSchema
 from polyaxon_schemas.ml.regularizations import RegularizerSchema
@@ -156,17 +156,20 @@ class RecurrentConfig(BaseLayerConfig):
         `states` should be a numpy array or list of numpy arrays representing
         the initial state of the RNN layer.
     """
-    IDENTIFIER = 'Recurrent'
+
+    IDENTIFIER = "Recurrent"
     SCHEMA = RecurrentSchema
 
-    def __init__(self,
-                 return_sequences=False,
-                 return_state=False,
-                 go_backwards=False,
-                 stateful=False,
-                 unroll=False,
-                 implementation=0,
-                 **kwargs):
+    def __init__(
+        self,
+        return_sequences=False,
+        return_state=False,
+        go_backwards=False,
+        stateful=False,
+        unroll=False,
+        implementation=0,
+        **kwargs
+    ):
         super(RecurrentConfig, self).__init__(**kwargs)
         self.return_sequences = return_sequences
         self.return_state = return_state
@@ -190,8 +193,8 @@ class SimpleRNNSchema(RecurrentSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     recurrent_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     bias_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
-    dropout = fields.Float(default=0., missing=0.)
-    recurrent_dropout = fields.Float(default=0., missing=0.)
+    dropout = fields.Float(default=0.0, missing=0.0)
+    recurrent_dropout = fields.Float(default=0.0, missing=0.0)
 
     @staticmethod
     def schema_config():
@@ -245,26 +248,29 @@ class SimpleRNNConfig(RecurrentConfig):
       activation: tanh
     ```
     """
-    IDENTIFIER = 'SimpleRNN'
+
+    IDENTIFIER = "SimpleRNN"
     SCHEMA = SimpleRNNSchema
 
-    def __init__(self,
-                 units,
-                 activation='tanh',
-                 use_bias=True,
-                 kernel_initializer=GlorotUniformInitializerConfig(),
-                 recurrent_initializer=OrthogonalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 recurrent_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 recurrent_constraint=None,
-                 bias_constraint=None,
-                 dropout=0.,
-                 recurrent_dropout=0.,
-                 **kwargs):
+    def __init__(
+        self,
+        units,
+        activation="tanh",
+        use_bias=True,
+        kernel_initializer=GlorotUniformInitializerConfig(),
+        recurrent_initializer=OrthogonalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        recurrent_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        recurrent_constraint=None,
+        bias_constraint=None,
+        dropout=0.0,
+        recurrent_dropout=0.0,
+        **kwargs
+    ):
         super(SimpleRNNConfig, self).__init__(**kwargs)
         self.units = units
         self.activation = activation
@@ -287,7 +293,9 @@ class GRUSchema(RecurrentSchema):
     units = fields.Int()
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
-    recurrent_activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
+    recurrent_activation = StrOrFct(
+        allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES)
+    )
     kernel_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
     recurrent_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
     bias_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
@@ -298,8 +306,8 @@ class GRUSchema(RecurrentSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     recurrent_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     bias_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
-    dropout = fields.Float(default=0., missing=0.)
-    recurrent_dropout = fields.Float(default=0., missing=0.)
+    dropout = fields.Float(default=0.0, missing=0.0)
+    recurrent_dropout = fields.Float(default=0.0, missing=0.0)
 
     @staticmethod
     def schema_config():
@@ -360,27 +368,30 @@ class GRUConfig(RecurrentConfig):
       activation: tanh
     ```
     """
-    IDENTIFIER = 'GRU'
+
+    IDENTIFIER = "GRU"
     SCHEMA = GRUSchema
 
-    def __init__(self,
-                 units,
-                 activation='tanh',
-                 recurrent_activation='hard_sigmoid',
-                 use_bias=True,
-                 kernel_initializer=GlorotUniformInitializerConfig(),
-                 recurrent_initializer=OrthogonalInitializerConfig(),
-                 bias_initializer=ZerosInitializerConfig(),
-                 kernel_regularizer=None,
-                 recurrent_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 recurrent_constraint=None,
-                 bias_constraint=None,
-                 dropout=0.,
-                 recurrent_dropout=0.,
-                 **kwargs):
+    def __init__(
+        self,
+        units,
+        activation="tanh",
+        recurrent_activation="hard_sigmoid",
+        use_bias=True,
+        kernel_initializer=GlorotUniformInitializerConfig(),
+        recurrent_initializer=OrthogonalInitializerConfig(),
+        bias_initializer=ZerosInitializerConfig(),
+        kernel_regularizer=None,
+        recurrent_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        recurrent_constraint=None,
+        bias_constraint=None,
+        dropout=0.0,
+        recurrent_dropout=0.0,
+        **kwargs
+    ):
         super(GRUConfig, self).__init__(**kwargs)
         self.units = units
         self.activation = activation
@@ -404,7 +415,9 @@ class LSTMSchema(RecurrentSchema):
     units = fields.Int()
     activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
     use_bias = fields.Bool(default=True, missing=True)
-    recurrent_activation = StrOrFct(allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES))
+    recurrent_activation = StrOrFct(
+        allow_none=True, validate=validate.OneOf(ACTIVATION_VALUES)
+    )
     kernel_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
     recurrent_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
     bias_initializer = fields.Nested(InitializerSchema, default=None, missing=None)
@@ -416,8 +429,8 @@ class LSTMSchema(RecurrentSchema):
     kernel_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     recurrent_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
     bias_constraint = fields.Nested(ConstraintSchema, default=None, missing=None)
-    dropout = fields.Float(default=0., missing=0.)
-    recurrent_dropout = fields.Float(default=0., missing=0.)
+    dropout = fields.Float(default=0.0, missing=0.0)
+    recurrent_dropout = fields.Float(default=0.0, missing=0.0)
 
     @staticmethod
     def schema_config():
@@ -485,28 +498,31 @@ class LSTMConfig(RecurrentConfig):
       activation: tanh
     ```
     """
-    IDENTIFIER = 'LSTM'
+
+    IDENTIFIER = "LSTM"
     SCHEMA = LSTMSchema
 
-    def __init__(self,
-                 units,
-                 activation='tanh',
-                 recurrent_activation='hard_sigmoid',
-                 use_bias=True,
-                 kernel_initializer=GlorotUniformInitializerConfig(),
-                 recurrent_initializer=OrthogonalInitializerConfig,
-                 bias_initializer=ZerosInitializerConfig(),
-                 unit_forget_bias=True,
-                 kernel_regularizer=None,
-                 recurrent_regularizer=None,
-                 bias_regularizer=None,
-                 activity_regularizer=None,
-                 kernel_constraint=None,
-                 recurrent_constraint=None,
-                 bias_constraint=None,
-                 dropout=0.,
-                 recurrent_dropout=0.,
-                 **kwargs):
+    def __init__(
+        self,
+        units,
+        activation="tanh",
+        recurrent_activation="hard_sigmoid",
+        use_bias=True,
+        kernel_initializer=GlorotUniformInitializerConfig(),
+        recurrent_initializer=OrthogonalInitializerConfig,
+        bias_initializer=ZerosInitializerConfig(),
+        unit_forget_bias=True,
+        kernel_regularizer=None,
+        recurrent_regularizer=None,
+        bias_regularizer=None,
+        activity_regularizer=None,
+        kernel_constraint=None,
+        recurrent_constraint=None,
+        bias_constraint=None,
+        dropout=0.0,
+        recurrent_dropout=0.0,
+        **kwargs
+    ):
         super(LSTMConfig, self).__init__(**kwargs)
         self.units = units
         self.activation = activation

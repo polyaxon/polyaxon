@@ -263,27 +263,29 @@ class MatrixSchema(BaseSchema):
 
     @validates_schema
     def validate_pvalues(self, data):
-        if data.get('pvalues'):
-            validate_pvalues(values=[v[1] for v in data['pvalues'] if v])
+        if data.get("pvalues"):
+            validate_pvalues(values=[v[1] for v in data["pvalues"] if v])
 
     @validates_schema
     def validate_matrix(self, data):
-        validate_matrix([
-            data.get('values'),
-            data.get('pvalues'),
-            data.get('range'),
-            data.get('linspace'),
-            data.get('logspace'),
-            data.get('geomspace'),
-            data.get('uniform'),
-            data.get('quniform'),
-            data.get('loguniform'),
-            data.get('qloguniform'),
-            data.get('normal'),
-            data.get('qnormal'),
-            data.get('lognormal'),
-            data.get('qlognormal'),
-        ])
+        validate_matrix(
+            [
+                data.get("values"),
+                data.get("pvalues"),
+                data.get("range"),
+                data.get("linspace"),
+                data.get("logspace"),
+                data.get("geomspace"),
+                data.get("uniform"),
+                data.get("quniform"),
+                data.get("loguniform"),
+                data.get("qloguniform"),
+                data.get("normal"),
+                data.get("qnormal"),
+                data.get("lognormal"),
+                data.get("qlognormal"),
+            ]
+        )
 
 
 class MatrixConfig(BaseConfig):

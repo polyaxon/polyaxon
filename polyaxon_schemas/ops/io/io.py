@@ -58,12 +58,14 @@ class IOSchema(BaseSchema):
 
     @validates_schema
     def validate_io(self, values):
-        validate_io(name=values.get('name'),
-                    iotype=values.get('iotype'),
-                    default=values.get('default'),
-                    is_list=values.get('is_list'),
-                    is_optional=values.get('is_optional'),
-                    is_flag=values.get('is_flag'))
+        validate_io(
+            name=values.get("name"),
+            iotype=values.get("iotype"),
+            default=values.get("default"),
+            is_list=values.get("is_list"),
+            is_optional=values.get("is_optional"),
+            is_flag=values.get("is_flag"),
+        )
 
 
 class IOConfig(BaseConfig):

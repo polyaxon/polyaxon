@@ -72,8 +72,9 @@ class ResizeConfig(BaseLayerConfig):
         method: 0
     ```
     """
+
     SCHEMA = ResizeSchema
-    IDENTIFIER = 'Resize'
+    IDENTIFIER = "Resize"
 
     def __init__(self, height, width, method=None, align_corners=False, **kwargs):
         super(ResizeConfig, self).__init__(**kwargs)
@@ -84,7 +85,7 @@ class ResizeConfig(BaseLayerConfig):
 
 
 class CentralCropSchema(BaseLayerSchema):
-    central_fraction = fields.Float(validate=validate.Range(0., 1.))
+    central_fraction = fields.Float(validate=validate.Range(0.0, 1.0))
     name = fields.Str(allow_none=True)
 
     @staticmethod
@@ -128,8 +129,9 @@ class CentralCropConfig(BaseLayerConfig):
         central_fraction: 0.5
     ```
     """
+
     SCHEMA = CentralCropSchema
-    IDENTIFIER = 'CentralCrop'
+    IDENTIFIER = "CentralCrop"
 
     def __init__(self, central_fraction, **kwargs):
         super(CentralCropConfig, self).__init__(**kwargs)
@@ -167,8 +169,9 @@ class RandomCropConfig(BaseLayerConfig):
         width: 10
     ```
     """
+
     SCHEMA = RandomCropSchema
-    IDENTIFIER = 'RandomCrop'
+    IDENTIFIER = "RandomCrop"
 
     def __init__(self, height, width, **kwargs):
         super(RandomCropConfig, self).__init__(**kwargs)
@@ -234,16 +237,19 @@ class ExtractGlimpseConfig(BaseLayerConfig):
         A `Tensor` of type `float32`.
         A tensor representing the glimpses `[batch_size, glimpse_height, glimpse_width, channels]`.
     """
-    SCHEMA = ExtractGlimpseSchema
-    IDENTIFIER = 'ExtractGlimpse'
 
-    def __init__(self,
-                 size,
-                 offsets,
-                 centered=None,
-                 normalized=None,
-                 uniform_noise=None,
-                 **kwargs):
+    SCHEMA = ExtractGlimpseSchema
+    IDENTIFIER = "ExtractGlimpse"
+
+    def __init__(
+        self,
+        size,
+        offsets,
+        centered=None,
+        normalized=None,
+        uniform_noise=None,
+        **kwargs
+    ):
         super(ExtractGlimpseConfig, self).__init__(**kwargs)
         self.size = size
         self.offsets = offsets
@@ -257,7 +263,7 @@ class ToBoundingBoxSchema(BaseLayerSchema):
     offset_width = fields.Int(validate=lambda n: n >= 0)
     target_height = fields.Int(validate=lambda n: n >= 0)
     target_width = fields.Int(validate=lambda n: n >= 0)
-    method = fields.Str(allow_none=True, validate=validate.OneOf(['crop', 'pad']))
+    method = fields.Str(allow_none=True, validate=validate.OneOf(["crop", "pad"]))
     name = fields.Str(allow_none=True)
 
     @staticmethod
@@ -315,16 +321,19 @@ class ToBoundingBoxConfig(BaseLayerConfig):
         target_width: 100
     ```
     """
-    SCHEMA = ToBoundingBoxSchema
-    IDENTIFIER = 'ToBoundingBox'
 
-    def __init__(self,
-                 offset_height,
-                 offset_width,
-                 target_height,
-                 target_width,
-                 method='crop',
-                 **kwargs):
+    SCHEMA = ToBoundingBoxSchema
+    IDENTIFIER = "ToBoundingBox"
+
+    def __init__(
+        self,
+        offset_height,
+        offset_width,
+        target_height,
+        target_width,
+        method="crop",
+        **kwargs
+    ):
         super(ToBoundingBoxConfig, self).__init__(**kwargs)
         self.offset_height = offset_height
         self.offset_width = offset_width
@@ -377,8 +386,9 @@ class FlipConfig(BaseLayerConfig):
         axis: 0
     ```
     """
+
     SCHEMA = FlipSchema
-    IDENTIFIER = 'Flip'
+    IDENTIFIER = "Flip"
 
     def __init__(self, axis=0, is_random=False, seed=None, **kwargs):
         super(FlipConfig, self).__init__(**kwargs)
@@ -414,8 +424,9 @@ class TransposeConfig(BaseLayerConfig):
     - Transpose:
     ```
     """
+
     SCHEMA = TransposeSchema
-    IDENTIFIER = 'Transpose'
+    IDENTIFIER = "Transpose"
 
 
 class Rotate90Schema(BaseLayerSchema):
@@ -455,8 +466,9 @@ class Rotate90Config(BaseLayerConfig):
         k: 2
     ```
     """
+
     SCHEMA = Rotate90Schema
-    IDENTIFIER = 'Rotate90'
+    IDENTIFIER = "Rotate90"
 
     def __init__(self, k=1, is_random=False, seed=None, **kwargs):
         super(Rotate90Config, self).__init__(**kwargs)
@@ -466,8 +478,8 @@ class Rotate90Config(BaseLayerConfig):
 
 
 class ConvertColorSpaceSchema(BaseLayerSchema):
-    from_space = fields.Str(validate=validate.OneOf(['rgb', 'grayscale', 'hsv']))
-    to_space = fields.Str(validate=validate.OneOf(['rgb', 'grayscale', 'hsv']))
+    from_space = fields.Str(validate=validate.OneOf(["rgb", "grayscale", "hsv"]))
+    to_space = fields.Str(validate=validate.OneOf(["rgb", "grayscale", "hsv"]))
     name = fields.Str(allow_none=True)
 
     @staticmethod
@@ -511,8 +523,9 @@ class ConvertColorSpaceConfig(BaseLayerConfig):
         to_space: grayscale
     ```
     """
+
     SCHEMA = ConvertColorSpaceSchema
-    IDENTIFIER = 'ConvertColorSpace'
+    IDENTIFIER = "ConvertColorSpace"
 
     def __init__(self, from_space, to_space, **kwargs):
         super(ConvertColorSpaceConfig, self).__init__(**kwargs)
@@ -565,8 +578,9 @@ class ConvertImagesDtypeConfig(BaseLayerConfig):
         dtype: float32
     ```
     """
+
     SCHEMA = ConvertImagesDtypeSchema
-    IDENTIFIER = 'ConvertImagesDtype'
+    IDENTIFIER = "ConvertImagesDtype"
 
     def __init__(self, dtype, saturate=False, **kwargs):
         super(ConvertImagesDtypeConfig, self).__init__(**kwargs)
@@ -620,8 +634,9 @@ class AdjustBrightnessConfig(BaseLayerConfig):
         is_random: true
     ```
     """
+
     SCHEMA = AdjustBrightnessSchema
-    IDENTIFIER = 'AdjustBrightness'
+    IDENTIFIER = "AdjustBrightness"
 
     def __init__(self, delta, is_random=False, seed=None, **kwargs):
         super(AdjustBrightnessConfig, self).__init__(**kwargs)
@@ -687,15 +702,18 @@ class AdjustContrastConfig(BaseLayerConfig):
         is_random: true
     ```
     """
-    SCHEMA = AdjustContrastSchema
-    IDENTIFIER = 'AdjustContrast'
 
-    def __init__(self,
-                 contrast_factor,
-                 contrast_factor_max=None,
-                 is_random=False,
-                 seed=None,
-                 **kwargs):
+    SCHEMA = AdjustContrastSchema
+    IDENTIFIER = "AdjustContrast"
+
+    def __init__(
+        self,
+        contrast_factor,
+        contrast_factor_max=None,
+        is_random=False,
+        seed=None,
+        **kwargs
+    ):
         super(AdjustContrastConfig, self).__init__(**kwargs)
         self.contrast_factor = contrast_factor
         self.contrast_factor_max = contrast_factor_max
@@ -704,7 +722,7 @@ class AdjustContrastConfig(BaseLayerConfig):
 
 
 class AdjustHueSchema(BaseLayerSchema):
-    delta = fields.Float(validate=validate.Range(min=-1., max=1.))
+    delta = fields.Float(validate=validate.Range(min=-1.0, max=1.0))
     is_random = fields.Bool(allow_none=True)
     seed = fields.Int(allow_none=True)
     name = fields.Str(allow_none=True)
@@ -749,8 +767,9 @@ class AdjustHueConfig(BaseLayerConfig):
         is_random: true
     ```
     """
+
     SCHEMA = AdjustHueSchema
-    IDENTIFIER = 'AdjustHue'
+    IDENTIFIER = "AdjustHue"
 
     def __init__(self, delta, is_random=False, seed=None, **kwargs):
         super(AdjustHueConfig, self).__init__(**kwargs)
@@ -815,11 +834,18 @@ class AdjustSaturationConfig(BaseLayerConfig):
         saturation_factor_max: 1.
     ```
     """
-    SCHEMA = AdjustSaturationSchema
-    IDENTIFIER = 'AdjustSaturation'
 
-    def __init__(self, saturation_factor, saturation_factor_max=None, is_random=False,
-                 seed=None, **kwargs):
+    SCHEMA = AdjustSaturationSchema
+    IDENTIFIER = "AdjustSaturation"
+
+    def __init__(
+        self,
+        saturation_factor,
+        saturation_factor_max=None,
+        is_random=False,
+        seed=None,
+        **kwargs
+    ):
         super(AdjustSaturationConfig, self).__init__(**kwargs)
         self.saturation_factor = saturation_factor
         self.saturation_factor_max = saturation_factor_max
@@ -828,7 +854,7 @@ class AdjustSaturationConfig(BaseLayerConfig):
 
 
 class AdjustGammaSchema(BaseLayerSchema):
-    gamma = fields.Float(validate=lambda n: n > 0.)
+    gamma = fields.Float(validate=lambda n: n > 0.0)
     gain = fields.Float(allow_none=True)
     name = fields.Str(allow_none=True)
 
@@ -867,8 +893,9 @@ class AdjustGammaConfig(BaseLayerConfig):
         gamma: 1
     ```
     """
+
     SCHEMA = AdjustGammaSchema
-    IDENTIFIER = 'AdjustGamma'
+    IDENTIFIER = "AdjustGamma"
 
     def __init__(self, gamma=1, gain=1, **kwargs):
         super(AdjustGammaConfig, self).__init__(**kwargs)
@@ -907,8 +934,9 @@ class StandardizationConfig(BaseLayerConfig):
     - Standardization:
     ```
     """
+
     SCHEMA = StandardizationSchema
-    IDENTIFIER = 'Standardization'
+    IDENTIFIER = "Standardization"
 
 
 class DrawBoundingBoxesSchema(BaseLayerSchema):
@@ -953,8 +981,9 @@ class DrawBoundingBoxesConfig(BaseLayerConfig):
         boxes: [0.1, 0.2, 0.5, 0.9]
     ```
     """
+
     SCHEMA = DrawBoundingBoxesSchema
-    IDENTIFIER = 'DrawBoundingBoxes'
+    IDENTIFIER = "DrawBoundingBoxes"
 
     def __init__(self, boxes, **kwargs):
         super(DrawBoundingBoxesConfig, self).__init__(**kwargs)
@@ -1006,5 +1035,6 @@ class TotalVariationConfig(BaseLayerConfig):
     - TotalVariation:
     ```
     """
+
     SCHEMA = TotalVariationSchema
-    IDENTIFIER = 'TotalVariation'
+    IDENTIFIER = "TotalVariation"

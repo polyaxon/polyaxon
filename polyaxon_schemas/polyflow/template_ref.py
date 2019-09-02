@@ -29,11 +29,13 @@ class TemplateRefSchema(BaseSchema):
 
     @validates_schema
     def validate_template(self, values):
-        validate_template(name=values.get('name'),
-                          url=values.get('url'),
-                          path=values.get('path'),
-                          action=values.get('action'),
-                          event=values.get('event'))
+        validate_template(
+            name=values.get("name"),
+            url=values.get("url"),
+            path=values.get("path"),
+            action=values.get("action"),
+            event=values.get("event"),
+        )
 
 
 class TemplateRefConfig(BaseConfig):

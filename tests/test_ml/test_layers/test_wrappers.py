@@ -9,7 +9,7 @@ from polyaxon_schemas.ml.layers.embeddings import EmbeddingConfig
 from polyaxon_schemas.ml.layers.wrappers import (
     BidirectionalConfig,
     TimeDistributedConfig,
-    WrapperConfig
+    WrapperConfig,
 )
 
 
@@ -17,7 +17,7 @@ class TestWrapperConfigs(TestCase):
     @staticmethod
     def assert_wrapper_config(wrapper_class):
         config_dict = {
-            'layer': EmbeddingConfig(input_dim=30, output_dim=30).to_schema(),
+            "layer": EmbeddingConfig(input_dim=30, output_dim=30).to_schema()
         }
         config = wrapper_class.from_dict(config_dict)
         assert_equal_layers(config, config_dict)

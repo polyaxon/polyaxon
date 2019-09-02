@@ -16,7 +16,7 @@ class GlobalStepWaiterHookSchema(BaseSchema):
 
 
 class GlobalStepWaiterHookConfig(BaseConfig):
-    IDENTIFIER = 'GlobalStepWaiterHook'
+    IDENTIFIER = "GlobalStepWaiterHook"
     SCHEMA = GlobalStepWaiterHookSchema
 
     def __init__(self, wait_until_step):
@@ -32,7 +32,7 @@ class FinalOpsHookSchema(BaseSchema):
 
 
 class FinalOpsHookConfig(BaseConfig):
-    IDENTIFIER = 'FinalOpsHook'
+    IDENTIFIER = "FinalOpsHook"
     SCHEMA = FinalOpsHookSchema
 
     def __init__(self, final_ops):
@@ -50,7 +50,7 @@ class StepLoggingTensorHookSchema(BaseSchema):
 
 
 class StepLoggingTensorHookConfig(BaseConfig):
-    IDENTIFIER = 'StepLoggingTensorHook'
+    IDENTIFIER = "StepLoggingTensorHook"
     SCHEMA = StepLoggingTensorHookSchema
 
     def __init__(self, tensors, every_n_iter=None, every_n_secs=None):
@@ -69,7 +69,7 @@ class EpisodeLoggingTensorHookSchema(BaseSchema):
 
 
 class EpisodeLoggingTensorHookConfig(BaseConfig):
-    IDENTIFIER = 'EpisodeLoggingTensorHook'
+    IDENTIFIER = "EpisodeLoggingTensorHook"
     SCHEMA = EpisodeLoggingTensorHookSchema
 
     def __init__(self, tensors, every_n_episodes):
@@ -78,7 +78,7 @@ class EpisodeLoggingTensorHookConfig(BaseConfig):
 
 
 class HookSchema(BaseMultiSchema):
-    __multi_schema_name__ = 'loss'
+    __multi_schema_name__ = "loss"
     __configs__ = {
         GlobalStepWaiterHookConfig.IDENTIFIER: GlobalStepWaiterHookConfig,
         FinalOpsHookConfig.IDENTIFIER: FinalOpsHookConfig,
