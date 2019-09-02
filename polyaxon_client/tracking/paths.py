@@ -4,23 +4,29 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
+from hestia.env_var_keys import (
+    POLYAXON_KEYS_ARTIFACTS_PATHS,
+    POLYAXON_KEYS_LOG_LEVEL,
+    POLYAXON_KEYS_OUTPUTS_PATH,
+)
+
 from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 
 
 @check_no_op
-def get_data_paths():
+def get_artifacts_paths():
     """
-    The data paths dictionary that you mounted for the job/experiment.
+    The data/artifacts paths dictionary that you mounted for the job/experiment.
     {'data1': '/data/1/', 'data-foo': '/data/foo'}
     """
     ensure_is_managed()
-    data_path = os.getenv("POLYAXON_RUN_DATA_PATHS", None)
+    paths = os.getenv(POLYAXON_KEYS_ARTIFACTS_PATHS, None)
     try:
-        return json.loads(data_path) if data_path else None
+        return json.loads(paths) if paths else None
     except (ValueError, TypeError):
         print(
-            "Could get data paths, "
+            "Could get data/artifacts paths, "
             "please make sure this is running inside a polyaxon job."
         )
         return None
@@ -44,38 +50,11 @@ def get_outputs_path():
         `user/project/jobs/files`
     """
     ensure_is_managed()
-    return os.getenv("POLYAXON_RUN_OUTPUTS_PATH", None)
-
-
-@check_no_op
-def get_outputs_refs_paths():
-    """
-    The references outputs paths requested by the user,
-    the order follows the order specified by the user:
-    {
-        'jobs': [
-            `user/project/job12/files`,
-        ],
-        'experiments': [
-            `user/project/group/experiment1/files`,
-            `user/project/experiment100/files`
-        ]
-    }
-    """
-    ensure_is_managed()
-    outputs_refs = os.getenv("POLYAXON_REFS_OUTPUTS_PATHS", None)
-    try:
-        return json.loads(outputs_refs) if outputs_refs else None
-    except (ValueError, TypeError):
-        print(
-            "Could get outputs refs paths, "
-            "please make sure this is running inside a polyaxon job."
-        )
-        return None
+    return os.getenv(POLYAXON_KEYS_OUTPUTS_PATH, None)
 
 
 @check_no_op
 def get_log_level():
     """If set on the polyaxonfile it will return the log level."""
     ensure_is_managed()
-    return os.getenv("POLYAXON_LOG_LEVEL", None)
+    return os.getenv(POLYAXON_KEYS_LOG_LEVEL, None)

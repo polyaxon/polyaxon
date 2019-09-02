@@ -74,7 +74,7 @@ config = rhea.Rhea.read_configs(
     ]
 )
 
-IS_OFFLINE = config.get_boolean('POLYAXON_IS_OFFLINE', is_optional=True, default=False)
+IS_OFFLINE = config.get_boolean("POLYAXON_IS_OFFLINE", is_optional=True, default=False)
 IS_LOCAL = config.get_boolean(POLYAXON_KEYS_IS_LOCAL, is_optional=True, default=False)
 IN_CLUSTER = config.get_boolean(
     POLYAXON_KEYS_IN_CLUSTER, is_optional=True, default=False
@@ -146,7 +146,7 @@ HEALTH_CHECK_INTERVAL = config.get_int(
     "HEALTH_CHECK_INTERVAL", is_optional=True, default=60
 )
 QUEUE_CALL = config.get_int("POLYAXON_INTERVAL", is_optional=True, default=200)
-LOG_LEVEL = config.get_int(POLYAXON_KEYS_LOG_LEVEL, is_optional=True)
+LOG_LEVEL = config.get_string(POLYAXON_KEYS_LOG_LEVEL, is_optional=True)
 RECEPTION_UNKNOWN_BEHAVIOUR = config.get_string(
     "POLYAXON_RECEPTION_UNKNOWN_BEHAVIOUR", is_optional=True, default=EXCLUDE
 )

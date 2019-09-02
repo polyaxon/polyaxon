@@ -7,6 +7,7 @@ import os
 import sys
 import time
 
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO
 from polystores.stores.manager import StoreManager
 
 from polyaxon_client import PolyaxonClient, settings
@@ -16,7 +17,7 @@ from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.paths import get_outputs_path
-from polyaxon_client.tracking.utils.env import get_run_env
+from polyaxon_client.tracking.utils.env import get_run_env, is_notebook
 from polyaxon_client.tracking.utils.hashing import hash_value
 from polyaxon_client.tracking.utils.project import get_project_info
 from polyaxon_client.tracking.utils.tags import validate_tags
@@ -47,11 +48,15 @@ class BaseTracker(object):
         if not (self.client or settings.IS_OFFLINE):
             self.client = PolyaxonClient()
         if self.client and not settings.IS_MANAGED:
-            self.user = (self.client.auth.get_user().username if
-                         self.client.api_config.schema_response else
-                         self.client.auth.get_user().get('username'))
+            self.user = (
+                self.client.auth.get_user().username
+                if self.client.api_config.schema_response
+                else self.client.auth.get_user().get("username")
+            )
 
-        username, project_name = get_project_info(current_user=self.user, project=project)
+        username, project_name = get_project_info(
+            current_user=self.user, project=project
+        )
         self.track_logs = track_logs
         self.track_code = track_code
         self.track_env = track_env
@@ -68,14 +73,18 @@ class BaseTracker(object):
 
     def _get_entity_id(self, entity):
         if self.client:
-            return entity.id if self.client.api_config.schema_response else entity.get('id')
+            return (
+                entity.id
+                if self.client.api_config.schema_response
+                else entity.get("id")
+            )
         return int(time.time())
 
     @check_no_op
     def get_notebook_job_info(self):
         ensure_is_managed()
 
-        info = os.getenv("POLYAXON_NOTEBOOK_INFO", None)
+        info = os.getenv(POLYAXON_KEYS_JOB_INFO, None)
         try:
             return json.loads(info) if info else None
         except (ValueError, TypeError):
@@ -90,7 +99,7 @@ class BaseTracker(object):
         if settings.NO_OP:
             return None
 
-        return settings.IS_MANAGED and "POLYAXON_NOTEBOOK_INFO" in os.environ
+        return settings.IS_MANAGED and is_notebook()
 
     def _update(self, patch_dict):
         raise NotImplementedError

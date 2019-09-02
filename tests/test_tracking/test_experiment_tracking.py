@@ -5,6 +5,7 @@ import json
 import os
 import uuid
 
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
 from tests.utils import TestEnvVarsCase
 
 from polyaxon_client import settings
@@ -47,14 +48,14 @@ class TestExperimentTracking(TestEnvVarsCase):
             Experiment.get_params()
 
     def test_empty_params(self):
-        self.check_empty_value("POLYAXON_PARAMS", Experiment.get_params)
+        self.check_empty_value(POLYAXON_KEYS_PARAMS, Experiment.get_params)
 
     def test_non_dict_params(self):
-        self.check_non_dict_value("POLYAXON_PARAMS", Experiment.get_params)
+        self.check_non_dict_value(POLYAXON_KEYS_PARAMS, Experiment.get_params)
 
     def test_dict_params(self):
         params = {"foo": "bar"}
-        self.check_valid_dict_value("POLYAXON_PARAMS", Experiment.get_params, params)
+        self.check_valid_dict_value(POLYAXON_KEYS_PARAMS, Experiment.get_params, params)
 
     def test_experiment_info_checks_is_managed(self):
         settings.IS_MANAGED = False
@@ -62,13 +63,11 @@ class TestExperimentTracking(TestEnvVarsCase):
             Experiment.get_experiment_info()
 
     def test_empty_experiment_info(self):
-        self.check_empty_value(
-            "POLYAXON_EXPERIMENT_INFO", Experiment.get_experiment_info
-        )
+        self.check_empty_value(POLYAXON_KEYS_JOB_INFO, Experiment.get_experiment_info)
 
     def test_non_dict_experiment_info(self):
         self.check_non_dict_value(
-            "POLYAXON_EXPERIMENT_INFO", Experiment.get_experiment_info
+            POLYAXON_KEYS_JOB_INFO, Experiment.get_experiment_info
         )
 
     def test_dict_experiment_info(self):
@@ -81,7 +80,7 @@ class TestExperimentTracking(TestEnvVarsCase):
             "experiment_uuid": uuid.uuid4().hex,
         }
         self.check_valid_dict_value(
-            "POLYAXON_EXPERIMENT_INFO", Experiment.get_experiment_info, experiment_info
+            POLYAXON_KEYS_JOB_INFO, Experiment.get_experiment_info, experiment_info
         )
 
     def test_task_info_checks_is_managed(self):

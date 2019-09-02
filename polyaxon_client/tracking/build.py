@@ -39,14 +39,16 @@ class BuildJob(BaseJob):
         if backend:
             build_config["backend"] = backend
         if description:
-            build_config['description'] = description
-        build_config['is_managed'] = settings.IS_MANAGED
+            build_config["description"] = description
+        build_config["is_managed"] = settings.IS_MANAGED
 
         build = None
 
         if self.client:
             if content:
-                build_config['content'] = self.client.project.validate_content(content=content)
+                build_config["content"] = self.client.project.validate_content(
+                    content=content
+                )
             build_config["is_managed"] = settings.IS_MANAGED
 
             build = self.client.project.create_build(
@@ -55,7 +57,7 @@ class BuildJob(BaseJob):
                 build_config=build_config,
             )
             if not build:
-                raise PolyaxonClientException('Could not create build.')
+                raise PolyaxonClientException("Could not create build.")
 
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)

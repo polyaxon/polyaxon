@@ -4,6 +4,8 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO
+
 from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.handlers.conf import setup_logging
@@ -12,11 +14,10 @@ from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.paths import (
+    get_artifacts_paths,
     get_base_outputs_path,
-    get_data_paths,
     get_log_level,
     get_outputs_path,
-    get_outputs_refs_paths,
 )
 from polyaxon_client.tracking.utils.backend import OTHER_BACKEND
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
@@ -119,7 +120,7 @@ class BaseJob(BaseTracker):
 
         ensure_is_managed()
 
-        info = os.getenv("POLYAXON_JOB_INFO", None)
+        info = os.getenv(POLYAXON_KEYS_JOB_INFO, None)
         try:
             return json.loads(info) if info else None
         except (ValueError, TypeError):
@@ -220,14 +221,16 @@ class Job(BaseJob):
         job = None
         if self.client:
             if content:
-                job_config['content'] = self.client.project.validate_content(content=content)
+                job_config["content"] = self.client.project.validate_content(
+                    content=content
+                )
             job = self.client.project.create_job(
                 username=self.username,
                 project_name=self.project_name,
                 job_config=job_config,
             )
             if not job:
-                raise PolyaxonClientException('Could not create job.')
+                raise PolyaxonClientException("Could not create job.")
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.job_id = self._get_entity_id(job)
@@ -269,15 +272,12 @@ class Job(BaseJob):
     def get_log_level(self):
         return get_log_level()
 
-    @staticmethod
-    def get_data_paths():
-        if settings.NO_OP:
-            return None
-        return get_data_paths()
+    @classmethod
+    def get_data_paths(cls):
+        return cls.get_artifacts_paths()
 
     @staticmethod
-    def get_outputs_refs_paths():
+    def get_artifacts_paths():
         if settings.NO_OP:
             return None
-
-        return get_outputs_refs_paths()
+        return get_artifacts_paths()

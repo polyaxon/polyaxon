@@ -7,7 +7,6 @@ from polyaxon_client import settings
 from polyaxon_client.exceptions import PolyaxonClientException
 from polyaxon_client.tracking import Experiment
 
-
 try:
     from keras.callbacks import Callback
     from keras.callbacks import ModelCheckpoint

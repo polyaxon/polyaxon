@@ -6,6 +6,8 @@ import os
 
 from datetime import datetime
 
+from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
+
 from polyaxon_client import settings
 from polyaxon_client.exceptions import AuthenticationError, PolyaxonClientException
 from polyaxon_client.handlers.conf import setup_logging
@@ -15,11 +17,10 @@ from polyaxon_client.tracking.is_managed import ensure_is_managed
 from polyaxon_client.tracking.no_op import check_no_op
 from polyaxon_client.tracking.offline import check_offline
 from polyaxon_client.tracking.paths import (
+    get_artifacts_paths,
     get_base_outputs_path,
-    get_data_paths,
     get_log_level,
     get_outputs_path,
-    get_outputs_refs_paths,
 )
 from polyaxon_client.tracking.utils.backend import OTHER_BACKEND
 from polyaxon_client.tracking.utils.code_reference import get_code_reference
@@ -133,7 +134,9 @@ class Experiment(BaseTracker):
 
         if self.client:
             if content:
-                experiment_config['content'] = self.client.project.validate_content(content=content)
+                experiment_config["content"] = self.client.project.validate_content(
+                    content=content
+                )
 
             experiment = self.client.project.create_experiment(
                 username=self.username,
@@ -142,7 +145,7 @@ class Experiment(BaseTracker):
                 group=self.group_id,
             )
             if not experiment:
-                raise PolyaxonClientException('Could not create experiment.')
+                raise PolyaxonClientException("Could not create experiment.")
         if not settings.IS_MANAGED and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.experiment_id = self._get_entity_id(experiment)
@@ -341,7 +344,7 @@ class Experiment(BaseTracker):
         """
         ensure_is_managed()
 
-        info = os.getenv("POLYAXON_EXPERIMENT_INFO", None)
+        info = os.getenv(POLYAXON_KEYS_JOB_INFO, None)
         try:
             return json.loads(info) if info else None
         except (ValueError, TypeError):
@@ -368,7 +371,7 @@ class Experiment(BaseTracker):
         """
         ensure_is_managed()
 
-        params = os.getenv("POLYAXON_PARAMS", None)
+        params = os.getenv(POLYAXON_KEYS_PARAMS, None)
         try:
             return json.loads(params) if params else None
         except (ValueError, TypeError):
@@ -388,15 +391,12 @@ class Experiment(BaseTracker):
         # TODO: Add handling for experiment running out of Polyaxon
         return get_log_level()
 
-    @staticmethod
-    def get_data_paths():
-        if settings.NO_OP:
-            return None
-        return get_data_paths()
+    @classmethod
+    def get_data_paths(cls):
+        return cls.get_artifacts_paths()
 
     @staticmethod
-    def get_outputs_refs_paths():
+    def get_artifacts_paths():
         if settings.NO_OP:
             return None
-
-        return get_outputs_refs_paths()
+        return get_artifacts_paths()
