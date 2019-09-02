@@ -95,9 +95,9 @@ class BaseConfig(object):
     def obj_to_dict(cls, obj, humanize_values=False, unknown=None):
         unknown = unknown or cls.UNKNOWN_BEHAVIOUR
         humanized_attrs = cls.humanize_attrs(obj) if humanize_values else {}
-        data_dict = cls.SCHEMA(unknown=unknown).dump(
+        data_dict = cls.SCHEMA(unknown=unknown).dump(  # pylint: disable=not-callable
             obj
-        )  # pylint: disable=not-callable
+        )
 
         for k, v in six.iteritems(humanized_attrs):
             data_dict[k] = v

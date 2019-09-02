@@ -180,8 +180,8 @@ class ExperimentSpecification(BaseRunSpecification):
         return self.environment.tolerations if self.environment else None
 
     @classmethod
-    def create_specification(
-        cls, build_config, run_config, to_dict=True  # pylint:disable=arguments-differ
+    def create_specification(  # pylint:disable=arguments-differ
+        cls, build_config, run_config, to_dict=True
     ):
         try:
             specification = BaseRunSpecification.create_specification(

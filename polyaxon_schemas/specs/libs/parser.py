@@ -83,8 +83,8 @@ class Parser(object):
         return parsed_data
 
     @classmethod
-    def parse_expression(
-        cls,  # pylint:disable=too-many-branches
+    def parse_expression(  # pylint:disable=too-many-branches
+        cls,
         spec,
         expression,
         params,
@@ -244,8 +244,8 @@ class Parser(object):
                 if not layer_value.get("inbound_nodes"):
                     if last_layer is not None:
                         layer_value["inbound_nodes"] = [
-                            last_layer["name"]
-                        ]  # noqa, unsubscriptable-object
+                            last_layer["name"]  # noqa, unsubscriptable-object
+                        ]
                     if first_layer and len(input_layers) == 1:
                         layer_value["inbound_nodes"] = input_layers
                     if first_layer and len(input_layers) > 1:
