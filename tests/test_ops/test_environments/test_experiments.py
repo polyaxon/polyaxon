@@ -3,10 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.environments.legacy import TFRunConfig
 from polyaxon_schemas.ops.experiment.environment import (
     HorovodClusterConfig,
     HorovodConfig,
@@ -82,12 +80,6 @@ class TestExperimentEnvironmentsConfigs(TestCase):
         config_dict = {"n_workers": 10, "n_ps": 5}
         config = TensorflowConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
-
-        # Add run config
-        config_dict["run_config"] = TFRunConfig().to_dict()
-        with self.assertRaises(ValidationError):
-            TensorflowConfig.from_dict(config_dict)
-        del config_dict["run_config"]
 
         # Add default worker resources
         config_dict["default_worker"] = {
