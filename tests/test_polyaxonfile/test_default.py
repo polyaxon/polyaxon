@@ -5,6 +5,8 @@ import tempfile
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.polyaxonfile import (
     DEFAULT_POLYAXON_FILE_EXTENSION,
     DEFAULT_POLYAXON_FILE_NAME,
@@ -12,6 +14,7 @@ from polyaxon_schemas.polyaxonfile import (
 )
 
 
+@pytest.mark.polyaxonfile_mark
 class TestDefaultFile(TestCase):
     def test_default_not_found(self):
         path = tempfile.mkdtemp()

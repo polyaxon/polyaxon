@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.version import (
     ChartVersionConfig,
     CliVersionConfig,
@@ -11,6 +13,7 @@ from polyaxon_schemas.api.version import (
 )
 
 
+@pytest.mark.api_mark
 class TestVersionConfigs(TestCase):
     def test_cli_version_config(self):
         config_dict = {"latest_version": "2.2.2", "min_version": "1.1.0"}

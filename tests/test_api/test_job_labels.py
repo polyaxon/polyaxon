@@ -5,9 +5,12 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.job import JobLabelConfig
 
 
+@pytest.mark.api_mark
 class TestSettingConfigs(TestCase):
     @staticmethod
     def create_pod_labels():

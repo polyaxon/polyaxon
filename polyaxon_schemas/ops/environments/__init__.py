@@ -1,0 +1,86 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+from marshmallow import fields, validate
+
+from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.ops.environments.container_resources import (
+    ContainerResourcesSchema,
+)
+
+
+class EnvironmentSchema(BaseSchema):
+    name = fields.Str(allow_none=True)
+    resources = fields.Nested(ContainerResourcesSchema, allow_none=True)
+    labels = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
+    annotations = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
+    node_selector = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
+    affinity = fields.Dict(allow_none=True)
+    tolerations = fields.List(fields.Dict(), allow_none=True)
+    service_account = fields.Str(allow_none=True)
+    image_pull_secrets = fields.List(fields.Str(), allow_none=True)
+    env_vars = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
+    security_context = fields.Dict(allow_none=True)
+    log_level = fields.Str(allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return EnvironmentConfig
+
+
+class EnvironmentConfig(BaseConfig):
+    """
+    Pod environment config.
+
+    Args:
+        index: `int | None`. The index of the pod.
+        resources: `PodResourcesConfig`.
+        node_selector: `dict`.
+        affinity: `dict`.
+        tolerations: `list(dict)`.
+    """
+
+    IDENTIFIER = "environment"
+    SCHEMA = EnvironmentSchema
+    REDUCED_ATTRIBUTES = [
+        "name",
+        "resources",
+        "labels",
+        "annotations",
+        "node_selector",
+        "affinity",
+        "tolerations",
+        "service_account",
+        "image_pull_secrets",
+        "env_vars",
+        "security_context",
+        "log_level",
+    ]
+
+    def __init__(
+        self,
+        name=None,
+        resources=None,
+        labels=None,
+        annotations=None,
+        node_selector=None,
+        affinity=None,
+        tolerations=None,
+        service_account=None,
+        image_pull_secrets=None,
+        env_vars=None,
+        security_context=None,
+        log_level=None,
+    ):
+        self.name = name
+        self.resources = resources
+        self.labels = labels
+        self.annotations = annotations
+        self.node_selector = node_selector
+        self.affinity = affinity
+        self.tolerations = tolerations
+        self.service_account = service_account
+        self.image_pull_secrets = image_pull_secrets
+        self.env_vars = env_vars
+        self.security_context = security_context
+        self.log_level = log_level

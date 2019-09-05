@@ -5,10 +5,13 @@ import os
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 
 
+@pytest.mark.polyaxonfile_mark
 class TestPolyaxonfileWithPipelines(TestCase):
     def test_pipeline_with_no_ops_raises(self):
         plx_file = PolyaxonFile(

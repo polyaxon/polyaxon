@@ -5,6 +5,8 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
@@ -14,6 +16,7 @@ from polyaxon_schemas.api.group import GroupConfig
 from polyaxon_schemas.api.project import ProjectConfig
 
 
+@pytest.mark.api_mark
 class TestProjectConfigs(TestCase):
     def test_validate_project_name_config(self):
         config_dict = {"name": "test sdf", "description": "", "is_public": True}

@@ -1,29 +1,32 @@
 ---
-version: 1
+version: 0.6
 
 kind: pipeline
 
 name: test-pipeline
 
-tags: [foo, bar]
-
-backend: native
-
+tags:
+  backend: native
 
 templates:
 
   - kind: job
     name: job-template
     description: job to process something
-    tags: [tag11, tag12]
+    tags: {tag11: tag12}
     inputs:
     - name: bucket
       type: s3_path
-    build: {'dockerfile': 'Dockerfile'}
+    contexts:
+      build:
+        image: my_image
+        build_steps:
+        - pip install package1
     environment:
-      resources: {cpu: {requests: 1}}
+      resources: {requests: {cpu: 1}}
       node_selector: {polyaxon: experiments}
       service_account: service
       image_pull_secrets: [secret1, secret2]
+    termination:
       max_retries: 2
-      timeout: 3600
+      ttl: 3600

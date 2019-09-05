@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from marshmallow import ValidationError
 
 from polyaxon_schemas.polyflow.conditions import (
@@ -12,6 +14,7 @@ from polyaxon_schemas.polyflow.conditions import (
 )
 
 
+@pytest.mark.polyflow_mark
 class TestCondsConfigs(TestCase):
     def test_status_cond(self):
         config_dict = {"foo": "bar", "op": "foo", "trigger": "done"}

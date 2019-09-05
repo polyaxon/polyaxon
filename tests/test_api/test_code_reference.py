@@ -3,9 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.code_reference import CodeReferenceConfig
 
 
+@pytest.mark.api_mark
 class TestCodeReferenceConfigs(TestCase):
     def test_code_reference_config(self):
         config_dict = {

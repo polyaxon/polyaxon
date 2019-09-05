@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from marshmallow import ValidationError
 
 from polyaxon_schemas.ops import params as ops_params
@@ -10,6 +12,7 @@ from polyaxon_schemas.ops.io import IOTypes
 from polyaxon_schemas.ops.operation import BaseOpConfig
 
 
+@pytest.mark.ops_mark
 class TestOperationsConfigs(TestCase):
     def test_passing_params_declarations_raises(self):
         config_dict = {"params": {"foo": "bar"}, "declarations": {"foo": "bar"}}
@@ -20,8 +23,8 @@ class TestOperationsConfigs(TestCase):
     def test_passing_declarations_sets_params(self):
         config_dict = {"declarations": {"foo": "bar"}}
 
-        op = BaseOpConfig.from_dict(config_dict)
-        assert op.params == config_dict["declarations"]
+        with self.assertRaises(ValidationError):
+            BaseOpConfig.from_dict(config_dict)
 
     def test_passing_params_passes(self):
         config_dict = {"params": {"foo": "bar"}}

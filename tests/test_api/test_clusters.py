@@ -6,6 +6,8 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.clusters import (
     ClusterNodeConfig,
     NodeGPUConfig,
@@ -13,6 +15,7 @@ from polyaxon_schemas.api.clusters import (
 )
 
 
+@pytest.mark.api_mark
 class TestClusterConfigs(TestCase):
     @staticmethod
     def create_gpu():

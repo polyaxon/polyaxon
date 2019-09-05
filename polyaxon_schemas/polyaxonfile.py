@@ -44,18 +44,28 @@ class PolyaxonFile(object):
                 raise PolyaxonfileError(
                     "Debug TTL `{}` must be a valid integer".format(debug_ttl)
                 )
-            filepaths.append({"run": {"cmd": "sleep {}".format(debug_ttl)}})
+            filepaths.append(
+                {
+                    "container": {
+                        "command": ["/bin/bash", "-c"],
+                        "args": "sleep {}".format(debug_ttl),
+                    }
+                }
+            )
         data = rhea.read(filepaths)
         kind = BaseSpecification.get_kind(data=data)
+        parallel = data.get(BaseSpecification.PARALLEL)
 
-        debug_cond = debug_ttl and not (
-            BaseSpecification.check_kind_experiment(kind)
-            or BaseSpecification.check_kind_job(kind)
-        )
+        debug_cond = debug_ttl and not BaseSpecification.check_kind_job(kind)
         if debug_cond:
             raise PolyaxonfileError(
-                "You can only trigger debug mode on a job or an experiment specification, "
+                "You can only trigger debug mode on a job specification, "
                 "received instead a `{}` specification".format(kind)
+            )
+        if debug_ttl and parallel:
+            raise PolyaxonfileError(
+                "You can only trigger debug mode on a job specification "
+                "without a parallel section"
             )
         try:
             self.specification = SPECIFICATION_BY_KIND[kind](data)

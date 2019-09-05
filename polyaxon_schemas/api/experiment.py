@@ -6,7 +6,6 @@ from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon_schemas.fields import UUID
-from polyaxon_schemas.ops.environments.resources import PodResourcesSchema
 
 
 class ExperimentJobSchema(BaseSchema):
@@ -23,7 +22,7 @@ class ExperimentJobSchema(BaseSchema):
     started_at = fields.LocalDateTime(allow_none=True)
     finished_at = fields.LocalDateTime(allow_none=True)
     total_run = fields.Str(allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    resources = fields.Dict(allow_none=True)
     definition = fields.Dict(allow_none=True)
 
     @staticmethod
@@ -106,7 +105,7 @@ class ExperimentSchema(BaseSchema):
     num_jobs = fields.Int(allow_none=True)
     params = fields.Dict(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
-    resources = fields.Nested(PodResourcesSchema, allow_none=True)
+    resources = fields.Dict(allow_none=True)
     run_env = fields.Dict(allow_none=True)
     is_managed = fields.Bool(allow_none=True)
     ttl = fields.Int(allow_none=True)

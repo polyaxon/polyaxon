@@ -1,0 +1,53 @@
+---
+version: 0.6
+
+kind: job
+
+tags:
+  framework: tensorflow
+
+environment:
+  log_level: INFO
+
+contexts:
+  secrets:
+  - name: my_ssh_secret
+    mount_path: ~/.ssh/id_rsa
+  config_maps:
+  - name: config_map1
+  - name: config_map2
+    items: ['item1', 'item2']
+  artifacts:
+  - name: data1
+    paths: ['path1', 'path2']
+    manage: true
+  - name: data2
+    manage: true
+  repos:
+  - name: repo1
+    commit: commit-hash
+  - name: repo2
+    branch: master
+    commit: commit-hash
+  outputs:
+    enable: true
+    manage: true
+  registry:
+    enable: true
+  build:
+    image: my_image
+    build_steps:
+    - pip install package1
+    env_vars:
+    - ['KEY1', 'en_US.UTF-8']
+    - ['KEY2', 2]
+  docker: {enable: true}
+  auth: {enable: true}
+  shm: {enable: true}
+
+
+container:
+  image: my_image
+  command: video_prediction_train
+  args: [--model=DNA, --num_masks=1]
+...

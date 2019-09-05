@@ -5,11 +5,14 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 
 from polyaxon_schemas.api.data import DataConfig, DataDetailsConfig, DatasetConfig
 
 
+@pytest.mark.api_mark
 class TestDataConfigs(TestCase):
     def test_data_details_config(self):
         config_dict = {"state": "state", "size": 1.4, "uri": "http://www.foo.com/data"}

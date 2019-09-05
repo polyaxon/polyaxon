@@ -1,16 +1,12 @@
 ---
-version: 1
+version: 0.6
 
 kind: pipeline
 
 name: test-pipeline
 
-logging:
-  level: INFO
-
-tags: [foo, bar]
-
-backend: native
+tags:
+  backend: native
 
 schedule:
   kind: interval
@@ -23,10 +19,10 @@ ops:
     template: {name: experiment-template}
 
 templates:
-  - kind: experiment
+  - kind: job
     name: experiment-template
     description: experiment to predict something
-    tags: [tag11, tag12]
+    tags: {tag11: tag12}
     inputs:
       - name: lr
         type: float
@@ -36,10 +32,10 @@ templates:
         type: str
         default: MSE
         is_optional: true
-    build: {'dockerfile': 'Dockerfile'}
     environment:
-      resources: {cpu: {requests: 1}}
+      resources: {requests: {cpu: 1}}
       node_selector: {polyaxon: experiments}
       service_account: service
       image_pull_secrets: [secret1, secret2]
+    termination:
       max_retries: 2

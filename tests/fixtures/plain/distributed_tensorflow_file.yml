@@ -1,14 +1,14 @@
 ---
-version: 1
+version: 0.6
 
 kind: experiment
 
-framework: tensorflow
-
-logging:
-  level: INFO
+tags:
+  framework: tensorflow
 
 environment:
+  log_level: INFO
+
   resources:
     cpu:
       requests: 1
@@ -33,11 +33,20 @@ environment:
             values:
             - another-node-label-value
 
-  replicas:
-    n_workers: 5
-    n_ps: 10
+replica_spec:
+  Worker:
+    replicas: 5
+    termination:
+      restart_policy: OnFailure
+    environment:
+      resources:
+        memory:
+          requests: 300
+          limits: 300
 
-    default_worker:
+  PS:
+    replicas: 10
+    environment:
       tolerations:
         - key: "key"
           operator: "Exists"
@@ -50,34 +59,7 @@ environment:
           requests: 256
           limits: 256
 
-    worker:
-      - index: 2
-        tolerations:
-          - operator: "Exists"
-      - index: 3
-        resources:
-          memory:
-            requests: 300
-            limits: 300
-
-    default_ps:
-      tolerations:
-        - operator: "Exists"
-      resources:
-        cpu:
-          requests: 2
-          limits: 4
-
-    ps:
-      - index: 9
-        resources:
-          memory:
-            requests: 512
-            limits: 1024
-
-build:
+containe:
   image: my_image
-
-run:
-  cmd: video_prediction_train --model=DNA --num_masks=1
+  command: [video_prediction_train, --model=DNA, --num_masks=1]
 ...

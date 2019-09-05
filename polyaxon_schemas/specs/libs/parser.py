@@ -39,13 +39,8 @@ class Parser(object):
         return section_data
 
     @classmethod
-    def parse(
-        cls, spec, config, params, matrix_params=None
-    ):  # pylint:disable=too-many-branches
+    def parse(cls, spec, config, params):  # pylint:disable=too-many-branches
         params = params or {}
-        matrix_params = copy.copy(matrix_params)
-        if matrix_params:
-            params = deep_update(matrix_params, params)
 
         parsed_data = {spec.VERSION: config.version, spec.KIND: config.kind}
 
@@ -53,7 +48,17 @@ class Parser(object):
             params = cls.parse_expression(spec, params, params)
             parsed_data[spec.PARAMS] = params
 
-        for section in spec.STD_PARSING_SECTIONS:
+        # Check parallel
+        parallel_section = cls._get_section(config, spec.PARALLEL)
+        if parallel_section:
+            parsed_data[spec.PARALLEL] = cls.parse_expression(
+                spec, parallel_section, params
+            )
+            parallel_params = copy.copy(parsed_data[spec.PARALLEL])
+            if parallel_params:
+                params = deep_update(parallel_params, params)
+
+        for section in spec.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)
             if config_section:
                 parsed_data[section] = cls.parse_expression(
@@ -64,27 +69,14 @@ class Parser(object):
             config_section = cls._get_section(config, section)
             if config_section:
                 parsed_data[section] = cls.parse_expression(
-                    spec, config_section, params, True, False
-                )
-
-        config_section = cls._get_section(config, spec.RUN)
-        if config_section:
-            parsed_data[spec.RUN] = cls.parse_expression(
-                spec, config_section, params, True, False
-            )
-
-        for section in spec.GRAPH_SECTIONS:
-            config_section = cls._get_section(config, section)
-            if config_section:
-                parsed_data[section] = cls.parse_expression(
-                    spec, config_section, params, True, True
+                    spec, config_section, params
                 )
 
         return parsed_data
 
     @classmethod
     def parse_expression(  # pylint:disable=too-many-branches
-        cls, spec, expression, params, check_operators=False, check_graph=False
+        cls, spec, expression, params, check_operators=False
     ):
         if isinstance(expression, (int, float, complex, type(None))):
             return expression
@@ -99,52 +91,33 @@ class Parser(object):
                 key = cls.parse_expression(spec, old_key, params)
                 if check_operators and cls.is_operator(spec, key):
                     return cls._parse_operator(spec, {key: value}, params)
-                if check_graph and key in ["graph", "encoder", "decoder"]:
-                    return {key: cls._parse_graph(spec, value, params)}
-                if check_graph and key == "feature_processors":  # noqa, no-else-return
-                    return {
-                        key: {
-                            cls.parse_expression(spec, f_key, params): cls._parse_graph(
-                                spec, f_vlaue, params
-                            )
-                            for f_key, f_vlaue in six.iteritems(value)
-                        }
-                    }
                 else:
                     return {
-                        key: cls.parse_expression(
-                            spec, value, params, check_operators, check_graph
-                        )
+                        key: cls.parse_expression(spec, value, params, check_operators)
                     }
 
             new_expression = {}
             for k, v in six.iteritems(expression):
                 new_expression.update(
-                    cls.parse_expression(
-                        spec, {k: v}, params, check_operators, check_graph
-                    )
+                    cls.parse_expression(spec, {k: v}, params, check_operators)
                 )
             return new_expression
 
         if isinstance(expression, list):
             return list(
-                cls.parse_expression(spec, v, params, check_operators, check_graph)
+                cls.parse_expression(spec, v, params, check_operators)
                 for v in expression
             )
         if isinstance(expression, tuple):
             return tuple(
-                cls.parse_expression(spec, v, params, check_operators, check_graph)
+                cls.parse_expression(spec, v, params, check_operators)
                 for v in expression
             )
         if isinstance(expression, six.string_types):
-            return cls._evaluate_expression(
-                spec, expression, params, check_operators, check_graph
-            )
+            return cls._evaluate_expression(spec, expression, params, check_operators)
 
     @classmethod
-    def _evaluate_expression(
-        cls, spec, expression, params, check_operators, check_graph
-    ):
+    def _evaluate_expression(cls, spec, expression, params, check_operators):
         result = cls.env.from_string(expression).render(**params)
         if result == expression:
             try:
@@ -152,7 +125,7 @@ class Parser(object):
             except (ValueError, SyntaxError):
                 pass
             return result
-        return cls.parse_expression(spec, result, params, check_operators, check_graph)
+        return cls.parse_expression(spec, result, params, check_operators)
 
     @classmethod
     def _parse_operator(cls, spec, expression, params):

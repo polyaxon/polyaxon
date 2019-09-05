@@ -1,7 +1,7 @@
 ---
-version: 1
+version: 0.6
 
-kind: group
+kind: job
 
 inputs:
   - name: input1
@@ -9,11 +9,15 @@ inputs:
     default: [MeanSquaredError, AbsoluteDifference]
     is_optional: true
 
-hptuning:
-  matrix:
-    loss:
-      values: "{{ input1 }}"
+parallel:
+  algorithm:
+    kind: random
+    matrix:
+      loss:
+        values: "{{ input1 }}"
 
-run:
-  cmd: train --loss="{{ loss }}"
+container:
+  image: my_image
+  command: ["/bin/sh", "-c"]
+  args: [train --loss="{{ loss }}"]
 ...

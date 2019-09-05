@@ -5,6 +5,8 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 
 from polyaxon_schemas.api.job import (
@@ -15,6 +17,7 @@ from polyaxon_schemas.api.job import (
 )
 
 
+@pytest.mark.api_mark
 class TestJobConfigs(TestCase):
     def test_job_config(self):
         config_dict = {

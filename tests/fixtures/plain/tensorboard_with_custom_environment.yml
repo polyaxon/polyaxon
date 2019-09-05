@@ -1,9 +1,16 @@
 ---
-version: 1
+version: 0.6
 
-kind: tensorboard
+kind: service
 
-tags: ['foo', 'bar']
+tags:
+  foo: bar
+
+inputs:
+- name: log_dir
+  type: path
+  default: /path/my/outputs
+  is_optional: true
 
 environment:
   node_selector:
@@ -22,14 +29,13 @@ environment:
       requiredDuringSchedulingIgnoredDuringExecution: {}
 
   tolerations:
-    - key: "key"
-      operator: "Exists"
+  - key: "key"
+    operator: "Exists"
 
-build:
+container:
   image: my_image
-  build_steps:
-    - pip install package1
-  env_vars:
-    - ['KEY1', 'en_US.UTF-8']
-    - ['KEY2', 2]
-...
+  command: ["/bin/sh", "-c"]
+  args: "tensorboard --logdir={{log_dir}} --port=6006"
+
+ports: [6006, 6006]
+

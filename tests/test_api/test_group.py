@@ -5,6 +5,8 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 from tests.utils import assert_equal_dict
 
@@ -12,6 +14,7 @@ from polyaxon_schemas.api.experiment import ExperimentConfig
 from polyaxon_schemas.api.group import GroupConfig, GroupStatusConfig
 
 
+@pytest.mark.api_mark
 class TestGroupConfigs(TestCase):
     def test_experiment_group_config(self):
         uuid_value = uuid.uuid4().hex

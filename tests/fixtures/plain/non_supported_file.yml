@@ -1,16 +1,9 @@
 ---
-version: 0.6
+version: 0.4
 
-kind: tensorboard
+kind: job
 
-build:
-  image: my_image
-  build_steps:
-    - pip install package1
-  env_vars:
-    - ['KEY1', 'en_US.UTF-8']
-    - ['KEY2', 2]
-
-run:
-  cmd: video_prediction_train --model=DNA --num_masks=1
+container:
+  image: test:latest
+  command: [docker, build, /plx-context/build/Dockerfile]
 ...

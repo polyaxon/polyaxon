@@ -3,9 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.log_handler import LogHandlerConfig
 
 
+@pytest.mark.api_mark
 class TestLogHandlerConfig(TestCase):
     def test_log_handler_config(self):
         config_dict = {"dsn": "https//foo:bar", "environment": "staging", "tags": {}}

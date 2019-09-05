@@ -1,8 +1,0 @@
----
-version: 1
-
-kind: job
-
-run:
-  cmd: test
-...

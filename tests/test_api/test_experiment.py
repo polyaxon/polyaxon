@@ -5,6 +5,8 @@ import uuid
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 
 from polyaxon_schemas.api.experiment import (
@@ -18,6 +20,7 @@ from polyaxon_schemas.api.experiment import (
 )
 
 
+@pytest.mark.api_mark
 class TestExperimentConfigs(TestCase):
     def test_experiment_config(self):
         config_dict = {

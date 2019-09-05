@@ -1,23 +1,29 @@
 ---
-version: 1
+version: 0.6
 
-kind: group
+kind: job
 
-hptuning:
+parallel:
   concurrency: 2
-  random_search:
-    n_experiments: 5
+
+  algorithm:
+    kind: random
+    n_experiments: 300
+    matrix:
+      lr:
+        kind: linspace
+        value: 0.01:0.1:5
+      loss:
+        kind: choice
+        value: [MeanSquaredError, AbsoluteDifference]
+
   early_stopping:
-    - metric: loss
-      value: 0.01
-      optimization: maximize
-  matrix:
-    lr:
-      linspace: 0.01:0.1:5
+  - kind: metric_early_stopping
+    metric: loss
+    value: 0.01
+    optimization: maximize
 
-    loss:
-      values: [MeanSquaredError, AbsoluteDifference]
-
-run:
-  cmd: train --lr={{ lr }} --loss={{ loss }}
+container:
+  image: foo:latest
+  command: train --lr={{ lr }} --loss={{ loss }}
 ...

@@ -1,7 +1,7 @@
 ---
-version: 1
+version: 0.6
 
-kind: group
+kind: job
 
 inputs:
   - name: input1
@@ -9,15 +9,24 @@ inputs:
     default: 23423
     is_optional: true
 
-hptuning:
+parallel:
   concurrency: 2
+  algorithm:
+    kind: grid
+    matrix:
+      param1:
+        kind: choice
+        value: [1, 2]
+      param2:
+        kind: choice
+        value: [3.3, 4.4]
 
-  matrix:
-    param1:
-      values: [1, 2]
-    param2:
-      values: [3.3, 4.4]
-
-run:
-  cmd: train --param1={{ param1 }} --param2={{ param2 }} --param3={{ input1 }}
+container:
+  image: my_image
+  command: ["/bin/sh", "-c"]
+  args:
+    - train
+    - --param1={{ param1 }}
+    - --param2={{ param2 }}
+    - --param3={{ input1 }}
 ...

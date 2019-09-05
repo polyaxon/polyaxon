@@ -1,16 +1,17 @@
 ---
-version: 1
+version: 0.6
 
 kind: pipeline
 
 name: test-pipeline
 
-logging:
-  level: INFO
-
-tags: [foo, bar]
+tags:
+  backend: native
 
 concurrency: 3
+
+environment:
+  log_level: INFO
 
 ops:
   - name: job1
@@ -39,10 +40,11 @@ ops:
     dependencies: [experiment1, experiment2, experiment3]
 
 templates:
-  - kind: experiment
+  - kind: job
     name: experiment-template
     description: experiment to predict something
-    tags: [tag11, tag12]
+    tags:
+      key: value
     inputs:
       - name: lr
         type: float
@@ -52,25 +54,26 @@ templates:
         type: str
         default: MSE
         is_optional: true
-    build: {'dockerfile': 'Dockerfile'}
     environment:
-      resources: {cpu: {requests: 1}}
+      resources: {requests: {cpu: 1}}
       node_selector: {polyaxon: experiments}
       service_account: service
       image_pull_secrets: [secret1, secret2]
+    termination:
       max_retries: 2
 
   - kind: job
     name: job-template
     description: job to process something
-    tags: [tag11, tag12]
+    tags:
+      key: value
     inputs:
     - name: bucket
       type: s3_path
-    build: {'dockerfile': 'Dockerfile'}
     environment:
-      resources: {cpu: {requests: 1}}
+      resources: {requests: {cpu: 1}}
       node_selector: {polyaxon: experiments}
       service_account: service
       image_pull_secrets: [secret1, secret2]
+    termination:
       max_retries: 2

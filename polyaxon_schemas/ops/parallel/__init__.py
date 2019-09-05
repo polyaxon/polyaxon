@@ -1,0 +1,54 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import, division, print_function
+
+from marshmallow import fields
+
+from polyaxon_schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
+from polyaxon_schemas.ops.parallel.bo import BOConfig, BOSchema
+from polyaxon_schemas.ops.parallel.early_stopping_policies import EarlyStoppingSchema
+from polyaxon_schemas.ops.parallel.grid_search import GridSearchConfig, GridSearchSchema
+from polyaxon_schemas.ops.parallel.hyperband import HyperbandConfig, HyperbandSchema
+from polyaxon_schemas.ops.parallel.metrics import SearchMetricSchema
+from polyaxon_schemas.ops.parallel.random_search import (
+    RandomSearchConfig,
+    RandomSearchSchema,
+)
+from polyaxon_schemas.ops.parallel.sequential import (
+    SequentialSearchConfig,
+    SequentialSearchSchema,
+)
+
+
+class ParallelAlgorithmSchema(BaseOneOfSchema):
+    TYPE_FIELD = "kind"
+    TYPE_FIELD_REMOVE = False
+    SCHEMAS = {
+        SequentialSearchConfig.IDENTIFIER: SequentialSearchSchema,
+        GridSearchConfig.IDENTIFIER: GridSearchSchema,
+        RandomSearchConfig.IDENTIFIER: RandomSearchSchema,
+        HyperbandConfig.IDENTIFIER: HyperbandSchema,
+        BOConfig.IDENTIFIER: BOSchema,
+    }
+
+
+class ParallelSchema(BaseSchema):
+    seed = fields.Int(allow_none=True)
+    concurrency = fields.Int(allow_none=True)
+    algorithm = fields.Nested(ParallelAlgorithmSchema, allow_none=True)
+    early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
+
+    @staticmethod
+    def schema_config():
+        return ParallelConfig
+
+
+class ParallelConfig(BaseConfig):
+    SCHEMA = ParallelSchema
+    IDENTIFIER = "parallel"
+    REDUCED_ATTRIBUTES = ["seed", "algorithm", "early_stopping"]
+
+    def __init__(self, seed=None, concurrency=1, algorithm=None, early_stopping=None):
+        self.seed = seed
+        self.concurrency = concurrency
+        self.algorithm = algorithm
+        self.early_stopping = early_stopping

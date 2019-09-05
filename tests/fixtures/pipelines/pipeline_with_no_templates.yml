@@ -1,13 +1,12 @@
 ---
-version: 1
+version: 0.6
 
 kind: pipeline
 
 name: test-pipeline
 
-tags: [foo, bar]
-
-backend: native
+tags:
+  backend: native
 
 ops:
   - name: job1

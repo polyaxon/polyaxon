@@ -3,11 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from marshmallow import ValidationError
 
 from polyaxon_schemas.polyflow.ops import OpConfig
 
 
+@pytest.mark.polyflow_mark
 class TestOpConfigs(TestCase):
     def test_op_raises_for_template_action_event(self):
         config_dict = {"template": {"action": "foo", "event": "bar"}}

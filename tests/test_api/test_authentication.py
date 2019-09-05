@@ -3,9 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.authentication import AccessTokenConfig, CredentialsConfig
 
 
+@pytest.mark.api_mark
 class TestAccessConfigs(TestCase):
     def test_access_token_config(self):
         config_dict = {"username": "username", "token": "sdfsdf098sdf80s9dSDF800"}

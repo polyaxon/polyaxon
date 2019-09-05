@@ -1,9 +1,10 @@
 ---
-version: 1
+version: 0.6
 
-kind: experiment
+kind: job
 
-tags: ['foo', 'bar']
+tags:
+  foo: bar
 
 inputs:
   - name: loss
@@ -12,14 +13,7 @@ inputs:
     type: bool
     is_flag: true
 
-
-build:
+container:
   image: my_image
-  build_steps:
-    - pip install package1
-  env_vars:
-    - ['KEY1', 'en_US.UTF-8']
-    - ['KEY2', 2]
-
-run:
-  cmd: video_prediction_train --loss={{loss}} {{ flag }}
+  command: ["/bin/sh", "-c"]
+  args: video_prediction_train --loss={{loss}} {{ flag }}

@@ -1,0 +1,15 @@
+---
+version: 0.6
+
+kind: job
+
+termination:
+  ttl: 400
+  timeout: 500
+  restart_policy: never
+  max_retries: 5
+
+container:
+  image: my_image
+  command: echo
+...

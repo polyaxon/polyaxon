@@ -4,9 +4,10 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
-from polyaxon_schemas.ops.build_job import BuildSchema
-from polyaxon_schemas.ops.experiment.environment import ExperimentEnvironmentSchema
-from polyaxon_schemas.ops.logging import LoggingSchema
+from polyaxon_schemas.ops.contexts import ContextsSchema
+from polyaxon_schemas.ops.environments import EnvironmentSchema
+from polyaxon_schemas.ops.job.replicas import OpReplicaSchema
+from polyaxon_schemas.ops.termination import TerminationSchema
 from polyaxon_schemas.polyflow.conditions import ConditionSchema
 from polyaxon_schemas.polyflow.template_ref import TemplateRefSchema
 from polyaxon_schemas.polyflow.trigger_policies import TriggerPolicy
@@ -16,13 +17,16 @@ class OpSchema(BaseSchema):
     version = fields.Int(allow_none=True)
     kind = fields.Str(allow_none=True)
     template = fields.Nested(TemplateRefSchema, allow_none=True)
-    logging = fields.Nested(LoggingSchema, allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     description = fields.Str(allow_none=True)
-    tags = fields.List(fields.Str(), allow_none=True)
+    tags = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
     params = fields.Raw(allow_none=True)
-    environment = fields.Nested(ExperimentEnvironmentSchema, allow_none=True)
-    build = fields.Nested(BuildSchema, allow_none=True)
+    environment = fields.Nested(EnvironmentSchema, allow_none=True)
+    termination = fields.Nested(TerminationSchema, allow_none=True)
+    contexts = fields.Nested(ContextsSchema, allow_none=True)
+    replica_spec = fields.Dict(
+        keys=fields.Str(), values=fields.Nested(OpReplicaSchema), allow_none=True
+    )
     concurrency = fields.Int(allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
@@ -41,13 +45,13 @@ class OpConfig(BaseConfig):
         "version",
         "kind",
         "template",
-        "logging",
         "name",
         "description",
         "tags",
         "params",
         "environment",
-        "build",
+        "termination",
+        "contexts",
         "concurrency",
         "dependencies",
         "trigger",
@@ -60,12 +64,13 @@ class OpConfig(BaseConfig):
         version=None,
         kind=None,
         template=None,
-        logging=None,
         name=None,
         description=None,
         tags=None,
         params=None,
         environment=None,
+        termination=None,
+        contexts=None,
         build=None,
         concurrency=None,
         dependencies=None,
@@ -76,11 +81,12 @@ class OpConfig(BaseConfig):
         self.version = version
         self.kind = kind
         self.template = template
-        self.logging = logging
         self.name = name
         self.description = description
         self.tags = tags
         self.environment = environment
+        self.termination = termination
+        self.contexts = contexts
         self.params = params
         self.build = build
         self.concurrency = concurrency

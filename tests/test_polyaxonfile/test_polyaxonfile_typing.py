@@ -5,16 +5,16 @@ import os
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.ops.build_job import BuildConfig
-from polyaxon_schemas.ops.environments.pods import EnvironmentConfig
-from polyaxon_schemas.ops.group.hptuning import HPTuningConfig, SearchAlgorithms
-from polyaxon_schemas.ops.group.matrix import MatrixConfig
-from polyaxon_schemas.ops.run import RunConfig
+from polyaxon_schemas.ops.container import ContainerConfig
+from polyaxon_schemas.ops.parallel import GridSearchConfig, ParallelConfig
+from polyaxon_schemas.ops.parallel.matrix import MatrixChoiceConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
-from polyaxon_schemas.utils import TaskType
 
 
+@pytest.mark.polyaxonfile_mark
 class TestPolyaxonfileWithTypes(TestCase):
     def test_using_untyped_params_raises(self):
         with self.assertRaises(PolyaxonfileError):
@@ -33,17 +33,14 @@ class TestPolyaxonfileWithTypes(TestCase):
         )
         spec = plxfile.specification
         spec.apply_context()
-        assert spec.version == 1
-        assert spec.logging is None
-        assert set(spec.tags) == {"foo", "bar"}
+        assert spec.version == 0.6
+        assert spec.tags == {"foo": "bar"}
         assert spec.params == {"loss": "bar", "flag": ""}
-        assert spec.build.image == "my_image"
-        assert spec.run.cmd == "video_prediction_train --loss=bar "
+        assert spec.container.image == "my_image"
+        assert spec.container.command == ["/bin/sh", "-c"]
+        assert spec.container.args == "video_prediction_train --loss=bar "
         assert spec.environment is None
-        assert spec.framework is None
-        assert spec.is_experiment
-        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.is_experiment is True
+        assert spec.is_job
 
         plxfile = PolyaxonFile(
             os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
@@ -51,17 +48,14 @@ class TestPolyaxonfileWithTypes(TestCase):
         )
         spec = plxfile.specification
         spec.apply_context()
-        assert spec.version == 1
-        assert spec.logging is None
-        assert set(spec.tags) == {"foo", "bar"}
+        assert spec.version == 0.6
+        assert spec.tags == {"foo": "bar"}
         assert spec.params == {"loss": "bar", "flag": "--flag"}
-        assert spec.build.image == "my_image"
-        assert spec.run.cmd == "video_prediction_train --loss=bar --flag"
+        assert spec.container.image == "my_image"
+        assert spec.container.command == ["/bin/sh", "-c"]
+        assert spec.container.args == "video_prediction_train --loss=bar --flag"
         assert spec.environment is None
-        assert spec.framework is None
-        assert spec.is_experiment
-        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert spec.is_experiment is True
+        assert spec.is_job
 
         # Adding extra value raises
         with self.assertRaises(PolyaxonfileError):
@@ -85,39 +79,36 @@ class TestPolyaxonfileWithTypes(TestCase):
         )
         spec = plxfile.specification
         spec.apply_context()
-        assert spec.version == 1
-        assert spec.is_group
-        assert isinstance(spec.hptuning.matrix["param1"], MatrixConfig)
-        assert isinstance(spec.hptuning.matrix["param2"], MatrixConfig)
-        assert spec.hptuning.matrix["param1"].to_dict() == {"values": [1, 2]}
-        assert spec.hptuning.matrix["param2"].to_dict() == {"values": [3.3, 4.4]}
-        assert spec.matrix_space == 4
-        assert isinstance(spec.hptuning, HPTuningConfig)
-        assert spec.hptuning.concurrency == 2
-        assert spec.search_algorithm == SearchAlgorithms.GRID
-        assert spec.hptuning.early_stopping is None
-        assert spec.early_stopping == []
-
-        assert spec.experiments_def == {
-            "search_algorithm": SearchAlgorithms.GRID,
-            "early_stopping": False,
-            "concurrency": 2,
+        assert spec.version == 0.6
+        assert spec.is_job
+        assert isinstance(spec.parallel.algorithm.matrix["param1"], MatrixChoiceConfig)
+        assert isinstance(spec.parallel.algorithm.matrix["param2"], MatrixChoiceConfig)
+        assert spec.parallel.algorithm.matrix["param1"].to_dict() == {
+            "kind": "choice",
+            "value": [1, 2],
         }
+        assert spec.parallel.algorithm.matrix["param2"].to_dict() == {
+            "kind": "choice",
+            "value": [3.3, 4.4],
+        }
+        assert isinstance(spec.parallel, ParallelConfig)
+        assert spec.parallel_concurrency == 2
+        assert spec.parallel_algorithm == GridSearchConfig.IDENTIFIER
+        assert spec.parallel.early_stopping is None
+        assert spec.parallel_early_stopping == []
 
-        build = spec.build
-        assert build is None
-
-        spec = spec.get_experiment_spec(matrix_declaration=spec.matrix_declaration_test)
-        spec.apply_context()
-        assert spec.environment is None
-        assert spec.framework is None
-        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        assert (
-            spec.run.cmd
-            == "train --param1={param1} --param2={param2} --param3=23423".format(
-                **spec.params
-            )
-        )
+        # TODO
+        # spec = spec.get_experiment_spec(matrix_declaration=get_matrix_declaration_test(spec))
+        # spec.apply_context()
+        # assert spec.environment is None
+        # assert spec.framework is None
+        # assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
+        # assert (
+        #     spec.run.cmd
+        #     == "train --param1={param1} --param2={param2} --param3=23423".format(
+        #         **spec.params
+        #     )
+        # )
 
     def test_run_simple_file_passes(self):
         plxfile = PolyaxonFile(
@@ -125,18 +116,19 @@ class TestPolyaxonfileWithTypes(TestCase):
         )
         spec = plxfile.specification
         spec.apply_context()
-        assert spec.version == 1
-        assert spec.logging is None
-        assert sorted(spec.tags) == sorted(["foo", "bar"])
-        assert spec.is_experiment
-        assert isinstance(spec.build, BuildConfig)
-        assert isinstance(spec.run, RunConfig)
+        assert spec.version == 0.6
+        assert spec.tags == {"foo": "bar"}
+        assert spec.is_job
         assert spec.environment is None
-        assert spec.framework is None
-        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        run = spec.run
-        assert isinstance(run, RunConfig)
-        assert run.cmd == "video_prediction_train --num_masks=2 --loss=MeanSquaredError"
+        container = spec.container
+        assert isinstance(container, ContainerConfig)
+        assert container.image == "my_image"
+        assert container.command == ["/bin/sh", "-c"]
+        assert container.args == [
+            "video_prediction_train",
+            "--num_masks=2",
+            "--loss=MeanSquaredError",
+        ]
 
     def test_run_with_refs(self):
         plxfile = PolyaxonFile(
@@ -148,65 +140,15 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert required_refs[0].name == "model_path"
         assert required_refs[0].value == "jobs.1.outputs.doo"
         spec.apply_context(context={"jobs__1__outputs__doo": "model_path"})
-        assert spec.version == 1
-        assert spec.logging is None
-        assert sorted(spec.tags) == sorted(["foo", "bar"])
-        assert spec.is_experiment
-        assert isinstance(spec.build, BuildConfig)
-        assert isinstance(spec.run, RunConfig)
-        assert spec.environment is None
-        assert spec.framework is None
-        assert spec.cluster_def == ({TaskType.MASTER: 1}, False)
-        run = spec.run
-        assert isinstance(run, RunConfig)
-        assert run.cmd == "video_prediction_train --num_masks=2 --model_path=model_path"
-
-    def test_jupyter_lab_job_with_node_selectors(self):
-        plxfile = PolyaxonFile(
-            os.path.abspath(
-                "tests/fixtures/typing/jupyterlab_with_custom_environment.yml"
-            )
-        )
-        spec = plxfile.specification
-        spec.apply_context()
-        assert spec.version == 1
-        assert spec.is_notebook
-        assert spec.is_notebook is True
-        assert spec.backend == "lab"
-        assert spec.logging is None
-        assert sorted(spec.tags) == sorted(["foo", "bar"])
-        assert isinstance(spec.build, BuildConfig)
-        assert isinstance(spec.environment, EnvironmentConfig)
-        artifact_refs = [r.to_light_dict()["name"] for r in spec.artifact_refs]
-        assert len(artifact_refs) == 3
-        assert set(artifact_refs) == {"data1", "data2", "outputs1"}
-        assert [r.to_light_dict() for r in spec.secret_refs] == [
-            {"name": "secret1"},
-            {"name": "secret2"},
+        assert spec.version == 0.6
+        assert spec.tags == {"foo": "bar"}
+        assert spec.is_job
+        container = spec.container
+        assert isinstance(container, ContainerConfig)
+        assert container.image == "my_image"
+        assert container.command == ["/bin/sh", "-c"]
+        assert container.args == [
+            "video_prediction_train",
+            "--num_masks=2",
+            "--model_path=model_path",
         ]
-        assert [r.to_light_dict() for r in spec.config_map_refs] == [
-            {"name": "config_map1"},
-            {"name": "config_map2"},
-        ]
-
-        node_selector = {"polyaxon.com": "node_for_notebook_jobs"}
-        assert spec.environment.node_selector == node_selector
-        assert spec.node_selector == node_selector
-
-        resources = {
-            "requests": {"cpu": 1, "memory": "200Mi"},
-            "limits": {"cpu": 2, "memory": "200Mi"},
-        }
-        assert spec.environment.resources == resources
-        assert spec.resources == resources
-
-        affinity = {
-            "nodeAffinity": {"requiredDuringSchedulingIgnoredDuringExecution": {}}
-        }
-        assert spec.environment.affinity == affinity
-        assert spec.affinity == affinity
-
-        tolerations = [{"key": "key", "operator": "Exists"}]
-
-        assert spec.environment.tolerations == tolerations
-        assert spec.tolerations == tolerations

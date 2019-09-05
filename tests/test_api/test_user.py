@@ -3,9 +3,12 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from polyaxon_schemas.api.user import UserConfig
 
 
+@pytest.mark.api_mark
 class TestUserConfigs(TestCase):
     def test_user_config(self):
         config_dict = {

@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
@@ -13,6 +15,7 @@ from polyaxon_schemas.polyflow.schedule import (
 )
 
 
+@pytest.mark.polyflow_mark
 class TestScheduleConfigs(TestCase):
     def test_interval_schedule(self):
         config_dict = {"frequency": 2, "start_at": "foo"}

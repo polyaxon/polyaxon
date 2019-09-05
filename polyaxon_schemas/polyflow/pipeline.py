@@ -10,7 +10,9 @@ from marshmallow import fields, validate
 from polyaxon_schemas.base import NAME_REGEX
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.logging import LoggingSchema
+from polyaxon_schemas.ops.contexts import ContextsSchema
+from polyaxon_schemas.ops.environments import EnvironmentSchema
+from polyaxon_schemas.ops.termination import TerminationSchema
 from polyaxon_schemas.polyflow.executable import ExecutableConfig, ExecutableSchema
 from polyaxon_schemas.polyflow.ops import OpSchema
 from polyaxon_schemas.polyflow.schedule import ScheduleSchema
@@ -32,11 +34,12 @@ class PipelineSchema(ExecutableSchema):
     description = fields.Str(
         validate=validate.Regexp(regex=NAME_REGEX), allow_none=True
     )
-    logging = fields.Nested(LoggingSchema, allow_none=True)
-    tags = fields.List(fields.Str(), allow_none=True)
-    backend = fields.Str(allow_none=True)
+    tags = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
     ops = fields.Nested(OpSchema, many=True)
     templates = fields.Nested(TemplateSchema, many=True)
+    environment = fields.Nested(EnvironmentSchema, allow_none=True)
+    termination = fields.Nested(TerminationSchema, allow_none=True)
+    contexts = fields.Nested(ContextsSchema, allow_none=True)
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
     concurrency = fields.Int(allow_none=True)
 
@@ -53,13 +56,14 @@ class PipelineConfig(ExecutableConfig):
         "version",
         "name",
         "description",
-        "logging",
         "tags",
-        "backend",
         "ops",
+        "templates",
+        "environment",
+        "termination",
+        "contexts",
         "concurrency",
         "schedule",
-        "templates",
     ]
 
     def __init__(
@@ -68,13 +72,14 @@ class PipelineConfig(ExecutableConfig):
         version=None,
         name=None,
         description=None,
-        logging=None,
         tags=None,
-        backend=None,
         ops=None,
+        templates=None,
+        environment=None,
+        termination=None,
+        contexts=None,
         concurrency=None,
         schedule=None,
-        templates=None,
         execute_at=None,
         timeout=None,
     ):
@@ -83,10 +88,11 @@ class PipelineConfig(ExecutableConfig):
         self.version = version
         self.name = name
         self.description = description
-        self.logging = logging
         self.tags = tags
-        self.backend = backend
         self.ops = ops
+        self.environment = environment
+        self.termination = termination
+        self.contexts = contexts
         self.concurrency = concurrency
         self.schedule = schedule
         self.templates = templates

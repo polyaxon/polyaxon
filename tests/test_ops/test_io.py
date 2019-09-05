@@ -3,13 +3,15 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.io import IOTypes
-from polyaxon_schemas.ops.io.io import IOConfig
+from polyaxon_schemas.ops.io import IOConfig, IOTypes
 
 
+@pytest.mark.ops_mark
 class TestIOConfigs(TestCase):
     def test_wrong_io_config(self):
         # No name

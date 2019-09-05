@@ -3,6 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+import pytest
+
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
@@ -13,6 +15,7 @@ from polyaxon_schemas.polyflow.pipeline import PipelineConfig
 from polyaxon_schemas.polyflow.template_ref import TemplateRefConfig
 
 
+@pytest.mark.polyflow_mark
 class TestPipelineConfigs(TestCase):
     def test_pipelines_base_attrs(self):
         config_dict = {"concurrency": "foo"}
@@ -55,7 +58,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"action": "action1"},
                     "name": "A",
                     "description": "description A",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "params": {
                         "param1": "text",
                         "param2": 12,
@@ -66,14 +69,14 @@ class TestPipelineConfigs(TestCase):
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2},
                 },
                 {
                     "template": {"url": "https://url-to-temaplte.com"},
                     "name": "B",
                     "description": "description B",
-                    "tags": ["tag21", "tag22"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "params": {
                         "param1": "{{ ops.A.outputs.x }}",
                         "param2": 12,
@@ -84,37 +87,36 @@ class TestPipelineConfigs(TestCase):
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2},
                 },
                 {
                     "template": {"name": "my-template"},
                     "name": "C",
                     "description": "description C",
-                    "tags": ["tag31", "tag32"],
+                    "tags": {"key1": "tag31", "key2": "tag32"},
                     "params": {"param2": 12.34, "param3": False},
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 5,
-                        "restart_policy": "never",
                     },
+                    "termination": {"max_retries": 5, "restart_policy": "never"},
                 },
                 {
                     "template": {"path": "./relative/path/to/my-template.yaml"},
                     "name": "D",
                     "description": "description D",
-                    "tags": ["tag31", "tag32"],
+                    "tags": {"key1": "tag31", "key2": "tag32"},
                     "dependencies": ["B", "C"],
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 3,
                     },
+                    "termination": {"max_retries": 3, "restart_policy": "never"},
                 },
             ]
         }
@@ -129,10 +131,10 @@ class TestPipelineConfigs(TestCase):
         config_dict = {
             "templates": [
                 {
-                    "kind": "experiment",
+                    "kind": "job",
                     "name": "experiment-template",
                     "description": "description experiment",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "inputs": [
                         {
                             "name": "input1",
@@ -154,20 +156,19 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.S3_PATH,
                         }
                     ],
-                    "build": {"dockerfile": "Dockerfile"},
                     "environment": {
                         "resources": {"requests": {"cpu": "500m"}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2, "restart_policy": "never"},
                 },
                 {
-                    "kind": "group",
+                    "kind": "job",
                     "name": "group-template",
                     "description": "description group",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "inputs": [
                         {
                             "name": "input1",
@@ -189,42 +190,44 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.S3_PATH,
                         }
                     ],
-                    "build": {"ref": "12"},
                     "environment": {
                         "resources": {"requests": {"cpu": "200m"}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2, "restart_policy": "never"},
                 },
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "ref": "12",
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                 },
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "contexts": {
+                        "build": {
+                            "image": "foo/bar",
+                            "build_steps": ["pip3 install foo"],
+                        }
+                    },
                     "environment": {
                         "resources": {"requests": {"cpu": "500m"}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2, "restart_policy": "never"},
                 },
                 {
                     "kind": "job",
                     "name": "job-template",
                     "description": "description job",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"tag11": "tag12"},
                     "inputs": [
                         {
                             "name": "input1",
@@ -234,7 +237,6 @@ class TestPipelineConfigs(TestCase):
                             "default": "s3://foo",
                         }
                     ],
-                    "build": {"ref": "12"},
                     "outputs": [
                         {
                             "name": "output1",
@@ -247,8 +249,8 @@ class TestPipelineConfigs(TestCase):
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2, "restart_policy": "never"},
                 },
             ]
         }
@@ -1022,19 +1024,15 @@ class TestPipelineConfigs(TestCase):
             ],
             "templates": [
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "ref": "12",
+                    "tags": {"tag11": "tag12"},
                 },
                 {
-                    "kind": "build",
-                    "name": "build-template",
+                    "kind": "job",
+                    "name": "job-template",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
                 },
             ],
         }
@@ -1051,19 +1049,17 @@ class TestPipelineConfigs(TestCase):
             ],
             "templates": [
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template1",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "ref": "12",
+                    "tags": {"tag11": "tag12"},
                 },
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template2",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"backend": "kaniko"},
+                    "contexts": {"registry": {"enable": True}},
                 },
             ],
         }
@@ -1080,12 +1076,11 @@ class TestPipelineConfigs(TestCase):
             ],
             "templates": [
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template2",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"backend": "kaniko"},
+                    "contexts": {"registry": {"enable": True}},
                 }
             ],
         }
@@ -1107,10 +1102,10 @@ class TestPipelineConfigs(TestCase):
             "templates": [
                 {"kind": "job", "name": "job-template"},
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"backend": "kaniko"},
+                    "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                 },
             ],
         }
@@ -1136,10 +1131,9 @@ class TestPipelineConfigs(TestCase):
             "templates": [
                 {"kind": "job", "name": "job-template"},
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"backend": "kaniko"},
                 },
             ],
         }
@@ -1449,10 +1443,9 @@ class TestPipelineConfigs(TestCase):
             "templates": [
                 {"kind": "job", "name": "job-template"},
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"backend": "kaniko"},
                 },
             ],
         }
@@ -1468,20 +1461,20 @@ class TestPipelineConfigs(TestCase):
                     "template": {"name": "build-template"},
                     "name": "A",
                     "description": "description A",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 3,
                     },
+                    "termination": {"max_retries": 2},
                 },
                 {
                     "template": {"name": "experiment-template"},
                     "name": "B",
                     "description": "description B",
-                    "tags": ["tag21", "tag22"],
+                    "tags": {"key1": "tag21", "key2": "tag22"},
                     "dependencies": ["A"],
                     "params": {
                         "input1": 11.1,
@@ -1493,14 +1486,14 @@ class TestPipelineConfigs(TestCase):
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 3,
                     },
+                    "termination": {"max_retries": 3},
                 },
                 {
                     "template": {"name": "group-template"},
                     "name": "C",
                     "description": "description C",
-                    "tags": ["tag31", "tag32"],
+                    "tags": {"key1": "tag31", "key2": "tag32"},
                     "params": {
                         "input1": "{{ ops.B.outputs.output1 }}",
                         "output1": "S3://foo.com",
@@ -1510,16 +1503,16 @@ class TestPipelineConfigs(TestCase):
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 5,
                     },
+                    "termination": {"max_retries": 5},
                 },
             ],
             "templates": [
                 {
-                    "kind": "experiment",
+                    "kind": "job",
                     "name": "experiment-template",
                     "description": "description experiment",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "inputs": [
                         {
                             "name": "input1",
@@ -1541,20 +1534,19 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.S3_PATH,
                         }
                     ],
-                    "build": {"dockerfile": "Dockerfile"},
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2},
                 },
                 {
-                    "kind": "group",
+                    "kind": "job",
                     "name": "group-template",
                     "description": "description group",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "inputs": [
                         {
                             "name": "input1",
@@ -1576,42 +1568,38 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.S3_PATH,
                         }
                     ],
-                    "build": {"ref": "12"},
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2},
                 },
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "ref": "12",
+                    "tags": {"tag11": "tag12"},
                 },
                 {
-                    "kind": "build",
+                    "kind": "job",
                     "name": "build-template2",
                     "description": "description build",
-                    "tags": ["tag11", "tag12"],
-                    "backend": "kaniko",
-                    "dockerfile": "Dockerfile",
+                    "tags": {"key1": "tag11", "key2": "tag12", "backend": "kaniko"},
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2},
                 },
                 {
                     "kind": "job",
                     "name": "job-template",
                     "description": "description job",
-                    "tags": ["tag11", "tag12"],
+                    "tags": {"key1": "tag11", "key2": "tag12"},
                     "inputs": [
                         {
                             "name": "input1",
@@ -1621,7 +1609,6 @@ class TestPipelineConfigs(TestCase):
                             "default": "s3://foo",
                         }
                     ],
-                    "build": {"ref": "12"},
                     "outputs": [
                         {
                             "name": "output1",
@@ -1634,8 +1621,8 @@ class TestPipelineConfigs(TestCase):
                         "node_selector": {"polyaxon": "core"},
                         "service_account": "service",
                         "image_pull_secrets": ["secret1", "secret2"],
-                        "max_retries": 2,
                     },
+                    "termination": {"max_retries": 2},
                 },
             ],
         }

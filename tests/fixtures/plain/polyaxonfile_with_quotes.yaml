@@ -1,10 +1,10 @@
-version: 1
+version: 0.6
 
-kind: experiment
+kind: job
 
-build:
+container:
   image: continuumio/miniconda3
-
-run:
-  cmd:
-    - python -c "print('Tweet tweet')"
+  command:
+    - python
+  args:
+    - -c "print('Tweet tweet')"

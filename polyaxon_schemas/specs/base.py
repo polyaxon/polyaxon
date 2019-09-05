@@ -6,94 +6,262 @@ import copy
 import json
 import six
 
-from collections import Mapping
-
 import rhea
 
 from hestia.list_utils import to_list
-from marshmallow import EXCLUDE, ValidationError
+from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.environments.pods import (
-    EnvironmentConfig,
-    K8SResourceRefConfig,
-    StoreRefConfig,
-)
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
 
 
+class EnvironmentSpecificationMixin(object):
+    @property
+    def environment(self):
+        return self._config_data.environment
+
+    @property
+    def environment_name(self):
+        return self.environment.name if self.environment else None
+
+    @property
+    def resources(self):
+        return self.environment.resources if self.environment else None
+
+    @property
+    def labels(self):
+        return self.environment.labels if self.environment else None
+
+    @property
+    def annotations(self):
+        return self.environment.annotations if self.environment else None
+
+    @property
+    def node_selector(self):
+        return self.environment.node_selector if self.environment else None
+
+    @property
+    def affinity(self):
+        return self.environment.affinity if self.environment else None
+
+    @property
+    def tolerations(self):
+        return self.environment.tolerations if self.environment else None
+
+    @property
+    def security_context(self):
+        return self.environment.security_context if self.environment else None
+
+    @property
+    def service_account(self):
+        return self.environment.service_account if self.environment else None
+
+    @property
+    def env_vars(self):
+        return self.environment.env_vars if self.environment else None
+
+    @property
+    def image_pull_secrets(self):
+        return self.environment.image_pull_secrets if self.environment else None
+
+    @property
+    def log_level(self):
+        return self.environment.log_level if self.environment else None
+
+
+class ContextsSpecificationMixin(object):
+    @property
+    def contexts(self):
+        return self._config_data.contexts
+
+    @property
+    def contexts_name(self):
+        return self.contexts.name if self.contexts else None
+
+    @staticmethod
+    def _get_refs_names(refs):
+        if refs:
+            return [r.name for r in refs]
+
+    @staticmethod
+    def _get_refs_by_names(refs):
+        if refs:
+            return {r.name: r for r in refs}
+
+    @property
+    def artifacts(self):
+        return self.contexts.artifacts if self.contexts else None
+
+    @property
+    def artifacts_names(self):
+        return self._get_refs_names(self.artifacts)
+
+    @property
+    def artifacts_by_names(self):
+        return self._get_refs_by_names(self.artifacts)
+
+    @property
+    def secrets(self):
+        return self.contexts.secrets if self.contexts else None
+
+    @property
+    def secrets_names(self):
+        return self._get_refs_names(self.secrets)
+
+    @property
+    def secrets_by_names(self):
+        return self._get_refs_by_names(self.secrets)
+
+    @property
+    def config_maps(self):
+        return self.contexts.config_maps if self.contexts else None
+
+    @property
+    def config_maps_names(self):
+        return self._get_refs_names(self.config_maps)
+
+    @property
+    def config_maps_by_names(self):
+        return self._get_refs_by_names(self.config_maps)
+
+    @property
+    def repos(self):
+        return self.contexts.repos if self.contexts else None
+
+    @property
+    def repos_names(self):
+        return self._get_refs_names(self.repos)
+
+    @property
+    def repos_by_names(self):
+        return self._get_refs_by_names(self.repos)
+
+    @property
+    def registry(self):
+        return self.contexts.registry if self.contexts else None
+
+    @property
+    def outputs(self):
+        return self.contexts.outputs if self.contexts else None
+
+    @property
+    def build_context(self):
+        return self.contexts.build if self.contexts else None
+
+    @property
+    def auth_context(self):
+        return self.contexts.auth if self.contexts else None
+
+    @property
+    def docker_context(self):
+        return self.contexts.docker if self.contexts else None
+
+    @property
+    def shm_context(self):
+        return self.contexts.shm if self.contexts else None
+
+
+class TerminationSpecificationMixin(object):
+    @property
+    def termination(self):
+        return self._config_data.termination
+
+    @property
+    def termination_name(self):
+        return self.termination.name if self.termination else None
+
+    @property
+    def max_retries(self):
+        return self.termination.max_retries if self.termination else None
+
+    @property
+    def timeout(self):
+        return self.termination.timeout if self.termination else None
+
+    @property
+    def restart_policy(self):
+        return self.termination.restart_policy if self.termination else None
+
+    @property
+    def ttl(self):
+        return self.termination.ttl if self.termination else None
+
+
 @six.add_metaclass(abc.ABCMeta)
-class BaseSpecification(object):
+class BaseSpecification(
+    EnvironmentSpecificationMixin,
+    ContextsSpecificationMixin,
+    TerminationSpecificationMixin,
+):
     """Base abstract specification for plyaxonfiles and configurations."""
 
     _SPEC_KIND = None
 
-    MAX_VERSION = 1  # Max Polyaxonfile specification version this CLI supports
-    MIN_VERSION = 1  # Min Polyaxonfile specification version this CLI supports
+    MAX_VERSION = 0.6  # Max Polyaxonfile specification version this CLI supports
+    MIN_VERSION = 0.6  # Min Polyaxonfile specification version this CLI supports
 
     VERSION = "version"
     KIND = "kind"
-    LOGGING = "logging"
     NAME = "name"
     DESCRIPTION = "description"
     TAGS = "tags"
     INPUTS = "inputs"
     OUTPUTS = "outputs"
-    BACKEND = "backend"
-    FRAMEWORK = "framework"
-    HP_TUNING = "hptuning"
-    DECLARATIONS = "declarations"
     PARAMS = "params"
     ENVIRONMENT = "environment"
-    RUN = "run"
-    BUILD = "build"
+    TERMINATION = "termination"
+    CONTEXTS = "contexts"
+    CONTAINER = "container"
+    PARALLEL = "parallel"
+    REPLICA_SPEC = "replica_spec"
+    PORTS = "ports"
+    TEMPLATES = "templates"
+    OPS = "ops"
+    SCHEDULE = "schedule"
+    CONCURRENCY = "concurrency"
 
     SECTIONS = (
         VERSION,
         KIND,
         NAME,
         DESCRIPTION,
-        LOGGING,
         TAGS,
         INPUTS,
         OUTPUTS,
-        DECLARATIONS,
         PARAMS,
-        BACKEND,
-        FRAMEWORK,
         ENVIRONMENT,
-        HP_TUNING,
-        BUILD,
-        RUN,
+        TERMINATION,
+        CONTEXTS,
+        CONTAINER,
+        PARALLEL,
+        REPLICA_SPEC,
+        PORTS,
+        TEMPLATES,
+        OPS,
+        SCHEDULE,
+        CONCURRENCY,
     )
 
-    STD_PARSING_SECTIONS = (BACKEND, FRAMEWORK, ENVIRONMENT, LOGGING, TAGS)
-    OP_PARSING_SECTIONS = (BUILD, RUN)
+    PARSING_SECTIONS = (
+        ENVIRONMENT,
+        TERMINATION,
+        CONTEXTS,
+        CONTAINER,
+        REPLICA_SPEC,
+        PORTS,
+    )
+    OP_PARSING_SECTIONS = (TEMPLATES, OPS, SCHEDULE, CONCURRENCY)
 
-    HEADER_SECTIONS = (VERSION, KIND, NAME, DESCRIPTION, LOGGING, TAGS)
-
-    GRAPH_SECTIONS = []
+    HEADER_SECTIONS = (VERSION, KIND, NAME, DESCRIPTION, TAGS)
 
     REQUIRED_SECTIONS = (VERSION, KIND)
 
-    POSSIBLE_SECTIONS = (
-        VERSION,
-        KIND,
-        LOGGING,
-        TAGS,
-        NAME,
-        DESCRIPTION,
-        INPUTS,
-        OUTPUTS,
-    )
-
     OPERATORS = {ForConfig.IDENTIFIER: ForConfig, IfConfig.IDENTIFIER: IfConfig}
 
-    ENVIRONMENT_CONFIG = EnvironmentConfig
     CONFIG = None
 
     def __init__(self, values):
@@ -145,7 +313,7 @@ class BaseSpecification(object):
     def apply_context(self, context=None):
         context = context or {}
         params = self._config_data.get_params(context=context)
-        parsed_data = Parser.parse(self, self._config_data, params, None)
+        parsed_data = Parser.parse(self, self._config_data, params)
         self._config = self._get_config(parsed_data)
         self._parsed_data = parsed_data
         return parsed_data
@@ -193,13 +361,6 @@ class BaseSpecification(object):
                 "for this version.".format(key, data[self.VERSION])
             )
 
-        for key in set(six.iterkeys(data)) - set(self.POSSIBLE_SECTIONS):
-            raise PolyaxonfileError(
-                "Unexpected section `{}` for specification kind `{}` version `{}`. "
-                "Please check the Polyaxonfile specification "
-                "for this version.".format(key, self._SPEC_KIND, data[self.VERSION])
-            )
-
         for key in self.REQUIRED_SECTIONS:
             if key not in data:
                 raise PolyaxonfileError(
@@ -218,28 +379,12 @@ class BaseSpecification(object):
         return data[cls.KIND]
 
     @staticmethod
-    def check_kind_experiment(kind):
-        return kind == kinds.EXPERIMENT
-
-    @staticmethod
-    def check_kind_group(kind):
-        return kind == kinds.GROUP
-
-    @staticmethod
     def check_kind_job(kind):
         return kind == kinds.JOB
 
     @staticmethod
-    def check_kind_notebook(kind):
-        return kind == kinds.NOTEBOOK
-
-    @staticmethod
-    def check_kind_tensorboard(kind):
-        return kind == kinds.TENSORBOARD
-
-    @staticmethod
-    def check_kind_build(kind):
-        return kind == kinds.BUILD
+    def check_kind_service(kind):
+        return kind == kinds.SERVICE
 
     @staticmethod
     def check_kind_pipeline(kind):
@@ -252,28 +397,12 @@ class BaseSpecification(object):
         return cls(values)
 
     @property
-    def is_experiment(self):
-        return self.check_kind_experiment(self.kind)
-
-    @property
-    def is_group(self):
-        return self.check_kind_group(self.kind)
-
-    @property
     def is_job(self):
         return self.check_kind_job(self.kind)
 
     @property
-    def is_notebook(self):
+    def is_service(self):
         return self.check_kind_notebook(self.kind)
-
-    @property
-    def is_tensorboard(self):
-        return self.check_kind_tensorboard(self.kind)
-
-    @property
-    def is_build(self):
-        return self.check_kind_build(self.kind)
 
     @property
     def is_pipeline(self):
@@ -308,206 +437,21 @@ class BaseSpecification(object):
         return self.headers[self.KIND]
 
     @property
-    def logging(self):
-        return self.headers.get(self.LOGGING, None)
+    def name(self):
+        return self.headers[self.NAME]
 
     @property
-    def log_level(self):
-        if self.logging:
-            return self.logging.level
-        return "INFO"
+    def description(self):
+        return self.headers[self.DESCRIPTION]
 
     @property
     def tags(self):
-        tags = self.headers.get(self.TAGS, None)
-        return list(set(tags)) if tags else None
-
-
-class EnvironmentSpecificationMixin(object):
-    @property
-    def environment(self):
-        return self._config_data.environment
+        return self.headers.get(self.TAGS, None)
 
     @property
-    def resources(self):
-        return self.environment.resources if self.environment else None
+    def params(self):
+        return self.parsed_data.get(self.PARAMS, None)
 
     @property
-    def labels(self):
-        return self.environment.labels if self.environment else None
-
-    @property
-    def annotations(self):
-        return self.environment.annotations if self.environment else None
-
-    @staticmethod
-    def _get_refs_names(refs_raw):
-        if refs_raw:
-            return [r.get("name") for r in refs_raw]
-
-    @staticmethod
-    def _get_refs_by_names(refs):
-        if refs:
-            return {r.name: r for r in refs}
-
-    @staticmethod
-    def _get_store_refs(refs_raw):
-        if refs_raw:
-            return [StoreRefConfig.from_dict(s) for s in refs_raw]
-
-    @staticmethod
-    def _get_k8s_resource_refs(refs_raw):
-        if refs_raw:
-            return [K8SResourceRefConfig.from_dict(s) for s in refs_raw]
-
-    @property
-    def artifact_refs_raw(self):
-        if not self.environment or not self.environment.artifact_refs:
-            return None
-        return self.environment.artifact_refs
-
-    @property
-    def artifact_refs_names(self):
-        return self._get_refs_names(self.artifact_refs_raw)
-
-    @property
-    def artifact_refs(self):
-        return self._get_store_refs(self.artifact_refs_raw)
-
-    @property
-    def artifact_refs_by_names(self):
-        return self._get_refs_by_names(self.artifact_refs)
-
-    @property
-    def secret_refs_raw(self):
-        if not self.environment or not self.environment.secret_refs:
-            return None
-        return self.environment.secret_refs
-
-    @property
-    def secret_refs_names(self):
-        return self._get_refs_names(self.secret_refs_raw)
-
-    @property
-    def secret_refs(self):
-        return self._get_k8s_resource_refs(self.secret_refs_raw)
-
-    @property
-    def secret_refs_by_names(self):
-        return self._get_refs_by_names(self.secret_refs)
-
-    @property
-    def config_map_refs_raw(self):
-        if not self.environment or not self.environment.config_map_refs:
-            return None
-        return self.environment.config_map_refs
-
-    @property
-    def config_map_refs_names(self):
-        return self._get_refs_names(self.config_map_refs_raw)
-
-    @property
-    def config_map_refs(self):
-        return self._get_k8s_resource_refs(self.config_map_refs_raw)
-
-    @property
-    def config_map_refs_by_names(self):
-        return self._get_refs_by_names(self.config_map_refs)
-
-    @property
-    def node_selector(self):
-        return self.environment.node_selector if self.environment else None
-
-    @property
-    def affinity(self):
-        return self.environment.affinity if self.environment else None
-
-    @property
-    def tolerations(self):
-        return self.environment.tolerations if self.environment else None
-
-    @property
-    def outputs(self):
-        return self.environment.outputs if self.environment else None
-
-    @property
-    def service_account(self):
-        return self.environment.service_account if self.environment else None
-
-    @property
-    def image_pull_secrets(self):
-        return self.environment.image_pull_secrets if self.environment else None
-
-    @property
-    def max_retries(self):
-        return self.environment.max_retries if self.environment else None
-
-    @property
-    def timeout(self):
-        return self.environment.timeout if self.environment else None
-
-    @property
-    def restart_policy(self):
-        return self.environment.restart_policy if self.environment else None
-
-    @property
-    def ttl(self):
-        return self.environment.ttl if self.environment else None
-
-    @property
-    def env_vars(self):
-        return self.environment.env_vars if self.environment else None
-
-    @property
-    def security_context(self):
-        return self.environment.security_context if self.environment else None
-
-
-class BaseRunSpecification(BaseSpecification, EnvironmentSpecificationMixin):
-    """The polyaxonfile specification for build jobs.
-
-    SECTIONS:
-        VERSION: defines the version of the file to be parsed and validated.
-        LOGGING: defines the logging
-        TAGS: defines the tags
-        ENVIRONMENT: defines the run environment for experiment.
-        BUILD: defines the build step where the user can set a docker image definition
-    """
-
-    _SPEC_KIND = kinds.BUILD
-
-    HEADER_SECTIONS = BaseSpecification.HEADER_SECTIONS + (BaseSpecification.BACKEND,)
-
-    POSSIBLE_SECTIONS = BaseSpecification.POSSIBLE_SECTIONS + (
-        BaseSpecification.ENVIRONMENT,
-        BaseSpecification.BUILD,
-        BaseSpecification.BACKEND,
-    )
-
-    @property
-    def build(self):
-        return self.config.build
-
-    @classmethod
-    def create_specification(
-        cls, build_config, to_dict=True  # pylint:disable=arguments-differ
-    ):
-        from polyaxon_schemas.ops.build_job import BuildConfig
-
-        if isinstance(build_config, BuildConfig):
-            b_config = build_config.to_light_dict()
-        elif isinstance(build_config, Mapping):
-            # Since the objective is to create the build spec from other specs
-            # we drop any extra attrs
-            b_config = BuildConfig.from_dict(build_config, unknown=EXCLUDE)
-            b_config = b_config.to_light_dict()
-        else:
-            raise PolyaxonConfigurationError(
-                "Create specification expects a dict or an instance of BuildConfig."
-            )
-
-        specification = {cls.VERSION: 1, cls.KIND: cls._SPEC_KIND, cls.BUILD: b_config}
-
-        if to_dict:
-            return specification
-        return cls.read(specification)
+    def container(self):
+        return self.config.container

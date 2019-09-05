@@ -5,6 +5,8 @@ import six
 
 from collections import Mapping
 
+from polyaxon_schemas.specs import JobSpecification, kinds
+
 
 def assert_equal_dict(dict1, dict2):
     for k, v in six.iteritems(dict1):
