@@ -51,7 +51,7 @@ setup(
         "kubernetes",
     ],
     install_requires=[
-        "hestia==0.4.5",
+        "hestia==0.4.6",
         "Jinja2==2.10.1",
         "marshmallow==3.0.0rc5",
         "numpy>=1.15.2",
