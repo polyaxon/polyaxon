@@ -32,7 +32,6 @@ class ParallelAlgorithmSchema(BaseOneOfSchema):
 
 
 class ParallelSchema(BaseSchema):
-    seed = fields.Int(allow_none=True)
     concurrency = fields.Int(allow_none=True)
     algorithm = fields.Nested(ParallelAlgorithmSchema, allow_none=True)
     early_stopping = fields.Nested(EarlyStoppingSchema, many=True, allow_none=True)
@@ -45,10 +44,9 @@ class ParallelSchema(BaseSchema):
 class ParallelConfig(BaseConfig):
     SCHEMA = ParallelSchema
     IDENTIFIER = "parallel"
-    REDUCED_ATTRIBUTES = ["seed", "algorithm", "early_stopping"]
+    REDUCED_ATTRIBUTES = ["concurrency", "algorithm", "early_stopping"]
 
-    def __init__(self, seed=None, concurrency=1, algorithm=None, early_stopping=None):
-        self.seed = seed
+    def __init__(self, concurrency=None, algorithm=None, early_stopping=None):
         self.concurrency = concurrency
         self.algorithm = algorithm
         self.early_stopping = early_stopping

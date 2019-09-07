@@ -61,6 +61,7 @@ class HyperbandSchema(BaseSchema):
     resource = fields.Nested(ResourceSchema)
     metric = fields.Nested(SearchMetricSchema)
     resume = fields.Boolean(allow_none=True)
+    seed = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -72,7 +73,7 @@ class HyperbandConfig(BaseConfig):
     IDENTIFIER = "hyperband"
 
     def __init__(
-        self, matrix, max_iter, eta, resource, metric, resume=False, kind="hyperband"
+        self, matrix, max_iter, eta, resource, metric, resume=False, seed=None, kind="hyperband"
     ):
         self.matrix = matrix
         self.kind = kind
@@ -80,4 +81,5 @@ class HyperbandConfig(BaseConfig):
         self.eta = eta
         self.resource = resource
         self.metric = metric
+        self.seed = seed
         self.resume = resume

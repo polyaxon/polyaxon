@@ -173,6 +173,7 @@ class BOSchema(BaseSchema):
     matrix = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
     )
+    seed = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -195,6 +196,7 @@ class BOConfig(BaseConfig):
         n_iterations,
         metric,
         utility_function=None,
+        seed=None,
         kind="bo",
     ):
         self.matrix = validate_matrix(matrix)
@@ -203,3 +205,4 @@ class BOConfig(BaseConfig):
         self.n_iterations = n_iterations
         self.utility_function = utility_function
         self.metric = metric
+        self.seed = seed

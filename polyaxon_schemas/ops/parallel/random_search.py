@@ -13,6 +13,7 @@ class RandomSearchSchema(BaseSchema):
         keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
     )
     n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
+    seed = fields.Int(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -22,9 +23,10 @@ class RandomSearchSchema(BaseSchema):
 class RandomSearchConfig(BaseConfig):
     SCHEMA = RandomSearchSchema
     IDENTIFIER = "random"
-    REDUCED_ATTRIBUTES = ["n_experiments"]
+    REDUCED_ATTRIBUTES = ["seed", "n_experiments"]
 
-    def __init__(self, matrix, n_experiments=None, kind="random"):
+    def __init__(self, matrix, n_experiments=None, seed=None, kind="random"):
         self.matrix = matrix
         self.kind = kind
         self.n_experiments = n_experiments
+        self.seed = seed

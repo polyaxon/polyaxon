@@ -255,6 +255,7 @@ class TestParallelConfigs(TestCase):
             "matrix": {
                 "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
             },
+            "seed": 1,
         }
         config = ParallelConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
@@ -304,6 +305,7 @@ class TestParallelConfigs(TestCase):
             "matrix": {
                 "lr": {"kind": "pchoice", "value": [(1, 0.3), (2, 0.3), (3, 0.3)]}
             },
+            "seed": 1,
         }
         with self.assertRaises(ValidationError):
             ParallelConfig.from_dict(config_dict)
@@ -335,9 +337,9 @@ class TestParallelConfigs(TestCase):
             "algorithm": {
                 "kind": "random",
                 "matrix": {"lr": {"kind": "choice", "value": [1, 2, 3]}},
+                "seed": 1,
             },
             "early_stopping": [],
-            "seed": 1,
         }
         config = ParallelConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
