@@ -51,6 +51,9 @@ timeZone: 'UTC'
 adminViewEnabled: true
 encryptionSecret:
 
+# Include helm chart relase revision
+includeChartRevision: true
+
 dirs:
   nvidia:
     lib: ""  # e.g. "/usr/lib/nvidia-384"

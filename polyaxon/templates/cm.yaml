@@ -195,7 +195,9 @@ data:
   POLYAXON_LIB_LATEST_VERSION: "0.0.5"
   POLYAXON_CHART_VERSION: {{ .Chart.Version | quote }}
   POLYAXON_CHART_IS_UPGRADE: {{ .Release.IsUpgrade | quote }}
+  {{- if .Values.includeChartRevison }}
   POLYAXON_CHART_REVISION: {{ .Release.Revision | quote }}
+  {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
   POLYAXON_AUTH_LDAP: "true"
