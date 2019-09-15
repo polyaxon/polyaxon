@@ -29,9 +29,9 @@ class TestContextsConfigs(TestCase):
 
         # Add artifact_refs
         config_dict["artifacts"] = [
-            {"name": "data2", "manage": False},
-            {"name": "data3", "paths": ["/subpath1", "subpath2"], "manage": True},
-            {"name": "artifact2", "paths": ["/subpath1", "subpath2"], "manage": True},
+            {"name": "data2", "managed": False},
+            {"name": "data3", "paths": ["/subpath1", "subpath2"], "managed": True},
+            {"name": "artifact2", "paths": ["/subpath1", "subpath2"], "managed": True},
         ]
         config = ContextsConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())

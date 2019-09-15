@@ -1059,7 +1059,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template2",
                     "description": "description build",
                     "tags": {"backend": "kaniko"},
-                    "contexts": {"registry": {"enable": True}},
+                    "contexts": {"registry": {"enabled": True}},
                 },
             ],
         }
@@ -1080,7 +1080,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template2",
                     "description": "description build",
                     "tags": {"backend": "kaniko"},
-                    "contexts": {"registry": {"enable": True}},
+                    "contexts": {"registry": {"enabled": True}},
                 }
             ],
         }

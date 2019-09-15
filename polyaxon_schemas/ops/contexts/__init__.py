@@ -6,7 +6,7 @@ from marshmallow import fields
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.contexts.artifact_refs import ArtifactRefSchema
 from polyaxon_schemas.ops.contexts.build_context import BuildContextSchema
-from polyaxon_schemas.ops.contexts.enbale import EnableSchema
+from polyaxon_schemas.ops.contexts.enbaled import EnabledSchema
 from polyaxon_schemas.ops.contexts.k8s_resource_refs import K8SResourceRefSchema
 from polyaxon_schemas.ops.contexts.outputs_context import OutputsContextSchema
 from polyaxon_schemas.ops.contexts.repo_refs import RepoRefSchema
@@ -18,12 +18,12 @@ class ContextsSchema(BaseSchema):
     config_maps = fields.Nested(K8SResourceRefSchema, many=True, allow_none=True)
     artifacts = fields.Nested(ArtifactRefSchema, many=True, allow_none=True)
     repos = fields.Nested(RepoRefSchema, many=True, allow_none=True)
-    registry = fields.Nested(EnableSchema, allow_none=True)
+    registry = fields.Nested(EnabledSchema, allow_none=True)
     outputs = fields.Nested(OutputsContextSchema, allow_none=True)
     build = fields.Nested(BuildContextSchema, allow_none=True)
-    auth = fields.Nested(EnableSchema, allow_none=True)
-    docker = fields.Nested(EnableSchema, allow_none=True)
-    shm = fields.Nested(EnableSchema, allow_none=True)
+    auth = fields.Nested(EnabledSchema, allow_none=True)
+    docker = fields.Nested(EnabledSchema, allow_none=True)
+    shm = fields.Nested(EnabledSchema, allow_none=True)
 
     @staticmethod
     def schema_config():

@@ -18,7 +18,7 @@ class TestK8SResourceConfigs(TestCase):
         config = ArtifactRefConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 
-        config_dict = {"name": "foo", "manage": 213}
+        config_dict = {"name": "foo", "managed": 213}
         with self.assertRaises(ValidationError):
             ArtifactRefConfig.from_dict(config_dict)
 
@@ -26,7 +26,7 @@ class TestK8SResourceConfigs(TestCase):
         with self.assertRaises(ValidationError):
             ArtifactRefConfig.from_dict(config_dict)
 
-        config_dict = {"name": "foo", "manage": True, "paths": ["item1", "item2"]}
+        config_dict = {"name": "foo", "managed": True, "paths": ["item1", "item2"]}
         config = ArtifactRefConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
 

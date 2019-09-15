@@ -1,7 +1,7 @@
 ---
 version: 0.6
 
-kind: experiment
+kind: job
 
 tags:
   framework: tensorflow
@@ -10,9 +10,10 @@ environment:
   log_level: INFO
 
   resources:
-    cpu:
-      requests: 1
-      limits: 2
+    requests:
+      cpu: 1
+    limits:
+      cpu: 2
 
   affinity:
     nodeAffinity:
@@ -40,9 +41,10 @@ replica_spec:
       restart_policy: OnFailure
     environment:
       resources:
-        memory:
-          requests: 300
-          limits: 300
+        requests:
+          memory: 300
+        limits:
+          memory: 300
 
   PS:
     replicas: 10
@@ -52,14 +54,14 @@ replica_spec:
           operator: "Exists"
           effect: "NoSchedule"
       resources:
-        cpu:
-          requests: 3
-          limits: 3
-        memory:
-          requests: 256
-          limits: 256
+        requests:
+          cpu: 3
+          memory: 256
+        limits:
+          cpu: 3
+          memory: 256
 
-containe:
+container:
   image: my_image
   command: [video_prediction_train, --model=DNA, --num_masks=1]
 ...

@@ -20,9 +20,9 @@ contexts:
   artifacts:
   - name: data1
     paths: ['path1', 'path2']
-    manage: true
+    managed: true
   - name: data2
-    manage: true
+    managed: true
   repos:
   - name: repo1
     commit: commit-hash
@@ -30,10 +30,10 @@ contexts:
     branch: master
     commit: commit-hash
   outputs:
-    enable: true
-    manage: true
+    enabled: true
+    managed: true
   registry:
-    enable: true
+    enabled: true
   build:
     image: my_image
     build_steps:
@@ -41,9 +41,9 @@ contexts:
     env_vars:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
-  docker: {enable: true}
-  auth: {enable: true}
-  shm: {enable: true}
+  docker: {enabled: true}
+  auth: {enabled: true}
+  shm: {enabled: true}
 
 
 container:

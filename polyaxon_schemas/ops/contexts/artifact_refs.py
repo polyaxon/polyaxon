@@ -11,7 +11,7 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 class ArtifactRefSchema(BaseSchema):
     name = fields.Str(allow_none=True)
-    manage = fields.Bool(allow_none=True)
+    managed = fields.Bool(allow_none=True)
     paths = fields.List(fields.Str(), allow_none=True)
 
     @staticmethod
@@ -22,11 +22,11 @@ class ArtifactRefSchema(BaseSchema):
 class ArtifactRefConfig(BaseConfig):
     IDENTIFIER = "artifact_ref"
     SCHEMA = ArtifactRefSchema
-    REDUCED_ATTRIBUTES = ["name", "manage", "paths"]
+    REDUCED_ATTRIBUTES = ["name", "managed", "paths"]
 
-    def __init__(self, name, manage=None, paths=None):
+    def __init__(self, name, managed=None, paths=None):
         self.name = name
-        self.manage = manage
+        self.managed = managed
         self.paths = paths
 
 

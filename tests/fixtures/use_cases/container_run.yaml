@@ -1,0 +1,488 @@
+---
+version: 0.6
+
+kind: job
+
+description: Run default image entry-point
+
+container:
+  image: image
+
+---
+version: 0.6
+
+kind: job
+
+description: Run image with updated command/args
+
+container:
+  image: image
+  command: my_command
+  args: my_arg
+
+---
+version: 0.6
+
+kind: job
+
+description: Run image with updated list command/args
+
+container:
+  image: image
+  command: [/bin/bash, -c]
+  args: [arg1, arg2]
+
+---
+version: 0.6
+
+kind: job
+
+description: Run image with updated list command/args
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args:
+    - arg1
+    - arg2
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run image with updated command/args based on code I download with git clone
+
+container:
+  image: image-with-git-installed
+  command:
+    - /bin/bash
+    - -c
+  args: git clone github.com/user/public-repo && cd public-repo && ./run stuff
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run image with updated command/args based on code I download with (ssh) git clone
+
+
+contexts:
+  secrets:
+    - name: my-ssh-secret
+
+container:
+  image: image-with-git-installed
+  command:
+    - /bin/bash
+    - -c
+  args: git clone github.com/user/private-repo && cd private-repo && ./run stuff
+
+---
+version: 0.6
+
+kind: job
+
+description: Run image with updated command/args based on my code with no need to to clone (using repos catalog)
+
+
+contexts:
+  repos:
+    - name: default-repo
+      brnach: dev
+    - name: user/my-repo1
+      commit: c29c31d5912eede1790b38e6c24e00198e67b807
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args: {{REPOS_CONTEXT}}/my-repo1/script.sh --arg1=foo && python3 -u {{REPOS_CONTEXT}}/default-repo/model.py
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a bucket
+
+
+contexts:
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args: aws s3 cp s3://public-bucket ./data/ --recursive && ./do-stuff.sh --data_path=./data/
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a bucket
+
+
+contexts:
+  secrets:
+    - name: my-s3-secret  # Secret used to authenticate aws cli or your python/java/.. code to download the s3 bucket
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args: aws s3 cp s3://foo ./data/ --recursive && ./do-stuff.sh --data_path=./data/
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a bucket based in artifacts catalog
+
+
+contexts:
+  artifacts:
+    - name: images-data-in-gcs
+      managed: true  # This tells polyaxon to take care of downloading and preparing a context
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args: python3 -u model.py --data-path={{ARTIFACTS_CONTEXTS}}/images-data-in-gcs/
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a bucket based in artifacts catalog
+
+
+contexts:
+  artifacts:
+    - name: images-data-in-gcs
+      managed: true  # This tells polyaxon to take care of downloading and preparing a context
+      paths:["path1/cat-images", "path2/dog-images"]
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args: ls {{ARTIFACTS_CONTEXTS}}/images-data-in-gcs  # Result should be "path1/cat-images" "path2/dog-images"
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a multiple bucket based in artifacts catalog
+
+
+contexts:
+  artifacts:
+    - name: images-data-in-gcs
+      managed: true  # This tells polyaxon to take care of downloading and preparing a context
+      paths:["path1/cat-images", "path2/dog-images"]
+
+    - name: azure-blob-data
+      managed: true  # This tells polyaxon to take care of downloading and preparing a context
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args: ls {{ARTIFACTS_CONTEXTS}}/  # Result should be "images-data-in-gcs/path1/cat-images" "images-data-in-gcs/path2/dog-images" "azure-blob-data/*"
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a volumes
+
+
+contexts:
+  artifacts:
+    - name: images-data-in-volume-claim
+      managed: true  # This tells polyaxon to take care of copying data fro the volume to a context to not allow the user to access underlaying data
+      paths:["path1/cat-images", "path2/dog-images"]
+
+    - name: audio-data-in-read-only-volume-claim
+      managed: false  # This tells polyaxon to expose the underlaying volume, since the volume was created read-only, the user will see the mount path defined in the volume
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args:
+   - ls {{ARTIFACTS_CONTEXTS}}/  # Result should be "images-data-in-volume-claim/path1/cat-images" "images-data-in-volume-claim/path2/dog-images"
+   - ls /user/knows/where/mount/path/is  # user can hard code the path if the path is known and does not change, this is equivalent to the ls in next arg
+   - ls {{ARTIFACTS_PATHS_audio-data-in-read-only-volume-claim}} #  user relies on the env var that Polyaxon will expose: ARTIFACTS_PATHS + name of the artifact
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run with data from a volumes
+
+
+contexts:
+  artifacts:
+    - name: images-data-in-volume-claim
+      managed: true  # This tells polyaxon to take care of copying data fro the volume to a context to not allow the user to access underlaying data
+      paths:["path1/cat-images", "path2/dog-images"]
+
+    - name: audio-data-in-read-only-volume-claim
+      managed: false  # This tells polyaxon to expose the underlaying volume, since the volume was created read-only, the user will see the mount path defined in the volume
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args:
+   - ls {{ARTIFACTS_CONTEXTS}}/  # Result should be "images-data-in-volume-claim/path1/cat-images" "images-data-in-volume-claim/path2/dog-images"
+   - ls /user/knows/where/mount/path/is  # user can hard code the path if the path is known and does not change, this is equivalent to the ls in next arg
+   - ls {{ARTIFACTS_PATHS_audio-data-in-read-only-volume-claim}} #  user relies on the env var that Polyaxon will expose: ARTIFACTS_PATHS + name of the artifact
+
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run and upload outputs to a bucket
+
+
+contexts:
+
+  secrets:
+    - name: my-s3-secret  # Secret used to authenticate aws cli or your python/java/.. code to upload the s3 bucket
+    - name: my-gcs-secret  # Secret used to authenticate gcs cli or your python/java/.. code to upload the gcs bucket
+    - name: my-azure-secret  # Secret used to authenticate azure cli or your python/java/.. code to upload the azure bucket
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args:
+   - aws sync ...
+   - gcs upload ...
+   - az upload ...
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run and upload outputs to a bucket based on artifacts stores
+
+
+contexts:
+
+  artifacts:
+    # This tells polyaxon to just expose the secrets/connexion defined with this artifact
+    # it also expose an env var with the path of the bucket ARTIFACTS_PATHS_ + repo-name: e.g. ARTIFACTS_PATHS_my-s3-artifact == s3://some-bucket-path
+    - name: my-s3-artifact
+      managed: false
+    - name: my-gcs-artifact
+      managed: false
+    - name: my-azure-artifact
+      managed: false
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args:
+   - aws sync {{ARTIFACTS_PATHS_my-s3-artifact}}/relative-path ...
+   - gcs upload {{ARTIFACTS_PATHS_my-gcs-artifact}}/relative-path ...
+   - az upload {{ARTIFACTS_PATHS_my-azure-artifact}}/relative-path ...
+
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description:
+  Run and upload outputs to the default outputs store. In Polyaxon,
+  you can configure a default outputs store for your projects so that you don't need to deal with remembring name of artifacts that can change.
+
+
+contexts:
+
+  outputs:
+    enabled: true  # This tells Polyaxon to enable the default outputs store
+    managed: true  # This tells Polyaxon to expose a context to the user and manage the process of uploading any artifact generated by her code,
+    # this abstract completely your code & yaml file from the process of storage connexion / claim volume. Polyaxon takes care of sync to the underlaying backend.
+
+container:
+  image: image
+  command:
+    - /bin/bash
+    - -c
+  args:
+   - python model.py --outputs-path={{OUTPUTS_CONTEXTS}}
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Run some code with env vars coming from config map or config-map mounted somewhere
+
+contexts:
+  config_maps:
+    - name: env-vars-config-map
+    - name: mount-path-config-map
+  secrets:
+    - name: env-vars-secret
+    - name: mount-path-secret
+
+container:
+  image: image
+  command: [/bin/bash, -c]
+  args:
+   - env  # Will print all items of the env-vars-config-map and env-vars-secret
+   - ls {{CONFIG_MAPS_PATHS_mount-path-config-map}}  # paths exposed by this config_map
+   - ls {{CONFIG_MAPS_PATHS_mount-path-secret}}  # paths exposed by this secret
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Building docker image with Polyaxon using the docker context
+
+contexts:
+  config_maps:
+    - name: config-map-for-pushing-to-registry
+  secrets:
+    - name: secret-for-pushing-to-private-registry
+  docker:  # Expose a docker context containing the docker socket
+    enabled: true
+  build:  # The build context is a helper to create a simple docker file, for advance use case, you can just clone a repo with a dockerfile, or use a repo from the catalog with dockerile
+    image: my_image
+    build_steps:
+    - pip install package1
+    env_vars:
+    - ['KEY1', 'en_US.UTF-8']
+    - ['KEY2', 2]
+
+container:
+  image: docker-builder
+  command: [/bin/bash, -c]
+  args:
+   - docker build
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Building docker image with Polyaxon
+  for code and dockerfile, you can use the `repos`context, or attach and ssh/token secret to git clone the code
+
+contexts:
+  config_maps:
+    - name: config-map-for-pushing-to-registry
+  secrets:
+    - name: secret-for-pushing-to-private-registry
+  repos:
+    - name: my-repo-with-dockerfile-to-build
+
+container:
+  image: kaniko
+  command: [/bin/bash, -c]
+  args:
+   - kaniko build
+
+
+
+---
+version: 0.6
+
+kind: job
+
+description: Building docker image with Polyaxon and default registry connexion
+  Similar to the outputs store, Polyaxon allows users to create a registry in the catalog to define how to connect to that registry, and where to push the images to
+
+contexts:
+  registry:
+    enabled: true
+  repos:
+    - name: my-repo-with-dockerfile-to-build
+
+container:
+  image: kaniko
+  command: [/bin/bash, -c]
+  args:
+   - kaniko build
+
+
+
+---
+version: 0.6
+
+kind: Pipeline
+
+description: Building and running: user can build and create images that they can reuse later on, but they can also abstract this process using a pipeline
+
+ops:
+  - name: build
+    contexts:
+      registry:
+        enabled: true
+      repos:
+        - name: my-repo-with-dockerfile-to-build
+
+    container:
+      image: kaniko
+      command: [/bin/bash, -c]
+      args:
+       - kaniko build
+  - name: run
+    inputs:
+      - name: image
+        type: container
+    params:
+      image: {{build.outputs.image}}
+    container:
+      image: {{image}}
+      command: [python3, -u, my-model]

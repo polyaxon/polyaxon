@@ -7,7 +7,7 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
 class ServiceLevelSchema(BaseSchema):
-    enable = fields.Bool(allow_none=True)
+    enabled = fields.Bool(allow_none=True)
     multiple = fields.Bool(allow_none=True)
 
     @staticmethod
@@ -18,8 +18,8 @@ class ServiceLevelSchema(BaseSchema):
 class ServiceLevelConfig(BaseConfig):
     IDENTIFIER = "service_level"
     SCHEMA = ServiceLevelSchema
-    REDUCED_ATTRIBUTES = ["enable", "multiple"]
+    REDUCED_ATTRIBUTES = ["enabled", "multiple"]
 
-    def __init__(self, enable=None, multiple=None):
-        self.enable = enable
+    def __init__(self, enabled=None, multiple=None):
+        self.enabled = enabled
         self.multiple = multiple
