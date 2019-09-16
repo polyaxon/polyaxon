@@ -51,7 +51,7 @@ timeZone: 'UTC'
 adminViewEnabled: true
 encryptionSecret:
 
-# Include helm chart relase revision
+# Include helm chart release revision
 includeChartRevision: true
 
 dirs:

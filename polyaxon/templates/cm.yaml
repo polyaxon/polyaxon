@@ -195,8 +195,10 @@ data:
   POLYAXON_LIB_LATEST_VERSION: "0.0.5"
   POLYAXON_CHART_VERSION: {{ .Chart.Version | quote }}
   POLYAXON_CHART_IS_UPGRADE: {{ .Release.IsUpgrade | quote }}
-  {{- if .Values.includeChartRevison }}
+  {{- if .Values.includeChartRevision }}
   POLYAXON_CHART_REVISION: {{ .Release.Revision | quote }}
+  {{- else }}
+  POLYAXON_CHART_REVISION: ""
   {{- end }}
   # Auth
   {{- if .Values.ldap.enabled }}
