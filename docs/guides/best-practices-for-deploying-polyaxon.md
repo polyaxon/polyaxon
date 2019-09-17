@@ -34,7 +34,7 @@ In order to achieve such behaviour Polyaxon provides a [node scheduling configur
 Here's an example of the minimum requirement that we suggest for a production cluster:
 
 ```yaml
-nodeSelectors:
+nodeSelector:
   core:
     polyaxon: core
   experiments:
