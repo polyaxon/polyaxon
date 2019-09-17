@@ -68,7 +68,7 @@ You may need to update `gcr.io`key to your repository hosts `us.gcr.io`, `eu.gcr
 ## Create a secret with config.json as a name
 
 ```bash
-kubectl create secret generic docker-conf --from-file=config.json=./config.json -n polyaxon
+kubectl create secret generic docker-conf --from-file=./config.json -n polyaxon
 ```
 
 ## Add the secret to the k8s_secrets catalog in Stores
