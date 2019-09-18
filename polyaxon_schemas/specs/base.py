@@ -165,6 +165,34 @@ class ContextsSpecificationMixin(object):
         return self.contexts.shm if self.contexts else None
 
 
+class ParallelSpecificationMixin(object):
+    @property
+    def parallel(self):
+        return self._config_data.parallel
+
+    @property
+    def early_stopping(self):
+        early_stopping = None
+        if self.parallel:
+            early_stopping = self.parallel.early_stopping
+        return early_stopping or []
+
+    @property
+    def parallel_algorithm(self):
+        return self.parallel.algorithm if self.parallel else None
+
+    @property
+    def parallel_algorithm_kind(self):
+        return self.parallel_algorithm.kind if self.parallel_algorithm else None
+
+    @property
+    def concurrency(self):
+        concurrency = None
+        if self.parallel:
+            concurrency = self.parallel.concurrency
+        return concurrency or 1
+
+
 class TerminationSpecificationMixin(object):
     @property
     def termination(self):
@@ -196,6 +224,7 @@ class BaseSpecification(
     EnvironmentSpecificationMixin,
     ContextsSpecificationMixin,
     TerminationSpecificationMixin,
+    ParallelSpecificationMixin,
 ):
     """Base abstract specification for plyaxonfiles and configurations."""
 

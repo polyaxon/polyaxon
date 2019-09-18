@@ -23,25 +23,3 @@ class JobSpecification(BaseSpecification):
     )
 
     CONFIG = JobConfig
-
-    @property
-    def parallel(self):
-        return self.config.parallel
-
-    @property
-    def parallel_early_stopping(self):
-        early_stopping = None
-        if self.parallel:
-            early_stopping = self.parallel.early_stopping
-        return early_stopping or []
-
-    @property
-    def parallel_algorithm(self):
-        return self.parallel.algorithm.kind if self.parallel else None
-
-    @property
-    def parallel_concurrency(self):
-        concurrency = None
-        if self.parallel:
-            concurrency = self.parallel.concurrency
-        return concurrency or 1

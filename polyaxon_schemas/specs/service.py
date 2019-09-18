@@ -22,7 +22,3 @@ class ServiceSpecification(BaseSpecification):
     )
 
     CONFIG = ServiceConfig
-
-    @property
-    def backend(self):
-        return self.config.backend

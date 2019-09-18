@@ -92,10 +92,11 @@ class TestPolyaxonfileWithTypes(TestCase):
             "value": [3.3, 4.4],
         }
         assert isinstance(spec.parallel, ParallelConfig)
-        assert spec.parallel_concurrency == 2
-        assert spec.parallel_algorithm == GridSearchConfig.IDENTIFIER
+        assert spec.concurrency == 2
+        assert isinstance(spec.parallel_algorithm, GridSearchConfig)
+        assert spec.parallel_algorithm_kind == GridSearchConfig.IDENTIFIER
         assert spec.parallel.early_stopping is None
-        assert spec.parallel_early_stopping == []
+        assert spec.early_stopping == []
 
         # TODO
         # spec = spec.get_experiment_spec(matrix_declaration=get_matrix_declaration_test(spec))

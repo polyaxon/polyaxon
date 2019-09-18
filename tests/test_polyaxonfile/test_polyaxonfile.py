@@ -251,9 +251,11 @@ class TestPolyaxonfileXXX(TestCase):
             "value": ["CDNA", "DNA", "STP"],
         }
         assert spec.parallel.concurrency == 2
-        assert spec.parallel_algorithm == HyperbandConfig.IDENTIFIER
+        assert spec.concurrency == 2
+        assert isinstance(spec.parallel_algorithm, HyperbandConfig)
+        assert spec.parallel_algorithm_kind == HyperbandConfig.IDENTIFIER
         assert spec.parallel.early_stopping is None
-        assert spec.parallel_early_stopping == []
+        assert spec.early_stopping == []
 
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(
@@ -275,9 +277,10 @@ class TestPolyaxonfileXXX(TestCase):
             "value": [3.3, 4.4],
         }
         assert spec.parallel.concurrency == 2
-        assert spec.parallel_algorithm == GridSearchConfig.IDENTIFIER
+        assert isinstance(spec.parallel_algorithm, GridSearchConfig)
+        assert spec.parallel_algorithm_kind == GridSearchConfig.IDENTIFIER
         assert spec.parallel.early_stopping is None
-        assert spec.parallel_early_stopping == []
+        assert spec.early_stopping == []
 
     def test_matrix_early_stopping_file_passes(self):
         plxfile = PolyaxonFile(
@@ -300,10 +303,11 @@ class TestPolyaxonfileXXX(TestCase):
         }
         assert spec.parallel.concurrency == 2
         assert spec.parallel.algorithm.n_experiments == 300
-        assert spec.parallel_algorithm == RandomSearchConfig.IDENTIFIER
-        assert spec.parallel_early_stopping == spec.parallel.early_stopping
-        assert len(spec.parallel_early_stopping) == 1
-        assert isinstance(spec.parallel_early_stopping[0], MetricEarlyStoppingConfig)
+        assert isinstance(spec.parallel_algorithm, RandomSearchConfig)
+        assert spec.parallel_algorithm_kind == RandomSearchConfig.IDENTIFIER
+        assert spec.early_stopping == spec.parallel.early_stopping
+        assert len(spec.early_stopping) == 1
+        assert isinstance(spec.early_stopping[0], MetricEarlyStoppingConfig)
 
     def test_tf_passes(self):
         plxfile = PolyaxonFile(
