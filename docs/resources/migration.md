@@ -23,15 +23,16 @@ some of these dependencies cannot be upgraded automatically and require a shutdo
 N.B.1 the Postgres dependency is still the same, we also suggest that you always pin the db version, 
 Polyaxon's built-in dependency points to `imageTag: 9.6.1`.
  
-N.B.2 Polyaxon supports any version of postfresql from 9.6 and it's recommended that you have this value in your deployment config.
+N.B.2 Polyaxon supports any version of postgresql from 9.6 and it's recommended that you have this value in your deployment config.
 
 N.B.3 If you are using an external Postgres instance, the chart has been updated to consolidate all external services in one section. 
 
 ### Teardown Polyaxon deployment
 
-In order to upgrade to the latest Polyaxon version, please make sure to teardown your deployment, 
-this will leave your data intact, i.e. database, outputs, logs, and they will be reused upon the upgrade.
+Make sure that your data (database, outputs, logs,...) is stored on some persistent storage (not a pvc created by Helm when you installed polyaxon).
+Then, in order to upgrade to the latest Polyaxon version, please make sure to teardown your deployment, this will leave your data intact and they will be reused upon the upgrade. (Provided that the storage it resides on is not deleted!)
 
+`polyaxon admin teardown`
 
 ### Delete entities not deleted by Helm
 
@@ -41,11 +42,13 @@ please make sure to delete them before proceeding.
 ### Migrate your configuration YAML/Json file
 
 In order to upgrade to the new version while reusing your previous data, 
-you need to make sure that your deployment config file is valid, you can use the CLI to validate your new config file. 
+you need to make sure that your deployment config file is valid, you can use the upgraded CLI to validate your new config file.
+
+`polyaxon admin deploy -f config.yaml --check` 
 
 Make sure to keep a backup of your config file to set the configuration using the web UI.
 
-Several options have been migrated to a web UI settings page, please section [Dynamic configuration](/resources/migration/#dynamic-configuration).
+Several options have been migrated to a web UI settings page, please refer to section [Dynamic configuration](/resources/migration/#dynamic-configuration).
 
 ### Dependencies
 
