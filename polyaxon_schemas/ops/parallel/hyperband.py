@@ -73,7 +73,15 @@ class HyperbandConfig(BaseConfig):
     IDENTIFIER = "hyperband"
 
     def __init__(
-        self, matrix, max_iter, eta, resource, metric, resume=False, seed=None, kind="hyperband"
+        self,
+        matrix,
+        max_iter,
+        eta,
+        resource,
+        metric,
+        resume=False,
+        seed=None,
+        kind="hyperband",
     ):
         self.matrix = matrix
         self.kind = kind

@@ -9,7 +9,7 @@ tags:
 inputs:
 - name: log_dir
   type: path
-  default: /path/my/outputs
+  value: /path/my/outputs
   is_optional: true
 
 environment:

@@ -6,7 +6,7 @@ kind: job
 inputs:
   - name: input1
     type: str
-    default: [MeanSquaredError, AbsoluteDifference]
+    value: [MeanSquaredError, AbsoluteDifference]
     is_optional: true
 
 parallel:

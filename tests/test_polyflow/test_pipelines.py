@@ -146,7 +146,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                     "outputs": [
@@ -180,7 +180,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                     "outputs": [
@@ -234,7 +234,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.S3_PATH,
                             "is_optional": True,
-                            "default": "s3://foo",
+                            "value": "s3://foo",
                         }
                     ],
                     "outputs": [
@@ -1177,7 +1177,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.FLOAT,
                             "is_optional": True,
-                            "default": 12.2,
+                            "value": 12.2,
                         }
                     ],
                 }
@@ -1206,7 +1206,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.FLOAT,
                             "is_optional": True,
-                            "default": 12.2,
+                            "value": 12.2,
                         }
                     ],
                 }
@@ -1252,7 +1252,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                 }
@@ -1300,7 +1300,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                 }
@@ -1349,7 +1349,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                     "outputs": [
@@ -1358,7 +1358,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.INT,
                             "is_optional": True,
-                            "default": 123,
+                            "value": 123,
                         }
                     ],
                 }
@@ -1411,7 +1411,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                     "outputs": [
@@ -1524,7 +1524,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                     "outputs": [
@@ -1558,7 +1558,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.BOOL,
                             "is_optional": True,
-                            "default": True,
+                            "value": True,
                         },
                     ],
                     "outputs": [
@@ -1606,7 +1606,7 @@ class TestPipelineConfigs(TestCase):
                             "description": "some text",
                             "type": IOTypes.S3_PATH,
                             "is_optional": True,
-                            "default": "s3://foo",
+                            "value": "s3://foo",
                         }
                     ],
                     "outputs": [

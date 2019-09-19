@@ -176,7 +176,7 @@ class TestOperationsConfigs(TestCase):
                 {
                     "name": "param1",
                     "type": IOTypes.INT,
-                    "default": 12,
+                    "value": 12,
                     "is_optional": True,
                 },
                 {"name": "param2", "type": IOTypes.INT},

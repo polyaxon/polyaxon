@@ -160,7 +160,7 @@ def validate_params(
             validated_params.append(
                 ParamSpec(
                     name=inp.name,
-                    value=inp.default,
+                    value=inp.value,
                     iotype=inp.iotype,
                     entity=None,
                     entity_ref=None,
@@ -186,7 +186,7 @@ def validate_params(
             validated_params.append(
                 ParamSpec(
                     name=out.name,
-                    value=out.default,
+                    value=out.value,
                     iotype=out.iotype,
                     entity=None,
                     entity_ref=None,

@@ -6,7 +6,7 @@ kind: job
 inputs:
   - name: input1
     type: int
-    default: 23423
+    value: 23423
     is_optional: true
 
 parallel:

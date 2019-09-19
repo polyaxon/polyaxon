@@ -48,11 +48,11 @@ templates:
     inputs:
       - name: lr
         type: float
-        default: 0.1
+        value: 0.1
         is_optional: true
       - name: loss
         type: str
-        default: MSE
+        value: MSE
         is_optional: true
     environment:
       resources: {requests: {cpu: 1}}

@@ -9,7 +9,7 @@ tags:
 inputs:
   - name: loss
     type: str
-    default: MeanSquaredError
+    value: MeanSquaredError
     is_optional: true
   - name: num_masks
     type: int
