@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import six
-
-from collections import namedtuple
-
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX
@@ -13,18 +9,12 @@ from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.termination import TerminationSchema
+from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.executable import ExecutableConfig, ExecutableSchema
 from polyaxon_schemas.polyflow.ops import OpSchema
 from polyaxon_schemas.polyflow.schedule import ScheduleSchema
+from polyaxon_schemas.polyflow.spec import DagOpSpec
 from polyaxon_schemas.polyflow.template import TemplateSchema
-
-
-class DagOpSpec(namedtuple("DagOpSpec", "op upstream downstream")):
-    def items(self):
-        return self._asdict().items()
-
-    def set_op(self, op):
-        return self._replace(op=op)
 
 
 class PipelineSchema(ExecutableSchema):
@@ -130,24 +120,11 @@ class PipelineConfig(ExecutableConfig):
 
         return upstream
 
-    def _set_dag_op(self, op_name, op=None, upstream=None, downstream=None):
-        upstream = set(upstream) if upstream else set([])
-        downstream = set(downstream) if downstream else set([])
-        if op_name in self._dag:
-            if op and self._dag[op_name].op is None:
-                self._dag[op_name] = self._dag[op_name].set_op(op)
-            self._dag[op_name].upstream.update(upstream)
-            self._dag[op_name].downstream.update(downstream)
-        else:
-            self._dag[op_name] = DagOpSpec(
-                op=op, upstream=upstream, downstream=downstream
-            )
-
     def _process_op(self, op):
         upstream = self._get_op_upstream(op=op)
-        self._set_dag_op(op_name=op.name, op=op, upstream=upstream, downstream=None)
+        self._dag = dags.set_dag_op(dag=self.dag, op_name=op.name, op=op, upstream=upstream, downstream=None)
         for op_name in upstream:
-            self._set_dag_op(op_name=op_name, downstream=[op.name])
+            self._dag = dags.set_dag_op(dag=self.dag, op_name=op_name, downstream=[op.name])
 
     def process_dag(self):
         for op in self.ops or []:
@@ -164,20 +141,11 @@ class PipelineConfig(ExecutableConfig):
 
     def get_independent_ops(self, dag=None):
         """Get a list of all node in the graph with no dependencies."""
-        dag = dag or self.dag
-        ops = set(six.iterkeys(dag))
-        dependent_nodes = {
-            op_downstream
-            for op in six.itervalues(dag)
-            for op_downstream in op.downstream
-        }
-        return ops - dependent_nodes
+        return dags.get_independent_ops(self.dag or dag)
 
     def get_orphan_ops(self, dag=None):
         """Get orphan ops for given dag."""
-        dag = dag or self.dag
-        independent_ops = self.get_independent_ops(dag)
-        return {op for op in independent_ops if dag[op].op is None}
+        return dags.get_orphan_ops(dag or self.dag)
 
     def sort_topologically(self, dag=None, flatten=False):
         """Sort the dag breath first topologically.
@@ -190,45 +158,7 @@ class PipelineConfig(ExecutableConfig):
              an error if this is not possible (graph is not valid).
         """
 
-        def get_independent_ops():
-            if current_independent_ops:
-                return current_independent_ops.pop()
-            current_independent_ops.update(next_independent_ops)
-            next_independent_ops.clear()
-            sorted_ops.append(current_sorted_ops[:])
-            del current_sorted_ops[:]  # in python3 it should use .clear()
-            if current_independent_ops:
-                return current_independent_ops.pop()
-
-        dag = dag or self.dag
-        visited_ops = set()
-        next_independent_ops = set()
-        current_sorted_ops = []
-        sorted_ops = []
-        current_independent_ops = self.get_independent_ops(dag)
-        op = get_independent_ops()
-        while op:
-            current_sorted_ops.append(op)
-            visited_ops.add(op)
-            downstream_ops = dag[op].downstream.copy()
-            while downstream_ops:
-                downstream_op = downstream_ops.pop()
-
-                if downstream_op not in dag:
-                    continue
-
-                if downstream_op in visited_ops:
-                    continue
-
-                if not dag[downstream_op].upstream - visited_ops:
-                    next_independent_ops.add(downstream_op)
-
-            op = get_independent_ops()
-
-        flatten_sorted_ops = [i for il in sorted_ops for i in il]
-        if len(flatten_sorted_ops) != len(dag.keys()):
-            raise PolyaxonSchemaError("Pipeline's graph is not acyclic.")
-        return flatten_sorted_ops if flatten else sorted_ops
+        return dags.sort_topologically(dag or self.dag, flatten=flatten)
 
     def process_templates(self):
         if not self.templates:

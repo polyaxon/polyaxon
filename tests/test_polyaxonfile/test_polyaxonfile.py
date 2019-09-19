@@ -33,7 +33,7 @@ from polyaxon_schemas.utils import TaskType
 
 
 @pytest.mark.polyaxonfile_mark
-class TestPolyaxonfileXXX(TestCase):
+class TestPolyaxonfile(TestCase):
     def test_missing_version_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath("tests/fixtures/plain/missing_version.yml"))

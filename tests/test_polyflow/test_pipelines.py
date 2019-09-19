@@ -10,6 +10,7 @@ from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.ops.io import IOTypes
+from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpConfig
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
 from polyaxon_schemas.polyflow.template_ref import TemplateRefConfig
@@ -306,7 +307,9 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A", "C"}
+        assert dags.get_independent_ops(dag=dag) == {"A", "C"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
         assert sorted_dag[0] in [["A", "C"], ["C", "A"]]
         assert sorted_dag[1] == ["B"]
@@ -358,7 +361,9 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A", "B", "C", "D"}
+        assert dags.get_independent_ops(dag=dag) == {"A", "B", "C", "D"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         assert len(config.sort_topologically(dag=dag)) == 1  # order can be any
         assert len(config.sort_topologically(dag=dag)[0]) == 4  # order can be any
 
@@ -404,8 +409,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         assert config.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
+        assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
@@ -458,8 +466,12 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"B", "C", "D"}
+        assert dags.get_independent_ops(dag=dag) == {"B", "C", "D"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
+
         sorted_dag = config.sort_topologically(dag=dag)
+        assert dags.sort_topologically(dag=dag) == sorted_dag
         # Sort is not guaranteed at stage 0
         assert len(sorted_dag[0]) == 3
         assert set(sorted_dag[0]) == {"B", "C", "D"}
@@ -507,9 +519,13 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 3
         assert config.get_independent_ops(dag=dag) == set()
+        assert dags.get_independent_ops(dag=dag) == set()
         assert config.get_orphan_ops(dag=dag) == set()
+        assert dags.get_orphan_ops(dag=dag) == set()
         with self.assertRaises(PolyaxonSchemaError):
             config.sort_topologically(dag=dag)
+        with self.assertRaises(PolyaxonSchemaError):
+            dags.sort_topologically(dag=dag)
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
@@ -548,9 +564,13 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 3
         assert config.get_independent_ops(dag=dag) == set()
+        assert dags.get_independent_ops(dag=dag) == set()
         assert config.get_orphan_ops(dag=dag) == set()
+        assert dags.get_orphan_ops(dag=dag) == set()
         with self.assertRaises(PolyaxonSchemaError):
             config.sort_topologically(dag=dag)
+        with self.assertRaises(PolyaxonSchemaError):
+            dags.sort_topologically(dag=dag)
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
@@ -590,6 +610,7 @@ class TestPipelineConfigs(TestCase):
         assert config.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert dags.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]  # Only this one has consistent order
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
@@ -623,8 +644,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 5
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]
         # Sort is not guaranteed at stage 1
         assert len(sorted_dag[1]) == 3
@@ -667,8 +691,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 5
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]
         # Sort is not guaranteed at stage 1
         assert len(sorted_dag[1]) == 3
@@ -721,8 +748,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 3
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]  # Only this one has consistent order
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
@@ -753,8 +783,11 @@ class TestPipelineConfigs(TestCase):
         config.validate_dag()
         assert len(config.dag) == 5
         assert config.get_independent_ops(dag=config.dag) == {"A"}
+        assert dags.get_independent_ops(dag=config.dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]
         # Sort is not guaranteed at stage 1
         assert len(sorted_dag[1]) == 3
@@ -798,8 +831,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 5
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]
         # Sort is not guaranteed at stage 1
         assert len(sorted_dag[1]) == 3
@@ -880,8 +916,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         assert config.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
+        assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.template.to_dict() == {"action": "echo"}
@@ -951,8 +990,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         assert config.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
+        assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
         assert config.dag["A"].op.template.to_dict() == {"action": "echo"}
@@ -996,8 +1038,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 4
         assert config.get_independent_ops(dag=dag) == {"A", "E"}
+        assert dags.get_independent_ops(dag=dag) == {"A", "E"}
         assert config.get_orphan_ops(dag=dag) == {"E"}
+        assert dags.get_orphan_ops(dag=dag) == {"E"}
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] in [["A", "E"], ["E", "A"]]
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
@@ -1635,8 +1680,11 @@ class TestPipelineConfigs(TestCase):
         dag = config.dag
         assert len(dag) == 3
         assert config.get_independent_ops(dag=dag) == {"A"}
+        assert dags.get_independent_ops(dag=dag) == {"A"}
         assert config.get_orphan_ops(dag=dag) == set([])
+        assert dags.get_orphan_ops(dag=dag) == set([])
         sorted_dag = config.sort_topologically(dag=dag)
+        assert config.sort_topologically(dag=dag) == sorted_dag
         assert sorted_dag[0] == ["A"]
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["C"]
