@@ -139,8 +139,10 @@ class TestPolyaxonfileWithTypes(TestCase):
         required_refs = spec.raw_config.get_params_with_refs()
         assert len(required_refs) == 1
         assert required_refs[0].name == "model_path"
-        assert required_refs[0].value == "jobs.1.outputs.doo"
-        spec.apply_context(context={"jobs__1__outputs__doo": "model_path"})
+        assert required_refs[0].value == "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"
+        spec.apply_context(
+            context={"runs__64332180bfce46eba80a65caf73c5396__outputs__doo": "model_path"}
+        )
         assert spec.version == 0.6
         assert spec.tags == {"foo": "bar"}
         assert spec.is_job

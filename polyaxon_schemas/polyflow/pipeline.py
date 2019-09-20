@@ -163,12 +163,12 @@ class PipelineConfig(BaseConfig):
     def process_templates(self):
         if not self.templates:
             raise PolyaxonSchemaError(
-                "Pipeline is not valid, " "it has no templates to validate operations."
+                "Pipeline is not valid, it has no templates to validate operations."
             )
 
         if not self.ops:
             raise PolyaxonSchemaError(
-                "Pipeline is not valid, " "it has no ops to validate operations."
+                "Pipeline is not valid, it has no ops to validate operations."
             )
 
         for template in self.templates:

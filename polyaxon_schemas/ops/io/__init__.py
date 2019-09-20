@@ -28,7 +28,7 @@ def validate_io_value(
         return default
     except RheaError as e:
         raise ValidationError(
-            "Could not parse value `%s`, " "an error was encountered: %s" % (value, e)
+            "Could not parse value `%s`, an error was encountered: %s" % (value, e)
         )
 
 

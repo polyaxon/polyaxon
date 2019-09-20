@@ -2,6 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import re
+import uuid
+
 import six
 
 from collections import namedtuple
@@ -12,9 +14,8 @@ REGEX = re.compile(r"{{\s*([^\s]*)\s*}}")
 
 OUTPUTS = "outputs"
 OPS = "ops"
-EXPERIMENTS = "experiments"
-JOBS = "jobs"
-ENTITIES = {JOBS, EXPERIMENTS, OPS}
+RUNS = "runs"
+ENTITIES = {RUNS, OPS}
 
 
 class ParamSpec(namedtuple("ParamSpec", "name iotype value entity entity_ref is_flag")):
@@ -71,13 +72,12 @@ def get_param(name, value, iotype, is_flag):
         raise ValidationError(
             "Could not parse value `{}` for param `{}`.".format(value, name)
         )
-    if param_parts[0] in {EXPERIMENTS, JOBS}:
+    if param_parts[0] == RUNS:
         try:
-            int(param_parts[1])
+            uuid.UUID(param_parts[1])
         except (KeyError, ValueError):
             raise ValidationError(
-                "Param value `{}` is not valid, "
-                "it should provide an id.".format(value)
+                "Param value `{}` should reference a valid uuid.".format(value, param_parts[1])
             )
 
     return ParamSpec(

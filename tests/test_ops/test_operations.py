@@ -353,10 +353,10 @@ class TestOperationsConfigs(TestCase):
     def test_experiment_and_job_refs_params(self):
         config_dict = {
             "params": {
-                "param1": "{{ experiments.1.outputs.foo }}",
-                "param2": "{{ jobs.1.outputs.foo }}",
+                "param1": "{{ runs.64332180bfce46eba80a65caf73c5396.outputs.foo }}",
+                "param2": "{{ runs.0de53b5bf8b04a219d12a39c6b92bcce.outputs.foo }}",
                 "param9": "wasbs://container@user.blob.core.windows.net/",
-                "param11": "{{ experiments.1.outputs.accuracy }}",
+                "param11": "{{ runs.fcc462d764104eb698d3cca509f34154.outputs.accuracy }}",
             },
             "inputs": [
                 {"name": "param1", "type": IOTypes.INT},
