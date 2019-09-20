@@ -8,7 +8,41 @@ from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification
 
 
-class PipelineSpecification(BaseSpecification):
+class ScheduleSpecificationMixin(object):
+    @property
+    def schedule(self):
+        return self._config_data.schedule
+
+    @property
+    def schedule_kind(self):
+        return self.schedule.kind if self.schedule else None
+
+    @property
+    def schedule_start_at(self):
+        return self.schedule.start_at if self.schedule else None
+
+    @property
+    def schedule_end_at(self):
+        return self.schedule.end_at if self.schedule else None
+
+    @property
+    def schedule_frequency(self):
+        return self.schedule.frequency if self.schedule else None
+
+    @property
+    def schedule_cron(self):
+        return self.schedule.cron if self.schedule else None
+
+    @property
+    def schedule_depends_on_past(self):
+        return self.schedule.depends_on_past if self.schedule else None
+
+    @property
+    def execute_at(self):
+        return self.schedule.execute_at if self.schedule else None
+
+
+class PipelineSpecification(BaseSpecification, ScheduleSpecificationMixin):
     """The polyaxonfile specification for pipelines.
 
     SECTIONS:

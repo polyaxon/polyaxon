@@ -18,12 +18,33 @@ from polyaxon_schemas.polyflow.template_ref import TemplateRefConfig
 
 @pytest.mark.polyflow_mark
 class TestPipelineConfigs(TestCase):
+
+    def test_executable(self):
+        config_dict = {"start_at": "foo"}
+        with self.assertRaises(ValidationError):
+            PipelineConfig.from_dict(config_dict)
+
+        config_dict = {"execute_at": "foo"}
+        with self.assertRaises(ValidationError):
+            PipelineConfig.from_dict(config_dict)
+
+        config_dict = {"timeout": 2}
+        with self.assertRaises(ValidationError):
+            PipelineConfig.from_dict(config_dict)
+
+        config_dict = {"termination": {"timeout": 2}, "execute_at": local_now().isoformat()}
+        PipelineConfig.from_dict(config_dict)
+
     def test_pipelines_base_attrs(self):
         config_dict = {"concurrency": "foo"}
         with self.assertRaises(ValidationError):
             PipelineConfig.from_dict(config_dict)
 
         config_dict = {"concurrency": 2}
+        with self.assertRaises(ValidationError):
+            PipelineConfig.from_dict(config_dict)
+
+        config_dict = {"parallel": {"concurrency": 2}}
         config = PipelineConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         config.process_dag()
@@ -32,9 +53,9 @@ class TestPipelineConfigs(TestCase):
             config.process_templates()
 
         config_dict = {
-            "concurrency": 2,
+            "parallel": {"concurrency": 2},
             "execute_at": local_now().isoformat(),
-            "timeout": 1000,
+            "termination": {"timeout": 1000},
         }
         config = PipelineConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

@@ -7,7 +7,7 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
 class ExecutableSchema(BaseSchema):
-    execute_at = fields.LocalDateTime(allow_none=True)
+
     timeout = fields.Int(allow_none=True)
 
     @staticmethod

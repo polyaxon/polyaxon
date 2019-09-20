@@ -8,7 +8,8 @@ name: test-pipeline
 tags:
   backend: native
 
-concurrency: 2
+parallel:
+  concurrency: 2
 
 ops:
   - name: job1

@@ -8,7 +8,8 @@ name: test-pipeline
 tags:
   backend: native
 
-concurrency: 3
+parallel:
+  concurrency: 3
 
 environment:
   log_level: INFO

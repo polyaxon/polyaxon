@@ -51,10 +51,13 @@ class TestPolyaxonfileWithPipelines(TestCase):
         spec.apply_context()
         assert len(spec.config.ops) == 1
         assert spec.config.ops[0].name == "cron-task"
-        assert spec.config.concurrency is None
+        assert spec.config.parallel is None
         assert spec.config.schedule is not None
         assert spec.config.schedule.kind == "cron"
         assert spec.config.schedule.cron == "0 0 * * *"
+        assert spec.schedule is not None
+        assert spec.schedule_kind == "cron"
+        assert spec.schedule_cron == "0 0 * * *"
 
     def test_interval_pipeline(self):
         plx_file = PolyaxonFile(
@@ -64,12 +67,17 @@ class TestPolyaxonfileWithPipelines(TestCase):
         spec.apply_context()
         assert len(spec.config.ops) == 1
         assert spec.config.ops[0].name == "recurrent-task"
-        assert spec.config.concurrency is None
+        assert spec.config.parallel is None
         assert spec.config.schedule is not None
         assert spec.config.schedule.kind == "interval"
         assert spec.config.schedule.start_at.year == 2019
         assert spec.config.schedule.frequency == 120
         assert spec.config.schedule.depends_on_past is True
+        assert spec.schedule is not None
+        assert spec.schedule_kind == "interval"
+        assert spec.schedule_start_at.year == 2019
+        assert spec.schedule_frequency == 120
+        assert spec.schedule_depends_on_past is True
 
     def test_sequential_pipeline(self):
         plx_file = PolyaxonFile(
@@ -91,7 +99,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             ["experiment1"],
             ["experiment2"],
         ]
-        assert spec.config.concurrency is None
+        assert spec.config.parallel is None
         assert spec.config.schedule is None
 
     def test_parallel_pipeline(self):
@@ -115,8 +123,10 @@ class TestPolyaxonfileWithPipelines(TestCase):
             "experiment1",
             "experiment2",
         }
-        assert spec.config.concurrency == 2
+        assert spec.config.parallel.concurrency == 2
         assert spec.config.schedule is None
+        assert spec.concurrency == 2
+        assert spec.schedule is None
 
     def test_dag_pipeline(self):
         plx_file = PolyaxonFile(
@@ -142,5 +152,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert srorted_dag[0] == ["job1"]
         assert set(srorted_dag[1]) == {"experiment1", "experiment2", "experiment3"}
         assert srorted_dag[2] == ["job2"]
-        assert spec.config.concurrency == 3
+        assert spec.config.parallel.concurrency == 3
         assert spec.config.schedule is None
+        assert spec.concurrency == 3
+        assert spec.schedule is None
