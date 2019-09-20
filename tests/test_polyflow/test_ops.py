@@ -57,7 +57,6 @@ class TestOpConfigs(TestCase):
 
         config_dict = {
             "template": {"action": "foo"},
-            "concurrency": 2,
             "dependencies": ["foo", "bar"],
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
@@ -65,13 +64,12 @@ class TestOpConfigs(TestCase):
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-        config_dict = {"template": {"event": "foo"}, "concurrency": 2}
+        config_dict = {"template": {"event": "foo"}}
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
         config_dict = {
             "template": {"name": "foo"},
-            "concurrency": 2,
             "dependencies": [{"name": "foo"}, {"name": "bar"}],  # Wrong
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
