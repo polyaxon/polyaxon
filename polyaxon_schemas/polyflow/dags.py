@@ -4,16 +4,16 @@ from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.polyflow.spec import DagOpSpec
 
 
-def set_dag_op(dag, op_name, op=None, upstream=None, downstream=None):
+def set_dag_op(dag, op_id, op=None, upstream=None, downstream=None):
     upstream = set(upstream) if upstream else set([])
     downstream = set(downstream) if downstream else set([])
-    if op_name in dag:
-        if op and dag[op_name].op is None:
-            dag[op_name] = dag[op_name].set_op(op)
-        dag[op_name].upstream.update(upstream)
-        dag[op_name].downstream.update(downstream)
+    if op_id in dag:
+        if op and dag[op_id].op is None:
+            dag[op_id] = dag[op_id].set_op(op)
+        dag[op_id].upstream.update(upstream)
+        dag[op_id].downstream.update(downstream)
     else:
-        dag[op_name] = DagOpSpec(
+        dag[op_id] = DagOpSpec(
             op=op, upstream=upstream, downstream=downstream
         )
 
@@ -21,9 +21,9 @@ def set_dag_op(dag, op_name, op=None, upstream=None, downstream=None):
 
 
 def process_op(dag, op, upstream):
-    set_dag_op(dag=dag, op_name=op, op=op, upstream=upstream, downstream=None)
+    set_dag_op(dag=dag, op_id=op.id, op=op, upstream=upstream, downstream=None)
     for op_upstream in upstream:
-        dag = set_dag_op(dag=dag, op_name=op_upstream, downstream=[op])
+        dag = set_dag_op(dag=dag, op_id=op_upstream, downstream=[op.id])
 
     return dag
 

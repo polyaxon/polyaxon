@@ -122,9 +122,9 @@ class PipelineConfig(BaseConfig):
 
     def _process_op(self, op):
         upstream = self._get_op_upstream(op=op)
-        self._dag = dags.set_dag_op(dag=self.dag, op_name=op.name, op=op, upstream=upstream, downstream=None)
+        self._dag = dags.set_dag_op(dag=self.dag, op_id=op.name, op=op, upstream=upstream, downstream=None)
         for op_name in upstream:
-            self._dag = dags.set_dag_op(dag=self.dag, op_name=op_name, downstream=[op.name])
+            self._dag = dags.set_dag_op(dag=self.dag, op_id=op_name, downstream=[op.name])
 
     def process_dag(self):
         for op in self.ops or []:
