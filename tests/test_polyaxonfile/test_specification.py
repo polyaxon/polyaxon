@@ -9,6 +9,8 @@ import pytest
 
 from flaky import flaky
 from marshmallow import ValidationError
+
+from polyaxon_schemas.ops.io import IOTypes
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
@@ -48,28 +50,102 @@ class TestSpecifications(TestCase):
     #     spec.apply_context()
     #     self.assertEqual(spec.cluster_def, ({TaskType.MASTER: 1}, False))
     #
-    def test_patch_experiment(self):
+    def test_patch_experiment_without_io_and_params_raises(self):
         content = {
             "version": 0.6,
             "kind": "job",
             "container": {"image": "test/test:latest", "command": "train"},
         }
         spec = JobSpecification.read(content)
-        spec.apply_context()
-        new_spec = JobSpecification.read(spec.raw_data)
-        new_spec.apply_context()
-        assert new_spec.parsed_data == content
-        assert spec.params is None
+        spec = spec.apply_context()
+        new_spec = JobSpecification.read(spec.data)
+        spec = new_spec.apply_context()
+        assert new_spec.data == content
 
         # Add params
         params = {"params": {"lr": 0.1}}
-        spec = spec.patch(values=params)
-        assert spec.params == params["params"]
+        with self.assertRaises(PolyaxonfileError):
+            spec.patch(values=params)
 
-        # Update params
-        params = {"params": {"lr": 0.01, "num_steps": 100}}
-        spec = spec.patch(values=params)
-        assert spec.params == params["params"]
+    def test_apply_context_raises_with_required_inputs(self):
+        content = {
+            "version": 0.6,
+            "kind": "job",
+            "inputs": [
+                {"name": "lr", "type": IOTypes.FLOAT},
+                {"name": "num_steps", "type": IOTypes.INT},
+            ],
+            "container": {"image": "test/test:latest", "command": "train"},
+        }
+        spec = JobSpecification.read(content)
+
+        # Raise because required inputs are not met
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_context()
+
+        # Validation for template should pass
+        validated_params = spec.validate_params()
+        assert {"lr": None, "num_steps": None} == {p.name: p.value for p in validated_params}
+        # Validation for non template should raise
+        with self.assertRaises(PolyaxonfileError):
+            spec.validate_params(is_template=False)
+
+    def test_apply_context_passes_with_required_inputs_and_params(self):
+        content = {
+            "version": 0.6,
+            "kind": "job",
+            "inputs": [
+                {"name": "lr", "type": IOTypes.FLOAT},
+                {"name": "num_steps", "type": IOTypes.INT},
+            ],
+            "container": {"image": "test/test:latest", "command": "train"},
+        }
+        spec = JobSpecification.read(content)
+        # no params
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_context()
+
+        params = {"lr": 0.1, "num_steps": 100}
+        validated_params = spec.validate_params(params=params)
+        assert params == {p.name: p.value for p in validated_params}
+        new_spec = spec.apply_context(params=params)
+        assert new_spec.data == content
+
+        env = {
+            "environment": {
+                "resources": {
+                    "requests": {"gpu": 1, "tpu": 1},
+                    "limits": {"gpu": 1, "tpu": 1},
+                }
+            }
+        }
+        spec = spec.patch(values=env)
+        assert spec.data["environment"] == env["environment"]
+
+    def test_patch_experiment_with_optional_inputs(self):
+        content = {
+            "version": 0.6,
+            "kind": "job",
+            "inputs": [
+                {"name": "lr", "type": IOTypes.FLOAT, "value": 0.6, "is_optional": True},
+                {"name": "num_steps", "type": IOTypes.INT, "value": 16, "is_optional": True},
+            ],
+            "container": {"image": "test/test:latest", "command": "train"},
+        }
+        spec = JobSpecification.read(content)
+        spec = spec.apply_context()
+        validated_params = spec.validate_params()
+        assert {"lr": 0.6, "num_steps": 16} == {p.name: p.value for p in validated_params}
+
+        new_spec = JobSpecification.read(spec.data)
+        assert new_spec.data == content
+
+        params = {"lr": 0.6, "num_steps": 16}
+        new_spec.apply_context(params=params)
+
+        with self.assertRaises(PolyaxonfileError):  # not valid
+            params = {"params": {"lr": 0.1}}
+            spec.patch(values=params)
 
         # Add env
         assert spec.environment is None
@@ -82,7 +158,6 @@ class TestSpecifications(TestCase):
             }
         }
         spec = spec.patch(values=env)
-        assert spec.params == params["params"]
         assert spec.environment.resources.to_dict() == {
             "requests": {"gpu": 1, "tpu": 1},
             "limits": {"gpu": 1, "tpu": 1},

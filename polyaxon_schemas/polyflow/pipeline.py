@@ -212,5 +212,4 @@ class PipelineConfig(BaseConfig):
                 outputs=template.outputs,
                 context=self._context,
                 is_template=False,
-                is_run=False,
             )

@@ -53,10 +53,9 @@ class TestPolyaxonfile(TestCase):
     def test_simple_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath("tests/fixtures/plain/simple_job.yml"))
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.tags is None
-        assert spec.params is None
         assert spec.container.image == "python-with-boto3"
         assert spec.container.command == "python download-s3-bucket"
         assert spec.environment is not None
@@ -66,23 +65,27 @@ class TestPolyaxonfile(TestCase):
         }
         assert spec.is_job
 
+    def test_passing_params_to_no_io_overrides_polyaxonfiles_raises(self):
+        with self.assertRaises(PolyaxonfileError):
+            PolyaxonFile(
+                os.path.abspath("tests/fixtures/plain/simple_job.yml"),
+                params={"flag": True, "loss": "some-loss"},
+            )
+
     def test_passing_params_overrides_polyaxonfiles(self):
         plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/simple_job.yml"),
-            params={"foo": "bar", "value": 1.1},
+            os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
         )
         spec = plxfile.specification
-        spec.apply_context()
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_context()
+        spec = spec.apply_context(params={"flag": True, "loss": "some-loss"})
         assert spec.version == 0.6
-        assert spec.tags is None
-        assert spec.params == {"foo": "bar", "value": 1.1}
-        assert spec.container.image == "python-with-boto3"
-        assert spec.container.command == "python download-s3-bucket"
-        assert spec.environment is not None
-        assert spec.resources.to_dict() == {
-            "requests": {"nvidia.com/gpu": 1},
-            "limits": {"nvidia.com/gpu": 1},
-        }
+        assert spec.tags == {"foo": "bar"}
+        assert spec.container.image == "my_image"
+        assert spec.container.command == ["/bin/sh", "-c"]
+        assert spec.container.args == "video_prediction_train --loss=some-loss --flag"
+        assert spec.environment is None
         assert spec.is_job
 
     def test_passing_wrong_params_raises(self):
@@ -96,7 +99,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/simple_job.yml"), debug_ttl=100
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.tags is None
         assert spec.container.image == "python-with-boto3"
@@ -140,7 +143,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/job_file_with_contexts.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.environment, EnvironmentConfig)
@@ -175,7 +178,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/job_file_with_termination.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.termination, TerminationConfig)
@@ -189,7 +192,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/job_file_with_environment.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.environment, EnvironmentConfig)
@@ -220,7 +223,7 @@ class TestPolyaxonfile(TestCase):
     def test_matrix_file_passes(self):
         plxfile = PolyaxonFile(os.path.abspath("tests/fixtures/plain/matrix_file.yml"))
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.parallel, ParallelConfig)
@@ -262,7 +265,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/matrix_file_with_int_float_types.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.parallel, ParallelConfig)
@@ -287,7 +290,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/matrix_file_early_stopping.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.parallel, ParallelConfig)
@@ -314,7 +317,7 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/distributed_tensorflow_file.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 1
         assert isinstance(spec.logging, LoggingConfig)
         assert spec.is_experiment
@@ -424,7 +427,7 @@ class TestPolyaxonfile(TestCase):
                 )
             )
             spec = plxfile.specification
-            spec.apply_context()
+            spec = spec.apply_context()
             assert spec.version == 1
             assert spec.is_experiment
             assert isinstance(spec.logging, LoggingConfig)
@@ -1281,12 +1284,12 @@ class TestPolyaxonfile(TestCase):
             os.path.abspath("tests/fixtures/plain/polyaxonfile_with_quotes.yaml")
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.container.image == "continuumio/miniconda3"
         assert spec.container.command == ["python"]
         assert spec.container.args == ["-c \"print('Tweet tweet')\""]
-        spec = JobSpecification(spec.raw_data)
-        spec.apply_context()
+        spec = JobSpecification(spec.data)
+        spec = spec.apply_context()
         assert spec.container.image == "continuumio/miniconda3"
         assert spec.container.command == ["python"]
         assert spec.container.args == ["-c \"print('Tweet tweet')\""]

@@ -36,7 +36,6 @@ class ServiceConfig(BaseOpConfig):
         termination=None,
         contexts=None,
         container=None,
-        params=None,
         inputs=None,
         outputs=None,
         ports=None,
@@ -51,7 +50,6 @@ class ServiceConfig(BaseOpConfig):
             termination=termination,
             contexts=contexts,
             container=container,
-            params=params,
             inputs=inputs,
             outputs=outputs,
         )

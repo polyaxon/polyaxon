@@ -36,7 +36,6 @@ class JobConfig(BaseOpConfig):
         termination=None,
         contexts=None,
         container=None,
-        params=None,
         inputs=None,
         outputs=None,
         parallel=None,
@@ -52,7 +51,6 @@ class JobConfig(BaseOpConfig):
             termination=termination,
             contexts=contexts,
             container=container,
-            params=params,
             inputs=inputs,
             outputs=outputs,
         )

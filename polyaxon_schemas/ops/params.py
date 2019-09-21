@@ -19,13 +19,20 @@ ENTITIES = {RUNS, OPS}
 
 
 class ParamSpec(namedtuple("ParamSpec", "name iotype value entity entity_ref is_flag")):
-    pass
 
+    @property
+    def display_value(self):
+        if self.is_flag:
+            return "--{}".format(self.name) if self.value else ""
+        return self.value
 
-def get_param_display_value(param, value):
-    if param.is_flag:
-        return "--{}".format(param.name) if value else ""
-    return value
+    def set_value(self, value):
+        return ParamSpec(name=self.name,
+                         iotype=self.iotype,
+                         value=value,
+                         entity=self.entity,
+                         entity_ref=self.entity_ref,
+                         is_flag=self.is_flag)
 
 
 def get_param(name, value, iotype, is_flag):
@@ -90,12 +97,12 @@ def get_param(name, value, iotype, is_flag):
     )
 
 
-def validate_param(param, context):
+def validate_param(param, context, is_template=False):
     """
     Given a param reference to an operation, we check that the operation exists in the context,
     and that the types
     """
-    if param.entity != OPS:
+    if is_template or param.entity != OPS:
         return
 
     context = context or {}
@@ -119,7 +126,7 @@ def validate_param(param, context):
 
 
 def validate_params(
-    params, inputs, outputs, context=None, is_template=True, is_run=True
+    params, inputs, outputs, context=None, is_template=True
 ):
     """
     Validates Params given inputs, and an optional context.
@@ -130,8 +137,13 @@ def validate_params(
      * ops reference: in that case a context must be provided to validate that the reference exists.
         and types are correct.
     """
-    if is_run and not inputs and not outputs:
-        return []
+    if requires_params(inputs, outputs):
+        if not is_template and not params:
+            raise ValidationError(
+                "The Polyaxonfile has non optional inputs/outputs, "
+                "you need to pass valid params.")
+    elif not accepts_params(inputs, outputs) and params:
+        raise ValidationError("Received unexpected params `{}`.".format(params))
 
     params = params or {}
     inputs = inputs or []
@@ -147,7 +159,7 @@ def validate_params(
                 name=inp.name, value=param_value, iotype=inp.iotype, is_flag=inp.is_flag
             )
             if param.entity_ref:
-                validate_param(param, context)
+                validate_param(param, context, is_template)
             else:  # Plain value
                 inp.validate_value(param_value)
             validated_params.append(param)
@@ -198,3 +210,32 @@ def validate_params(
         raise ValidationError("Received unexpected params `{}`.".format(extra_params))
 
     return validated_params
+
+
+def requires_params(inputs, outputs):
+    if not inputs and not outputs:
+        return False
+
+    def parse_io(io):
+        if not io:
+            return False
+        for i in io:
+            if not i.is_optional:
+                return True
+        return False
+
+    if parse_io(inputs):
+        return True
+
+    if parse_io(outputs):
+        return True
+
+    return False
+
+
+def accepts_params(inputs, outputs):
+    return bool(inputs or outputs)
+
+
+def get_params_with_refs(params):
+    return [param for param in params if param.entity_ref]

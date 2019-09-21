@@ -12,19 +12,19 @@ from polyaxon_schemas.specs.base import BaseSpecification
 class OperationSpecificationMixin(object):
     @property
     def dependencies(self):
-        return self._config_data.dependencies
+        return self.config.dependencies
 
     @property
     def trigger(self):
-        return self._config_data.trigger
+        return self.config.trigger
 
     @property
     def conditions(self):
-        return self._config_data.conditions
+        return self.config.conditions
 
     @property
     def skip_on_upstream_skip(self):
-        return self._config_data.skip_on_upstream_skip
+        return self.config.skip_on_upstream_skip
 
 
 class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
@@ -42,11 +42,10 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
 
     @property
     def backend(self):
-        return self.raw_config.backend
+        return self.config.backend
 
     def apply_context(self, context=None):
-        self._config_data.process_dag()
-        self._config_data.validate_dag()
-        self._config_data.process_templates()
-        self._config = self._config_data
+        self.config.process_dag()
+        self.config.validate_dag()
+        self.config.process_templates()
         return self

@@ -48,7 +48,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             os.path.abspath("tests/fixtures/pipelines/simple_cron_pipeline.yml")
         )
         spec = plx_file.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert len(spec.config.ops) == 1
         assert spec.config.ops[0].name == "cron-task"
         assert spec.config.parallel is None
@@ -64,7 +64,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             os.path.abspath("tests/fixtures/pipelines/simple_recurrent_pipeline.yml")
         )
         spec = plx_file.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert len(spec.config.ops) == 1
         assert spec.config.ops[0].name == "recurrent-task"
         assert spec.config.parallel is None
@@ -84,7 +84,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             os.path.abspath("tests/fixtures/pipelines/simple_sequential_pipeline.yml")
         )
         spec = plx_file.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert len(spec.config.ops) == 4
         assert spec.config.ops[0].name == "job1"
         assert spec.config.ops[1].name == "job2"
@@ -107,7 +107,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             os.path.abspath("tests/fixtures/pipelines/simple_parallel_pipeline.yml")
         )
         spec = plx_file.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert len(spec.config.ops) == 4
         assert spec.config.ops[0].name == "job1"
         assert spec.config.ops[0].dependencies is None
@@ -133,7 +133,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
             os.path.abspath("tests/fixtures/pipelines/simple_dag_pipeline.yml")
         )
         spec = plx_file.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert len(spec.config.ops) == 5
         assert spec.config.ops[0].name == "job1"
         assert spec.config.ops[1].name == "experiment1"

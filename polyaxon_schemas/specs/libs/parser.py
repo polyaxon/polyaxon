@@ -41,35 +41,48 @@ class Parser(object):
     @classmethod
     def parse(cls, spec, config, params):  # pylint:disable=too-many-branches
         params = params or {}
+        parsed_params = {param: params[param].display_value for param in params}
 
-        parsed_data = {spec.VERSION: config.version, spec.KIND: config.kind}
+        parsed_data = {
+            spec.VERSION: config.version,
+            spec.KIND: config.kind,
+        }
 
-        if params:
-            params = cls.parse_expression(spec, params, params)
-            parsed_data[spec.PARAMS] = params
+        if config.name:
+            parsed_data[spec.INPUTS] = config.name
+        if config.description:
+            parsed_data[spec.DESCRIPTION] = config.description
+        if config.tags:
+            parsed_data[spec.TAGS] = config.tags
+        inputs = getattr(config, spec.INPUTS)
+        if inputs:
+            parsed_data[spec.INPUTS] = [io.to_dict() for io in inputs]
+        outputs = getattr(config, spec.OUTPUTS)
+        if outputs:
+            parsed_data[spec.OUTPUTS] = [io.to_dict() for io in outputs]
 
         # Check parallel
         parallel_section = cls._get_section(config, spec.PARALLEL)
         if parallel_section:
             parsed_data[spec.PARALLEL] = cls.parse_expression(
-                spec, parallel_section, params
+                spec, parallel_section, parsed_params
             )
             parallel_params = copy.copy(parsed_data[spec.PARALLEL])
             if parallel_params:
-                params = deep_update(parallel_params, params)
+                parsed_params = deep_update(parallel_params, parsed_params)
 
         for section in spec.PARSING_SECTIONS:
             config_section = cls._get_section(config, section)
             if config_section:
                 parsed_data[section] = cls.parse_expression(
-                    spec, config_section, params
+                    spec, config_section, parsed_params
                 )
 
         for section in spec.OP_PARSING_SECTIONS:
             config_section = cls._get_section(config, section)
             if config_section:
                 parsed_data[section] = cls.parse_expression(
-                    spec, config_section, params
+                    spec, config_section, parsed_params
                 )
 
         return parsed_data

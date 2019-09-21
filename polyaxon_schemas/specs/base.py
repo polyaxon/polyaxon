@@ -22,7 +22,7 @@ from polyaxon_schemas.specs.libs.parser import Parser
 class EnvironmentSpecificationMixin(object):
     @property
     def environment(self):
-        return self._config_data.environment
+        return self.config.environment
 
     @property
     def environment_name(self):
@@ -76,7 +76,7 @@ class EnvironmentSpecificationMixin(object):
 class ContextsSpecificationMixin(object):
     @property
     def contexts(self):
-        return self._config_data.contexts
+        return self.config.contexts
 
     @property
     def contexts_name(self):
@@ -168,7 +168,7 @@ class ContextsSpecificationMixin(object):
 class ParallelSpecificationMixin(object):
     @property
     def parallel(self):
-        return self._config_data.parallel
+        return self.config.parallel
 
     @property
     def early_stopping(self):
@@ -196,7 +196,7 @@ class ParallelSpecificationMixin(object):
 class TerminationSpecificationMixin(object):
     @property
     def termination(self):
-        return self._config_data.termination
+        return self.config.termination
 
     @property
     def termination_name(self):
@@ -301,7 +301,7 @@ class BaseSpecification(
         except rhea.RheaError as e:
             raise PolyaxonConfigurationError(e)
         try:
-            self._config_data = self._get_config(self._data)
+            self._config = self.CONFIG.from_dict(copy.deepcopy(self.data))
         except ValidationError as e:
             raise PolyaxonfileError(e)
         self.check_data()
@@ -310,8 +310,6 @@ class BaseSpecification(
             self._headers = validator.validate_headers(spec=self, data=headers)
         except ValidationError as e:
             raise PolyaxonConfigurationError(e)
-        self._parsed_data = None
-        self._config = None
         self._extra_validation()
 
     def _extra_validation(self):
@@ -321,24 +319,36 @@ class BaseSpecification(
     def config(self):
         return self._config
 
-    @property
-    def raw_config(self):
-        return self._config_data
+    def _parse(self, params):
+        params = params or {}
+        parsed_data = Parser.parse(self, self.config, params)
+        return self.read(parsed_data)
 
-    def _get_config(self, data):
-        config = self.CONFIG.from_dict(copy.deepcopy(data))
-        return config
+    def validate_params(self, params=None, context=None, is_template=True):
+        try:
+            return ops_params.validate_params(inputs=self.config.inputs,
+                                              outputs=self.config.outputs,
+                                              params=params,
+                                              context=context,
+                                              is_template=is_template)
+        except ValidationError as e:
+            raise PolyaxonfileError(e)
 
-    def parse_data(self, context=None):
-        return self.apply_context(context=context)
-
-    def apply_context(self, context=None):
+    def apply_context(self, params=None, context=None):
         context = context or {}
-        params = self._config_data.get_params(context=context)
-        parsed_data = Parser.parse(self, self._config_data, params)
-        self._config = self._get_config(parsed_data)
-        self._parsed_data = parsed_data
-        return parsed_data
+        validated_params = self.validate_params(params=params,
+                                                context=context,
+                                                is_template=False)
+        if not validated_params:
+            return self._parse(params)
+
+        params = {}
+        for param in validated_params:
+            if param.entity_ref:
+                param = param.set_value(context[param.value.replace(".", "__")])
+            params[param.name] = param
+
+        return self._parse(params)
 
     @classmethod
     def check_version(cls, data):
@@ -390,10 +400,8 @@ class BaseSpecification(
                 )
 
     def patch(self, values):
-        values = [self._parsed_data] + to_list(values)
-        spec = self.read(values=values)
-        spec.apply_context()
-        return spec
+        values = [self.data] + to_list(values)
+        return self.read(values=values)
 
     @classmethod
     def get_kind(cls, data):
@@ -443,14 +451,6 @@ class BaseSpecification(
         return self._headers
 
     @property
-    def parsed_data(self):
-        return self._parsed_data
-
-    @property
-    def raw_data(self):
-        return json.dumps(self._data)
-
-    @property
     def version(self):
         return self.headers[self.VERSION]
 
@@ -469,10 +469,6 @@ class BaseSpecification(
     @property
     def tags(self):
         return self.headers.get(self.TAGS, None)
-
-    @property
-    def params(self):
-        return self.parsed_data.get(self.PARAMS, None)
 
     @property
     def container(self):

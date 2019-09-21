@@ -11,7 +11,7 @@ from polyaxon_schemas.specs.base import BaseSpecification
 class ScheduleSpecificationMixin(object):
     @property
     def schedule(self):
-        return self._config_data.schedule
+        return self.config.schedule
 
     @property
     def schedule_kind(self):
@@ -55,13 +55,8 @@ class PipelineSpecification(BaseSpecification, ScheduleSpecificationMixin):
 
     CONFIG = PipelineConfig
 
-    @property
-    def backend(self):
-        return self.raw_config.backend
-
     def apply_context(self, context=None):
-        self._config_data.process_dag()
-        self._config_data.validate_dag()
-        self._config_data.process_templates()
-        self._config = self._config_data
+        self.config.process_dag()
+        self.config.validate_dag()
+        self.config.process_templates()
         return self

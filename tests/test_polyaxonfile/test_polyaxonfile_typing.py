@@ -11,6 +11,7 @@ from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.ops.container import ContainerConfig
 from polyaxon_schemas.ops.parallel import GridSearchConfig, ParallelConfig
 from polyaxon_schemas.ops.parallel.matrix import MatrixChoiceConfig
+from polyaxon_schemas.ops.params import get_params_with_refs
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 
 
@@ -21,21 +22,24 @@ class TestPolyaxonfileWithTypes(TestCase):
             PolyaxonFile(os.path.abspath("tests/fixtures/typing/untyped_params.yml"))
 
     def test_no_params_for_required_inputs_outputs_raises(self):
+        plx = PolyaxonFile(os.path.abspath("tests/fixtures/typing/required_inputs.yml"))
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(os.path.abspath("tests/fixtures/typing/required_inputs.yml"))
-
-        PolyaxonFile(os.path.abspath("tests/fixtures/typing/required_outputs.yml"))
+            plx.specification.apply_context()
+        plx = PolyaxonFile(os.path.abspath("tests/fixtures/typing/required_outputs.yml"))
+        with self.assertRaises(PolyaxonfileError):
+            plx.specification.apply_context()
 
     def test_required_inputs_with_params(self):
         plxfile = PolyaxonFile(
             os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
-            params={"loss": "bar", "flag": False},
         )
         spec = plxfile.specification
-        spec.apply_context()
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_context()
+
+        spec = spec.apply_context(params={"loss": "bar", "flag": False})
         assert spec.version == 0.6
         assert spec.tags == {"foo": "bar"}
-        assert spec.params == {"loss": "bar", "flag": ""}
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar "
@@ -44,13 +48,11 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         plxfile = PolyaxonFile(
             os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
-            params={"loss": "bar", "flag": True},
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context(params={"loss": "bar", "flag": True})
         assert spec.version == 0.6
         assert spec.tags == {"foo": "bar"}
-        assert spec.params == {"loss": "bar", "flag": "--flag"}
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar --flag"
@@ -59,6 +61,8 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         # Adding extra value raises
         with self.assertRaises(PolyaxonfileError):
+            spec.apply_context(params={"loss": "bar", "flag": True, "value": 1.1})
+        with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(
                 os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
                 params={"loss": "bar", "value": 1.1},
@@ -66,10 +70,7 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         # Adding non valid params raises
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
-                params={"value": 1.1},
-            )
+            spec.apply_context(params={"value": 1.1})
 
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(
@@ -78,7 +79,7 @@ class TestPolyaxonfileWithTypes(TestCase):
             )
         )
         spec = plxfile.specification
-        spec.apply_context()
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.is_job
         assert isinstance(spec.parallel.algorithm.matrix["param1"], MatrixChoiceConfig)
@@ -116,18 +117,32 @@ class TestPolyaxonfileWithTypes(TestCase):
             os.path.abspath("tests/fixtures/typing/run_cmd_simple_file.yml")
         )
         spec = plxfile.specification
-        spec.apply_context()
-        assert spec.version == 0.6
-        assert spec.tags == {"foo": "bar"}
-        assert spec.is_job
-        assert spec.environment is None
-        container = spec.container
+        validated_params = spec.validate_params()
+        assert {"loss": "MeanSquaredError", "num_masks": None} == {p.name: p.value for p in validated_params}
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_context()
+
+        validated_params = spec.validate_params(params={"num_masks": 100})
+        assert {"loss": "MeanSquaredError", "num_masks": 100} == {p.name: p.value for p in
+                                                                  validated_params}
+        assert spec.container.args == [
+            "video_prediction_train",
+            "--num_masks={{num_masks}}",
+            "--loss={{loss}}",
+        ]
+
+        new_spec = spec.apply_context(params={"num_masks": 100})
+        assert new_spec.version == 0.6
+        assert new_spec.tags == {"foo": "bar"}
+        assert new_spec.is_job
+        assert new_spec.environment is None
+        container = new_spec.container
         assert isinstance(container, ContainerConfig)
         assert container.image == "my_image"
         assert container.command == ["/bin/sh", "-c"]
         assert container.args == [
             "video_prediction_train",
-            "--num_masks=2",
+            "--num_masks=100",
             "--loss=MeanSquaredError",
         ]
 
@@ -136,22 +151,39 @@ class TestPolyaxonfileWithTypes(TestCase):
             os.path.abspath("tests/fixtures/typing/run_with_refs.yml")
         )
         spec = plxfile.specification
-        required_refs = spec.raw_config.get_params_with_refs()
-        assert len(required_refs) == 1
-        assert required_refs[0].name == "model_path"
-        assert required_refs[0].value == "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"
-        spec.apply_context(
+        params = {"num_masks": 2, "model_path": "{{ runs.64332180bfce46eba80a65caf73c5396.outputs.doo }}"}
+        validated_params = spec.validate_params(params=params)
+        assert {"num_masks": 2, "model_path": "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"} == {p.name: p.value for p in validated_params}
+        ref_param = get_params_with_refs(validated_params)[0]
+        assert ref_param == validated_params[0]
+        assert ref_param.name == "model_path"
+        assert ref_param.entity == "runs"
+        assert ref_param.value == "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"
+
+        spec = spec.apply_context(
+            params=params,
             context={"runs__64332180bfce46eba80a65caf73c5396__outputs__doo": "model_path"}
         )
-        assert spec.version == 0.6
-        assert spec.tags == {"foo": "bar"}
-        assert spec.is_job
-        container = spec.container
-        assert isinstance(container, ContainerConfig)
-        assert container.image == "my_image"
-        assert container.command == ["/bin/sh", "-c"]
-        assert container.args == [
+        assert spec.container.args == [
             "video_prediction_train",
             "--num_masks=2",
             "--model_path=model_path",
         ]
+
+        params = {"num_masks": 2,
+                  "model_path": "{{ ops.A.outputs.doo }}"}
+        validated_params = spec.validate_params(params=params)
+        assert {"num_masks": 2,
+                "model_path": "ops.A.outputs.doo"} == {
+               p.name: p.value for p in validated_params}
+        ref_param = get_params_with_refs(validated_params)[0]
+        assert ref_param == validated_params[0]
+        assert ref_param.name == "model_path"
+        assert ref_param.entity == "ops"
+        assert ref_param.value == "ops.A.outputs.doo"
+
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_context(
+                params=params,
+                context={"ops__A__outputs__doo": "model_path"}
+            )

@@ -11,7 +11,6 @@ from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.io import IOSchema
-from polyaxon_schemas.ops.params import get_param_display_value
 from polyaxon_schemas.ops.termination import TerminationSchema
 
 PARAM_REGEX = re.compile(r"{{\s*([^\s]*)\s*}}")
@@ -27,7 +26,6 @@ class BaseOpSchema(BaseSchema):
     termination = fields.Nested(TerminationSchema, allow_none=True)
     contexts = fields.Nested(ContextsSchema, allow_none=True)
     container = fields.Nested(ContainerSchema, allow_none=True)
-    params = fields.Raw(allow_none=True)
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
 
@@ -42,7 +40,6 @@ class BaseOpSchema(BaseSchema):
             inputs=values.get("inputs"),
             outputs=values.get("outputs"),
             is_template=True,
-            is_run=True,
         )
 
 
@@ -59,7 +56,6 @@ class BaseOpConfig(BaseConfig):
         "termination",
         "contexts",
         "container",
-        "params",
         "inputs",
         "outputs",
     ]
@@ -75,7 +71,6 @@ class BaseOpConfig(BaseConfig):
         termination=None,
         contexts=None,
         container=None,
-        params=None,
         inputs=None,
         outputs=None,
     ):
@@ -88,31 +83,27 @@ class BaseOpConfig(BaseConfig):
         self.termination = termination
         self.contexts = contexts
         self.container = container
-        self.params = params
-        self._validated_params = ops_params.validate_params(
-            params=self.params,
-            inputs=inputs,
-            outputs=outputs,
-            is_template=True,
-            is_run=True,
-        )
+        # self._validated_params = ops_params.validate_params(
+        #     params=self.params,
+        #     inputs=inputs,
+        #     outputs=outputs,
+        #     is_template=True,
+        # )
         self.inputs = inputs
         self.outputs = outputs
 
-    def get_params(self, context):
-        """Return all params: Merge params if passed, if not default values."""
-        if not self._validated_params:
-            return self.params
-
-        params = {}
-        for param in self._validated_params:
-            if not param.entity_ref:
-                value = param.value
-            else:
-                value = context[param.value.replace(".", "__")]
-            params[param.name] = get_param_display_value(param=param, value=value)
-
-        return params
-
-    def get_params_with_refs(self):
-        return [param for param in self._validated_params if param.entity_ref]
+    # def get_params(self, context):
+    #     """Return all params: Merge params if passed, if not default values."""
+    #     if not self._validated_params:
+    #         return self.params
+    #
+    #     params = {}
+    #     for param in self._validated_params:
+    #         if param.entity_ref:
+    #             param = param.set_value(context[param.value.replace(".", "__")])
+    #         params[param.name] = param
+    #
+    #     return params
+    #
+    # def get_params_with_refs(self):
+    #     return [param for param in self._validated_params if param.entity_ref]

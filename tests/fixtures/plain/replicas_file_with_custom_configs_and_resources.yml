@@ -64,12 +64,6 @@ replica_spec:
                 values:
                 - another-node-label-value
 
-params:
-  cnn:
-    kernels: [64, 32]
-    size: [2, 2]
-    strides: [1, 1]
-
 container:
   image: my_image
   command: video_prediction_train

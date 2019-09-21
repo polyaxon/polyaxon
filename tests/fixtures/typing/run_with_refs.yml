@@ -12,10 +12,6 @@ inputs:
   - name: num_masks
     type: int
 
-params:
-  num_masks: 2
-  model_path: "{{ runs.64332180bfce46eba80a65caf73c5396.outputs.doo }}"
-
 container:
   image: my_image
   command: ["/bin/sh", "-c"]
