@@ -3,14 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
 
+from polyaxon_schemas.base import BaseSchema, BaseConfig
 from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
-from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 from polyaxon_schemas.ops.termination import TerminationSchema
 
 
-class OpReplicaSchema(BaseOpSchema):
+class OpReplicaSchema(BaseSchema):
     replicas = fields.Int(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
@@ -21,7 +21,7 @@ class OpReplicaSchema(BaseOpSchema):
         return OpReplicaConfig
 
 
-class OpReplicaConfig(BaseOpConfig):
+class OpReplicaConfig(BaseConfig):
     SCHEMA = OpReplicaSchema
     IDENTIFIER = "replica"
     REDUCED_ATTRIBUTES = ["replicas", "environment", "termination", "contexts"]
@@ -33,7 +33,7 @@ class OpReplicaConfig(BaseOpConfig):
         self.refs = refs
 
 
-class JobReplicaSchema(BaseOpSchema):
+class JobReplicaSchema(BaseSchema):
     replicas = fields.Int(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
@@ -45,7 +45,7 @@ class JobReplicaSchema(BaseOpSchema):
         return JobReplicaConfig
 
 
-class JobReplicaConfig(BaseOpConfig):
+class JobReplicaConfig(BaseConfig):
     SCHEMA = JobReplicaSchema
     IDENTIFIER = "replica"
     REDUCED_ATTRIBUTES = [
