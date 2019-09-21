@@ -327,13 +327,6 @@ class BaseSpecification(
 
     def _get_config(self, data):
         config = self.CONFIG.from_dict(copy.deepcopy(data))
-        ops_params.validate_params(
-            params=config.params,
-            inputs=config.inputs,
-            outputs=config.outputs,
-            is_template=False,
-            is_run=True,
-        )
         return config
 
     def parse_data(self, context=None):
