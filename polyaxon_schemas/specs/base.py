@@ -451,6 +451,14 @@ class BaseSpecification(
         return self._data
 
     @property
+    def data_dump(self):
+        return json.dumps(self._data)
+
+    @property
+    def config_dump(self):
+        return json.dumps(self.config.to_light_dict())
+
+    @property
     def headers(self):
         return self._headers
 

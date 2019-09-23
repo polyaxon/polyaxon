@@ -44,13 +44,15 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
     def apply_context(self, params=None, context=None):
         raise PolyaxonConfigurationError("This method is not allowed on this specification.")
 
-    def generate_run_data(self, template):
-        values = [template]
-        override = {}
+    def generate_run_data(self, override=None):
+        values = [self.config._template]
+        op_override = {}
         for field in [self.NAME, self.DESCRIPTION, self.TAGS, self.ENVIRONMENT, self.TERMINATION, self.CONTEXTS, self.PARALLEL, self.REPLICA_SPEC]:
             override_field = getattr(self.config, field)
             if override_field:
-                override[field] = override_field
+                op_override[field] = override_field
+        if op_override:
+            values.append(op_override)
         if override:
             values.append(override)
         return values
