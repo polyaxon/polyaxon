@@ -251,7 +251,9 @@ class BaseSpecification(
     TEMPLATES = "templates"
     OPS = "ops"
     SCHEDULE = "schedule"
-    CONCURRENCY = "concurrency"
+    DEPENDENCIES = "dependencies"
+    TRIGGER = "trigger"
+    CONDITIONS = "conditions"
 
     SECTIONS = (
         VERSION,
@@ -272,7 +274,9 @@ class BaseSpecification(
         TEMPLATES,
         OPS,
         SCHEDULE,
-        CONCURRENCY,
+        DEPENDENCIES,
+        TRIGGER,
+        CONDITIONS
     )
 
     PARSING_SECTIONS = (
@@ -283,7 +287,7 @@ class BaseSpecification(
         REPLICA_SPEC,
         PORTS,
     )
-    OP_PARSING_SECTIONS = (TEMPLATES, OPS, SCHEDULE, CONCURRENCY)
+    OP_PARSING_SECTIONS = (TEMPLATES, OPS, SCHEDULE, DEPENDENCIES, TRIGGER, CONDITIONS)
 
     HEADER_SECTIONS = (VERSION, KIND, NAME, DESCRIPTION, TAGS)
 

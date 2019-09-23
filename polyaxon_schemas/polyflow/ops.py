@@ -31,6 +31,7 @@ class OpSchema(BaseSchema):
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
     conditions = fields.Nested(ConditionSchema, allow_none=True)
     skip_on_upstream_skip = fields.Bool(allow_none=True)
+    _template = fields.Nested('TemplateSchema', allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -55,6 +56,7 @@ class OpConfig(BaseConfig):
         "trigger",
         "conditions",
         "skip_on_upstream_skip",
+        "_template"
     ]
 
     def __init__(
@@ -74,6 +76,7 @@ class OpConfig(BaseConfig):
         trigger=None,
         conditions=None,
         skip_on_upstream_skip=None,
+        _template=None
     ):
         self.version = version
         self.kind = kind
@@ -90,3 +93,4 @@ class OpConfig(BaseConfig):
         self.trigger = trigger
         self.conditions = conditions
         self.skip_on_upstream_skip = skip_on_upstream_skip
+        self._template = _template
