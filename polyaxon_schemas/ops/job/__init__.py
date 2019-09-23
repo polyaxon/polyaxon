@@ -3,14 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.job.replicas import JobReplicaSchema
 from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
-from polyaxon_schemas.ops.parallel import ParallelSchema
 
 
 class JobSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("job"))
-    parallel = fields.Nested(ParallelSchema, allow_none=True)
+    container = fields.Nested(ContainerSchema, allow_none=True)
     replica_spec = fields.Dict(
         keys=fields.Str(), values=fields.Nested(JobReplicaSchema), allow_none=True
     )
@@ -23,7 +23,7 @@ class JobSchema(BaseOpSchema):
 class JobConfig(BaseOpConfig):
     SCHEMA = JobSchema
     IDENTIFIER = "job"
-    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["parallel", "replica_spec"]
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["container", "replica_spec"]
 
     def __init__(
         self,
@@ -50,10 +50,10 @@ class JobConfig(BaseOpConfig):
             environment=environment,
             termination=termination,
             contexts=contexts,
-            container=container,
+            parallel=parallel,
             inputs=inputs,
             outputs=outputs,
         )
 
-        self.parallel = parallel
+        self.container = container
         self.replica_spec = replica_spec

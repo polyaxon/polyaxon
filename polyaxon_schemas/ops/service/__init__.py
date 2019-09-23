@@ -3,12 +3,14 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 from polyaxon_schemas.ops.service.validation import ServiceLevelSchema
 
 
 class ServiceSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("service"))
+    container = fields.Nested(ContainerSchema, allow_none=True)
     ports = fields.List(
         fields.Int(allow_none=True),
         validate=validate.Range(min=1, max=2),
@@ -23,7 +25,7 @@ class ServiceSchema(BaseOpSchema):
 class ServiceConfig(BaseOpConfig):
     IDENTIFIER = "service"
     SCHEMA = ServiceSchema
-    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["ports"]
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["container", "ports"]
 
     def __init__(
         self,
@@ -35,10 +37,11 @@ class ServiceConfig(BaseOpConfig):
         environment=None,
         termination=None,
         contexts=None,
+        parallel=None,
         container=None,
+        ports=None,
         inputs=None,
         outputs=None,
-        ports=None,
     ):
         super(ServiceConfig, self).__init__(
             version=version,
@@ -49,8 +52,9 @@ class ServiceConfig(BaseOpConfig):
             environment=environment,
             termination=termination,
             contexts=contexts,
-            container=container,
+            parallel=parallel,
             inputs=inputs,
             outputs=outputs,
         )
+        self.container = container
         self.ports = ports

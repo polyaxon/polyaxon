@@ -3,33 +3,21 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
-from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
+from polyaxon_schemas.base import BaseOneOfSchema
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.contexts import ContextsSchema
-from polyaxon_schemas.ops.environments import EnvironmentSchema
-from polyaxon_schemas.ops.parallel import ParallelSchema
-from polyaxon_schemas.ops.termination import TerminationSchema
+from polyaxon_schemas.ops.job import JobConfig, JobSchema
+from polyaxon_schemas.ops.operation import BaseOpSchema, BaseOpConfig
+from polyaxon_schemas.ops.service import ServiceConfig, ServiceSchema
 from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpSchema
 from polyaxon_schemas.polyflow.schedule import ScheduleSchema
-from polyaxon_schemas.polyflow.template import TemplateSchema
 
 
-class PipelineSchema(BaseSchema):
-    version = fields.Int(allow_none=True)
+class PipelineSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("pipeline"))
-    name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
-    description = fields.Str(
-        validate=validate.Regexp(regex=NAME_REGEX), allow_none=True
-    )
-    tags = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
     ops = fields.Nested(OpSchema, many=True)
-    templates = fields.Nested(TemplateSchema, many=True)
-    environment = fields.Nested(EnvironmentSchema, allow_none=True)
-    termination = fields.Nested(TerminationSchema, allow_none=True)
-    contexts = fields.Nested(ContextsSchema, allow_none=True)
-    parallel = fields.Nested(ParallelSchema, allow_none=True)
+    templates = fields.Nested('TemplateSchema', many=True)
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
     execute_at = fields.LocalDateTime(allow_none=True)
 
@@ -38,22 +26,13 @@ class PipelineSchema(BaseSchema):
         return PipelineConfig
 
 
-class PipelineConfig(BaseConfig):
+class PipelineConfig(BaseOpConfig):
     SCHEMA = PipelineSchema
     IDENTIFIER = "pipeline"
-    REDUCED_ATTRIBUTES = [
-        "kind",
-        "version",
-        "name",
-        "description",
-        "tags",
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + [
         "ops",
         "templates",
-        "environment",
-        "termination",
-        "contexts",
         "schedule",
-        "parallel",
         "execute_at",
     ]
 
@@ -72,17 +51,23 @@ class PipelineConfig(BaseConfig):
         parallel=None,
         schedule=None,
         execute_at=None,
+        inputs=None,
+        outputs=None,
     ):
-        self.kind = kind
-        self.version = version
-        self.name = name
-        self.description = description
-        self.tags = tags
+        super(PipelineConfig, self).__init__(
+            version=version,
+            kind=kind,
+            name=name,
+            description=description,
+            tags=tags,
+            environment=environment,
+            termination=termination,
+            contexts=contexts,
+            parallel=parallel,
+            inputs=inputs,
+            outputs=outputs,
+        )
         self.ops = ops
-        self.environment = environment
-        self.termination = termination
-        self.contexts = contexts
-        self.parallel = parallel
         self.schedule = schedule
         self.execute_at = execute_at
         self.templates = templates
@@ -213,3 +198,13 @@ class PipelineConfig(BaseConfig):
                 context=self._context,
                 is_template=False,
             )
+
+
+class TemplateSchema(BaseOneOfSchema):
+    TYPE_FIELD = "kind"
+    TYPE_FIELD_REMOVE = False
+    SCHEMAS = {
+        JobConfig.IDENTIFIER: JobSchema,
+        ServiceConfig.IDENTIFIER: ServiceSchema,
+        PipelineConfig.IDENTIFIER: PipelineSchema,
+    }

@@ -77,7 +77,7 @@ class TestPipelineConfigs(TestCase):
         config_dict = {
             "ops": [
                 {
-                    "template": {"action": "action1"},
+                    "template": {"hub": "action1"},
                     "name": "A",
                     "description": "description A",
                     "tags": {"key1": "tag11", "key2": "tag12"},
@@ -287,7 +287,7 @@ class TestPipelineConfigs(TestCase):
         config_dict = {
             "ops": [
                 {
-                    "template": {"action": "action1"},
+                    "template": {"hub": "action1"},
                     "name": "A",
                     "params": {
                         "param1": "text",
@@ -337,7 +337,7 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B"}
 
@@ -363,8 +363,8 @@ class TestPipelineConfigs(TestCase):
     def test_pipelines_parallel_ops(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A"},
-                {"template": {"event": "event1"}, "name": "B"},
+                {"template": {"hub": "action1"}, "name": "A"},
+                {"template": {"hub": "event1"}, "name": "B"},
                 {"template": {"name": "foo"}, "name": "C"},
                 {"template": {"name": "bar"}, "name": "D"},
             ]
@@ -389,12 +389,12 @@ class TestPipelineConfigs(TestCase):
         assert len(config.sort_topologically(dag=dag)[0]) == 4  # order can be any
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == set()
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == set()
         assert config.dag["B"].downstream == set()
 
@@ -411,8 +411,8 @@ class TestPipelineConfigs(TestCase):
     def test_pipelines_sequential_ops(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A"},
-                {"template": {"event": "event1"}, "name": "B", "dependencies": ["A"]},
+                {"template": {"hub": "action1"}, "name": "A"},
+                {"template": {"hub": "event1"}, "name": "B", "dependencies": ["A"]},
                 {"template": {"name": "foo"}, "name": "C", "dependencies": ["B"]},
                 {"template": {"name": "bar"}, "name": "D", "dependencies": ["C"]},
             ]
@@ -437,12 +437,12 @@ class TestPipelineConfigs(TestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"C"}
 
@@ -460,7 +460,7 @@ class TestPipelineConfigs(TestCase):
         config_dict = {
             "ops": [
                 {
-                    "template": {"action": "action1"},
+                    "template": {"hub": "action1"},
                     "name": "A",
                     "params": {
                         "param1": "text",
@@ -469,9 +469,9 @@ class TestPipelineConfigs(TestCase):
                     },
                     "dependencies": ["B", "C", "D"],
                 },
-                {"template": {"event": "event1"}, "name": "B"},
-                {"template": {"event": "event2"}, "name": "C"},
-                {"template": {"event": "event3"}, "name": "D"},
+                {"template": {"hub": "event1"}, "name": "B"},
+                {"template": {"hub": "event2"}, "name": "C"},
+                {"template": {"hub": "event3"}, "name": "D"},
             ]
         }
 
@@ -499,30 +499,30 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[1] == ["A"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == {"B", "C", "D"}
         assert config.dag["A"].downstream == set()
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == set()
         assert config.dag["B"].downstream == {"A"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {"event": "event2"}
+        assert config.dag["C"].op.template.to_dict() == {"hub": "event2"}
         assert config.dag["C"].upstream == set()
         assert config.dag["C"].downstream == {"A"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"event": "event3"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "event3"}
         assert config.dag["D"].upstream == set()
         assert config.dag["D"].downstream == {"A"}
 
     def test_pipelines_acyclic_deps(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A", "dependencies": ["B"]},
-                {"template": {"event": "event1"}, "name": "B", "dependencies": ["A"]},
+                {"template": {"hub": "action1"}, "name": "A", "dependencies": ["B"]},
+                {"template": {"hub": "event1"}, "name": "B", "dependencies": ["A"]},
                 {"template": {"name": "foo"}, "name": "C", "dependencies": ["A"]},
             ]
         }
@@ -549,12 +549,12 @@ class TestPipelineConfigs(TestCase):
             dags.sort_topologically(dag=dag)
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == {"B"}
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"A"}
 
@@ -566,8 +566,8 @@ class TestPipelineConfigs(TestCase):
     def test_pipelines_circular_deps(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A", "dependencies": ["C"]},
-                {"template": {"event": "event1"}, "name": "B", "dependencies": ["A"]},
+                {"template": {"hub": "action1"}, "name": "A", "dependencies": ["C"]},
+                {"template": {"hub": "event1"}, "name": "B", "dependencies": ["A"]},
                 {"template": {"name": "foo"}, "name": "C", "dependencies": ["B"]},
             ]
         }
@@ -594,12 +594,12 @@ class TestPipelineConfigs(TestCase):
             dags.sort_topologically(dag=dag)
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == {"C"}
         assert config.dag["A"].downstream == {"B"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"C"}
 
@@ -611,8 +611,8 @@ class TestPipelineConfigs(TestCase):
     def test_pipelines_adding_ops_one_by_one_manually(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A"},
-                {"template": {"event": "event1"}, "name": "B", "dependencies": ["A"]},
+                {"template": {"hub": "action1"}, "name": "A"},
+                {"template": {"hub": "event1"}, "name": "B", "dependencies": ["A"]},
                 {"template": {"name": "foo"}, "name": "C", "dependencies": ["A"]},
             ]
         }
@@ -636,12 +636,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == set()
 
@@ -650,7 +650,7 @@ class TestPipelineConfigs(TestCase):
         assert config.dag["C"].upstream == {"A"}
         assert config.dag["C"].downstream == set()
 
-        template4 = TemplateRefConfig.from_dict({"action": "action4"})
+        template4 = TemplateRefConfig.from_dict({"hub": "action4"})
         operationD = OpConfig(template=template4, name="D", dependencies=["B", "C"])
         config.add_op(operationD)
 
@@ -677,12 +677,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"D"}
 
@@ -692,12 +692,12 @@ class TestPipelineConfigs(TestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["E"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["E"].upstream == {"A"}
         assert config.dag["E"].downstream == set()
 
@@ -724,12 +724,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"D"}
 
@@ -739,20 +739,20 @@ class TestPipelineConfigs(TestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["E"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["E"].upstream == {"A"}
         assert config.dag["E"].downstream == set()
 
     def test_pipelines_adding_ops_many_manually(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A"},
-                {"template": {"event": "event1"}, "name": "B", "dependencies": ["A"]},
+                {"template": {"hub": "action1"}, "name": "A"},
+                {"template": {"hub": "event1"}, "name": "B", "dependencies": ["A"]},
                 {"template": {"name": "foo"}, "name": "C", "dependencies": ["A"]},
             ]
         }
@@ -778,12 +778,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == set()
 
@@ -792,7 +792,7 @@ class TestPipelineConfigs(TestCase):
         assert config.dag["C"].upstream == {"A"}
         assert config.dag["C"].downstream == set()
 
-        template4 = TemplateRefConfig.from_dict({"action": "action4"})
+        template4 = TemplateRefConfig.from_dict({"hub": "action4"})
         operationD = OpConfig(template=template4, name="D", dependencies=["B", "C"])
         operationE = OpConfig(template=template4, name="E", dependencies=["A"])
         config.add_ops([operationD, operationE])
@@ -816,12 +816,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"D"}
 
@@ -831,12 +831,12 @@ class TestPipelineConfigs(TestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["E"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["E"].upstream == {"A"}
         assert config.dag["E"].downstream == set()
 
@@ -864,12 +864,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[2] == ["D"]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C", "E"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"D"}
 
@@ -879,12 +879,12 @@ class TestPipelineConfigs(TestCase):
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
         assert config.dag["E"].op.name == "E"
-        assert config.dag["E"].op.template.to_dict() == {"action": "action4"}
+        assert config.dag["E"].op.template.to_dict() == {"hub": "action4"}
         assert config.dag["E"].upstream == {"A"}
         assert config.dag["E"].downstream == set()
 
@@ -892,7 +892,7 @@ class TestPipelineConfigs(TestCase):
         config_dict = {
             "ops": [
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "A",
                     "params": {
                         "param1": "text",
@@ -901,7 +901,7 @@ class TestPipelineConfigs(TestCase):
                     },
                 },
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "B",
                     "params": {
                         "param1": "{{ ops.A.outputs.x }}",
@@ -910,7 +910,7 @@ class TestPipelineConfigs(TestCase):
                     },
                 },
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "C",
                     "params": {
                         "param1": "{{ ops.A.outputs.x }}",
@@ -918,7 +918,7 @@ class TestPipelineConfigs(TestCase):
                     },
                 },
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "D",
                     "dependencies": ["B", "C"],
                 },
@@ -944,22 +944,22 @@ class TestPipelineConfigs(TestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"C", "D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["C"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["C"].upstream == {"A", "B"}
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
@@ -967,7 +967,7 @@ class TestPipelineConfigs(TestCase):
         config_dict = {
             "ops": [
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "A",
                     "params": {
                         "param1": "text",
@@ -976,7 +976,7 @@ class TestPipelineConfigs(TestCase):
                     },
                 },
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "B",
                     "params": {
                         "param1": "{{ ops.A.outputs.x }}",
@@ -986,13 +986,13 @@ class TestPipelineConfigs(TestCase):
                     "dependencies": ["A"],
                 },
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "C",
                     "params": {"param2": "{{ ops.B.outputs.x }}"},
                     "dependencies": ["A"],
                 },
                 {
-                    "template": {"action": "echo"},
+                    "template": {"hub": "echo"},
                     "name": "D",
                     "dependencies": ["B", "C"],
                 },
@@ -1018,30 +1018,30 @@ class TestPipelineConfigs(TestCase):
         assert dags.sort_topologically(dag=dag) == [["A"], ["B"], ["C"], ["D"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == {"C", "D"}
 
         assert config.dag["C"].op.name == "C"
-        assert config.dag["C"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["C"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["C"].upstream == {"A", "B"}
         assert config.dag["C"].downstream == {"D"}
 
         assert config.dag["D"].op.name == "D"
-        assert config.dag["D"].op.template.to_dict() == {"action": "echo"}
+        assert config.dag["D"].op.template.to_dict() == {"hub": "echo"}
         assert config.dag["D"].upstream == {"B", "C"}
         assert config.dag["D"].downstream == set()
 
     def test_pipelines_orphan_ops(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A"},
-                {"template": {"event": "event1"}, "name": "B", "dependencies": ["A"]},
+                {"template": {"hub": "action1"}, "name": "A"},
+                {"template": {"hub": "event1"}, "name": "B", "dependencies": ["A"]},
                 {"template": {"name": "foo"}, "name": "C", "dependencies": ["A", "E"]},
             ]
         }
@@ -1068,12 +1068,12 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[1] in [["B", "C"], ["C", "B"]]
 
         assert config.dag["A"].op.name == "A"
-        assert config.dag["A"].op.template.to_dict() == {"action": "action1"}
+        assert config.dag["A"].op.template.to_dict() == {"hub": "action1"}
         assert config.dag["A"].upstream == set()
         assert config.dag["A"].downstream == {"B", "C"}
 
         assert config.dag["B"].op.name == "B"
-        assert config.dag["B"].op.template.to_dict() == {"event": "event1"}
+        assert config.dag["B"].op.template.to_dict() == {"hub": "event1"}
         assert config.dag["B"].upstream == {"A"}
         assert config.dag["B"].downstream == set()
 
@@ -1085,8 +1085,8 @@ class TestPipelineConfigs(TestCase):
     def test_pipelines_with_duplicate_template_names(self):
         config_dict = {
             "ops": [
-                {"template": {"action": "action1"}, "name": "A"},
-                {"template": {"action": "action1"}, "name": "B"},
+                {"template": {"hub": "action1"}, "name": "A"},
+                {"template": {"hub": "action1"}, "name": "B"},
             ],
             "templates": [
                 {

@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import re
-
-from marshmallow import fields, validate, validates_schema
+from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
-from polyaxon_schemas.ops import params as ops_params
-from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.io import IOSchema
+from polyaxon_schemas.ops.parallel import ParallelSchema
 from polyaxon_schemas.ops.termination import TerminationSchema
-
-PARAM_REGEX = re.compile(r"{{\s*([^\s]*)\s*}}")
 
 
 class BaseOpSchema(BaseSchema):
@@ -25,22 +20,13 @@ class BaseOpSchema(BaseSchema):
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     contexts = fields.Nested(ContextsSchema, allow_none=True)
-    container = fields.Nested(ContainerSchema, allow_none=True)
+    parallel = fields.Nested(ParallelSchema, allow_none=True)
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
 
     @staticmethod
     def schema_config():
         return BaseOpConfig
-
-    @validates_schema
-    def validate_params(self, values):
-        ops_params.validate_params(
-            params=values.get("params"),
-            inputs=values.get("inputs"),
-            outputs=values.get("outputs"),
-            is_template=True,
-        )
 
 
 class BaseOpConfig(BaseConfig):
@@ -55,7 +41,7 @@ class BaseOpConfig(BaseConfig):
         "environment",
         "termination",
         "contexts",
-        "container",
+        "parallel",
         "inputs",
         "outputs",
     ]
@@ -70,7 +56,7 @@ class BaseOpConfig(BaseConfig):
         environment=None,
         termination=None,
         contexts=None,
-        container=None,
+        parallel=None,
         inputs=None,
         outputs=None,
     ):
@@ -82,28 +68,6 @@ class BaseOpConfig(BaseConfig):
         self.environment = environment
         self.termination = termination
         self.contexts = contexts
-        self.container = container
-        # self._validated_params = ops_params.validate_params(
-        #     params=self.params,
-        #     inputs=inputs,
-        #     outputs=outputs,
-        #     is_template=True,
-        # )
+        self.parallel = parallel
         self.inputs = inputs
         self.outputs = outputs
-
-    # def get_params(self, context):
-    #     """Return all params: Merge params if passed, if not default values."""
-    #     if not self._validated_params:
-    #         return self.params
-    #
-    #     params = {}
-    #     for param in self._validated_params:
-    #         if param.entity_ref:
-    #             param = param.set_value(context[param.value.replace(".", "__")])
-    #         params[param.name] = param
-    #
-    #     return params
-    #
-    # def get_params_with_refs(self):
-    #     return [param for param in self._validated_params if param.entity_ref]

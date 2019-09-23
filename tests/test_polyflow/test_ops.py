@@ -13,24 +13,24 @@ from polyaxon_schemas.polyflow.ops import OpConfig
 @pytest.mark.polyflow_mark
 class TestOpConfigs(TestCase):
     def test_op_raises_for_template_action_event(self):
-        config_dict = {"template": {"action": "foo", "event": "bar"}}
+        config_dict = {"template": {"hub": "foo", "name": "bar"}}
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
 
-        config_dict = {"template": {"path": "bar", "action": "foo"}}
+        config_dict = {"template": {"path": "bar", "hub": "foo"}}
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
 
-        config_dict = {"template": {"url": "bar", "action": "foo"}}
+        config_dict = {"template": {"url": "bar", "hub": "foo"}}
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
 
-    def test_op_passes_for_template_action_event(self):
-        config_dict = {"template": {"event": "bar"}}
+    def test_op_passes_for_template_hub(self):
+        config_dict = {"template": {"hub": "bar"}}
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-        config_dict = {"template": {"action": "foo"}}
+        config_dict = {"template": {"hub": "foo"}}
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
@@ -47,16 +47,16 @@ class TestOpConfigs(TestCase):
         assert config.to_dict() == config_dict
 
     def test_validation(self):
-        config_dict = {"template": {"action": "foo"}, "concurrency": "foo"}
+        config_dict = {"template": {"hub": "foo"}, "concurrency": "foo"}
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
 
-        config_dict = {"template": {"action": "foo"}, "dependencies": "foo"}
+        config_dict = {"template": {"hub": "foo"}, "dependencies": "foo"}
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
 
         config_dict = {
-            "template": {"action": "foo"},
+            "template": {"hub": "foo"},
             "dependencies": ["foo", "bar"],
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
@@ -64,7 +64,7 @@ class TestOpConfigs(TestCase):
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-        config_dict = {"template": {"event": "foo"}}
+        config_dict = {"template": {"hub": "foo"}}
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
