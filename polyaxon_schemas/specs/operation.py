@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyflow.ops import OpConfig
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
 from polyaxon_schemas.specs import kinds
@@ -36,16 +37,20 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
         ENVIRONMENT: defines the run environment for experiment.
     """
 
-    _SPEC_KIND = kinds.PIPELINE
+    _SPEC_KIND = kinds.OPERATION
 
     CONFIG = OpConfig
 
-    @property
-    def backend(self):
-        return self.config.backend
+    def apply_context(self, params=None, context=None):
+        raise PolyaxonConfigurationError("This method is not allowed on this specification.")
 
-    def apply_context(self, context=None):
-        self.config.process_dag()
-        self.config.validate_dag()
-        self.config.process_templates()
-        return self
+    def generate_run_data(self, template):
+        values = [template]
+        override = {}
+        for field in [self.NAME, self.DESCRIPTION, self.TAGS, self.ENVIRONMENT, self.TERMINATION, self.CONTEXTS, self.PARALLEL, self.REPLICA_SPEC]:
+            override_field = getattr(self.config, field)
+            if override_field:
+                override[field] = override_field
+        if override:
+            values.append(override)
+        return values

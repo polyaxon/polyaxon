@@ -9,9 +9,8 @@ import rhea
 
 from hestia.list_utils import to_list
 
-from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from polyaxon_schemas.specs import SPECIFICATION_BY_KIND
-from polyaxon_schemas.specs.base import BaseSpecification
+from polyaxon_schemas.exceptions import PolyaxonfileError
+from polyaxon_schemas.specs import get_specification
 
 DEFAULT_POLYAXON_FILE_NAME = [
     "polyaxon",
@@ -33,7 +32,7 @@ class PolyaxonFile(object):
             if not os.path.isfile(filepath):
                 raise PolyaxonfileError("`{}` must be a valid file".format(filepath))
         self._filenames = [os.path.basename(filepath) for filepath in filepaths]
-        if params:
+        if params:  # TODO: If params are provided we need to generate an op with params
             if not isinstance(params, Mapping):
                 raise PolyaxonfileError(
                     "Params: `{}` must be a valid mapping".format(params)
@@ -52,25 +51,20 @@ class PolyaxonFile(object):
                     }
                 }
             )
-        data = rhea.read(filepaths)
-        kind = BaseSpecification.get_kind(data=data)
-        parallel = data.get(BaseSpecification.PARALLEL)
+        specification = get_specification(data=rhea.read(filepaths))
 
-        debug_cond = debug_ttl and not BaseSpecification.check_kind_job(kind)
+        debug_cond = debug_ttl and not (specification.is_job or specification.is_service)
         if debug_cond:
             raise PolyaxonfileError(
-                "You can only trigger debug mode on a job specification, "
-                "received instead a `{}` specification".format(kind)
+                "You can only trigger debug mode on a job/service specification, "
+                "received instead a `{}` specification.".format(specification.kind)
             )
-        if debug_ttl and parallel:
+        if debug_ttl and specification.parallel:
             raise PolyaxonfileError(
-                "You can only trigger debug mode on a job specification "
-                "without a parallel section"
+                "You can only trigger debug mode on a job/service specification "
+                "without a parallel section."
             )
-        try:
-            self.specification = SPECIFICATION_BY_KIND[kind](data)
-        except PolyaxonConfigurationError as e:
-            raise PolyaxonfileError(e)
+        self.specification = specification
 
     @property
     def filenames(self):

@@ -13,7 +13,7 @@ class ServiceSchema(BaseOpSchema):
     container = fields.Nested(ContainerSchema, allow_none=True)
     ports = fields.List(
         fields.Int(allow_none=True),
-        validate=validate.Range(min=1, max=2),
+        validate=validate.Length(min=1, max=2),
         allow_none=True,
     )
 
