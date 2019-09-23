@@ -1177,7 +1177,23 @@ class TestPipelineConfigs(TestCase):
         }
         config = PipelineConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
+        # Trying to set op template before processing templates
+        with self.assertRaises(PolyaxonSchemaError):
+            config.set_op_template("A")
         config.process_templates()
+        # Trying to set op template before processing dag
+        with self.assertRaises(PolyaxonSchemaError):
+            config.set_op_template("A")
+        config.process_dag()
+        assert config.dag["A"].op._template is None
+        assert config.dag["B"].op._template is None
+        config.set_op_template("A")
+        assert config.dag["B"].op._template is None
+        assert config.dag["A"].op._template is not None
+        assert config.dag["A"].op._template == config._template_by_names["build-template"]
+        config.set_op_template("B")
+        assert config.dag["B"].op._template is not None
+        assert config.dag["B"].op._template == config._template_by_names["job-template"]
 
     def test_pipelines_with_template_not_defining_inputs_and_ops_with_params(self):
         config_dict = {
@@ -1326,7 +1342,24 @@ class TestPipelineConfigs(TestCase):
         }
         config = PipelineConfig.from_dict(config_dict)
         assert config.to_light_dict() == config_dict
+
+        # Trying to set op template before processing templates
+        with self.assertRaises(PolyaxonSchemaError):
+            config.set_op_template("A")
         config.process_templates()
+        # Trying to set op template before processing dag
+        with self.assertRaises(PolyaxonSchemaError):
+            config.set_op_template("A")
+        config.process_dag()
+        assert config.dag["A"].op._template is None
+        assert config.dag["B"].op._template is None
+        config.set_op_template("A")
+        assert config.dag["B"].op._template is None
+        assert config.dag["A"].op._template is not None
+        assert config.dag["A"].op._template == config._template_by_names["job-template"]
+        config.set_op_template("B")
+        assert config.dag["B"].op._template is not None
+        assert config.dag["B"].op._template == config._template_by_names["job-template"]
 
     def test_pipelines_with_wrong_refs(self):
         config_dict = {

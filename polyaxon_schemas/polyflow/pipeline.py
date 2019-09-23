@@ -199,6 +199,28 @@ class PipelineConfig(BaseOpConfig):
                 is_template=False,
             )
 
+    def set_op_template(self, op_name):
+        if op_name not in self.dag:
+            raise PolyaxonSchemaError(
+                "Pp with name `{}` was not found in Pipeline, "
+                "make sure to run `process_dag`.".format(
+                    op_name
+                )
+            )
+        op_spec = self.dag[op_name]
+        if op_spec.op._template:
+            return
+        if op_name not in self._op_template_mapping:
+            raise PolyaxonSchemaError(
+                "Pipeline op with name `{}` requires a template with name `{}`, "
+                "which is not defined on this pipeline, "
+                "make sure to run `process_templates`".format(
+                    op_name, op_spec.op.template.name
+                )
+            )
+        template_name = self._op_template_mapping[op_name]
+        op_spec.op._template = self._template_by_names[template_name]
+
 
 class TemplateSchema(BaseOneOfSchema):
     TYPE_FIELD = "kind"
