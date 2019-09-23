@@ -106,10 +106,26 @@ class TestSpecifications(TestCase):
             spec.apply_context()
 
         params = {"lr": 0.1, "num_steps": 100}
+
+        assert spec.config.inputs[0].value is None
+        assert spec.config.inputs[1].value is None
         validated_params = spec.validate_params(params=params)
+        spec.apply_params(params=params)
         assert params == {p.name: p.value for p in validated_params}
-        new_spec = spec.apply_context(params=params)
-        assert new_spec.data == content
+        assert spec.config.inputs[0].value == 0.1
+        assert spec.config.inputs[1].value == 100
+
+        new_spec = spec.apply_context()
+        updated_content = {
+            "version": 0.6,
+            "kind": "job",
+            "inputs": [
+                {"name": "lr", "type": IOTypes.FLOAT, "is_optional": True, "value": 0.1},
+                {"name": "num_steps", "type": IOTypes.INT, "is_optional": True, "value": 100},
+            ],
+            "container": {"image": "test/test:latest", "command": "train"},
+        }
+        assert new_spec.data == updated_content
 
         env = {
             "environment": {
@@ -133,15 +149,22 @@ class TestSpecifications(TestCase):
             "container": {"image": "test/test:latest", "command": "train"},
         }
         spec = JobSpecification.read(content)
+        assert spec.config.inputs[0].value == 0.6
+        assert spec.config.inputs[1].value == 16
         spec = spec.apply_context()
         validated_params = spec.validate_params()
         assert {"lr": 0.6, "num_steps": 16} == {p.name: p.value for p in validated_params}
+        assert spec.config.inputs[0].value == 0.6
+        assert spec.config.inputs[1].value == 16
 
         new_spec = JobSpecification.read(spec.data)
         assert new_spec.data == content
 
         params = {"lr": 0.6, "num_steps": 16}
-        new_spec.apply_context(params=params)
+        new_spec.validate_params(params=params)
+        new_spec.apply_context()
+        assert spec.config.inputs[0].value == 0.6
+        assert spec.config.inputs[1].value == 16
 
         with self.assertRaises(PolyaxonfileError):  # not valid
             params = {"params": {"lr": 0.1}}

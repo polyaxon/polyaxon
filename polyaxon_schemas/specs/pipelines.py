@@ -55,7 +55,7 @@ class PipelineSpecification(BaseSpecification, ScheduleSpecificationMixin):
 
     CONFIG = PipelineConfig
 
-    def apply_context(self, context=None):
+    def apply_context(self):
         self.config.process_dag()
         self.config.validate_dag()
         self.config.process_templates()

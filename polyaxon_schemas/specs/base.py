@@ -4,10 +4,9 @@ from __future__ import absolute_import, division, print_function
 import abc
 import copy
 import json
-import six
 
 import rhea
-
+import six
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
@@ -338,7 +337,7 @@ class BaseSpecification(
         except ValidationError as e:
             raise PolyaxonfileError(e)
 
-    def apply_context(self, params=None, context=None):
+    def apply_params(self, params=None, context=None):
         context = context or {}
         validated_params = self.validate_params(params=params,
                                                 context=context,
@@ -352,6 +351,27 @@ class BaseSpecification(
                 param = param.set_value(context[param.value.replace(".", "__")])
             params[param.name] = param
 
+        def set_io(io):
+            if not io:
+                return
+            for i in io:
+                if i.name in params:
+                    i.value = params[i.name].value
+                    i.is_optional = True
+
+        set_io(self.config.inputs)
+        set_io(self.config.outputs)
+
+    def apply_context(self):
+        params = self.validate_params(is_template=False)
+
+        for param in params:
+            if param.entity_ref:
+                raise PolyaxonfileError(
+                    "apply_context recieved a non-resolved "
+                    "ref param `{}` with value `{}`".format(param.name, param.value))
+
+        params = {param.name: param for param in params}
         return self._parse(params)
 
     @classmethod

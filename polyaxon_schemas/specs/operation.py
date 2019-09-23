@@ -41,7 +41,7 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
 
     CONFIG = OpConfig
 
-    def apply_context(self, params=None, context=None):
+    def apply_context(self):
         raise PolyaxonConfigurationError("This method is not allowed on this specification.")
 
     def generate_run_data(self, override=None):

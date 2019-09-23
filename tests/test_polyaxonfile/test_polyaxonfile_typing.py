@@ -37,7 +37,12 @@ class TestPolyaxonfileWithTypes(TestCase):
         with self.assertRaises(PolyaxonfileError):
             spec.apply_context()
 
-        spec = spec.apply_context(params={"loss": "bar", "flag": False})
+        assert spec.config.inputs[0].value is None
+        assert spec.config.inputs[1].value is None
+        spec.apply_params(params={"loss": "bar", "flag": False})
+        assert spec.config.inputs[0].value == "bar"
+        assert spec.config.inputs[1].value is False
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.tags == {"foo": "bar"}
         assert spec.container.image == "my_image"
@@ -50,7 +55,12 @@ class TestPolyaxonfileWithTypes(TestCase):
             os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
         )
         spec = plxfile.specification
-        spec = spec.apply_context(params={"loss": "bar", "flag": True})
+        assert spec.config.inputs[0].value is None
+        assert spec.config.inputs[1].value is None
+        spec.apply_params(params={"loss": "bar", "flag": True})
+        assert spec.config.inputs[0].value == "bar"
+        assert spec.config.inputs[1].value is True
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.tags == {"foo": "bar"}
         assert spec.container.image == "my_image"
@@ -61,7 +71,7 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         # Adding extra value raises
         with self.assertRaises(PolyaxonfileError):
-            spec.apply_context(params={"loss": "bar", "flag": True, "value": 1.1})
+            spec.validate_params(params={"loss": "bar", "flag": True, "value": 1.1})
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(
                 os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
@@ -70,7 +80,7 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         # Adding non valid params raises
         with self.assertRaises(PolyaxonfileError):
-            spec.apply_context(params={"value": 1.1})
+            spec.validate_params(params={"value": 1.1})
 
     def test_matrix_file_passes_int_float_types(self):
         plxfile = PolyaxonFile(
@@ -117,7 +127,11 @@ class TestPolyaxonfileWithTypes(TestCase):
             os.path.abspath("tests/fixtures/typing/run_cmd_simple_file.yml")
         )
         spec = plxfile.specification
+        assert spec.config.inputs[0].value == "MeanSquaredError"
+        assert spec.config.inputs[1].value is None
         validated_params = spec.validate_params()
+        assert spec.config.inputs[0].value == "MeanSquaredError"
+        assert spec.config.inputs[1].value is None
         assert {"loss": "MeanSquaredError", "num_masks": None} == {p.name: p.value for p in validated_params}
         with self.assertRaises(PolyaxonfileError):
             spec.apply_context()
@@ -131,7 +145,11 @@ class TestPolyaxonfileWithTypes(TestCase):
             "--loss={{loss}}",
         ]
 
-        new_spec = spec.apply_context(params={"num_masks": 100})
+        with self.assertRaises(PolyaxonfileError):  # Applying context before applying params
+            spec.apply_context()
+
+        spec.apply_params(params={"num_masks": 100})
+        new_spec = spec.apply_context()
         assert new_spec.version == 0.6
         assert new_spec.tags == {"foo": "bar"}
         assert new_spec.is_job
@@ -160,10 +178,11 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert ref_param.entity == "runs"
         assert ref_param.value == "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"
 
-        spec = spec.apply_context(
+        spec.apply_params(
             params=params,
             context={"runs__64332180bfce46eba80a65caf73c5396__outputs__doo": "model_path"}
         )
+        spec = spec.apply_context()
         assert spec.container.args == [
             "video_prediction_train",
             "--num_masks=2",
@@ -183,7 +202,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert ref_param.value == "ops.A.outputs.doo"
 
         with self.assertRaises(PolyaxonfileError):
-            spec.apply_context(
+            spec.apply_params(
                 params=params,
                 context={"ops__A__outputs__doo": "model_path"}
             )

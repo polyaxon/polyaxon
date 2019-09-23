@@ -79,7 +79,12 @@ class TestPolyaxonfile(TestCase):
         spec = plxfile.specification
         with self.assertRaises(PolyaxonfileError):
             spec.apply_context()
-        spec = spec.apply_context(params={"flag": True, "loss": "some-loss"})
+        assert spec.config.inputs[0].value is None
+        assert spec.config.inputs[1].value is None
+        spec.apply_params(params={"flag": True, "loss": "some-loss"})
+        assert spec.config.inputs[0].value == "some-loss"
+        assert spec.config.inputs[1].value is True
+        spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.tags == {"foo": "bar"}
         assert spec.container.image == "my_image"
