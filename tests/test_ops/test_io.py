@@ -75,7 +75,9 @@ class TestIOConfigs(TestCase):
         }
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
-        expected_repr = OrderedDict(name="input1", type=IOTypes.S3_PATH, value="s3://foo")
+        expected_repr = OrderedDict(
+            name="input1", type=IOTypes.S3_PATH, value="s3://foo"
+        )
         assert config.get_repr_from_value("s3://foo") == expected_repr
         assert config.get_repr() == OrderedDict(name="input1", type=IOTypes.S3_PATH)
 

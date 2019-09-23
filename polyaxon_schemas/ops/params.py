@@ -2,9 +2,8 @@
 from __future__ import absolute_import, division, print_function
 
 import re
-import uuid
-
 import six
+import uuid
 
 from collections import namedtuple
 
@@ -18,8 +17,9 @@ RUNS = "runs"
 ENTITIES = {RUNS, OPS}
 
 
-class ParamSpec(namedtuple("ParamSpec", "name iotype value entity entity_ref is_flag")):
-
+class ParamSpec(
+    namedtuple("ParamSpec", "name iotype value entity entity_ref entity_value is_flag")
+):
     @property
     def display_value(self):
         if self.is_flag:
@@ -27,12 +27,15 @@ class ParamSpec(namedtuple("ParamSpec", "name iotype value entity entity_ref is_
         return self.value
 
     def set_value(self, value):
-        return ParamSpec(name=self.name,
-                         iotype=self.iotype,
-                         value=value,
-                         entity=self.entity,
-                         entity_ref=self.entity_ref,
-                         is_flag=self.is_flag)
+        return ParamSpec(
+            name=self.name,
+            iotype=self.iotype,
+            value=value,
+            entity=self.entity,
+            entity_ref=self.entity_ref,
+            entity_value=self.entity_value,
+            is_flag=self.is_flag,
+        )
 
 
 def get_param(name, value, iotype, is_flag):
@@ -49,6 +52,7 @@ def get_param(name, value, iotype, is_flag):
             value=value,
             entity=None,
             entity_ref=None,
+            entity_value=None,
             is_flag=is_flag,
         )
 
@@ -60,6 +64,7 @@ def get_param(name, value, iotype, is_flag):
             value=value,
             entity=None,
             entity_ref=None,
+            entity_value=None,
             is_flag=is_flag,
         )
 
@@ -84,7 +89,9 @@ def get_param(name, value, iotype, is_flag):
             uuid.UUID(param_parts[1])
         except (KeyError, ValueError):
             raise ValidationError(
-                "Param value `{}` should reference a valid uuid.".format(value, param_parts[1])
+                "Param value `{}` should reference a valid uuid.".format(
+                    value, param_parts[1]
+                )
             )
 
     return ParamSpec(
@@ -93,6 +100,7 @@ def get_param(name, value, iotype, is_flag):
         value=param,
         entity=param_parts[0],
         entity_ref=param_parts[1],
+        entity_value=param_parts[3],
         is_flag=is_flag,
     )
 
@@ -125,9 +133,7 @@ def validate_param(param, context, is_template=False):
         )
 
 
-def validate_params(
-    params, inputs, outputs, context=None, is_template=True
-):
+def validate_params(params, inputs, outputs, context=None, is_template=True):
     """
     Validates Params given inputs, and an optional context.
 
@@ -141,7 +147,8 @@ def validate_params(
         if not is_template and not params:
             raise ValidationError(
                 "The Polyaxonfile has non optional inputs/outputs, "
-                "you need to pass valid params.")
+                "you need to pass valid params."
+            )
     elif not accepts_params(inputs, outputs) and params:
         raise ValidationError("Received unexpected params `{}`.".format(params))
 
@@ -176,6 +183,7 @@ def validate_params(
                     iotype=inp.iotype,
                     entity=None,
                     entity_ref=None,
+                    entity_value=None,
                     is_flag=inp.is_flag,
                 )
             )
@@ -202,6 +210,7 @@ def validate_params(
                     iotype=out.iotype,
                     entity=None,
                     entity_ref=None,
+                    entity_value=None,
                     is_flag=out.is_flag,
                 )
             )

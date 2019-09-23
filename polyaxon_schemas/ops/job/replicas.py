@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
 
-from polyaxon_schemas.base import BaseSchema, BaseConfig
+from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema

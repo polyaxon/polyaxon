@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import pytest
+
 from marshmallow import ValidationError
 
 from polyaxon_schemas.polyflow.ops import OpConfig
@@ -88,7 +89,7 @@ class TestOpConfigs(TestCase):
                 "not_supported_key": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
-            }
+            },
         }
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
@@ -104,7 +105,7 @@ class TestOpConfigs(TestCase):
                 "name": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
-            }
+            },
         }
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -123,11 +124,12 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}],
-                             "config_maps": [{"name": "config_map1"}]},
-
-                "container": {"image": "jupyterlab"}
-            }
+                "contexts": {
+                    "repos": [{"name": "foo", "branch": "dev"}],
+                    "config_maps": [{"name": "config_map1"}],
+                },
+                "container": {"image": "jupyterlab"},
+            },
         }
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
@@ -145,11 +147,12 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}],
-                             "config_maps": [{"name": "config_map1"}]},
-
-                "container": {"image": "jupyterlab"}
-            }
+                "contexts": {
+                    "repos": [{"name": "foo", "branch": "dev"}],
+                    "config_maps": [{"name": "config_map1"}],
+                },
+                "container": {"image": "jupyterlab"},
+            },
         }
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -180,7 +183,7 @@ class TestOpConfigs(TestCase):
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],
-            }
+            },
         }
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
@@ -210,7 +213,7 @@ class TestOpConfigs(TestCase):
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],
-            }
+            },
         }
         config = OpConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
@@ -240,7 +243,7 @@ class TestOpConfigs(TestCase):
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],
-            }
+            },
         }
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)

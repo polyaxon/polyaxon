@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import pytest
+
 from marshmallow import ValidationError
 
 from polyaxon_schemas.ops import params as ops_params
@@ -44,7 +45,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param8", "type": IOTypes.S3_PATH},
                 {"name": "param9", "type": IOTypes.AZURE_PATH},
                 {"name": "param10", "type": IOTypes.PATH},
-            ],
+            ]
         }
         op = BaseOpConfig.from_dict(config_dict)
 
@@ -60,16 +61,18 @@ class TestOperationsConfigs(TestCase):
             "param9": "wasbs://container@user.blob.core.windows.net/",
             "param10": "/foo/bar",
         }
-        validated_params = ops_params.validate_params(params=params, inputs=op.inputs,
-                                                      outputs=None, is_template=False)
+        validated_params = ops_params.validate_params(
+            params=params, inputs=op.inputs, outputs=None, is_template=False
+        )
         assert params == {p.name: p.value for p in validated_params}
 
         # Passing missing params
         params.pop("param1")
         params.pop("param2")
         with self.assertRaises(ValidationError):
-            ops_params.validate_params(params=params, inputs=op.inputs,
-                                       outputs=None, is_template=False)
+            ops_params.validate_params(
+                params=params, inputs=op.inputs, outputs=None, is_template=False
+            )
 
     def test_param_validation_with_outputs(self):
         config_dict = {
@@ -88,7 +91,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param12", "type": IOTypes.METADATA},
                 {"name": "param13", "type": IOTypes.METADATA},
                 {"name": "param14", "type": IOTypes.METADATA},
-            ],
+            ]
         }
         op = BaseOpConfig.from_dict(config_dict)
         params = {
@@ -107,15 +110,17 @@ class TestOperationsConfigs(TestCase):
             "param13": {"foo": "bar"},
             "param14": {"foo": ["foo", 124.4]},
         }
-        validated_params = ops_params.validate_params(params=params, inputs=None,
-                                                      outputs=op.outputs, is_template=False)
+        validated_params = ops_params.validate_params(
+            params=params, inputs=None, outputs=op.outputs, is_template=False
+        )
         assert params == {p.name: p.value for p in validated_params}
 
         # Passing missing params
         params.pop("param1")
         params.pop("param2")
-        validated_params = ops_params.validate_params(params=params, inputs=None,
-                                                      outputs=op.outputs, is_template=False)
+        validated_params = ops_params.validate_params(
+            params=params, inputs=None, outputs=op.outputs, is_template=False
+        )
         params["param1"] = None
         params["param2"] = None
         assert params == {p.name: p.value for p in validated_params}
@@ -126,7 +131,7 @@ class TestOperationsConfigs(TestCase):
             "inputs": [
                 {"name": "param1", "type": IOTypes.STR},
                 {"name": "param10", "type": IOTypes.PATH},
-            ],
+            ]
         }
         config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
@@ -142,7 +147,7 @@ class TestOperationsConfigs(TestCase):
             "outputs": [
                 {"name": "param1", "type": IOTypes.STR},
                 {"name": "param10", "type": IOTypes.PATH},
-            ],
+            ]
         }
         config = BaseOpConfig.from_dict(config_dict)
 
@@ -171,7 +176,7 @@ class TestOperationsConfigs(TestCase):
             "inputs": [
                 {"name": "param1", "type": IOTypes.INT},
                 {"name": "param2", "type": IOTypes.INT},
-            ],
+            ]
         }
         config = BaseOpConfig.from_dict(config_dict)
         with self.assertRaises(ValidationError):
@@ -191,7 +196,7 @@ class TestOperationsConfigs(TestCase):
                     "is_optional": True,
                 },
                 {"name": "param2", "type": IOTypes.INT},
-            ],
+            ]
         }
         config = BaseOpConfig.from_dict(config_dict)
         ops_params.validate_params(
@@ -367,7 +372,7 @@ class TestOperationsConfigs(TestCase):
                 {"name": "param2", "type": IOTypes.FLOAT},
                 {"name": "param9", "type": IOTypes.AZURE_PATH},
                 {"name": "param11", "type": IOTypes.METRIC},
-            ],
+            ]
         }
         op = BaseOpConfig.from_dict(config_dict)
         params = {
@@ -376,7 +381,9 @@ class TestOperationsConfigs(TestCase):
             "param9": "wasbs://container@user.blob.core.windows.net/",
             "param11": "{{ runs.fcc462d764104eb698d3cca509f34154.outputs.accuracy }}",
         }
-        validated_params = ops_params.validate_params(params=params, inputs=op.inputs, outputs=None, is_template=False)
+        validated_params = ops_params.validate_params(
+            params=params, inputs=op.inputs, outputs=None, is_template=False
+        )
         assert {p.name: p.value for p in validated_params} == {
             "param1": "runs.64332180bfce46eba80a65caf73c5396.outputs.foo",
             "param2": "runs.0de53b5bf8b04a219d12a39c6b92bcce.outputs.foo",

@@ -13,9 +13,7 @@ def set_dag_op(dag, op_id, op=None, upstream=None, downstream=None):
         dag[op_id].upstream.update(upstream)
         dag[op_id].downstream.update(downstream)
     else:
-        dag[op_id] = DagOpSpec(
-            op=op, upstream=upstream, downstream=downstream
-        )
+        dag[op_id] = DagOpSpec(op=op, upstream=upstream, downstream=downstream)
 
     return dag
 
@@ -40,9 +38,7 @@ def get_independent_ops(dag):
     """Get a list of all node in the graph with no dependencies."""
     ops = set(six.iterkeys(dag))
     dependent_nodes = {
-        op_downstream
-        for op in six.itervalues(dag)
-        for op_downstream in op.downstream
+        op_downstream for op in six.itervalues(dag) for op_downstream in op.downstream
     }
     return ops - dependent_nodes
 

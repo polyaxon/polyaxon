@@ -10,6 +10,7 @@ from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.ops.io import IOTypes
+from polyaxon_schemas.ops.params import ParamSpec
 from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpConfig
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
@@ -18,7 +19,6 @@ from polyaxon_schemas.polyflow.template_ref import TemplateRefConfig
 
 @pytest.mark.polyflow_mark
 class TestPipelineConfigs(TestCase):
-
     def test_executable(self):
         config_dict = {"start_at": "foo"}
         with self.assertRaises(ValidationError):
@@ -32,7 +32,10 @@ class TestPipelineConfigs(TestCase):
         with self.assertRaises(ValidationError):
             PipelineConfig.from_dict(config_dict)
 
-        config_dict = {"termination": {"timeout": 2}, "execute_at": local_now().isoformat()}
+        config_dict = {
+            "termination": {"timeout": 2},
+            "execute_at": local_now().isoformat(),
+        }
         PipelineConfig.from_dict(config_dict)
 
     def test_pipelines_base_attrs(self):
@@ -917,11 +920,7 @@ class TestPipelineConfigs(TestCase):
                         "param2": "{{ ops.B.outputs.x }}",
                     },
                 },
-                {
-                    "template": {"hub": "echo"},
-                    "name": "D",
-                    "dependencies": ["B", "C"],
-                },
+                {"template": {"hub": "echo"}, "name": "D", "dependencies": ["B", "C"]},
             ]
         }
 
@@ -991,11 +990,7 @@ class TestPipelineConfigs(TestCase):
                     "params": {"param2": "{{ ops.B.outputs.x }}"},
                     "dependencies": ["A"],
                 },
-                {
-                    "template": {"hub": "echo"},
-                    "name": "D",
-                    "dependencies": ["B", "C"],
-                },
+                {"template": {"hub": "echo"}, "name": "D", "dependencies": ["B", "C"]},
             ]
         }
 
@@ -1190,7 +1185,9 @@ class TestPipelineConfigs(TestCase):
         config.set_op_template("A")
         assert config.dag["B"].op._template is None
         assert config.dag["A"].op._template is not None
-        assert config.dag["A"].op._template == config._template_by_names["build-template"]
+        assert (
+            config.dag["A"].op._template == config._template_by_names["build-template"]
+        )
         config.set_op_template("B")
         assert config.dag["B"].op._template is not None
         assert config.dag["B"].op._template == config._template_by_names["job-template"]
@@ -1595,6 +1592,7 @@ class TestPipelineConfigs(TestCase):
                     "tags": {"key1": "tag31", "key2": "tag32"},
                     "params": {
                         "input1": "{{ ops.B.outputs.output1 }}",
+                        "input2": "{{ ops.B.outputs.output2 }}",
                         "output1": "S3://foo.com",
                     },
                     "environment": {
@@ -1631,6 +1629,13 @@ class TestPipelineConfigs(TestCase):
                             "name": "output1",
                             "description": "some text",
                             "type": IOTypes.S3_PATH,
+                        },
+                        {
+                            "name": "output2",
+                            "description": "some text",
+                            "type": IOTypes.BOOL,
+                            "is_optional": True,
+                            "value": True,
                         }
                     ],
                     "environment": {
@@ -1742,3 +1747,25 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[0] == ["A"]
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["C"]
+        op_upstream_by_names = config.get_op_upstream_by_names(config.dag["A"].op)
+        assert op_upstream_by_names == {}
+        op_upstream_by_names = config.get_op_upstream_by_names(config.dag["B"].op)
+        assert op_upstream_by_names == {}
+        op_upstream_by_names = config.get_op_upstream_by_names(config.dag["C"].op)
+        assert op_upstream_by_names["C"] == [ParamSpec(
+            name="input1",
+            iotype=None,
+            value="ops.B.outputs.output1",
+            entity="ops",
+            entity_ref="B",
+            entity_value="output1",
+            is_flag=None,
+        ), ParamSpec(
+            name="input2",
+            iotype=None,
+            value="ops.B.outputs.output2",
+            entity="ops",
+            entity_ref="B",
+            entity_value="output2",
+            is_flag=None,
+        )]

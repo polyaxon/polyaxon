@@ -25,13 +25,15 @@ class TestPolyaxonfileWithTypes(TestCase):
         plx = PolyaxonFile(os.path.abspath("tests/fixtures/typing/required_inputs.yml"))
         with self.assertRaises(PolyaxonfileError):
             plx.specification.apply_context()
-        plx = PolyaxonFile(os.path.abspath("tests/fixtures/typing/required_outputs.yml"))
+        plx = PolyaxonFile(
+            os.path.abspath("tests/fixtures/typing/required_outputs.yml")
+        )
         with self.assertRaises(PolyaxonfileError):
             plx.specification.apply_context()
 
     def test_required_inputs_with_params(self):
         plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
+            os.path.abspath("tests/fixtures/typing/required_inputs.yml")
         )
         spec = plxfile.specification
         with self.assertRaises(PolyaxonfileError):
@@ -52,7 +54,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.is_job
 
         plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
+            os.path.abspath("tests/fixtures/typing/required_inputs.yml")
         )
         spec = plxfile.specification
         assert spec.config.inputs[0].value is None
@@ -132,20 +134,25 @@ class TestPolyaxonfileWithTypes(TestCase):
         validated_params = spec.validate_params()
         assert spec.config.inputs[0].value == "MeanSquaredError"
         assert spec.config.inputs[1].value is None
-        assert {"loss": "MeanSquaredError", "num_masks": None} == {p.name: p.value for p in validated_params}
+        assert {"loss": "MeanSquaredError", "num_masks": None} == {
+            p.name: p.value for p in validated_params
+        }
         with self.assertRaises(PolyaxonfileError):
             spec.apply_context()
 
         validated_params = spec.validate_params(params={"num_masks": 100})
-        assert {"loss": "MeanSquaredError", "num_masks": 100} == {p.name: p.value for p in
-                                                                  validated_params}
+        assert {"loss": "MeanSquaredError", "num_masks": 100} == {
+            p.name: p.value for p in validated_params
+        }
         assert spec.container.args == [
             "video_prediction_train",
             "--num_masks={{num_masks}}",
             "--loss={{loss}}",
         ]
 
-        with self.assertRaises(PolyaxonfileError):  # Applying context before applying params
+        with self.assertRaises(
+            PolyaxonfileError
+        ):  # Applying context before applying params
             spec.apply_context()
 
         spec.apply_params(params={"num_masks": 100})
@@ -169,9 +176,15 @@ class TestPolyaxonfileWithTypes(TestCase):
             os.path.abspath("tests/fixtures/typing/run_with_refs.yml")
         )
         spec = plxfile.specification
-        params = {"num_masks": 2, "model_path": "{{ runs.64332180bfce46eba80a65caf73c5396.outputs.doo }}"}
+        params = {
+            "num_masks": 2,
+            "model_path": "{{ runs.64332180bfce46eba80a65caf73c5396.outputs.doo }}",
+        }
         validated_params = spec.validate_params(params=params)
-        assert {"num_masks": 2, "model_path": "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"} == {p.name: p.value for p in validated_params}
+        assert {
+            "num_masks": 2,
+            "model_path": "runs.64332180bfce46eba80a65caf73c5396.outputs.doo",
+        } == {p.name: p.value for p in validated_params}
         ref_param = get_params_with_refs(validated_params)[0]
         assert ref_param == validated_params[0]
         assert ref_param.name == "model_path"
@@ -180,7 +193,9 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         spec.apply_params(
             params=params,
-            context={"runs__64332180bfce46eba80a65caf73c5396__outputs__doo": "model_path"}
+            context={
+                "runs__64332180bfce46eba80a65caf73c5396__outputs__doo": "model_path"
+            },
         )
         spec = spec.apply_context()
         assert spec.container.args == [
@@ -189,12 +204,11 @@ class TestPolyaxonfileWithTypes(TestCase):
             "--model_path=model_path",
         ]
 
-        params = {"num_masks": 2,
-                  "model_path": "{{ ops.A.outputs.doo }}"}
+        params = {"num_masks": 2, "model_path": "{{ ops.A.outputs.doo }}"}
         validated_params = spec.validate_params(params=params)
-        assert {"num_masks": 2,
-                "model_path": "ops.A.outputs.doo"} == {
-               p.name: p.value for p in validated_params}
+        assert {"num_masks": 2, "model_path": "ops.A.outputs.doo"} == {
+            p.name: p.value for p in validated_params
+        }
         ref_param = get_params_with_refs(validated_params)[0]
         assert ref_param == validated_params[0]
         assert ref_param.name == "model_path"
@@ -203,6 +217,5 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         with self.assertRaises(PolyaxonfileError):
             spec.apply_params(
-                params=params,
-                context={"ops__A__outputs__doo": "model_path"}
+                params=params, context={"ops__A__outputs__doo": "model_path"}
             )

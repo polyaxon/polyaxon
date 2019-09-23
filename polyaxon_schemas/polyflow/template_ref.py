@@ -11,8 +11,7 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 def validate_template(**kwargs):
     if len([i for i in six.itervalues(kwargs) if i is not None and i != ""]) != 1:
         raise ValidationError(
-            "Template requires one and only one param: "
-            "name, url, path, or hub."
+            "Template requires one and only one param: " "name, url, path, or hub."
         )
 
 

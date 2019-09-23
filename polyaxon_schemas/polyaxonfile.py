@@ -53,7 +53,9 @@ class PolyaxonFile(object):
             )
         specification = get_specification(data=rhea.read(filepaths))
 
-        debug_cond = debug_ttl and not (specification.is_job or specification.is_service)
+        debug_cond = debug_ttl and not (
+            specification.is_job or specification.is_service
+        )
         if debug_cond:
             raise PolyaxonfileError(
                 "You can only trigger debug mode on a job/service specification, "

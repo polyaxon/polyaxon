@@ -134,11 +134,63 @@ class TestDags(TestCase):
         assert dags.has_dependencies(op=11, dag=self.cycle2_processed) is False
 
     def test_sort_topologically(self):
-        assert dags.sort_topologically(self.dag1_processed, flatten=True) == [3, 4, 6, 2, 5, 1]
-        assert dags.sort_topologically(self.dag2_processed, flatten=True) == [4, 5, 8, 10, 11, 28, 3, 7, 9, 2, 6, 1]
-        assert dags.sort_topologically(self.dag3_processed, flatten=True) == [7, 11, 12, 13, 14, 15, 6, 8, 9, 10, 2, 3, 4, 5, 1]
-        assert dags.sort_topologically(self.dag4_processed, flatten=True) == [5, 6, 7, 4, 3, 2, 1, 0]
-        assert dags.sort_topologically(self.dag5_processed, flatten=True) == [1, 5, 6, 2, 4, 3]
+        assert dags.sort_topologically(self.dag1_processed, flatten=True) == [
+            3,
+            4,
+            6,
+            2,
+            5,
+            1,
+        ]
+        assert dags.sort_topologically(self.dag2_processed, flatten=True) == [
+            4,
+            5,
+            8,
+            10,
+            11,
+            28,
+            3,
+            7,
+            9,
+            2,
+            6,
+            1,
+        ]
+        assert dags.sort_topologically(self.dag3_processed, flatten=True) == [
+            7,
+            11,
+            12,
+            13,
+            14,
+            15,
+            6,
+            8,
+            9,
+            10,
+            2,
+            3,
+            4,
+            5,
+            1,
+        ]
+        assert dags.sort_topologically(self.dag4_processed, flatten=True) == [
+            5,
+            6,
+            7,
+            4,
+            3,
+            2,
+            1,
+            0,
+        ]
+        assert dags.sort_topologically(self.dag5_processed, flatten=True) == [
+            1,
+            5,
+            6,
+            2,
+            4,
+            3,
+        ]
 
         with self.assertRaises(PolyaxonSchemaError):  # Cycles
             assert dags.sort_topologically(self.cycle1_processed)

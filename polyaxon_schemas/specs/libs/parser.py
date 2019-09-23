@@ -43,10 +43,7 @@ class Parser(object):
         params = params or {}
         parsed_params = {param: params[param].display_value for param in params}
 
-        parsed_data = {
-            spec.VERSION: config.version,
-            spec.KIND: config.kind,
-        }
+        parsed_data = {spec.VERSION: config.version, spec.KIND: config.kind}
 
         if config.name:
             parsed_data[spec.INPUTS] = config.name

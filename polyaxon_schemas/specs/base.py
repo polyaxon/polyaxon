@@ -4,9 +4,10 @@ from __future__ import absolute_import, division, print_function
 import abc
 import copy
 import json
+import six
 
 import rhea
-import six
+
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
@@ -275,7 +276,7 @@ class BaseSpecification(
         SCHEDULE,
         DEPENDENCIES,
         TRIGGER,
-        CONDITIONS
+        CONDITIONS,
     )
 
     PARSING_SECTIONS = (
@@ -329,19 +330,21 @@ class BaseSpecification(
 
     def validate_params(self, params=None, context=None, is_template=True):
         try:
-            return ops_params.validate_params(inputs=self.config.inputs,
-                                              outputs=self.config.outputs,
-                                              params=params,
-                                              context=context,
-                                              is_template=is_template)
+            return ops_params.validate_params(
+                inputs=self.config.inputs,
+                outputs=self.config.outputs,
+                params=params,
+                context=context,
+                is_template=is_template,
+            )
         except ValidationError as e:
             raise PolyaxonfileError(e)
 
     def apply_params(self, params=None, context=None):
         context = context or {}
-        validated_params = self.validate_params(params=params,
-                                                context=context,
-                                                is_template=False)
+        validated_params = self.validate_params(
+            params=params, context=context, is_template=False
+        )
         if not validated_params:
             return self._parse(params)
 
@@ -369,7 +372,8 @@ class BaseSpecification(
             if param.entity_ref:
                 raise PolyaxonfileError(
                     "apply_context recieved a non-resolved "
-                    "ref param `{}` with value `{}`".format(param.name, param.value))
+                    "ref param `{}` with value `{}`".format(param.name, param.value)
+                )
 
         params = {param.name: param for param in params}
         return self._parse(params)

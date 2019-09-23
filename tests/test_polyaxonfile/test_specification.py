@@ -9,12 +9,11 @@ import pytest
 
 from flaky import flaky
 from marshmallow import ValidationError
-
-from polyaxon_schemas.ops.io import IOTypes
 from tests.utils import assert_equal_dict
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops.environments import EnvironmentConfig
+from polyaxon_schemas.ops.io import IOTypes
 from polyaxon_schemas.ops.job import JobConfig
 from polyaxon_schemas.specs import (
     JobSpecification,
@@ -85,7 +84,9 @@ class TestSpecifications(TestCase):
 
         # Validation for template should pass
         validated_params = spec.validate_params()
-        assert {"lr": None, "num_steps": None} == {p.name: p.value for p in validated_params}
+        assert {"lr": None, "num_steps": None} == {
+            p.name: p.value for p in validated_params
+        }
         # Validation for non template should raise
         with self.assertRaises(PolyaxonfileError):
             spec.validate_params(is_template=False)
@@ -120,8 +121,18 @@ class TestSpecifications(TestCase):
             "version": 0.6,
             "kind": "job",
             "inputs": [
-                {"name": "lr", "type": IOTypes.FLOAT, "is_optional": True, "value": 0.1},
-                {"name": "num_steps", "type": IOTypes.INT, "is_optional": True, "value": 100},
+                {
+                    "name": "lr",
+                    "type": IOTypes.FLOAT,
+                    "is_optional": True,
+                    "value": 0.1,
+                },
+                {
+                    "name": "num_steps",
+                    "type": IOTypes.INT,
+                    "is_optional": True,
+                    "value": 100,
+                },
             ],
             "container": {"image": "test/test:latest", "command": "train"},
         }
@@ -143,8 +154,18 @@ class TestSpecifications(TestCase):
             "version": 0.6,
             "kind": "job",
             "inputs": [
-                {"name": "lr", "type": IOTypes.FLOAT, "value": 0.6, "is_optional": True},
-                {"name": "num_steps", "type": IOTypes.INT, "value": 16, "is_optional": True},
+                {
+                    "name": "lr",
+                    "type": IOTypes.FLOAT,
+                    "value": 0.6,
+                    "is_optional": True,
+                },
+                {
+                    "name": "num_steps",
+                    "type": IOTypes.INT,
+                    "value": 16,
+                    "is_optional": True,
+                },
             ],
             "container": {"image": "test/test:latest", "command": "train"},
         }
@@ -153,7 +174,9 @@ class TestSpecifications(TestCase):
         assert spec.config.inputs[1].value == 16
         spec = spec.apply_context()
         validated_params = spec.validate_params()
-        assert {"lr": 0.6, "num_steps": 16} == {p.name: p.value for p in validated_params}
+        assert {"lr": 0.6, "num_steps": 16} == {
+            p.name: p.value for p in validated_params
+        }
         assert spec.config.inputs[0].value == 0.6
         assert spec.config.inputs[1].value == 16
 

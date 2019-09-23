@@ -7,7 +7,7 @@ from polyaxon_schemas.base import BaseOneOfSchema
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.job import JobConfig, JobSchema
-from polyaxon_schemas.ops.operation import BaseOpSchema, BaseOpConfig
+from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 from polyaxon_schemas.ops.service import ServiceConfig, ServiceSchema
 from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpSchema
@@ -17,7 +17,7 @@ from polyaxon_schemas.polyflow.schedule import ScheduleSchema
 class PipelineSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("pipeline"))
     ops = fields.Nested(OpSchema, many=True)
-    templates = fields.Nested('TemplateSchema', many=True)
+    templates = fields.Nested("TemplateSchema", many=True)
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
     execute_at = fields.LocalDateTime(allow_none=True)
 
@@ -105,11 +105,33 @@ class PipelineConfig(BaseOpConfig):
 
         return upstream
 
+    def get_op_upstream_by_names(self, op):
+        upstream = {}
+
+        if not op.params:
+            return upstream
+
+        for param in op.params:
+            param_ref = ops_params.get_param(
+                name=param, value=op.params[param], iotype=None, is_flag=None
+            )
+            if param_ref and param_ref.entity == ops_params.OPS:
+                if op.name in upstream:
+                    upstream[op.name].append(param_ref)
+                else:
+                    upstream[op.name] = [param_ref]
+
+        return upstream
+
     def _process_op(self, op):
         upstream = self._get_op_upstream(op=op)
-        self._dag = dags.set_dag_op(dag=self.dag, op_id=op.name, op=op, upstream=upstream, downstream=None)
+        self._dag = dags.set_dag_op(
+            dag=self.dag, op_id=op.name, op=op, upstream=upstream, downstream=None
+        )
         for op_name in upstream:
-            self._dag = dags.set_dag_op(dag=self.dag, op_id=op_name, downstream=[op.name])
+            self._dag = dags.set_dag_op(
+                dag=self.dag, op_id=op_name, downstream=[op.name]
+            )
 
     def process_dag(self):
         for op in self.ops or []:
@@ -203,9 +225,7 @@ class PipelineConfig(BaseOpConfig):
         if op_name not in self.dag:
             raise PolyaxonSchemaError(
                 "Pp with name `{}` was not found in Pipeline, "
-                "make sure to run `process_dag`.".format(
-                    op_name
-                )
+                "make sure to run `process_dag`.".format(op_name)
             )
         op_spec = self.dag[op_name]
         if op_spec.op._template:

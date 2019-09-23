@@ -74,7 +74,7 @@ class TestPolyaxonfile(TestCase):
 
     def test_passing_params_overrides_polyaxonfiles(self):
         plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
+            os.path.abspath("tests/fixtures/typing/required_inputs.yml")
         )
         spec = plxfile.specification
         with self.assertRaises(PolyaxonfileError):
