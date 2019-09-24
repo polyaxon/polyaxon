@@ -10,7 +10,7 @@ from polyaxon_schemas.ops.service.validation import ServiceLevelSchema
 
 class ServiceSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("service"))
-    container = fields.Nested(ContainerSchema, allow_none=True)
+    container = fields.Nested(ContainerSchema)
     ports = fields.List(
         fields.Int(allow_none=True),
         validate=validate.Length(min=1, max=2),
@@ -25,10 +25,11 @@ class ServiceSchema(BaseOpSchema):
 class ServiceConfig(BaseOpConfig):
     IDENTIFIER = "service"
     SCHEMA = ServiceSchema
-    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["container", "ports"]
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["ports"]
 
     def __init__(
         self,
+        container,
         version=None,
         kind=None,
         name=None,
@@ -38,7 +39,6 @@ class ServiceConfig(BaseOpConfig):
         termination=None,
         contexts=None,
         parallel=None,
-        container=None,
         ports=None,
         inputs=None,
         outputs=None,

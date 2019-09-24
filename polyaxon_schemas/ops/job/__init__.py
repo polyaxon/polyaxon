@@ -10,7 +10,7 @@ from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 
 class JobSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("job"))
-    container = fields.Nested(ContainerSchema, allow_none=True)
+    container = fields.Nested(ContainerSchema)
     replica_spec = fields.Dict(
         keys=fields.Str(), values=fields.Nested(JobReplicaSchema), allow_none=True
     )
@@ -23,10 +23,11 @@ class JobSchema(BaseOpSchema):
 class JobConfig(BaseOpConfig):
     SCHEMA = JobSchema
     IDENTIFIER = "job"
-    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["container", "replica_spec"]
+    REDUCED_ATTRIBUTES = BaseOpConfig.REDUCED_ATTRIBUTES + ["replica_spec"]
 
     def __init__(
         self,
+        container,
         version=None,
         kind=None,
         name=None,
@@ -35,7 +36,6 @@ class JobConfig(BaseOpConfig):
         environment=None,
         termination=None,
         contexts=None,
-        container=None,
         inputs=None,
         outputs=None,
         parallel=None,

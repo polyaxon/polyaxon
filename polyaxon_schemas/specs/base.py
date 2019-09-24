@@ -307,7 +307,7 @@ class BaseSpecification(
             raise PolyaxonConfigurationError(e)
         try:
             self._config = self.CONFIG.from_dict(copy.deepcopy(self.data))
-        except ValidationError as e:
+        except (ValidationError, TypeError) as e:
             raise PolyaxonfileError(e)
         self.check_data()
         headers = Parser.get_headers(spec=self, data=self._data)

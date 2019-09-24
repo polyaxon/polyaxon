@@ -19,3 +19,4 @@ templates:
     name: experiment-template
     description: experiment to predict something
     tags: {tag11: tag12}
+    container: {image: test}

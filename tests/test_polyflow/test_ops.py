@@ -89,9 +89,26 @@ class TestOpConfigs(TestCase):
                 "not_supported_key": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "container": {"image": "foo"}
             },
         }
         with self.assertRaises(ValidationError):
+            OpConfig.from_dict(config_dict)
+
+        # Embedding a template without container
+        config_dict = {
+            "template": {"name": "foo"},
+            "dependencies": ["foo", "bar"],
+            "params": {"param1": "foo", "param2": "bar"},
+            "trigger": "all_succeeded",
+            "_template": {
+                "kind": "job",
+                "name": "build-template",
+                "tags": {"backend": "kaniko"},
+                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+            },
+        }
+        with self.assertRaises(TypeError):
             OpConfig.from_dict(config_dict)
 
         # Embedding a correct template
@@ -105,6 +122,7 @@ class TestOpConfigs(TestCase):
                 "name": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "container": {"image": "foo"}
             },
         }
         config = OpConfig.from_dict(config_dict)
@@ -132,6 +150,28 @@ class TestOpConfigs(TestCase):
             },
         }
         with self.assertRaises(ValidationError):
+            OpConfig.from_dict(config_dict)
+
+        # Embedding a template without container
+        config_dict = {
+            "template": {"name": "foo"},
+            "dependencies": ["foo", "bar"],
+            "params": {"param1": "foo", "param2": "bar"},
+            "trigger": "all_succeeded",
+            "_template": {
+                "kind": "service",
+                "name": "build-template",
+                "tags": {"backend": "lab"},
+                "environment": {
+                    "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
+                },
+                "contexts": {
+                    "repos": [{"name": "foo", "branch": "dev"}],
+                    "config_maps": [{"name": "config_map1"}],
+                },
+            },
+        }
+        with self.assertRaises(TypeError):
             OpConfig.from_dict(config_dict)
 
         # Embedding a correct template
@@ -176,12 +216,13 @@ class TestOpConfigs(TestCase):
                     },
                 ],
                 "templates": [
-                    {"kind": "job", "name": "job-template"},
+                    {"kind": "job", "name": "job-template", "container": {"image": "test"},},
                     {
                         "kind": "job",
                         "name": "build-template",
                         "tags": {"backend": "kaniko"},
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "container": {"image": "test"},
                     },
                 ],
             },
@@ -189,7 +230,7 @@ class TestOpConfigs(TestCase):
         with self.assertRaises(ValidationError):
             OpConfig.from_dict(config_dict)
 
-        # Embedding a correct template
+        # Embedding a template without container
         config_dict = {
             "template": {"name": "foo"},
             "dependencies": ["foo", "bar"],
@@ -213,6 +254,38 @@ class TestOpConfigs(TestCase):
                         "name": "build-template",
                         "tags": {"backend": "kaniko"},
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                    },
+                ],
+            },
+        }
+        with self.assertRaises(TypeError):
+            OpConfig.from_dict(config_dict)
+
+        # Embedding a correct template
+        config_dict = {
+            "template": {"name": "foo"},
+            "dependencies": ["foo", "bar"],
+            "params": {"param1": "foo", "param2": "bar"},
+            "trigger": "all_succeeded",
+            "_template": {
+                "kind": "pipeline",
+                "version": 0.6,
+                "ops": [
+                    {"template": {"name": "build-template"}, "name": "A"},
+                    {
+                        "template": {"name": "job-template"},
+                        "name": "B",
+                        "dependencies": ["A"],
+                    },
+                ],
+                "templates": [
+                    {"kind": "job", "name": "job-template", "container": {"image": "test"}},
+                    {
+                        "kind": "job",
+                        "name": "build-template",
+                        "tags": {"backend": "kaniko"},
+                        "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "container": {"image": "test"},
                     },
                 ],
             },

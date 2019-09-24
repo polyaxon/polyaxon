@@ -194,6 +194,7 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2, "restart_policy": "never"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -228,12 +229,14 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2, "restart_policy": "never"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
                     "name": "build-template",
                     "description": "description build",
                     "tags": {"key1": "tag11", "key2": "tag12"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -253,6 +256,7 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2, "restart_policy": "never"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -282,6 +286,7 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2, "restart_policy": "never"},
+                    "container": {"image": "test"},
                 },
             ]
         }
@@ -1131,11 +1136,13 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template",
                     "description": "description build",
                     "tags": {"tag11": "tag12"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
                     "name": "job-template",
                     "description": "description build",
+                    "container": {"image": "test"},
                 },
             ],
         }
@@ -1159,6 +1166,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template1",
                     "description": "description build",
                     "tags": {"tag11": "tag12"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -1166,6 +1174,7 @@ class TestPipelineConfigs(TestCase):
                     "description": "description build",
                     "tags": {"backend": "kaniko"},
                     "contexts": {"registry": {"enabled": True}},
+                    "container": {"image": "test"},
                 },
             ],
         }
@@ -1190,6 +1199,7 @@ class TestPipelineConfigs(TestCase):
                     "description": "description build",
                     "tags": {"backend": "kaniko"},
                     "contexts": {"registry": {"enabled": True}},
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1212,12 +1222,13 @@ class TestPipelineConfigs(TestCase):
                 },
             ],
             "templates": [
-                {"kind": "job", "name": "job-template"},
+                {"kind": "job", "name": "job-template", "container": {"image": "test"}},
                 {
                     "kind": "job",
                     "name": "build-template",
                     "tags": {"backend": "kaniko"},
                     "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                    "container": {"image": "test"},
                 },
             ],
         }
@@ -1264,11 +1275,12 @@ class TestPipelineConfigs(TestCase):
                 },
             ],
             "templates": [
-                {"kind": "job", "name": "job-template"},
+                {"kind": "job", "name": "job-template", "container": {"image": "test"}},
                 {
                     "kind": "job",
                     "name": "build-template",
                     "tags": {"backend": "kaniko"},
+                    "container": {"image": "test"},
                 },
             ],
         }
@@ -1291,6 +1303,7 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.FLOAT,
                         }
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1318,6 +1331,7 @@ class TestPipelineConfigs(TestCase):
                             "value": 12.2,
                         }
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1350,6 +1364,7 @@ class TestPipelineConfigs(TestCase):
                             "value": 12.2,
                         }
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1401,6 +1416,7 @@ class TestPipelineConfigs(TestCase):
                             "value": True,
                         },
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1473,6 +1489,7 @@ class TestPipelineConfigs(TestCase):
                             "value": True,
                         },
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1533,6 +1550,7 @@ class TestPipelineConfigs(TestCase):
                             "value": 123,
                         }
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1595,6 +1613,7 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.INT,
                         }
                     ],
+                    "container": {"image": "test"},
                 }
             ],
         }
@@ -1617,11 +1636,12 @@ class TestPipelineConfigs(TestCase):
                 },
             ],
             "templates": [
-                {"kind": "job", "name": "job-template"},
+                {"kind": "job", "name": "job-template", "container": {"image": "test"}},
                 {
                     "kind": "job",
                     "name": "build-template",
                     "tags": {"backend": "kaniko"},
+                    "container": {"image": "test"},
                 },
             ],
         }
@@ -1727,6 +1747,7 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -1761,12 +1782,14 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
                     "name": "build-template",
                     "description": "description build",
                     "tags": {"tag11": "tag12"},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -1780,6 +1803,7 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
+                    "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
@@ -1809,6 +1833,7 @@ class TestPipelineConfigs(TestCase):
                         "image_pull_secrets": ["secret1", "secret2"],
                     },
                     "termination": {"max_retries": 2},
+                    "container": {"image": "test"},
                 },
             ],
         }

@@ -47,6 +47,7 @@ templates:
       image_pull_secrets: [secret1, secret2]
     termination:
       max_retries: 2
+    container: {image: test}
 
   - kind: job
     name: job-template
@@ -68,3 +69,4 @@ templates:
       image_pull_secrets: [secret1, secret2]
     termination:
       max_retries: 2
+    container: {image: test}

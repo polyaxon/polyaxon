@@ -30,3 +30,4 @@ templates:
     termination:
       max_retries: 2
       ttl: 3600
+    container: {image: test}

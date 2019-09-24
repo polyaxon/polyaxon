@@ -19,3 +19,4 @@ ops:
 templates:
   - kind: job
     name: experiment-template
+    container: {image: test}
