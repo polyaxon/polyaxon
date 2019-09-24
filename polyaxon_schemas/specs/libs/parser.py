@@ -46,7 +46,7 @@ class Parser(object):
         parsed_data = {spec.VERSION: config.version, spec.KIND: config.kind}
 
         if config.name:
-            parsed_data[spec.INPUTS] = config.name
+            parsed_data[spec.NAME] = config.name
         if config.description:
             parsed_data[spec.DESCRIPTION] = config.description
         if config.tags:
