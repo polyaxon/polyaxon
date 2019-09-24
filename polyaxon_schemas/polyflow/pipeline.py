@@ -9,6 +9,7 @@ from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.job import JobConfig, JobSchema
 from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 from polyaxon_schemas.ops.service import ServiceConfig, ServiceSchema
+from polyaxon_schemas.pkg import SCHEMA_VERSION
 from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpSchema
 from polyaxon_schemas.polyflow.schedule import ScheduleSchema
@@ -38,8 +39,8 @@ class PipelineConfig(BaseOpConfig):
 
     def __init__(
         self,
-        kind=None,
-        version=None,
+        version=SCHEMA_VERSION,
+        kind=IDENTIFIER,
         name=None,
         description=None,
         tags=None,
@@ -240,6 +241,11 @@ class PipelineConfig(BaseOpConfig):
             )
         template_name = self._op_template_mapping[op_name]
         op_spec.op._template = self._template_by_names[template_name]
+        # Check version
+        if op_spec.op._template.version is None:
+            op_spec.op._template.version = self.version
+        if op_spec.op.version is None:
+            op_spec.op.version = self.version
 
 
 class TemplateSchema(BaseOneOfSchema):

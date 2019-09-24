@@ -49,7 +49,7 @@ class TestPipelineConfigs(TestCase):
 
         config_dict = {"parallel": {"concurrency": 2}}
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        assert config.to_dict()["parallel"] == config_dict["parallel"]
         config.process_dag()
         config.validate_dag()
         with self.assertRaises(PolyaxonSchemaError):
@@ -61,7 +61,10 @@ class TestPipelineConfigs(TestCase):
             "termination": {"timeout": 1000},
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         config.process_dag()
         config.validate_dag()
         with self.assertRaises(PolyaxonSchemaError):
@@ -146,7 +149,10 @@ class TestPipelineConfigs(TestCase):
             ]
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         config.process_dag()
         config.validate_dag()
         with self.assertRaises(PolyaxonSchemaError):
@@ -280,7 +286,10 @@ class TestPipelineConfigs(TestCase):
             ]
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         config.process_dag()
         config.validate_dag()
         with self.assertRaises(PolyaxonSchemaError):
@@ -320,7 +329,10 @@ class TestPipelineConfigs(TestCase):
             ]
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -374,7 +386,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -422,7 +437,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -479,7 +497,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -531,7 +552,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -576,7 +600,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -621,7 +648,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -761,7 +791,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -925,7 +958,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -995,7 +1031,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -1042,7 +1081,10 @@ class TestPipelineConfigs(TestCase):
         }
 
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         assert config.dag == {}
 
         # Process the dag
@@ -1098,7 +1140,10 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         with self.assertRaises(PolyaxonSchemaError):
             config.process_templates()
 
@@ -1125,7 +1170,10 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         with self.assertRaises(PolyaxonSchemaError):
             config.process_templates()
 
@@ -1146,7 +1194,10 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         with self.assertRaises(PolyaxonSchemaError):
             config.process_templates()
 
@@ -1171,7 +1222,10 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         # Trying to set op template before processing templates
         with self.assertRaises(PolyaxonSchemaError):
             config.set_op_template("A")
@@ -1194,6 +1248,8 @@ class TestPipelineConfigs(TestCase):
 
     def test_pipelines_with_template_not_defining_inputs_and_ops_with_params(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {"template": {"name": "build-template"}, "name": "A"},
                 {
@@ -1239,7 +1295,10 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         with self.assertRaises(ValidationError):
             config.process_templates()
 
@@ -1263,7 +1322,10 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         config.process_templates()
 
     def test_pipelines_with_ops_template_optional_inputs_and_wrong_param(self):
@@ -1292,12 +1354,17 @@ class TestPipelineConfigs(TestCase):
             ],
         }
         config = PipelineConfig.from_dict(config_dict)
-        assert config.to_light_dict() == config_dict
+        config_to_light = config.to_light_dict()
+        config_to_light.pop("version")
+        config_to_light.pop("kind")
+        assert config_to_light == config_dict
         with self.assertRaises(ValidationError):
             config.process_templates()
 
     def test_pipelines_with_ops_template_validation(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {
                     "template": {"name": "job-template"},
@@ -1360,13 +1427,19 @@ class TestPipelineConfigs(TestCase):
 
     def test_pipelines_with_wrong_refs(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {
+                    "version": 0.6,
+                    "kind": "op",
                     "template": {"name": "job-template"},
                     "name": "A",
                     "params": {"input1": "sdf", "input2": 12.0, "input3": False},
                 },
                 {
+                    "version": 0.6,
+                    "kind": "op",
                     "template": {"name": "job-template"},
                     "name": "B",
                     "dependencies": ["A"],
@@ -1378,6 +1451,7 @@ class TestPipelineConfigs(TestCase):
             ],
             "templates": [
                 {
+                    "version": 0.6,
                     "kind": "job",
                     "name": "job-template",
                     "inputs": [
@@ -1409,6 +1483,8 @@ class TestPipelineConfigs(TestCase):
 
     def test_pipelines_with_correct_refs(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {
                     "template": {"name": "job-template"},
@@ -1466,6 +1542,8 @@ class TestPipelineConfigs(TestCase):
 
     def test_pipelines_with_correct_ref_and_wrong_ref_type(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {
                     "template": {"name": "job-template"},
@@ -1527,6 +1605,8 @@ class TestPipelineConfigs(TestCase):
 
     def test_pipelines_with_template_not_defining_inputs_and_ops_refs_params(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {"template": {"name": "build-template"}, "name": "A"},
                 {
@@ -1552,6 +1632,8 @@ class TestPipelineConfigs(TestCase):
 
     def test_pipelines_with_ops_and_templates(self):
         config_dict = {
+            "version": 0.6,
+            "kind": "pipeline",
             "ops": [
                 {
                     "template": {"name": "build-template"},

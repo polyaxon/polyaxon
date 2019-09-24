@@ -1,5 +1,5 @@
 JOB = "job"
 SERVICE = "service"
 PIPELINE = "pipeline"
-OPERATION = "operation"
+OPERATION = "op"
 KINDS = {JOB, SERVICE, PIPELINE, OPERATION}

@@ -14,6 +14,7 @@ from marshmallow import ValidationError
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
+from polyaxon_schemas.pkg import SCHEMA_VERSION
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
@@ -230,8 +231,8 @@ class BaseSpecification(
 
     _SPEC_KIND = None
 
-    MAX_VERSION = 0.6  # Max Polyaxonfile specification version this CLI supports
-    MIN_VERSION = 0.6  # Min Polyaxonfile specification version this CLI supports
+    MAX_VERSION = SCHEMA_VERSION  # Max Polyaxonfile specification version this CLI supports
+    MIN_VERSION = SCHEMA_VERSION  # Min Polyaxonfile specification version this CLI supports
 
     VERSION = "version"
     KIND = "kind"

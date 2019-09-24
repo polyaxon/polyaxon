@@ -39,6 +39,11 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
 
     _SPEC_KIND = kinds.OPERATION
 
+    TEMPLATE = "template"
+    I_TEMPLATE = "_template"
+
+    SECTIONS = BaseSpecification.SECTIONS + (TEMPLATE, I_TEMPLATE)
+
     CONFIG = OpConfig
 
     def apply_context(self):
@@ -47,7 +52,7 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
         )
 
     def generate_run_data(self, override=None):
-        values = [self.config._template]
+        values = [self.config._template.to_light_dict()]
         op_override = {}
         for field in [
             self.NAME,

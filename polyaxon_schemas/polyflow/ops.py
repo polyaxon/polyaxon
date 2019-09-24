@@ -7,6 +7,7 @@ from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.job.replicas import OpReplicaSchema
+from polyaxon_schemas.ops.parallel import ParallelSchema
 from polyaxon_schemas.ops.termination import TerminationSchema
 from polyaxon_schemas.polyflow.conditions import ConditionSchema
 from polyaxon_schemas.polyflow.template_ref import TemplateRefSchema
@@ -14,8 +15,8 @@ from polyaxon_schemas.polyflow.trigger_policies import TriggerPolicy
 
 
 class OpSchema(BaseSchema):
-    version = fields.Int(allow_none=True)
-    kind = fields.Str(allow_none=True)
+    version = fields.Float(allow_none=True)
+    kind = fields.Str(allow_none=True, validate=validate.Equal("op"))
     template = fields.Nested(TemplateRefSchema, allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     description = fields.Str(allow_none=True)
@@ -27,6 +28,7 @@ class OpSchema(BaseSchema):
     replica_spec = fields.Dict(
         keys=fields.Str(), values=fields.Nested(OpReplicaSchema), allow_none=True
     )
+    parallel = fields.Nested(ParallelSchema, allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
     conditions = fields.Nested(ConditionSchema, allow_none=True)
@@ -52,6 +54,8 @@ class OpConfig(BaseConfig):
         "environment",
         "termination",
         "contexts",
+        "replica_spec",
+        "parallel",
         "dependencies",
         "trigger",
         "conditions",
@@ -71,6 +75,8 @@ class OpConfig(BaseConfig):
         environment=None,
         termination=None,
         contexts=None,
+        replica_spec=None,
+        parallel=None,
         build=None,
         dependencies=None,
         trigger=None,
@@ -87,6 +93,8 @@ class OpConfig(BaseConfig):
         self.environment = environment
         self.termination = termination
         self.contexts = contexts
+        self.replica_spec = replica_spec
+        self.parallel = parallel
         self.params = params
         self.build = build
         self.dependencies = dependencies

@@ -166,6 +166,7 @@ class TestOpConfigs(TestCase):
             "trigger": "all_succeeded",
             "_template": {
                 "kind": "pipeline",
+                "version": 0.6,
                 "key_not_supported": [
                     {"template": {"name": "build-template"}, "name": "A"},
                     {
@@ -196,6 +197,7 @@ class TestOpConfigs(TestCase):
             "trigger": "all_succeeded",
             "_template": {
                 "kind": "pipeline",
+                "version": 0.6,
                 "ops": [
                     {"template": {"name": "build-template"}, "name": "A"},
                     {
