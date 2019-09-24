@@ -351,7 +351,7 @@ class BaseSpecification(
             params=params, context=context, is_template=False
         )
         if not validated_params:
-            return self._parse(params)
+            return
 
         params = {}
         for param in validated_params:
