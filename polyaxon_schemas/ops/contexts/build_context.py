@@ -5,6 +5,7 @@ from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.fields.docker_image import validate_image
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 
 
 def validate_build_context_image(image):
@@ -15,13 +16,16 @@ def validate_build_context_image(image):
 
 class BuildContextSchema(BaseSchema):
     context = fields.Str(allow_none=True)
-    image = fields.Str(allow_none=True)
-    build_steps = fields.List(fields.Str(), allow_none=True)
-    lang_env = fields.Str(allow_none=True)
-    env_vars = fields.List(
-        fields.List(fields.Raw(), validate=validate.Length(equal=2)), allow_none=True
+    image = RefOrObject(fields.Str(allow_none=True))
+    build_steps = RefOrObject(fields.List(fields.Str(), allow_none=True))
+    lang_env = RefOrObject(fields.Str(allow_none=True))
+    env_vars = RefOrObject(
+        fields.List(
+            fields.List(fields.Raw(), validate=validate.Length(equal=2)),
+            allow_none=True,
+        )
     )
-    nocache = fields.Boolean(allow_none=True)
+    nocache = RefOrObject(fields.Boolean(allow_none=True))
 
     @staticmethod
     def schema_config():

@@ -4,11 +4,12 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 
 
 class ContainerResourcesSchema(BaseSchema):
-    limits = fields.Dict(allow_none=True)
-    requests = fields.Dict(allow_none=True)
+    limits = RefOrObject(fields.Dict(allow_none=True))
+    requests = RefOrObject(fields.Dict(allow_none=True))
 
     @staticmethod
     def schema_config():

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import re
 import six
 import uuid
 
@@ -9,7 +8,7 @@ from collections import namedtuple
 
 from marshmallow import ValidationError
 
-REGEX = re.compile(r"{{\s*([^\s]*)\s*}}")
+from polyaxon_schemas.fields.params import PARAM_REGEX
 
 OUTPUTS = "outputs"
 OPS = "ops"
@@ -56,7 +55,7 @@ def get_param(name, value, iotype, is_flag):
             is_flag=is_flag,
         )
 
-    param = REGEX.search(value)
+    param = PARAM_REGEX.search(value)
     if not param:
         return ParamSpec(
             name=name,

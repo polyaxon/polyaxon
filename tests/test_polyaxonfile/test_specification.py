@@ -17,9 +17,11 @@ from polyaxon_schemas.ops.io import IOTypes
 from polyaxon_schemas.ops.job import JobConfig
 from polyaxon_schemas.specs import (
     JobSpecification,
+    OperationSpecification,
     PipelineSpecification,
     ServiceSpecification,
-    OperationSpecification, get_specification)
+    get_specification,
+)
 from polyaxon_schemas.utils import TaskType
 
 
@@ -235,7 +237,7 @@ class TestSpecifications(TestCase):
                 "name": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "test"}
+                "container": {"image": "test"},
             },
         }
         spec = OperationSpecification.read(values=config_dict)
@@ -245,7 +247,9 @@ class TestSpecifications(TestCase):
         assert job_spec.config.name == "foo"
         assert job_spec.config.description == "a description"
         assert job_spec.tags == {"backend": "kaniko", "key": "value"}
-        assert job_spec.contexts.to_light_dict() == {"repos": [{"name": "foo", "branch": "dev"}]}
+        assert job_spec.contexts.to_light_dict() == {
+            "repos": [{"name": "foo", "branch": "dev"}]
+        }
         assert job_spec.environment is None
 
         env = {

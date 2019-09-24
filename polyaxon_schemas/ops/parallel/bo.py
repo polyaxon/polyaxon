@@ -6,6 +6,7 @@ import six
 from marshmallow import ValidationError, fields, validate, validates_schema
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 from polyaxon_schemas.ops.parallel.matrix import MatrixSchema
 from polyaxon_schemas.ops.parallel.metrics import SearchMetricSchema
 
@@ -167,13 +168,13 @@ def validate_matrix(matrix):
 class BOSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("bo"))
     utility_function = fields.Nested(UtilityFunctionSchema, allow_none=True)
-    n_initial_trials = fields.Int()
-    n_iterations = fields.Int()
+    n_initial_trials = RefOrObject(fields.Int())
+    n_iterations = RefOrObject(fields.Int())
     metric = fields.Nested(SearchMetricSchema)
     matrix = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
     )
-    seed = fields.Int(allow_none=True)
+    seed = RefOrObject(fields.Int(allow_none=True))
 
     @staticmethod
     def schema_config():

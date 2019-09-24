@@ -1,8 +1,13 @@
 from marshmallow import ValidationError
 
+from polyaxon_schemas.fields.params import PARAM_REGEX
+
 
 def validate_image(image):
     if not image:
+        return
+    param = PARAM_REGEX.search(image)
+    if param:
         return
     if " " in image:
         raise ValidationError("Invalid docker image `{}`".format(image))

@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields, validate
 
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 from polyaxon_schemas.ops.container import ContainerSchema
 from polyaxon_schemas.ops.operation import BaseOpConfig, BaseOpSchema
 from polyaxon_schemas.ops.service.validation import ServiceLevelSchema
@@ -11,10 +12,12 @@ from polyaxon_schemas.ops.service.validation import ServiceLevelSchema
 class ServiceSchema(BaseOpSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("service"))
     container = fields.Nested(ContainerSchema)
-    ports = fields.List(
-        fields.Int(allow_none=True),
-        validate=validate.Length(min=1, max=2),
-        allow_none=True,
+    ports = RefOrObject(
+        fields.List(
+            fields.Int(allow_none=True),
+            validate=validate.Length(min=1, max=2),
+            allow_none=True,
+        )
     )
 
     @staticmethod

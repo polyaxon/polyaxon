@@ -89,7 +89,7 @@ class TestOpConfigs(TestCase):
                 "not_supported_key": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "foo"}
+                "container": {"image": "foo"},
             },
         }
         with self.assertRaises(ValidationError):
@@ -122,7 +122,7 @@ class TestOpConfigs(TestCase):
                 "name": "build-template",
                 "tags": {"backend": "kaniko"},
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
-                "container": {"image": "foo"}
+                "container": {"image": "foo"},
             },
         }
         config = OpConfig.from_dict(config_dict)
@@ -216,7 +216,11 @@ class TestOpConfigs(TestCase):
                     },
                 ],
                 "templates": [
-                    {"kind": "job", "name": "job-template", "container": {"image": "test"},},
+                    {
+                        "kind": "job",
+                        "name": "job-template",
+                        "container": {"image": "test"},
+                    },
                     {
                         "kind": "job",
                         "name": "build-template",
@@ -279,7 +283,11 @@ class TestOpConfigs(TestCase):
                     },
                 ],
                 "templates": [
-                    {"kind": "job", "name": "job-template", "container": {"image": "test"}},
+                    {
+                        "kind": "job",
+                        "name": "job-template",
+                        "container": {"image": "test"},
+                    },
                     {
                         "kind": "job",
                         "name": "build-template",

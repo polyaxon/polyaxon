@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 from polyaxon_schemas.ops.parallel.matrix import MatrixSchema
 
 
@@ -12,8 +13,10 @@ class RandomSearchSchema(BaseSchema):
     matrix = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
     )
-    n_experiments = fields.Int(allow_none=True, validate=validate.Range(min=1))
-    seed = fields.Int(allow_none=True)
+    n_experiments = RefOrObject(
+        fields.Int(allow_none=True, validate=validate.Range(min=1))
+    )
+    seed = RefOrObject(fields.Int(allow_none=True))
 
     @staticmethod
     def schema_config():

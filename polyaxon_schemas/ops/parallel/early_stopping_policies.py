@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 from polyaxon_schemas.ops.parallel.metrics import Optimization
 
 
@@ -104,7 +105,7 @@ class StoppingPolicySchema(BaseOneOfSchema):
 class MetricEarlyStoppingSchema(BaseSchema):
     kind = fields.Str(allow_none=True, validate=validate.Equal("metric_early_stopping"))
     metric = fields.Str()
-    value = fields.Float()
+    value = RefOrObject(fields.Float())
     optimization = fields.Str(
         allow_none=True, validate=validate.OneOf(Optimization.VALUES)
     )
@@ -149,7 +150,7 @@ class FailureEarlyStoppingSchema(BaseSchema):
         allow_none=True, validate=validate.Equal("failure_early_stopping")
     )
     percent = fields.Float()
-    evaluation_interval = fields.Int()
+    evaluation_interval = RefOrObject(fields.Int())
 
     @staticmethod
     def schema_config():

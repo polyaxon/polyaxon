@@ -13,6 +13,7 @@ from polyaxon_schemas.pkg import SCHEMA_VERSION
 from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpSchema
 from polyaxon_schemas.polyflow.schedule import ScheduleSchema
+from polyaxon_schemas.specs import kinds
 
 
 class PipelineSchema(BaseOpSchema):
@@ -225,7 +226,7 @@ class PipelineConfig(BaseOpConfig):
     def set_op_template(self, op_name):
         if op_name not in self.dag:
             raise PolyaxonSchemaError(
-                "Pp with name `{}` was not found in Pipeline, "
+                "Op with name `{}` was not found in Pipeline, "
                 "make sure to run `process_dag`.".format(op_name)
             )
         op_spec = self.dag[op_name]
@@ -246,6 +247,9 @@ class PipelineConfig(BaseOpConfig):
             op_spec.op._template.version = self.version
         if op_spec.op.version is None:
             op_spec.op.version = self.version
+        # Check op has kind
+        if op_spec.op.kind is None:
+            op_spec.op.kind = kinds.OPERATION
 
 
 class TemplateSchema(BaseOneOfSchema):

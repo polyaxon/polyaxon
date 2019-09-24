@@ -1738,7 +1738,7 @@ class TestPipelineConfigs(TestCase):
                             "type": IOTypes.BOOL,
                             "is_optional": True,
                             "value": True,
-                        }
+                        },
                     ],
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
@@ -1859,20 +1859,23 @@ class TestPipelineConfigs(TestCase):
         op_upstream_by_names = config.get_op_upstream_by_names(config.dag["B"].op)
         assert op_upstream_by_names == {}
         op_upstream_by_names = config.get_op_upstream_by_names(config.dag["C"].op)
-        assert op_upstream_by_names["C"] == [ParamSpec(
-            name="input1",
-            iotype=None,
-            value="ops.B.outputs.output1",
-            entity="ops",
-            entity_ref="B",
-            entity_value="output1",
-            is_flag=None,
-        ), ParamSpec(
-            name="input2",
-            iotype=None,
-            value="ops.B.outputs.output2",
-            entity="ops",
-            entity_ref="B",
-            entity_value="output2",
-            is_flag=None,
-        )]
+        assert op_upstream_by_names["C"] == [
+            ParamSpec(
+                name="input1",
+                iotype=None,
+                value="ops.B.outputs.output1",
+                entity="ops",
+                entity_ref="B",
+                entity_value="output1",
+                is_flag=None,
+            ),
+            ParamSpec(
+                name="input2",
+                iotype=None,
+                value="ops.B.outputs.output2",
+                entity="ops",
+                entity_ref="B",
+                entity_value="output2",
+                is_flag=None,
+            ),
+        ]

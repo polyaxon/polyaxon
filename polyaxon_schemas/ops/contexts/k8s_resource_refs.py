@@ -7,12 +7,13 @@ import warnings
 from marshmallow import ValidationError, fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 
 
 class K8SResourceRefSchema(BaseSchema):
     name = fields.Str()
     mount_path = fields.Str(allow_none=True)
-    items = fields.List(fields.Str(), allow_none=True)
+    items = RefOrObject(fields.List(fields.Str(), allow_none=True))
 
     @staticmethod
     def schema_config():

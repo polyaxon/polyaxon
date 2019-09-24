@@ -225,7 +225,7 @@ class TestPolyaxonfile(TestCase):
         }
         assert spec.log_level == "DEBUG"
 
-    def test_matrix_file_passes(self):
+    def test_matrix_file_passes_s(self):
         plxfile = PolyaxonFile(os.path.abspath("tests/fixtures/plain/matrix_file.yml"))
         spec = plxfile.specification
         spec = spec.apply_context()

@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 from polyaxon_schemas.ops.parallel.matrix import MatrixSchema
 from polyaxon_schemas.ops.parallel.metrics import SearchMetricSchema
 
@@ -56,12 +57,12 @@ class HyperbandSchema(BaseSchema):
     matrix = fields.Dict(
         keys=fields.Str(), values=fields.Nested(MatrixSchema), allow_none=True
     )
-    max_iter = fields.Int(validate=validate.Range(min=1))
-    eta = fields.Float(validate=validate.Range(min=0))
+    max_iter = RefOrObject(fields.Int(validate=validate.Range(min=1)))
+    eta = RefOrObject(fields.Float(validate=validate.Range(min=0)))
     resource = fields.Nested(ResourceSchema)
     metric = fields.Nested(SearchMetricSchema)
-    resume = fields.Boolean(allow_none=True)
-    seed = fields.Int(allow_none=True)
+    resume = RefOrObject(fields.Boolean(allow_none=True))
+    seed = RefOrObject(fields.Int(allow_none=True))
 
     @staticmethod
     def schema_config():

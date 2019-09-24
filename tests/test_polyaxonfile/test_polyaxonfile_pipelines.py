@@ -9,6 +9,7 @@ import pytest
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
+from polyaxon_schemas.specs import OperationSpecification, get_specification
 
 
 @pytest.mark.polyaxonfile_mark
@@ -156,3 +157,46 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert spec.config.schedule is None
         assert spec.concurrency == 3
         assert spec.schedule is None
+
+    def test_build_run_pipeline(self):
+        plx_file = PolyaxonFile(
+            os.path.abspath("tests/fixtures/pipelines/build_run_pipeline.yml")
+        )
+        spec = plx_file.specification
+        spec = spec.apply_context()
+        assert len(spec.config.ops) == 2
+        assert spec.config.ops[0].name == "build"
+        assert spec.config.ops[1].name == "run"
+        assert spec.config.parallel is None
+        assert spec.config.schedule is None
+        assert len(spec.config.ops) == 2
+        assert spec.config.templates[0].name == "experiment-template"
+        assert spec.config.templates[0].container.to_dict() == {
+            "image": "{{ image }}",
+            "command": ["python3", "main.py"],
+            "args": "--lr={{ lr }}",
+        }
+        assert spec.config.templates[1].name == "build-template"
+        assert spec.config.templates[1].container.to_light_dict() == {"image": "base"}
+        assert spec.config.templates[1].contexts.build.to_light_dict() == {
+            "image": "base",
+            "env_vars": "{{ env_vars }}",
+        }
+
+        # Create a an op spec
+        spec.config.set_op_template("run")
+        assert spec.config.ops[1]._template is not None
+        op_spec = OperationSpecification(spec.config.ops[1].to_dict())
+        assert op_spec.config.params == {
+            "image": "{{ ops.build.outputs.docker-image }}",
+            "lr": 0.001,
+        }
+        job_spec = get_specification(op_spec.generate_run_data())
+        assert job_spec.is_job is True
+        job_spec.apply_params({"image": "foo", "lr": 0.001})
+        job_spec = job_spec.apply_context()
+        assert job_spec.config.container.to_dict() == {
+            "image": "foo",
+            "command": ["python3", "main.py"],
+            "args": "--lr=0.001",
+        }

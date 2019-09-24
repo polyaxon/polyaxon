@@ -231,8 +231,12 @@ class BaseSpecification(
 
     _SPEC_KIND = None
 
-    MAX_VERSION = SCHEMA_VERSION  # Max Polyaxonfile specification version this CLI supports
-    MIN_VERSION = SCHEMA_VERSION  # Min Polyaxonfile specification version this CLI supports
+    MAX_VERSION = (
+        SCHEMA_VERSION
+    )  # Max Polyaxonfile specification version this CLI supports
+    MIN_VERSION = (
+        SCHEMA_VERSION
+    )  # Min Polyaxonfile specification version this CLI supports
 
     VERSION = "version"
     KIND = "kind"
