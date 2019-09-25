@@ -1854,11 +1854,11 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[0] == ["A"]
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["C"]
-        op_upstream_by_names = config.get_op_upstream_by_names(config.dag["A"].op)
+        op_upstream_by_names = config.get_op_upstream_params_by_names(config.dag["A"].op)
         assert op_upstream_by_names == {}
-        op_upstream_by_names = config.get_op_upstream_by_names(config.dag["B"].op)
+        op_upstream_by_names = config.get_op_upstream_params_by_names(config.dag["B"].op)
         assert op_upstream_by_names == {}
-        op_upstream_by_names = config.get_op_upstream_by_names(config.dag["C"].op)
+        op_upstream_by_names = config.get_op_upstream_params_by_names(config.dag["C"].op)
         assert op_upstream_by_names["C"] == [
             ParamSpec(
                 name="input1",

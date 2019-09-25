@@ -107,7 +107,7 @@ class PipelineConfig(BaseOpConfig):
 
         return upstream
 
-    def get_op_upstream_by_names(self, op):
+    def get_op_upstream_params_by_names(self, op):
         upstream = {}
 
         if not op.params:
