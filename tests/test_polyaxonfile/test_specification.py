@@ -227,7 +227,7 @@ class TestSpecifications(TestCase):
             "kind": "op",
             "name": "foo",
             "description": "a description",
-            "tags": {"key": "value"},
+            "tags": ["value"],
             "template": {"name": "foo"},
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
@@ -235,7 +235,7 @@ class TestSpecifications(TestCase):
                 "version": 0.6,
                 "kind": "job",
                 "name": "build-template",
-                "tags": {"backend": "kaniko"},
+                "tags": ["kaniko"],
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
@@ -243,13 +243,13 @@ class TestSpecifications(TestCase):
         spec = OperationSpecification.read(values=config_dict)
         assert spec.name == "foo"
         assert spec.description == "a description"
-        assert spec.tags == {"key": "value"}
+        assert spec.tags == ["value"]
 
         run_data = spec.generate_run_data()
         job_spec = get_specification(run_data)
         assert job_spec.config.name == "foo"
         assert job_spec.config.description == "a description"
-        assert job_spec.tags == {"backend": "kaniko", "key": "value"}
+        assert job_spec.tags == ["value"]
         assert job_spec.contexts.to_light_dict() == {
             "repos": [{"name": "foo", "branch": "dev"}]
         }
@@ -273,7 +273,7 @@ class TestSpecifications(TestCase):
             "kind": "op",
             "name": "foo",
             "description": "a description",
-            "tags": {"key": "value"},
+            "tags": ["value"],
             "template": {"name": "foo"},
             "params": {"param1": "foo", "param2": "bar"},
             "trigger": "all_succeeded",
@@ -281,7 +281,7 @@ class TestSpecifications(TestCase):
                 "version": 0.6,
                 "kind": "job",
                 "name": "build-template",
-                "tags": {"backend": "kaniko"},
+                "tags": ["kaniko"],
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
@@ -292,7 +292,7 @@ class TestSpecifications(TestCase):
         job_spec = get_specification(run_data)
         assert job_spec.config.name == "foo"
         assert job_spec.config.description == "a description"
-        assert job_spec.tags == {"backend": "kaniko", "key": "value"}
+        assert job_spec.tags == ["value"]
         assert job_spec.contexts.to_light_dict() == {
             "repos": [{"name": "foo", "branch": "dev"}]
         }

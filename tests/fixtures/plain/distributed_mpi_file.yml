@@ -3,9 +3,7 @@ version: 0.6
 
 kind: experiment
 
-tags:
-  backend: mpi
-  framework: tensorflow
+tags: [mpi, tensorflow]
 
 replica_spec:
   workers:

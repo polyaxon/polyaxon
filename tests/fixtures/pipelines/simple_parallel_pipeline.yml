@@ -5,8 +5,7 @@ kind: pipeline
 
 name: test-pipeline
 
-tags:
-  backend: native
+tags: [native]
 
 parallel:
   concurrency: 2
@@ -29,8 +28,7 @@ templates:
   - kind: job
     name: experiment-template
     description: experiment to predict something
-    tags:
-      key: tag1
+    tags: [tag1]
     inputs:
       - name: lr
         type: float
@@ -52,8 +50,7 @@ templates:
   - kind: job
     name: job-template
     description: job to process something
-    tags:
-      key: tag2
+    tags: [tag2]
     inputs:
     - name: bucket
       type: s3_path

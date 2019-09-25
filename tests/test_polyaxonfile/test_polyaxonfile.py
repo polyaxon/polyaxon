@@ -86,7 +86,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
         assert spec.version == 0.6
-        assert spec.tags == {"foo": "bar"}
+        assert spec.tags == ['foo', 'bar']
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=some-loss --flag"

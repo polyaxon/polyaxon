@@ -86,7 +86,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"hub": "action1"},
                     "name": "A",
                     "description": "description A",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "params": {
                         "param1": "text",
                         "param2": 12,
@@ -104,7 +104,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"url": "https://url-to-temaplte.com"},
                     "name": "B",
                     "description": "description B",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "params": {
                         "param1": "{{ ops.A.outputs.x }}",
                         "param2": 12,
@@ -122,7 +122,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"name": "my-template"},
                     "name": "C",
                     "description": "description C",
-                    "tags": {"key1": "tag31", "key2": "tag32"},
+                    "tags": ["tag31", "tag32"],
                     "params": {"param2": 12.34, "param3": False},
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
@@ -136,7 +136,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"path": "./relative/path/to/my-template.yaml"},
                     "name": "D",
                     "description": "description D",
-                    "tags": {"key1": "tag31", "key2": "tag32"},
+                    "tags": ["tag31", "tag32"],
                     "dependencies": ["B", "C"],
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
@@ -165,7 +165,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "experiment-template",
                     "description": "description experiment",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "inputs": [
                         {
                             "name": "input1",
@@ -200,7 +200,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "group-template",
                     "description": "description group",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "inputs": [
                         {
                             "name": "input1",
@@ -235,14 +235,14 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "contexts": {
                         "build": {
                             "image": "foo/bar",
@@ -262,7 +262,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "job-template",
                     "description": "description job",
-                    "tags": {"tag11": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "inputs": [
                         {
                             "name": "input1",
@@ -1135,7 +1135,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": {"tag11": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "container": {"image": "test"},
                 },
                 {
@@ -1165,14 +1165,14 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "build-template1",
                     "description": "description build",
-                    "tags": {"tag11": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
                     "name": "build-template2",
                     "description": "description build",
-                    "tags": {"backend": "kaniko"},
+                    "tags": ["kaniko"],
                     "contexts": {"registry": {"enabled": True}},
                     "container": {"image": "test"},
                 },
@@ -1197,7 +1197,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "build-template2",
                     "description": "description build",
-                    "tags": {"backend": "kaniko"},
+                    "tags": ["kaniko"],
                     "contexts": {"registry": {"enabled": True}},
                     "container": {"image": "test"},
                 }
@@ -1226,7 +1226,7 @@ class TestPipelineConfigs(TestCase):
                 {
                     "kind": "job",
                     "name": "build-template",
-                    "tags": {"backend": "kaniko"},
+                    "tags": ["kaniko"],
                     "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                     "container": {"image": "test"},
                 },
@@ -1279,7 +1279,7 @@ class TestPipelineConfigs(TestCase):
                 {
                     "kind": "job",
                     "name": "build-template",
-                    "tags": {"backend": "kaniko"},
+                    "tags": ["kaniko"],
                     "container": {"image": "test"},
                 },
             ],
@@ -1640,7 +1640,7 @@ class TestPipelineConfigs(TestCase):
                 {
                     "kind": "job",
                     "name": "build-template",
-                    "tags": {"backend": "kaniko"},
+                    "tags": ["kaniko"],
                     "container": {"image": "test"},
                 },
             ],
@@ -1659,7 +1659,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"name": "build-template"},
                     "name": "A",
                     "description": "description A",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
@@ -1672,7 +1672,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"name": "experiment-template"},
                     "name": "B",
                     "description": "description B",
-                    "tags": {"key1": "tag21", "key2": "tag22"},
+                    "tags": ["tag21", "tag22"],
                     "dependencies": ["A"],
                     "params": {
                         "input1": 11.1,
@@ -1691,7 +1691,7 @@ class TestPipelineConfigs(TestCase):
                     "template": {"name": "group-template"},
                     "name": "C",
                     "description": "description C",
-                    "tags": {"key1": "tag31", "key2": "tag32"},
+                    "tags": ["tag31", "tag32"],
                     "params": {
                         "input1": "{{ ops.B.outputs.output1 }}",
                         "input2": "{{ ops.B.outputs.output2 }}",
@@ -1711,7 +1711,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "experiment-template",
                     "description": "description experiment",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "inputs": [
                         {
                             "name": "input1",
@@ -1753,7 +1753,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "group-template",
                     "description": "description group",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "inputs": [
                         {
                             "name": "input1",
@@ -1788,14 +1788,14 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "build-template",
                     "description": "description build",
-                    "tags": {"tag11": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "container": {"image": "test"},
                 },
                 {
                     "kind": "job",
                     "name": "build-template2",
                     "description": "description build",
-                    "tags": {"key1": "tag11", "key2": "tag12", "backend": "kaniko"},
+                    "tags": ["tag11", "tag12", "kaniko"],
                     "environment": {
                         "resources": {"requests": {"cpu": 1}},
                         "node_selector": {"polyaxon": "core"},
@@ -1809,7 +1809,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "job-template",
                     "description": "description job",
-                    "tags": {"key1": "tag11", "key2": "tag12"},
+                    "tags": ["tag11", "tag12"],
                     "inputs": [
                         {
                             "name": "input1",

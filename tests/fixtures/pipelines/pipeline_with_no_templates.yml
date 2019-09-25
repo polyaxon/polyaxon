@@ -5,8 +5,7 @@ kind: pipeline
 
 name: test-pipeline
 
-tags:
-  backend: native
+tags: [native]
 
 ops:
   - name: job1

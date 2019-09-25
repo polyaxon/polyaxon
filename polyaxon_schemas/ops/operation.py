@@ -16,7 +16,7 @@ class BaseOpSchema(BaseSchema):
     kind = fields.Str(allow_none=True)
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     description = fields.Str(allow_none=True)
-    tags = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
+    tags = fields.List(fields.Str(), allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     contexts = fields.Nested(ContextsSchema, allow_none=True)

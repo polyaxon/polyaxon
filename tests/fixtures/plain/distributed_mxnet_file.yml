@@ -3,8 +3,7 @@ version: 0.6
 
 kind: experiment
 
-tags:
-  framework: mxnet
+tags: [mxnet]
 
 environment:
   log_level: INFO

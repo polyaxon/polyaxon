@@ -5,8 +5,7 @@ kind: pipeline
 
 name: test-build-run
 
-tags:
-  backend: native
+tags: [native]
 
 ops:
   - name: build
@@ -24,8 +23,7 @@ templates:
   - kind: job
     name: experiment-template
     description: experiment to predict something
-    tags:
-      key: value
+    tags: [value]
     inputs:
       - name: lr
         type: float
@@ -48,8 +46,7 @@ templates:
   - kind: job
     name: build-template
     description: build images
-    tags:
-      key: value
+    tags: [value]
     inputs:
     - name: env_vars
       type: list

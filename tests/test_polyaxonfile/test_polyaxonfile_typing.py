@@ -46,7 +46,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[1].value is False
         spec = spec.apply_context()
         assert spec.version == 0.6
-        assert spec.tags == {"foo": "bar"}
+        assert spec.tags == ['foo', 'bar']
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar "
@@ -64,7 +64,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
         assert spec.version == 0.6
-        assert spec.tags == {"foo": "bar"}
+        assert spec.tags == ['foo', 'bar']
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar --flag"
@@ -158,7 +158,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec.apply_params(params={"num_masks": 100})
         new_spec = spec.apply_context()
         assert new_spec.version == 0.6
-        assert new_spec.tags == {"foo": "bar"}
+        assert new_spec.tags == ['foo', 'bar']
         assert new_spec.is_job
         assert new_spec.environment is None
         container = new_spec.container

@@ -3,8 +3,7 @@ version: 0.6
 
 kind: job
 
-tags:
-  framework: tensorflow
+tags: [tensorflow]
 
 environment:
   log_level: INFO

@@ -3,8 +3,7 @@ version: 0.6
 
 kind: job
 
-tags:
-  foo: bar
+tags: [foo, bar]
 
 outputs:
   - name: path

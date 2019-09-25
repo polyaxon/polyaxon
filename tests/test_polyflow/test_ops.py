@@ -87,7 +87,7 @@ class TestOpConfigs(TestCase):
             "_template": {
                 "kind": "job",
                 "not_supported_key": "build-template",
-                "tags": {"backend": "kaniko"},
+                "tags": ["kaniko"],
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "foo"},
             },
@@ -104,7 +104,7 @@ class TestOpConfigs(TestCase):
             "_template": {
                 "kind": "job",
                 "name": "build-template",
-                "tags": {"backend": "kaniko"},
+                "tags": ["kaniko"],
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
             },
         }
@@ -120,7 +120,7 @@ class TestOpConfigs(TestCase):
             "_template": {
                 "kind": "job",
                 "name": "build-template",
-                "tags": {"backend": "kaniko"},
+                "tags": ["kaniko"],
                 "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "foo"},
             },
@@ -138,7 +138,7 @@ class TestOpConfigs(TestCase):
             "_template": {
                 "kind": "service",
                 "not_supported_key": "build-template",
-                "tags": {"backend": "lab"},
+                "tags": ["lab"],
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
@@ -161,7 +161,7 @@ class TestOpConfigs(TestCase):
             "_template": {
                 "kind": "service",
                 "name": "build-template",
-                "tags": {"backend": "lab"},
+                "tags": ["lab"],
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
@@ -183,7 +183,7 @@ class TestOpConfigs(TestCase):
             "_template": {
                 "kind": "service",
                 "name": "build-template",
-                "tags": {"backend": "lab"},
+                "tags": ["lab"],
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
@@ -224,7 +224,7 @@ class TestOpConfigs(TestCase):
                     {
                         "kind": "job",
                         "name": "build-template",
-                        "tags": {"backend": "kaniko"},
+                        "tags": ["kaniko"],
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                         "container": {"image": "test"},
                     },
@@ -256,7 +256,7 @@ class TestOpConfigs(TestCase):
                     {
                         "kind": "job",
                         "name": "build-template",
-                        "tags": {"backend": "kaniko"},
+                        "tags": ["kaniko"],
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],
@@ -291,7 +291,7 @@ class TestOpConfigs(TestCase):
                     {
                         "kind": "job",
                         "name": "build-template",
-                        "tags": {"backend": "kaniko"},
+                        "tags": ["kaniko"],
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                         "container": {"image": "test"},
                     },
@@ -322,7 +322,7 @@ class TestOpConfigs(TestCase):
                     {
                         "kind": "job",
                         "name": "build-template",
-                        "tags": {"backend": "kaniko"},
+                        "tags": ["kaniko"],
                         "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],

@@ -5,8 +5,7 @@ kind: pipeline
 
 name: test-pipeline
 
-tags:
-  backend: native
+tags: [native]
 
 ops:
   - name: job1
@@ -29,7 +28,7 @@ templates:
   - kind: job
     name: experiment-template
     description: experiment to predict something
-    tags: {tag11: tag12}
+    tags: [tag11, tag12]
     inputs:
       - name: lr
         type: float
@@ -51,7 +50,7 @@ templates:
   - kind: job
     name: job-template
     description: job to process something
-    tags: {tag11: tag12}
+    tags: [tag11, tag12]
     inputs:
     - name: bucket
       type: s3_path

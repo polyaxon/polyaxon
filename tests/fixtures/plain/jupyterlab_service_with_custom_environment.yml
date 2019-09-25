@@ -3,8 +3,7 @@ version: 0.6
 
 kind: service
 
-tags:
-  backend: lab
+tags: [lab]
 
 environment:
   node_selector:

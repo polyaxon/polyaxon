@@ -5,8 +5,7 @@ kind: pipeline
 
 name: test-pipeline
 
-tags:
-  backend: native
+tags: [native]
 
 schedule:
   kind: cron
@@ -20,7 +19,7 @@ templates:
   - kind: job
     name: experiment-template
     description: experiment to predict something
-    tags: {tag11: tag12}
+    tags: [tag11, tag12]
     inputs:
       - name: lr
         type: float
