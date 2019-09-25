@@ -20,15 +20,6 @@ class Parser(object):
 
     env = jinja2.Environment()
 
-    @classmethod
-    def get_headers(cls, spec, data):
-        parsed_data = {
-            section: data[section]
-            for section in spec.HEADER_SECTIONS
-            if data.get(section)
-        }
-        return parsed_data
-
     @staticmethod
     def _get_section(config, section):
         if not hasattr(config, section):

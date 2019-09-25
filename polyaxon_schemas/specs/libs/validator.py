@@ -6,20 +6,6 @@ import copy
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.ops.container import ContainerConfig
 from polyaxon_schemas.ops.environments import EnvironmentConfig
-from polyaxon_schemas.ops.parallel import ParallelConfig
-
-
-def validate_headers(spec, data):
-    """Validates headers data and creates the config objects"""
-    validated_data = {spec.VERSION: data[spec.VERSION], spec.KIND: data[spec.KIND]}
-
-    if data.get(spec.TAGS):
-        validated_data[spec.TAGS] = data[spec.TAGS]
-
-    if data.get(spec.PARALLEL):
-        validated_data[spec.HP_TUNING] = ParallelConfig.from_dict(data[spec.HP_TUNING])
-
-    return validated_data
 
 
 def validate(spec, data):

@@ -294,8 +294,6 @@ class BaseSpecification(
     )
     OP_PARSING_SECTIONS = (TEMPLATES, OPS, SCHEDULE, DEPENDENCIES, TRIGGER, CONDITIONS)
 
-    HEADER_SECTIONS = (VERSION, KIND, NAME, DESCRIPTION, TAGS)
-
     REQUIRED_SECTIONS = (VERSION, KIND)
 
     OPERATORS = {ForConfig.IDENTIFIER: ForConfig, IfConfig.IDENTIFIER: IfConfig}
@@ -314,11 +312,6 @@ class BaseSpecification(
         except (ValidationError, TypeError) as e:
             raise PolyaxonfileError(e)
         self.check_data()
-        headers = Parser.get_headers(spec=self, data=self._data)
-        try:
-            self._headers = validator.validate_headers(spec=self, data=headers)
-        except ValidationError as e:
-            raise PolyaxonConfigurationError(e)
         self._extra_validation()
 
     def _extra_validation(self):
@@ -488,28 +481,24 @@ class BaseSpecification(
         return json.dumps(self.config.to_light_dict())
 
     @property
-    def headers(self):
-        return self._headers
-
-    @property
     def version(self):
-        return self.headers[self.VERSION]
+        return self.config.version
 
     @property
     def kind(self):
-        return self.headers[self.KIND]
+        return self.config.kind
 
     @property
     def name(self):
-        return self.headers[self.NAME]
+        return self.config.name
 
     @property
     def description(self):
-        return self.headers[self.DESCRIPTION]
+        return self.config.description
 
     @property
     def tags(self):
-        return self.headers.get(self.TAGS, None)
+        return self.config.tags
 
     @property
     def container(self):
