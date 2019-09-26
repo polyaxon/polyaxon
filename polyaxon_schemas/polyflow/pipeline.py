@@ -107,24 +107,6 @@ class PipelineConfig(BaseOpConfig):
 
         return upstream
 
-    def get_op_upstream_params_by_names(self, op):
-        upstream = {}
-
-        if not op.params:
-            return upstream
-
-        for param in op.params:
-            param_ref = ops_params.get_param(
-                name=param, value=op.params[param], iotype=None, is_flag=None
-            )
-            if param_ref and param_ref.entity == ops_params.OPS:
-                if op.name in upstream:
-                    upstream[op.name].append(param_ref)
-                else:
-                    upstream[op.name] = [param_ref]
-
-        return upstream
-
     def _process_op(self, op):
         upstream = self._get_op_upstream(op=op)
         self._dag = dags.set_dag_op(

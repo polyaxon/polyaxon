@@ -13,7 +13,8 @@ from polyaxon_schemas.fields.params import PARAM_REGEX
 OUTPUTS = "outputs"
 OPS = "ops"
 RUNS = "runs"
-ENTITIES = {RUNS, OPS}
+PIPELINE = "pipeline"
+ENTITIES = {OPS, RUNS, PIPELINE}
 
 
 class ParamSpec(
@@ -247,3 +248,41 @@ def accepts_params(inputs, outputs):
 
 def get_params_with_refs(params):
     return [param for param in params if param.entity_ref]
+
+
+def get_upstream_op_params_by_names(params):
+    upstream = {}
+
+    if not params:
+        return upstream
+
+    for param in params:
+        param_ref = get_param(
+            name=param, value=params[param], iotype=None, is_flag=None
+        )
+        if param_ref and param_ref.entity == OPS:
+            if param_ref.entity_ref in upstream:
+                upstream[param_ref.entity_ref].append(param_ref)
+            else:
+                upstream[param_ref.entity_ref] = [param_ref]
+
+    return upstream
+
+
+def get_upstream_run_params_by_names(params):
+    upstream = {}
+
+    if not params:
+        return upstream
+
+    for param in params:
+        param_ref = get_param(
+            name=param, value=params[param], iotype=None, is_flag=None
+        )
+        if param_ref and param_ref.entity == RUNS:
+            if param_ref.entity_ref in upstream:
+                upstream[param_ref.entity_ref].append(param_ref)
+            else:
+                upstream[param_ref.entity_ref] = [param_ref]
+
+    return upstream

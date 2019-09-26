@@ -10,7 +10,7 @@ from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonSchemaError
 from polyaxon_schemas.ops.io import IOTypes
-from polyaxon_schemas.ops.params import ParamSpec
+from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.polyflow import dags
 from polyaxon_schemas.polyflow.ops import OpConfig
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
@@ -1677,6 +1677,7 @@ class TestPipelineConfigs(TestCase):
                     "params": {
                         "input1": 11.1,
                         "input2": False,
+                        "input3": "{{ runs.64332180bfce46eba80a65caf73c5396.outputs.foo }}",
                         "output1": "S3://foo.com",
                     },
                     "environment": {
@@ -1722,6 +1723,13 @@ class TestPipelineConfigs(TestCase):
                             "name": "input2",
                             "description": "some text",
                             "type": IOTypes.BOOL,
+                            "is_optional": True,
+                            "value": True,
+                        },
+                        {
+                            "name": "input3",
+                            "description": "some text",
+                            "type": IOTypes.INT,
                             "is_optional": True,
                             "value": True,
                         },
@@ -1854,13 +1862,19 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[0] == ["A"]
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["C"]
-        op_upstream_by_names = config.get_op_upstream_params_by_names(config.dag["A"].op)
+        op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
+            params=config.dag["A"].op.params,
+        )
         assert op_upstream_by_names == {}
-        op_upstream_by_names = config.get_op_upstream_params_by_names(config.dag["B"].op)
+        op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
+            params=config.dag["B"].op.params,
+        )
         assert op_upstream_by_names == {}
-        op_upstream_by_names = config.get_op_upstream_params_by_names(config.dag["C"].op)
-        assert op_upstream_by_names["C"] == [
-            ParamSpec(
+        op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
+            params=config.dag["C"].op.params,
+        )
+        assert op_upstream_by_names["B"] == [
+            ops_params.ParamSpec(
                 name="input1",
                 iotype=None,
                 value="ops.B.outputs.output1",
@@ -1869,7 +1883,7 @@ class TestPipelineConfigs(TestCase):
                 entity_value="output1",
                 is_flag=None,
             ),
-            ParamSpec(
+            ops_params.ParamSpec(
                 name="input2",
                 iotype=None,
                 value="ops.B.outputs.output2",
@@ -1879,3 +1893,26 @@ class TestPipelineConfigs(TestCase):
                 is_flag=None,
             ),
         ]
+
+        op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
+            params=config.dag["A"].op.params,
+        )
+        assert op_upstream_by_names == {}
+        op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
+            params=config.dag["B"].op.params,
+        )
+        assert op_upstream_by_names["64332180bfce46eba80a65caf73c5396"] == [
+            ops_params.ParamSpec(
+                name="input3",
+                iotype=None,
+                value="runs.64332180bfce46eba80a65caf73c5396.outputs.foo",
+                entity="runs",
+                entity_ref="64332180bfce46eba80a65caf73c5396",
+                entity_value="foo",
+                is_flag=None,
+            ),
+        ]
+        op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
+            params=config.dag["C"].op.params,
+        )
+        assert op_upstream_by_names == {}
