@@ -28,7 +28,6 @@ class OpSchema(BaseSchema):
     replica_spec = fields.Dict(
         keys=fields.Str(), values=fields.Nested(OpReplicaSchema), allow_none=True
     )
-    parallel = fields.Nested(ParallelSchema, allow_none=True)
     dependencies = fields.List(fields.Str(), allow_none=True)
     trigger = fields.Str(allow_none=True, validate=validate.OneOf(TriggerPolicy.VALUES))
     conditions = fields.Nested(ConditionSchema, allow_none=True)
@@ -55,7 +54,6 @@ class OpConfig(BaseConfig):
         "termination",
         "contexts",
         "replica_spec",
-        "parallel",
         "dependencies",
         "trigger",
         "conditions",
@@ -76,7 +74,6 @@ class OpConfig(BaseConfig):
         termination=None,
         contexts=None,
         replica_spec=None,
-        parallel=None,
         build=None,
         dependencies=None,
         trigger=None,
@@ -94,7 +91,6 @@ class OpConfig(BaseConfig):
         self.termination = termination
         self.contexts = contexts
         self.replica_spec = replica_spec
-        self.parallel = parallel
         self.params = params
         self.build = build
         self.dependencies = dependencies

@@ -61,7 +61,6 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
             self.ENVIRONMENT,
             self.TERMINATION,
             self.CONTEXTS,
-            self.PARALLEL,
             self.REPLICA_SPEC,
         ]:
             override_field = getattr(self.config, field)
