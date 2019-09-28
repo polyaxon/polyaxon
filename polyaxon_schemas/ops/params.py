@@ -105,12 +105,12 @@ def get_param(name, value, iotype, is_flag):
     )
 
 
-def validate_param(param, context, is_template=False):
+def validate_param(param, context, is_template=False, check_runs=False):
     """
     Given a param reference to an operation, we check that the operation exists in the context,
     and that the types
     """
-    if is_template or param.entity != OPS:
+    if is_template or (param.entity == RUNS and not check_runs):
         return
 
     context = context or {}
@@ -133,7 +133,7 @@ def validate_param(param, context, is_template=False):
         )
 
 
-def validate_params(params, inputs, outputs, context=None, is_template=True):
+def validate_params(params, inputs, outputs, context=None, is_template=True, check_runs=False):
     """
     Validates Params given inputs, and an optional context.
 
@@ -166,7 +166,7 @@ def validate_params(params, inputs, outputs, context=None, is_template=True):
                 name=inp.name, value=param_value, iotype=inp.iotype, is_flag=inp.is_flag
             )
             if param.entity_ref:
-                validate_param(param, context, is_template)
+                validate_param(param, context, is_template, check_runs)
             else:  # Plain value
                 inp.validate_value(param_value)
             validated_params.append(param)
@@ -196,7 +196,7 @@ def validate_params(params, inputs, outputs, context=None, is_template=True):
             )
             validated_params.append(param)
             if param.entity_ref:
-                validate_param(param, None)
+                validate_param(param, None, is_template=False, check_runs=check_runs)
             else:  # Plain value
                 out.validate_value(param_value)
             validated_params.append(param)

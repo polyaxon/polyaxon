@@ -9,6 +9,7 @@ import pytest
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
 from polyaxon_schemas.ops.container import ContainerConfig
+from polyaxon_schemas.ops.io import IOConfig
 from polyaxon_schemas.ops.parallel import GridSearchConfig, ParallelConfig
 from polyaxon_schemas.ops.parallel.matrix import MatrixChoiceConfig
 from polyaxon_schemas.ops.params import get_params_with_refs
@@ -191,18 +192,15 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert ref_param.entity == "runs"
         assert ref_param.value == "runs.64332180bfce46eba80a65caf73c5396.outputs.doo"
 
+        with self.assertRaises(PolyaxonfileError):
+            spec.apply_params(params=params)
+
         spec.apply_params(
             params=params,
             context={
-                "runs__64332180bfce46eba80a65caf73c5396__outputs__doo": "model_path"
-            },
+                "runs.64332180bfce46eba80a65caf73c5396.outputs.doo": IOConfig(name="model_path", value="model_path", is_optional=True, iotype="path")
+            }
         )
-        spec = spec.apply_context()
-        assert spec.container.args == [
-            "video_prediction_train",
-            "--num_masks=2",
-            "--model_path=model_path",
-        ]
 
         params = {"num_masks": 2, "model_path": "{{ ops.A.outputs.doo }}"}
         validated_params = spec.validate_params(params=params)
@@ -216,6 +214,11 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert ref_param.value == "ops.A.outputs.doo"
 
         with self.assertRaises(PolyaxonfileError):
-            spec.apply_params(
-                params=params, context={"ops__A__outputs__doo": "model_path"}
-            )
+            spec.apply_params(params=params)
+
+        spec.apply_params(
+            params=params,
+            context={
+                "ops.A.outputs.doo": IOConfig(name="model_path", value="model_path", is_optional=True, iotype="path")
+            }
+        )

@@ -326,7 +326,7 @@ class BaseSpecification(
         parsed_data = Parser.parse(self, self.config, params)
         return self.read(parsed_data)
 
-    def validate_params(self, params=None, context=None, is_template=True):
+    def validate_params(self, params=None, context=None, is_template=True, check_runs=False):
         try:
             return ops_params.validate_params(
                 inputs=self.config.inputs,
@@ -334,6 +334,7 @@ class BaseSpecification(
                 params=params,
                 context=context,
                 is_template=is_template,
+                check_runs=check_runs
             )
         except ValidationError as e:
             raise PolyaxonfileError(e)
@@ -341,15 +342,13 @@ class BaseSpecification(
     def apply_params(self, params=None, context=None):
         context = context or {}
         validated_params = self.validate_params(
-            params=params, context=context, is_template=False
+            params=params, context=context, is_template=False, check_runs=True
         )
         if not validated_params:
             return
 
         params = {}
         for param in validated_params:
-            if param.entity_ref:
-                param = param.set_value(context[param.value.replace(".", "__")])
             params[param.name] = param
 
         def set_io(io):
@@ -364,7 +363,7 @@ class BaseSpecification(
         set_io(self.config.outputs)
 
     def apply_context(self):
-        params = self.validate_params(is_template=False)
+        params = self.validate_params(is_template=False, check_runs=True)
 
         for param in params:
             if param.entity_ref:
