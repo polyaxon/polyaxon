@@ -1173,7 +1173,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template2",
                     "description": "description build",
                     "tags": ["kaniko"],
-                    "contexts": {"registry": {"enabled": True}},
+                    "contexts": {"registry": "A"},
                     "container": {"image": "test"},
                 },
             ],
@@ -1198,7 +1198,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template2",
                     "description": "description build",
                     "tags": ["kaniko"],
-                    "contexts": {"registry": {"enabled": True}},
+                    "contexts": {"registry": "A"},
                     "container": {"image": "test"},
                 }
             ],

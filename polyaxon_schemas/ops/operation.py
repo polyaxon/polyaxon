@@ -17,6 +17,7 @@ class BaseOpSchema(BaseSchema):
     name = fields.Str(validate=validate.Regexp(regex=NAME_REGEX), allow_none=True)
     description = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
+    profile = fields.Str(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     contexts = fields.Nested(ContextsSchema, allow_none=True)
@@ -38,6 +39,7 @@ class BaseOpConfig(BaseConfig):
         "name",
         "description",
         "tags",
+        "profile",
         "environment",
         "termination",
         "contexts",
@@ -53,6 +55,7 @@ class BaseOpConfig(BaseConfig):
         name=None,
         description=None,
         tags=None,
+        profile=None,
         environment=None,
         termination=None,
         contexts=None,
@@ -65,6 +68,7 @@ class BaseOpConfig(BaseConfig):
         self.name = name
         self.description = description
         self.tags = tags
+        self.profile = profile
         self.environment = environment
         self.termination = termination
         self.contexts = contexts

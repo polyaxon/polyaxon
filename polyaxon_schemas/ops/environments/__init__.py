@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields, validate
+from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
+from polyaxon_schemas.ops.enbaled import EnabledSchema
 from polyaxon_schemas.ops.environments.container_resources import (
     ContainerResourcesSchema,
 )
 
 
 class EnvironmentSchema(BaseSchema):
-    name = fields.Str(allow_none=True)
     resources = fields.Nested(ContainerResourcesSchema, allow_none=True)
     labels = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
     annotations = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
@@ -22,6 +22,9 @@ class EnvironmentSchema(BaseSchema):
     env_vars = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
     security_context = fields.Dict(allow_none=True)
     log_level = fields.Str(allow_none=True)
+    auth = fields.Nested(EnabledSchema, allow_none=True)
+    docker = fields.Nested(EnabledSchema, allow_none=True)
+    shm = fields.Nested(EnabledSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -31,19 +34,11 @@ class EnvironmentSchema(BaseSchema):
 class EnvironmentConfig(BaseConfig):
     """
     Pod environment config.
-
-    Args:
-        index: `int | None`. The index of the pod.
-        resources: `PodResourcesConfig`.
-        node_selector: `dict`.
-        affinity: `dict`.
-        tolerations: `list(dict)`.
     """
 
     IDENTIFIER = "environment"
     SCHEMA = EnvironmentSchema
     REDUCED_ATTRIBUTES = [
-        "name",
         "resources",
         "labels",
         "annotations",
@@ -55,11 +50,13 @@ class EnvironmentConfig(BaseConfig):
         "env_vars",
         "security_context",
         "log_level",
+        "auth",
+        "docker",
+        "shm",
     ]
 
     def __init__(
         self,
-        name=None,
         resources=None,
         labels=None,
         annotations=None,
@@ -71,8 +68,10 @@ class EnvironmentConfig(BaseConfig):
         env_vars=None,
         security_context=None,
         log_level=None,
+        docker=None,
+        shm=None,
+        auth=None,
     ):
-        self.name = name
         self.resources = resources
         self.labels = labels
         self.annotations = annotations
@@ -84,3 +83,6 @@ class EnvironmentConfig(BaseConfig):
         self.env_vars = env_vars
         self.security_context = security_context
         self.log_level = log_level
+        self.docker = docker
+        self.shm = shm
+        self.auth = auth

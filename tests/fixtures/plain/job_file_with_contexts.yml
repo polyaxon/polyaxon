@@ -5,8 +5,13 @@ kind: job
 
 tags: [tensorflow]
 
+profile: "profile A"
+
 environment:
   log_level: INFO
+  docker: {enabled: true}
+  auth: {enabled: true}
+  shm: {enabled: true}
 
 contexts:
   secrets:
@@ -31,8 +36,7 @@ contexts:
   outputs:
     enabled: true
     managed: true
-  registry:
-    enabled: true
+  registry: "A"
   build:
     image: my_image
     build_steps:
@@ -40,9 +44,6 @@ contexts:
     env_vars:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
-  docker: {enabled: true}
-  auth: {enabled: true}
-  shm: {enabled: true}
 
 
 container:

@@ -7,7 +7,6 @@ from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
 class TerminationSchema(BaseSchema):
-    name = fields.Str(allow_none=True)
     max_retries = fields.Int(allow_none=True)
     restart_policy = fields.Str(allow_none=True)
     ttl = fields.Int(allow_none=True)
@@ -31,12 +30,11 @@ class TerminationConfig(BaseConfig):
 
     IDENTIFIER = "termination"
     SCHEMA = TerminationSchema
-    REDUCED_ATTRIBUTES = ["name", "max_retries", "timeout", "restart_policy", "ttl"]
+    REDUCED_ATTRIBUTES = ["max_retries", "timeout", "restart_policy", "ttl"]
 
     def __init__(
-        self, name=None, max_retries=None, timeout=None, restart_policy=None, ttl=None
+        self, max_retries=None, timeout=None, restart_policy=None, ttl=None
     ):
-        self.name = name
         self.max_retries = max_retries
         self.timeout = timeout
         self.restart_policy = restart_policy

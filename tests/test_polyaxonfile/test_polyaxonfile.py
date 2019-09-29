@@ -7,10 +7,7 @@ from unittest import TestCase
 
 import pytest
 
-from flaky import flaky
-
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.ops.container import ContainerConfig
 from polyaxon_schemas.ops.contexts import ContextsConfig
 from polyaxon_schemas.ops.environments import EnvironmentConfig
 from polyaxon_schemas.ops.parallel import (
@@ -317,215 +314,216 @@ class TestPolyaxonfile(TestCase):
         assert len(spec.early_stopping) == 1
         assert isinstance(spec.early_stopping[0], MetricEarlyStoppingConfig)
 
-    def test_tf_passes(self):
-        plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/distributed_tensorflow_file.yml")
-        )
-        spec = plxfile.specification
-        spec = spec.apply_context()
-        assert spec.version == 1
-        assert isinstance(spec.logging, LoggingConfig)
-        assert spec.is_experiment
-        assert isinstance(spec.environment, EnvironmentConfig)
-        assert spec.environment.node_selector is None
-        assert spec.master_node_selector is None
-        assert spec.framework == ExperimentFramework.TENSORFLOW
-        assert spec.config.tensorflow.n_workers == 5
-        assert spec.config.tensorflow.n_ps == 10
-
-        assert spec.environment.tolerations is None
-        assert spec.environment.node_selector is None
-        assert isinstance(spec.environment.affinity, dict)
-        assert spec.environment.resources == {
-            "requests": {"cpu": 1},
-            "limits": {"cpu": 2},
-        }
-
-        assert spec.config.tensorflow.default_worker_node_selector is None
-        assert spec.config.tensorflow.default_worker_affinity is None
-        assert isinstance(spec.config.tensorflow.default_worker_tolerations, list)
-        assert spec.config.tensorflow.default_worker_resources == {
-            "requests": {"cpu": 3, "memory": "256Mi"},
-            "limits": {"cpu": 3, "memory": "256Mi"},
-        }
-
-        assert spec.config.tensorflow.worker_tolerations[2] == [{"operator": "Exists"}]
-        assert spec.config.tensorflow.worker_resources[3] == {
-            "requests": {"memory": "300Mi"},
-            "limits": {"memory": "300Mi"},
-        }
-
-        assert spec.config.tensorflow.default_ps_node_selector is None
-        assert spec.config.tensorflow.default_ps_affinity is None
-        assert isinstance(spec.config.tensorflow.default_ps_tolerations, list)
-        assert spec.config.tensorflow.default_ps_resources == {
-            "requests": {"cpu": 2},
-            "limits": {"cpu": 4},
-        }
-
-        assert spec.config.tensorflow.ps_resources[9] == {
-            "requests": {"memory": "512Mi"},
-            "limits": {"memory": "1024Mi"},
-        }
-
-        # check that properties for return list of configs and resources is working
-        cluster, is_distributed = spec.cluster_def
-        worker_affinities = TensorflowSpecification.get_worker_affinities(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        worker_tolerations = TensorflowSpecification.get_worker_tolerations(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        worker_resources = TensorflowSpecification.get_worker_resources(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        assert worker_affinities == {}
-        assert worker_node_selectors == {}
-        assert len(worker_tolerations) == spec.config.tensorflow.n_workers
-        assert len(worker_resources) == spec.config.tensorflow.n_workers
-
-        ps_tolerations = TensorflowSpecification.get_ps_tolerations(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        ps_affinities = TensorflowSpecification.get_ps_affinities(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        ps_resources = TensorflowSpecification.get_ps_resources(
-            environment=spec.config.tensorflow,
-            cluster=cluster,
-            is_distributed=is_distributed,
-        )
-        assert ps_affinities == {}
-        assert ps_node_selectors == {}
-        assert len(ps_tolerations) == spec.config.tensorflow.n_ps
-        assert len(ps_resources) == spec.config.tensorflow.n_ps
-
-        assert spec.cluster_def == (
-            {TaskType.MASTER: 1, TaskType.WORKER: 5, TaskType.PS: 10},
-            True,
-        )
-
-        def test_distributed_tensorflow_passes_with_node_selectors(self):
-            plxfile = PolyaxonFile(
-                os.path.abspath(
-                    "tests/fixtures/plain/distributed_tensorflow_with_node_selectors_file.yml"
-                )
-            )
-            spec = plxfile.specification
-            spec = spec.apply_context()
-            assert spec.version == 1
-            assert spec.is_experiment
-            assert isinstance(spec.logging, LoggingConfig)
-            assert isinstance(spec.environment, EnvironmentConfig)
-            assert spec.environment.node_selector == {
-                "polyaxon.com": "node_for_master_task"
-            }
-            assert spec.master_node_selector == {"polyaxon.com": "node_for_master_task"}
-            assert spec.framework == ExperimentFramework.TENSORFLOW
-            assert spec.config.tensorflow.n_workers == 5
-            assert spec.config.tensorflow.n_ps == 10
-
-            assert spec.environment.resources == {
-                "requests": {"cpu": 1},
-                "limits": {"cpu": 2},
-            }
-
-            assert spec.config.tensorflow.default_worker_resources == {
-                "requests": {"cpu": 3, "memory": "256Mi"},
-                "limits": {"cpu": 3, "memory": "256Mi"},
-            }
-
-            assert spec.config.tensorflow.worker_resources[3] == {
-                "requests": {"memory": "300Mi"},
-                "limits": {"memory": "300Mi"},
-            }
-
-            assert spec.config.tensorflow.default_ps_resources == {
-                "requests": {"cpu": 2},
-                "limits": {"cpu": 4},
-            }
-
-            assert spec.config.tensorflow.ps_resources[9] == {
-                "requests": {"memory": "512Mi"},
-                "limits": {"memory": "1024Mi"},
-            }
-
-            # check that properties for return list of configs and resources is working
-            cluster, is_distributed = spec.cluster_def
-            worker_resources = TensorflowSpecification.get_worker_resources(
-                environment=spec.config.tensorflow,
-                cluster=cluster,
-                is_distributed=is_distributed,
-            )
-            assert len(worker_resources) == spec.config.tensorflow.n_workers
-
-            ps_resources = TensorflowSpecification.get_ps_resources(
-                environment=spec.config.tensorflow,
-                cluster=cluster,
-                is_distributed=is_distributed,
-            )
-            assert len(ps_resources) == spec.config.tensorflow.n_ps
-
-            assert spec.cluster_def == (
-                {TaskType.MASTER: 1, TaskType.WORKER: 5, TaskType.PS: 10},
-                True,
-            )
-
-            assert spec.config.tensorflow.default_worker.node_selector == {
-                "polyaxon.com": "node_for_worker_tasks"
-            }
-            assert spec.config.tensorflow.worker_node_selectors[2] == {
-                "polyaxon.com": "node_for_worker_task_2"
-            }
-
-            assert spec.config.tensorflow.default_ps.node_selector == {
-                "polyaxon.com": "node_for_ps_tasks"
-            }
-            assert spec.config.tensorflow.ps_node_selectors[2] == {
-                "polyaxon.com": "node_for_ps_task_2"
-            }
-
-            worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
-                environment=spec.config.tensorflow,
-                cluster=cluster,
-                is_distributed=is_distributed,
-            )
-            assert len(worker_node_selectors) == spec.config.tensorflow.n_workers
-            assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
-                tuple(spec.config.tensorflow.default_worker.node_selector.items()),
-                tuple(spec.config.tensorflow.worker_node_selectors[2].items()),
-            }
-
-            ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
-                environment=spec.config.tensorflow,
-                cluster=cluster,
-                is_distributed=is_distributed,
-            )
-            assert len(ps_node_selectors) == spec.config.tensorflow.n_ps
-            assert set(tuple(i.items()) for i in ps_node_selectors.values()) == {
-                tuple(spec.config.tensorflow.default_ps.node_selector.items()),
-                tuple(spec.config.tensorflow.ps_node_selectors[2].items()),
-            }
+    # def test_tf_passes(self):
+    #     # TODO
+    #     plxfile = PolyaxonFile(
+    #         os.path.abspath("tests/fixtures/plain/distributed_tensorflow_file.yml")
+    #     )
+    #     spec = plxfile.specification
+    #     spec = spec.apply_context()
+    #     assert spec.version == 1
+    #     assert isinstance(spec.logging, LoggingConfig)
+    #     assert spec.is_experiment
+    #     assert isinstance(spec.environment, EnvironmentConfig)
+    #     assert spec.environment.node_selector is None
+    #     assert spec.master_node_selector is None
+    #     assert spec.framework == ExperimentFramework.TENSORFLOW
+    #     assert spec.config.tensorflow.n_workers == 5
+    #     assert spec.config.tensorflow.n_ps == 10
+    #
+    #     assert spec.environment.tolerations is None
+    #     assert spec.environment.node_selector is None
+    #     assert isinstance(spec.environment.affinity, dict)
+    #     assert spec.environment.resources == {
+    #         "requests": {"cpu": 1},
+    #         "limits": {"cpu": 2},
+    #     }
+    #
+    #     assert spec.config.tensorflow.default_worker_node_selector is None
+    #     assert spec.config.tensorflow.default_worker_affinity is None
+    #     assert isinstance(spec.config.tensorflow.default_worker_tolerations, list)
+    #     assert spec.config.tensorflow.default_worker_resources == {
+    #         "requests": {"cpu": 3, "memory": "256Mi"},
+    #         "limits": {"cpu": 3, "memory": "256Mi"},
+    #     }
+    #
+    #     assert spec.config.tensorflow.worker_tolerations[2] == [{"operator": "Exists"}]
+    #     assert spec.config.tensorflow.worker_resources[3] == {
+    #         "requests": {"memory": "300Mi"},
+    #         "limits": {"memory": "300Mi"},
+    #     }
+    #
+    #     assert spec.config.tensorflow.default_ps_node_selector is None
+    #     assert spec.config.tensorflow.default_ps_affinity is None
+    #     assert isinstance(spec.config.tensorflow.default_ps_tolerations, list)
+    #     assert spec.config.tensorflow.default_ps_resources == {
+    #         "requests": {"cpu": 2},
+    #         "limits": {"cpu": 4},
+    #     }
+    #
+    #     assert spec.config.tensorflow.ps_resources[9] == {
+    #         "requests": {"memory": "512Mi"},
+    #         "limits": {"memory": "1024Mi"},
+    #     }
+    #
+    #     # check that properties for return list of configs and resources is working
+    #     cluster, is_distributed = spec.cluster_def
+    #     worker_affinities = TensorflowSpecification.get_worker_affinities(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     worker_tolerations = TensorflowSpecification.get_worker_tolerations(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     worker_resources = TensorflowSpecification.get_worker_resources(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     assert worker_affinities == {}
+    #     assert worker_node_selectors == {}
+    #     assert len(worker_tolerations) == spec.config.tensorflow.n_workers
+    #     assert len(worker_resources) == spec.config.tensorflow.n_workers
+    #
+    #     ps_tolerations = TensorflowSpecification.get_ps_tolerations(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     ps_affinities = TensorflowSpecification.get_ps_affinities(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     ps_resources = TensorflowSpecification.get_ps_resources(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     assert ps_affinities == {}
+    #     assert ps_node_selectors == {}
+    #     assert len(ps_tolerations) == spec.config.tensorflow.n_ps
+    #     assert len(ps_resources) == spec.config.tensorflow.n_ps
+    #
+    #     assert spec.cluster_def == (
+    #         {TaskType.MASTER: 1, TaskType.WORKER: 5, TaskType.PS: 10},
+    #         True,
+    #     )
+    #
+    # def test_distributed_tensorflow_passes_with_node_selectors(self):
+    #     plxfile = PolyaxonFile(
+    #         os.path.abspath(
+    #             "tests/fixtures/plain/distributed_tensorflow_with_node_selectors_file.yml"
+    #         )
+    #     )
+    #     spec = plxfile.specification
+    #     spec = spec.apply_context()
+    #     assert spec.version == 1
+    #     assert spec.is_experiment
+    #     assert isinstance(spec.logging, LoggingConfig)
+    #     assert isinstance(spec.environment, EnvironmentConfig)
+    #     assert spec.environment.node_selector == {
+    #         "polyaxon.com": "node_for_master_task"
+    #     }
+    #     assert spec.master_node_selector == {"polyaxon.com": "node_for_master_task"}
+    #     assert spec.framework == ExperimentFramework.TENSORFLOW
+    #     assert spec.config.tensorflow.n_workers == 5
+    #     assert spec.config.tensorflow.n_ps == 10
+    #
+    #     assert spec.environment.resources == {
+    #         "requests": {"cpu": 1},
+    #         "limits": {"cpu": 2},
+    #     }
+    #
+    #     assert spec.config.tensorflow.default_worker_resources == {
+    #         "requests": {"cpu": 3, "memory": "256Mi"},
+    #         "limits": {"cpu": 3, "memory": "256Mi"},
+    #     }
+    #
+    #     assert spec.config.tensorflow.worker_resources[3] == {
+    #         "requests": {"memory": "300Mi"},
+    #         "limits": {"memory": "300Mi"},
+    #     }
+    #
+    #     assert spec.config.tensorflow.default_ps_resources == {
+    #         "requests": {"cpu": 2},
+    #         "limits": {"cpu": 4},
+    #     }
+    #
+    #     assert spec.config.tensorflow.ps_resources[9] == {
+    #         "requests": {"memory": "512Mi"},
+    #         "limits": {"memory": "1024Mi"},
+    #     }
+    #
+    #     # check that properties for return list of configs and resources is working
+    #     cluster, is_distributed = spec.cluster_def
+    #     worker_resources = TensorflowSpecification.get_worker_resources(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     assert len(worker_resources) == spec.config.tensorflow.n_workers
+    #
+    #     ps_resources = TensorflowSpecification.get_ps_resources(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     assert len(ps_resources) == spec.config.tensorflow.n_ps
+    #
+    #     assert spec.cluster_def == (
+    #         {TaskType.MASTER: 1, TaskType.WORKER: 5, TaskType.PS: 10},
+    #         True,
+    #     )
+    #
+    #     assert spec.config.tensorflow.default_worker.node_selector == {
+    #         "polyaxon.com": "node_for_worker_tasks"
+    #     }
+    #     assert spec.config.tensorflow.worker_node_selectors[2] == {
+    #         "polyaxon.com": "node_for_worker_task_2"
+    #     }
+    #
+    #     assert spec.config.tensorflow.default_ps.node_selector == {
+    #         "polyaxon.com": "node_for_ps_tasks"
+    #     }
+    #     assert spec.config.tensorflow.ps_node_selectors[2] == {
+    #         "polyaxon.com": "node_for_ps_task_2"
+    #     }
+    #
+    #     worker_node_selectors = TensorflowSpecification.get_worker_node_selectors(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     assert len(worker_node_selectors) == spec.config.tensorflow.n_workers
+    #     assert set(tuple(i.items()) for i in worker_node_selectors.values()) == {
+    #         tuple(spec.config.tensorflow.default_worker.node_selector.items()),
+    #         tuple(spec.config.tensorflow.worker_node_selectors[2].items()),
+    #     }
+    #
+    #     ps_node_selectors = TensorflowSpecification.get_ps_node_selectors(
+    #         environment=spec.config.tensorflow,
+    #         cluster=cluster,
+    #         is_distributed=is_distributed,
+    #     )
+    #     assert len(ps_node_selectors) == spec.config.tensorflow.n_ps
+    #     assert set(tuple(i.items()) for i in ps_node_selectors.values()) == {
+    #         tuple(spec.config.tensorflow.default_ps.node_selector.items()),
+    #         tuple(spec.config.tensorflow.ps_node_selectors[2].items()),
+    #     }
 
     #
     #     def test_distributed_horovod_passes(self):

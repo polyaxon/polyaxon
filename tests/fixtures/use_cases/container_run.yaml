@@ -444,8 +444,7 @@ description: Building docker image with Polyaxon and default registry connexion
   Similar to the outputs store, Polyaxon allows users to create a registry in the catalog to define how to connect to that registry, and where to push the images to
 
 contexts:
-  registry:
-    enabled: true
+  registry: "A"
   repos:
     - name: my-repo-with-dockerfile-to-build
 
@@ -467,8 +466,7 @@ description: Building and running: user can build and create images that they ca
 ops:
   - name: build
     contexts:
-      registry:
-        enabled: true
+      registry: "A"
       repos:
         - name: my-repo-with-dockerfile-to-build
 

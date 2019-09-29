@@ -16,7 +16,6 @@ from polyaxon_schemas.ops import params as ops_params
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
 from polyaxon_schemas.pkg import SCHEMA_VERSION
 from polyaxon_schemas.specs import kinds
-from polyaxon_schemas.specs.libs import validator
 from polyaxon_schemas.specs.libs.parser import Parser
 
 
@@ -72,6 +71,18 @@ class EnvironmentSpecificationMixin(object):
     @property
     def log_level(self):
         return self.environment.log_level if self.environment else None
+
+    @property
+    def auth_context(self):
+        return self.environment.auth if self.environment else None
+
+    @property
+    def docker_context(self):
+        return self.environment.docker if self.environment else None
+
+    @property
+    def shm_context(self):
+        return self.environment.shm if self.environment else None
 
 
 class ContextsSpecificationMixin(object):
@@ -153,18 +164,6 @@ class ContextsSpecificationMixin(object):
     def build_context(self):
         return self.contexts.build if self.contexts else None
 
-    @property
-    def auth_context(self):
-        return self.contexts.auth if self.contexts else None
-
-    @property
-    def docker_context(self):
-        return self.contexts.docker if self.contexts else None
-
-    @property
-    def shm_context(self):
-        return self.contexts.shm if self.contexts else None
-
 
 class ParallelSpecificationMixin(object):
     @property
@@ -243,6 +242,7 @@ class BaseSpecification(
     NAME = "name"
     DESCRIPTION = "description"
     TAGS = "tags"
+    PROFILE = "profile"
     INPUTS = "inputs"
     OUTPUTS = "outputs"
     PARAMS = "params"
@@ -269,6 +269,7 @@ class BaseSpecification(
         INPUTS,
         OUTPUTS,
         PARAMS,
+        PROFILE,
         ENVIRONMENT,
         TERMINATION,
         CONTEXTS,
@@ -285,6 +286,7 @@ class BaseSpecification(
     )
 
     PARSING_SECTIONS = (
+        PROFILE,
         ENVIRONMENT,
         TERMINATION,
         CONTEXTS,
@@ -498,6 +500,10 @@ class BaseSpecification(
     @property
     def tags(self):
         return self.config.tags
+
+    @property
+    def profile(self):
+        return self.config.profile
 
     @property
     def container(self):
