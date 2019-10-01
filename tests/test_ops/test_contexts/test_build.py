@@ -65,7 +65,6 @@ class TestBuildConfigs(TestCase):
         config = BuildContextConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == "latest"
-        assert config.nocache is None
         assert config.context is None
 
     def test_build_config_image_use_cases(self):
@@ -103,13 +102,6 @@ class TestBuildConfigs(TestCase):
         config_dict = {"image": "registry.foobar.com:4567/some_image_name:foo"}
         config = BuildContextConfig.from_dict(config_dict)
         assert config.image_tag == "foo"
-
-    def test_build_nocache(self):
-        config_dict = {"image": "some_image_name", "nocache": True}
-        config = BuildContextConfig.from_dict(config_dict)
-        assert config.to_dict() == config_dict
-        assert config.image_tag == "latest"
-        assert config.nocache is True
 
     def test_build_context(self):
         config_dict = {"image": "some_image_name", "context": "path/to/module"}

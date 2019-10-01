@@ -243,6 +243,7 @@ class BaseSpecification(
     DESCRIPTION = "description"
     TAGS = "tags"
     PROFILE = "profile"
+    NOCACHE = "nocache"
     INPUTS = "inputs"
     OUTPUTS = "outputs"
     PARAMS = "params"
@@ -270,6 +271,7 @@ class BaseSpecification(
         OUTPUTS,
         PARAMS,
         PROFILE,
+        NOCACHE,
         ENVIRONMENT,
         TERMINATION,
         CONTEXTS,
@@ -287,6 +289,7 @@ class BaseSpecification(
 
     PARSING_SECTIONS = (
         PROFILE,
+        NOCACHE,
         ENVIRONMENT,
         TERMINATION,
         CONTEXTS,
@@ -504,6 +507,10 @@ class BaseSpecification(
     @property
     def profile(self):
         return self.config.profile
+
+    @property
+    def nocache(self):
+        return self.config.nocache
 
     @property
     def container(self):

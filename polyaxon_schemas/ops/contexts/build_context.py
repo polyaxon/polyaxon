@@ -25,7 +25,6 @@ class BuildContextSchema(BaseSchema):
             allow_none=True,
         )
     )
-    nocache = RefOrObject(fields.Boolean(allow_none=True))
 
     @staticmethod
     def schema_config():
@@ -45,7 +44,6 @@ class BuildContextConfig(BaseConfig):
         "build_steps",
         "lang_env",
         "env_vars",
-        "nocache",
     ]
 
     def __init__(
@@ -55,7 +53,6 @@ class BuildContextConfig(BaseConfig):
         build_steps=None,
         lang_env=None,
         env_vars=None,
-        nocache=None,
     ):
         validate_build_context_image(image)
         self.context = context
@@ -63,7 +60,6 @@ class BuildContextConfig(BaseConfig):
         self.build_steps = build_steps
         self.lang_env = lang_env
         self.env_vars = env_vars
-        self.nocache = nocache
 
     @property
     def image_tag(self):

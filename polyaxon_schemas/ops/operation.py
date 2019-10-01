@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
+from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 from polyaxon_schemas.ops.contexts import ContextsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.io import IOSchema
@@ -18,6 +19,7 @@ class BaseOpSchema(BaseSchema):
     description = fields.Str(allow_none=True)
     tags = fields.List(fields.Str(), allow_none=True)
     profile = fields.Str(allow_none=True)
+    nocache = RefOrObject(fields.Boolean(allow_none=True))
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     contexts = fields.Nested(ContextsSchema, allow_none=True)
@@ -40,6 +42,7 @@ class BaseOpConfig(BaseConfig):
         "description",
         "tags",
         "profile",
+        "nocache",
         "environment",
         "termination",
         "contexts",
@@ -56,6 +59,7 @@ class BaseOpConfig(BaseConfig):
         description=None,
         tags=None,
         profile=None,
+        nocache=None,
         environment=None,
         termination=None,
         contexts=None,
@@ -69,6 +73,7 @@ class BaseOpConfig(BaseConfig):
         self.description = description
         self.tags = tags
         self.profile = profile
+        self.nocache = nocache
         self.environment = environment
         self.termination = termination
         self.contexts = contexts

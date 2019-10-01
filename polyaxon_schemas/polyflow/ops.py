@@ -23,6 +23,7 @@ class OpSchema(BaseSchema):
     tags = fields.List(fields.Str(), allow_none=True)
     params = fields.Raw(allow_none=True)
     profile = fields.Str(allow_none=True)
+    nocache = fields.Bool(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
     contexts = fields.Nested(ContextsSchema, allow_none=True)
@@ -51,6 +52,7 @@ class OpConfig(BaseConfig):
         "description",
         "tags",
         "profile",
+        "nocache",
         "params",
         "environment",
         "termination",
@@ -72,6 +74,7 @@ class OpConfig(BaseConfig):
         description=None,
         tags=None,
         profile=None,
+        nocache=None,
         params=None,
         environment=None,
         termination=None,
@@ -91,6 +94,7 @@ class OpConfig(BaseConfig):
         self.description = description
         self.tags = tags
         self.profile = profile
+        self.nocache = nocache
         self.environment = environment
         self.termination = termination
         self.contexts = contexts

@@ -310,6 +310,51 @@ class TestSpecifications(TestCase):
         job_spec = get_specification(run_data)
         assert job_spec.environment.to_light_dict() == env["environment"]
 
+    def test_op_specification_with_nocache(self):
+        config_dict = {
+            "version": 0.6,
+            "kind": "op",
+            "name": "foo",
+            "description": "a description",
+            "tags": ["value"],
+            "nocache": True,
+            "template": {"name": "foo"},
+            "params": {"param1": "foo", "param2": "bar"},
+            "trigger": "all_succeeded",
+            "_template": {
+                "version": 0.6,
+                "kind": "job",
+                "name": "build-template",
+                "tags": ["kaniko"],
+                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "container": {"image": "test"},
+            },
+        }
+        spec = OperationSpecification.read(values=config_dict)
+
+        run_data = spec.generate_run_data()
+        job_spec = get_specification(run_data)
+        assert job_spec.config.name == "foo"
+        assert job_spec.config.description == "a description"
+        assert job_spec.tags == ["value"]
+        assert job_spec.nocache is True
+        assert job_spec.contexts.to_light_dict() == {
+            "repos": [{"name": "foo", "branch": "dev"}]
+        }
+        assert job_spec.environment is None
+
+        env = {
+            "environment": {
+                "resources": {
+                    "requests": {"gpu": 1, "tpu": 1},
+                    "limits": {"gpu": 1, "tpu": 1},
+                }
+            }
+        }
+        run_data = spec.generate_run_data(env)
+        job_spec = get_specification(run_data)
+        assert job_spec.environment.to_light_dict() == env["environment"]
+
     # def test_job_replicas_environment_config(self):
     #     config_dict = {
     #         "resources": {'requests': {"cpu": 1}, "limits": {"cpu": 0.5}},
