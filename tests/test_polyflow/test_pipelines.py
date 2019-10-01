@@ -243,7 +243,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template",
                     "description": "description build",
                     "tags": ["tag11", "tag12"],
-                    "contexts": {
+                    "init": {
                         "build": {
                             "image": "foo/bar",
                             "build_steps": ["pip3 install foo"],
@@ -1173,7 +1173,7 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template2",
                     "description": "description build",
                     "tags": ["kaniko"],
-                    "contexts": {"registry": "A"},
+                    "environment": {"registry": "A"},
                     "container": {"image": "test"},
                 },
             ],
@@ -1198,7 +1198,8 @@ class TestPipelineConfigs(TestCase):
                     "name": "build-template2",
                     "description": "description build",
                     "tags": ["kaniko"],
-                    "contexts": {"registry": "A"},
+                    "environment": {"registry": "A"},
+                    "mounts": {"artifacts": [{"name": "data2"}]},
                     "container": {"image": "test"},
                 }
             ],
@@ -1227,7 +1228,7 @@ class TestPipelineConfigs(TestCase):
                     "kind": "job",
                     "name": "build-template",
                     "tags": ["kaniko"],
-                    "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                    "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                     "container": {"image": "test"},
                 },
             ],

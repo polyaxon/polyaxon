@@ -5,7 +5,7 @@ kind: job
 
 tags: [tensorflow]
 
-contexts:
+mounts:
   secrets: ['secret1', 'secret2']
   config_maps: ['config_map1', 'config_map2']
   artifacts: ['data1', 'data2', 'outputs1']

@@ -5,7 +5,7 @@ from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.container import ContainerSchema
-from polyaxon_schemas.ops.contexts import ContextsSchema
+from polyaxon_schemas.ops.mounts import MountsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.termination import TerminationSchema
 
@@ -14,7 +14,7 @@ class OpReplicaSchema(BaseSchema):
     replicas = fields.Int(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
-    contexts = fields.Nested(ContextsSchema, allow_none=True)
+    mounts = fields.Nested(MountsSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -24,20 +24,20 @@ class OpReplicaSchema(BaseSchema):
 class OpReplicaConfig(BaseConfig):
     SCHEMA = OpReplicaSchema
     IDENTIFIER = "replica"
-    REDUCED_ATTRIBUTES = ["replicas", "environment", "termination", "contexts"]
+    REDUCED_ATTRIBUTES = ["replicas", "environment", "termination", "mounts"]
 
-    def __init__(self, replicas=None, environment=None, termination=None, refs=None):
+    def __init__(self, replicas=None, environment=None, termination=None, mounts=None):
         self.replicas = replicas
         self.environment = environment
         self.termination = termination
-        self.refs = refs
+        self.mounts = mounts
 
 
 class JobReplicaSchema(BaseSchema):
     replicas = fields.Int(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
-    contexts = fields.Nested(ContextsSchema, allow_none=True)
+    mounts = fields.Nested(MountsSchema, allow_none=True)
     container = fields.Nested(ContainerSchema, allow_none=True)
 
     @staticmethod
@@ -52,7 +52,7 @@ class JobReplicaConfig(BaseConfig):
         "replicas",
         "environment",
         "termination",
-        "contexts",
+        "mounts",
         "container",
     ]
 
@@ -61,11 +61,11 @@ class JobReplicaConfig(BaseConfig):
         replicas=None,
         environment=None,
         termination=None,
-        refs=None,
+        mounts=None,
         container=None,
     ):
         self.replicas = replicas
         self.environment = environment
         self.termination = termination
-        self.refs = refs
+        self.mounts = mounts
         self.container = container

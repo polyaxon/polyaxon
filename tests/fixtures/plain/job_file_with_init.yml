@@ -12,8 +12,27 @@ environment:
   docker: {enabled: true}
   auth: {enabled: true}
   shm: {enabled: true}
+  outputs:
+    enabled: true
+    managed: true
+  registry: "A"
 
-contexts:
+init:
+  repos:
+  - name: repo1
+    commit: commit-hash
+  - name: repo2
+    branch: master
+    commit: commit-hash
+  build:
+    image: my_image
+    build_steps:
+    - pip install package1
+    env_vars:
+    - ['KEY1', 'en_US.UTF-8']
+    - ['KEY2', 2]
+
+mounts:
   secrets:
   - name: my_ssh_secret
     mount_path: ~/.ssh/id_rsa
@@ -24,27 +43,7 @@ contexts:
   artifacts:
   - name: data1
     paths: ['path1', 'path2']
-    managed: true
   - name: data2
-    managed: true
-  repos:
-  - name: repo1
-    commit: commit-hash
-  - name: repo2
-    branch: master
-    commit: commit-hash
-  outputs:
-    enabled: true
-    managed: true
-  registry: "A"
-  build:
-    image: my_image
-    build_steps:
-    - pip install package1
-    env_vars:
-    - ['KEY1', 'en_US.UTF-8']
-    - ['KEY2', 2]
-
 
 container:
   image: my_image

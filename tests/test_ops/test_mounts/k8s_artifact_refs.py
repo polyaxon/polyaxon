@@ -8,10 +8,10 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.contexts.artifact_refs import ArtifactRefConfig
+from polyaxon_schemas.ops.mounts.artifact_refs import ArtifactRefConfig
 
 
-@pytest.mark.contexts_mark
+@pytest.mark.mounts_mark
 class TestArtifactConfigs(TestCase):
     def test_artifact_config(self):
         config_dict = {"name": "foo"}

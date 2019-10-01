@@ -236,7 +236,7 @@ class TestSpecifications(TestCase):
                 "kind": "job",
                 "name": "build-template",
                 "tags": ["kaniko"],
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
         }
@@ -250,7 +250,7 @@ class TestSpecifications(TestCase):
         assert job_spec.config.name == "foo"
         assert job_spec.config.description == "a description"
         assert job_spec.tags == ["value"]
-        assert job_spec.contexts.to_light_dict() == {
+        assert job_spec.init.to_light_dict() == {
             "repos": [{"name": "foo", "branch": "dev"}]
         }
         assert job_spec.environment is None
@@ -282,7 +282,7 @@ class TestSpecifications(TestCase):
                 "kind": "job",
                 "name": "build-template",
                 "tags": ["kaniko"],
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
         }
@@ -293,7 +293,7 @@ class TestSpecifications(TestCase):
         assert job_spec.config.name == "foo"
         assert job_spec.config.description == "a description"
         assert job_spec.tags == ["value"]
-        assert job_spec.contexts.to_light_dict() == {
+        assert job_spec.init.to_light_dict() == {
             "repos": [{"name": "foo", "branch": "dev"}]
         }
         assert job_spec.environment is None
@@ -326,7 +326,7 @@ class TestSpecifications(TestCase):
                 "kind": "job",
                 "name": "build-template",
                 "tags": ["kaniko"],
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "test"},
             },
         }
@@ -338,7 +338,7 @@ class TestSpecifications(TestCase):
         assert job_spec.config.description == "a description"
         assert job_spec.tags == ["value"]
         assert job_spec.nocache is True
-        assert job_spec.contexts.to_light_dict() == {
+        assert job_spec.init.to_light_dict() == {
             "repos": [{"name": "foo", "branch": "dev"}]
         }
         assert job_spec.environment is None

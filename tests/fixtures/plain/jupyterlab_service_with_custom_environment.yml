@@ -33,16 +33,14 @@ environment:
     operator: "Exists"
 
 
-contexts:
+mounts:
   secrets:
     - name: my_ssh_secret
       mount_path: ~/.ssh/id_rsa
   artifacts:
     - name: data1
       paths: ['path1', 'path2']
-      manage: true
     - name: data2
-      manage: true
   config_maps:
     - name: config_map1
     - name: config_map2

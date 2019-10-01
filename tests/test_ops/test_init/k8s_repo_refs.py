@@ -8,10 +8,10 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from polyaxon_schemas.ops.contexts.repo_refs import RepoRefConfig
+from polyaxon_schemas.ops.mounts.repo_refs import RepoRefConfig
 
 
-@pytest.mark.contexts_mark
+@pytest.mark.init_mark
 class TestRepoConfigs(TestCase):
     def test_repo_config(self):
         config_dict = {"name": "foo"}

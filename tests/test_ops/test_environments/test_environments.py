@@ -102,3 +102,33 @@ class TestEnvironmentsConfigs(TestCase):
         config_dict["log_level"] = "INFO"
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
+
+        # Add auth
+        config_dict["auth"] = {"enabled": True}
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add docker
+        config_dict["docker"] = {"enabled": True}
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add shm
+        config_dict["shm"] = {"enabled": True}
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add outputs
+        config_dict["outputs"] = {"enabled": True, "managed": True}
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add logs
+        config_dict["logs"] = {"enabled": True, "managed": True}
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())
+
+        # Add registry
+        config_dict["registry"] = "foo"
+        config = EnvironmentConfig.from_dict(config_dict)
+        assert_equal_dict(config_dict, config.to_dict())

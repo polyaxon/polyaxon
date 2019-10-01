@@ -5,7 +5,8 @@ from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
 from polyaxon_schemas.fields.ref_or_obj import RefOrObject
-from polyaxon_schemas.ops.contexts import ContextsSchema
+from polyaxon_schemas.ops.init import InitSchema
+from polyaxon_schemas.ops.mounts import MountsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.io import IOSchema
 from polyaxon_schemas.ops.parallel import ParallelSchema
@@ -22,7 +23,8 @@ class BaseOpSchema(BaseSchema):
     nocache = RefOrObject(fields.Boolean(allow_none=True))
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
-    contexts = fields.Nested(ContextsSchema, allow_none=True)
+    init = fields.Nested(InitSchema, allow_none=True)
+    mounts = fields.Nested(MountsSchema, allow_none=True)
     parallel = fields.Nested(ParallelSchema, allow_none=True)
     inputs = fields.Nested(IOSchema, allow_none=True, many=True)
     outputs = fields.Nested(IOSchema, allow_none=True, many=True)
@@ -45,7 +47,8 @@ class BaseOpConfig(BaseConfig):
         "nocache",
         "environment",
         "termination",
-        "contexts",
+        "init",
+        "mounts",
         "parallel",
         "inputs",
         "outputs",
@@ -62,7 +65,8 @@ class BaseOpConfig(BaseConfig):
         nocache=None,
         environment=None,
         termination=None,
-        contexts=None,
+        init=None,
+        mounts=None,
         parallel=None,
         inputs=None,
         outputs=None,
@@ -76,7 +80,8 @@ class BaseOpConfig(BaseConfig):
         self.nocache = nocache
         self.environment = environment
         self.termination = termination
-        self.contexts = contexts
+        self.init = init
+        self.mounts = mounts
         self.parallel = parallel
         self.inputs = inputs
         self.outputs = outputs

@@ -10,7 +10,7 @@ outputs:
     type: path
 
 
-contexts:
+init:
   build:
     image: my_image
     build_steps:

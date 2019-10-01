@@ -59,9 +59,10 @@ templates:
       node_selector: {polyaxon: experiments}
       service_account: service
       image_pull_secrets: [secret1, secret2]
+      registry: foo
     termination:
       max_retries: 2
-    contexts:
+    init:
       build:
         image: base
         env_vars: "{{ env_vars }}"

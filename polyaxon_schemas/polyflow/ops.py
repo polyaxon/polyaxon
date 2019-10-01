@@ -4,10 +4,10 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon_schemas.base import NAME_REGEX, BaseConfig, BaseSchema
-from polyaxon_schemas.ops.contexts import ContextsSchema
+from polyaxon_schemas.ops.init import InitSchema
+from polyaxon_schemas.ops.mounts import MountsSchema
 from polyaxon_schemas.ops.environments import EnvironmentSchema
 from polyaxon_schemas.ops.job.replicas import OpReplicaSchema
-from polyaxon_schemas.ops.parallel import ParallelSchema
 from polyaxon_schemas.ops.termination import TerminationSchema
 from polyaxon_schemas.polyflow.conditions import ConditionSchema
 from polyaxon_schemas.polyflow.template_ref import TemplateRefSchema
@@ -26,7 +26,8 @@ class OpSchema(BaseSchema):
     nocache = fields.Bool(allow_none=True)
     environment = fields.Nested(EnvironmentSchema, allow_none=True)
     termination = fields.Nested(TerminationSchema, allow_none=True)
-    contexts = fields.Nested(ContextsSchema, allow_none=True)
+    init = fields.Nested(InitSchema, allow_none=True)
+    mounts = fields.Nested(MountsSchema, allow_none=True)
     replica_spec = fields.Dict(
         keys=fields.Str(), values=fields.Nested(OpReplicaSchema), allow_none=True
     )
@@ -56,7 +57,8 @@ class OpConfig(BaseConfig):
         "params",
         "environment",
         "termination",
-        "contexts",
+        "init",
+        "mounts",
         "replica_spec",
         "dependencies",
         "trigger",
@@ -78,7 +80,8 @@ class OpConfig(BaseConfig):
         params=None,
         environment=None,
         termination=None,
-        contexts=None,
+        init=None,
+        mounts=None,
         replica_spec=None,
         build=None,
         dependencies=None,
@@ -97,7 +100,8 @@ class OpConfig(BaseConfig):
         self.nocache = nocache
         self.environment = environment
         self.termination = termination
-        self.contexts = contexts
+        self.init = init
+        self.mounts = mounts
         self.replica_spec = replica_spec
         self.params = params
         self.build = build

@@ -54,7 +54,7 @@ templates:
     inputs:
     - name: bucket
       type: s3_path
-    contexts:
+    init:
       build:
         image: my_image
         build_steps:

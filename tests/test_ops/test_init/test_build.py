@@ -7,10 +7,10 @@ import pytest
 
 from marshmallow import ValidationError
 
-from polyaxon_schemas.ops.contexts.build_context import BuildContextConfig
+from polyaxon_schemas.ops.init.build_context import BuildContextConfig
 
 
-@pytest.mark.contexts_mark
+@pytest.mark.init_mark
 class TestBuildConfigs(TestCase):
     def test_valid_image(self):
         config_dict = {"image": None}

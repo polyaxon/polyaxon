@@ -6,18 +6,18 @@ from marshmallow import fields
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 
 
-class OutputsContextSchema(BaseSchema):
+class ArtifactsContextSchema(BaseSchema):
     enabled = fields.Bool(allow_none=True)
     managed = fields.Bool(allow_none=True)
 
     @staticmethod
     def schema_config():
-        return OutputsContextConfig
+        return ArtifactsContextConfig
 
 
-class OutputsContextConfig(BaseConfig):
-    IDENTIFIER = "outputs_context"
-    SCHEMA = OutputsContextSchema
+class ArtifactsContextConfig(BaseConfig):
+    IDENTIFIER = "artifacts_context"
+    SCHEMA = ArtifactsContextSchema
     REDUCED_ATTRIBUTES = ["enabled", "managed"]
 
     def __init__(self, enabled=None, managed=None):

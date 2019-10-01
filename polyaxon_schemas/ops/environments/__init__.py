@@ -5,6 +5,8 @@ from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
 from polyaxon_schemas.ops.enbaled import EnabledSchema
+from polyaxon_schemas.ops.environments.artifacts_context import ArtifactsContextConfig, \
+    ArtifactsContextSchema
 from polyaxon_schemas.ops.environments.container_resources import (
     ContainerResourcesSchema,
 )
@@ -25,6 +27,9 @@ class EnvironmentSchema(BaseSchema):
     auth = fields.Nested(EnabledSchema, allow_none=True)
     docker = fields.Nested(EnabledSchema, allow_none=True)
     shm = fields.Nested(EnabledSchema, allow_none=True)
+    outputs = fields.Nested(ArtifactsContextSchema, allow_none=True)
+    logs = fields.Nested(ArtifactsContextSchema, allow_none=True)
+    registry = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -53,6 +58,9 @@ class EnvironmentConfig(BaseConfig):
         "auth",
         "docker",
         "shm",
+        "outputs",
+        "logs",
+        "registry"
     ]
 
     def __init__(
@@ -71,6 +79,9 @@ class EnvironmentConfig(BaseConfig):
         docker=None,
         shm=None,
         auth=None,
+        outputs=None,
+        logs=None,
+        registry=None,
     ):
         self.resources = resources
         self.labels = labels
@@ -86,3 +97,6 @@ class EnvironmentConfig(BaseConfig):
         self.docker = docker
         self.shm = shm
         self.auth = auth
+        self.outputs = outputs
+        self.logs = logs
+        self.registry = registry

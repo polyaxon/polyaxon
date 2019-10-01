@@ -72,7 +72,7 @@ kind: job
 description: Run image with updated command/args based on code I download with (ssh) git clone
 
 
-contexts:
+mounts:
   secrets:
     - name: my-ssh-secret
 
@@ -91,7 +91,7 @@ kind: job
 description: Run image with updated command/args based on my code with no need to to clone (using repos catalog)
 
 
-contexts:
+init:
   repos:
     - name: default-repo
       brnach: dev
@@ -113,9 +113,6 @@ kind: job
 
 description: Run with data from a bucket
 
-
-contexts:
-
 container:
   image: image
   command:
@@ -132,7 +129,7 @@ kind: job
 description: Run with data from a bucket
 
 
-contexts:
+mounts:
   secrets:
     - name: my-s3-secret  # Secret used to authenticate aws cli or your python/java/.. code to download the s3 bucket
 
@@ -151,10 +148,9 @@ kind: job
 description: Run with data from a bucket based in artifacts catalog
 
 
-contexts:
+init:
   artifacts:
     - name: images-data-in-gcs
-      managed: true  # This tells polyaxon to take care of downloading and preparing a context
 
 container:
   image: image
@@ -172,11 +168,10 @@ kind: job
 
 description: Run with data from a bucket based in artifacts catalog
 
-
-contexts:
+# This tells polyaxon to take care of downloading and preparing a context
+init:
   artifacts:
     - name: images-data-in-gcs
-      managed: true  # This tells polyaxon to take care of downloading and preparing a context
       paths:["path1/cat-images", "path2/dog-images"]
 
 container:
@@ -195,14 +190,11 @@ kind: job
 description: Run with data from a multiple bucket based in artifacts catalog
 
 
-contexts:
+init:
   artifacts:
     - name: images-data-in-gcs
-      managed: true  # This tells polyaxon to take care of downloading and preparing a context
       paths:["path1/cat-images", "path2/dog-images"]
-
     - name: azure-blob-data
-      managed: true  # This tells polyaxon to take care of downloading and preparing a context
 
 container:
   image: image
@@ -221,14 +213,11 @@ kind: job
 description: Run with data from a volumes
 
 
-contexts:
+init:
   artifacts:
     - name: images-data-in-volume-claim
-      managed: true  # This tells polyaxon to take care of copying data fro the volume to a context to not allow the user to access underlaying data
       paths:["path1/cat-images", "path2/dog-images"]
-
     - name: audio-data-in-read-only-volume-claim
-      managed: false  # This tells polyaxon to expose the underlaying volume, since the volume was created read-only, the user will see the mount path defined in the volume
 
 container:
   image: image
@@ -249,15 +238,11 @@ kind: job
 
 description: Run with data from a volumes
 
-
-contexts:
+init:
   artifacts:
     - name: images-data-in-volume-claim
-      managed: true  # This tells polyaxon to take care of copying data fro the volume to a context to not allow the user to access underlaying data
       paths:["path1/cat-images", "path2/dog-images"]
-
     - name: audio-data-in-read-only-volume-claim
-      managed: false  # This tells polyaxon to expose the underlaying volume, since the volume was created read-only, the user will see the mount path defined in the volume
 
 container:
   image: image
@@ -280,7 +265,7 @@ kind: job
 description: Run and upload outputs to a bucket
 
 
-contexts:
+mounts:
 
   secrets:
     - name: my-s3-secret  # Secret used to authenticate aws cli or your python/java/.. code to upload the s3 bucket
@@ -306,17 +291,12 @@ kind: job
 description: Run and upload outputs to a bucket based on artifacts stores
 
 
-contexts:
+mounts:
 
   artifacts:
-    # This tells polyaxon to just expose the secrets/connexion defined with this artifact
-    # it also expose an env var with the path of the bucket ARTIFACTS_PATHS_ + repo-name: e.g. ARTIFACTS_PATHS_my-s3-artifact == s3://some-bucket-path
     - name: my-s3-artifact
-      managed: false
     - name: my-gcs-artifact
-      managed: false
     - name: my-azure-artifact
-      managed: false
 
 container:
   image: image
@@ -341,7 +321,7 @@ description:
   you can configure a default outputs store for your projects so that you don't need to deal with remembring name of artifacts that can change.
 
 
-contexts:
+environment:
 
   outputs:
     enabled: true  # This tells Polyaxon to enable the default outputs store
@@ -364,7 +344,7 @@ kind: job
 
 description: Run some code with env vars coming from config map or config-map mounted somewhere
 
-contexts:
+mounts:
   config_maps:
     - name: env-vars-config-map
     - name: mount-path-config-map
@@ -389,13 +369,11 @@ kind: job
 
 description: Building docker image with Polyaxon using the docker context
 
-contexts:
-  config_maps:
-    - name: config-map-for-pushing-to-registry
-  secrets:
-    - name: secret-for-pushing-to-private-registry
+environemnt:
   docker:  # Expose a docker context containing the docker socket
     enabled: true
+
+init:
   build:  # The build context is a helper to create a simple docker file, for advance use case, you can just clone a repo with a dockerfile, or use a repo from the catalog with dockerile
     image: my_image
     build_steps:
@@ -403,6 +381,12 @@ contexts:
     env_vars:
     - ['KEY1', 'en_US.UTF-8']
     - ['KEY2', 2]
+
+mounts:
+  config_maps:
+    - name: config-map-for-pushing-to-registry
+  secrets:
+    - name: secret-for-pushing-to-private-registry
 
 container:
   image: docker-builder
@@ -419,13 +403,14 @@ kind: job
 description: Building docker image with Polyaxon
   for code and dockerfile, you can use the `repos`context, or attach and ssh/token secret to git clone the code
 
-contexts:
+init:
+  repos:
+    - name: my-repo-with-dockerfile-to-build
+mounts:
   config_maps:
     - name: config-map-for-pushing-to-registry
   secrets:
     - name: secret-for-pushing-to-private-registry
-  repos:
-    - name: my-repo-with-dockerfile-to-build
 
 container:
   image: kaniko
@@ -443,8 +428,10 @@ kind: job
 description: Building docker image with Polyaxon and default registry connexion
   Similar to the outputs store, Polyaxon allows users to create a registry in the catalog to define how to connect to that registry, and where to push the images to
 
-contexts:
+environment:
   registry: "A"
+
+init:
   repos:
     - name: my-repo-with-dockerfile-to-build
 
@@ -465,8 +452,10 @@ description: Building and running: user can build and create images that they ca
 
 ops:
   - name: build
-    contexts:
+    environment:
       registry: "A"
+
+    init:
       repos:
         - name: my-repo-with-dockerfile-to-build
 

@@ -9,12 +9,12 @@ environment:
       nvidia.com/gpu: 1
     limits:
       nvidia.com/gpu: 1
+  outputs: {enabled: False}
 
-contexts:
+mounts:
   secrets:
     - name: my_s3_connnexion_secret
       mount_path: ~/.aws/credentials
-  outputs: {enabled: False}
 
 container:
   image: python-with-boto3

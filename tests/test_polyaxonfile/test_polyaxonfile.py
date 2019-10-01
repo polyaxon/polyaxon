@@ -8,7 +8,7 @@ from unittest import TestCase
 import pytest
 
 from polyaxon_schemas.exceptions import PolyaxonfileError
-from polyaxon_schemas.ops.contexts import ContextsConfig
+from polyaxon_schemas.ops.init import InitConfig
 from polyaxon_schemas.ops.environments import EnvironmentConfig
 from polyaxon_schemas.ops.parallel import (
     GridSearchConfig,
@@ -26,7 +26,6 @@ from polyaxon_schemas.ops.parallel.matrix import (
 from polyaxon_schemas.ops.termination import TerminationConfig
 from polyaxon_schemas.polyaxonfile import PolyaxonFile
 from polyaxon_schemas.specs import JobSpecification
-from polyaxon_schemas.utils import TaskType
 
 
 @pytest.mark.polyaxonfile_mark
@@ -140,9 +139,9 @@ class TestPolyaxonfile(TestCase):
                 debug_ttl=120,
             )
 
-    def test_job_file_with_contexts_passes(self):
+    def test_job_file_with_init_passes(self):
         plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/job_file_with_contexts.yml")
+            os.path.abspath("tests/fixtures/plain/job_file_with_init.yml")
         )
         spec = plxfile.specification
         spec = spec.apply_context()
@@ -150,7 +149,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.is_job
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.log_level == "INFO"
-        assert isinstance(spec.contexts, ContextsConfig)
+        assert isinstance(spec.init, InitConfig)
         assert spec.auth_context.enabled is True
         assert spec.shm_context.enabled is True
         assert spec.docker_context.enabled is True
@@ -160,9 +159,8 @@ class TestPolyaxonfile(TestCase):
         assert spec.artifacts[0].to_dict() == {
             "name": "data1",
             "paths": ["path1", "path2"],
-            "managed": True,
         }
-        assert spec.artifacts[1].to_dict() == {"name": "data2", "managed": True}
+        assert spec.artifacts[1].to_dict() == {"name": "data2"}
         assert len(spec.secrets) == 1
         assert spec.secrets[0].to_dict() == {
             "name": "my_ssh_secret",

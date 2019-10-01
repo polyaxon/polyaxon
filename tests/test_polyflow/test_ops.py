@@ -88,7 +88,7 @@ class TestOpConfigs(TestCase):
                 "kind": "job",
                 "not_supported_key": "build-template",
                 "tags": ["kaniko"],
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "foo"},
             },
         }
@@ -105,7 +105,7 @@ class TestOpConfigs(TestCase):
                 "kind": "job",
                 "name": "build-template",
                 "tags": ["kaniko"],
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
             },
         }
         with self.assertRaises(TypeError):
@@ -121,7 +121,7 @@ class TestOpConfigs(TestCase):
                 "kind": "job",
                 "name": "build-template",
                 "tags": ["kaniko"],
-                "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                 "container": {"image": "foo"},
             },
         }
@@ -142,8 +142,10 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "contexts": {
+                "init": {
                     "repos": [{"name": "foo", "branch": "dev"}],
+                },
+                "mounts": {
                     "config_maps": [{"name": "config_map1"}],
                 },
                 "container": {"image": "jupyterlab"},
@@ -165,8 +167,10 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "contexts": {
+                "init": {
                     "repos": [{"name": "foo", "branch": "dev"}],
+                },
+                "mounts": {
                     "config_maps": [{"name": "config_map1"}],
                 },
             },
@@ -187,8 +191,10 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "contexts": {
+                "init": {
                     "repos": [{"name": "foo", "branch": "dev"}],
+                },
+                "mounts": {
                     "config_maps": [{"name": "config_map1"}],
                 },
                 "container": {"image": "jupyterlab"},
@@ -225,7 +231,7 @@ class TestOpConfigs(TestCase):
                         "kind": "job",
                         "name": "build-template",
                         "tags": ["kaniko"],
-                        "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                         "container": {"image": "test"},
                     },
                 ],
@@ -257,7 +263,7 @@ class TestOpConfigs(TestCase):
                         "kind": "job",
                         "name": "build-template",
                         "tags": ["kaniko"],
-                        "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],
             },
@@ -292,7 +298,7 @@ class TestOpConfigs(TestCase):
                         "kind": "job",
                         "name": "build-template",
                         "tags": ["kaniko"],
-                        "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                         "container": {"image": "test"},
                     },
                 ],
@@ -323,7 +329,7 @@ class TestOpConfigs(TestCase):
                         "kind": "job",
                         "name": "build-template",
                         "tags": ["kaniko"],
-                        "contexts": {"repos": [{"name": "foo", "branch": "dev"}]},
+                        "init": {"repos": [{"name": "foo", "branch": "dev"}]},
                     },
                 ],
             },

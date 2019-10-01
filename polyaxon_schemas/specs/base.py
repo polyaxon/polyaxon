@@ -25,10 +25,6 @@ class EnvironmentSpecificationMixin(object):
         return self.config.environment
 
     @property
-    def environment_name(self):
-        return self.environment.name if self.environment else None
-
-    @property
     def resources(self):
         return self.environment.resources if self.environment else None
 
@@ -77,22 +73,68 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.auth if self.environment else None
 
     @property
-    def docker_context(self):
+    def docker_docker(self):
         return self.environment.docker if self.environment else None
 
     @property
     def shm_context(self):
         return self.environment.shm if self.environment else None
 
-
-class ContextsSpecificationMixin(object):
     @property
-    def contexts(self):
-        return self.config.contexts
+    def registry(self):
+        return self.environment.registry if self.environment else None
 
     @property
-    def contexts_name(self):
-        return self.contexts.name if self.contexts else None
+    def outputs(self):
+        return self.environment.outputs if self.environment else None
+
+    @property
+    def logs(self):
+        return self.environment.logs if self.environment else None
+
+
+class InitSpecificationMixin(object):
+    @property
+    def init(self):
+        return self.config.init
+
+    @property
+    def repos(self):
+        return self.init.repos if self.init else None
+
+    @property
+    def repos_names(self):
+        return self._get_refs_names(self.repos)
+
+    @property
+    def repos_by_names(self):
+        return self._get_refs_by_names(self.repos)
+
+    @property
+    def build_context(self):
+        return self.init.build if self.init else None
+
+    @property
+    def init_artifacts(self):
+        return self.init.artifacts if self.init else None
+
+    @property
+    def init_artifacts_names(self):
+        return self._get_refs_names(self.init_artifacts)
+
+    @property
+    def init_artifacts_by_names(self):
+        return self._get_refs_by_names(self.init_artifacts)
+
+
+class MountsSpecificationMixin(object):
+    @property
+    def mounts(self):
+        return self.config.mounts
+
+    @property
+    def mounts_name(self):
+        return self.mounts.name if self.mounts else None
 
     @staticmethod
     def _get_refs_names(refs):
@@ -106,7 +148,7 @@ class ContextsSpecificationMixin(object):
 
     @property
     def artifacts(self):
-        return self.contexts.artifacts if self.contexts else None
+        return self.mounts.artifacts if self.mounts else None
 
     @property
     def artifacts_names(self):
@@ -118,7 +160,7 @@ class ContextsSpecificationMixin(object):
 
     @property
     def secrets(self):
-        return self.contexts.secrets if self.contexts else None
+        return self.mounts.secrets if self.mounts else None
 
     @property
     def secrets_names(self):
@@ -130,7 +172,7 @@ class ContextsSpecificationMixin(object):
 
     @property
     def config_maps(self):
-        return self.contexts.config_maps if self.contexts else None
+        return self.mounts.config_maps if self.mounts else None
 
     @property
     def config_maps_names(self):
@@ -139,30 +181,6 @@ class ContextsSpecificationMixin(object):
     @property
     def config_maps_by_names(self):
         return self._get_refs_by_names(self.config_maps)
-
-    @property
-    def repos(self):
-        return self.contexts.repos if self.contexts else None
-
-    @property
-    def repos_names(self):
-        return self._get_refs_names(self.repos)
-
-    @property
-    def repos_by_names(self):
-        return self._get_refs_by_names(self.repos)
-
-    @property
-    def registry(self):
-        return self.contexts.registry if self.contexts else None
-
-    @property
-    def outputs(self):
-        return self.contexts.outputs if self.contexts else None
-
-    @property
-    def build_context(self):
-        return self.contexts.build if self.contexts else None
 
 
 class ParallelSpecificationMixin(object):
@@ -199,10 +217,6 @@ class TerminationSpecificationMixin(object):
         return self.config.termination
 
     @property
-    def termination_name(self):
-        return self.termination.name if self.termination else None
-
-    @property
     def max_retries(self):
         return self.termination.max_retries if self.termination else None
 
@@ -222,7 +236,8 @@ class TerminationSpecificationMixin(object):
 @six.add_metaclass(abc.ABCMeta)
 class BaseSpecification(
     EnvironmentSpecificationMixin,
-    ContextsSpecificationMixin,
+    InitSpecificationMixin,
+    MountsSpecificationMixin,
     TerminationSpecificationMixin,
     ParallelSpecificationMixin,
 ):
@@ -249,7 +264,8 @@ class BaseSpecification(
     PARAMS = "params"
     ENVIRONMENT = "environment"
     TERMINATION = "termination"
-    CONTEXTS = "contexts"
+    INIT = "init"
+    CONTEXTS = "mounts"
     CONTAINER = "container"
     PARALLEL = "parallel"
     REPLICA_SPEC = "replica_spec"
@@ -274,6 +290,7 @@ class BaseSpecification(
         NOCACHE,
         ENVIRONMENT,
         TERMINATION,
+        INIT,
         CONTEXTS,
         CONTAINER,
         PARALLEL,
@@ -292,6 +309,7 @@ class BaseSpecification(
         NOCACHE,
         ENVIRONMENT,
         TERMINATION,
+        INIT,
         CONTEXTS,
         CONTAINER,
         REPLICA_SPEC,

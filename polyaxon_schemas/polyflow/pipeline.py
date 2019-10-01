@@ -22,6 +22,8 @@ class PipelineSchema(BaseOpSchema):
     templates = fields.Nested("TemplateSchema", many=True)
     schedule = fields.Nested(ScheduleSchema, allow_none=True)
     execute_at = fields.LocalDateTime(allow_none=True)
+    init = None
+    mounts = None
 
     @staticmethod
     def schema_config():
@@ -50,7 +52,6 @@ class PipelineConfig(BaseOpConfig):
         templates=None,
         environment=None,
         termination=None,
-        contexts=None,
         parallel=None,
         schedule=None,
         execute_at=None,
@@ -66,7 +67,6 @@ class PipelineConfig(BaseOpConfig):
             profile=profile,
             environment=environment,
             termination=termination,
-            contexts=contexts,
             parallel=parallel,
             inputs=inputs,
             outputs=outputs,

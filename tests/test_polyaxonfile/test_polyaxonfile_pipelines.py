@@ -178,7 +178,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         }
         assert spec.config.templates[1].name == "build-template"
         assert spec.config.templates[1].container.to_light_dict() == {"image": "base"}
-        assert spec.config.templates[1].contexts.build.to_light_dict() == {
+        assert spec.config.templates[1].init.build.to_light_dict() == {
             "image": "base",
             "env_vars": "{{ env_vars }}",
         }
