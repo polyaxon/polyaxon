@@ -56,7 +56,8 @@ setup(
         "marshmallow==3.0.0rc5",
         "numpy>=1.15.2",
         "python-dateutil>=2.7.3",
-        "pytz>=2018.9",
+        "pytz>=2019.2",
+        "ujson>=1.35",
         "rhea==0.5.4",
     ],
     classifiers=[
