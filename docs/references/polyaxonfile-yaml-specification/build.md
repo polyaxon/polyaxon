@@ -18,7 +18,7 @@ This is where you define how you build an image to run your code.
 This section defines the following values/subsections:
 
  * image [required if dockerfile not provided]: the base image Polyaxon will use to build an image for you to run your code.
- * dockerfile [required if image note provided]: the path to the dockerfile in your code repo.
+ * dockerfile [required if image not provided]: the path to the dockerfile in your code repo.
  * context[optional]: path to the context to mount and look for any file used for the build process.
  * build_steps [optional]: steps are basically a list of ops that Polyaxon use with docker
  `RUN` to install/run further operations you define in the list.
