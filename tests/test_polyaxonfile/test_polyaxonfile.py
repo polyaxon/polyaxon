@@ -150,11 +150,11 @@ class TestPolyaxonfile(TestCase):
         assert isinstance(spec.environment, EnvironmentConfig)
         assert spec.environment.log_level == "INFO"
         assert isinstance(spec.init, InitConfig)
-        assert spec.auth_context.enabled is True
-        assert spec.shm_context.enabled is True
-        assert spec.docker_context.enabled is True
-        assert spec.outputs.enabled is True
-        assert spec.outputs.managed is True
+        assert spec.auth_context is True
+        assert spec.shm_context is True
+        assert spec.docker_context is True
+        assert spec.outputs is True
+        assert spec.logs is None
         assert len(spec.artifacts) == 2
         assert spec.artifacts[0].to_dict() == {
             "name": "data1",

@@ -9,12 +9,10 @@ profile: "profile A"
 
 environment:
   log_level: INFO
-  docker: {enabled: true}
-  auth: {enabled: true}
-  shm: {enabled: true}
-  outputs:
-    enabled: true
-    managed: true
+  docker: true
+  auth: true
+  shm: true
+  outputs: true
   registry: "A"
 
 init:

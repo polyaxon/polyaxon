@@ -73,7 +73,7 @@ class EnvironmentSpecificationMixin(object):
         return self.environment.auth if self.environment else None
 
     @property
-    def docker_docker(self):
+    def docker_context(self):
         return self.environment.docker if self.environment else None
 
     @property

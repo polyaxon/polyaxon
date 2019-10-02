@@ -4,9 +4,6 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields
 
 from polyaxon_schemas.base import BaseConfig, BaseSchema
-from polyaxon_schemas.ops.enbaled import EnabledSchema
-from polyaxon_schemas.ops.environments.artifacts_context import ArtifactsContextConfig, \
-    ArtifactsContextSchema
 from polyaxon_schemas.ops.environments.container_resources import (
     ContainerResourcesSchema,
 )
@@ -24,11 +21,11 @@ class EnvironmentSchema(BaseSchema):
     env_vars = fields.Dict(values=fields.Str(), keys=fields.Str(), allow_none=True)
     security_context = fields.Dict(allow_none=True)
     log_level = fields.Str(allow_none=True)
-    auth = fields.Nested(EnabledSchema, allow_none=True)
-    docker = fields.Nested(EnabledSchema, allow_none=True)
-    shm = fields.Nested(EnabledSchema, allow_none=True)
-    outputs = fields.Nested(ArtifactsContextSchema, allow_none=True)
-    logs = fields.Nested(ArtifactsContextSchema, allow_none=True)
+    auth = fields.Bool(allow_none=True)
+    docker = fields.Bool(allow_none=True)
+    shm = fields.Bool(allow_none=True)
+    outputs = fields.Bool(allow_none=True)
+    logs = fields.Bool(allow_none=True)
     registry = fields.Str(allow_none=True)
 
     @staticmethod

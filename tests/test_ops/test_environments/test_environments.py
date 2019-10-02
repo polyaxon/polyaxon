@@ -104,27 +104,27 @@ class TestEnvironmentsConfigs(TestCase):
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add auth
-        config_dict["auth"] = {"enabled": True}
+        config_dict["auth"] = True
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add docker
-        config_dict["docker"] = {"enabled": True}
+        config_dict["docker"] = True
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add shm
-        config_dict["shm"] = {"enabled": True}
+        config_dict["shm"] = True
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add outputs
-        config_dict["outputs"] = {"enabled": True, "managed": True}
+        config_dict["outputs"] = True
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 
         # Add logs
-        config_dict["logs"] = {"enabled": True, "managed": True}
+        config_dict["logs"] = True
         config = EnvironmentConfig.from_dict(config_dict)
         assert_equal_dict(config_dict, config.to_dict())
 

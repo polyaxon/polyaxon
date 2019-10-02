@@ -9,7 +9,7 @@ environment:
       nvidia.com/gpu: 1
     limits:
       nvidia.com/gpu: 1
-  outputs: {enabled: False}
+  outputs: False
 
 mounts:
   secrets:
