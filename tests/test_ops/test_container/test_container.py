@@ -133,6 +133,10 @@ class TestContainerCmdArgs(TestCase):
             """,
         ]
 
+        self.null_cmd1 = MagicMock()
+        self.null_cmd1.command = None
+        self.null_cmd1.args = None
+
     def test_get_container_command_args_cmd(self):
         assert get_container_command_args(self.cmd1) == (
             ["/bin/bash"],
@@ -263,6 +267,12 @@ class TestContainerCmdArgs(TestCase):
                 "--num_epochs={{ num_epochs }} "
                 "--activation={{ activation }}",
             ],
+        )
+
+    def test_none_cmd_args(self):
+        assert get_container_command_args(self.null_cmd1) == (
+            [],
+            [],
         )
 
 

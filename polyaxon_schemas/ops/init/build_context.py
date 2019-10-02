@@ -8,14 +8,15 @@ from polyaxon_schemas.fields.docker_image import validate_image
 from polyaxon_schemas.fields.ref_or_obj import RefOrObject
 
 
-def validate_build_context_image(image):
-    if not image:
-        raise ValidationError("Invalid Build context, an image is required.")
+def validate_build_context_image(image, dockerfile):
+    if not image and not dockerfile:
+        raise ValidationError("Invalid Build context, an image or path to dockerfile is required.")
     validate_image(image)
 
 
 class BuildContextSchema(BaseSchema):
     context = fields.Str(allow_none=True)
+    dockerfile = fields.Str(allow_none=True)
     image = RefOrObject(fields.Str(allow_none=True))
     build_steps = RefOrObject(fields.List(fields.Str(), allow_none=True))
     lang_env = RefOrObject(fields.Str(allow_none=True))
@@ -25,6 +26,8 @@ class BuildContextSchema(BaseSchema):
             allow_none=True,
         )
     )
+    security_context = RefOrObject(fields.Dict(allow_none=True))
+    commit = fields.Str(allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -32,7 +35,10 @@ class BuildContextSchema(BaseSchema):
 
     @validates_schema
     def validate(self, data):
-        validate_build_context_image(data.get("image"))
+        validate_build_context_image(
+            image=data.get("image"),
+            dockerfile=data.get("dockerfile"),
+        )
 
 
 class BuildContextConfig(BaseConfig):
@@ -40,26 +46,35 @@ class BuildContextConfig(BaseConfig):
     SCHEMA = BuildContextSchema
     REDUCED_ATTRIBUTES = [
         "context",
+        "dockerfile",
         "image",
         "build_steps",
         "lang_env",
         "env_vars",
+        "security_context",
+        "commit"
     ]
 
     def __init__(
         self,
         context=None,
+        dockerfile=None,
         image=None,
         build_steps=None,
         lang_env=None,
         env_vars=None,
+        security_context=None,
+        commit=None,
     ):
-        validate_build_context_image(image)
+        validate_build_context_image(image, dockerfile)
         self.context = context
+        self.dockerfile = dockerfile
         self.image = image
         self.build_steps = build_steps
         self.lang_env = lang_env
         self.env_vars = env_vars
+        self.security_context = security_context
+        self.commit = commit
 
     @property
     def image_tag(self):

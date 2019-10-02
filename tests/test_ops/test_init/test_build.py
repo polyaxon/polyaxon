@@ -4,7 +4,6 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import pytest
-
 from marshmallow import ValidationError
 
 from polyaxon_schemas.ops.init.build_context import BuildContextConfig
@@ -57,8 +56,8 @@ class TestBuildConfigs(TestCase):
 
     def test_does_not_accept_dockerfiles(self):
         config_dict = {"dockerfile": "foo/bar"}
-        with self.assertRaises(ValidationError):
-            BuildContextConfig.from_dict(config_dict)
+        config = BuildContextConfig.from_dict(config_dict)
+        assert config.dockerfile == "foo/bar"
 
     def test_build_config(self):
         config_dict = {"image": "some_image_name"}
@@ -110,6 +109,12 @@ class TestBuildConfigs(TestCase):
         assert config.image_tag == "latest"
         assert config.context == "path/to/module"
 
+        config_dict = {"dockerfile": "path/to/Dockerfile", "context": "path/to/module"}
+        config = BuildContextConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.dockerfile == "path/to/Dockerfile"
+        assert config.context == "path/to/module"
+
     def test_build_repo_with_install_step_config(self):
         config_dict = {
             "image": "tensorflow:1.3.0",
@@ -119,3 +124,40 @@ class TestBuildConfigs(TestCase):
         config = BuildContextConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == "1.3.0"
+
+    def test_build_repo_with_security_context(self):
+        config_dict = {
+            "image": "tensorflow:1.3.0",
+            "build_steps": ["pip install tensor2tensor"],
+            "env_vars": [["LC_ALL", "en_US.UTF-8"]],
+            "security_context": {
+                "runAsUser": 1000,
+                "runAsGroup": 3000,
+            }
+        }
+        config = BuildContextConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag == "1.3.0"
+        assert config.security_context == {
+                "runAsUser": 1000,
+                "runAsGroup": 3000,
+            }
+
+    def test_build_config_with_dockerfile(self):
+        config_dict = {"image": "some_image_name"}
+        config = BuildContextConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag == "latest"
+        assert config.dockerfile is None
+        assert config.context is None
+
+        config_dict = {"dockerfile": "path/Dockerfile"}
+        config = BuildContextConfig.from_dict(config_dict)
+        assert config.to_dict() == config_dict
+        assert config.image_tag is None
+        assert config.dockerfile == "path/Dockerfile"
+        assert config.context is None
+
+        config_dict = {}
+        with self.assertRaises(ValidationError):
+            BuildContextConfig.from_dict(config_dict)
