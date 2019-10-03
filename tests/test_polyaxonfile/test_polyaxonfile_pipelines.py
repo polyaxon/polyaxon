@@ -195,6 +195,7 @@ class TestPolyaxonfileWithPipelines(TestCase):
         assert job_spec.is_job is True
         job_spec.apply_params({"image": "foo", "lr": 0.001})
         job_spec = job_spec.apply_context()
+        job_spec = job_spec.apply_container_contexts()
         assert job_spec.config.container.to_dict() == {
             "image": "foo",
             "command": ["python3", "main.py"],

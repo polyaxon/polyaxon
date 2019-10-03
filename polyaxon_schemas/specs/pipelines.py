@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
+from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyflow.pipeline import PipelineConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification
@@ -54,6 +55,11 @@ class PipelineSpecification(BaseSpecification, ScheduleSpecificationMixin):
     _SPEC_KIND = kinds.PIPELINE
 
     CONFIG = PipelineConfig
+
+    def apply_container_contexts(self, contexts=None):
+        raise PolyaxonConfigurationError(
+            "This method is not allowed on this specification."
+        )
 
     def apply_context(self):
         self.config.process_dag()

@@ -81,6 +81,7 @@ class TestPolyaxonfile(TestCase):
         assert spec.config.inputs[0].value == "some-loss"
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
+        spec = spec.apply_container_contexts()
         assert spec.version == 0.6
         assert spec.tags == ['foo', 'bar']
         assert spec.container.image == "my_image"

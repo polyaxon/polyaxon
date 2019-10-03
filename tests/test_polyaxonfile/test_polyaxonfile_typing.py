@@ -46,6 +46,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[0].value == "bar"
         assert spec.config.inputs[1].value is False
         spec = spec.apply_context()
+        spec = spec.apply_container_contexts()
         assert spec.version == 0.6
         assert spec.tags == ['foo', 'bar']
         assert spec.container.image == "my_image"
@@ -64,6 +65,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         assert spec.config.inputs[0].value == "bar"
         assert spec.config.inputs[1].value is True
         spec = spec.apply_context()
+        spec = spec.apply_container_contexts()
         assert spec.version == 0.6
         assert spec.tags == ['foo', 'bar']
         assert spec.container.image == "my_image"
@@ -158,6 +160,7 @@ class TestPolyaxonfileWithTypes(TestCase):
 
         spec.apply_params(params={"num_masks": 100})
         new_spec = spec.apply_context()
+        new_spec = new_spec.apply_container_contexts()
         assert new_spec.version == 0.6
         assert new_spec.tags == ['foo', 'bar']
         assert new_spec.is_job

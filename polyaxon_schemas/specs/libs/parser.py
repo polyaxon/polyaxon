@@ -73,6 +73,21 @@ class Parser(object):
                     spec, config_section, parsed_params
                 )
 
+        config_section = cls._get_section(config, spec.CONTAINER)
+        if config_section:
+            parsed_data[spec.CONTAINER] = config_section
+
+        return parsed_data
+
+    @classmethod
+    def parse_container(cls, spec, parsed_data, params):
+        params = params or {}
+        parsed_params = {param: params[param].display_value for param in params}
+        config_section = parsed_data.get(spec.CONTAINER)
+        if config_section:
+            parsed_data[spec.CONTAINER] = cls.parse_expression(
+                spec, config_section, parsed_params
+            )
         return parsed_data
 
     @classmethod

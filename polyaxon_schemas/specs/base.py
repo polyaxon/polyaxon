@@ -13,7 +13,9 @@ from marshmallow import ValidationError
 
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon_schemas.ops import params as ops_params
+from polyaxon_schemas.ops.io import IOTypes
 from polyaxon_schemas.ops.operators import ForConfig, IfConfig
+from polyaxon_schemas.ops.params import ParamSpec
 from polyaxon_schemas.pkg import SCHEMA_VERSION
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.libs.parser import Parser
@@ -311,7 +313,6 @@ class BaseSpecification(
         TERMINATION,
         INIT,
         MOUNTS,
-        CONTAINER,
         REPLICA_SPEC,
         PORTS,
     )
@@ -397,6 +398,25 @@ class BaseSpecification(
 
         params = {param.name: param for param in params}
         return self._parse(params)
+
+    def apply_container_contexts(self, contexts=None):
+        params = self.validate_params(is_template=False, check_runs=True)
+        params = {param.name: param for param in params}
+        contexts = contexts or {}
+        contexts = {
+            k: ParamSpec(
+                name=k,
+                value=v,
+                iotype=IOTypes.STR,
+                entity=None,
+                entity_ref=None,
+                entity_value=None,
+                is_flag=False)
+            for k, v in six.iteritems(contexts)
+        }
+        params.update(contexts)
+        parsed_data = Parser.parse_container(self, self.data, params)
+        return self.read(parsed_data)
 
     @classmethod
     def check_version(cls, data):

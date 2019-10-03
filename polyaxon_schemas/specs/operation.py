@@ -48,6 +48,11 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
             "This method is not allowed on this specification."
         )
 
+    def apply_container_contexts(self, contexts=None):
+        raise PolyaxonConfigurationError(
+            "This method is not allowed on this specification."
+        )
+
     def generate_run_data(self, override=None):
         values = [self.config._template.to_light_dict()]
         op_override = {}
