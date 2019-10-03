@@ -265,7 +265,7 @@ class BaseSpecification(
     ENVIRONMENT = "environment"
     TERMINATION = "termination"
     INIT = "init"
-    CONTEXTS = "mounts"
+    MOUNTS = "mounts"
     CONTAINER = "container"
     PARALLEL = "parallel"
     REPLICA_SPEC = "replica_spec"
@@ -291,7 +291,7 @@ class BaseSpecification(
         ENVIRONMENT,
         TERMINATION,
         INIT,
-        CONTEXTS,
+        MOUNTS,
         CONTAINER,
         PARALLEL,
         REPLICA_SPEC,
@@ -310,7 +310,7 @@ class BaseSpecification(
         ENVIRONMENT,
         TERMINATION,
         INIT,
-        CONTEXTS,
+        MOUNTS,
         CONTAINER,
         REPLICA_SPEC,
         PORTS,

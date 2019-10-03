@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import copy
-
 from polyaxon_schemas.exceptions import PolyaxonConfigurationError
 from polyaxon_schemas.polyflow.ops import OpConfig
-from polyaxon_schemas.polyflow.pipeline import PipelineConfig
 from polyaxon_schemas.specs import kinds
 from polyaxon_schemas.specs.base import BaseSpecification
 
@@ -60,7 +57,8 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
             self.TAGS,
             self.ENVIRONMENT,
             self.TERMINATION,
-            self.CONTEXTS,
+            self.INIT,
+            self.MOUNTS,
             self.REPLICA_SPEC,
             self.PROFILE,
             self.NOCACHE
