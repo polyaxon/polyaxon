@@ -95,229 +95,35 @@ export class RequiredError extends Error {
 /**
  * 
  * @export
- * @interface V1Build
+ * @interface V1Auth
  */
-export interface V1Build {
+export interface V1Auth {
     /**
      * 
      * @type {string}
-     * @memberof V1Build
+     * @memberof V1Auth
      */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    unique_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1Build
-     */
-    tags?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1Build
-     */
-    deleted?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    user?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    updated_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    started_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    finished_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    is_managed?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    spec?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    backend?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    framework?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    last_status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    code_reference?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Build
-     */
-    resources?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    readme?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1Build
-     */
-    bookmarked?: boolean;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Build
-     */
-    params?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Build
-     */
-    run_env?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Build
-     */
-    build_build?: string;
+    token?: string;
 }
 
 /**
  * 
  * @export
- * @interface V1BuildBodyRequest
+ * @interface V1CodeRefBodyRequest
  */
-export interface V1BuildBodyRequest {
+export interface V1CodeRefBodyRequest {
     /**
      * 
-     * @type {string}
-     * @memberof V1BuildBodyRequest
+     * @type {V1OwnedEntityUUIdRequest}
+     * @memberof V1CodeRefBodyRequest
      */
-    owner?: string;
+    entity?: V1OwnedEntityUUIdRequest;
     /**
      * 
-     * @type {string}
-     * @memberof V1BuildBodyRequest
+     * @type {V1CodeReference}
+     * @memberof V1CodeRefBodyRequest
      */
-    project?: string;
-    /**
-     * 
-     * @type {V1Build}
-     * @memberof V1BuildBodyRequest
-     */
-    build?: V1Build;
-}
-
-/**
- * 
- * @export
- * @interface V1BuildStatus
- */
-export interface V1BuildStatus {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1BuildStatus
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1BuildStatus
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1BuildStatus
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1BuildStatus
-     */
-    updated_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1BuildStatus
-     */
-    status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1BuildStatus
-     */
-    message?: string;
+    CodeReference?: V1CodeReference;
 }
 
 /**
@@ -326,12 +132,6 @@ export interface V1BuildStatus {
  * @interface V1CodeReference
  */
 export interface V1CodeReference {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1CodeReference
-     */
-    id?: string;
     /**
      * 
      * @type {string}
@@ -373,26 +173,6 @@ export interface V1CodeReference {
 /**
  * 
  * @export
- * @interface V1CodeReferenceBodyRequest
- */
-export interface V1CodeReferenceBodyRequest {
-    /**
-     * 
-     * @type {V1OwnedEntityIdRequest}
-     * @memberof V1CodeReferenceBodyRequest
-     */
-    entity?: V1OwnedEntityIdRequest;
-    /**
-     * 
-     * @type {V1CodeReference}
-     * @memberof V1CodeReferenceBodyRequest
-     */
-    CodeReference?: V1CodeReference;
-}
-
-/**
- * 
- * @export
  * @interface V1EntityStatusRequest
  */
 export interface V1EntityStatusRequest {
@@ -413,7 +193,7 @@ export interface V1EntityStatusRequest {
      * @type {string}
      * @memberof V1EntityStatusRequest
      */
-    id?: string;
+    uuid?: string;
     /**
      * 
      * @type {string}
@@ -425,747 +205,193 @@ export interface V1EntityStatusRequest {
 /**
  * 
  * @export
- * @interface V1Experiment
+ * @interface V1ListCodeRefResponse
  */
-export interface V1Experiment {
+export interface V1ListCodeRefResponse {
     /**
      * 
-     * @type {string}
-     * @memberof V1Experiment
+     * @type {number}
+     * @memberof V1ListCodeRefResponse
      */
-    id?: string;
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1CodeReference>}
+     * @memberof V1ListCodeRefResponse
+     */
+    results?: Array<V1CodeReference>;
     /**
      * 
      * @type {string}
-     * @memberof V1Experiment
+     * @memberof V1ListCodeRefResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListCodeRefResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListProjectsResponse
+ */
+export interface V1ListProjectsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListProjectsResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Project>}
+     * @memberof V1ListProjectsResponse
+     */
+    results?: Array<V1Project>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListProjectsResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListProjectsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1ListRunsResponse
+ */
+export interface V1ListRunsResponse {
+    /**
+     * 
+     * @type {number}
+     * @memberof V1ListRunsResponse
+     */
+    count?: number;
+    /**
+     * 
+     * @type {Array<V1Run>}
+     * @memberof V1ListRunsResponse
+     */
+    results?: Array<V1Run>;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListRunsResponse
+     */
+    previous?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1ListRunsResponse
+     */
+    next?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OwnedEntityUUIdRequest
+ */
+export interface V1OwnedEntityUUIdRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OwnedEntityUUIdRequest
+     */
+    owner?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OwnedEntityUUIdRequest
+     */
+    project?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OwnedEntityUUIdRequest
+     */
+    uuid?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1OwnerBodyRequest
+ */
+export interface V1OwnerBodyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1OwnerBodyRequest
+     */
+    owner?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1Project
+ */
+export interface V1Project {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Project
      */
     uuid?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1Experiment
-     */
-    unique_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof V1Experiment
-     */
-    tags?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1Experiment
-     */
-    deleted?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
+     * @memberof V1Project
      */
     user?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1Experiment
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    updated_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    started_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    finished_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    is_managed?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    spec?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    backend?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    framework?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    last_status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    code_reference?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Experiment
-     */
-    resources?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    readme?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1Experiment
-     */
-    bookmarked?: boolean;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Experiment
-     */
-    params?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Experiment
-     */
-    run_env?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    build_job?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Experiment
-     */
-    data_refs?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Experiment
-     */
-    artifact_refs?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    original?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    cloning_strategy?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Experiment
-     */
-    experiment_group?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof V1Experiment
-     */
-    num_jobs?: number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1Experiment
-     */
-    has_tensorboard?: boolean;
-    /**
-     * 
-     * @type {{ [key: string]: number; }}
-     * @memberof V1Experiment
-     */
-    last_metric?: { [key: string]: number; };
-}
-
-/**
- * 
- * @export
- * @interface V1ExperimentBodyRequest
- */
-export interface V1ExperimentBodyRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentBodyRequest
-     */
-    owner?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentBodyRequest
-     */
-    project?: string;
-    /**
-     * 
-     * @type {V1Experiment}
-     * @memberof V1ExperimentBodyRequest
-     */
-    experiment?: V1Experiment;
-}
-
-/**
- * 
- * @export
- * @interface V1ExperimentStatus
- */
-export interface V1ExperimentStatus {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentStatus
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentStatus
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentStatus
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentStatus
-     */
-    updated_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentStatus
-     */
-    status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ExperimentStatus
-     */
-    message?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1Job
- */
-export interface V1Job {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    unique_name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
+     * @memberof V1Project
      */
     name?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1Job
+     * @memberof V1Project
      */
     description?: string;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof V1Job
-     */
-    tags?: Array<string>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof V1Job
-     */
-    deleted?: boolean;
-    /**
-     * 
      * @type {string}
-     * @memberof V1Job
-     */
-    user?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
+     * @memberof V1Project
      */
     created_at?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1Job
+     * @memberof V1Project
      */
     updated_at?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1Job
+     * @memberof V1Project
      */
-    started_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    finished_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    is_managed?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    spec?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    backend?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    framework?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    last_status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    code_reference?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Job
-     */
-    resources?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    readme?: string;
+    is_public?: string;
     /**
      * 
      * @type {boolean}
-     * @memberof V1Job
+     * @memberof V1Project
      */
     bookmarked?: boolean;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Job
-     */
-    params?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Job
-     */
-    run_env?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    build_job?: string;
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Job
-     */
-    data_refs?: { [key: string]: string; };
-    /**
-     * 
-     * @type {{ [key: string]: string; }}
-     * @memberof V1Job
-     */
-    artifact_refs?: { [key: string]: string; };
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    original?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1Job
-     */
-    cloning_strategy?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1JobBodyRequest
- */
-export interface V1JobBodyRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobBodyRequest
-     */
-    owner?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobBodyRequest
-     */
-    project?: string;
-    /**
-     * 
-     * @type {V1Job}
-     * @memberof V1JobBodyRequest
-     */
-    job?: V1Job;
-}
-
-/**
- * 
- * @export
- * @interface V1JobStatus
- */
-export interface V1JobStatus {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobStatus
-     */
-    id?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobStatus
-     */
-    uuid?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobStatus
-     */
-    created_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobStatus
-     */
-    updated_at?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobStatus
-     */
-    status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1JobStatus
-     */
-    message?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListBuildStatusesResponse
- */
-export interface V1ListBuildStatusesResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListBuildStatusesResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1BuildStatus>}
-     * @memberof V1ListBuildStatusesResponse
-     */
-    results?: Array<V1BuildStatus>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListBuildStatusesResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListBuildStatusesResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListBuildsResponse
- */
-export interface V1ListBuildsResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListBuildsResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1Build>}
-     * @memberof V1ListBuildsResponse
-     */
-    results?: Array<V1Build>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListBuildsResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListBuildsResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListExperimentStatusesResponse
- */
-export interface V1ListExperimentStatusesResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListExperimentStatusesResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1ExperimentStatus>}
-     * @memberof V1ListExperimentStatusesResponse
-     */
-    results?: Array<V1ExperimentStatus>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListExperimentStatusesResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListExperimentStatusesResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListExperimentsResponse
- */
-export interface V1ListExperimentsResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListExperimentsResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1Experiment>}
-     * @memberof V1ListExperimentsResponse
-     */
-    results?: Array<V1Experiment>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListExperimentsResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListExperimentsResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListJobStatusesResponse
- */
-export interface V1ListJobStatusesResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListJobStatusesResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1JobStatus>}
-     * @memberof V1ListJobStatusesResponse
-     */
-    results?: Array<V1JobStatus>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListJobStatusesResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListJobStatusesResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1ListJobsResponse
- */
-export interface V1ListJobsResponse {
-    /**
-     * 
-     * @type {number}
-     * @memberof V1ListJobsResponse
-     */
-    count?: number;
-    /**
-     * 
-     * @type {Array<V1Job>}
-     * @memberof V1ListJobsResponse
-     */
-    results?: Array<V1Job>;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListJobsResponse
-     */
-    previous?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1ListJobsResponse
-     */
-    next?: string;
-}
-
-/**
- * 
- * @export
- * @interface V1OwnedEntityIdRequest
- */
-export interface V1OwnedEntityIdRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof V1OwnedEntityIdRequest
-     */
-    owner?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1OwnedEntityIdRequest
-     */
-    project?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof V1OwnedEntityIdRequest
-     */
-    id?: string;
 }
 
 /**
@@ -1191,6 +417,196 @@ export interface V1ProjectBodyRequest {
 /**
  * 
  * @export
+ * @interface V1Run
+ */
+export interface V1Run {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof V1Run
+     */
+    tags?: Array<string>;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Run
+     */
+    deleted?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    owner?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    project?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    created_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    updated_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    started_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    finished_at?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    is_managed?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    content?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    status?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    readme?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Run
+     */
+    bookmarked?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Run
+     */
+    inputs?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Run
+     */
+    outputs?: { [key: string]: string; };
+    /**
+     * 
+     * @type {{ [key: string]: string; }}
+     * @memberof V1Run
+     */
+    run_env?: { [key: string]: string; };
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1Run
+     */
+    is_clone?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    pipeline?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    original?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    pipeline_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    original_name?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Run
+     */
+    cloning_strategy?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1RunBodyRequest
+ */
+export interface V1RunBodyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunBodyRequest
+     */
+    owner?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1RunBodyRequest
+     */
+    project?: string;
+    /**
+     * 
+     * @type {V1Run}
+     * @memberof V1RunBodyRequest
+     */
+    run?: V1Run;
+}
+
+/**
+ * 
+ * @export
  * @interface V1StatusResponse
  */
 export interface V1StatusResponse {
@@ -1202,406 +618,75 @@ export interface V1StatusResponse {
     status?: string;
 }
 
+/**
+ * 
+ * @export
+ * @interface V1Version
+ */
+export interface V1Version {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Version
+     */
+    min_version?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Version
+     */
+    latest_version?: string;
+}
 
 /**
- * BuildServiceApi - fetch parameter creator
+ * 
+ * @export
+ * @interface V1Versions
+ */
+export interface V1Versions {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Versions
+     */
+    current_version?: string;
+    /**
+     * 
+     * @type {V1Version}
+     * @memberof V1Versions
+     */
+    cli?: V1Version;
+    /**
+     * 
+     * @type {V1Version}
+     * @memberof V1Versions
+     */
+    platform?: V1Version;
+    /**
+     * 
+     * @type {V1Version}
+     * @memberof V1Versions
+     */
+    agent?: V1Version;
+}
+
+
+/**
+ * AuthServiceApi - fetch parameter creator
  * @export
  */
-export const BuildServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const AuthServiceApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Archive build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @summary List runs
+         * @param {string} [user] User email.
+         * @param {string} [password] Project where the experiement will be assigned.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveBuild(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling archiveBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling archiveBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling archiveBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/archive`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bookmarkBuild(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling bookmarkBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling bookmarkBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling bookmarkBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/bookmark`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuild(owner: string, project: string, body: V1BuildBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling createBuild.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1BuildBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} entity_owner Owner of the namespace
-         * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuildCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'entity_owner' is not null or undefined
-            if (entity_owner === null || entity_owner === undefined) {
-                throw new RequiredError('entity_owner','Required parameter entity_owner was null or undefined when calling createBuildCodeRef.');
-            }
-            // verify required parameter 'entity_project' is not null or undefined
-            if (entity_project === null || entity_project === undefined) {
-                throw new RequiredError('entity_project','Required parameter entity_project was null or undefined when calling createBuildCodeRef.');
-            }
-            // verify required parameter 'entity_id' is not null or undefined
-            if (entity_id === null || entity_id === undefined) {
-                throw new RequiredError('entity_id','Required parameter entity_id was null or undefined when calling createBuildCodeRef.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createBuildCodeRef.');
-            }
-            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef`
-                .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
-                .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
-                .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1CodeReferenceBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1EntityStatusRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createBuildStatus.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling createBuildStatus.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling createBuildStatus.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createBuildStatus.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/statuses`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1EntityStatusRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBuild(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling deleteBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBuilds(owner: string, project: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteBuilds.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteBuilds.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling deleteBuilds.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/delete`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBuild(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+        login(user?: string, password?: string, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/users/token`;
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -1615,607 +700,18 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            if (user !== undefined) {
+                localVarQueryParameter['user'] = user;
+            }
 
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBuildCodeRef(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getBuildCodeRef.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getBuildCodeRef.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getBuildCodeRef.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/coderef`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            if (password !== undefined) {
+                localVarQueryParameter['password'] = password;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedBuilds(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedBuilds.');
-            }
-            const localVarPath = `/api/v1/archives/{owner}/builds`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedBuilds(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedBuilds.');
-            }
-            const localVarPath = `/api/v1/bookmarks/{owner}/builds`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List build statuses
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBuildStatuses(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBuildStatuses.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling listBuildStatuses.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling listBuildStatuses.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/statuses`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBuilds(owner: string, project: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBuilds.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling listBuilds.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Patch build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} build_id Unique integer identifier
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling patchBuild.');
-            }
-            // verify required parameter 'build_id' is not null or undefined
-            if (build_id === null || build_id === undefined) {
-                throw new RequiredError('build_id','Required parameter build_id was null or undefined when calling patchBuild.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling patchBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{build.id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"build.id"}}`, encodeURIComponent(String(build_id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1BuildBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restartBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restartBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling restartBuild.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling restartBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/restart`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Restore build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreBuild(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling restoreBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/restore`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling stopBuild.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling stopBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/stop`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Stop builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {V1ProjectBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopBuilds(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopBuilds.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopBuilds.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling stopBuilds.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/stop`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1ProjectBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary UnBookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unBookmarkBuild(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unBookmarkBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling unBookmarkBuild.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling unBookmarkBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{id}/unbookmark`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Update build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} build_id Unique integer identifier
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateBuild.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling updateBuild.');
-            }
-            // verify required parameter 'build_id' is not null or undefined
-            if (build_id === null || build_id === undefined) {
-                throw new RequiredError('build_id','Required parameter build_id was null or undefined when calling updateBuild.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateBuild.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/builds/{build.id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"build.id"}}`, encodeURIComponent(String(build_id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1BuildBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -2226,422 +722,21 @@ export const BuildServiceApiFetchParamCreator = function (configuration?: Config
 };
 
 /**
- * BuildServiceApi - functional programming interface
+ * AuthServiceApi - functional programming interface
  * @export
  */
-export const BuildServiceApiFp = function(configuration?: Configuration) {
+export const AuthServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Archive build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @summary List runs
+         * @param {string} [user] User email.
+         * @param {string} [password] Project where the experiement will be assigned.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveBuild(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).archiveBuild(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bookmarkBuild(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).bookmarkBuild(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create new build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuild(owner: string, project: string, body: V1BuildBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).createBuild(owner, project, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} entity_owner Owner of the namespace
-         * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuildCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).createBuildCodeRef(entity_owner, entity_project, entity_id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1EntityStatusRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1BuildStatus> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).createBuildStatus(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Delete build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBuild(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).deleteBuild(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBuilds(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).deleteBuilds(owner, project, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBuild(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).getBuild(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBuildCodeRef(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).getBuildCodeRef(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedBuilds(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListBuildsResponse> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).listArchivedBuilds(owner, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedBuilds(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListBuildsResponse> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).listBookmarkedBuilds(owner, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List build statuses
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBuildStatuses(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListBuildStatusesResponse> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).listBuildStatuses(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBuilds(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListBuildsResponse> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).listBuilds(owner, project, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Patch build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} build_id Unique integer identifier
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).patchBuild(owner, project, build_id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).restartBuild(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Restore build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreBuild(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).restoreBuild(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).stopBuild(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Stop builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {V1ProjectBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopBuilds(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).stopBuilds(owner, project, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary UnBookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unBookmarkBuild(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).unBookmarkBuild(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Update build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} build_id Unique integer identifier
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Build> {
-            const localVarFetchArgs = BuildServiceApiFetchParamCreator(configuration).updateBuild(owner, project, build_id, body, options);
+        login(user?: string, password?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Auth> {
+            const localVarFetchArgs = AuthServiceApiFetchParamCreator(configuration).login(user, password, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -2656,672 +751,71 @@ export const BuildServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * BuildServiceApi - factory interface
+ * AuthServiceApi - factory interface
  * @export
  */
-export const BuildServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const AuthServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
-         * @summary Archive build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @summary List runs
+         * @param {string} [user] User email.
+         * @param {string} [password] Project where the experiement will be assigned.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveBuild(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).archiveBuild(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bookmarkBuild(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).bookmarkBuild(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create new build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuild(owner: string, project: string, body: V1BuildBodyRequest, options?: any) {
-            return BuildServiceApiFp(configuration).createBuild(owner, project, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} entity_owner Owner of the namespace
-         * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuildCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
-            return BuildServiceApiFp(configuration).createBuildCodeRef(entity_owner, entity_project, entity_id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1EntityStatusRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
-            return BuildServiceApiFp(configuration).createBuildStatus(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Delete build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBuild(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).deleteBuild(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteBuilds(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return BuildServiceApiFp(configuration).deleteBuilds(owner, project, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBuild(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).getBuild(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBuildCodeRef(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).getBuildCodeRef(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedBuilds(owner: string, options?: any) {
-            return BuildServiceApiFp(configuration).listArchivedBuilds(owner, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedBuilds(owner: string, options?: any) {
-            return BuildServiceApiFp(configuration).listBookmarkedBuilds(owner, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List build statuses
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBuildStatuses(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).listBuildStatuses(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBuilds(owner: string, project: string, options?: any) {
-            return BuildServiceApiFp(configuration).listBuilds(owner, project, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Patch build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} build_id Unique integer identifier
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
-            return BuildServiceApiFp(configuration).patchBuild(owner, project, build_id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return BuildServiceApiFp(configuration).restartBuild(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Restore build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreBuild(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).restoreBuild(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return BuildServiceApiFp(configuration).stopBuild(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Stop builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {V1ProjectBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopBuilds(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return BuildServiceApiFp(configuration).stopBuilds(owner, project, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary UnBookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        unBookmarkBuild(owner: string, project: string, id: string, options?: any) {
-            return BuildServiceApiFp(configuration).unBookmarkBuild(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Update build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} build_id Unique integer identifier
-         * @param {V1BuildBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
-            return BuildServiceApiFp(configuration).updateBuild(owner, project, build_id, body, options)(fetch, basePath);
+        login(user?: string, password?: string, options?: any) {
+            return AuthServiceApiFp(configuration).login(user, password, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * BuildServiceApi - object-oriented interface
+ * AuthServiceApi - object-oriented interface
  * @export
- * @class BuildServiceApi
+ * @class AuthServiceApi
  * @extends {BaseAPI}
  */
-export class BuildServiceApi extends BaseAPI {
+export class AuthServiceApi extends BaseAPI {
     /**
      * 
-     * @summary Archive build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @summary List runs
+     * @param {string} [user] User email.
+     * @param {string} [password] Project where the experiement will be assigned.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof BuildServiceApi
+     * @memberof AuthServiceApi
      */
-    public archiveBuild(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).archiveBuild(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Bookmark build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public bookmarkBuild(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).bookmarkBuild(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create new build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {V1BuildBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public createBuild(owner: string, project: string, body: V1BuildBodyRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).createBuild(owner, project, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create build code ref
-     * @param {string} entity_owner Owner of the namespace
-     * @param {string} entity_project Project where the experiement will be assigned
-     * @param {string} entity_id Unique integer identifier of the entity
-     * @param {V1CodeReferenceBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public createBuildCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).createBuildCodeRef(entity_owner, entity_project, entity_id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create new build status
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1EntityStatusRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public createBuildStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).createBuildStatus(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Delete build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public deleteBuild(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).deleteBuild(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Delete builds
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public deleteBuilds(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).deleteBuilds(owner, project, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public getBuild(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).getBuild(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get build code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public getBuildCodeRef(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).getBuildCodeRef(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List archived builds
-     * @param {string} owner Owner of the namespace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public listArchivedBuilds(owner: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).listArchivedBuilds(owner, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List bookmarked builds
-     * @param {string} owner Owner of the namespace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public listBookmarkedBuilds(owner: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).listBookmarkedBuilds(owner, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List build statuses
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public listBuildStatuses(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).listBuildStatuses(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List builds
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project under namesapce
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public listBuilds(owner: string, project: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).listBuilds(owner, project, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Patch build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} build_id Unique integer identifier
-     * @param {V1BuildBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public patchBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).patchBuild(owner, project, build_id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Restart build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public restartBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).restartBuild(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Restore build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public restoreBuild(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).restoreBuild(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Stop build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public stopBuild(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).stopBuild(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Stop builds
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project under namesapce
-     * @param {V1ProjectBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public stopBuilds(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).stopBuilds(owner, project, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary UnBookmark build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public unBookmarkBuild(owner: string, project: string, id: string, options?: any) {
-        return BuildServiceApiFp(this.configuration).unBookmarkBuild(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Update build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} build_id Unique integer identifier
-     * @param {V1BuildBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BuildServiceApi
-     */
-    public updateBuild(owner: string, project: string, build_id: string, body: V1BuildBodyRequest, options?: any) {
-        return BuildServiceApiFp(this.configuration).updateBuild(owner, project, build_id, body, options)(this.fetch, this.basePath);
+    public login(user?: string, password?: string, options?: any) {
+        return AuthServiceApiFp(this.configuration).login(user, password, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * ExperimentServiceApi - fetch parameter creator
+ * ProjectServiceApi - fetch parameter creator
  * @export
  */
-export const ExperimentServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const ProjectServiceApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Restore build
+         * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveExperiment(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        archiveProject(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling archiveExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling archiveProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling archiveExperiment.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling archiveProject.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling archiveExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/archive`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary UnBookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bookmarkExperiment(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling bookmarkExperiment.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling bookmarkExperiment.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling bookmarkExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/bookmark`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1ExperimentBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperiment(owner: string, project: string, body: V1ExperimentBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createExperiment.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling createExperiment.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments`
+            const localVarPath = `/api/v1/{owner}/{project}/archive`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3337,14 +831,10 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1ExperimentBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -3353,93 +843,66 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Get experiment code ref
-         * @param {string} entity_owner Owner of the namespace
-         * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'entity_owner' is not null or undefined
-            if (entity_owner === null || entity_owner === undefined) {
-                throw new RequiredError('entity_owner','Required parameter entity_owner was null or undefined when calling createExperimentCodeRef.');
-            }
-            // verify required parameter 'entity_project' is not null or undefined
-            if (entity_project === null || entity_project === undefined) {
-                throw new RequiredError('entity_project','Required parameter entity_project was null or undefined when calling createExperimentCodeRef.');
-            }
-            // verify required parameter 'entity_id' is not null or undefined
-            if (entity_id === null || entity_id === undefined) {
-                throw new RequiredError('entity_id','Required parameter entity_id was null or undefined when calling createExperimentCodeRef.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createExperimentCodeRef.');
-            }
-            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef`
-                .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
-                .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
-                .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1CodeReferenceBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get job code ref
+         * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1EntityStatusRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
+        bookmarkProject(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createExperimentStatus.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling bookmarkProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling createExperimentStatus.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling bookmarkProject.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling createExperimentStatus.');
+            const localVarPath = `/api/v1/{owner}/{project}/bookmark`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {V1OwnerBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createProject(owner: string, body: V1OwnerBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createProject.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createExperimentStatus.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createProject.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/statuses`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarPath = `/api/v1/{owner}/projects/create`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3459,7 +922,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1EntityStatusRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnerBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3469,14 +932,13 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Delete build
+         * @summary Delete runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExperiment(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        deleteExperiment(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteExperiment.');
@@ -3485,60 +947,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             if (project === null || project === undefined) {
                 throw new RequiredError('project','Required parameter project was null or undefined when calling deleteExperiment.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling deleteExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteExperiments(owner: string, project: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteExperiments.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteExperiments.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling deleteExperiments.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/delete`
+            const localVarPath = `/api/v1/{owner}/projecs/{project}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3554,59 +963,6 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExperiment(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getExperiment.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getExperiment.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -3619,194 +975,108 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Get experiment code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExperimentCodeRef(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getExperimentCodeRef.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getExperimentCodeRef.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getExperimentCodeRef.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/coderef`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedExperiments(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedExperiments.');
-            }
-            const localVarPath = `/api/v1/archives/{owner}/experiments`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedExperiments(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedExperiments.');
-            }
-            const localVarPath = `/api/v1/bookmarks/{owner}/experiments`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listExperimentStatuses(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listExperimentStatuses.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling listExperimentStatuses.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling listExperimentStatuses.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/statuses`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List builds
+         * @summary Resume run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listExperiments(owner: string, project: string, options: any = {}): FetchArgs {
+        disableProjectCI(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listExperiments.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling disableProjectCI.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling listExperiments.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling disableProjectCI.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments`
+            const localVarPath = `/api/v1/{owner}/{project}/unbookmark`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restart run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        enableProjectCI(owner: string, project: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling enableProjectCI.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling enableProjectCI.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/ci`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProject(owner: string, project: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getProject.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getProject.');
+            }
+            const localVarPath = `/api/v1/{owner}/projects/{project}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -3834,148 +1104,20 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Patch build
+         * @summary Create new run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} experiment_id Unique integer identifier
-         * @param {V1ExperimentBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options: any = {}): FetchArgs {
+        listArchivedProjects(owner: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedProjects.');
             }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling patchExperiment.');
-            }
-            // verify required parameter 'experiment_id' is not null or undefined
-            if (experiment_id === null || experiment_id === undefined) {
-                throw new RequiredError('experiment_id','Required parameter experiment_id was null or undefined when calling patchExperiment.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling patchExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{experiment.id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"experiment.id"}}`, encodeURIComponent(String(experiment_id)));
+            const localVarPath = `/api/v1/archives/{owner}/projects`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1ExperimentBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restartExperiment.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restartExperiment.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling restartExperiment.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling restartExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/restart`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreExperiment(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreExperiment.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreExperiment.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling restoreExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/restore`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -3999,206 +1141,20 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Archive build
+         * @summary List archived runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resumeExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
+        listBookmarkedProjects(owner: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling resumeExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedProjects.');
             }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling resumeExperiment.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling resumeExperiment.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling resumeExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/resume`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            const localVarPath = `/api/v1/bookmarks/{owner}/projects`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List build statuses
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        startExperimentTensorboard(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling startExperimentTensorboard.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling startExperimentTensorboard.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling startExperimentTensorboard.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling startExperimentTensorboard.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopExperiment.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopExperiment.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling stopExperiment.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling stopExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/stop`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopExperimentTensorboard(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopExperimentTensorboard.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopExperimentTensorboard.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling stopExperimentTensorboard.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4222,31 +1178,105 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Stop builds
+         * @summary List bookmarked runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProjectNames(owner: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjectNames.');
+            }
+            const localVarPath = `/api/v1/{owner}/projects/names`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProjects(owner: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjects.');
+            }
+            const localVarPath = `/api/v1/{owner}/projects/list`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperiments(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
+        patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopExperiments.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopExperiments.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchProject.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling stopExperiments.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchProject.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/stop`
+            const localVarPath = `/api/v1/{owner}/projects/{project}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4274,32 +1304,26 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Get build status
+         * @summary Stop runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkExperiment(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        restoreExperiment(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unBookmarkExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreExperiment.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling unBookmarkExperiment.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreExperiment.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling unBookmarkExperiment.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{id}/unbookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/restore`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -4323,35 +1347,29 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Update build
+         * @summary Patch run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} experiment_id Unique integer identifier
-         * @param {V1ExperimentBodyRequest} body 
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options: any = {}): FetchArgs {
+        updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling updateExperiment.');
-            }
-            // verify required parameter 'experiment_id' is not null or undefined
-            if (experiment_id === null || experiment_id === undefined) {
-                throw new RequiredError('experiment_id','Required parameter experiment_id was null or undefined when calling updateExperiment.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateProject.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateExperiment.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateProject.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/experiments/{experiment.id}`
+            const localVarPath = `/api/v1/{owner}/projects/{project}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"experiment.id"}}`, encodeURIComponent(String(experiment_id)));
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
             const localVarHeaderParameter = {} as any;
@@ -4371,7 +1389,7 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1ExperimentBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1ProjectBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -4383,271 +1401,21 @@ export const ExperimentServiceApiFetchParamCreator = function (configuration?: C
 };
 
 /**
- * ExperimentServiceApi - functional programming interface
+ * ProjectServiceApi - functional programming interface
  * @export
  */
-export const ExperimentServiceApiFp = function(configuration?: Configuration) {
+export const ProjectServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Restore build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        archiveExperiment(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).archiveExperiment(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary UnBookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bookmarkExperiment(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).bookmarkExperiment(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create new build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1ExperimentBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperiment(owner: string, project: string, body: V1ExperimentBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).createExperiment(owner, project, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get experiment code ref
-         * @param {string} entity_owner Owner of the namespace
-         * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).createExperimentCodeRef(entity_owner, entity_project, entity_id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get job code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1EntityStatusRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ExperimentStatus> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).createExperimentStatus(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Delete build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteExperiment(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).deleteExperiment(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteExperiments(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).deleteExperiments(owner, project, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExperiment(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).getExperiment(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get experiment code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExperimentCodeRef(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).getExperimentCodeRef(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedExperiments(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListExperimentsResponse> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).listArchivedExperiments(owner, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedExperiments(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListExperimentsResponse> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).listBookmarkedExperiments(owner, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listExperimentStatuses(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListExperimentStatusesResponse> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).listExperimentStatuses(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List builds
+         * @summary Stop run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listExperiments(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListExperimentsResponse> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).listExperiments(owner, project, options);
+        archiveProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).archiveProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4660,16 +1428,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Patch build
+         * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} experiment_id Unique integer identifier
-         * @param {V1ExperimentBodyRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).patchExperiment(owner, project, experiment_id, body, options);
+        bookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).bookmarkProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4682,16 +1448,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Restart build
+         * @summary Get run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1OwnerBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).restartExperiment(owner, project, id, body, options);
+        createProject(owner: string, body: V1OwnerBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).createProject(owner, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4704,15 +1468,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Bookmark build
+         * @summary Delete runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restoreExperiment(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).restoreExperiment(owner, project, id, options);
+        deleteExperiment(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).deleteExperiment(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4725,16 +1488,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Archive build
+         * @summary Resume run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resumeExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).resumeExperiment(owner, project, id, body, options);
+        disableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).disableProjectCI(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4747,16 +1508,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List build statuses
+         * @summary Restart run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startExperimentTensorboard(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).startExperimentTensorboard(owner, project, id, body, options);
+        enableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).enableProjectCI(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4769,16 +1528,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Stop build
+         * @summary Update run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).stopExperiment(owner, project, id, body, options);
+        getProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).getProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4791,15 +1548,13 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Create new build status
+         * @summary Create new run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperimentTensorboard(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).stopExperimentTensorboard(owner, project, id, options);
+        listArchivedProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listArchivedProjects(owner, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4812,15 +1567,72 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Stop builds
+         * @summary List archived runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBookmarkedProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listBookmarkedProjects(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProjectNames(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listProjectNames(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listProjects(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Delete run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperiments(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).stopExperiments(owner, project, body, options);
+        patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).patchProject(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4833,15 +1645,14 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get build status
+         * @summary Stop runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkExperiment(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).unBookmarkExperiment(owner, project, id, options);
+        restoreExperiment(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).restoreExperiment(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4854,16 +1665,15 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update build
+         * @summary Patch run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} experiment_id Unique integer identifier
-         * @param {V1ExperimentBodyRequest} body 
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Experiment> {
-            const localVarFetchArgs = ExperimentServiceApiFetchParamCreator(configuration).updateExperiment(owner, project, experiment_id, body, options);
+        updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).updateProject(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4878,659 +1688,387 @@ export const ExperimentServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * ExperimentServiceApi - factory interface
+ * ProjectServiceApi - factory interface
  * @export
  */
-export const ExperimentServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ProjectServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
-         * @summary Restore build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        archiveExperiment(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).archiveExperiment(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary UnBookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        bookmarkExperiment(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).bookmarkExperiment(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create new build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1ExperimentBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperiment(owner: string, project: string, body: V1ExperimentBodyRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).createExperiment(owner, project, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get experiment code ref
-         * @param {string} entity_owner Owner of the namespace
-         * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).createExperimentCodeRef(entity_owner, entity_project, entity_id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get job code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1EntityStatusRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).createExperimentStatus(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Delete build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteExperiment(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).deleteExperiment(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteExperiments(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).deleteExperiments(owner, project, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExperiment(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).getExperiment(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get experiment code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getExperimentCodeRef(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).getExperimentCodeRef(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedExperiments(owner: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).listArchivedExperiments(owner, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedExperiments(owner: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).listBookmarkedExperiments(owner, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listExperimentStatuses(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).listExperimentStatuses(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List builds
+         * @summary Stop run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listExperiments(owner: string, project: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).listExperiments(owner, project, options)(fetch, basePath);
+        archiveProject(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).archiveProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Patch build
+         * @summary Stop run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} experiment_id Unique integer identifier
-         * @param {V1ExperimentBodyRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).patchExperiment(owner, project, experiment_id, body, options)(fetch, basePath);
+        bookmarkProject(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).bookmarkProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Restart build
+         * @summary Get run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {V1OwnerBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).restartExperiment(owner, project, id, body, options)(fetch, basePath);
+        createProject(owner: string, body: V1OwnerBodyRequest, options?: any) {
+            return ProjectServiceApiFp(configuration).createProject(owner, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Bookmark build
+         * @summary Delete runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restoreExperiment(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).restoreExperiment(owner, project, id, options)(fetch, basePath);
+        deleteExperiment(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).deleteExperiment(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Archive build
+         * @summary Resume run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resumeExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).resumeExperiment(owner, project, id, body, options)(fetch, basePath);
+        disableProjectCI(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).disableProjectCI(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary List build statuses
+         * @summary Restart run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startExperimentTensorboard(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).startExperimentTensorboard(owner, project, id, body, options)(fetch, basePath);
+        enableProjectCI(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).enableProjectCI(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Stop build
+         * @summary Update run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).stopExperiment(owner, project, id, body, options)(fetch, basePath);
+        getProject(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).getProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Create new build status
+         * @summary Create new run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperimentTensorboard(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).stopExperimentTensorboard(owner, project, id, options)(fetch, basePath);
+        listArchivedProjects(owner: string, options?: any) {
+            return ProjectServiceApiFp(configuration).listArchivedProjects(owner, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Stop builds
+         * @summary List archived runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBookmarkedProjects(owner: string, options?: any) {
+            return ProjectServiceApiFp(configuration).listBookmarkedProjects(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProjectNames(owner: string, options?: any) {
+            return ProjectServiceApiFp(configuration).listProjectNames(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listProjects(owner: string, options?: any) {
+            return ProjectServiceApiFp(configuration).listProjects(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Delete run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopExperiments(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).stopExperiments(owner, project, body, options)(fetch, basePath);
+        patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+            return ProjectServiceApiFp(configuration).patchProject(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Get build status
+         * @summary Stop runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkExperiment(owner: string, project: string, id: string, options?: any) {
-            return ExperimentServiceApiFp(configuration).unBookmarkExperiment(owner, project, id, options)(fetch, basePath);
+        restoreExperiment(owner: string, project: string, options?: any) {
+            return ProjectServiceApiFp(configuration).restoreExperiment(owner, project, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Update build
+         * @summary Patch run
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} experiment_id Unique integer identifier
-         * @param {V1ExperimentBodyRequest} body 
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
-            return ExperimentServiceApiFp(configuration).updateExperiment(owner, project, experiment_id, body, options)(fetch, basePath);
+        updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+            return ProjectServiceApiFp(configuration).updateProject(owner, project, body, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * ExperimentServiceApi - object-oriented interface
+ * ProjectServiceApi - object-oriented interface
  * @export
- * @class ExperimentServiceApi
+ * @class ProjectServiceApi
  * @extends {BaseAPI}
  */
-export class ExperimentServiceApi extends BaseAPI {
+export class ProjectServiceApi extends BaseAPI {
     /**
      * 
-     * @summary Restore build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public archiveExperiment(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).archiveExperiment(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary UnBookmark build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public bookmarkExperiment(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).bookmarkExperiment(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create new build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {V1ExperimentBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public createExperiment(owner: string, project: string, body: V1ExperimentBodyRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).createExperiment(owner, project, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get experiment code ref
-     * @param {string} entity_owner Owner of the namespace
-     * @param {string} entity_project Project where the experiement will be assigned
-     * @param {string} entity_id Unique integer identifier of the entity
-     * @param {V1CodeReferenceBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public createExperimentCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).createExperimentCodeRef(entity_owner, entity_project, entity_id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get job code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1EntityStatusRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public createExperimentStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).createExperimentStatus(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Delete build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public deleteExperiment(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).deleteExperiment(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Delete builds
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public deleteExperiments(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).deleteExperiments(owner, project, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public getExperiment(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).getExperiment(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get experiment code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public getExperimentCodeRef(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).getExperimentCodeRef(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List archived builds
-     * @param {string} owner Owner of the namespace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public listArchivedExperiments(owner: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).listArchivedExperiments(owner, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List bookmarked builds
-     * @param {string} owner Owner of the namespace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public listBookmarkedExperiments(owner: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).listBookmarkedExperiments(owner, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create build code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
-     */
-    public listExperimentStatuses(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).listExperimentStatuses(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List builds
+     * @summary Stop run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public listExperiments(owner: string, project: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).listExperiments(owner, project, options)(this.fetch, this.basePath);
+    public archiveProject(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).archiveProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Patch build
+     * @summary Stop run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} experiment_id Unique integer identifier
-     * @param {V1ExperimentBodyRequest} body 
+     * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public patchExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).patchExperiment(owner, project, experiment_id, body, options)(this.fetch, this.basePath);
+    public bookmarkProject(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).bookmarkProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Restart build
+     * @summary Get run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {V1OwnerBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public restartExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).restartExperiment(owner, project, id, body, options)(this.fetch, this.basePath);
+    public createProject(owner: string, body: V1OwnerBodyRequest, options?: any) {
+        return ProjectServiceApiFp(this.configuration).createProject(owner, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Bookmark build
+     * @summary Delete runs
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public restoreExperiment(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).restoreExperiment(owner, project, id, options)(this.fetch, this.basePath);
+    public deleteExperiment(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).deleteExperiment(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Archive build
+     * @summary Resume run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public resumeExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).resumeExperiment(owner, project, id, body, options)(this.fetch, this.basePath);
+    public disableProjectCI(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).disableProjectCI(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary List build statuses
+     * @summary Restart run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public startExperimentTensorboard(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).startExperimentTensorboard(owner, project, id, body, options)(this.fetch, this.basePath);
+    public enableProjectCI(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).enableProjectCI(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Stop build
+     * @summary Update run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
+     * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public stopExperiment(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).stopExperiment(owner, project, id, body, options)(this.fetch, this.basePath);
+    public getProject(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).getProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Create new build status
+     * @summary Create new run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public stopExperimentTensorboard(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).stopExperimentTensorboard(owner, project, id, options)(this.fetch, this.basePath);
+    public listArchivedProjects(owner: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).listArchivedProjects(owner, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Stop builds
+     * @summary List archived runs
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectServiceApi
+     */
+    public listBookmarkedProjects(owner: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).listBookmarkedProjects(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectServiceApi
+     */
+    public listProjectNames(owner: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).listProjectNames(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectServiceApi
+     */
+    public listProjects(owner: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).listProjects(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Delete run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public stopExperiments(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).stopExperiments(owner, project, body, options)(this.fetch, this.basePath);
+    public patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+        return ProjectServiceApiFp(this.configuration).patchProject(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Get build status
+     * @summary Stop runs
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public unBookmarkExperiment(owner: string, project: string, id: string, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).unBookmarkExperiment(owner, project, id, options)(this.fetch, this.basePath);
+    public restoreExperiment(owner: string, project: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).restoreExperiment(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Update build
+     * @summary Patch run
      * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} experiment_id Unique integer identifier
-     * @param {V1ExperimentBodyRequest} body 
+     * @param {string} project Project under namesapce
+     * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExperimentServiceApi
+     * @memberof ProjectServiceApi
      */
-    public updateExperiment(owner: string, project: string, experiment_id: string, body: V1ExperimentBodyRequest, options?: any) {
-        return ExperimentServiceApiFp(this.configuration).updateExperiment(owner, project, experiment_id, body, options)(this.fetch, this.basePath);
+    public updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+        return ProjectServiceApiFp(this.configuration).updateProject(owner, project, body, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * JobServiceApi - fetch parameter creator
+ * RunServiceApi - fetch parameter creator
  * @export
  */
-export const JobServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const RunServiceApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Restore build
+         * @summary Archive run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveJob(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        archiveRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling archiveJob.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling archiveRun.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling archiveJob.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling archiveRun.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling archiveJob.');
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling archiveRun.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/archive`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/archive`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -5556,30 +2094,30 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary UnBookmark build
+         * @summary Bookmark run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookmarkJob(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        bookmarkRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling bookmarkJob.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling bookmarkRun.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling bookmarkJob.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling bookmarkRun.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling bookmarkJob.');
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling bookmarkRun.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/bookmark`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/bookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -5605,27 +2143,27 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Create new build
+         * @summary Create new run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {V1JobBodyRequest} body 
+         * @param {V1RunBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJob(owner: string, project: string, body: V1JobBodyRequest, options: any = {}): FetchArgs {
+        createRun(owner: string, project: string, body: V1RunBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createJob.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createRun.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling createJob.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling createRun.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createJob.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createRun.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs`
+            const localVarPath = `/api/v1/{owner}/{project}/runs`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -5647,7 +2185,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1JobBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1RunBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -5657,35 +2195,35 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Get job code ref
+         * @summary Get run code ref
          * @param {string} entity_owner Owner of the namespace
          * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
+         * @param {string} entity_uuid Unique integer identifier of the entity
+         * @param {V1CodeRefBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options: any = {}): FetchArgs {
+        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'entity_owner' is not null or undefined
             if (entity_owner === null || entity_owner === undefined) {
-                throw new RequiredError('entity_owner','Required parameter entity_owner was null or undefined when calling createJobCodeRef.');
+                throw new RequiredError('entity_owner','Required parameter entity_owner was null or undefined when calling createRunCodeRef.');
             }
             // verify required parameter 'entity_project' is not null or undefined
             if (entity_project === null || entity_project === undefined) {
-                throw new RequiredError('entity_project','Required parameter entity_project was null or undefined when calling createJobCodeRef.');
+                throw new RequiredError('entity_project','Required parameter entity_project was null or undefined when calling createRunCodeRef.');
             }
-            // verify required parameter 'entity_id' is not null or undefined
-            if (entity_id === null || entity_id === undefined) {
-                throw new RequiredError('entity_id','Required parameter entity_id was null or undefined when calling createJobCodeRef.');
+            // verify required parameter 'entity_uuid' is not null or undefined
+            if (entity_uuid === null || entity_uuid === undefined) {
+                throw new RequiredError('entity_uuid','Required parameter entity_uuid was null or undefined when calling createRunCodeRef.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createJobCodeRef.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createRunCodeRef.');
             }
-            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef`
+            const localVarPath = `/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef`
                 .replace(`{${"entity.owner"}}`, encodeURIComponent(String(entity_owner)))
                 .replace(`{${"entity.project"}}`, encodeURIComponent(String(entity_project)))
-                .replace(`{${"entity.id"}}`, encodeURIComponent(String(entity_id)));
+                .replace(`{${"entity.uuid"}}`, encodeURIComponent(String(entity_uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -5705,7 +2243,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1CodeReferenceBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1CodeRefBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -5715,35 +2253,35 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Get build code ref
+         * @summary Create new run status
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
+        createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createJobStatus.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling createRunStatus.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling createJobStatus.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling createRunStatus.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling createJobStatus.');
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling createRunStatus.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling createJobStatus.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling createRunStatus.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/statuses`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/statuses`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
@@ -5773,30 +2311,30 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Delete build
+         * @summary Delete run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteJob(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        deleteRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteJob.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteRun.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteJob.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteRun.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling deleteJob.');
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling deleteRun.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
             const localVarHeaderParameter = {} as any;
@@ -5822,624 +2360,284 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteJobs(owner: string, project: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteJobs.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteJobs.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling deleteJobs.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/delete`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getJob(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getJob.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getJob.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getJob.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getJobCodeRef(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getJobCodeRef.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling getJobCodeRef.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling getJobCodeRef.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/coderef`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedJobs(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedJobs.');
-            }
-            const localVarPath = `/api/v1/archives/{owner}/jobs`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedJobs(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedJobs.');
-            }
-            const localVarPath = `/api/v1/bookmarks/{owner}/jobs`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobStatuses(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listJobStatuses.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling listJobStatuses.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling listJobStatuses.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/statuses`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary List builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobs(owner: string, project: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listJobs.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling listJobs.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Patch build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} job_id Unique integer identifier
-         * @param {V1JobBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchJob.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling patchJob.');
-            }
-            // verify required parameter 'job_id' is not null or undefined
-            if (job_id === null || job_id === undefined) {
-                throw new RequiredError('job_id','Required parameter job_id was null or undefined when calling patchJob.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling patchJob.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{job.id}`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"job.id"}}`, encodeURIComponent(String(job_id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1JobBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restartJob.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restartJob.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling restartJob.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling restartJob.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/restart`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreJob(owner: string, project: string, id: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreJob.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreJob.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling restoreJob.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/restore`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Archive build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resumeJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling resumeJob.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling resumeJob.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling resumeJob.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling resumeJob.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/resume`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopJob.');
-            }
-            // verify required parameter 'project' is not null or undefined
-            if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopJob.');
-            }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling stopJob.');
-            }
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling stopJob.');
-            }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/stop`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
-                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Stop builds
+         * @summary Delete runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopJobs(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
+        deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopJobs.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteRuns.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling stopJobs.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteRuns.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling stopJobs.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling deleteRuns.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/stop`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/delete`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ProjectBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run code ref
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunCodeRefs(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRunCodeRefs.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getRunCodeRefs.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getRunCodeRefs.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/coderef`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get run status
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunStatuses(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling getRunStatuses.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling getRunStatuses.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling getRunStatuses.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/statuses`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling invalidateRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling invalidateRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling invalidateRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling invalidateRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/invalidate`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling invalidateRuns.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling invalidateRuns.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling invalidateRuns.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/invalidate`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)));
             const localVarUrlObj = url.parse(localVarPath, true);
@@ -6471,30 +2669,486 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Get build status
+         * @summary List archived runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkJob(owner: string, project: string, id: string, options: any = {}): FetchArgs {
+        listArchivedRuns(owner: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unBookmarkJob.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedRuns.');
+            }
+            const localVarPath = `/api/v1/archives/{owner}/runs`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBookmarkedRuns(owner: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedRuns.');
+            }
+            const localVarPath = `/api/v1/bookmarks/{owner}/runs`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listRuns(owner: string, project: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listRuns.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling unBookmarkJob.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling listRuns.');
             }
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError('id','Required parameter id was null or undefined when calling unBookmarkJob.');
+            const localVarPath = `/api/v1/{owner}/{project}/runs`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{id}/unbookmark`
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} run_uuid UUID
+         * @param {V1RunBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling patchRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling patchRun.');
+            }
+            // verify required parameter 'run_uuid' is not null or undefined
+            if (run_uuid === null || run_uuid === undefined) {
+                throw new RequiredError('run_uuid','Required parameter run_uuid was null or undefined when calling patchRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling patchRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{run.uuid}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+                .replace(`{${"run.uuid"}}`, encodeURIComponent(String(run_uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'PATCH' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1RunBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restart run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restartRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling restartRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling restartRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling restartRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/restart`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restore run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restoreRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling restoreRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling restoreRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling restoreRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/restore`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Resume run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling resumeRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling resumeRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling resumeRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling resumeRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/resume`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Start run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling startRunTensorboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling startRunTensorboard.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling startRunTensorboard.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling startRunTensorboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling stopRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling stopRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling stopRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/stop`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Stop run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRunTensorboard(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopRunTensorboard.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling stopRunTensorboard.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling stopRunTensorboard.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
             const localVarHeaderParameter = {} as any;
@@ -6520,35 +3174,136 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Update build
+         * @summary Stop runs
          * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} job_id Unique integer identifier
-         * @param {V1JobBodyRequest} body 
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options: any = {}): FetchArgs {
+        stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateJob.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopRuns.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling updateJob.');
-            }
-            // verify required parameter 'job_id' is not null or undefined
-            if (job_id === null || job_id === undefined) {
-                throw new RequiredError('job_id','Required parameter job_id was null or undefined when calling updateJob.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling stopRuns.');
             }
             // verify required parameter 'body' is not null or undefined
             if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling updateJob.');
+                throw new RequiredError('body','Required parameter body was null or undefined when calling stopRuns.');
             }
-            const localVarPath = `/api/v1/{owner}/{project}/jobs/{job.id}`
+            const localVarPath = `/api/v1/{owner}/{project}/runs/stop`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1ProjectBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary UnBookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unBookmarkRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unBookmarkRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling unBookmarkRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling unBookmarkRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/unbookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
                 .replace(`{${"project"}}`, encodeURIComponent(String(project)))
-                .replace(`{${"job.id"}}`, encodeURIComponent(String(job_id)));
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'DELETE' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} run_uuid UUID
+         * @param {V1RunBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling updateRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling updateRun.');
+            }
+            // verify required parameter 'run_uuid' is not null or undefined
+            if (run_uuid === null || run_uuid === undefined) {
+                throw new RequiredError('run_uuid','Required parameter run_uuid was null or undefined when calling updateRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling updateRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{run.uuid}`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"run.uuid"}}`, encodeURIComponent(String(run_uuid)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'PUT' }, options);
             const localVarHeaderParameter = {} as any;
@@ -6568,7 +3323,7 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1JobBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1RunBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -6580,22 +3335,22 @@ export const JobServiceApiFetchParamCreator = function (configuration?: Configur
 };
 
 /**
- * JobServiceApi - functional programming interface
+ * RunServiceApi - functional programming interface
  * @export
  */
-export const JobServiceApiFp = function(configuration?: Configuration) {
+export const RunServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Restore build
+         * @summary Archive run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveJob(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).archiveJob(owner, project, id, options);
+        archiveRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).archiveRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6608,15 +3363,15 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary UnBookmark build
+         * @summary Bookmark run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookmarkJob(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).bookmarkJob(owner, project, id, options);
+        bookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).bookmarkRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6629,15 +3384,15 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Create new build
+         * @summary Create new run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {V1JobBodyRequest} body 
+         * @param {V1RunBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJob(owner: string, project: string, body: V1JobBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).createJob(owner, project, body, options);
+        createRun(owner: string, project: string, body: V1RunBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRun(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6650,16 +3405,16 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get job code ref
+         * @summary Get run code ref
          * @param {string} entity_owner Owner of the namespace
          * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
+         * @param {string} entity_uuid Unique integer identifier of the entity
+         * @param {V1CodeRefBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).createJobCodeRef(entity_owner, entity_project, entity_id, body, options);
+        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6672,16 +3427,16 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get build code ref
+         * @summary Create new run status
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1JobStatus> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).createJobStatus(owner, project, id, body, options);
+        createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRunStatus(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6694,15 +3449,15 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Delete build
+         * @summary Delete run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteJob(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).deleteJob(owner, project, id, options);
+        deleteRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).deleteRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6715,266 +3470,15 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteJobs(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).deleteJobs(owner, project, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getJob(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).getJob(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getJobCodeRef(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).getJobCodeRef(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedJobs(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListJobsResponse> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).listArchivedJobs(owner, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedJobs(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListJobsResponse> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).listBookmarkedJobs(owner, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobStatuses(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListJobStatusesResponse> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).listJobStatuses(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary List builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobs(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListJobsResponse> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).listJobs(owner, project, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Patch build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} job_id Unique integer identifier
-         * @param {V1JobBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).patchJob(owner, project, job_id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).restartJob(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreJob(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).restoreJob(owner, project, id, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Archive build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resumeJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).resumeJob(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).stopJob(owner, project, id, body, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return response.json();
-                    } else {
-                        throw response;
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary Stop builds
+         * @summary Delete runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopJobs(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).stopJobs(owner, project, body, options);
+        deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).deleteRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -6987,15 +3491,15 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get build status
+         * @summary Get run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkJob(owner: string, project: string, id: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).unBookmarkJob(owner, project, id, options);
+        getRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7008,16 +3512,353 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update build
+         * @summary Get run code ref
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} job_id Unique integer identifier
-         * @param {V1JobBodyRequest} body 
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Job> {
-            const localVarFetchArgs = JobServiceApiFetchParamCreator(configuration).updateJob(owner, project, job_id, body, options);
+        getRunCodeRefs(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListCodeRefResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRunCodeRefs(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Get run status
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunStatuses(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1StatusResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRunStatuses(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).invalidateRun(owner, project, uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).invalidateRuns(owner, project, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List archived runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listArchivedRuns(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listArchivedRuns(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List bookmarked runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBookmarkedRuns(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listBookmarkedRuns(owner, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listRuns(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listRuns(owner, project, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} run_uuid UUID
+         * @param {V1RunBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).patchRun(owner, project, run_uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Restart run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).restartRun(owner, project, uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Restore run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restoreRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).restoreRun(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Resume run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).resumeRun(owner, project, uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Start run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).startRunTensorboard(owner, project, uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).stopRun(owner, project, uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRunTensorboard(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).stopRunTensorboard(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).stopRuns(owner, project, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary UnBookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unBookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).unBookmarkRun(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} run_uuid UUID
+         * @param {V1RunBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).updateRun(owner, project, run_uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -7032,569 +3873,782 @@ export const JobServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * JobServiceApi - factory interface
+ * RunServiceApi - factory interface
  * @export
  */
-export const JobServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const RunServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
-         * @summary Restore build
+         * @summary Archive run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        archiveJob(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).archiveJob(owner, project, id, options)(fetch, basePath);
+        archiveRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).archiveRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary UnBookmark build
+         * @summary Bookmark run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        bookmarkJob(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).bookmarkJob(owner, project, id, options)(fetch, basePath);
+        bookmarkRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).bookmarkRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Create new build
+         * @summary Create new run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {V1JobBodyRequest} body 
+         * @param {V1RunBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJob(owner: string, project: string, body: V1JobBodyRequest, options?: any) {
-            return JobServiceApiFp(configuration).createJob(owner, project, body, options)(fetch, basePath);
+        createRun(owner: string, project: string, body: V1RunBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).createRun(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Get job code ref
+         * @summary Get run code ref
          * @param {string} entity_owner Owner of the namespace
          * @param {string} entity_project Project where the experiement will be assigned
-         * @param {string} entity_id Unique integer identifier of the entity
-         * @param {V1CodeReferenceBodyRequest} body 
+         * @param {string} entity_uuid Unique integer identifier of the entity
+         * @param {V1CodeRefBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
-            return JobServiceApiFp(configuration).createJobCodeRef(entity_owner, entity_project, entity_id, body, options)(fetch, basePath);
+        createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Get build code ref
+         * @summary Create new run status
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {V1EntityStatusRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
-            return JobServiceApiFp(configuration).createJobStatus(owner, project, id, body, options)(fetch, basePath);
+        createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any) {
+            return RunServiceApiFp(configuration).createRunStatus(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Delete build
+         * @summary Delete run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteJob(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).deleteJob(owner, project, id, options)(fetch, basePath);
+        deleteRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).deleteRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Delete builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteJobs(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return JobServiceApiFp(configuration).deleteJobs(owner, project, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Get build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getJob(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).getJob(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create build code ref
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getJobCodeRef(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).getJobCodeRef(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List archived builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listArchivedJobs(owner: string, options?: any) {
-            return JobServiceApiFp(configuration).listArchivedJobs(owner, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List bookmarked builds
-         * @param {string} owner Owner of the namespace
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listBookmarkedJobs(owner: string, options?: any) {
-            return JobServiceApiFp(configuration).listBookmarkedJobs(owner, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Create new build status
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobStatuses(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).listJobStatuses(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary List builds
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project under namesapce
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listJobs(owner: string, project: string, options?: any) {
-            return JobServiceApiFp(configuration).listJobs(owner, project, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Patch build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} job_id Unique integer identifier
-         * @param {V1JobBodyRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
-            return JobServiceApiFp(configuration).patchJob(owner, project, job_id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Restart build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restartJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return JobServiceApiFp(configuration).restartJob(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Bookmark build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        restoreJob(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).restoreJob(owner, project, id, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Archive build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        resumeJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return JobServiceApiFp(configuration).resumeJob(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Stop build
-         * @param {string} owner Owner of the namespace
-         * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
-         * @param {V1OwnedEntityIdRequest} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        stopJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-            return JobServiceApiFp(configuration).stopJob(owner, project, id, body, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary Stop builds
+         * @summary Delete runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {V1ProjectBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopJobs(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return JobServiceApiFp(configuration).stopJobs(owner, project, body, options)(fetch, basePath);
+        deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).deleteRuns(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Get build status
+         * @summary Get run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} id Unique integer identifier of the entity
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkJob(owner: string, project: string, id: string, options?: any) {
-            return JobServiceApiFp(configuration).unBookmarkJob(owner, project, id, options)(fetch, basePath);
+        getRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).getRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary Update build
+         * @summary Get run code ref
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
-         * @param {string} job_id Unique integer identifier
-         * @param {V1JobBodyRequest} body 
+         * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
-            return JobServiceApiFp(configuration).updateJob(owner, project, job_id, body, options)(fetch, basePath);
+        getRunCodeRefs(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).getRunCodeRefs(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Get run status
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRunStatuses(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).getRunStatuses(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+            return RunServiceApiFp(configuration).invalidateRun(owner, project, uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Invalidate runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).invalidateRuns(owner, project, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List archived runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listArchivedRuns(owner: string, options?: any) {
+            return RunServiceApiFp(configuration).listArchivedRuns(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List bookmarked runs
+         * @param {string} owner Owner of the namespace
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBookmarkedRuns(owner: string, options?: any) {
+            return RunServiceApiFp(configuration).listBookmarkedRuns(owner, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary List runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listRuns(owner: string, project: string, options?: any) {
+            return RunServiceApiFp(configuration).listRuns(owner, project, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Patch run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} run_uuid UUID
+         * @param {V1RunBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).patchRun(owner, project, run_uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Restart run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+            return RunServiceApiFp(configuration).restartRun(owner, project, uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Restore run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        restoreRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).restoreRun(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Resume run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+            return RunServiceApiFp(configuration).resumeRun(owner, project, uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Start run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+            return RunServiceApiFp(configuration).startRunTensorboard(owner, project, uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+            return RunServiceApiFp(configuration).stopRun(owner, project, uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop run tensorboard
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRunTensorboard(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).stopRunTensorboard(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Stop runs
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project under namesapce
+         * @param {V1ProjectBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).stopRuns(owner, project, body, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary UnBookmark run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        unBookmarkRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunServiceApiFp(configuration).unBookmarkRun(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
+         * @summary Update run
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} run_uuid UUID
+         * @param {V1RunBodyRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
+            return RunServiceApiFp(configuration).updateRun(owner, project, run_uuid, body, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * JobServiceApi - object-oriented interface
+ * RunServiceApi - object-oriented interface
  * @export
- * @class JobServiceApi
+ * @class RunServiceApi
  * @extends {BaseAPI}
  */
-export class JobServiceApi extends BaseAPI {
+export class RunServiceApi extends BaseAPI {
     /**
      * 
-     * @summary Restore build
+     * @summary Archive run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public archiveJob(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).archiveJob(owner, project, id, options)(this.fetch, this.basePath);
+    public archiveRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).archiveRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary UnBookmark build
+     * @summary Bookmark run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public bookmarkJob(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).bookmarkJob(owner, project, id, options)(this.fetch, this.basePath);
+    public bookmarkRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).bookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Create new build
+     * @summary Create new run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {V1JobBodyRequest} body 
+     * @param {V1RunBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public createJob(owner: string, project: string, body: V1JobBodyRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).createJob(owner, project, body, options)(this.fetch, this.basePath);
+    public createRun(owner: string, project: string, body: V1RunBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).createRun(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Get job code ref
+     * @summary Get run code ref
      * @param {string} entity_owner Owner of the namespace
      * @param {string} entity_project Project where the experiement will be assigned
-     * @param {string} entity_id Unique integer identifier of the entity
-     * @param {V1CodeReferenceBodyRequest} body 
+     * @param {string} entity_uuid Unique integer identifier of the entity
+     * @param {V1CodeRefBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public createJobCodeRef(entity_owner: string, entity_project: string, entity_id: string, body: V1CodeReferenceBodyRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).createJobCodeRef(entity_owner, entity_project, entity_id, body, options)(this.fetch, this.basePath);
+    public createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Get build code ref
+     * @summary Create new run status
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} uuid Unique integer identifier of the entity
      * @param {V1EntityStatusRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public createJobStatus(owner: string, project: string, id: string, body: V1EntityStatusRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).createJobStatus(owner, project, id, body, options)(this.fetch, this.basePath);
+    public createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).createRunStatus(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Delete build
+     * @summary Delete run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public deleteJob(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).deleteJob(owner, project, id, options)(this.fetch, this.basePath);
+    public deleteRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).deleteRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Delete builds
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public deleteJobs(owner: string, project: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).deleteJobs(owner, project, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Get build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public getJob(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).getJob(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create build code ref
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public getJobCodeRef(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).getJobCodeRef(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List archived builds
-     * @param {string} owner Owner of the namespace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public listArchivedJobs(owner: string, options?: any) {
-        return JobServiceApiFp(this.configuration).listArchivedJobs(owner, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List bookmarked builds
-     * @param {string} owner Owner of the namespace
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public listBookmarkedJobs(owner: string, options?: any) {
-        return JobServiceApiFp(this.configuration).listBookmarkedJobs(owner, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Create new build status
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public listJobStatuses(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).listJobStatuses(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary List builds
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project under namesapce
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public listJobs(owner: string, project: string, options?: any) {
-        return JobServiceApiFp(this.configuration).listJobs(owner, project, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Patch build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} job_id Unique integer identifier
-     * @param {V1JobBodyRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public patchJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).patchJob(owner, project, job_id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Restart build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public restartJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).restartJob(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Bookmark build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public restoreJob(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).restoreJob(owner, project, id, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Archive build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public resumeJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).resumeJob(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Stop build
-     * @param {string} owner Owner of the namespace
-     * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
-     * @param {V1OwnedEntityIdRequest} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof JobServiceApi
-     */
-    public stopJob(owner: string, project: string, id: string, body: V1OwnedEntityIdRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).stopJob(owner, project, id, body, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary Stop builds
+     * @summary Delete runs
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public stopJobs(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).stopJobs(owner, project, body, options)(this.fetch, this.basePath);
+    public deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).deleteRuns(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Get build status
+     * @summary Get run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {string} id Unique integer identifier of the entity
+     * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public unBookmarkJob(owner: string, project: string, id: string, options?: any) {
-        return JobServiceApiFp(this.configuration).unBookmarkJob(owner, project, id, options)(this.fetch, this.basePath);
+    public getRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).getRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary Update build
+     * @summary Get run code ref
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
-     * @param {string} job_id Unique integer identifier
-     * @param {V1JobBodyRequest} body 
+     * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof JobServiceApi
+     * @memberof RunServiceApi
      */
-    public updateJob(owner: string, project: string, job_id: string, body: V1JobBodyRequest, options?: any) {
-        return JobServiceApiFp(this.configuration).updateJob(owner, project, job_id, body, options)(this.fetch, this.basePath);
+    public getRunCodeRefs(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).getRunCodeRefs(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Get run status
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public getRunStatuses(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).getRunStatuses(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).invalidateRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Invalidate runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {V1ProjectBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).invalidateRuns(owner, project, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List archived runs
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public listArchivedRuns(owner: string, options?: any) {
+        return RunServiceApiFp(this.configuration).listArchivedRuns(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List bookmarked runs
+     * @param {string} owner Owner of the namespace
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public listBookmarkedRuns(owner: string, options?: any) {
+        return RunServiceApiFp(this.configuration).listBookmarkedRuns(owner, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary List runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public listRuns(owner: string, project: string, options?: any) {
+        return RunServiceApiFp(this.configuration).listRuns(owner, project, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Patch run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} run_uuid UUID
+     * @param {V1RunBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).patchRun(owner, project, run_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Restart run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).restartRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Restore run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public restoreRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).restoreRun(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Resume run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).resumeRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Start run tensorboard
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).startRunTensorboard(owner, project, uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).stopRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop run tensorboard
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public stopRunTensorboard(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).stopRunTensorboard(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Stop runs
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project under namesapce
+     * @param {V1ProjectBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).stopRuns(owner, project, body, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary UnBookmark run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public unBookmarkRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunServiceApiFp(this.configuration).unBookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Update run
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} run_uuid UUID
+     * @param {V1RunBodyRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).updateRun(owner, project, run_uuid, body, options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * VersionsServiceApi - fetch parameter creator
+ * @export
+ */
+export const VersionsServiceApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getVersions(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/versions`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * VersionsServiceApi - functional programming interface
+ * @export
+ */
+export const VersionsServiceApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getVersions(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Versions> {
+            const localVarFetchArgs = VersionsServiceApiFetchParamCreator(configuration).getVersions(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * VersionsServiceApi - factory interface
+ * @export
+ */
+export const VersionsServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getVersions(options?: any) {
+            return VersionsServiceApiFp(configuration).getVersions(options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * VersionsServiceApi - object-oriented interface
+ * @export
+ * @class VersionsServiceApi
+ * @extends {BaseAPI}
+ */
+export class VersionsServiceApi extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof VersionsServiceApi
+     */
+    public getVersions(options?: any) {
+        return VersionsServiceApiFp(this.configuration).getVersions(options)(this.fetch, this.basePath);
     }
 
 }

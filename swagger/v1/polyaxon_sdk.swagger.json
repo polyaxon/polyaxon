@@ -22,15 +22,15 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/archives/{owner}/builds": {
+    "/api/v1/archives/{owner}/projects": {
       "get": {
-        "summary": "List archived builds",
-        "operationId": "ListArchivedBuilds",
+        "summary": "Create new run",
+        "operationId": "ListArchivedProjects",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListBuildsResponse"
+              "$ref": "#/definitions/v1ListProjectsResponse"
             }
           },
           "403": {
@@ -40,6 +40,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -54,19 +55,19 @@
           }
         ],
         "tags": [
-          "BuildService"
+          "ProjectService"
         ]
       }
     },
-    "/api/v1/archives/{owner}/experiments": {
+    "/api/v1/archives/{owner}/runs": {
       "get": {
-        "summary": "List archived builds",
-        "operationId": "ListArchivedExperiments",
+        "summary": "List archived runs",
+        "operationId": "ListArchivedRuns",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListExperimentsResponse"
+              "$ref": "#/definitions/v1ListRunsResponse"
             }
           },
           "403": {
@@ -76,6 +77,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -90,19 +92,19 @@
           }
         ],
         "tags": [
-          "ExperimentService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/archives/{owner}/jobs": {
+    "/api/v1/bookmarks/{owner}/projects": {
       "get": {
-        "summary": "List archived builds",
-        "operationId": "ListArchivedJobs",
+        "summary": "List archived runs",
+        "operationId": "ListBookmarkedProjects",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListJobsResponse"
+              "$ref": "#/definitions/v1ListProjectsResponse"
             }
           },
           "403": {
@@ -112,6 +114,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -126,19 +129,19 @@
           }
         ],
         "tags": [
-          "JobService"
+          "ProjectService"
         ]
       }
     },
-    "/api/v1/bookmarks/{owner}/builds": {
+    "/api/v1/bookmarks/{owner}/runs": {
       "get": {
-        "summary": "List bookmarked builds",
-        "operationId": "ListBookmarkedBuilds",
+        "summary": "List bookmarked runs",
+        "operationId": "ListBookmarkedRuns",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListBuildsResponse"
+              "$ref": "#/definitions/v1ListRunsResponse"
             }
           },
           "403": {
@@ -148,6 +151,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -162,19 +166,19 @@
           }
         ],
         "tags": [
-          "BuildService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/bookmarks/{owner}/experiments": {
+    "/api/v1/users/token": {
       "get": {
-        "summary": "List bookmarked builds",
-        "operationId": "ListBookmarkedExperiments",
+        "summary": "List runs",
+        "operationId": "Login",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListExperimentsResponse"
+              "$ref": "#/definitions/v1Auth"
             }
           },
           "403": {
@@ -184,33 +188,41 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
         },
         "parameters": [
           {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
+            "name": "user",
+            "description": "User email.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "description": "Project where the experiement will be assigned.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
         "tags": [
-          "ExperimentService"
+          "AuthService"
         ]
       }
     },
-    "/api/v1/bookmarks/{owner}/jobs": {
+    "/api/v1/versions": {
       "get": {
-        "summary": "List bookmarked builds",
-        "operationId": "ListBookmarkedJobs",
+        "summary": "List runs",
+        "operationId": "GetVersions",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListJobsResponse"
+              "$ref": "#/definitions/v1Versions"
             }
           },
           "403": {
@@ -220,28 +232,20 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
         },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "tags": [
-          "JobService"
+          "VersionsService"
         ]
       }
     },
-    "/api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef": {
+    "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef": {
       "post": {
-        "summary": "Create build code ref",
-        "operationId": "CreateBuildCodeRef",
+        "summary": "Get run code ref",
+        "operationId": "CreateRunCodeRef",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -256,6 +260,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -276,7 +281,7 @@
             "type": "string"
           },
           {
-            "name": "entity.id",
+            "name": "entity.uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -288,1386 +293,18 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CodeReferenceBodyRequest"
+              "$ref": "#/definitions/v1CodeRefBodyRequest"
             }
           }
         ],
         "tags": [
-          "BuildService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef": {
-      "post": {
-        "summary": "Get experiment code ref",
-        "operationId": "CreateExperimentCodeRef",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CodeReference"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "entity.owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1CodeReferenceBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef": {
-      "post": {
-        "summary": "Get job code ref",
-        "operationId": "CreateJobCodeRef",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CodeReference"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "entity.owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "entity.id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1CodeReferenceBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "JobService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds": {
-      "get": {
-        "summary": "List builds",
-        "operationId": "ListBuilds",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListBuildsResponse"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      },
-      "post": {
-        "summary": "Create new build",
-        "operationId": "CreateBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Build"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1BuildBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/delete": {
+    "/api/v1/{owner}/projecs/{project}": {
       "delete": {
-        "summary": "Delete builds",
-        "operationId": "DeleteBuilds",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/stop": {
-      "post": {
-        "summary": "Stop builds",
-        "operationId": "StopBuilds",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{build.id}": {
-      "put": {
-        "summary": "Update build",
-        "operationId": "UpdateBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Build"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "build.id",
-            "description": "Unique integer identifier",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1BuildBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      },
-      "patch": {
-        "summary": "Patch build",
-        "operationId": "PatchBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Build"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "build.id",
-            "description": "Unique integer identifier",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1BuildBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}": {
-      "get": {
-        "summary": "Get build",
-        "operationId": "GetBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Build"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      },
-      "delete": {
-        "summary": "Delete build",
-        "operationId": "DeleteBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/archive": {
-      "post": {
-        "summary": "Archive build",
-        "operationId": "ArchiveBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/bookmark": {
-      "post": {
-        "summary": "Bookmark build",
-        "operationId": "BookmarkBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/coderef": {
-      "get": {
-        "summary": "Get build code ref",
-        "operationId": "GetBuildCodeRef",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CodeReference"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/restart": {
-      "post": {
-        "summary": "Restart build",
-        "operationId": "RestartBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Build"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/restore": {
-      "post": {
-        "summary": "Restore build",
-        "operationId": "RestoreBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/statuses": {
-      "get": {
-        "summary": "List build statuses",
-        "operationId": "ListBuildStatuses",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListBuildStatusesResponse"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      },
-      "post": {
-        "summary": "Create new build status",
-        "operationId": "CreateBuildStatus",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1BuildStatus"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1EntityStatusRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/stop": {
-      "post": {
-        "summary": "Stop build",
-        "operationId": "StopBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/builds/{id}/unbookmark": {
-      "delete": {
-        "summary": "UnBookmark build",
-        "operationId": "UnBookmarkBuild",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "BuildService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments": {
-      "get": {
-        "summary": "List builds",
-        "operationId": "ListExperiments",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListExperimentsResponse"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      },
-      "post": {
-        "summary": "Create new build",
-        "operationId": "CreateExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Experiment"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ExperimentBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/delete": {
-      "delete": {
-        "summary": "Delete builds",
-        "operationId": "DeleteExperiments",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/stop": {
-      "post": {
-        "summary": "Stop builds",
-        "operationId": "StopExperiments",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{experiment.id}": {
-      "put": {
-        "summary": "Update build",
-        "operationId": "UpdateExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Experiment"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "experiment.id",
-            "description": "Unique integer identifier",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ExperimentBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      },
-      "patch": {
-        "summary": "Patch build",
-        "operationId": "PatchExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Experiment"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "experiment.id",
-            "description": "Unique integer identifier",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ExperimentBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}": {
-      "get": {
-        "summary": "Get build",
-        "operationId": "GetExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Experiment"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      },
-      "delete": {
-        "summary": "Delete build",
+        "summary": "Delete runs",
         "operationId": "DeleteExperiment",
         "responses": {
           "200": {
@@ -1683,707 +320,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/archive": {
-      "post": {
-        "summary": "Restore build",
-        "operationId": "ArchiveExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/bookmark": {
-      "post": {
-        "summary": "UnBookmark build",
-        "operationId": "BookmarkExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/coderef": {
-      "get": {
-        "summary": "Get experiment code ref",
-        "operationId": "GetExperimentCodeRef",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CodeReference"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/restart": {
-      "post": {
-        "summary": "Restart build",
-        "operationId": "RestartExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Experiment"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/restore": {
-      "post": {
-        "summary": "Bookmark build",
-        "operationId": "RestoreExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/resume": {
-      "post": {
-        "summary": "Archive build",
-        "operationId": "ResumeExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Experiment"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/statuses": {
-      "get": {
-        "summary": "Create build code ref",
-        "operationId": "ListExperimentStatuses",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListExperimentStatusesResponse"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      },
-      "post": {
-        "summary": "Get job code ref",
-        "operationId": "CreateExperimentStatus",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ExperimentStatus"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1EntityStatusRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/stop": {
-      "post": {
-        "summary": "Stop build",
-        "operationId": "StopExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/start": {
-      "post": {
-        "summary": "List build statuses",
-        "operationId": "StartExperimentTensorboard",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop": {
-      "delete": {
-        "summary": "Create new build status",
-        "operationId": "StopExperimentTensorboard",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/experiments/{id}/unbookmark": {
-      "delete": {
-        "summary": "Get build status",
-        "operationId": "UnBookmarkExperiment",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "id",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "ExperimentService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/jobs": {
-      "get": {
-        "summary": "List builds",
-        "operationId": "ListJobs",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListJobsResponse"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2405,17 +342,180 @@
           }
         ],
         "tags": [
-          "JobService"
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/projects/create": {
+      "post": {
+        "summary": "Get run",
+        "operationId": "CreateProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OwnerBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/projects/list": {
+      "get": {
+        "summary": "List runs",
+        "operationId": "ListProjects",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListProjectsResponse"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/projects/names": {
+      "get": {
+        "summary": "List bookmarked runs",
+        "operationId": "ListProjectNames",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListProjectsResponse"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/projects/{project}": {
+      "get": {
+        "summary": "Update run",
+        "operationId": "GetProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
         ]
       },
-      "post": {
-        "summary": "Create new build",
-        "operationId": "CreateJob",
+      "put": {
+        "summary": "Patch run",
+        "operationId": "UpdateProject",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Job"
+              "$ref": "#/definitions/v1Project"
             }
           },
           "403": {
@@ -2425,108 +525,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1JobBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "JobService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/jobs/delete": {
-      "delete": {
-        "summary": "Delete builds",
-        "operationId": "DeleteJobs",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
-            }
-          }
-        ],
-        "tags": [
-          "JobService"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/jobs/stop": {
-      "post": {
-        "summary": "Stop builds",
-        "operationId": "StopJobs",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "properties": {}
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2556,19 +555,17 @@
           }
         ],
         "tags": [
-          "JobService"
+          "ProjectService"
         ]
-      }
-    },
-    "/api/v1/{owner}/{project}/jobs/{id}": {
-      "get": {
-        "summary": "Get build",
-        "operationId": "GetJob",
+      },
+      "patch": {
+        "summary": "Delete run",
+        "operationId": "PatchProject",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Job"
+              "$ref": "#/definitions/v1Project"
             }
           },
           "403": {
@@ -2578,6 +575,277 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/archive": {
+      "post": {
+        "summary": "Stop run",
+        "operationId": "ArchiveProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/bookmark": {
+      "post": {
+        "summary": "Stop run",
+        "operationId": "BookmarkProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/ci": {
+      "post": {
+        "summary": "Restart run",
+        "operationId": "EnableProjectCI",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/restore": {
+      "post": {
+        "summary": "Stop runs",
+        "operationId": "RestoreExperiment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs": {
+      "get": {
+        "summary": "List runs",
+        "operationId": "ListRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunsResponse"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      },
+      "post": {
+        "summary": "Create new run",
+        "operationId": "CreateRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2598,7 +866,331 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RunBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/delete": {
+      "delete": {
+        "summary": "Delete runs",
+        "operationId": "DeleteRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/invalidate": {
+      "post": {
+        "summary": "Invalidate runs",
+        "operationId": "InvalidateRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/stop": {
+      "post": {
+        "summary": "Stop runs",
+        "operationId": "StopRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProjectBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{run.uuid}": {
+      "put": {
+        "summary": "Update run",
+        "operationId": "UpdateRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RunBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      },
+      "patch": {
+        "summary": "Patch run",
+        "operationId": "PatchRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "run.uuid",
+            "description": "UUID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RunBodyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}": {
+      "get": {
+        "summary": "Get run",
+        "operationId": "GetRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2607,12 +1199,12 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       },
       "delete": {
-        "summary": "Delete build",
-        "operationId": "DeleteJob",
+        "summary": "Delete run",
+        "operationId": "DeleteRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2627,6 +1219,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2647,7 +1240,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2656,14 +1249,14 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/archive": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/archive": {
       "post": {
-        "summary": "Restore build",
-        "operationId": "ArchiveJob",
+        "summary": "Archive run",
+        "operationId": "ArchiveRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2678,6 +1271,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2698,7 +1292,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2707,14 +1301,14 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/bookmark": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/bookmark": {
       "post": {
-        "summary": "UnBookmark build",
-        "operationId": "BookmarkJob",
+        "summary": "Bookmark run",
+        "operationId": "BookmarkRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2729,6 +1323,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2749,7 +1344,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2758,19 +1353,19 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/coderef": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/coderef": {
       "get": {
-        "summary": "Create build code ref",
-        "operationId": "GetJobCodeRef",
+        "summary": "Get run code ref",
+        "operationId": "GetRunCodeRefs",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1CodeReference"
+              "$ref": "#/definitions/v1ListCodeRefResponse"
             }
           },
           "403": {
@@ -2780,6 +1375,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2800,7 +1396,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2809,19 +1405,19 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/restart": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/invalidate": {
       "post": {
-        "summary": "Restart build",
-        "operationId": "RestartJob",
+        "summary": "Stop run",
+        "operationId": "InvalidateRun",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Job"
+              "properties": {}
             }
           },
           "403": {
@@ -2831,6 +1427,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2851,7 +1448,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2863,19 +1460,79 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
             }
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/restore": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/restart": {
       "post": {
-        "summary": "Bookmark build",
-        "operationId": "RestoreJob",
+        "summary": "Restart run",
+        "operationId": "RestartRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/restore": {
+      "post": {
+        "summary": "Restore run",
+        "operationId": "RestoreRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2890,6 +1547,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2910,7 +1568,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2919,19 +1577,19 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/resume": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/resume": {
       "post": {
-        "summary": "Archive build",
-        "operationId": "ResumeJob",
+        "summary": "Resume run",
+        "operationId": "ResumeRun",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Job"
+              "$ref": "#/definitions/v1Run"
             }
           },
           "403": {
@@ -2941,6 +1599,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -2961,7 +1620,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -2973,24 +1632,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
             }
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/statuses": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/statuses": {
       "get": {
-        "summary": "Create new build status",
-        "operationId": "ListJobStatuses",
+        "summary": "Get run status",
+        "operationId": "GetRunStatuses",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListJobStatusesResponse"
+              "$ref": "#/definitions/v1StatusResponse"
             }
           },
           "403": {
@@ -3000,6 +1659,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -3020,7 +1680,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -3029,17 +1689,17 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       },
       "post": {
-        "summary": "Get build code ref",
-        "operationId": "CreateJobStatus",
+        "summary": "Create new run status",
+        "operationId": "CreateRunStatus",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1JobStatus"
+              "properties": {}
             }
           },
           "403": {
@@ -3049,6 +1709,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -3069,7 +1730,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -3086,14 +1747,14 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/stop": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/stop": {
       "post": {
-        "summary": "Stop build",
-        "operationId": "StopJob",
+        "summary": "Stop run",
+        "operationId": "StopRun",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3108,6 +1769,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -3128,7 +1790,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -3140,19 +1802,79 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
             }
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{id}/unbookmark": {
+    "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start": {
+      "post": {
+        "summary": "Start run tensorboard",
+        "operationId": "StartRunTensorboard",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop": {
       "delete": {
-        "summary": "Get build status",
-        "operationId": "UnBookmarkJob",
+        "summary": "Stop run tensorboard",
+        "operationId": "StopRunTensorboard",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -3167,6 +1889,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -3187,7 +1910,7 @@
             "type": "string"
           },
           {
-            "name": "id",
+            "name": "uuid",
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
@@ -3196,19 +1919,19 @@
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
       }
     },
-    "/api/v1/{owner}/{project}/jobs/{job.id}": {
-      "put": {
-        "summary": "Update build",
-        "operationId": "UpdateJob",
+    "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark": {
+      "delete": {
+        "summary": "UnBookmark run",
+        "operationId": "UnBookmarkRun",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Job"
+              "properties": {}
             }
           },
           "403": {
@@ -3218,6 +1941,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -3238,34 +1962,28 @@
             "type": "string"
           },
           {
-            "name": "job.id",
-            "description": "Unique integer identifier",
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
             "type": "string",
             "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1JobBodyRequest"
-            }
           }
         ],
         "tags": [
-          "JobService"
+          "RunService"
         ]
-      },
-      "patch": {
-        "summary": "Patch build",
-        "operationId": "PatchJob",
+      }
+    },
+    "/api/v1/{owner}/{project}/unbookmark": {
+      "delete": {
+        "summary": "Resume run",
+        "operationId": "DisableProjectCI",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Job"
+              "properties": {}
             }
           },
           "403": {
@@ -3275,6 +1993,7 @@
           "404": {
             "description": "Resource does not exist.",
             "schema": {
+              "type": "string",
               "format": "string"
             }
           }
@@ -3289,214 +2008,46 @@
           },
           {
             "name": "project",
-            "description": "Project where the experiement will be assigned",
+            "description": "Project under namesapce",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "job.id",
-            "description": "Unique integer identifier",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1JobBodyRequest"
-            }
           }
         ],
         "tags": [
-          "JobService"
+          "ProjectService"
         ]
       }
     }
   },
   "definitions": {
-    "v1Build": {
+    "v1Auth": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
-        "uuid": {
+        "token": {
           "type": "string",
           "title": "UUID"
-        },
-        "unique_name": {
-          "type": "string",
-          "title": "Unique name generated"
-        },
-        "name": {
-          "type": "string",
-          "title": "Optional name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional Tags of this entity"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "user": {
-          "type": "string",
-          "title": "Required name of user started this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "title": "Optional last time the entity was updated"
-        },
-        "started_at": {
-          "type": "string",
-          "title": "Optional last time the entity was started"
-        },
-        "finished_at": {
-          "type": "string",
-          "title": "Optional last time the entity was started"
-        },
-        "project": {
-          "type": "string",
-          "title": "Required project name"
-        },
-        "is_managed": {
-          "type": "string",
-          "title": "Optional flag to tell if this entity is managed by the platform"
-        },
-        "spec": {
-          "type": "string",
-          "title": "Optional content of the entity's spec"
-        },
-        "backend": {
-          "type": "string",
-          "title": "Optional backend value of this entity"
-        },
-        "framework": {
-          "type": "string",
-          "title": "Optional framework name of this entity"
-        },
-        "last_status": {
-          "type": "string",
-          "title": "Optional latest status of this entity"
-        },
-        "code_reference": {
-          "type": "string",
-          "format": "int64",
-          "title": "Optional Code reference"
-        },
-        "resources": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional hardware resources requested by this entity"
-        },
-        "readme": {
-          "type": "string",
-          "title": "Optional a readme text describing this entity"
-        },
-        "bookmarked": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if this entity was bookmarked"
-        },
-        "params": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional params of this entity"
-        },
-        "run_env": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional run enivronment tracked"
-        },
-        "build_build": {
-          "type": "string",
-          "title": "Optional build build name"
         }
       },
-      "title": "Build specification"
+      "title": "Auth specification"
     },
-    "v1BuildBodyRequest": {
+    "v1CodeRefBodyRequest": {
       "type": "object",
       "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
+        "entity": {
+          "$ref": "#/definitions/v1OwnedEntityUUIdRequest",
+          "title": "Owner of the code ref"
         },
-        "project": {
-          "type": "string",
-          "title": "Project where the experiement will be assigned"
-        },
-        "build": {
-          "$ref": "#/definitions/v1Build",
-          "title": "Build object"
+        "CodeReference": {
+          "$ref": "#/definitions/v1CodeReference",
+          "title": "Code ref object"
         }
       },
-      "title": "Request data to create/update build"
-    },
-    "v1BuildStatus": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "created_at": {
-          "type": "string",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "title": "Optional last time the entity was updated"
-        },
-        "status": {
-          "type": "string",
-          "title": "Optional status recorded"
-        },
-        "message": {
-          "type": "string",
-          "title": "Optional status message"
-        }
-      },
-      "title": "Build specification"
+      "title": "Request data to create/update CodeReference"
     },
     "v1CodeReference": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
         "uuid": {
           "type": "string",
           "title": "UUID"
@@ -3525,20 +2076,6 @@
       },
       "title": "Code Reference specification"
     },
-    "v1CodeReferenceBodyRequest": {
-      "type": "object",
-      "properties": {
-        "entity": {
-          "$ref": "#/definitions/v1OwnedEntityIdRequest",
-          "title": "Owner of the code ref"
-        },
-        "CodeReference": {
-          "$ref": "#/definitions/v1CodeReference",
-          "title": "Build object"
-        }
-      },
-      "title": "Request data to create/update CodeReference"
-    },
     "v1EntityStatusRequest": {
       "type": "object",
       "properties": {
@@ -3550,7 +2087,7 @@
           "type": "string",
           "title": "Project where the experiement will be assigned"
         },
-        "id": {
+        "uuid": {
           "type": "string",
           "format": "int64",
           "title": "Unique integer identifier of the entity"
@@ -3562,174 +2099,85 @@
       },
       "title": "Request data to create/update entity status"
     },
-    "v1Experiment": {
+    "v1ListCodeRefResponse": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "unique_name": {
-          "type": "string",
-          "title": "Unique name generated"
-        },
-        "name": {
-          "type": "string",
-          "title": "Optional name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional Tags of this entity"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "user": {
-          "type": "string",
-          "title": "Required name of user started this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "title": "Optional last time the entity was updated"
-        },
-        "started_at": {
-          "type": "string",
-          "title": "Optional last time the entity was started"
-        },
-        "finished_at": {
-          "type": "string",
-          "title": "Optional last time the entity was started"
-        },
-        "project": {
-          "type": "string",
-          "title": "Required project name"
-        },
-        "is_managed": {
-          "type": "string",
-          "title": "Optional flag to tell if this entity is managed by the platform"
-        },
-        "spec": {
-          "type": "string",
-          "title": "Optional content of the entity's spec"
-        },
-        "backend": {
-          "type": "string",
-          "title": "Optional backend value of this entity"
-        },
-        "framework": {
-          "type": "string",
-          "title": "Optional framework name of this entity"
-        },
-        "last_status": {
-          "type": "string",
-          "title": "Optional latest status of this entity"
-        },
-        "code_reference": {
-          "type": "string",
-          "format": "int64",
-          "title": "Optional Code reference"
-        },
-        "resources": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional hardware resources requested by this entity"
-        },
-        "readme": {
-          "type": "string",
-          "title": "Optional a readme text describing this entity"
-        },
-        "bookmarked": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if this entity was bookmarked"
-        },
-        "params": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional params of this entity"
-        },
-        "run_env": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional run enivronment tracked"
-        },
-        "build_job": {
-          "type": "string",
-          "title": "Optional build job name"
-        },
-        "data_refs": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional data references of this entity"
-        },
-        "artifact_refs": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional artificat references of this entity"
-        },
-        "original": {
-          "type": "string",
-          "format": "int64",
-          "title": "Optional Id of the original experiment"
-        },
-        "cloning_strategy": {
-          "type": "string",
-          "title": "Optional if this experiment was restarted/copied/resumed"
-        },
-        "experiment_group": {
-          "type": "string",
-          "title": "Optional Experiment group name"
-        },
-        "num_jobs": {
+        "count": {
           "type": "integer",
           "format": "int32",
-          "title": "Optional number of jobs belonging to this entity"
+          "title": "Count of the entities"
         },
-        "has_tensorboard": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if this entity has a tensorboard"
-        },
-        "last_metric": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "number",
-            "format": "double"
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1CodeReference"
           },
-          "title": "Optional last metrics of this entity"
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
         }
       },
-      "title": "Experiment specification"
+      "title": "Contains list runs"
     },
-    "v1ExperimentBodyRequest": {
+    "v1ListProjectsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Project"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list projects"
+    },
+    "v1ListRunsResponse": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Count of the entities"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Run"
+          },
+          "title": "List of all entities"
+        },
+        "previous": {
+          "type": "string",
+          "title": "Previous page"
+        },
+        "next": {
+          "type": "string",
+          "title": "Next page"
+        }
+      },
+      "title": "Contains list runs"
+    },
+    "v1OwnedEntityUUIdRequest": {
       "type": "object",
       "properties": {
         "owner": {
@@ -3740,412 +2188,62 @@
           "type": "string",
           "title": "Project where the experiement will be assigned"
         },
-        "experiment": {
-          "$ref": "#/definitions/v1Experiment",
-          "title": "Experiment object"
-        }
-      },
-      "title": "Request data to create/update experiment"
-    },
-    "v1ExperimentStatus": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
         "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "created_at": {
-          "type": "string",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "title": "Optional last time the entity was updated"
-        },
-        "status": {
-          "type": "string",
-          "title": "Optional status recorded"
-        },
-        "message": {
-          "type": "string",
-          "title": "Optional status message"
-        }
-      },
-      "title": "Experiment specification"
-    },
-    "v1Job": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "unique_name": {
-          "type": "string",
-          "title": "Unique name generated"
-        },
-        "name": {
-          "type": "string",
-          "title": "Optional name"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Optional Tags of this entity"
-        },
-        "deleted": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if the entity has been deleted"
-        },
-        "user": {
-          "type": "string",
-          "title": "Required name of user started this entity"
-        },
-        "created_at": {
-          "type": "string",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "title": "Optional last time the entity was updated"
-        },
-        "started_at": {
-          "type": "string",
-          "title": "Optional last time the entity was started"
-        },
-        "finished_at": {
-          "type": "string",
-          "title": "Optional last time the entity was started"
-        },
-        "project": {
-          "type": "string",
-          "title": "Required project name"
-        },
-        "is_managed": {
-          "type": "string",
-          "title": "Optional flag to tell if this entity is managed by the platform"
-        },
-        "spec": {
-          "type": "string",
-          "title": "Optional content of the entity's spec"
-        },
-        "backend": {
-          "type": "string",
-          "title": "Optional backend value of this entity"
-        },
-        "framework": {
-          "type": "string",
-          "title": "Optional framework name of this entity"
-        },
-        "last_status": {
-          "type": "string",
-          "title": "Optional latest status of this entity"
-        },
-        "code_reference": {
-          "type": "string",
-          "format": "int64",
-          "title": "Optional Code reference"
-        },
-        "resources": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional hardware resources requested by this entity"
-        },
-        "readme": {
-          "type": "string",
-          "title": "Optional a readme text describing this entity"
-        },
-        "bookmarked": {
-          "type": "boolean",
-          "format": "boolean",
-          "title": "Optional if this entity was bookmarked"
-        },
-        "params": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional params of this entity"
-        },
-        "run_env": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional run enivronment tracked"
-        },
-        "build_job": {
-          "type": "string",
-          "title": "Optional build job name"
-        },
-        "data_refs": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional data references of this entity"
-        },
-        "artifact_refs": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          },
-          "title": "Optional artificat references of this entity"
-        },
-        "original": {
-          "type": "string",
-          "format": "int64",
-          "title": "Optional Id of the original job"
-        },
-        "cloning_strategy": {
-          "type": "string",
-          "title": "Optional if this job was restarted/copied/resumed"
-        }
-      },
-      "title": "Job specification"
-    },
-    "v1JobBodyRequest": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
-        },
-        "project": {
-          "type": "string",
-          "title": "Project where the experiement will be assigned"
-        },
-        "job": {
-          "$ref": "#/definitions/v1Job",
-          "title": "Job object"
-        }
-      },
-      "title": "Request data to create/update job"
-    },
-    "v1JobStatus": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier"
-        },
-        "uuid": {
-          "type": "string",
-          "title": "UUID"
-        },
-        "created_at": {
-          "type": "string",
-          "title": "Optional time when the entityt was created"
-        },
-        "updated_at": {
-          "type": "string",
-          "title": "Optional last time the entity was updated"
-        },
-        "status": {
-          "type": "string",
-          "title": "Optional status recorded"
-        },
-        "message": {
-          "type": "string",
-          "title": "Optional status message"
-        }
-      },
-      "title": "Job specification"
-    },
-    "v1ListBuildStatusesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1BuildStatus"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list builds"
-    },
-    "v1ListBuildsResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Build"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list builds"
-    },
-    "v1ListExperimentStatusesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ExperimentStatus"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list experiments"
-    },
-    "v1ListExperimentsResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Experiment"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list experiments"
-    },
-    "v1ListJobStatusesResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1JobStatus"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list jobs"
-    },
-    "v1ListJobsResponse": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Count of the entities"
-        },
-        "results": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1Job"
-          },
-          "title": "List of all entities"
-        },
-        "previous": {
-          "type": "string",
-          "title": "Previous page"
-        },
-        "next": {
-          "type": "string",
-          "title": "Next page"
-        }
-      },
-      "title": "Contains list jobs"
-    },
-    "v1OwnedEntityIdRequest": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
-        },
-        "project": {
-          "type": "string",
-          "title": "Project where the experiement will be assigned"
-        },
-        "id": {
           "type": "string",
           "format": "int64",
           "title": "Unique integer identifier of the entity"
         }
       },
       "title": "Request data to get/delete entity"
+    },
+    "v1OwnerBodyRequest": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "title": "Owner of the namespace"
+        }
+      },
+      "title": "Request data with owner namespace"
+    },
+    "v1Project": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "user": {
+          "type": "string",
+          "title": "Required name of user who created this entity"
+        },
+        "name": {
+          "type": "string",
+          "title": "Required name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "created_at": {
+          "type": "string",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "title": "Optional last time the entity was updated"
+        },
+        "is_public": {
+          "type": "string",
+          "title": "Optional flag to tell if this project is public"
+        },
+        "bookmarked": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if this entity was bookmarked"
+        }
+      },
+      "title": "Project specification"
     },
     "v1ProjectBodyRequest": {
       "type": "object",
@@ -4161,6 +2259,146 @@
       },
       "title": "Request data with owner/project namespace"
     },
+    "v1Run": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "UUID"
+        },
+        "name": {
+          "type": "string",
+          "title": "Optional name"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional Tags of this entity"
+        },
+        "deleted": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if the entity has been deleted"
+        },
+        "user": {
+          "type": "string",
+          "title": "Required name of user started this entity"
+        },
+        "owner": {
+          "type": "string",
+          "title": "Required name of owner of this entity"
+        },
+        "project": {
+          "type": "string",
+          "title": "Required project name"
+        },
+        "created_at": {
+          "type": "string",
+          "title": "Optional time when the entityt was created"
+        },
+        "updated_at": {
+          "type": "string",
+          "title": "Optional last time the entity was updated"
+        },
+        "started_at": {
+          "type": "string",
+          "title": "Optional last time the entity was started"
+        },
+        "finished_at": {
+          "type": "string",
+          "title": "Optional last time the entity was started"
+        },
+        "is_managed": {
+          "type": "string",
+          "title": "Optional flag to tell if this entity is managed by the platform"
+        },
+        "content": {
+          "type": "string",
+          "title": "Optional content of the entity's spec"
+        },
+        "status": {
+          "type": "string",
+          "title": "Optional latest status of this entity"
+        },
+        "readme": {
+          "type": "string",
+          "title": "Optional a readme text describing this entity"
+        },
+        "bookmarked": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Optional if this entity was bookmarked"
+        },
+        "inputs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional inputs of this entity"
+        },
+        "outputs": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional outputs of this entity"
+        },
+        "run_env": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Optional run environment tracked"
+        },
+        "is_clone": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Id instance is clone"
+        },
+        "pipeline": {
+          "type": "string",
+          "title": "Optional uuid of the original run and pipeline"
+        },
+        "original": {
+          "type": "string"
+        },
+        "pipeline_name": {
+          "type": "string"
+        },
+        "original_name": {
+          "type": "string"
+        },
+        "cloning_strategy": {
+          "type": "string",
+          "title": "Optional if this run was restarted/copied/resumed"
+        }
+      },
+      "title": "Run specification"
+    },
+    "v1RunBodyRequest": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string",
+          "title": "Owner of the namespace"
+        },
+        "project": {
+          "type": "string",
+          "title": "Project where the experiement will be assigned"
+        },
+        "run": {
+          "$ref": "#/definitions/v1Run",
+          "title": "Run object"
+        }
+      },
+      "title": "Request data to create/update run"
+    },
     "v1StatusResponse": {
       "type": "object",
       "properties": {
@@ -4170,6 +2408,37 @@
         }
       },
       "title": "Request data for a status"
+    },
+    "v1Version": {
+      "type": "object",
+      "properties": {
+        "min_version": {
+          "type": "string",
+          "title": "Min version"
+        },
+        "latest_version": {
+          "type": "string",
+          "title": "Latest version"
+        }
+      },
+      "title": "Version specification"
+    },
+    "v1Versions": {
+      "type": "object",
+      "properties": {
+        "current_version": {
+          "type": "string"
+        },
+        "cli": {
+          "$ref": "#/definitions/v1Version"
+        },
+        "platform": {
+          "$ref": "#/definitions/v1Version"
+        },
+        "agent": {
+          "$ref": "#/definitions/v1Version"
+        }
+      }
     }
   },
   "securityDefinitions": {

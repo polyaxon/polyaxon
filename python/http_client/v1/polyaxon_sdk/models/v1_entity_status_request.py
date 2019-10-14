@@ -49,23 +49,23 @@ class V1EntityStatusRequest(object):
     swagger_types = {
         'owner': 'str',
         'project': 'str',
-        'id': 'str',
+        'uuid': 'str',
         'status': 'str'
     }
 
     attribute_map = {
         'owner': 'owner',
         'project': 'project',
-        'id': 'id',
+        'uuid': 'uuid',
         'status': 'status'
     }
 
-    def __init__(self, owner=None, project=None, id=None, status=None):  # noqa: E501
+    def __init__(self, owner=None, project=None, uuid=None, status=None):  # noqa: E501
         """V1EntityStatusRequest - a model defined in Swagger"""  # noqa: E501
 
         self._owner = None
         self._project = None
-        self._id = None
+        self._uuid = None
         self._status = None
         self.discriminator = None
 
@@ -73,8 +73,8 @@ class V1EntityStatusRequest(object):
             self.owner = owner
         if project is not None:
             self.project = project
-        if id is not None:
-            self.id = id
+        if uuid is not None:
+            self.uuid = uuid
         if status is not None:
             self.status = status
 
@@ -121,25 +121,25 @@ class V1EntityStatusRequest(object):
         self._project = project
 
     @property
-    def id(self):
-        """Gets the id of this V1EntityStatusRequest.  # noqa: E501
+    def uuid(self):
+        """Gets the uuid of this V1EntityStatusRequest.  # noqa: E501
 
 
-        :return: The id of this V1EntityStatusRequest.  # noqa: E501
+        :return: The uuid of this V1EntityStatusRequest.  # noqa: E501
         :rtype: str
         """
-        return self._id
+        return self._uuid
 
-    @id.setter
-    def id(self, id):
-        """Sets the id of this V1EntityStatusRequest.
+    @uuid.setter
+    def uuid(self, uuid):
+        """Sets the uuid of this V1EntityStatusRequest.
 
 
-        :param id: The id of this V1EntityStatusRequest.  # noqa: E501
+        :param uuid: The uuid of this V1EntityStatusRequest.  # noqa: E501
         :type: str
         """
 
-        self._id = id
+        self._uuid = uuid
 
     @property
     def status(self):

@@ -35,9 +35,6 @@ type V1CodeReference struct {
 	// Optional git url for this code ref
 	GitURL string `json:"git_url,omitempty"`
 
-	// Unique integer identifier
-	ID string `json:"id,omitempty"`
-
 	// Optional whether this code ref is dirty
 	IsDirty bool `json:"is_dirty,omitempty"`
 

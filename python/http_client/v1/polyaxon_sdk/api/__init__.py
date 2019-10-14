@@ -19,6 +19,7 @@ from __future__ import absolute_import
 # flake8: noqa
 
 # import apis into api package
-from polyaxon_sdk.api.build_service_api import BuildServiceApi
-from polyaxon_sdk.api.experiment_service_api import ExperimentServiceApi
-from polyaxon_sdk.api.job_service_api import JobServiceApi
+from polyaxon_sdk.api.auth_service_api import AuthServiceApi
+from polyaxon_sdk.api.project_service_api import ProjectServiceApi
+from polyaxon_sdk.api.run_service_api import RunServiceApi
+from polyaxon_sdk.api.versions_service_api import VersionsServiceApi

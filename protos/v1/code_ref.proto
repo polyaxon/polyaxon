@@ -7,34 +7,45 @@ import "v1/base.proto";
 
 // Code Reference specification
 message CodeReference {
-    // Unique integer identifier
-    int64 id = 1;
-
     // UUID
-    string uuid = 2;
+    string uuid = 1;
 
     // Optional commit of the code ref
-    string commit = 3;
+    string commit = 2;
 
     // Optional head of the code ref
-    string updated_at = 4;
+    string updated_at = 3;
 
     // Optional branch of the code ref
-    string status = 5;
+    string status = 4;
 
     // Optional git url for this code ref
-    string git_url = 6;
+    string git_url = 5;
 
     // Optional whether this code ref is dirty
-    bool is_dirty = 7;
+    bool is_dirty = 6;
 }
 
 // Request data to create/update CodeReference
-message CodeReferenceBodyRequest {
+message CodeRefBodyRequest {
     // Owner of the code ref
-    OwnedEntityIdRequest entity = 1;
+    OwnedEntityUUIdRequest entity = 1;
 
-    // Build object
+    // Code ref object
     CodeReference CodeReference = 2;
 }
 
+ // Contains list runs
+ message ListCodeRefResponse{
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated CodeReference results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

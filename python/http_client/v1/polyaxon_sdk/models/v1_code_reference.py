@@ -47,7 +47,6 @@ class V1CodeReference(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'id': 'str',
         'uuid': 'str',
         'commit': 'str',
         'updated_at': 'str',
@@ -57,7 +56,6 @@ class V1CodeReference(object):
     }
 
     attribute_map = {
-        'id': 'id',
         'uuid': 'uuid',
         'commit': 'commit',
         'updated_at': 'updated_at',
@@ -66,10 +64,9 @@ class V1CodeReference(object):
         'is_dirty': 'is_dirty'
     }
 
-    def __init__(self, id=None, uuid=None, commit=None, updated_at=None, status=None, git_url=None, is_dirty=None):  # noqa: E501
+    def __init__(self, uuid=None, commit=None, updated_at=None, status=None, git_url=None, is_dirty=None):  # noqa: E501
         """V1CodeReference - a model defined in Swagger"""  # noqa: E501
 
-        self._id = None
         self._uuid = None
         self._commit = None
         self._updated_at = None
@@ -78,8 +75,6 @@ class V1CodeReference(object):
         self._is_dirty = None
         self.discriminator = None
 
-        if id is not None:
-            self.id = id
         if uuid is not None:
             self.uuid = uuid
         if commit is not None:
@@ -92,27 +87,6 @@ class V1CodeReference(object):
             self.git_url = git_url
         if is_dirty is not None:
             self.is_dirty = is_dirty
-
-    @property
-    def id(self):
-        """Gets the id of this V1CodeReference.  # noqa: E501
-
-
-        :return: The id of this V1CodeReference.  # noqa: E501
-        :rtype: str
-        """
-        return self._id
-
-    @id.setter
-    def id(self, id):
-        """Sets the id of this V1CodeReference.
-
-
-        :param id: The id of this V1CodeReference.  # noqa: E501
-        :type: str
-        """
-
-        self._id = id
 
     @property
     def uuid(self):

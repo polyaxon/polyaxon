@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\rv1/base.proto\"\x80\x01\n\rCodeReference\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0c\n\x04uuid\x18\x02 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x03 \x01(\t\x12\x12\n\nupdated_at\x18\x04 \x01(\t\x12\x0e\n\x06status\x18\x05 \x01(\t\x12\x0f\n\x07git_url\x18\x06 \x01(\t\x12\x10\n\x08is_dirty\x18\x07 \x01(\x08\"n\n\x18\x43odeReferenceBodyRequest\x12(\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x18.v1.OwnedEntityIdRequest\x12(\n\rCodeReference\x18\x02 \x01(\x0b\x32\x11.v1.CodeReferenceb\x06proto3')
+  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\rv1/base.proto\"t\n\rCodeReference\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x02 \x01(\t\x12\x12\n\nupdated_at\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x0f\n\x07git_url\x18\x05 \x01(\t\x12\x10\n\x08is_dirty\x18\x06 \x01(\x08\"j\n\x12\x43odeRefBodyRequest\x12*\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x1a.v1.OwnedEntityUUIdRequest\x12(\n\rCodeReference\x18\x02 \x01(\x0b\x32\x11.v1.CodeReference\"h\n\x13ListCodeRefResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\"\n\x07results\x18\x02 \x03(\x0b\x32\x11.v1.CodeReference\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -52,50 +52,43 @@ _CODEREFERENCE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='v1.CodeReference.id', index=0,
-      number=1, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
+      name='uuid', full_name='v1.CodeReference.uuid', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='uuid', full_name='v1.CodeReference.uuid', index=1,
+      name='commit', full_name='v1.CodeReference.commit', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='commit', full_name='v1.CodeReference.commit', index=2,
+      name='updated_at', full_name='v1.CodeReference.updated_at', index=2,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='updated_at', full_name='v1.CodeReference.updated_at', index=3,
+      name='status', full_name='v1.CodeReference.status', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status', full_name='v1.CodeReference.status', index=4,
+      name='git_url', full_name='v1.CodeReference.git_url', index=4,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='git_url', full_name='v1.CodeReference.git_url', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='is_dirty', full_name='v1.CodeReference.is_dirty', index=6,
-      number=7, type=8, cpp_type=7, label=1,
+      name='is_dirty', full_name='v1.CodeReference.is_dirty', index=5,
+      number=6, type=8, cpp_type=7, label=1,
       has_default_value=False, default_value=False,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -112,27 +105,27 @@ _CODEREFERENCE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=41,
-  serialized_end=169,
+  serialized_start=40,
+  serialized_end=156,
 )
 
 
-_CODEREFERENCEBODYREQUEST = _descriptor.Descriptor(
-  name='CodeReferenceBodyRequest',
-  full_name='v1.CodeReferenceBodyRequest',
+_CODEREFBODYREQUEST = _descriptor.Descriptor(
+  name='CodeRefBodyRequest',
+  full_name='v1.CodeRefBodyRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='entity', full_name='v1.CodeReferenceBodyRequest.entity', index=0,
+      name='entity', full_name='v1.CodeRefBodyRequest.entity', index=0,
       number=1, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='CodeReference', full_name='v1.CodeReferenceBodyRequest.CodeReference', index=1,
+      name='CodeReference', full_name='v1.CodeRefBodyRequest.CodeReference', index=1,
       number=2, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
@@ -150,14 +143,68 @@ _CODEREFERENCEBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=171,
-  serialized_end=281,
+  serialized_start=158,
+  serialized_end=264,
 )
 
-_CODEREFERENCEBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._OWNEDENTITYIDREQUEST
-_CODEREFERENCEBODYREQUEST.fields_by_name['CodeReference'].message_type = _CODEREFERENCE
+
+_LISTCODEREFRESPONSE = _descriptor.Descriptor(
+  name='ListCodeRefResponse',
+  full_name='v1.ListCodeRefResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='count', full_name='v1.ListCodeRefResponse.count', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='results', full_name='v1.ListCodeRefResponse.results', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='previous', full_name='v1.ListCodeRefResponse.previous', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='next', full_name='v1.ListCodeRefResponse.next', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=266,
+  serialized_end=370,
+)
+
+_CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._OWNEDENTITYUUIDREQUEST
+_CODEREFBODYREQUEST.fields_by_name['CodeReference'].message_type = _CODEREFERENCE
+_LISTCODEREFRESPONSE.fields_by_name['results'].message_type = _CODEREFERENCE
 DESCRIPTOR.message_types_by_name['CodeReference'] = _CODEREFERENCE
-DESCRIPTOR.message_types_by_name['CodeReferenceBodyRequest'] = _CODEREFERENCEBODYREQUEST
+DESCRIPTOR.message_types_by_name['CodeRefBodyRequest'] = _CODEREFBODYREQUEST
+DESCRIPTOR.message_types_by_name['ListCodeRefResponse'] = _LISTCODEREFRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 CodeReference = _reflection.GeneratedProtocolMessageType('CodeReference', (_message.Message,), {
@@ -167,12 +214,19 @@ CodeReference = _reflection.GeneratedProtocolMessageType('CodeReference', (_mess
   })
 _sym_db.RegisterMessage(CodeReference)
 
-CodeReferenceBodyRequest = _reflection.GeneratedProtocolMessageType('CodeReferenceBodyRequest', (_message.Message,), {
-  'DESCRIPTOR' : _CODEREFERENCEBODYREQUEST,
+CodeRefBodyRequest = _reflection.GeneratedProtocolMessageType('CodeRefBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _CODEREFBODYREQUEST,
   '__module__' : 'v1.code_ref_pb2'
-  # @@protoc_insertion_point(class_scope:v1.CodeReferenceBodyRequest)
+  # @@protoc_insertion_point(class_scope:v1.CodeRefBodyRequest)
   })
-_sym_db.RegisterMessage(CodeReferenceBodyRequest)
+_sym_db.RegisterMessage(CodeRefBodyRequest)
+
+ListCodeRefResponse = _reflection.GeneratedProtocolMessageType('ListCodeRefResponse', (_message.Message,), {
+  'DESCRIPTOR' : _LISTCODEREFRESPONSE,
+  '__module__' : 'v1.code_ref_pb2'
+  # @@protoc_insertion_point(class_scope:v1.ListCodeRefResponse)
+  })
+_sym_db.RegisterMessage(ListCodeRefResponse)
 
 
 # @@protoc_insertion_point(module_scope)

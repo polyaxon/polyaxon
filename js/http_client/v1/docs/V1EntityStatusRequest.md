@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **owner** | **String** |  | [optional] 
 **project** | **String** |  | [optional] 
-**id** | **String** |  | [optional] 
+**uuid** | **String** |  | [optional] 
 **status** | **String** |  | [optional] 
 
 

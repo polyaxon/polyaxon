@@ -49,8 +49,8 @@ public class V1EntityStatusRequest {
   @SerializedName("project")
   private String project = null;
 
-  @SerializedName("id")
-  private String id = null;
+  @SerializedName("uuid")
+  private String uuid = null;
 
   @SerializedName("status")
   private String status = null;
@@ -91,22 +91,22 @@ public class V1EntityStatusRequest {
     this.project = project;
   }
 
-  public V1EntityStatusRequest id(String id) {
-    this.id = id;
+  public V1EntityStatusRequest uuid(String uuid) {
+    this.uuid = uuid;
     return this;
   }
 
    /**
-   * Get id
-   * @return id
+   * Get uuid
+   * @return uuid
   **/
   @ApiModelProperty(value = "")
-  public String getId() {
-    return id;
+  public String getUuid() {
+    return uuid;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
   }
 
   public V1EntityStatusRequest status(String status) {
@@ -139,13 +139,13 @@ public class V1EntityStatusRequest {
     V1EntityStatusRequest v1EntityStatusRequest = (V1EntityStatusRequest) o;
     return Objects.equals(this.owner, v1EntityStatusRequest.owner) &&
         Objects.equals(this.project, v1EntityStatusRequest.project) &&
-        Objects.equals(this.id, v1EntityStatusRequest.id) &&
+        Objects.equals(this.uuid, v1EntityStatusRequest.uuid) &&
         Objects.equals(this.status, v1EntityStatusRequest.status);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(owner, project, id, status);
+    return Objects.hash(owner, project, uuid, status);
   }
 
 
@@ -156,7 +156,7 @@ public class V1EntityStatusRequest {
     
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    project: ").append(toIndentedString(project)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("}");
     return sb.toString();

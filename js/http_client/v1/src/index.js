@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Build', 'model/V1BuildBodyRequest', 'model/V1BuildStatus', 'model/V1CodeReference', 'model/V1CodeReferenceBodyRequest', 'model/V1EntityStatusRequest', 'model/V1Experiment', 'model/V1ExperimentBodyRequest', 'model/V1ExperimentStatus', 'model/V1Job', 'model/V1JobBodyRequest', 'model/V1JobStatus', 'model/V1ListBuildStatusesResponse', 'model/V1ListBuildsResponse', 'model/V1ListExperimentStatusesResponse', 'model/V1ListExperimentsResponse', 'model/V1ListJobStatusesResponse', 'model/V1ListJobsResponse', 'model/V1OwnedEntityIdRequest', 'model/V1ProjectBodyRequest', 'model/V1StatusResponse', 'api/BuildServiceApi', 'api/ExperimentServiceApi', 'api/JobServiceApi'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityUUIdRequest', 'model/V1OwnerBodyRequest', 'model/V1Project', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1StatusResponse', 'model/V1Version', 'model/V1Versions', 'api/AuthServiceApi', 'api/ProjectServiceApi', 'api/RunServiceApi', 'api/VersionsServiceApi'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/V1Build'), require('./model/V1BuildBodyRequest'), require('./model/V1BuildStatus'), require('./model/V1CodeReference'), require('./model/V1CodeReferenceBodyRequest'), require('./model/V1EntityStatusRequest'), require('./model/V1Experiment'), require('./model/V1ExperimentBodyRequest'), require('./model/V1ExperimentStatus'), require('./model/V1Job'), require('./model/V1JobBodyRequest'), require('./model/V1JobStatus'), require('./model/V1ListBuildStatusesResponse'), require('./model/V1ListBuildsResponse'), require('./model/V1ListExperimentStatusesResponse'), require('./model/V1ListExperimentsResponse'), require('./model/V1ListJobStatusesResponse'), require('./model/V1ListJobsResponse'), require('./model/V1OwnedEntityIdRequest'), require('./model/V1ProjectBodyRequest'), require('./model/V1StatusResponse'), require('./api/BuildServiceApi'), require('./api/ExperimentServiceApi'), require('./api/JobServiceApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/V1Auth'), require('./model/V1CodeRefBodyRequest'), require('./model/V1CodeReference'), require('./model/V1EntityStatusRequest'), require('./model/V1ListCodeRefResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1OwnedEntityUUIdRequest'), require('./model/V1OwnerBodyRequest'), require('./model/V1Project'), require('./model/V1ProjectBodyRequest'), require('./model/V1Run'), require('./model/V1RunBodyRequest'), require('./model/V1StatusResponse'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/AuthServiceApi'), require('./api/ProjectServiceApi'), require('./api/RunServiceApi'), require('./api/VersionsServiceApi'));
   }
-}(function(ApiClient, V1Build, V1BuildBodyRequest, V1BuildStatus, V1CodeReference, V1CodeReferenceBodyRequest, V1EntityStatusRequest, V1Experiment, V1ExperimentBodyRequest, V1ExperimentStatus, V1Job, V1JobBodyRequest, V1JobStatus, V1ListBuildStatusesResponse, V1ListBuildsResponse, V1ListExperimentStatusesResponse, V1ListExperimentsResponse, V1ListJobStatusesResponse, V1ListJobsResponse, V1OwnedEntityIdRequest, V1ProjectBodyRequest, V1StatusResponse, BuildServiceApi, ExperimentServiceApi, JobServiceApi) {
+}(function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListProjectsResponse, V1ListRunsResponse, V1OwnedEntityUUIdRequest, V1OwnerBodyRequest, V1Project, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1StatusResponse, V1Version, V1Versions, AuthServiceApi, ProjectServiceApi, RunServiceApi, VersionsServiceApi) {
   'use strict';
 
   /**
@@ -77,125 +77,105 @@
      */
     ApiClient: ApiClient,
     /**
-     * The V1Build model constructor.
-     * @property {module:model/V1Build}
+     * The V1Auth model constructor.
+     * @property {module:model/V1Auth}
      */
-    V1Build: V1Build,
+    V1Auth: V1Auth,
     /**
-     * The V1BuildBodyRequest model constructor.
-     * @property {module:model/V1BuildBodyRequest}
+     * The V1CodeRefBodyRequest model constructor.
+     * @property {module:model/V1CodeRefBodyRequest}
      */
-    V1BuildBodyRequest: V1BuildBodyRequest,
-    /**
-     * The V1BuildStatus model constructor.
-     * @property {module:model/V1BuildStatus}
-     */
-    V1BuildStatus: V1BuildStatus,
+    V1CodeRefBodyRequest: V1CodeRefBodyRequest,
     /**
      * The V1CodeReference model constructor.
      * @property {module:model/V1CodeReference}
      */
     V1CodeReference: V1CodeReference,
     /**
-     * The V1CodeReferenceBodyRequest model constructor.
-     * @property {module:model/V1CodeReferenceBodyRequest}
-     */
-    V1CodeReferenceBodyRequest: V1CodeReferenceBodyRequest,
-    /**
      * The V1EntityStatusRequest model constructor.
      * @property {module:model/V1EntityStatusRequest}
      */
     V1EntityStatusRequest: V1EntityStatusRequest,
     /**
-     * The V1Experiment model constructor.
-     * @property {module:model/V1Experiment}
+     * The V1ListCodeRefResponse model constructor.
+     * @property {module:model/V1ListCodeRefResponse}
      */
-    V1Experiment: V1Experiment,
+    V1ListCodeRefResponse: V1ListCodeRefResponse,
     /**
-     * The V1ExperimentBodyRequest model constructor.
-     * @property {module:model/V1ExperimentBodyRequest}
+     * The V1ListProjectsResponse model constructor.
+     * @property {module:model/V1ListProjectsResponse}
      */
-    V1ExperimentBodyRequest: V1ExperimentBodyRequest,
+    V1ListProjectsResponse: V1ListProjectsResponse,
     /**
-     * The V1ExperimentStatus model constructor.
-     * @property {module:model/V1ExperimentStatus}
+     * The V1ListRunsResponse model constructor.
+     * @property {module:model/V1ListRunsResponse}
      */
-    V1ExperimentStatus: V1ExperimentStatus,
+    V1ListRunsResponse: V1ListRunsResponse,
     /**
-     * The V1Job model constructor.
-     * @property {module:model/V1Job}
+     * The V1OwnedEntityUUIdRequest model constructor.
+     * @property {module:model/V1OwnedEntityUUIdRequest}
      */
-    V1Job: V1Job,
+    V1OwnedEntityUUIdRequest: V1OwnedEntityUUIdRequest,
     /**
-     * The V1JobBodyRequest model constructor.
-     * @property {module:model/V1JobBodyRequest}
+     * The V1OwnerBodyRequest model constructor.
+     * @property {module:model/V1OwnerBodyRequest}
      */
-    V1JobBodyRequest: V1JobBodyRequest,
+    V1OwnerBodyRequest: V1OwnerBodyRequest,
     /**
-     * The V1JobStatus model constructor.
-     * @property {module:model/V1JobStatus}
+     * The V1Project model constructor.
+     * @property {module:model/V1Project}
      */
-    V1JobStatus: V1JobStatus,
-    /**
-     * The V1ListBuildStatusesResponse model constructor.
-     * @property {module:model/V1ListBuildStatusesResponse}
-     */
-    V1ListBuildStatusesResponse: V1ListBuildStatusesResponse,
-    /**
-     * The V1ListBuildsResponse model constructor.
-     * @property {module:model/V1ListBuildsResponse}
-     */
-    V1ListBuildsResponse: V1ListBuildsResponse,
-    /**
-     * The V1ListExperimentStatusesResponse model constructor.
-     * @property {module:model/V1ListExperimentStatusesResponse}
-     */
-    V1ListExperimentStatusesResponse: V1ListExperimentStatusesResponse,
-    /**
-     * The V1ListExperimentsResponse model constructor.
-     * @property {module:model/V1ListExperimentsResponse}
-     */
-    V1ListExperimentsResponse: V1ListExperimentsResponse,
-    /**
-     * The V1ListJobStatusesResponse model constructor.
-     * @property {module:model/V1ListJobStatusesResponse}
-     */
-    V1ListJobStatusesResponse: V1ListJobStatusesResponse,
-    /**
-     * The V1ListJobsResponse model constructor.
-     * @property {module:model/V1ListJobsResponse}
-     */
-    V1ListJobsResponse: V1ListJobsResponse,
-    /**
-     * The V1OwnedEntityIdRequest model constructor.
-     * @property {module:model/V1OwnedEntityIdRequest}
-     */
-    V1OwnedEntityIdRequest: V1OwnedEntityIdRequest,
+    V1Project: V1Project,
     /**
      * The V1ProjectBodyRequest model constructor.
      * @property {module:model/V1ProjectBodyRequest}
      */
     V1ProjectBodyRequest: V1ProjectBodyRequest,
     /**
+     * The V1Run model constructor.
+     * @property {module:model/V1Run}
+     */
+    V1Run: V1Run,
+    /**
+     * The V1RunBodyRequest model constructor.
+     * @property {module:model/V1RunBodyRequest}
+     */
+    V1RunBodyRequest: V1RunBodyRequest,
+    /**
      * The V1StatusResponse model constructor.
      * @property {module:model/V1StatusResponse}
      */
     V1StatusResponse: V1StatusResponse,
     /**
-     * The BuildServiceApi service constructor.
-     * @property {module:api/BuildServiceApi}
+     * The V1Version model constructor.
+     * @property {module:model/V1Version}
      */
-    BuildServiceApi: BuildServiceApi,
+    V1Version: V1Version,
     /**
-     * The ExperimentServiceApi service constructor.
-     * @property {module:api/ExperimentServiceApi}
+     * The V1Versions model constructor.
+     * @property {module:model/V1Versions}
      */
-    ExperimentServiceApi: ExperimentServiceApi,
+    V1Versions: V1Versions,
     /**
-     * The JobServiceApi service constructor.
-     * @property {module:api/JobServiceApi}
+     * The AuthServiceApi service constructor.
+     * @property {module:api/AuthServiceApi}
      */
-    JobServiceApi: JobServiceApi
+    AuthServiceApi: AuthServiceApi,
+    /**
+     * The ProjectServiceApi service constructor.
+     * @property {module:api/ProjectServiceApi}
+     */
+    ProjectServiceApi: ProjectServiceApi,
+    /**
+     * The RunServiceApi service constructor.
+     * @property {module:api/RunServiceApi}
+     */
+    RunServiceApi: RunServiceApi,
+    /**
+     * The VersionsServiceApi service constructor.
+     * @property {module:api/VersionsServiceApi}
+     */
+    VersionsServiceApi: VersionsServiceApi
   };
 
   return exports;

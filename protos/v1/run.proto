@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// Run specification
+message Run {
+    // UUID
+    string uuid = 1;
+
+    // Optional name
+    string name = 2;
+
+    // Optional description
+    string description = 3;
+
+    // Optional Tags of this entity
+    repeated string tags = 4;
+
+    // Optional if the entity has been deleted
+    bool deleted = 5;
+
+    // Required name of user started this entity
+    string user = 6;
+
+    // Required name of owner of this entity
+    string owner = 7;
+
+    // Required project name
+    string project = 8;
+
+    // Optional time when the entityt was created
+    string created_at = 9;
+
+    // Optional last time the entity was updated
+    string updated_at = 10;
+
+    // Optional last time the entity was started
+    string started_at = 11;
+
+    // Optional last time the entity was started
+    string finished_at = 12;
+
+    // Optional flag to tell if this entity is managed by the platform
+    string is_managed = 13;
+
+    // Optional content of the entity's spec
+    string content = 14;
+
+    // Optional latest status of this entity
+    string status = 15;
+
+    // Optional a readme text describing this entity
+    string readme = 16;
+
+    // Optional if this entity was bookmarked
+    bool bookmarked = 17;
+
+    // Optional inputs of this entity
+    map<string, string> inputs = 18;
+
+    // Optional outputs of this entity
+    map<string, string> outputs = 19;
+
+    // Optional run environment tracked
+    map<string, string> run_env = 20;
+
+    // Id instance is clone
+    bool is_clone = 21;
+
+    // Optional uuid of the original run and pipeline
+    string pipeline = 22;
+    string original = 23;
+    string pipeline_name = 24;
+    string original_name = 25;
+
+    // Optional if this run was restarted/copied/resumed
+    string cloning_strategy = 26;
+}
+
+
+// Request data to create/update run
+message RunBodyRequest{
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project where the experiement will be assigned
+    string project = 2;
+
+    // Run object
+    Run run = 3;
+}
+
+ // Contains list runs
+ message ListRunsResponse{
+    // Count of the entities
+    int32 count = 1;
+
+    // List of all entities
+    repeated Run results = 2;
+
+    // Previous page
+    string previous = 3;
+
+    // Next page
+    string next = 4;
+}

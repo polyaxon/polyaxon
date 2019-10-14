@@ -75,12 +75,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
-import io.swagger.client.api.BuildServiceApi;
+import io.swagger.client.api.AuthServiceApi;
 
 import java.io.File;
 import java.util.*;
 
-public class BuildServiceApiExample {
+public class AuthServiceApiExample {
 
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
@@ -91,15 +91,14 @@ public class BuildServiceApiExample {
         // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
         //ApiKey.setApiKeyPrefix("Token");
 
-        BuildServiceApi apiInstance = new BuildServiceApi();
-        String owner = "owner_example"; // String | Owner of the namespace
-        String project = "project_example"; // String | Project where the experiement will be assigned
-        String id = "id_example"; // String | Unique integer identifier of the entity
+        AuthServiceApi apiInstance = new AuthServiceApi();
+        String user = "user_example"; // String | User email.
+        String password = "password_example"; // String | Project where the experiement will be assigned.
         try {
-            Object result = apiInstance.archiveBuild(owner, project, id);
+            V1Auth result = apiInstance.login(user, password);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling BuildServiceApi#archiveBuild");
+            System.err.println("Exception when calling AuthServiceApi#login");
             e.printStackTrace();
         }
     }
@@ -113,95 +112,67 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*BuildServiceApi* | [**archiveBuild**](docs/BuildServiceApi.md#archiveBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/archive | Archive build
-*BuildServiceApi* | [**bookmarkBuild**](docs/BuildServiceApi.md#bookmarkBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/bookmark | Bookmark build
-*BuildServiceApi* | [**createBuild**](docs/BuildServiceApi.md#createBuild) | **POST** /api/v1/{owner}/{project}/builds | Create new build
-*BuildServiceApi* | [**createBuildCodeRef**](docs/BuildServiceApi.md#createBuildCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/builds/{entity.id}/coderef | Create build code ref
-*BuildServiceApi* | [**createBuildStatus**](docs/BuildServiceApi.md#createBuildStatus) | **POST** /api/v1/{owner}/{project}/builds/{id}/statuses | Create new build status
-*BuildServiceApi* | [**deleteBuild**](docs/BuildServiceApi.md#deleteBuild) | **DELETE** /api/v1/{owner}/{project}/builds/{id} | Delete build
-*BuildServiceApi* | [**deleteBuilds**](docs/BuildServiceApi.md#deleteBuilds) | **DELETE** /api/v1/{owner}/{project}/builds/delete | Delete builds
-*BuildServiceApi* | [**getBuild**](docs/BuildServiceApi.md#getBuild) | **GET** /api/v1/{owner}/{project}/builds/{id} | Get build
-*BuildServiceApi* | [**getBuildCodeRef**](docs/BuildServiceApi.md#getBuildCodeRef) | **GET** /api/v1/{owner}/{project}/builds/{id}/coderef | Get build code ref
-*BuildServiceApi* | [**listArchivedBuilds**](docs/BuildServiceApi.md#listArchivedBuilds) | **GET** /api/v1/archives/{owner}/builds | List archived builds
-*BuildServiceApi* | [**listBookmarkedBuilds**](docs/BuildServiceApi.md#listBookmarkedBuilds) | **GET** /api/v1/bookmarks/{owner}/builds | List bookmarked builds
-*BuildServiceApi* | [**listBuildStatuses**](docs/BuildServiceApi.md#listBuildStatuses) | **GET** /api/v1/{owner}/{project}/builds/{id}/statuses | List build statuses
-*BuildServiceApi* | [**listBuilds**](docs/BuildServiceApi.md#listBuilds) | **GET** /api/v1/{owner}/{project}/builds | List builds
-*BuildServiceApi* | [**patchBuild**](docs/BuildServiceApi.md#patchBuild) | **PATCH** /api/v1/{owner}/{project}/builds/{build.id} | Patch build
-*BuildServiceApi* | [**restartBuild**](docs/BuildServiceApi.md#restartBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restart | Restart build
-*BuildServiceApi* | [**restoreBuild**](docs/BuildServiceApi.md#restoreBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/restore | Restore build
-*BuildServiceApi* | [**stopBuild**](docs/BuildServiceApi.md#stopBuild) | **POST** /api/v1/{owner}/{project}/builds/{id}/stop | Stop build
-*BuildServiceApi* | [**stopBuilds**](docs/BuildServiceApi.md#stopBuilds) | **POST** /api/v1/{owner}/{project}/builds/stop | Stop builds
-*BuildServiceApi* | [**unBookmarkBuild**](docs/BuildServiceApi.md#unBookmarkBuild) | **DELETE** /api/v1/{owner}/{project}/builds/{id}/unbookmark | UnBookmark build
-*BuildServiceApi* | [**updateBuild**](docs/BuildServiceApi.md#updateBuild) | **PUT** /api/v1/{owner}/{project}/builds/{build.id} | Update build
-*ExperimentServiceApi* | [**archiveExperiment**](docs/ExperimentServiceApi.md#archiveExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/archive | Restore build
-*ExperimentServiceApi* | [**bookmarkExperiment**](docs/ExperimentServiceApi.md#bookmarkExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/bookmark | UnBookmark build
-*ExperimentServiceApi* | [**createExperiment**](docs/ExperimentServiceApi.md#createExperiment) | **POST** /api/v1/{owner}/{project}/experiments | Create new build
-*ExperimentServiceApi* | [**createExperimentCodeRef**](docs/ExperimentServiceApi.md#createExperimentCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/experiments/{entity.id}/coderef | Get experiment code ref
-*ExperimentServiceApi* | [**createExperimentStatus**](docs/ExperimentServiceApi.md#createExperimentStatus) | **POST** /api/v1/{owner}/{project}/experiments/{id}/statuses | Get job code ref
-*ExperimentServiceApi* | [**deleteExperiment**](docs/ExperimentServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id} | Delete build
-*ExperimentServiceApi* | [**deleteExperiments**](docs/ExperimentServiceApi.md#deleteExperiments) | **DELETE** /api/v1/{owner}/{project}/experiments/delete | Delete builds
-*ExperimentServiceApi* | [**getExperiment**](docs/ExperimentServiceApi.md#getExperiment) | **GET** /api/v1/{owner}/{project}/experiments/{id} | Get build
-*ExperimentServiceApi* | [**getExperimentCodeRef**](docs/ExperimentServiceApi.md#getExperimentCodeRef) | **GET** /api/v1/{owner}/{project}/experiments/{id}/coderef | Get experiment code ref
-*ExperimentServiceApi* | [**listArchivedExperiments**](docs/ExperimentServiceApi.md#listArchivedExperiments) | **GET** /api/v1/archives/{owner}/experiments | List archived builds
-*ExperimentServiceApi* | [**listBookmarkedExperiments**](docs/ExperimentServiceApi.md#listBookmarkedExperiments) | **GET** /api/v1/bookmarks/{owner}/experiments | List bookmarked builds
-*ExperimentServiceApi* | [**listExperimentStatuses**](docs/ExperimentServiceApi.md#listExperimentStatuses) | **GET** /api/v1/{owner}/{project}/experiments/{id}/statuses | Create build code ref
-*ExperimentServiceApi* | [**listExperiments**](docs/ExperimentServiceApi.md#listExperiments) | **GET** /api/v1/{owner}/{project}/experiments | List builds
-*ExperimentServiceApi* | [**patchExperiment**](docs/ExperimentServiceApi.md#patchExperiment) | **PATCH** /api/v1/{owner}/{project}/experiments/{experiment.id} | Patch build
-*ExperimentServiceApi* | [**restartExperiment**](docs/ExperimentServiceApi.md#restartExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restart | Restart build
-*ExperimentServiceApi* | [**restoreExperiment**](docs/ExperimentServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/restore | Bookmark build
-*ExperimentServiceApi* | [**resumeExperiment**](docs/ExperimentServiceApi.md#resumeExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/resume | Archive build
-*ExperimentServiceApi* | [**startExperimentTensorboard**](docs/ExperimentServiceApi.md#startExperimentTensorboard) | **POST** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/start | List build statuses
-*ExperimentServiceApi* | [**stopExperiment**](docs/ExperimentServiceApi.md#stopExperiment) | **POST** /api/v1/{owner}/{project}/experiments/{id}/stop | Stop build
-*ExperimentServiceApi* | [**stopExperimentTensorboard**](docs/ExperimentServiceApi.md#stopExperimentTensorboard) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/tensorboard/stop | Create new build status
-*ExperimentServiceApi* | [**stopExperiments**](docs/ExperimentServiceApi.md#stopExperiments) | **POST** /api/v1/{owner}/{project}/experiments/stop | Stop builds
-*ExperimentServiceApi* | [**unBookmarkExperiment**](docs/ExperimentServiceApi.md#unBookmarkExperiment) | **DELETE** /api/v1/{owner}/{project}/experiments/{id}/unbookmark | Get build status
-*ExperimentServiceApi* | [**updateExperiment**](docs/ExperimentServiceApi.md#updateExperiment) | **PUT** /api/v1/{owner}/{project}/experiments/{experiment.id} | Update build
-*JobServiceApi* | [**archiveJob**](docs/JobServiceApi.md#archiveJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/archive | Restore build
-*JobServiceApi* | [**bookmarkJob**](docs/JobServiceApi.md#bookmarkJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/bookmark | UnBookmark build
-*JobServiceApi* | [**createJob**](docs/JobServiceApi.md#createJob) | **POST** /api/v1/{owner}/{project}/jobs | Create new build
-*JobServiceApi* | [**createJobCodeRef**](docs/JobServiceApi.md#createJobCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/jobs/{entity.id}/coderef | Get job code ref
-*JobServiceApi* | [**createJobStatus**](docs/JobServiceApi.md#createJobStatus) | **POST** /api/v1/{owner}/{project}/jobs/{id}/statuses | Get build code ref
-*JobServiceApi* | [**deleteJob**](docs/JobServiceApi.md#deleteJob) | **DELETE** /api/v1/{owner}/{project}/jobs/{id} | Delete build
-*JobServiceApi* | [**deleteJobs**](docs/JobServiceApi.md#deleteJobs) | **DELETE** /api/v1/{owner}/{project}/jobs/delete | Delete builds
-*JobServiceApi* | [**getJob**](docs/JobServiceApi.md#getJob) | **GET** /api/v1/{owner}/{project}/jobs/{id} | Get build
-*JobServiceApi* | [**getJobCodeRef**](docs/JobServiceApi.md#getJobCodeRef) | **GET** /api/v1/{owner}/{project}/jobs/{id}/coderef | Create build code ref
-*JobServiceApi* | [**listArchivedJobs**](docs/JobServiceApi.md#listArchivedJobs) | **GET** /api/v1/archives/{owner}/jobs | List archived builds
-*JobServiceApi* | [**listBookmarkedJobs**](docs/JobServiceApi.md#listBookmarkedJobs) | **GET** /api/v1/bookmarks/{owner}/jobs | List bookmarked builds
-*JobServiceApi* | [**listJobStatuses**](docs/JobServiceApi.md#listJobStatuses) | **GET** /api/v1/{owner}/{project}/jobs/{id}/statuses | Create new build status
-*JobServiceApi* | [**listJobs**](docs/JobServiceApi.md#listJobs) | **GET** /api/v1/{owner}/{project}/jobs | List builds
-*JobServiceApi* | [**patchJob**](docs/JobServiceApi.md#patchJob) | **PATCH** /api/v1/{owner}/{project}/jobs/{job.id} | Patch build
-*JobServiceApi* | [**restartJob**](docs/JobServiceApi.md#restartJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restart | Restart build
-*JobServiceApi* | [**restoreJob**](docs/JobServiceApi.md#restoreJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/restore | Bookmark build
-*JobServiceApi* | [**resumeJob**](docs/JobServiceApi.md#resumeJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/resume | Archive build
-*JobServiceApi* | [**stopJob**](docs/JobServiceApi.md#stopJob) | **POST** /api/v1/{owner}/{project}/jobs/{id}/stop | Stop build
-*JobServiceApi* | [**stopJobs**](docs/JobServiceApi.md#stopJobs) | **POST** /api/v1/{owner}/{project}/jobs/stop | Stop builds
-*JobServiceApi* | [**unBookmarkJob**](docs/JobServiceApi.md#unBookmarkJob) | **DELETE** /api/v1/{owner}/{project}/jobs/{id}/unbookmark | Get build status
-*JobServiceApi* | [**updateJob**](docs/JobServiceApi.md#updateJob) | **PUT** /api/v1/{owner}/{project}/jobs/{job.id} | Update build
+*AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+*ProjectServiceApi* | [**archiveProject**](docs/ProjectServiceApi.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
+*ProjectServiceApi* | [**bookmarkProject**](docs/ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
+*ProjectServiceApi* | [**createProject**](docs/ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
+*ProjectServiceApi* | [**deleteExperiment**](docs/ProjectServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+*ProjectServiceApi* | [**disableProjectCI**](docs/ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
+*ProjectServiceApi* | [**enableProjectCI**](docs/ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run
+*ProjectServiceApi* | [**getProject**](docs/ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
+*ProjectServiceApi* | [**listArchivedProjects**](docs/ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{owner}/projects | Create new run
+*ProjectServiceApi* | [**listBookmarkedProjects**](docs/ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{owner}/projects | List archived runs
+*ProjectServiceApi* | [**listProjectNames**](docs/ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs
+*ProjectServiceApi* | [**listProjects**](docs/ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
+*ProjectServiceApi* | [**patchProject**](docs/ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
+*ProjectServiceApi* | [**restoreExperiment**](docs/ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+*ProjectServiceApi* | [**updateProject**](docs/ProjectServiceApi.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
+*RunServiceApi* | [**archiveRun**](docs/RunServiceApi.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
+*RunServiceApi* | [**bookmarkRun**](docs/RunServiceApi.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+*RunServiceApi* | [**createRun**](docs/RunServiceApi.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
+*RunServiceApi* | [**createRunCodeRef**](docs/RunServiceApi.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
+*RunServiceApi* | [**createRunStatus**](docs/RunServiceApi.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
+*RunServiceApi* | [**deleteRun**](docs/RunServiceApi.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
+*RunServiceApi* | [**deleteRuns**](docs/RunServiceApi.md#deleteRuns) | **DELETE** /api/v1/{owner}/{project}/runs/delete | Delete runs
+*RunServiceApi* | [**getRun**](docs/RunServiceApi.md#getRun) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
+*RunServiceApi* | [**getRunCodeRefs**](docs/RunServiceApi.md#getRunCodeRefs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
+*RunServiceApi* | [**getRunStatuses**](docs/RunServiceApi.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
+*RunServiceApi* | [**invalidateRun**](docs/RunServiceApi.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
+*RunServiceApi* | [**invalidateRuns**](docs/RunServiceApi.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
+*RunServiceApi* | [**listArchivedRuns**](docs/RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{owner}/runs | List archived runs
+*RunServiceApi* | [**listBookmarkedRuns**](docs/RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{owner}/runs | List bookmarked runs
+*RunServiceApi* | [**listRuns**](docs/RunServiceApi.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
+*RunServiceApi* | [**patchRun**](docs/RunServiceApi.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
+*RunServiceApi* | [**restartRun**](docs/RunServiceApi.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
+*RunServiceApi* | [**restoreRun**](docs/RunServiceApi.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
+*RunServiceApi* | [**resumeRun**](docs/RunServiceApi.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/resume | Resume run
+*RunServiceApi* | [**startRunTensorboard**](docs/RunServiceApi.md#startRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
+*RunServiceApi* | [**stopRun**](docs/RunServiceApi.md#stopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
+*RunServiceApi* | [**stopRunTensorboard**](docs/RunServiceApi.md#stopRunTensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
+*RunServiceApi* | [**stopRuns**](docs/RunServiceApi.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
+*RunServiceApi* | [**unBookmarkRun**](docs/RunServiceApi.md#unBookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
+*RunServiceApi* | [**updateRun**](docs/RunServiceApi.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
+*VersionsServiceApi* | [**getVersions**](docs/VersionsServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 
 ## Documentation for Models
 
- - [V1Build](docs/V1Build.md)
- - [V1BuildBodyRequest](docs/V1BuildBodyRequest.md)
- - [V1BuildStatus](docs/V1BuildStatus.md)
+ - [V1Auth](docs/V1Auth.md)
+ - [V1CodeRefBodyRequest](docs/V1CodeRefBodyRequest.md)
  - [V1CodeReference](docs/V1CodeReference.md)
- - [V1CodeReferenceBodyRequest](docs/V1CodeReferenceBodyRequest.md)
  - [V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
- - [V1Experiment](docs/V1Experiment.md)
- - [V1ExperimentBodyRequest](docs/V1ExperimentBodyRequest.md)
- - [V1ExperimentStatus](docs/V1ExperimentStatus.md)
- - [V1Job](docs/V1Job.md)
- - [V1JobBodyRequest](docs/V1JobBodyRequest.md)
- - [V1JobStatus](docs/V1JobStatus.md)
- - [V1ListBuildStatusesResponse](docs/V1ListBuildStatusesResponse.md)
- - [V1ListBuildsResponse](docs/V1ListBuildsResponse.md)
- - [V1ListExperimentStatusesResponse](docs/V1ListExperimentStatusesResponse.md)
- - [V1ListExperimentsResponse](docs/V1ListExperimentsResponse.md)
- - [V1ListJobStatusesResponse](docs/V1ListJobStatusesResponse.md)
- - [V1ListJobsResponse](docs/V1ListJobsResponse.md)
- - [V1OwnedEntityIdRequest](docs/V1OwnedEntityIdRequest.md)
+ - [V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
+ - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
+ - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
+ - [V1OwnedEntityUUIdRequest](docs/V1OwnedEntityUUIdRequest.md)
+ - [V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
+ - [V1Project](docs/V1Project.md)
  - [V1ProjectBodyRequest](docs/V1ProjectBodyRequest.md)
+ - [V1Run](docs/V1Run.md)
+ - [V1RunBodyRequest](docs/V1RunBodyRequest.md)
  - [V1StatusResponse](docs/V1StatusResponse.md)
+ - [V1Version](docs/V1Version.md)
+ - [V1Versions](docs/V1Versions.md)
 
 
 ## Documentation for Authorization

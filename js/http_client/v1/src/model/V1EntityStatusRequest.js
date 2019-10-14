@@ -85,8 +85,8 @@
       if (data.hasOwnProperty('project')) {
         obj['project'] = ApiClient.convertToType(data['project'], 'String');
       }
-      if (data.hasOwnProperty('id')) {
-        obj['id'] = ApiClient.convertToType(data['id'], 'String');
+      if (data.hasOwnProperty('uuid')) {
+        obj['uuid'] = ApiClient.convertToType(data['uuid'], 'String');
       }
       if (data.hasOwnProperty('status')) {
         obj['status'] = ApiClient.convertToType(data['status'], 'String');
@@ -104,9 +104,9 @@
    */
   exports.prototype['project'] = undefined;
   /**
-   * @member {String} id
+   * @member {String} uuid
    */
-  exports.prototype['id'] = undefined;
+  exports.prototype['uuid'] = undefined;
   /**
    * @member {String} status
    */

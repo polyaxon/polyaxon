@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **str** |  | [optional] 
 **uuid** | **str** |  | [optional] 
 **commit** | **str** |  | [optional] 
 **updated_at** | **str** |  | [optional] 

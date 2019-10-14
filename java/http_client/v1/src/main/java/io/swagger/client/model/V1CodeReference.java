@@ -43,9 +43,6 @@ import java.io.IOException;
  */
 
 public class V1CodeReference {
-  @SerializedName("id")
-  private String id = null;
-
   @SerializedName("uuid")
   private String uuid = null;
 
@@ -63,24 +60,6 @@ public class V1CodeReference {
 
   @SerializedName("is_dirty")
   private Boolean isDirty = null;
-
-  public V1CodeReference id(String id) {
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
 
   public V1CodeReference uuid(String uuid) {
     this.uuid = uuid;
@@ -200,8 +179,7 @@ public class V1CodeReference {
       return false;
     }
     V1CodeReference v1CodeReference = (V1CodeReference) o;
-    return Objects.equals(this.id, v1CodeReference.id) &&
-        Objects.equals(this.uuid, v1CodeReference.uuid) &&
+    return Objects.equals(this.uuid, v1CodeReference.uuid) &&
         Objects.equals(this.commit, v1CodeReference.commit) &&
         Objects.equals(this.updatedAt, v1CodeReference.updatedAt) &&
         Objects.equals(this.status, v1CodeReference.status) &&
@@ -211,7 +189,7 @@ public class V1CodeReference {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, uuid, commit, updatedAt, status, gitUrl, isDirty);
+    return Objects.hash(uuid, commit, updatedAt, status, gitUrl, isDirty);
   }
 
 
@@ -220,7 +198,6 @@ public class V1CodeReference {
     StringBuilder sb = new StringBuilder();
     sb.append("class V1CodeReference {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    commit: ").append(toIndentedString(commit)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");

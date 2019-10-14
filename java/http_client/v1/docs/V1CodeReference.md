@@ -4,7 +4,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **String** |  |  [optional]
 **uuid** | **String** |  |  [optional]
 **commit** | **String** |  |  [optional]
 **updatedAt** | **String** |  |  [optional]

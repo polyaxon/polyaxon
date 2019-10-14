@@ -83,8 +83,8 @@
       //expect(instance).to.be();
     });
 
-    it('should have the property id (base name: "id")', function() {
-      // uncomment below and update the code to test the property id
+    it('should have the property uuid (base name: "uuid")', function() {
+      // uncomment below and update the code to test the property uuid
       //var instance = new PolyaxonSdk.V1EntityStatusRequest();
       //expect(instance).to.be();
     });

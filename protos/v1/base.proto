@@ -25,7 +25,7 @@ message ProjectBodyRequest {
 }
 
 // Request data to get/delete entity
-message OwnedEntityIdRequest {
+message OwnedEntityUUIdRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -33,7 +33,7 @@ message OwnedEntityIdRequest {
     string project = 2;
 
     // Unique integer identifier of the entity
-    int64 id = 3;
+    int64 uuid = 3;
 }
 
 // Request data for a status
@@ -51,7 +51,7 @@ message EntityStatusRequest {
     string project = 2;
 
     // Unique integer identifier of the entity
-    int64 id = 3;
+    int64 uuid = 3;
 
     // Status: TODO: add one of validation and body information details once decided for all entities
     string status = 4;

@@ -32,32 +32,28 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from polyaxon_sdk.api.build_service_api import BuildServiceApi
-from polyaxon_sdk.api.experiment_service_api import ExperimentServiceApi
-from polyaxon_sdk.api.job_service_api import JobServiceApi
+from polyaxon_sdk.api.auth_service_api import AuthServiceApi
+from polyaxon_sdk.api.project_service_api import ProjectServiceApi
+from polyaxon_sdk.api.run_service_api import RunServiceApi
+from polyaxon_sdk.api.versions_service_api import VersionsServiceApi
 
 # import ApiClient
 from polyaxon_sdk.api_client import ApiClient
 from polyaxon_sdk.configuration import Configuration
 # import models into sdk package
-from polyaxon_sdk.models.v1_build import V1Build
-from polyaxon_sdk.models.v1_build_body_request import V1BuildBodyRequest
-from polyaxon_sdk.models.v1_build_status import V1BuildStatus
+from polyaxon_sdk.models.v1_auth import V1Auth
+from polyaxon_sdk.models.v1_code_ref_body_request import V1CodeRefBodyRequest
 from polyaxon_sdk.models.v1_code_reference import V1CodeReference
-from polyaxon_sdk.models.v1_code_reference_body_request import V1CodeReferenceBodyRequest
 from polyaxon_sdk.models.v1_entity_status_request import V1EntityStatusRequest
-from polyaxon_sdk.models.v1_experiment import V1Experiment
-from polyaxon_sdk.models.v1_experiment_body_request import V1ExperimentBodyRequest
-from polyaxon_sdk.models.v1_experiment_status import V1ExperimentStatus
-from polyaxon_sdk.models.v1_job import V1Job
-from polyaxon_sdk.models.v1_job_body_request import V1JobBodyRequest
-from polyaxon_sdk.models.v1_job_status import V1JobStatus
-from polyaxon_sdk.models.v1_list_build_statuses_response import V1ListBuildStatusesResponse
-from polyaxon_sdk.models.v1_list_builds_response import V1ListBuildsResponse
-from polyaxon_sdk.models.v1_list_experiment_statuses_response import V1ListExperimentStatusesResponse
-from polyaxon_sdk.models.v1_list_experiments_response import V1ListExperimentsResponse
-from polyaxon_sdk.models.v1_list_job_statuses_response import V1ListJobStatusesResponse
-from polyaxon_sdk.models.v1_list_jobs_response import V1ListJobsResponse
-from polyaxon_sdk.models.v1_owned_entity_id_request import V1OwnedEntityIdRequest
+from polyaxon_sdk.models.v1_list_code_ref_response import V1ListCodeRefResponse
+from polyaxon_sdk.models.v1_list_projects_response import V1ListProjectsResponse
+from polyaxon_sdk.models.v1_list_runs_response import V1ListRunsResponse
+from polyaxon_sdk.models.v1_owned_entity_uu_id_request import V1OwnedEntityUUIdRequest
+from polyaxon_sdk.models.v1_owner_body_request import V1OwnerBodyRequest
+from polyaxon_sdk.models.v1_project import V1Project
 from polyaxon_sdk.models.v1_project_body_request import V1ProjectBodyRequest
+from polyaxon_sdk.models.v1_run import V1Run
+from polyaxon_sdk.models.v1_run_body_request import V1RunBodyRequest
 from polyaxon_sdk.models.v1_status_response import V1StatusResponse
+from polyaxon_sdk.models.v1_version import V1Version
+from polyaxon_sdk.models.v1_versions import V1Versions

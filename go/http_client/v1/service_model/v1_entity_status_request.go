@@ -29,9 +29,6 @@ import (
 // swagger:model v1EntityStatusRequest
 type V1EntityStatusRequest struct {
 
-	// Unique integer identifier of the entity
-	ID string `json:"id,omitempty"`
-
 	// Owner of the namespace
 	Owner string `json:"owner,omitempty"`
 
@@ -40,6 +37,9 @@ type V1EntityStatusRequest struct {
 
 	// Status: TODO: add one of validation and body information details once decided for all entities
 	Status string `json:"status,omitempty"`
+
+	// Unique integer identifier of the entity
+	UUID string `json:"uuid,omitempty"`
 }
 
 // Validate validates this v1 entity status request

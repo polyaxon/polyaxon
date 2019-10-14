@@ -25,9 +25,10 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/build_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/experiment_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/job_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/auth_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/project_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/run_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/versions_service"
 )
 
 // Default polyaxon sdk HTTP client.
@@ -73,11 +74,13 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 	cli := new(PolyaxonSdk)
 	cli.Transport = transport
 
-	cli.BuildService = build_service.New(transport, formats)
+	cli.AuthService = auth_service.New(transport, formats)
 
-	cli.ExperimentService = experiment_service.New(transport, formats)
+	cli.ProjectService = project_service.New(transport, formats)
 
-	cli.JobService = job_service.New(transport, formats)
+	cli.RunService = run_service.New(transport, formats)
+
+	cli.VersionsService = versions_service.New(transport, formats)
 
 	return cli
 }
@@ -123,11 +126,13 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // PolyaxonSdk is a client for polyaxon sdk
 type PolyaxonSdk struct {
-	BuildService *build_service.Client
+	AuthService *auth_service.Client
 
-	ExperimentService *experiment_service.Client
+	ProjectService *project_service.Client
 
-	JobService *job_service.Client
+	RunService *run_service.Client
+
+	VersionsService *versions_service.Client
 
 	Transport runtime.ClientTransport
 }
@@ -136,10 +141,12 @@ type PolyaxonSdk struct {
 func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
-	c.BuildService.SetTransport(transport)
+	c.AuthService.SetTransport(transport)
 
-	c.ExperimentService.SetTransport(transport)
+	c.ProjectService.SetTransport(transport)
 
-	c.JobService.SetTransport(transport)
+	c.RunService.SetTransport(transport)
+
+	c.VersionsService.SetTransport(transport)
 
 }

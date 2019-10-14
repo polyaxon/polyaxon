@@ -44,119 +44,94 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 func init() { proto.RegisterFile("v1/polyaxon_sdk.proto", fileDescriptor_5f2d65d1ab5d9ce0) }
 
 var fileDescriptor_5f2d65d1ab5d9ce0 = []byte{
-	// 1784 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x9a, 0xef, 0x6f, 0xd3, 0x48,
-	0x1a, 0xc7, 0xcf, 0x01, 0x95, 0xf6, 0xe9, 0xcf, 0x4c, 0x4b, 0x81, 0x00, 0x47, 0xce, 0x1c, 0x14,
-	0x42, 0x6b, 0x37, 0x69, 0x0b, 0x5c, 0x81, 0x13, 0x2d, 0x57, 0x55, 0x57, 0x38, 0x81, 0xd2, 0x43,
-	0xba, 0x5b, 0x56, 0xcb, 0x3a, 0xf1, 0x34, 0x71, 0xdb, 0x78, 0x8c, 0x3d, 0x09, 0x2d, 0x6c, 0x8b,
-	0x60, 0x57, 0xe2, 0xe5, 0xae, 0x60, 0xa5, 0x95, 0xf6, 0xc5, 0xbe, 0xdf, 0x17, 0xfb, 0xd7, 0xec,
-	0x7f, 0xb0, 0xda, 0x3f, 0x64, 0xe5, 0x99, 0xb1, 0xe3, 0x34, 0x49, 0x33, 0x76, 0x56, 0xbc, 0x6a,
-	0x3d, 0x1e, 0x3f, 0x9f, 0xe7, 0x79, 0xfc, 0xcc, 0x33, 0xdf, 0xb1, 0x02, 0xa7, 0x1b, 0x79, 0xdd,
-	0x21, 0xbb, 0xfb, 0xc6, 0x1e, 0xb1, 0x9f, 0x7b, 0xe6, 0x8e, 0xe6, 0xb8, 0x84, 0x12, 0x94, 0x6a,
-	0xe4, 0x33, 0x17, 0x2a, 0x84, 0x54, 0x76, 0xb1, 0x6e, 0x38, 0x96, 0x6e, 0xd8, 0x36, 0xa1, 0x06,
-	0xb5, 0x88, 0xed, 0xf1, 0x19, 0x99, 0xf3, 0xe2, 0x2e, 0xbb, 0x2a, 0xd5, 0xb7, 0x74, 0x5c, 0x73,
-	0xe8, 0xbe, 0xb8, 0x39, 0xcb, 0xfe, 0x94, 0xe7, 0x2a, 0xd8, 0x9e, 0xf3, 0x5e, 0x1a, 0x95, 0x0a,
-	0x76, 0x75, 0xe2, 0xb0, 0xc7, 0x3b, 0x98, 0x1a, 0x6d, 0xe4, 0xf5, 0x92, 0xe1, 0x61, 0x71, 0x99,
-	0x6e, 0xe4, 0xf5, 0x32, 0x31, 0xf1, 0x73, 0x17, 0x6f, 0x89, 0xa1, 0x31, 0x7f, 0x46, 0xdd, 0xda,
-	0x35, 0xc5, 0xf5, 0x64, 0x23, 0xaf, 0xe3, 0x3d, 0x07, 0xbb, 0x56, 0x0d, 0xdb, 0x54, 0x0c, 0x8e,
-	0x34, 0xf2, 0xfa, 0x36, 0x29, 0xf1, 0xab, 0xc2, 0xb7, 0x93, 0x30, 0xb2, 0xea, 0x3f, 0xb2, 0x89,
-	0xdd, 0x86, 0x55, 0xc6, 0x68, 0x0b, 0xe0, 0x91, 0xe5, 0x51, 0x36, 0xe6, 0xa1, 0x69, 0xad, 0x91,
-	0xd7, 0x9e, 0xb8, 0x64, 0x1b, 0x97, 0xe9, 0x2a, 0x31, 0xf7, 0x8b, 0xf8, 0x45, 0x1d, 0x7b, 0x34,
-	0xc3, 0xc6, 0x9b, 0xf3, 0x8a, 0xd8, 0x73, 0x88, 0xed, 0x61, 0xf5, 0xda, 0xbb, 0x5f, 0x7f, 0xff,
-	0x98, 0x52, 0x51, 0x96, 0xa5, 0xa3, 0x91, 0xd7, 0x5f, 0x93, 0x97, 0x36, 0x76, 0x0f, 0xf4, 0xd7,
-	0x0e, 0x37, 0x72, 0xc0, 0x1d, 0xf4, 0x90, 0x0d, 0x53, 0xec, 0x79, 0x42, 0x76, 0x6a, 0x86, 0xbb,
-	0x83, 0x4d, 0x41, 0x9c, 0xf2, 0x2d, 0x3f, 0xf6, 0x1f, 0x4a, 0xc4, 0x2b, 0x09, 0x7b, 0x5e, 0x48,
-	0x16, 0xbc, 0x1d, 0x40, 0xfe, 0xf3, 0x2b, 0x6e, 0xb9, 0x6a, 0x35, 0x12, 0xd2, 0x66, 0x18, 0xed,
-	0x6f, 0xe8, 0x52, 0x40, 0x33, 0xb8, 0xb5, 0x36, 0xd8, 0x33, 0x18, 0x7e, 0xe0, 0x62, 0x83, 0x62,
-	0x66, 0x80, 0x53, 0xd8, 0xbf, 0x51, 0xca, 0x50, 0x38, 0xaa, 0xde, 0x60, 0x86, 0xaf, 0xa8, 0x3d,
-	0xd3, 0xb6, 0xac, 0xe4, 0xd0, 0x17, 0x30, 0xb8, 0x8e, 0xb9, 0x6b, 0xe8, 0x6c, 0xe0, 0xbf, 0xb9,
-	0x66, 0x53, 0x8b, 0xee, 0xff, 0xdb, 0xec, 0x60, 0x7d, 0x8e, 0x59, 0x9f, 0x41, 0x57, 0x7a, 0x59,
-	0xd7, 0x5f, 0x5b, 0xe6, 0x01, 0xda, 0x82, 0xe1, 0xa7, 0x8e, 0x29, 0xef, 0xfc, 0x4d, 0x66, 0x7e,
-	0x3e, 0x73, 0xa3, 0xb7, 0x79, 0x5e, 0x9c, 0x96, 0x79, 0xe0, 0xc7, 0x81, 0x01, 0x9e, 0x18, 0xb4,
-	0x5c, 0x8d, 0x87, 0x29, 0xc4, 0xc5, 0xd8, 0x30, 0xfc, 0x2f, 0xbc, 0x8b, 0x83, 0x70, 0xba, 0x67,
-	0x6c, 0x5a, 0xe3, 0x6b, 0x55, 0x0b, 0xd6, 0xaa, 0xb6, 0xe6, 0xaf, 0xd5, 0x20, 0x7d, 0x39, 0xc9,
-	0xf4, 0x51, 0x18, 0x89, 0xf0, 0xbc, 0x04, 0xc0, 0x02, 0x03, 0xce, 0xe6, 0x66, 0x7a, 0x02, 0x4d,
-	0x06, 0xf2, 0xa3, 0xa4, 0x30, 0xb4, 0x49, 0x89, 0x93, 0x34, 0xc6, 0x25, 0x86, 0xd4, 0xd5, 0x9c,
-	0x54, 0x8c, 0xba, 0x47, 0x89, 0xc3, 0x73, 0x0b, 0x21, 0xf5, 0xb8, 0x66, 0xd1, 0x19, 0x3a, 0xcf,
-	0xa0, 0x39, 0xb5, 0x77, 0x62, 0x03, 0x5e, 0x0d, 0x46, 0x8a, 0xd8, 0xa3, 0x86, 0x1b, 0xa7, 0xfc,
-	0x6f, 0x33, 0x4c, 0x41, 0x9d, 0x93, 0x8b, 0xcd, 0xe5, 0x00, 0x1f, 0xf7, 0x12, 0x46, 0x44, 0xbf,
-	0xe8, 0x37, 0xaf, 0x92, 0x6c, 0xd1, 0x4f, 0x7c, 0xb0, 0x1f, 0x27, 0x71, 0x3f, 0x15, 0xd8, 0xe5,
-	0x34, 0xb4, 0x0f, 0xa3, 0x41, 0x47, 0x4e, 0x4a, 0x16, 0xeb, 0x54, 0xd5, 0xe4, 0xc8, 0x41, 0xc3,
-	0x46, 0x07, 0x30, 0xfe, 0xd4, 0xee, 0x17, 0x2e, 0xde, 0x75, 0x6e, 0x5e, 0x0e, 0x5e, 0xb7, 0x43,
-	0xfc, 0x1e, 0x4c, 0x04, 0x5d, 0x75, 0x93, 0x1a, 0xb4, 0xee, 0xe1, 0xe3, 0x96, 0x2e, 0xf2, 0xef,
-	0xf0, 0x79, 0xe1, 0xee, 0x20, 0x02, 0x47, 0x9a, 0xec, 0x1a, 0x12, 0x94, 0x6f, 0x14, 0x48, 0x87,
-	0x9b, 0x8d, 0x04, 0xfb, 0x62, 0xcb, 0xee, 0x14, 0x3c, 0xd0, 0xb7, 0x1b, 0x7b, 0x90, 0x8e, 0xec,
-	0x59, 0xdc, 0x2c, 0x3a, 0xe3, 0xb3, 0xb8, 0x03, 0x41, 0xb4, 0xdc, 0x89, 0xf1, 0x70, 0x7d, 0xf1,
-	0x71, 0xf5, 0x1f, 0x0c, 0xbb, 0xa0, 0xc6, 0xc4, 0xfa, 0xcb, 0xac, 0x0e, 0xe3, 0x41, 0xea, 0x1f,
-	0x10, 0x13, 0x17, 0xf1, 0xd6, 0x31, 0xd1, 0xa7, 0xfd, 0x3b, 0x62, 0x1a, 0x76, 0xb1, 0x5d, 0xc6,
-	0x41, 0xad, 0x23, 0xc9, 0x5a, 0xf7, 0x45, 0x93, 0x8b, 0xb7, 0xd0, 0xf7, 0x0a, 0xa0, 0x48, 0xc4,
-	0x01, 0xfa, 0x42, 0x1b, 0x20, 0xda, 0xcb, 0x3a, 0xe0, 0xff, 0xc3, 0xf0, 0xeb, 0xea, 0x6a, 0x88,
-	0xc7, 0xcc, 0x67, 0x2d, 0xf0, 0x42, 0x5c, 0xb6, 0x39, 0x23, 0xc6, 0x23, 0x3e, 0x2d, 0x2b, 0xb9,
-	0xc2, 0xdb, 0x49, 0x80, 0x0d, 0x52, 0x0a, 0xf4, 0xd8, 0x97, 0x30, 0xe8, 0xbf, 0xeb, 0x0d, 0x52,
-	0xea, 0xde, 0x60, 0xa7, 0x82, 0x8a, 0xf0, 0x67, 0x85, 0x85, 0x70, 0x95, 0xf9, 0x95, 0x45, 0x7f,
-	0xed, 0x9e, 0x96, 0x6d, 0xdf, 0x6a, 0x95, 0x2b, 0xa3, 0xa6, 0x12, 0x63, 0xac, 0xce, 0xca, 0x48,
-	0x92, 0xd4, 0xae, 0xc2, 0x18, 0x09, 0xc3, 0x44, 0x54, 0x83, 0xc5, 0xe6, 0x5c, 0x61, 0x9c, 0x4b,
-	0xe8, 0x62, 0x57, 0xfd, 0xc5, 0x30, 0x9b, 0x30, 0xc4, 0xdf, 0xeb, 0x06, 0x29, 0x21, 0xb6, 0x52,
-	0x37, 0x48, 0x29, 0x6a, 0xfd, 0x94, 0x18, 0x53, 0xaf, 0x33, 0x83, 0x97, 0xd5, 0x1e, 0x29, 0xf2,
-	0x8b, 0xf4, 0x7f, 0x30, 0xb0, 0x8e, 0x7d, 0x77, 0x8e, 0xa9, 0xcd, 0xd0, 0xae, 0xd0, 0x73, 0xe8,
-	0xf2, 0xf1, 0x76, 0xb9, 0x60, 0xf8, 0x1c, 0x86, 0xb8, 0xde, 0xea, 0xe9, 0xae, 0x10, 0x06, 0x99,
-	0x99, 0x5e, 0x66, 0x7d, 0x7d, 0x2f, 0xe4, 0xcf, 0x33, 0x18, 0x64, 0x2a, 0x4b, 0xd6, 0x78, 0x21,
-	0x8e, 0xf1, 0x6d, 0x18, 0xe2, 0x5a, 0xe7, 0xf8, 0xbc, 0x74, 0xeb, 0xd6, 0x22, 0x4d, 0x39, 0xa9,
-	0x34, 0x39, 0x00, 0x21, 0x2b, 0x89, 0xaa, 0x12, 0x6a, 0xe3, 0x38, 0x19, 0xc7, 0x60, 0x4d, 0x4d,
-	0xe5, 0xc0, 0x29, 0x5f, 0xdd, 0x24, 0x8b, 0x6d, 0x81, 0xe1, 0xe6, 0xd4, 0x6b, 0x12, 0xb1, 0x85,
-	0xfa, 0x66, 0x1b, 0x06, 0x05, 0x31, 0xbe, 0x9a, 0xd2, 0x18, 0xf0, 0x9a, 0xda, 0x2b, 0x99, 0x01,
-	0xab, 0x02, 0x20, 0xb4, 0x94, 0x64, 0x51, 0x07, 0x1b, 0xfb, 0x0d, 0x99, 0x88, 0x22, 0x2a, 0x0a,
-	0xc3, 0x50, 0x11, 0x7b, 0xf5, 0x1a, 0x96, 0xe4, 0x48, 0x68, 0xd1, 0x16, 0x4e, 0xbd, 0xc6, 0xde,
-	0x96, 0x07, 0x20, 0x1a, 0x4b, 0x7f, 0x2f, 0x4c, 0x2a, 0xbc, 0x40, 0xa8, 0x79, 0x3c, 0x89, 0xc4,
-	0xfd, 0x14, 0xd0, 0x40, 0xa4, 0xd5, 0x61, 0x38, 0x68, 0xd6, 0xc9, 0xa8, 0x8b, 0x8c, 0xaa, 0xa9,
-	0xb3, 0x32, 0xd4, 0x50, 0x21, 0xed, 0xc3, 0x68, 0x53, 0xa0, 0x25, 0x03, 0x8b, 0x12, 0xca, 0x69,
-	0x32, 0xe0, 0x88, 0x38, 0xa3, 0x30, 0xc6, 0x9b, 0x6f, 0x42, 0x69, 0x26, 0x02, 0x46, 0xb3, 0x72,
-	0x8b, 0x51, 0x30, 0x0e, 0x61, 0x5c, 0x6c, 0x41, 0x12, 0xd8, 0xf3, 0x91, 0x1d, 0xab, 0x4d, 0x93,
-	0x25, 0xe3, 0xbb, 0x30, 0x1e, 0xee, 0x63, 0xbd, 0xf4, 0xd8, 0xa8, 0x58, 0x3d, 0x42, 0x8d, 0xdd,
-	0x62, 0xc0, 0xbc, 0x1a, 0x0b, 0xe8, 0xaf, 0xa2, 0x17, 0x30, 0xca, 0x33, 0x9d, 0x48, 0x89, 0x89,
-	0x72, 0x46, 0x52, 0xe5, 0x1c, 0xe8, 0xb0, 0xef, 0x14, 0x98, 0x08, 0xe3, 0x4c, 0xac, 0xc2, 0x1e,
-	0x32, 0xf4, 0x9a, 0x7a, 0x5f, 0x56, 0x85, 0x71, 0x47, 0x3a, 0x6b, 0xb0, 0xdf, 0xce, 0x42, 0x7a,
-	0x2d, 0xfc, 0x70, 0x16, 0x48, 0xb1, 0x3a, 0xaf, 0x87, 0xe6, 0x8d, 0xee, 0x4d, 0x3a, 0xac, 0x86,
-	0xc8, 0xe4, 0xb0, 0x1a, 0x24, 0xbe, 0xc7, 0xe0, 0x08, 0xe3, 0x00, 0xce, 0xb5, 0xea, 0xb3, 0xa8,
-	0x03, 0x9d, 0xe5, 0x53, 0x3c, 0x7c, 0xbb, 0x5a, 0x8b, 0xe2, 0x5f, 0xc1, 0x99, 0xa8, 0x68, 0xeb,
-	0x13, 0x3e, 0xcb, 0xe0, 0x57, 0xd1, 0xdf, 0xbb, 0x4a, 0xb8, 0x28, 0x9b, 0x04, 0x95, 0xd1, 0x34,
-	0x85, 0xce, 0xb1, 0x25, 0x10, 0x5e, 0x47, 0xc9, 0x63, 0xad, 0xb7, 0x64, 0x3e, 0x30, 0x44, 0x68,
-	0xfc, 0x03, 0x83, 0x5f, 0xfe, 0x11, 0x5a, 0xf7, 0xf2, 0x3f, 0x0a, 0x13, 0xfa, 0x09, 0xe5, 0xa4,
-	0x60, 0x5c, 0xd3, 0xbc, 0x81, 0x09, 0x2e, 0xfd, 0x92, 0xc5, 0x77, 0x9f, 0x21, 0x97, 0x33, 0x4b,
-	0x92, 0xc8, 0xc8, 0xb7, 0x60, 0x21, 0xe0, 0x0e, 0x61, 0x9c, 0xa9, 0xc3, 0xbe, 0xf8, 0x85, 0xe4,
-	0xfc, 0x3d, 0x98, 0xe0, 0xa2, 0x4e, 0x2a, 0xe5, 0xbd, 0x3e, 0x98, 0xc5, 0x49, 0xfd, 0x21, 0xa4,
-	0x8f, 0x92, 0x93, 0xa8, 0x4a, 0xd1, 0x68, 0x73, 0xb3, 0x72, 0xe8, 0xa6, 0xb8, 0x3c, 0x84, 0x31,
-	0x5f, 0xea, 0xf5, 0x15, 0xf7, 0x32, 0x83, 0x2f, 0xaa, 0xba, 0x7c, 0xdc, 0xa1, 0xfc, 0xdb, 0x83,
-	0xf1, 0x56, 0x7e, 0x7c, 0xc5, 0x29, 0x21, 0xd4, 0xa2, 0xf8, 0x80, 0xfc, 0x15, 0xa4, 0x85, 0xf0,
-	0x4c, 0xb4, 0xce, 0xee, 0x31, 0xea, 0x2d, 0xb5, 0x10, 0x23, 0xe8, 0x88, 0x1a, 0x7d, 0x05, 0x13,
-	0x5c, 0x8d, 0x26, 0x82, 0xdf, 0x65, 0xf0, 0x9b, 0x6a, 0x3e, 0x1e, 0x5c, 0x48, 0xd4, 0xb7, 0x0a,
-	0xa4, 0x45, 0x1f, 0xfd, 0x53, 0xde, 0x7b, 0x9c, 0x14, 0x04, 0x8a, 0xd5, 0xf7, 0x41, 0x48, 0xd6,
-	0x4f, 0xee, 0x43, 0x20, 0x60, 0xbf, 0x56, 0x00, 0x05, 0xdb, 0x59, 0x5f, 0x4e, 0xdc, 0x61, 0x4e,
-	0x2c, 0xa9, 0x0b, 0x31, 0x9c, 0x08, 0x45, 0xe5, 0x7b, 0x05, 0xa6, 0x9a, 0x82, 0xb6, 0x2f, 0x3f,
-	0x44, 0x4d, 0xe6, 0x96, 0x62, 0xf8, 0x11, 0x91, 0xb7, 0x3f, 0x28, 0x90, 0xd9, 0x6c, 0x5d, 0x10,
-	0xff, 0xc5, 0xb6, 0x47, 0xdc, 0x12, 0x31, 0xdc, 0x24, 0x9f, 0x41, 0xd7, 0x99, 0x3f, 0x2b, 0xea,
-	0xdd, 0x18, 0xfe, 0xd0, 0x26, 0x51, 0x0f, 0x57, 0xcb, 0x07, 0x05, 0xce, 0xb5, 0xb6, 0x89, 0xfe,
-	0x1c, 0x7b, 0xc0, 0x1c, 0xbb, 0x97, 0xbb, 0x93, 0xd8, 0x31, 0xe2, 0xa0, 0x77, 0x0a, 0x9c, 0x6e,
-	0xd9, 0xa5, 0x13, 0x9e, 0x0a, 0x44, 0xf5, 0xa0, 0x85, 0x58, 0xed, 0x53, 0xa0, 0x3e, 0x2a, 0x30,
-	0xdd, 0x2a, 0x72, 0x24, 0xbc, 0x50, 0xdb, 0xa5, 0x51, 0xdb, 0x59, 0xa1, 0x2f, 0xaf, 0xde, 0x2b,
-	0x30, 0x7d, 0x54, 0x31, 0xf5, 0x3a, 0x3a, 0x4c, 0xb5, 0xf6, 0x38, 0x71, 0x82, 0xf8, 0x27, 0x73,
-	0xe3, 0xb6, 0x9a, 0xc4, 0x0d, 0xbf, 0x72, 0xde, 0xc0, 0x54, 0xcb, 0x3b, 0x4a, 0x74, 0x9e, 0x10,
-	0x4d, 0x06, 0xc5, 0x69, 0x32, 0xc1, 0xb1, 0xe2, 0x27, 0x05, 0xce, 0x1c, 0x4d, 0x45, 0xe2, 0xd3,
-	0x45, 0x91, 0x39, 0xf2, 0x48, 0x5d, 0x97, 0x3d, 0x5d, 0xb4, 0xea, 0x9e, 0x4e, 0x87, 0x8c, 0xd5,
-	0x5f, 0x52, 0x1f, 0x56, 0x7e, 0x4e, 0xa1, 0x0a, 0x8c, 0x3c, 0x11, 0xbf, 0x2c, 0xc8, 0x7a, 0xe6,
-	0x8e, 0xfa, 0xb8, 0xf5, 0x1a, 0x5d, 0xaf, 0x52, 0xea, 0x78, 0xcb, 0xba, 0x5e, 0xb1, 0x68, 0xb5,
-	0x5e, 0xd2, 0xca, 0xa4, 0x16, 0xfe, 0x14, 0x21, 0xfc, 0x67, 0xce, 0x33, 0x77, 0xbc, 0xcc, 0x54,
-	0x99, 0xd8, 0xd4, 0x28, 0xd3, 0xfb, 0xc1, 0xb0, 0x3f, 0xb9, 0x30, 0x90, 0xd7, 0xf2, 0x8b, 0xda,
-	0x62, 0xee, 0xa4, 0x92, 0x3a, 0x71, 0xb2, 0x30, 0x61, 0x38, 0xce, 0xae, 0x55, 0x66, 0xbf, 0x2c,
-	0xd0, 0xb7, 0x3d, 0x62, 0x2f, 0xb7, 0x8d, 0x14, 0x97, 0xe1, 0xc4, 0xe2, 0xfc, 0x02, 0x5a, 0x80,
-	0xfc, 0xff, 0x49, 0x3d, 0x6b, 0x12, 0x7b, 0x86, 0x66, 0xab, 0x46, 0x03, 0x67, 0x1d, 0xec, 0xd6,
-	0x2c, 0xcf, 0xb3, 0x88, 0x9d, 0xa5, 0x24, 0x6b, 0x94, 0xcb, 0xd8, 0xf3, 0xb2, 0xb4, 0x8a, 0xb3,
-	0x2e, 0xf6, 0x48, 0xdd, 0x2d, 0x63, 0xad, 0x78, 0xdd, 0x7f, 0x76, 0x11, 0xa9, 0x70, 0xb6, 0x28,
-	0xc6, 0xb2, 0x26, 0xc1, 0x5e, 0xd6, 0x26, 0x34, 0x8b, 0xf7, 0x2c, 0x8f, 0x6a, 0x68, 0x00, 0x4e,
-	0xfe, 0x98, 0x52, 0x4e, 0x7d, 0x76, 0x09, 0x2e, 0xc2, 0xc0, 0x8a, 0x63, 0x3d, 0xc4, 0xfb, 0x68,
-	0x72, 0x30, 0x95, 0x19, 0x5d, 0xa9, 0xd3, 0x2a, 0x71, 0xad, 0x57, 0xcc, 0x95, 0x6c, 0xaa, 0x34,
-	0x02, 0x10, 0x4e, 0xf8, 0x4b, 0x69, 0x80, 0xf5, 0x92, 0x85, 0x3f, 0x02, 0x00, 0x00, 0xff, 0xff,
-	0xe0, 0xd7, 0x51, 0xb8, 0x8c, 0x21, 0x00, 0x00,
+	// 1383 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0x5d, 0x6f, 0xdb, 0xb6,
+	0x1e, 0xc6, 0x8f, 0xdd, 0x9e, 0x34, 0xf9, 0xc7, 0x49, 0x1c, 0xb6, 0x4d, 0x0b, 0xf7, 0xcd, 0x55,
+	0xdf, 0x4e, 0x8c, 0x46, 0x8a, 0x9d, 0xf4, 0xe5, 0x64, 0xc3, 0xb0, 0x24, 0x0d, 0x82, 0x62, 0xed,
+	0x5a, 0x38, 0xcb, 0x80, 0x0d, 0x5b, 0x5b, 0x59, 0x62, 0x6c, 0xc5, 0x36, 0xa9, 0x92, 0x94, 0x9b,
+	0xac, 0x0b, 0x30, 0xec, 0x6a, 0x17, 0xdb, 0xcd, 0x76, 0xb7, 0x6f, 0xb0, 0x8b, 0x7d, 0x9a, 0x5e,
+	0xef, 0x6e, 0x1f, 0x64, 0x20, 0x45, 0xaa, 0x4e, 0x5b, 0xc5, 0xb2, 0x03, 0xec, 0x2a, 0x21, 0x4d,
+	0x3e, 0xbf, 0xe7, 0x4f, 0x91, 0xd4, 0x03, 0xc1, 0xd9, 0x5e, 0xd5, 0x09, 0x69, 0x67, 0xdf, 0xdd,
+	0xa3, 0xe4, 0x39, 0xf7, 0xdb, 0x76, 0xc8, 0xa8, 0xa0, 0x28, 0xdf, 0xab, 0x96, 0x2e, 0x36, 0x29,
+	0x6d, 0x76, 0xb0, 0xe3, 0x86, 0x81, 0xe3, 0x12, 0x42, 0x85, 0x2b, 0x02, 0x4a, 0x78, 0x3c, 0xa2,
+	0x74, 0x41, 0xff, 0xaa, 0x5a, 0x8d, 0x68, 0xc7, 0xc1, 0xdd, 0x50, 0xec, 0xeb, 0x1f, 0x6f, 0xab,
+	0x3f, 0xde, 0x42, 0x13, 0x93, 0x05, 0xfe, 0xca, 0x6d, 0x36, 0x31, 0x73, 0x68, 0xa8, 0xa6, 0x7f,
+	0x40, 0x6a, 0xaa, 0x57, 0x75, 0x1a, 0x2e, 0xc7, 0xba, 0x39, 0xdb, 0xab, 0x3a, 0x1e, 0xf5, 0xf1,
+	0x73, 0x86, 0x77, 0x74, 0x57, 0xa1, 0x57, 0x75, 0x58, 0x44, 0x74, 0xab, 0x28, 0x3d, 0x33, 0xba,
+	0x8b, 0x3d, 0xd1, 0x37, 0xa5, 0x87, 0x19, 0x7f, 0x47, 0xd4, 0x8d, 0x44, 0x2b, 0x6e, 0xd6, 0xde,
+	0xcc, 0x01, 0xd4, 0x23, 0xb2, 0x85, 0x59, 0x2f, 0xf0, 0x30, 0x7a, 0x01, 0xe3, 0x8f, 0x02, 0x2e,
+	0xea, 0x11, 0xe1, 0x68, 0xce, 0xee, 0x55, 0xed, 0xa7, 0xb1, 0xde, 0x1a, 0xf5, 0xf7, 0xeb, 0xf8,
+	0x65, 0x84, 0xb9, 0x28, 0x9d, 0x91, 0xfd, 0x66, 0x54, 0x1d, 0xf3, 0x90, 0x12, 0x8e, 0xad, 0x9b,
+	0x3f, 0xbe, 0xf9, 0xfb, 0xb7, 0x7c, 0x19, 0x5d, 0x56, 0xeb, 0xd2, 0xab, 0x3a, 0xaf, 0xe9, 0x2b,
+	0x82, 0xd9, 0x81, 0xf3, 0x5a, 0x5b, 0x3a, 0x90, 0x4e, 0x39, 0x6a, 0x01, 0x92, 0x73, 0xd7, 0x28,
+	0x6d, 0x77, 0x5d, 0xd6, 0xc6, 0xbe, 0x62, 0x29, 0xcd, 0x27, 0x72, 0xc2, 0x08, 0xa4, 0x86, 0xd6,
+	0xe2, 0x09, 0x53, 0x91, 0x30, 0x14, 0xe5, 0xdc, 0x55, 0xe6, 0xb5, 0x82, 0xde, 0x08, 0x9c, 0x1b,
+	0x8a, 0x73, 0x05, 0x5d, 0x32, 0x1c, 0x37, 0x56, 0x7a, 0x07, 0xb3, 0x05, 0x13, 0xeb, 0x0c, 0xbb,
+	0x02, 0xd7, 0x23, 0x82, 0x90, 0x54, 0xaa, 0x47, 0xa4, 0x5f, 0xfd, 0x94, 0xee, 0xb3, 0xe6, 0x95,
+	0xe0, 0x35, 0x6b, 0xc0, 0x12, 0xad, 0xe4, 0x2a, 0xe8, 0x1b, 0x18, 0xdb, 0xc4, 0xd2, 0x0e, 0x2a,
+	0x19, 0xc7, 0xfe, 0x06, 0x11, 0x81, 0xd8, 0xdf, 0xde, 0x7e, 0xe8, 0xbf, 0xa7, 0xbc, 0xa0, 0x94,
+	0x6f, 0xa1, 0x1b, 0x47, 0x2b, 0x3b, 0xaf, 0xa3, 0x28, 0xf0, 0x0f, 0xd0, 0x33, 0x98, 0xd8, 0x0e,
+	0xfd, 0x2c, 0x96, 0x97, 0x95, 0xb0, 0x5d, 0x9a, 0x1f, 0x24, 0x2c, 0x77, 0xa1, 0x12, 0x97, 0xee,
+	0xbf, 0x85, 0xf1, 0xa7, 0xae, 0xf0, 0x5a, 0x59, 0xe5, 0x6b, 0xc3, 0xc9, 0x13, 0x98, 0x78, 0x80,
+	0x3b, 0x38, 0xb6, 0x7f, 0xd4, 0xfa, 0xcc, 0xd9, 0xf1, 0x61, 0xb4, 0xcd, 0x61, 0xb4, 0x37, 0xe4,
+	0x61, 0x34, 0xcb, 0x55, 0xc9, 0xb8, 0x5c, 0x04, 0x20, 0xe1, 0xa5, 0x1f, 0x8b, 0x34, 0xd8, 0xa2,
+	0x82, 0x55, 0x06, 0xc2, 0x7c, 0x85, 0x90, 0xf5, 0x09, 0x38, 0xb5, 0x25, 0x68, 0x38, 0x6a, 0x75,
+	0x77, 0x14, 0xd0, 0xb1, 0x2a, 0x99, 0xaa, 0x73, 0xb8, 0xa0, 0xa1, 0xa4, 0xee, 0xc2, 0xb8, 0xa6,
+	0x0e, 0x5f, 0xa3, 0xad, 0x90, 0xff, 0xb3, 0xae, 0x0d, 0x40, 0x1a, 0xd6, 0x0f, 0x39, 0x98, 0x7a,
+	0x48, 0x7a, 0x6e, 0x27, 0x30, 0xbb, 0x70, 0x94, 0x42, 0x3f, 0x52, 0xd4, 0x3b, 0xd6, 0x62, 0xb6,
+	0x42, 0x83, 0x04, 0x28, 0x2d, 0xf4, 0x60, 0xfa, 0x90, 0x83, 0xe1, 0x8b, 0xd6, 0x9b, 0xd7, 0x1a,
+	0xb4, 0x79, 0x0f, 0x73, 0xdb, 0x00, 0x75, 0xcc, 0x85, 0xcb, 0xb2, 0x9f, 0xee, 0xfb, 0x0a, 0x54,
+	0xb3, 0x16, 0xb2, 0xd5, 0xc9, 0x62, 0x79, 0x09, 0x0b, 0x60, 0xa2, 0x8e, 0x79, 0xd4, 0xc5, 0x99,
+	0x59, 0xf7, 0x14, 0xab, 0x6a, 0xdd, 0xce, 0xcc, 0x8a, 0xba, 0xaa, 0xae, 0x57, 0x00, 0xfa, 0xa6,
+	0x3d, 0xee, 0xbe, 0xcd, 0x58, 0xa6, 0xbe, 0x8d, 0x25, 0x58, 0x2e, 0x28, 0x65, 0xff, 0x16, 0x98,
+	0xc5, 0x34, 0xb4, 0x0f, 0x93, 0xe6, 0x2d, 0x36, 0x2a, 0xf9, 0xae, 0x22, 0x2f, 0x5a, 0x76, 0x36,
+	0xb2, 0x79, 0xd1, 0xa1, 0x03, 0x98, 0xda, 0x26, 0xc7, 0x85, 0xeb, 0x6d, 0x55, 0xc9, 0x78, 0x7c,
+	0x22, 0x92, 0xe0, 0x7f, 0xc9, 0xc1, 0xe9, 0x2d, 0xbd, 0x85, 0xbf, 0xc0, 0x84, 0x53, 0xd6, 0xa0,
+	0x2e, 0xf3, 0x47, 0x72, 0xb1, 0xa6, 0x5c, 0x7c, 0x6c, 0xdd, 0xcb, 0xe6, 0x42, 0xbc, 0xc5, 0x39,
+	0xc9, 0x36, 0xff, 0x29, 0x07, 0x48, 0xdf, 0x5d, 0xc7, 0xb5, 0xf3, 0x89, 0xb2, 0x73, 0xbf, 0x72,
+	0x77, 0x14, 0x3b, 0x34, 0x44, 0x7b, 0x30, 0x1d, 0xbf, 0xb8, 0xb7, 0x84, 0x2b, 0x22, 0x8e, 0xf9,
+	0x91, 0x2e, 0xd4, 0xcb, 0x31, 0x1e, 0x99, 0xc4, 0x0e, 0xbd, 0x27, 0x90, 0x9d, 0xf5, 0xfa, 0xd6,
+	0x9c, 0x03, 0x98, 0x49, 0x72, 0x48, 0x2c, 0x89, 0xce, 0x49, 0xf9, 0x98, 0x6a, 0x20, 0x47, 0x57,
+	0xff, 0x7f, 0xc5, 0x5e, 0xb2, 0x86, 0x64, 0xcb, 0x67, 0xf0, 0xbd, 0x29, 0x7c, 0x9d, 0xfa, 0xb8,
+	0x8e, 0x77, 0x8e, 0x2e, 0xfc, 0x9c, 0x49, 0x5c, 0x7a, 0x74, 0x52, 0xbd, 0x3e, 0x8b, 0x28, 0xe3,
+	0x59, 0x94, 0x79, 0x98, 0xe1, 0x1d, 0xf4, 0x73, 0x0e, 0x8a, 0x49, 0xf5, 0x5a, 0x33, 0xbe, 0xd0,
+	0x75, 0xa3, 0xff, 0x42, 0x9f, 0xed, 0xeb, 0xc7, 0x0c, 0x13, 0x0f, 0x5b, 0x8f, 0x15, 0x76, 0xd3,
+	0x5a, 0x4b, 0xb0, 0x58, 0x79, 0xb6, 0x0d, 0x5d, 0x37, 0xdf, 0x31, 0xa1, 0x7b, 0x0f, 0x79, 0x59,
+	0xc9, 0x55, 0x6a, 0x7f, 0x15, 0x60, 0x5a, 0xbf, 0x49, 0x4c, 0xb2, 0xc6, 0x50, 0x90, 0xf5, 0xea,
+	0xde, 0xb4, 0x24, 0x7a, 0xde, 0xac, 0x8b, 0x19, 0x97, 0x9e, 0x46, 0xcd, 0xc2, 0x68, 0x4b, 0xdc,
+	0xe9, 0x04, 0x5c, 0xa0, 0xdd, 0x38, 0xf4, 0xea, 0xe9, 0x9f, 0xbb, 0x5d, 0x3c, 0x3c, 0x2a, 0x35,
+	0xca, 0x27, 0x28, 0xa2, 0x74, 0x05, 0xcc, 0x1d, 0x8e, 0xf2, 0x23, 0x17, 0x57, 0x51, 0xc4, 0xeb,
+	0xc8, 0x4a, 0x8f, 0xf4, 0x86, 0x8d, 0x5e, 0xc2, 0x99, 0xfe, 0x58, 0x3f, 0x32, 0x53, 0xa7, 0x71,
+	0x74, 0x35, 0x35, 0xde, 0x27, 0xc8, 0x67, 0x30, 0x15, 0x6f, 0x2e, 0x2d, 0x92, 0xc2, 0x9a, 0xec,
+	0x0b, 0x10, 0xa6, 0x24, 0xeb, 0x4a, 0xea, 0x22, 0x7a, 0x4a, 0x32, 0xce, 0xcb, 0xb0, 0x89, 0x8d,
+	0xc3, 0xd4, 0x1c, 0xf2, 0x21, 0xf9, 0xb7, 0x2b, 0xf6, 0x9e, 0x7c, 0x72, 0x60, 0x90, 0x07, 0x53,
+	0x71, 0xdc, 0x1f, 0x8a, 0xa0, 0x43, 0x72, 0x29, 0x03, 0x41, 0xd6, 0xd0, 0x80, 0x82, 0xca, 0xfc,
+	0xa3, 0x30, 0x6a, 0x19, 0x19, 0x5d, 0x28, 0xc6, 0x41, 0x7c, 0x63, 0x2f, 0xc4, 0x2c, 0xe8, 0x62,
+	0x22, 0x86, 0x4e, 0x6d, 0xfa, 0xb1, 0x57, 0xae, 0x7e, 0x18, 0xd9, 0xbf, 0x6e, 0x6d, 0x98, 0xd6,
+	0xbb, 0x6c, 0x50, 0x51, 0x03, 0x60, 0xd6, 0xd5, 0xf4, 0xdb, 0xcc, 0xc4, 0x18, 0x02, 0xb3, 0x3a,
+	0xc6, 0x1c, 0xbf, 0xb8, 0xa3, 0x78, 0x26, 0xbd, 0x74, 0x61, 0xc6, 0x1c, 0xdc, 0x51, 0xab, 0x33,
+	0x5b, 0xdc, 0x4a, 0xa7, 0x25, 0x91, 0xe1, 0x25, 0xcc, 0xbe, 0x4d, 0x2c, 0xa3, 0x02, 0x6f, 0x2b,
+	0xe0, 0xcd, 0xca, 0xf5, 0x74, 0x60, 0x5f, 0x4a, 0x69, 0xc2, 0xcc, 0x06, 0x71, 0x1b, 0x1d, 0xf3,
+	0xf4, 0xd6, 0x1f, 0x0e, 0x0d, 0xbc, 0xae, 0x80, 0x97, 0xad, 0x8b, 0xe9, 0x40, 0x2f, 0x40, 0x21,
+	0x14, 0x1f, 0x04, 0xfc, 0x78, 0xa4, 0xa1, 0x4a, 0xab, 0x6d, 0xc1, 0xe4, 0x6a, 0x24, 0x5a, 0xe6,
+	0xdd, 0xf2, 0x00, 0xfe, 0xfb, 0x88, 0x36, 0x03, 0x12, 0xdf, 0x4b, 0xeb, 0x0c, 0xfb, 0xbc, 0x9f,
+	0x39, 0x2e, 0x7b, 0xe5, 0x78, 0xeb, 0x82, 0xa2, 0x9c, 0x45, 0xa7, 0x0d, 0x25, 0xe2, 0x98, 0x71,
+	0x47, 0xd0, 0x36, 0x26, 0xb5, 0x17, 0x30, 0xf3, 0xa5, 0xfe, 0x56, 0x64, 0x84, 0x1f, 0xc3, 0xe4,
+	0x26, 0x16, 0xa6, 0x17, 0xa5, 0x98, 0x2f, 0x15, 0x24, 0xc0, 0x8c, 0xb2, 0xce, 0x2b, 0x08, 0x42,
+	0x45, 0x03, 0x31, 0x5f, 0xa0, 0xd6, 0xfe, 0xcc, 0xff, 0xba, 0xfa, 0x47, 0x1e, 0x35, 0xa1, 0xf0,
+	0x54, 0x7f, 0x5a, 0x2b, 0x73, 0xbf, 0x6d, 0x3d, 0x39, 0xdc, 0x46, 0xf3, 0x2d, 0x21, 0x42, 0xbe,
+	0xe2, 0x38, 0xcd, 0x40, 0xb4, 0xa2, 0x86, 0xed, 0xd1, 0x6e, 0xf2, 0x2d, 0x2e, 0xf9, 0x67, 0x81,
+	0xfb, 0x6d, 0x5e, 0x3a, 0xe3, 0x51, 0x22, 0x5c, 0x4f, 0x7c, 0x6a, 0xba, 0xe5, 0xe0, 0xda, 0x58,
+	0xd5, 0xae, 0x2e, 0xdb, 0xcb, 0x95, 0x93, 0xb9, 0xfc, 0x89, 0x93, 0xb5, 0xa2, 0x1b, 0x86, 0x9d,
+	0xc0, 0x53, 0x9f, 0xd6, 0x9c, 0x5d, 0x4e, 0xc9, 0xca, 0x7b, 0x3d, 0xf5, 0x15, 0x38, 0xb1, 0xbc,
+	0xb8, 0x84, 0x96, 0xa0, 0xfa, 0x15, 0x8d, 0xca, 0x3e, 0x25, 0xb7, 0x44, 0xb9, 0xe5, 0xf6, 0x70,
+	0x39, 0xc4, 0xac, 0x1b, 0x70, 0x69, 0xbf, 0x2c, 0x68, 0xd9, 0xf5, 0x3c, 0xcc, 0x79, 0x59, 0xb4,
+	0x70, 0x99, 0x61, 0x4e, 0x23, 0xe6, 0x61, 0xbb, 0x3e, 0x2f, 0xe7, 0x2e, 0x23, 0x0b, 0xce, 0xd7,
+	0x75, 0x5f, 0xd9, 0xa7, 0x98, 0x97, 0x09, 0x15, 0x65, 0xbc, 0x17, 0x70, 0x61, 0xa3, 0x31, 0x38,
+	0xf9, 0x7b, 0x3e, 0x77, 0xea, 0xeb, 0x2b, 0x70, 0x09, 0xc6, 0x56, 0xc3, 0xe0, 0x33, 0xbc, 0x8f,
+	0x4e, 0x8f, 0xe7, 0x4b, 0x53, 0xf2, 0xa9, 0x50, 0x16, 0x7c, 0xa7, 0xac, 0x94, 0xf3, 0x8d, 0x02,
+	0x40, 0x32, 0xe0, 0x3f, 0x8d, 0x31, 0xb5, 0xce, 0x4b, 0xff, 0x04, 0x00, 0x00, 0xff, 0xff, 0x54,
+	0xca, 0xbd, 0x69, 0x8d, 0x14, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -167,2654 +142,1740 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// BuildServiceClient is the client API for BuildService service.
+// RunServiceClient is the client API for RunService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type BuildServiceClient interface {
-	// List builds
-	ListBuilds(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListBuildsResponse, error)
-	// List bookmarked builds
-	ListBookmarkedBuilds(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListBuildsResponse, error)
-	// List archived builds
-	ListArchivedBuilds(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListBuildsResponse, error)
-	// Create new build
-	CreateBuild(ctx context.Context, in *BuildBodyRequest, opts ...grpc.CallOption) (*Build, error)
-	// Get build
-	GetBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Build, error)
-	// Update build
-	UpdateBuild(ctx context.Context, in *BuildBodyRequest, opts ...grpc.CallOption) (*Build, error)
-	// Patch build
-	PatchBuild(ctx context.Context, in *BuildBodyRequest, opts ...grpc.CallOption) (*Build, error)
-	// Delete build
-	DeleteBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Delete builds
-	DeleteBuilds(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop build
-	StopBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop builds
-	StopBuilds(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Restart build
-	RestartBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Build, error)
-	// Archive build
-	ArchiveBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Restore build
-	RestoreBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Bookmark build
-	BookmarkBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// UnBookmark build
-	UnBookmarkBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Get build status
-	GetBuildStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	// List build statuses
-	ListBuildStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*ListBuildStatusesResponse, error)
-	// Create new build status
-	CreateBuildStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*BuildStatus, error)
-	// Get build code ref
-	GetBuildCodeRef(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*CodeReference, error)
-	// Create build code ref
-	CreateBuildCodeRef(ctx context.Context, in *CodeReferenceBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
+type RunServiceClient interface {
+	// List runs
+	ListRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
+	// List bookmarked runs
+	ListBookmarkedRuns(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
+	// List archived runs
+	ListArchivedRuns(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
+	// Create new run
+	CreateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
+	// Get run
+	GetRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error)
+	// Update run
+	UpdateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
+	// Patch run
+	PatchRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
+	// Delete run
+	DeleteRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Delete runs
+	DeleteRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Stop run
+	StopRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Stop runs
+	StopRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Stop run
+	InvalidateRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Invalidate runs
+	InvalidateRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Restart run
+	RestartRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error)
+	// Resume run
+	ResumeRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error)
+	// Archive run
+	ArchiveRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Restore run
+	RestoreRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Bookmark run
+	BookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// UnBookmark run
+	UnBookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Start run tensorboard
+	StartRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Stop run tensorboard
+	StopRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Get run status
+	GetRunStatuses(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*StatusResponse, error)
+	// Create new run status
+	CreateRunStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Get run code ref
+	GetRunCodeRefs(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*ListCodeRefResponse, error)
+	// Get run code ref
+	CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
 }
 
-type buildServiceClient struct {
+type runServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewBuildServiceClient(cc *grpc.ClientConn) BuildServiceClient {
-	return &buildServiceClient{cc}
+func NewRunServiceClient(cc *grpc.ClientConn) RunServiceClient {
+	return &runServiceClient{cc}
 }
 
-func (c *buildServiceClient) ListBuilds(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListBuildsResponse, error) {
-	out := new(ListBuildsResponse)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/ListBuilds", in, out, opts...)
+func (c *runServiceClient) ListRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+	out := new(ListRunsResponse)
+	err := c.cc.Invoke(ctx, "/v1.RunService/ListRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) ListBookmarkedBuilds(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListBuildsResponse, error) {
-	out := new(ListBuildsResponse)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/ListBookmarkedBuilds", in, out, opts...)
+func (c *runServiceClient) ListBookmarkedRuns(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+	out := new(ListRunsResponse)
+	err := c.cc.Invoke(ctx, "/v1.RunService/ListBookmarkedRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) ListArchivedBuilds(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListBuildsResponse, error) {
-	out := new(ListBuildsResponse)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/ListArchivedBuilds", in, out, opts...)
+func (c *runServiceClient) ListArchivedRuns(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+	out := new(ListRunsResponse)
+	err := c.cc.Invoke(ctx, "/v1.RunService/ListArchivedRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) CreateBuild(ctx context.Context, in *BuildBodyRequest, opts ...grpc.CallOption) (*Build, error) {
-	out := new(Build)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/CreateBuild", in, out, opts...)
+func (c *runServiceClient) CreateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
+	out := new(Run)
+	err := c.cc.Invoke(ctx, "/v1.RunService/CreateRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) GetBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Build, error) {
-	out := new(Build)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/GetBuild", in, out, opts...)
+func (c *runServiceClient) GetRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+	out := new(Run)
+	err := c.cc.Invoke(ctx, "/v1.RunService/GetRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) UpdateBuild(ctx context.Context, in *BuildBodyRequest, opts ...grpc.CallOption) (*Build, error) {
-	out := new(Build)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/UpdateBuild", in, out, opts...)
+func (c *runServiceClient) UpdateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
+	out := new(Run)
+	err := c.cc.Invoke(ctx, "/v1.RunService/UpdateRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) PatchBuild(ctx context.Context, in *BuildBodyRequest, opts ...grpc.CallOption) (*Build, error) {
-	out := new(Build)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/PatchBuild", in, out, opts...)
+func (c *runServiceClient) PatchRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
+	out := new(Run)
+	err := c.cc.Invoke(ctx, "/v1.RunService/PatchRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) DeleteBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) DeleteRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/DeleteBuild", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/DeleteRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) DeleteBuilds(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) DeleteRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/DeleteBuilds", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/DeleteRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) StopBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) StopRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/StopBuild", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/StopRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) StopBuilds(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) StopRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/StopBuilds", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/StopRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) RestartBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Build, error) {
-	out := new(Build)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/RestartBuild", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *buildServiceClient) ArchiveBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) InvalidateRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/ArchiveBuild", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/InvalidateRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) RestoreBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) InvalidateRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/RestoreBuild", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/InvalidateRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) BookmarkBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) RestartRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+	out := new(Run)
+	err := c.cc.Invoke(ctx, "/v1.RunService/RestartRun", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runServiceClient) ResumeRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+	out := new(Run)
+	err := c.cc.Invoke(ctx, "/v1.RunService/ResumeRun", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runServiceClient) ArchiveRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/BookmarkBuild", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/ArchiveRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) UnBookmarkBuild(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runServiceClient) RestoreRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/UnBookmarkBuild", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/RestoreRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) GetBuildStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
+func (c *runServiceClient) BookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.RunService/BookmarkRun", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runServiceClient) UnBookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.RunService/UnBookmarkRun", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runServiceClient) StartRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.RunService/StartRunTensorboard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runServiceClient) StopRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.RunService/StopRunTensorboard", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runServiceClient) GetRunStatuses(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
 	out := new(StatusResponse)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/GetBuildStatuses", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/GetRunStatuses", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) ListBuildStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*ListBuildStatusesResponse, error) {
-	out := new(ListBuildStatusesResponse)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/ListBuildStatuses", in, out, opts...)
+func (c *runServiceClient) CreateRunStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/v1.RunService/CreateRunStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) CreateBuildStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*BuildStatus, error) {
-	out := new(BuildStatus)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/CreateBuildStatus", in, out, opts...)
+func (c *runServiceClient) GetRunCodeRefs(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*ListCodeRefResponse, error) {
+	out := new(ListCodeRefResponse)
+	err := c.cc.Invoke(ctx, "/v1.RunService/GetRunCodeRefs", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) GetBuildCodeRef(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*CodeReference, error) {
+func (c *runServiceClient) CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error) {
 	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/GetBuildCodeRef", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunService/CreateRunCodeRef", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *buildServiceClient) CreateBuildCodeRef(ctx context.Context, in *CodeReferenceBodyRequest, opts ...grpc.CallOption) (*CodeReference, error) {
-	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.BuildService/CreateBuildCodeRef", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+// RunServiceServer is the server API for RunService service.
+type RunServiceServer interface {
+	// List runs
+	ListRuns(context.Context, *ProjectBodyRequest) (*ListRunsResponse, error)
+	// List bookmarked runs
+	ListBookmarkedRuns(context.Context, *OwnerBodyRequest) (*ListRunsResponse, error)
+	// List archived runs
+	ListArchivedRuns(context.Context, *OwnerBodyRequest) (*ListRunsResponse, error)
+	// Create new run
+	CreateRun(context.Context, *RunBodyRequest) (*Run, error)
+	// Get run
+	GetRun(context.Context, *OwnedEntityUUIdRequest) (*Run, error)
+	// Update run
+	UpdateRun(context.Context, *RunBodyRequest) (*Run, error)
+	// Patch run
+	PatchRun(context.Context, *RunBodyRequest) (*Run, error)
+	// Delete run
+	DeleteRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Delete runs
+	DeleteRuns(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Stop run
+	StopRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Stop runs
+	StopRuns(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Stop run
+	InvalidateRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Invalidate runs
+	InvalidateRuns(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Restart run
+	RestartRun(context.Context, *OwnedEntityUUIdRequest) (*Run, error)
+	// Resume run
+	ResumeRun(context.Context, *OwnedEntityUUIdRequest) (*Run, error)
+	// Archive run
+	ArchiveRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Restore run
+	RestoreRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Bookmark run
+	BookmarkRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// UnBookmark run
+	UnBookmarkRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Start run tensorboard
+	StartRunTensorboard(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Stop run tensorboard
+	StopRunTensorboard(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Get run status
+	GetRunStatuses(context.Context, *OwnedEntityUUIdRequest) (*StatusResponse, error)
+	// Create new run status
+	CreateRunStatus(context.Context, *EntityStatusRequest) (*empty.Empty, error)
+	// Get run code ref
+	GetRunCodeRefs(context.Context, *OwnedEntityUUIdRequest) (*ListCodeRefResponse, error)
+	// Get run code ref
+	CreateRunCodeRef(context.Context, *CodeRefBodyRequest) (*CodeReference, error)
 }
 
-// BuildServiceServer is the server API for BuildService service.
-type BuildServiceServer interface {
-	// List builds
-	ListBuilds(context.Context, *ProjectBodyRequest) (*ListBuildsResponse, error)
-	// List bookmarked builds
-	ListBookmarkedBuilds(context.Context, *OwnerBodyRequest) (*ListBuildsResponse, error)
-	// List archived builds
-	ListArchivedBuilds(context.Context, *OwnerBodyRequest) (*ListBuildsResponse, error)
-	// Create new build
-	CreateBuild(context.Context, *BuildBodyRequest) (*Build, error)
-	// Get build
-	GetBuild(context.Context, *OwnedEntityIdRequest) (*Build, error)
-	// Update build
-	UpdateBuild(context.Context, *BuildBodyRequest) (*Build, error)
-	// Patch build
-	PatchBuild(context.Context, *BuildBodyRequest) (*Build, error)
-	// Delete build
-	DeleteBuild(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Delete builds
-	DeleteBuilds(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop build
-	StopBuild(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop builds
-	StopBuilds(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
-	// Restart build
-	RestartBuild(context.Context, *OwnedEntityIdRequest) (*Build, error)
-	// Archive build
-	ArchiveBuild(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Restore build
-	RestoreBuild(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Bookmark build
-	BookmarkBuild(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// UnBookmark build
-	UnBookmarkBuild(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Get build status
-	GetBuildStatuses(context.Context, *OwnedEntityIdRequest) (*StatusResponse, error)
-	// List build statuses
-	ListBuildStatuses(context.Context, *OwnedEntityIdRequest) (*ListBuildStatusesResponse, error)
-	// Create new build status
-	CreateBuildStatus(context.Context, *EntityStatusRequest) (*BuildStatus, error)
-	// Get build code ref
-	GetBuildCodeRef(context.Context, *OwnedEntityIdRequest) (*CodeReference, error)
-	// Create build code ref
-	CreateBuildCodeRef(context.Context, *CodeReferenceBodyRequest) (*CodeReference, error)
+// UnimplementedRunServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedRunServiceServer struct {
 }
 
-// UnimplementedBuildServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedBuildServiceServer struct {
+func (*UnimplementedRunServiceServer) ListRuns(ctx context.Context, req *ProjectBodyRequest) (*ListRunsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRuns not implemented")
+}
+func (*UnimplementedRunServiceServer) ListBookmarkedRuns(ctx context.Context, req *OwnerBodyRequest) (*ListRunsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedRuns not implemented")
+}
+func (*UnimplementedRunServiceServer) ListArchivedRuns(ctx context.Context, req *OwnerBodyRequest) (*ListRunsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedRuns not implemented")
+}
+func (*UnimplementedRunServiceServer) CreateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRun not implemented")
+}
+func (*UnimplementedRunServiceServer) GetRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRun not implemented")
+}
+func (*UnimplementedRunServiceServer) UpdateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRun not implemented")
+}
+func (*UnimplementedRunServiceServer) PatchRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchRun not implemented")
+}
+func (*UnimplementedRunServiceServer) DeleteRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRun not implemented")
+}
+func (*UnimplementedRunServiceServer) DeleteRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRuns not implemented")
+}
+func (*UnimplementedRunServiceServer) StopRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StopRun not implemented")
+}
+func (*UnimplementedRunServiceServer) StopRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StopRuns not implemented")
+}
+func (*UnimplementedRunServiceServer) InvalidateRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRun not implemented")
+}
+func (*UnimplementedRunServiceServer) InvalidateRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRuns not implemented")
+}
+func (*UnimplementedRunServiceServer) RestartRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestartRun not implemented")
+}
+func (*UnimplementedRunServiceServer) ResumeRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResumeRun not implemented")
+}
+func (*UnimplementedRunServiceServer) ArchiveRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRun not implemented")
+}
+func (*UnimplementedRunServiceServer) RestoreRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RestoreRun not implemented")
+}
+func (*UnimplementedRunServiceServer) BookmarkRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BookmarkRun not implemented")
+}
+func (*UnimplementedRunServiceServer) UnBookmarkRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkRun not implemented")
+}
+func (*UnimplementedRunServiceServer) StartRunTensorboard(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StartRunTensorboard not implemented")
+}
+func (*UnimplementedRunServiceServer) StopRunTensorboard(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StopRunTensorboard not implemented")
+}
+func (*UnimplementedRunServiceServer) GetRunStatuses(ctx context.Context, req *OwnedEntityUUIdRequest) (*StatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRunStatuses not implemented")
+}
+func (*UnimplementedRunServiceServer) CreateRunStatus(ctx context.Context, req *EntityStatusRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRunStatus not implemented")
+}
+func (*UnimplementedRunServiceServer) GetRunCodeRefs(ctx context.Context, req *OwnedEntityUUIdRequest) (*ListCodeRefResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRunCodeRefs not implemented")
+}
+func (*UnimplementedRunServiceServer) CreateRunCodeRef(ctx context.Context, req *CodeRefBodyRequest) (*CodeReference, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRunCodeRef not implemented")
 }
 
-func (*UnimplementedBuildServiceServer) ListBuilds(ctx context.Context, req *ProjectBodyRequest) (*ListBuildsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBuilds not implemented")
-}
-func (*UnimplementedBuildServiceServer) ListBookmarkedBuilds(ctx context.Context, req *OwnerBodyRequest) (*ListBuildsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedBuilds not implemented")
-}
-func (*UnimplementedBuildServiceServer) ListArchivedBuilds(ctx context.Context, req *OwnerBodyRequest) (*ListBuildsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedBuilds not implemented")
-}
-func (*UnimplementedBuildServiceServer) CreateBuild(ctx context.Context, req *BuildBodyRequest) (*Build, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) GetBuild(ctx context.Context, req *OwnedEntityIdRequest) (*Build, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) UpdateBuild(ctx context.Context, req *BuildBodyRequest) (*Build, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) PatchBuild(ctx context.Context, req *BuildBodyRequest) (*Build, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PatchBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) DeleteBuild(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) DeleteBuilds(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteBuilds not implemented")
-}
-func (*UnimplementedBuildServiceServer) StopBuild(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) StopBuilds(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopBuilds not implemented")
-}
-func (*UnimplementedBuildServiceServer) RestartBuild(ctx context.Context, req *OwnedEntityIdRequest) (*Build, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RestartBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) ArchiveBuild(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ArchiveBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) RestoreBuild(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RestoreBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) BookmarkBuild(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BookmarkBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) UnBookmarkBuild(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkBuild not implemented")
-}
-func (*UnimplementedBuildServiceServer) GetBuildStatuses(ctx context.Context, req *OwnedEntityIdRequest) (*StatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBuildStatuses not implemented")
-}
-func (*UnimplementedBuildServiceServer) ListBuildStatuses(ctx context.Context, req *OwnedEntityIdRequest) (*ListBuildStatusesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBuildStatuses not implemented")
-}
-func (*UnimplementedBuildServiceServer) CreateBuildStatus(ctx context.Context, req *EntityStatusRequest) (*BuildStatus, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateBuildStatus not implemented")
-}
-func (*UnimplementedBuildServiceServer) GetBuildCodeRef(ctx context.Context, req *OwnedEntityIdRequest) (*CodeReference, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBuildCodeRef not implemented")
-}
-func (*UnimplementedBuildServiceServer) CreateBuildCodeRef(ctx context.Context, req *CodeReferenceBodyRequest) (*CodeReference, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateBuildCodeRef not implemented")
+func RegisterRunServiceServer(s *grpc.Server, srv RunServiceServer) {
+	s.RegisterService(&_RunService_serviceDesc, srv)
 }
 
-func RegisterBuildServiceServer(s *grpc.Server, srv BuildServiceServer) {
-	s.RegisterService(&_BuildService_serviceDesc, srv)
-}
-
-func _BuildService_ListBuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunService_ListRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).ListBuilds(ctx, in)
+		return srv.(RunServiceServer).ListRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/ListBuilds",
+		FullMethod: "/v1.RunService/ListRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).ListBuilds(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunServiceServer).ListRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_ListBookmarkedBuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunService_ListBookmarkedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).ListBookmarkedBuilds(ctx, in)
+		return srv.(RunServiceServer).ListBookmarkedRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/ListBookmarkedBuilds",
+		FullMethod: "/v1.RunService/ListBookmarkedRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).ListBookmarkedBuilds(ctx, req.(*OwnerBodyRequest))
+		return srv.(RunServiceServer).ListBookmarkedRuns(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_ListArchivedBuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunService_ListArchivedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).ListArchivedBuilds(ctx, in)
+		return srv.(RunServiceServer).ListArchivedRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/ListArchivedBuilds",
+		FullMethod: "/v1.RunService/ListArchivedRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).ListArchivedBuilds(ctx, req.(*OwnerBodyRequest))
+		return srv.(RunServiceServer).ListArchivedRuns(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_CreateBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BuildBodyRequest)
+func _RunService_CreateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).CreateBuild(ctx, in)
+		return srv.(RunServiceServer).CreateRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/CreateBuild",
+		FullMethod: "/v1.RunService/CreateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).CreateBuild(ctx, req.(*BuildBodyRequest))
+		return srv.(RunServiceServer).CreateRun(ctx, req.(*RunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_GetBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_GetRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).GetBuild(ctx, in)
+		return srv.(RunServiceServer).GetRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/GetBuild",
+		FullMethod: "/v1.RunService/GetRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).GetBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).GetRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_UpdateBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BuildBodyRequest)
+func _RunService_UpdateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).UpdateBuild(ctx, in)
+		return srv.(RunServiceServer).UpdateRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/UpdateBuild",
+		FullMethod: "/v1.RunService/UpdateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).UpdateBuild(ctx, req.(*BuildBodyRequest))
+		return srv.(RunServiceServer).UpdateRun(ctx, req.(*RunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_PatchBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BuildBodyRequest)
+func _RunService_PatchRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).PatchBuild(ctx, in)
+		return srv.(RunServiceServer).PatchRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/PatchBuild",
+		FullMethod: "/v1.RunService/PatchRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).PatchBuild(ctx, req.(*BuildBodyRequest))
+		return srv.(RunServiceServer).PatchRun(ctx, req.(*RunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_DeleteBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).DeleteBuild(ctx, in)
+		return srv.(RunServiceServer).DeleteRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/DeleteBuild",
+		FullMethod: "/v1.RunService/DeleteRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).DeleteBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).DeleteRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_DeleteBuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BuildServiceServer).DeleteBuilds(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.BuildService/DeleteBuilds",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).DeleteBuilds(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BuildService_StopBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(BuildServiceServer).StopBuild(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.BuildService/StopBuild",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).StopBuild(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _BuildService_StopBuilds_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunService_DeleteRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).StopBuilds(ctx, in)
+		return srv.(RunServiceServer).DeleteRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/StopBuilds",
+		FullMethod: "/v1.RunService/DeleteRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).StopBuilds(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunServiceServer).DeleteRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_RestartBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_StopRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).RestartBuild(ctx, in)
+		return srv.(RunServiceServer).StopRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/RestartBuild",
+		FullMethod: "/v1.RunService/StopRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).RestartBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).StopRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_ArchiveBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_StopRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).ArchiveBuild(ctx, in)
+		return srv.(RunServiceServer).StopRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/ArchiveBuild",
+		FullMethod: "/v1.RunService/StopRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).ArchiveBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).StopRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_RestoreBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).RestoreBuild(ctx, in)
+		return srv.(RunServiceServer).InvalidateRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/RestoreBuild",
+		FullMethod: "/v1.RunService/InvalidateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).RestoreBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).InvalidateRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_BookmarkBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_InvalidateRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).BookmarkBuild(ctx, in)
+		return srv.(RunServiceServer).InvalidateRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/BookmarkBuild",
+		FullMethod: "/v1.RunService/InvalidateRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).BookmarkBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).InvalidateRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_UnBookmarkBuild_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_RestartRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).UnBookmarkBuild(ctx, in)
+		return srv.(RunServiceServer).RestartRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/UnBookmarkBuild",
+		FullMethod: "/v1.RunService/RestartRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).UnBookmarkBuild(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).RestartRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_GetBuildStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_ResumeRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).GetBuildStatuses(ctx, in)
+		return srv.(RunServiceServer).ResumeRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/GetBuildStatuses",
+		FullMethod: "/v1.RunService/ResumeRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).GetBuildStatuses(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).ResumeRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_ListBuildStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).ListBuildStatuses(ctx, in)
+		return srv.(RunServiceServer).ArchiveRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/ListBuildStatuses",
+		FullMethod: "/v1.RunService/ArchiveRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).ListBuildStatuses(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).ArchiveRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_CreateBuildStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunService_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunServiceServer).RestoreRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunService/RestoreRun",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunServiceServer).RestoreRun(ctx, req.(*OwnedEntityUUIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunService_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunServiceServer).BookmarkRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunService/BookmarkRun",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunServiceServer).BookmarkRun(ctx, req.(*OwnedEntityUUIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunService_UnBookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunServiceServer).UnBookmarkRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunService/UnBookmarkRun",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunServiceServer).UnBookmarkRun(ctx, req.(*OwnedEntityUUIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunService_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunServiceServer).StartRunTensorboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunService/StartRunTensorboard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunServiceServer).StartRunTensorboard(ctx, req.(*OwnedEntityUUIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunService_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunServiceServer).StopRunTensorboard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunService/StopRunTensorboard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunServiceServer).StopRunTensorboard(ctx, req.(*OwnedEntityUUIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunService_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunServiceServer).GetRunStatuses(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunService/GetRunStatuses",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunServiceServer).GetRunStatuses(ctx, req.(*OwnedEntityUUIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunService_CreateRunStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EntityStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).CreateBuildStatus(ctx, in)
+		return srv.(RunServiceServer).CreateRunStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/CreateBuildStatus",
+		FullMethod: "/v1.RunService/CreateRunStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).CreateBuildStatus(ctx, req.(*EntityStatusRequest))
+		return srv.(RunServiceServer).CreateRunStatus(ctx, req.(*EntityStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_GetBuildCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _RunService_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).GetBuildCodeRef(ctx, in)
+		return srv.(RunServiceServer).GetRunCodeRefs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/GetBuildCodeRef",
+		FullMethod: "/v1.RunService/GetRunCodeRefs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).GetBuildCodeRef(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(RunServiceServer).GetRunCodeRefs(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BuildService_CreateBuildCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeReferenceBodyRequest)
+func _RunService_CreateRunCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CodeRefBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BuildServiceServer).CreateBuildCodeRef(ctx, in)
+		return srv.(RunServiceServer).CreateRunCodeRef(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.BuildService/CreateBuildCodeRef",
+		FullMethod: "/v1.RunService/CreateRunCodeRef",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BuildServiceServer).CreateBuildCodeRef(ctx, req.(*CodeReferenceBodyRequest))
+		return srv.(RunServiceServer).CreateRunCodeRef(ctx, req.(*CodeRefBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _BuildService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.BuildService",
-	HandlerType: (*BuildServiceServer)(nil),
+var _RunService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.RunService",
+	HandlerType: (*RunServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListBuilds",
-			Handler:    _BuildService_ListBuilds_Handler,
+			MethodName: "ListRuns",
+			Handler:    _RunService_ListRuns_Handler,
 		},
 		{
-			MethodName: "ListBookmarkedBuilds",
-			Handler:    _BuildService_ListBookmarkedBuilds_Handler,
+			MethodName: "ListBookmarkedRuns",
+			Handler:    _RunService_ListBookmarkedRuns_Handler,
 		},
 		{
-			MethodName: "ListArchivedBuilds",
-			Handler:    _BuildService_ListArchivedBuilds_Handler,
+			MethodName: "ListArchivedRuns",
+			Handler:    _RunService_ListArchivedRuns_Handler,
 		},
 		{
-			MethodName: "CreateBuild",
-			Handler:    _BuildService_CreateBuild_Handler,
+			MethodName: "CreateRun",
+			Handler:    _RunService_CreateRun_Handler,
 		},
 		{
-			MethodName: "GetBuild",
-			Handler:    _BuildService_GetBuild_Handler,
+			MethodName: "GetRun",
+			Handler:    _RunService_GetRun_Handler,
 		},
 		{
-			MethodName: "UpdateBuild",
-			Handler:    _BuildService_UpdateBuild_Handler,
+			MethodName: "UpdateRun",
+			Handler:    _RunService_UpdateRun_Handler,
 		},
 		{
-			MethodName: "PatchBuild",
-			Handler:    _BuildService_PatchBuild_Handler,
+			MethodName: "PatchRun",
+			Handler:    _RunService_PatchRun_Handler,
 		},
 		{
-			MethodName: "DeleteBuild",
-			Handler:    _BuildService_DeleteBuild_Handler,
+			MethodName: "DeleteRun",
+			Handler:    _RunService_DeleteRun_Handler,
 		},
 		{
-			MethodName: "DeleteBuilds",
-			Handler:    _BuildService_DeleteBuilds_Handler,
+			MethodName: "DeleteRuns",
+			Handler:    _RunService_DeleteRuns_Handler,
 		},
 		{
-			MethodName: "StopBuild",
-			Handler:    _BuildService_StopBuild_Handler,
+			MethodName: "StopRun",
+			Handler:    _RunService_StopRun_Handler,
 		},
 		{
-			MethodName: "StopBuilds",
-			Handler:    _BuildService_StopBuilds_Handler,
+			MethodName: "StopRuns",
+			Handler:    _RunService_StopRuns_Handler,
 		},
 		{
-			MethodName: "RestartBuild",
-			Handler:    _BuildService_RestartBuild_Handler,
+			MethodName: "InvalidateRun",
+			Handler:    _RunService_InvalidateRun_Handler,
 		},
 		{
-			MethodName: "ArchiveBuild",
-			Handler:    _BuildService_ArchiveBuild_Handler,
+			MethodName: "InvalidateRuns",
+			Handler:    _RunService_InvalidateRuns_Handler,
 		},
 		{
-			MethodName: "RestoreBuild",
-			Handler:    _BuildService_RestoreBuild_Handler,
+			MethodName: "RestartRun",
+			Handler:    _RunService_RestartRun_Handler,
 		},
 		{
-			MethodName: "BookmarkBuild",
-			Handler:    _BuildService_BookmarkBuild_Handler,
+			MethodName: "ResumeRun",
+			Handler:    _RunService_ResumeRun_Handler,
 		},
 		{
-			MethodName: "UnBookmarkBuild",
-			Handler:    _BuildService_UnBookmarkBuild_Handler,
+			MethodName: "ArchiveRun",
+			Handler:    _RunService_ArchiveRun_Handler,
 		},
 		{
-			MethodName: "GetBuildStatuses",
-			Handler:    _BuildService_GetBuildStatuses_Handler,
+			MethodName: "RestoreRun",
+			Handler:    _RunService_RestoreRun_Handler,
 		},
 		{
-			MethodName: "ListBuildStatuses",
-			Handler:    _BuildService_ListBuildStatuses_Handler,
+			MethodName: "BookmarkRun",
+			Handler:    _RunService_BookmarkRun_Handler,
 		},
 		{
-			MethodName: "CreateBuildStatus",
-			Handler:    _BuildService_CreateBuildStatus_Handler,
+			MethodName: "UnBookmarkRun",
+			Handler:    _RunService_UnBookmarkRun_Handler,
 		},
 		{
-			MethodName: "GetBuildCodeRef",
-			Handler:    _BuildService_GetBuildCodeRef_Handler,
+			MethodName: "StartRunTensorboard",
+			Handler:    _RunService_StartRunTensorboard_Handler,
 		},
 		{
-			MethodName: "CreateBuildCodeRef",
-			Handler:    _BuildService_CreateBuildCodeRef_Handler,
+			MethodName: "StopRunTensorboard",
+			Handler:    _RunService_StopRunTensorboard_Handler,
+		},
+		{
+			MethodName: "GetRunStatuses",
+			Handler:    _RunService_GetRunStatuses_Handler,
+		},
+		{
+			MethodName: "CreateRunStatus",
+			Handler:    _RunService_CreateRunStatus_Handler,
+		},
+		{
+			MethodName: "GetRunCodeRefs",
+			Handler:    _RunService_GetRunCodeRefs_Handler,
+		},
+		{
+			MethodName: "CreateRunCodeRef",
+			Handler:    _RunService_CreateRunCodeRef_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/polyaxon_sdk.proto",
 }
 
-// JobServiceClient is the client API for JobService service.
+// ProjectServiceClient is the client API for ProjectService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type JobServiceClient interface {
-	// List jobs
-	ListJobs(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListJobsResponse, error)
-	// List bookmarked jobs
-	ListBookmarkedJobs(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListJobsResponse, error)
-	// List archived jobs
-	ListArchivedJobs(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListJobsResponse, error)
-	// Create new job
-	CreateJob(ctx context.Context, in *JobBodyRequest, opts ...grpc.CallOption) (*Job, error)
-	// Get job
-	GetJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Job, error)
-	// Update job
-	UpdateJob(ctx context.Context, in *JobBodyRequest, opts ...grpc.CallOption) (*Job, error)
-	// Patch job
-	PatchJob(ctx context.Context, in *JobBodyRequest, opts ...grpc.CallOption) (*Job, error)
-	// Delete job
-	DeleteJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Delete jobs
-	DeleteJobs(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop job
-	StopJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop jobs
-	StopJobs(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Restart job
-	RestartJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Job, error)
-	// Resume job
-	ResumeJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Job, error)
-	// Archive job
-	ArchiveJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Restore job
-	RestoreJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Bookmark job
-	BookmarkJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// UnBookmark job
-	UnBookmarkJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Get job status
-	GetJobStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	// List job statuses
-	ListJobStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*ListJobStatusesResponse, error)
-	// Create new job status
-	CreateJobStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*JobStatus, error)
-	// Get job code ref
-	GetJobCodeRef(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*CodeReference, error)
-	// Get job code ref
-	CreateJobCodeRef(ctx context.Context, in *CodeReferenceBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
+type ProjectServiceClient interface {
+	// List projects
+	ListProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	// List project namess
+	ListProjectNames(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	// List bookmarked projects
+	ListBookmarkedProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	// List archived projects
+	ListArchivedProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	// Create new project
+	CreateProject(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*Project, error)
+	// Get project
+	GetProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
+	// Update project
+	UpdateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
+	// Patch project
+	PatchProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
+	// Delete project
+	DeleteExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Archive project
+	ArchiveProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Restore project
+	RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Bookmark project
+	BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// UnBookmark project
+	UnBookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Enable CI
+	EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// UnBookmark project
+	DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
-type jobServiceClient struct {
+type projectServiceClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewJobServiceClient(cc *grpc.ClientConn) JobServiceClient {
-	return &jobServiceClient{cc}
+func NewProjectServiceClient(cc *grpc.ClientConn) ProjectServiceClient {
+	return &projectServiceClient{cc}
 }
 
-func (c *jobServiceClient) ListJobs(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListJobsResponse, error) {
-	out := new(ListJobsResponse)
-	err := c.cc.Invoke(ctx, "/v1.JobService/ListJobs", in, out, opts...)
+func (c *projectServiceClient) ListProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+	out := new(ListProjectsResponse)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListProjects", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) ListBookmarkedJobs(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListJobsResponse, error) {
-	out := new(ListJobsResponse)
-	err := c.cc.Invoke(ctx, "/v1.JobService/ListBookmarkedJobs", in, out, opts...)
+func (c *projectServiceClient) ListProjectNames(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+	out := new(ListProjectsResponse)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListProjectNames", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) ListArchivedJobs(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListJobsResponse, error) {
-	out := new(ListJobsResponse)
-	err := c.cc.Invoke(ctx, "/v1.JobService/ListArchivedJobs", in, out, opts...)
+func (c *projectServiceClient) ListBookmarkedProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+	out := new(ListProjectsResponse)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListBookmarkedProjects", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) CreateJob(ctx context.Context, in *JobBodyRequest, opts ...grpc.CallOption) (*Job, error) {
-	out := new(Job)
-	err := c.cc.Invoke(ctx, "/v1.JobService/CreateJob", in, out, opts...)
+func (c *projectServiceClient) ListArchivedProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+	out := new(ListProjectsResponse)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListArchivedProjects", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) GetJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Job, error) {
-	out := new(Job)
-	err := c.cc.Invoke(ctx, "/v1.JobService/GetJob", in, out, opts...)
+func (c *projectServiceClient) CreateProject(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+	out := new(Project)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/CreateProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) UpdateJob(ctx context.Context, in *JobBodyRequest, opts ...grpc.CallOption) (*Job, error) {
-	out := new(Job)
-	err := c.cc.Invoke(ctx, "/v1.JobService/UpdateJob", in, out, opts...)
+func (c *projectServiceClient) GetProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+	out := new(Project)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/GetProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) PatchJob(ctx context.Context, in *JobBodyRequest, opts ...grpc.CallOption) (*Job, error) {
-	out := new(Job)
-	err := c.cc.Invoke(ctx, "/v1.JobService/PatchJob", in, out, opts...)
+func (c *projectServiceClient) UpdateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+	out := new(Project)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/UpdateProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) DeleteJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) PatchProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+	out := new(Project)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/PatchProject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *projectServiceClient) DeleteExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/DeleteJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/DeleteExperiment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) DeleteJobs(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) ArchiveProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/DeleteJobs", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/ArchiveProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) StopJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/StopJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/RestoreExperiment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) StopJobs(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/StopJobs", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/BookmarkProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) RestartJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Job, error) {
-	out := new(Job)
-	err := c.cc.Invoke(ctx, "/v1.JobService/RestartJob", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *jobServiceClient) ResumeJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Job, error) {
-	out := new(Job)
-	err := c.cc.Invoke(ctx, "/v1.JobService/ResumeJob", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *jobServiceClient) ArchiveJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) UnBookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/ArchiveJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/UnBookmarkProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) RestoreJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/RestoreJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/EnableProjectCI", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) BookmarkJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectServiceClient) DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/BookmarkJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectService/DisableProjectCI", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *jobServiceClient) UnBookmarkJob(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.JobService/UnBookmarkJob", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+// ProjectServiceServer is the server API for ProjectService service.
+type ProjectServiceServer interface {
+	// List projects
+	ListProjects(context.Context, *OwnerBodyRequest) (*ListProjectsResponse, error)
+	// List project namess
+	ListProjectNames(context.Context, *OwnerBodyRequest) (*ListProjectsResponse, error)
+	// List bookmarked projects
+	ListBookmarkedProjects(context.Context, *OwnerBodyRequest) (*ListProjectsResponse, error)
+	// List archived projects
+	ListArchivedProjects(context.Context, *OwnerBodyRequest) (*ListProjectsResponse, error)
+	// Create new project
+	CreateProject(context.Context, *OwnerBodyRequest) (*Project, error)
+	// Get project
+	GetProject(context.Context, *ProjectBodyRequest) (*Project, error)
+	// Update project
+	UpdateProject(context.Context, *ProjectBodyRequest) (*Project, error)
+	// Patch project
+	PatchProject(context.Context, *ProjectBodyRequest) (*Project, error)
+	// Delete project
+	DeleteExperiment(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Archive project
+	ArchiveProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Restore project
+	RestoreExperiment(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Bookmark project
+	BookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// UnBookmark project
+	UnBookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Enable CI
+	EnableProjectCI(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// UnBookmark project
+	DisableProjectCI(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
 }
 
-func (c *jobServiceClient) GetJobStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
-	out := new(StatusResponse)
-	err := c.cc.Invoke(ctx, "/v1.JobService/GetJobStatuses", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+// UnimplementedProjectServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedProjectServiceServer struct {
 }
 
-func (c *jobServiceClient) ListJobStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*ListJobStatusesResponse, error) {
-	out := new(ListJobStatusesResponse)
-	err := c.cc.Invoke(ctx, "/v1.JobService/ListJobStatuses", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (*UnimplementedProjectServiceServer) ListProjects(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProjects not implemented")
 }
-
-func (c *jobServiceClient) CreateJobStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*JobStatus, error) {
-	out := new(JobStatus)
-	err := c.cc.Invoke(ctx, "/v1.JobService/CreateJobStatus", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (*UnimplementedProjectServiceServer) ListProjectNames(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProjectNames not implemented")
 }
-
-func (c *jobServiceClient) GetJobCodeRef(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*CodeReference, error) {
-	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.JobService/GetJobCodeRef", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (*UnimplementedProjectServiceServer) ListBookmarkedProjects(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedProjects not implemented")
 }
-
-func (c *jobServiceClient) CreateJobCodeRef(ctx context.Context, in *CodeReferenceBodyRequest, opts ...grpc.CallOption) (*CodeReference, error) {
-	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.JobService/CreateJobCodeRef", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
+func (*UnimplementedProjectServiceServer) ListArchivedProjects(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedProjects not implemented")
 }
-
-// JobServiceServer is the server API for JobService service.
-type JobServiceServer interface {
-	// List jobs
-	ListJobs(context.Context, *ProjectBodyRequest) (*ListJobsResponse, error)
-	// List bookmarked jobs
-	ListBookmarkedJobs(context.Context, *OwnerBodyRequest) (*ListJobsResponse, error)
-	// List archived jobs
-	ListArchivedJobs(context.Context, *OwnerBodyRequest) (*ListJobsResponse, error)
-	// Create new job
-	CreateJob(context.Context, *JobBodyRequest) (*Job, error)
-	// Get job
-	GetJob(context.Context, *OwnedEntityIdRequest) (*Job, error)
-	// Update job
-	UpdateJob(context.Context, *JobBodyRequest) (*Job, error)
-	// Patch job
-	PatchJob(context.Context, *JobBodyRequest) (*Job, error)
-	// Delete job
-	DeleteJob(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Delete jobs
-	DeleteJobs(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop job
-	StopJob(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop jobs
-	StopJobs(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
-	// Restart job
-	RestartJob(context.Context, *OwnedEntityIdRequest) (*Job, error)
-	// Resume job
-	ResumeJob(context.Context, *OwnedEntityIdRequest) (*Job, error)
-	// Archive job
-	ArchiveJob(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Restore job
-	RestoreJob(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Bookmark job
-	BookmarkJob(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// UnBookmark job
-	UnBookmarkJob(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Get job status
-	GetJobStatuses(context.Context, *OwnedEntityIdRequest) (*StatusResponse, error)
-	// List job statuses
-	ListJobStatuses(context.Context, *OwnedEntityIdRequest) (*ListJobStatusesResponse, error)
-	// Create new job status
-	CreateJobStatus(context.Context, *EntityStatusRequest) (*JobStatus, error)
-	// Get job code ref
-	GetJobCodeRef(context.Context, *OwnedEntityIdRequest) (*CodeReference, error)
-	// Get job code ref
-	CreateJobCodeRef(context.Context, *CodeReferenceBodyRequest) (*CodeReference, error)
+func (*UnimplementedProjectServiceServer) CreateProject(ctx context.Context, req *OwnerBodyRequest) (*Project, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProject not implemented")
 }
-
-// UnimplementedJobServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedJobServiceServer struct {
+func (*UnimplementedProjectServiceServer) GetProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProject not implemented")
 }
-
-func (*UnimplementedJobServiceServer) ListJobs(ctx context.Context, req *ProjectBodyRequest) (*ListJobsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListJobs not implemented")
+func (*UnimplementedProjectServiceServer) UpdateProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProject not implemented")
 }
-func (*UnimplementedJobServiceServer) ListBookmarkedJobs(ctx context.Context, req *OwnerBodyRequest) (*ListJobsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedJobs not implemented")
+func (*UnimplementedProjectServiceServer) PatchProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PatchProject not implemented")
 }
-func (*UnimplementedJobServiceServer) ListArchivedJobs(ctx context.Context, req *OwnerBodyRequest) (*ListJobsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedJobs not implemented")
-}
-func (*UnimplementedJobServiceServer) CreateJob(ctx context.Context, req *JobBodyRequest) (*Job, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateJob not implemented")
-}
-func (*UnimplementedJobServiceServer) GetJob(ctx context.Context, req *OwnedEntityIdRequest) (*Job, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJob not implemented")
-}
-func (*UnimplementedJobServiceServer) UpdateJob(ctx context.Context, req *JobBodyRequest) (*Job, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateJob not implemented")
-}
-func (*UnimplementedJobServiceServer) PatchJob(ctx context.Context, req *JobBodyRequest) (*Job, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PatchJob not implemented")
-}
-func (*UnimplementedJobServiceServer) DeleteJob(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteJob not implemented")
-}
-func (*UnimplementedJobServiceServer) DeleteJobs(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteJobs not implemented")
-}
-func (*UnimplementedJobServiceServer) StopJob(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopJob not implemented")
-}
-func (*UnimplementedJobServiceServer) StopJobs(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopJobs not implemented")
-}
-func (*UnimplementedJobServiceServer) RestartJob(ctx context.Context, req *OwnedEntityIdRequest) (*Job, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RestartJob not implemented")
-}
-func (*UnimplementedJobServiceServer) ResumeJob(ctx context.Context, req *OwnedEntityIdRequest) (*Job, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ResumeJob not implemented")
-}
-func (*UnimplementedJobServiceServer) ArchiveJob(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ArchiveJob not implemented")
-}
-func (*UnimplementedJobServiceServer) RestoreJob(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RestoreJob not implemented")
-}
-func (*UnimplementedJobServiceServer) BookmarkJob(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BookmarkJob not implemented")
-}
-func (*UnimplementedJobServiceServer) UnBookmarkJob(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkJob not implemented")
-}
-func (*UnimplementedJobServiceServer) GetJobStatuses(ctx context.Context, req *OwnedEntityIdRequest) (*StatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJobStatuses not implemented")
-}
-func (*UnimplementedJobServiceServer) ListJobStatuses(ctx context.Context, req *OwnedEntityIdRequest) (*ListJobStatusesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListJobStatuses not implemented")
-}
-func (*UnimplementedJobServiceServer) CreateJobStatus(ctx context.Context, req *EntityStatusRequest) (*JobStatus, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateJobStatus not implemented")
-}
-func (*UnimplementedJobServiceServer) GetJobCodeRef(ctx context.Context, req *OwnedEntityIdRequest) (*CodeReference, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJobCodeRef not implemented")
-}
-func (*UnimplementedJobServiceServer) CreateJobCodeRef(ctx context.Context, req *CodeReferenceBodyRequest) (*CodeReference, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateJobCodeRef not implemented")
-}
-
-func RegisterJobServiceServer(s *grpc.Server, srv JobServiceServer) {
-	s.RegisterService(&_JobService_serviceDesc, srv)
-}
-
-func _JobService_ListJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).ListJobs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/ListJobs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).ListJobs(ctx, req.(*ProjectBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_ListBookmarkedJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnerBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).ListBookmarkedJobs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/ListBookmarkedJobs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).ListBookmarkedJobs(ctx, req.(*OwnerBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_ListArchivedJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnerBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).ListArchivedJobs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/ListArchivedJobs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).ListArchivedJobs(ctx, req.(*OwnerBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_CreateJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JobBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).CreateJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/CreateJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).CreateJob(ctx, req.(*JobBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_GetJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).GetJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/GetJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).GetJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_UpdateJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JobBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).UpdateJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/UpdateJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).UpdateJob(ctx, req.(*JobBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_PatchJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(JobBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).PatchJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/PatchJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).PatchJob(ctx, req.(*JobBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_DeleteJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).DeleteJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/DeleteJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).DeleteJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_DeleteJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).DeleteJobs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/DeleteJobs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).DeleteJobs(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_StopJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).StopJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/StopJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).StopJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_StopJobs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).StopJobs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/StopJobs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).StopJobs(ctx, req.(*ProjectBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_RestartJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).RestartJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/RestartJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).RestartJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_ResumeJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).ResumeJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/ResumeJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).ResumeJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_ArchiveJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).ArchiveJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/ArchiveJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).ArchiveJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_RestoreJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).RestoreJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/RestoreJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).RestoreJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_BookmarkJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).BookmarkJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/BookmarkJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).BookmarkJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_UnBookmarkJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).UnBookmarkJob(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/UnBookmarkJob",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).UnBookmarkJob(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_GetJobStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).GetJobStatuses(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/GetJobStatuses",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).GetJobStatuses(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_ListJobStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).ListJobStatuses(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/ListJobStatuses",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).ListJobStatuses(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_CreateJobStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).CreateJobStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/CreateJobStatus",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).CreateJobStatus(ctx, req.(*EntityStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_GetJobCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).GetJobCodeRef(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/GetJobCodeRef",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).GetJobCodeRef(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _JobService_CreateJobCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeReferenceBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(JobServiceServer).CreateJobCodeRef(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.JobService/CreateJobCodeRef",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).CreateJobCodeRef(ctx, req.(*CodeReferenceBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _JobService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.JobService",
-	HandlerType: (*JobServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "ListJobs",
-			Handler:    _JobService_ListJobs_Handler,
-		},
-		{
-			MethodName: "ListBookmarkedJobs",
-			Handler:    _JobService_ListBookmarkedJobs_Handler,
-		},
-		{
-			MethodName: "ListArchivedJobs",
-			Handler:    _JobService_ListArchivedJobs_Handler,
-		},
-		{
-			MethodName: "CreateJob",
-			Handler:    _JobService_CreateJob_Handler,
-		},
-		{
-			MethodName: "GetJob",
-			Handler:    _JobService_GetJob_Handler,
-		},
-		{
-			MethodName: "UpdateJob",
-			Handler:    _JobService_UpdateJob_Handler,
-		},
-		{
-			MethodName: "PatchJob",
-			Handler:    _JobService_PatchJob_Handler,
-		},
-		{
-			MethodName: "DeleteJob",
-			Handler:    _JobService_DeleteJob_Handler,
-		},
-		{
-			MethodName: "DeleteJobs",
-			Handler:    _JobService_DeleteJobs_Handler,
-		},
-		{
-			MethodName: "StopJob",
-			Handler:    _JobService_StopJob_Handler,
-		},
-		{
-			MethodName: "StopJobs",
-			Handler:    _JobService_StopJobs_Handler,
-		},
-		{
-			MethodName: "RestartJob",
-			Handler:    _JobService_RestartJob_Handler,
-		},
-		{
-			MethodName: "ResumeJob",
-			Handler:    _JobService_ResumeJob_Handler,
-		},
-		{
-			MethodName: "ArchiveJob",
-			Handler:    _JobService_ArchiveJob_Handler,
-		},
-		{
-			MethodName: "RestoreJob",
-			Handler:    _JobService_RestoreJob_Handler,
-		},
-		{
-			MethodName: "BookmarkJob",
-			Handler:    _JobService_BookmarkJob_Handler,
-		},
-		{
-			MethodName: "UnBookmarkJob",
-			Handler:    _JobService_UnBookmarkJob_Handler,
-		},
-		{
-			MethodName: "GetJobStatuses",
-			Handler:    _JobService_GetJobStatuses_Handler,
-		},
-		{
-			MethodName: "ListJobStatuses",
-			Handler:    _JobService_ListJobStatuses_Handler,
-		},
-		{
-			MethodName: "CreateJobStatus",
-			Handler:    _JobService_CreateJobStatus_Handler,
-		},
-		{
-			MethodName: "GetJobCodeRef",
-			Handler:    _JobService_GetJobCodeRef_Handler,
-		},
-		{
-			MethodName: "CreateJobCodeRef",
-			Handler:    _JobService_CreateJobCodeRef_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "v1/polyaxon_sdk.proto",
-}
-
-// ExperimentServiceClient is the client API for ExperimentService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ExperimentServiceClient interface {
-	// List experiments
-	ListExperiments(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error)
-	// List bookmarked experiments
-	ListBookmarkedExperiments(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error)
-	// List archived experiments
-	ListArchivedExperiments(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error)
-	// Create new experiment
-	CreateExperiment(ctx context.Context, in *ExperimentBodyRequest, opts ...grpc.CallOption) (*Experiment, error)
-	// Get experiment
-	GetExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Experiment, error)
-	// Update experiment
-	UpdateExperiment(ctx context.Context, in *ExperimentBodyRequest, opts ...grpc.CallOption) (*Experiment, error)
-	// Patch experiment
-	PatchExperiment(ctx context.Context, in *ExperimentBodyRequest, opts ...grpc.CallOption) (*Experiment, error)
-	// Delete experiment
-	DeleteExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Delete experiments
-	DeleteExperiments(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop experiment
-	StopExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop experiments
-	StopExperiments(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Restart experiment
-	RestartExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Experiment, error)
-	// Resume experiment
-	ResumeExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Experiment, error)
-	// Archive experiment
-	ArchiveExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Restore experiment
-	RestoreExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Bookmark experiment
-	BookmarkExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// UnBookmark experiment
-	UnBookmarkExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Start experiment tensorboard
-	StartExperimentTensorboard(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop experiment tensorboard
-	StopExperimentTensorboard(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Get experiment status
-	GetExperimentStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*StatusResponse, error)
-	// List experiment statuses
-	ListExperimentStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*ListExperimentStatusesResponse, error)
-	// Create new experiment status
-	CreateExperimentStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*ExperimentStatus, error)
-	// Get experiment code ref
-	GetExperimentCodeRef(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*CodeReference, error)
-	// Get experiment code ref
-	CreateExperimentCodeRef(ctx context.Context, in *CodeReferenceBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
-}
-
-type experimentServiceClient struct {
-	cc *grpc.ClientConn
-}
-
-func NewExperimentServiceClient(cc *grpc.ClientConn) ExperimentServiceClient {
-	return &experimentServiceClient{cc}
-}
-
-func (c *experimentServiceClient) ListExperiments(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error) {
-	out := new(ListExperimentsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/ListExperiments", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) ListBookmarkedExperiments(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error) {
-	out := new(ListExperimentsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/ListBookmarkedExperiments", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) ListArchivedExperiments(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error) {
-	out := new(ListExperimentsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/ListArchivedExperiments", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) CreateExperiment(ctx context.Context, in *ExperimentBodyRequest, opts ...grpc.CallOption) (*Experiment, error) {
-	out := new(Experiment)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/CreateExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) GetExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Experiment, error) {
-	out := new(Experiment)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/GetExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) UpdateExperiment(ctx context.Context, in *ExperimentBodyRequest, opts ...grpc.CallOption) (*Experiment, error) {
-	out := new(Experiment)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/UpdateExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) PatchExperiment(ctx context.Context, in *ExperimentBodyRequest, opts ...grpc.CallOption) (*Experiment, error) {
-	out := new(Experiment)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/PatchExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) DeleteExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/DeleteExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) DeleteExperiments(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/DeleteExperiments", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) StopExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/StopExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) StopExperiments(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/StopExperiments", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) RestartExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Experiment, error) {
-	out := new(Experiment)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/RestartExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) ResumeExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*Experiment, error) {
-	out := new(Experiment)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/ResumeExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) ArchiveExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/ArchiveExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) RestoreExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/RestoreExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) BookmarkExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/BookmarkExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) UnBookmarkExperiment(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/UnBookmarkExperiment", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) StartExperimentTensorboard(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/StartExperimentTensorboard", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) StopExperimentTensorboard(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/StopExperimentTensorboard", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) GetExperimentStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*StatusResponse, error) {
-	out := new(StatusResponse)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/GetExperimentStatuses", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) ListExperimentStatuses(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*ListExperimentStatusesResponse, error) {
-	out := new(ListExperimentStatusesResponse)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/ListExperimentStatuses", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) CreateExperimentStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*ExperimentStatus, error) {
-	out := new(ExperimentStatus)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/CreateExperimentStatus", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) GetExperimentCodeRef(ctx context.Context, in *OwnedEntityIdRequest, opts ...grpc.CallOption) (*CodeReference, error) {
-	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/GetExperimentCodeRef", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *experimentServiceClient) CreateExperimentCodeRef(ctx context.Context, in *CodeReferenceBodyRequest, opts ...grpc.CallOption) (*CodeReference, error) {
-	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.ExperimentService/CreateExperimentCodeRef", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// ExperimentServiceServer is the server API for ExperimentService service.
-type ExperimentServiceServer interface {
-	// List experiments
-	ListExperiments(context.Context, *ProjectBodyRequest) (*ListExperimentsResponse, error)
-	// List bookmarked experiments
-	ListBookmarkedExperiments(context.Context, *OwnerBodyRequest) (*ListExperimentsResponse, error)
-	// List archived experiments
-	ListArchivedExperiments(context.Context, *OwnerBodyRequest) (*ListExperimentsResponse, error)
-	// Create new experiment
-	CreateExperiment(context.Context, *ExperimentBodyRequest) (*Experiment, error)
-	// Get experiment
-	GetExperiment(context.Context, *OwnedEntityIdRequest) (*Experiment, error)
-	// Update experiment
-	UpdateExperiment(context.Context, *ExperimentBodyRequest) (*Experiment, error)
-	// Patch experiment
-	PatchExperiment(context.Context, *ExperimentBodyRequest) (*Experiment, error)
-	// Delete experiment
-	DeleteExperiment(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Delete experiments
-	DeleteExperiments(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop experiment
-	StopExperiment(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop experiments
-	StopExperiments(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
-	// Restart experiment
-	RestartExperiment(context.Context, *OwnedEntityIdRequest) (*Experiment, error)
-	// Resume experiment
-	ResumeExperiment(context.Context, *OwnedEntityIdRequest) (*Experiment, error)
-	// Archive experiment
-	ArchiveExperiment(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Restore experiment
-	RestoreExperiment(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Bookmark experiment
-	BookmarkExperiment(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// UnBookmark experiment
-	UnBookmarkExperiment(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Start experiment tensorboard
-	StartExperimentTensorboard(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Stop experiment tensorboard
-	StopExperimentTensorboard(context.Context, *OwnedEntityIdRequest) (*empty.Empty, error)
-	// Get experiment status
-	GetExperimentStatuses(context.Context, *OwnedEntityIdRequest) (*StatusResponse, error)
-	// List experiment statuses
-	ListExperimentStatuses(context.Context, *OwnedEntityIdRequest) (*ListExperimentStatusesResponse, error)
-	// Create new experiment status
-	CreateExperimentStatus(context.Context, *EntityStatusRequest) (*ExperimentStatus, error)
-	// Get experiment code ref
-	GetExperimentCodeRef(context.Context, *OwnedEntityIdRequest) (*CodeReference, error)
-	// Get experiment code ref
-	CreateExperimentCodeRef(context.Context, *CodeReferenceBodyRequest) (*CodeReference, error)
-}
-
-// UnimplementedExperimentServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedExperimentServiceServer struct {
-}
-
-func (*UnimplementedExperimentServiceServer) ListExperiments(ctx context.Context, req *ProjectBodyRequest) (*ListExperimentsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListExperiments not implemented")
-}
-func (*UnimplementedExperimentServiceServer) ListBookmarkedExperiments(ctx context.Context, req *OwnerBodyRequest) (*ListExperimentsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedExperiments not implemented")
-}
-func (*UnimplementedExperimentServiceServer) ListArchivedExperiments(ctx context.Context, req *OwnerBodyRequest) (*ListExperimentsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedExperiments not implemented")
-}
-func (*UnimplementedExperimentServiceServer) CreateExperiment(ctx context.Context, req *ExperimentBodyRequest) (*Experiment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) GetExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*Experiment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) UpdateExperiment(ctx context.Context, req *ExperimentBodyRequest) (*Experiment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) PatchExperiment(ctx context.Context, req *ExperimentBodyRequest) (*Experiment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PatchExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) DeleteExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectServiceServer) DeleteExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperiment not implemented")
 }
-func (*UnimplementedExperimentServiceServer) DeleteExperiments(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperiments not implemented")
+func (*UnimplementedProjectServiceServer) ArchiveProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ArchiveProject not implemented")
 }
-func (*UnimplementedExperimentServiceServer) StopExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) StopExperiments(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopExperiments not implemented")
-}
-func (*UnimplementedExperimentServiceServer) RestartExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*Experiment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RestartExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) ResumeExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*Experiment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ResumeExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) ArchiveExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ArchiveExperiment not implemented")
-}
-func (*UnimplementedExperimentServiceServer) RestoreExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectServiceServer) RestoreExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreExperiment not implemented")
 }
-func (*UnimplementedExperimentServiceServer) BookmarkExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BookmarkExperiment not implemented")
+func (*UnimplementedProjectServiceServer) BookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BookmarkProject not implemented")
 }
-func (*UnimplementedExperimentServiceServer) UnBookmarkExperiment(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkExperiment not implemented")
+func (*UnimplementedProjectServiceServer) UnBookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkProject not implemented")
 }
-func (*UnimplementedExperimentServiceServer) StartExperimentTensorboard(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StartExperimentTensorboard not implemented")
+func (*UnimplementedProjectServiceServer) EnableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EnableProjectCI not implemented")
 }
-func (*UnimplementedExperimentServiceServer) StopExperimentTensorboard(ctx context.Context, req *OwnedEntityIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method StopExperimentTensorboard not implemented")
-}
-func (*UnimplementedExperimentServiceServer) GetExperimentStatuses(ctx context.Context, req *OwnedEntityIdRequest) (*StatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExperimentStatuses not implemented")
-}
-func (*UnimplementedExperimentServiceServer) ListExperimentStatuses(ctx context.Context, req *OwnedEntityIdRequest) (*ListExperimentStatusesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListExperimentStatuses not implemented")
-}
-func (*UnimplementedExperimentServiceServer) CreateExperimentStatus(ctx context.Context, req *EntityStatusRequest) (*ExperimentStatus, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExperimentStatus not implemented")
-}
-func (*UnimplementedExperimentServiceServer) GetExperimentCodeRef(ctx context.Context, req *OwnedEntityIdRequest) (*CodeReference, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetExperimentCodeRef not implemented")
-}
-func (*UnimplementedExperimentServiceServer) CreateExperimentCodeRef(ctx context.Context, req *CodeReferenceBodyRequest) (*CodeReference, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateExperimentCodeRef not implemented")
+func (*UnimplementedProjectServiceServer) DisableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DisableProjectCI not implemented")
 }
 
-func RegisterExperimentServiceServer(s *grpc.Server, srv ExperimentServiceServer) {
-	s.RegisterService(&_ExperimentService_serviceDesc, srv)
+func RegisterProjectServiceServer(s *grpc.Server, srv ProjectServiceServer) {
+	s.RegisterService(&_ProjectService_serviceDesc, srv)
 }
 
-func _ExperimentService_ListExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).ListExperiments(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/ListExperiments",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).ListExperiments(ctx, req.(*ProjectBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_ListBookmarkedExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectService_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).ListBookmarkedExperiments(ctx, in)
+		return srv.(ProjectServiceServer).ListProjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/ListBookmarkedExperiments",
+		FullMethod: "/v1.ProjectService/ListProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).ListBookmarkedExperiments(ctx, req.(*OwnerBodyRequest))
+		return srv.(ProjectServiceServer).ListProjects(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_ListArchivedExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectService_ListProjectNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).ListArchivedExperiments(ctx, in)
+		return srv.(ProjectServiceServer).ListProjectNames(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/ListArchivedExperiments",
+		FullMethod: "/v1.ProjectService/ListProjectNames",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).ListArchivedExperiments(ctx, req.(*OwnerBodyRequest))
+		return srv.(ProjectServiceServer).ListProjectNames(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_CreateExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExperimentBodyRequest)
+func _ProjectService_ListBookmarkedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).CreateExperiment(ctx, in)
+		return srv.(ProjectServiceServer).ListBookmarkedProjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/CreateExperiment",
+		FullMethod: "/v1.ProjectService/ListBookmarkedProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).CreateExperiment(ctx, req.(*ExperimentBodyRequest))
+		return srv.(ProjectServiceServer).ListBookmarkedProjects(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_GetExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_ListArchivedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).GetExperiment(ctx, in)
+		return srv.(ProjectServiceServer).ListArchivedProjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/GetExperiment",
+		FullMethod: "/v1.ProjectService/ListArchivedProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).GetExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).ListArchivedProjects(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_UpdateExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExperimentBodyRequest)
+func _ProjectService_CreateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).UpdateExperiment(ctx, in)
+		return srv.(ProjectServiceServer).CreateProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/UpdateExperiment",
+		FullMethod: "/v1.ProjectService/CreateProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).UpdateExperiment(ctx, req.(*ExperimentBodyRequest))
+		return srv.(ProjectServiceServer).CreateProject(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_PatchExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ExperimentBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).PatchExperiment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/PatchExperiment",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).PatchExperiment(ctx, req.(*ExperimentBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_DeleteExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).DeleteExperiment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/DeleteExperiment",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).DeleteExperiment(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_DeleteExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).DeleteExperiments(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/DeleteExperiments",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).DeleteExperiments(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_StopExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).StopExperiment(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/StopExperiment",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).StopExperiment(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_StopExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectService_GetProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).StopExperiments(ctx, in)
+		return srv.(ProjectServiceServer).GetProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/StopExperiments",
+		FullMethod: "/v1.ProjectService/GetProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).StopExperiments(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectServiceServer).GetProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_RestartExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_UpdateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).RestartExperiment(ctx, in)
+		return srv.(ProjectServiceServer).UpdateProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/RestartExperiment",
+		FullMethod: "/v1.ProjectService/UpdateProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).RestartExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).UpdateProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_ResumeExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_PatchProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).ResumeExperiment(ctx, in)
+		return srv.(ProjectServiceServer).PatchProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/ResumeExperiment",
+		FullMethod: "/v1.ProjectService/PatchProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).ResumeExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).PatchProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_ArchiveExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_DeleteExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).ArchiveExperiment(ctx, in)
+		return srv.(ProjectServiceServer).DeleteExperiment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/ArchiveExperiment",
+		FullMethod: "/v1.ProjectService/DeleteExperiment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).ArchiveExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).DeleteExperiment(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_RestoreExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_ArchiveProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).RestoreExperiment(ctx, in)
+		return srv.(ProjectServiceServer).ArchiveProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/RestoreExperiment",
+		FullMethod: "/v1.ProjectService/ArchiveProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).RestoreExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).ArchiveProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_BookmarkExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_RestoreExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).BookmarkExperiment(ctx, in)
+		return srv.(ProjectServiceServer).RestoreExperiment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/BookmarkExperiment",
+		FullMethod: "/v1.ProjectService/RestoreExperiment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).BookmarkExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).RestoreExperiment(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_UnBookmarkExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_BookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).UnBookmarkExperiment(ctx, in)
+		return srv.(ProjectServiceServer).BookmarkProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/UnBookmarkExperiment",
+		FullMethod: "/v1.ProjectService/BookmarkProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).UnBookmarkExperiment(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).BookmarkProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_StartExperimentTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_UnBookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).StartExperimentTensorboard(ctx, in)
+		return srv.(ProjectServiceServer).UnBookmarkProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/StartExperimentTensorboard",
+		FullMethod: "/v1.ProjectService/UnBookmarkProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).StartExperimentTensorboard(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).UnBookmarkProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_StopExperimentTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_EnableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).StopExperimentTensorboard(ctx, in)
+		return srv.(ProjectServiceServer).EnableProjectCI(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/StopExperimentTensorboard",
+		FullMethod: "/v1.ProjectService/EnableProjectCI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).StopExperimentTensorboard(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).EnableProjectCI(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_GetExperimentStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
+func _ProjectService_DisableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExperimentServiceServer).GetExperimentStatuses(ctx, in)
+		return srv.(ProjectServiceServer).DisableProjectCI(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ExperimentService/GetExperimentStatuses",
+		FullMethod: "/v1.ProjectService/DisableProjectCI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).GetExperimentStatuses(ctx, req.(*OwnedEntityIdRequest))
+		return srv.(ProjectServiceServer).DisableProjectCI(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExperimentService_ListExperimentStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).ListExperimentStatuses(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/ListExperimentStatuses",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).ListExperimentStatuses(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_CreateExperimentStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).CreateExperimentStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/CreateExperimentStatus",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).CreateExperimentStatus(ctx, req.(*EntityStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_GetExperimentCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).GetExperimentCodeRef(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/GetExperimentCodeRef",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).GetExperimentCodeRef(ctx, req.(*OwnedEntityIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ExperimentService_CreateExperimentCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CodeReferenceBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ExperimentServiceServer).CreateExperimentCodeRef(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.ExperimentService/CreateExperimentCodeRef",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExperimentServiceServer).CreateExperimentCodeRef(ctx, req.(*CodeReferenceBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-var _ExperimentService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.ExperimentService",
-	HandlerType: (*ExperimentServiceServer)(nil),
+var _ProjectService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.ProjectService",
+	HandlerType: (*ProjectServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListExperiments",
-			Handler:    _ExperimentService_ListExperiments_Handler,
+			MethodName: "ListProjects",
+			Handler:    _ProjectService_ListProjects_Handler,
 		},
 		{
-			MethodName: "ListBookmarkedExperiments",
-			Handler:    _ExperimentService_ListBookmarkedExperiments_Handler,
+			MethodName: "ListProjectNames",
+			Handler:    _ProjectService_ListProjectNames_Handler,
 		},
 		{
-			MethodName: "ListArchivedExperiments",
-			Handler:    _ExperimentService_ListArchivedExperiments_Handler,
+			MethodName: "ListBookmarkedProjects",
+			Handler:    _ProjectService_ListBookmarkedProjects_Handler,
 		},
 		{
-			MethodName: "CreateExperiment",
-			Handler:    _ExperimentService_CreateExperiment_Handler,
+			MethodName: "ListArchivedProjects",
+			Handler:    _ProjectService_ListArchivedProjects_Handler,
 		},
 		{
-			MethodName: "GetExperiment",
-			Handler:    _ExperimentService_GetExperiment_Handler,
+			MethodName: "CreateProject",
+			Handler:    _ProjectService_CreateProject_Handler,
 		},
 		{
-			MethodName: "UpdateExperiment",
-			Handler:    _ExperimentService_UpdateExperiment_Handler,
+			MethodName: "GetProject",
+			Handler:    _ProjectService_GetProject_Handler,
 		},
 		{
-			MethodName: "PatchExperiment",
-			Handler:    _ExperimentService_PatchExperiment_Handler,
+			MethodName: "UpdateProject",
+			Handler:    _ProjectService_UpdateProject_Handler,
+		},
+		{
+			MethodName: "PatchProject",
+			Handler:    _ProjectService_PatchProject_Handler,
 		},
 		{
 			MethodName: "DeleteExperiment",
-			Handler:    _ExperimentService_DeleteExperiment_Handler,
+			Handler:    _ProjectService_DeleteExperiment_Handler,
 		},
 		{
-			MethodName: "DeleteExperiments",
-			Handler:    _ExperimentService_DeleteExperiments_Handler,
-		},
-		{
-			MethodName: "StopExperiment",
-			Handler:    _ExperimentService_StopExperiment_Handler,
-		},
-		{
-			MethodName: "StopExperiments",
-			Handler:    _ExperimentService_StopExperiments_Handler,
-		},
-		{
-			MethodName: "RestartExperiment",
-			Handler:    _ExperimentService_RestartExperiment_Handler,
-		},
-		{
-			MethodName: "ResumeExperiment",
-			Handler:    _ExperimentService_ResumeExperiment_Handler,
-		},
-		{
-			MethodName: "ArchiveExperiment",
-			Handler:    _ExperimentService_ArchiveExperiment_Handler,
+			MethodName: "ArchiveProject",
+			Handler:    _ProjectService_ArchiveProject_Handler,
 		},
 		{
 			MethodName: "RestoreExperiment",
-			Handler:    _ExperimentService_RestoreExperiment_Handler,
+			Handler:    _ProjectService_RestoreExperiment_Handler,
 		},
 		{
-			MethodName: "BookmarkExperiment",
-			Handler:    _ExperimentService_BookmarkExperiment_Handler,
+			MethodName: "BookmarkProject",
+			Handler:    _ProjectService_BookmarkProject_Handler,
 		},
 		{
-			MethodName: "UnBookmarkExperiment",
-			Handler:    _ExperimentService_UnBookmarkExperiment_Handler,
+			MethodName: "UnBookmarkProject",
+			Handler:    _ProjectService_UnBookmarkProject_Handler,
 		},
 		{
-			MethodName: "StartExperimentTensorboard",
-			Handler:    _ExperimentService_StartExperimentTensorboard_Handler,
+			MethodName: "EnableProjectCI",
+			Handler:    _ProjectService_EnableProjectCI_Handler,
 		},
 		{
-			MethodName: "StopExperimentTensorboard",
-			Handler:    _ExperimentService_StopExperimentTensorboard_Handler,
+			MethodName: "DisableProjectCI",
+			Handler:    _ProjectService_DisableProjectCI_Handler,
 		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// AuthServiceClient is the client API for AuthService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type AuthServiceClient interface {
+	// Login
+	Login(ctx context.Context, in *CredsBodyRequest, opts ...grpc.CallOption) (*Auth, error)
+}
+
+type authServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewAuthServiceClient(cc *grpc.ClientConn) AuthServiceClient {
+	return &authServiceClient{cc}
+}
+
+func (c *authServiceClient) Login(ctx context.Context, in *CredsBodyRequest, opts ...grpc.CallOption) (*Auth, error) {
+	out := new(Auth)
+	err := c.cc.Invoke(ctx, "/v1.AuthService/Login", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AuthServiceServer is the server API for AuthService service.
+type AuthServiceServer interface {
+	// Login
+	Login(context.Context, *CredsBodyRequest) (*Auth, error)
+}
+
+// UnimplementedAuthServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedAuthServiceServer struct {
+}
+
+func (*UnimplementedAuthServiceServer) Login(ctx context.Context, req *CredsBodyRequest) (*Auth, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+
+func RegisterAuthServiceServer(s *grpc.Server, srv AuthServiceServer) {
+	s.RegisterService(&_AuthService_serviceDesc, srv)
+}
+
+func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CredsBodyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.AuthService/Login",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).Login(ctx, req.(*CredsBodyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _AuthService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.AuthService",
+	HandlerType: (*AuthServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetExperimentStatuses",
-			Handler:    _ExperimentService_GetExperimentStatuses_Handler,
+			MethodName: "Login",
+			Handler:    _AuthService_Login_Handler,
 		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "v1/polyaxon_sdk.proto",
+}
+
+// VersionsServiceClient is the client API for VersionsService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type VersionsServiceClient interface {
+	// Get versions
+	GetVersions(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Versions, error)
+}
+
+type versionsServiceClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewVersionsServiceClient(cc *grpc.ClientConn) VersionsServiceClient {
+	return &versionsServiceClient{cc}
+}
+
+func (c *versionsServiceClient) GetVersions(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Versions, error) {
+	out := new(Versions)
+	err := c.cc.Invoke(ctx, "/v1.VersionsService/GetVersions", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// VersionsServiceServer is the server API for VersionsService service.
+type VersionsServiceServer interface {
+	// Get versions
+	GetVersions(context.Context, *empty.Empty) (*Versions, error)
+}
+
+// UnimplementedVersionsServiceServer can be embedded to have forward compatible implementations.
+type UnimplementedVersionsServiceServer struct {
+}
+
+func (*UnimplementedVersionsServiceServer) GetVersions(ctx context.Context, req *empty.Empty) (*Versions, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVersions not implemented")
+}
+
+func RegisterVersionsServiceServer(s *grpc.Server, srv VersionsServiceServer) {
+	s.RegisterService(&_VersionsService_serviceDesc, srv)
+}
+
+func _VersionsService_GetVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VersionsServiceServer).GetVersions(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.VersionsService/GetVersions",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VersionsServiceServer).GetVersions(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _VersionsService_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.VersionsService",
+	HandlerType: (*VersionsServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListExperimentStatuses",
-			Handler:    _ExperimentService_ListExperimentStatuses_Handler,
-		},
-		{
-			MethodName: "CreateExperimentStatus",
-			Handler:    _ExperimentService_CreateExperimentStatus_Handler,
-		},
-		{
-			MethodName: "GetExperimentCodeRef",
-			Handler:    _ExperimentService_GetExperimentCodeRef_Handler,
-		},
-		{
-			MethodName: "CreateExperimentCodeRef",
-			Handler:    _ExperimentService_CreateExperimentCodeRef_Handler,
+			MethodName: "GetVersions",
+			Handler:    _VersionsService_GetVersions_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
