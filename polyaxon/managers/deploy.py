@@ -5,11 +5,11 @@ import shutil
 
 import click
 
-from polyaxon_deploy.operators.compose import ComposeOperator
-from polyaxon_deploy.operators.docker import DockerOperator
-from polyaxon_deploy.operators.helm import HelmOperator
-from polyaxon_deploy.operators.kubectl import KubectlOperator
-from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
+from polyaxon.deploy.operators.compose import ComposeOperator
+from polyaxon.deploy.operators.docker import DockerOperator
+from polyaxon.deploy.operators.helm import HelmOperator
+from polyaxon.deploy.operators.kubectl import KubectlOperator
+from polyaxon.deploy.schemas.deployment_types import DeploymentTypes
 
 from polyaxon.exceptions import PolyaxonDeploymentConfigError
 from polyaxon.managers.compose import ComposeConfigManager

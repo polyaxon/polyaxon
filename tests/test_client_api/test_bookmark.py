@@ -21,7 +21,7 @@ class TestBookmarkApi(TestBaseApi):
         self.api_handler = BookmarkApi(transport=self.transport, config=self.api_config)
 
     @httpretty.activate
-    def test_get_bookmarked_experiments(self):
+    def test_get_bookmarked_runs(self):
         project_uuid = uuid.uuid4().hex
         obj_uuid = uuid.uuid4().hex
         objs = [
@@ -43,13 +43,13 @@ class TestBookmarkApi(TestBaseApi):
         )
 
         # Schema response
-        result = self.api_handler.experiments("user")
+        result = self.api_handler.runs("user")
         assert len(result["results"]) == 10
         assert isinstance(result["results"][0], ExperimentConfig)
 
         # Raw response
         self.set_raw_response()
-        result = self.api_handler.experiments("user")
+        result = self.api_handler.runs("user")
         assert len(result["results"]) == 10
         assert isinstance(result["results"][0], Mapping)
 

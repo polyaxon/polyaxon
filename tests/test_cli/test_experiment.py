@@ -9,9 +9,9 @@ from polyaxon.cli.experiment import experiment
 
 class TestExperiment(BaseCommandTestCase):
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.get_experiment')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.get_experiment')
     @patch('polyaxon.managers.project.ProjectManager.is_initialized')
-    @patch('polyaxon.managers.experiment.ExperimentManager.set_config')
+    @patch('polyaxon.managers.run.RunManager.set_config')
     @patch('polyaxon.cli.experiment.get_experiment_details')
     def test_get_experiment(self, get_experiment_details,
                             set_config,
@@ -23,7 +23,7 @@ class TestExperiment(BaseCommandTestCase):
         assert is_initialized.call_count == 1
         assert get_experiment_details.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.update_experiment')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.update_experiment')
     def test_update_experiment(self, update_experiment):
         self.runner.invoke(experiment, ['update'])
         assert update_experiment.call_count == 0
@@ -34,7 +34,7 @@ class TestExperiment(BaseCommandTestCase):
                                         '--description=foo'])
         assert update_experiment.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.stop')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.stop')
     def test_stop_experiment(self, stop):
         self.runner.invoke(experiment, ['stop'])
         assert stop.call_count == 0
@@ -45,7 +45,7 @@ class TestExperiment(BaseCommandTestCase):
                                         '-y'])
         assert stop.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.restart')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.restart')
     def test_restart_experiment(self, restart):
         self.runner.invoke(experiment, ['restart'])
         assert restart.call_count == 0
@@ -55,7 +55,7 @@ class TestExperiment(BaseCommandTestCase):
                                         'restart'])
         assert restart.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.copy')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.copy')
     def test_copy_experiment(self, copy):
         self.runner.invoke(experiment, ['restart'])
         assert copy.call_count == 0
@@ -66,7 +66,7 @@ class TestExperiment(BaseCommandTestCase):
                                         '-c'])
         assert copy.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.resume')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.resume')
     def test_resume_experiment(self, resume):
         self.runner.invoke(experiment, ['resume'])
         assert resume.call_count == 0
@@ -76,27 +76,22 @@ class TestExperiment(BaseCommandTestCase):
                                         'resume'])
         assert resume.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.get_statuses')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.get_statuses')
     def test_experiment_statuses(self, get_statuses):
         self.runner.invoke(experiment, ['--project=admin/foo', '--experiment=1', 'statuses'])
         assert get_statuses.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.list_jobs')
-    def test_experiment_jobs(self, list_jobs):
-        self.runner.invoke(experiment, ['--project=admin/foo', '--experiment=1', 'jobs'])
-        assert list_jobs.call_count == 1
-
-    @patch('polyaxon_client.api.experiment.ExperimentApi.download_outputs')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.download_outputs')
     def test_experiment_download_repo(self, download_outputs):
         self.runner.invoke(experiment, ['--project=admin/foo', '--experiment=1', 'outputs'])
         assert download_outputs.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.bookmark')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.bookmark')
     def test_experiment_bookmark(self, bookmark):
         self.runner.invoke(experiment, ['--project=admin/foo', '--experiment=1', 'bookmark'])
         assert bookmark.call_count == 1
 
-    @patch('polyaxon_client.api.experiment.ExperimentApi.unbookmark')
+    @patch('polyaxon.client.api.experiment.ExperimentApi.unbookmark')
     def test_experiment_unbookmark(self, unbookmark):
         self.runner.invoke(experiment, ['--project=admin/foo', '--experiment=1', 'unbookmark'])
         assert unbookmark.call_count == 1

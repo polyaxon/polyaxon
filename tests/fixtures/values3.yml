@@ -4,38 +4,20 @@ rbac:
 ingress:
   enabled: true
 
-serviceType: clusterIP
+serviceType: ClusterIP
 environment: staging
 user:
   password: root
 
 
 postgresql:
-  install: false
+  enabled: true
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: postgres
-  externalPostgresHost: 35.226.163.84
 
-nodeSelectors:
-  core:
-    polyaxon: core
-  builds:
-    polyaxon: core
-
-
-nfsProvisioner:
-  enabled: true
-  persistence:
-    enabled: true
-    size: 150Gi
-
-  pvc:
-    repos: 50
-    outputs:
-      size: 80Gi
-    logs:
-      size: 15Gi
+nodeSelector:
+  polyaxon: core
 
 api:
   replicas: 3
@@ -54,13 +36,6 @@ k8sEventsHandlers:
 
 eventMonitors:
   replicas: 3
-
-auth:
-  bitbucket:
-    enabled: false
-    clientId: "593b4e1bfc3f4742cc23"
-    clientSecret: "c20621355af0c9f2032ee4bb20d0c3f12bf0cac6"
-
 
 persistence:
   data:
@@ -92,19 +67,22 @@ email:
   hostUser: "foo"
   hostPassword: "bar"
 
-integrations:
-  slack:
-    - url: https://hooks.slack.com/services/sdfdfdsfsdf/sdflsdklfj
-    - url: https://hooks.slack.com/services/sdlkfjsdlk/lkjsdlkfjdklsjf2
+hostName: 123.123.123.123
+allowedHosts:
+  - foo.bar.com
+  - 123.123.12.3
 
+rabbitmq-ha:
+  enabled: false
 
-privateRegistries:
-  - host: "my.registry.com"
-    user: "_json_key"
-    password: '{"type": "service_account", "project_id": "my_project", "private_key_id": "ajshvasjhqweqetquytqut17253871238", "private_key": "-----BEGIN PRIVATE KEY-----\nASBHJASJDASBDJAJHSBDJB/sfbdj1223"}'
+docker-registry:
+  enabled: false
 
-  - host: "another.registry.com"
-    user: "myname"
-    password: "mypassword"
+broker: redis
 
-  - "user:password@foo.bar.registry.com"
+redis:
+  enabled: false
+
+externalServices:
+  redis:
+    host: 35.226.163.84

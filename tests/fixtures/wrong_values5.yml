@@ -1,0 +1,14 @@
+deploymentType: docker-compose
+
+rbac:
+  enabled: true
+
+serviceType: ClusterIP
+
+environment: staging
+
+user:
+  password: root
+
+rabbitmq-ha:
+  enabled: false  # Requires external service

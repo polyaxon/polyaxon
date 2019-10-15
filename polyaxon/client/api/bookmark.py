@@ -5,6 +5,7 @@ from polyaxon.client import settings
 from polyaxon.client.api.base import BaseApiHandler
 from polyaxon.client.exceptions import PolyaxonClientException
 from polyaxon.schemas.api.experiment import ExperimentConfig
+from polyaxon.schemas.api.project import ProjectConfig
 
 
 class BookmarkApi(BaseApiHandler):

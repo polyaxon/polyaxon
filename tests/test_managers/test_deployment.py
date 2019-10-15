@@ -3,9 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_deploy.operators.helm import HelmOperator
-from polyaxon_deploy.operators.kubectl import KubectlOperator
-from polyaxon_deploy.schemas.deployment import DeploymentConfig, DeploymentTypes
+from polyaxon.deploy.operators.helm import HelmOperator
+from polyaxon.deploy.operators.kubectl import KubectlOperator
+from polyaxon.deploy.schemas.deployment import DeploymentConfig, DeploymentTypes
 
 from polyaxon.managers.deploy import DeployManager
 

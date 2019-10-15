@@ -15,22 +15,22 @@ class TestVersion(BaseCommandTestCase):
         self.runner.invoke(upgrade)
         pip_upgrade.assert_called_once()
 
-    @patch('polyaxon_client.api.version.VersionApi.get_cli_version')
+    @patch('polyaxon.client.api.version.VersionApi.get_cli_version')
     @patch('polyaxon.cli.version.dict_tabulate')
     def test_version_cli_default(self, dict_tabulate, get_cli_version):
         self.runner.invoke(version)
         get_cli_version.assert_called_once()
         dict_tabulate.assert_called_once()
 
-    @patch('polyaxon_client.api.version.VersionApi.get_cli_version')
+    @patch('polyaxon.client.api.version.VersionApi.get_cli_version')
     @patch('polyaxon.cli.version.dict_tabulate')
     def test_version_cli(self, dict_tabulate, get_cli_version):
         self.runner.invoke(version, ['--cli'])
         get_cli_version.assert_called_once()
         dict_tabulate.assert_called_once()
 
-    @patch('polyaxon_client.api.version.VersionApi.get_platform_version')
-    @patch('polyaxon_client.api.version.VersionApi.get_chart_version')
+    @patch('polyaxon.client.api.version.VersionApi.get_platform_version')
+    @patch('polyaxon.client.api.version.VersionApi.get_chart_version')
     @patch('polyaxon.cli.version.dict_tabulate')
     def test_version(self, dict_tabulate, get_chart_version, get_platform_version):
         self.runner.invoke(version, ['--platform'])

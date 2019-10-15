@@ -7,7 +7,7 @@ import sys
 import click
 
 from hestia.list_utils import to_list
-from polyaxon_deploy import reader
+from polyaxon.deploy import reader
 
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.deploy import DeployManager

@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon_deploy.operators.pip import PipOperator
+from polyaxon.deploy.operators.pip import PipOperator
 
 from polyaxon import pkg
 from polyaxon.client import PolyaxonClient

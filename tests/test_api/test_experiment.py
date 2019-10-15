@@ -45,7 +45,6 @@ class TestExperimentConfigs(TestCase):
         config_to_dict.pop("params")
         config_to_dict.pop("finished_at")
         config_to_dict.pop("is_clone")
-        config_to_dict.pop("jobs")
         config_to_dict.pop("last_metric")
         config_to_dict.pop("resources")
         config_to_dict.pop("run_env")

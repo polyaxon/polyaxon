@@ -7,7 +7,7 @@ import sys
 
 import click
 
-from polyaxon_deploy.operators.conda import CondaOperator
+from polyaxon.deploy.operators.conda import CondaOperator
 
 from polyaxon.client.exceptions import (
     PolyaxonClientException,

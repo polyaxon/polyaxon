@@ -13,7 +13,7 @@ class TestAuth(BaseCommandTestCase):
         self.runner.invoke(logout)
         assert get_user.call_count == 1
 
-    @patch('polyaxon_client.api.auth.AuthApi.get_user')
+    @patch('polyaxon.client.api.auth.AuthApi.get_user')
     def test_whoami(self, get_user):
         self.runner.invoke(whoami)
         assert get_user.call_count == 1

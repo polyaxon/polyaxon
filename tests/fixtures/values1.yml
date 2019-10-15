@@ -5,8 +5,13 @@ rbac:
 
 ingress:
   enabled: true
+  path: /*
+  tls:
+    - secretName: polyaxon.cluster.local-tls
+      hosts:
+      - polyaxon.cluster.local
 
-serviceType: clusterIP
+serviceType: ClusterIP
 
 environment: staging
 
@@ -14,8 +19,11 @@ user:
   password: root
 
 postgresql:
-  install: false
+  enabled: false
   postgresUser: polyaxon
   postgresPassword: polyaxon
   postgresDatabase: postgres
-  externalPostgresHost: 35.226.163.84
+
+externalServices:
+  postgresql:
+    host: https://foo.com

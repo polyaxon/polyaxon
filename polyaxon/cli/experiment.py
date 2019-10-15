@@ -353,50 +353,6 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 
 
 @experiment.command()
-@click.option('--page', type=int, help="To paginate through the list of jobs.")
-@click.pass_context
-@clean_outputs
-def jobs(ctx, page):
-    """List jobs for experiment.
-
-    Uses [Caching](/references/polyaxon-cli/#caching)
-
-    Examples:
-
-    \b
-    ```bash
-    $ polyaxon experiment --experiment=1 jobs
-    ```
-    """
-    user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
-                                                                      ctx.obj.get('experiment'))
-    page = page or 1
-    try:
-        response = PolyaxonClient().experiment.list_jobs(
-            user, project_name, _experiment, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error('Could not get jobs for experiment `{}`.'.format(_experiment))
-        Printer.print_error('Error message `{}`.'.format(e))
-        sys.exit(1)
-
-    meta = get_meta_response(response)
-    if meta:
-        Printer.print_header('Jobs for experiment `{}`.'.format(_experiment))
-        Printer.print_header('Navigation:')
-        dict_tabulate(meta)
-    else:
-        Printer.print_header('No jobs found for experiment `{}`.'.format(_experiment))
-
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
-    objects = list_dicts_to_tabulate(objects)
-    if objects:
-        Printer.print_header("Jobs:")
-        objects.pop('experiment', None)
-        dict_tabulate(objects, is_list_dict=True)
-
-
-@experiment.command()
 @click.option('--page', type=int, help="To paginate through the list of statuses.")
 @click.pass_context
 @clean_outputs

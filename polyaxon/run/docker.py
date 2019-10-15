@@ -9,7 +9,7 @@ import tempfile
 import time
 
 from hestia.user_path import polyaxon_user_path
-from polyaxon_deploy.operators.docker import DockerOperator
+from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
