@@ -15,7 +15,7 @@ from polyaxon.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate
 )
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon.client.exceptions import PolyaxonClientException
 
 
 @click.group()

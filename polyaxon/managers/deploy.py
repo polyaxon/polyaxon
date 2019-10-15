@@ -14,7 +14,7 @@ from polyaxon_deploy.schemas.deployment_types import DeploymentTypes
 from polyaxon.exceptions import PolyaxonDeploymentConfigError
 from polyaxon.managers.compose import ComposeConfigManager
 from polyaxon.utils.formatting import Printer
-from polyaxon_client.transport import Transport
+from polyaxon.client.transport import Transport
 
 
 class DeployManager(object):

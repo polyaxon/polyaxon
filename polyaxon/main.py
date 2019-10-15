@@ -32,7 +32,7 @@ from polyaxon.cli.user import user
 from polyaxon.cli.version import check_cli_version, upgrade, version
 from polyaxon.logger import clean_outputs, configure_logger
 from polyaxon.managers.config import GlobalConfigManager
-from polyaxon_client import settings
+from polyaxon.client import settings
 
 click_completion.init()
 

@@ -9,7 +9,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon.client.exceptions import PolyaxonClientException
 
 
 @click.group()

@@ -19,7 +19,7 @@ from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.utils import indentation
 from polyaxon.utils.formatting import Printer, dict_tabulate
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon.client.exceptions import PolyaxonClientException
 
 PROJECT_CLI_NAME = "polyaxon-cli"
 

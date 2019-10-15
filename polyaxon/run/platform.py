@@ -12,7 +12,7 @@ from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitErro
 from polyaxon.managers.run import RunManager
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon.client.exceptions import PolyaxonClientException
 
 from polyaxon.schemas.polyflow.ops import OpConfig
 

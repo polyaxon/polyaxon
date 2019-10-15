@@ -14,7 +14,7 @@ from polyaxon.logger import clean_outputs
 from polyaxon.schemas import kinds
 from polyaxon.utils import indentation
 from polyaxon.utils.formatting import Printer
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon.client.exceptions import PolyaxonClientException
 
 
 def get_notebook_url(user, project_name):

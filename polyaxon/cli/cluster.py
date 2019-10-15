@@ -9,7 +9,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
 from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import Printer, dict_tabulate, list_dicts_to_tabulate
-from polyaxon_client.exceptions import PolyaxonClientException
+from polyaxon.client.exceptions import PolyaxonClientException
 
 
 def get_cluster_info(cluster_config):
