@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Versions'], factory);
+    define(['ApiClient', 'model/V1LogHandler', 'model/V1Versions'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1Versions'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1LogHandler'), require('../model/V1Versions'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.VersionServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Versions);
+    root.PolyaxonSdk.VersionServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1LogHandler, root.PolyaxonSdk.V1Versions);
   }
-}(this, function(ApiClient, V1Versions) {
+}(this, function(ApiClient, V1LogHandler, V1Versions) {
   'use strict';
 
   /**
@@ -61,6 +61,46 @@
   var exports = function(apiClient) {
     this.apiClient = apiClient || ApiClient.instance;
 
+
+    /**
+     * Callback function to receive the result of the getLogHandler operation.
+     * @callback module:api/VersionServiceApi~getLogHandlerCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1LogHandler} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List bookmarked runs
+     * @param {module:api/VersionServiceApi~getLogHandlerCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1LogHandler}
+     */
+    this.getLogHandler = function(callback) {
+      var postBody = null;
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1LogHandler;
+
+      return this.apiClient.callApi(
+        '/api/v1/log_handler', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
 
     /**
      * Callback function to receive the result of the getVersions operation.

@@ -32,31 +32,23 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.api.version_service_api import VersionServiceApi  # noqa: E501
+from polyaxon_sdk.models.v1_log_handler import V1LogHandler  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestVersionServiceApi(unittest.TestCase):
-    """VersionServiceApi unit test stubs"""
+class TestV1LogHandler(unittest.TestCase):
+    """V1LogHandler unit test stubs"""
 
     def setUp(self):
-        self.api = polyaxon_sdk.api.version_service_api.VersionServiceApi()  # noqa: E501
+        pass
 
     def tearDown(self):
         pass
 
-    def test_get_log_handler(self):
-        """Test case for get_log_handler
-
-        List bookmarked runs  # noqa: E501
-        """
-        pass
-
-    def test_get_versions(self):
-        """Test case for get_versions
-
-        List runs  # noqa: E501
-        """
+    def testV1LogHandler(self):
+        """Test V1LogHandler"""
+        # FIXME: construct object with mandatory attributes with example values
+        # model = polyaxon_sdk.models.v1_log_handler.V1LogHandler()  # noqa: E501
         pass
 
 

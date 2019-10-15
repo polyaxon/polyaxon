@@ -170,6 +170,34 @@
         ]
       }
     },
+    "/api/v1/log_handler": {
+      "get": {
+        "summary": "List bookmarked runs",
+        "operationId": "GetLogHandler",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1LogHandler"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "VersionService"
+        ]
+      }
+    },
     "/api/v1/users": {
       "get": {
         "summary": "List runs",
@@ -2212,6 +2240,17 @@
         }
       },
       "title": "Contains list runs"
+    },
+    "v1LogHandler": {
+      "type": "object",
+      "properties": {
+        "dsn": {
+          "type": "string"
+        },
+        "environment": {
+          "type": "string"
+        }
+      }
     },
     "v1OwnedEntityUUIdRequest": {
       "type": "object",

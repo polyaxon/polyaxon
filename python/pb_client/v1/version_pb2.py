@@ -39,7 +39,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x10v1/version.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a,protoc-gen-swagger/options/annotations.proto\"6\n\x07Version\x12\x13\n\x0bmin_version\x18\x01 \x01(\t\x12\x16\n\x0elatest_version\x18\x02 \x01(\t\"x\n\x08Versions\x12\x17\n\x0f\x63urrent_version\x18\x01 \x01(\t\x12\x18\n\x03\x63li\x18\x02 \x01(\x0b\x32\x0b.v1.Version\x12\x1d\n\x08platform\x18\x03 \x01(\x0b\x32\x0b.v1.Version\x12\x1a\n\x05\x61gent\x18\x04 \x01(\x0b\x32\x0b.v1.Versionb\x06proto3')
+  serialized_pb=_b('\n\x10v1/version.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a,protoc-gen-swagger/options/annotations.proto\"6\n\x07Version\x12\x13\n\x0bmin_version\x18\x01 \x01(\t\x12\x16\n\x0elatest_version\x18\x02 \x01(\t\"x\n\x08Versions\x12\x17\n\x0f\x63urrent_version\x18\x01 \x01(\t\x12\x18\n\x03\x63li\x18\x02 \x01(\x0b\x32\x0b.v1.Version\x12\x1d\n\x08platform\x18\x03 \x01(\x0b\x32\x0b.v1.Version\x12\x1a\n\x05\x61gent\x18\x04 \x01(\x0b\x32\x0b.v1.Version\".\n\nLogHandler\x12\x0b\n\x03\x64sn\x18\x01 \x01(\t\x12\x13\n\x0b\x65nvironment\x18\x02 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_struct__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,])
 
@@ -135,11 +135,50 @@ _VERSIONS = _descriptor.Descriptor(
   serialized_end=306,
 )
 
+
+_LOGHANDLER = _descriptor.Descriptor(
+  name='LogHandler',
+  full_name='v1.LogHandler',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='dsn', full_name='v1.LogHandler.dsn', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='environment', full_name='v1.LogHandler.environment', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=308,
+  serialized_end=354,
+)
+
 _VERSIONS.fields_by_name['cli'].message_type = _VERSION
 _VERSIONS.fields_by_name['platform'].message_type = _VERSION
 _VERSIONS.fields_by_name['agent'].message_type = _VERSION
 DESCRIPTOR.message_types_by_name['Version'] = _VERSION
 DESCRIPTOR.message_types_by_name['Versions'] = _VERSIONS
+DESCRIPTOR.message_types_by_name['LogHandler'] = _LOGHANDLER
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Version = _reflection.GeneratedProtocolMessageType('Version', (_message.Message,), {
@@ -155,6 +194,13 @@ Versions = _reflection.GeneratedProtocolMessageType('Versions', (_message.Messag
   # @@protoc_insertion_point(class_scope:v1.Versions)
   })
 _sym_db.RegisterMessage(Versions)
+
+LogHandler = _reflection.GeneratedProtocolMessageType('LogHandler', (_message.Message,), {
+  'DESCRIPTOR' : _LOGHANDLER,
+  '__module__' : 'v1.version_pb2'
+  # @@protoc_insertion_point(class_scope:v1.LogHandler)
+  })
+_sym_db.RegisterMessage(LogHandler)
 
 
 # @@protoc_insertion_point(module_scope)

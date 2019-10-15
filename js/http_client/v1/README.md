@@ -167,6 +167,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunServiceApi* | [**unBookmarkRun**](docs/RunServiceApi.md#unBookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
 *PolyaxonSdk.RunServiceApi* | [**updateRun**](docs/RunServiceApi.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *PolyaxonSdk.UserServiceApi* | [**getUser**](docs/UserServiceApi.md#getUser) | **GET** /api/v1/users | List runs
+*PolyaxonSdk.VersionServiceApi* | [**getLogHandler**](docs/VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs
 *PolyaxonSdk.VersionServiceApi* | [**getVersions**](docs/VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 
@@ -180,6 +181,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
  - [PolyaxonSdk.V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [PolyaxonSdk.V1ListRunsResponse](docs/V1ListRunsResponse.md)
+ - [PolyaxonSdk.V1LogHandler](docs/V1LogHandler.md)
  - [PolyaxonSdk.V1OwnedEntityUUIdRequest](docs/V1OwnedEntityUUIdRequest.md)
  - [PolyaxonSdk.V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [PolyaxonSdk.V1Project](docs/V1Project.md)

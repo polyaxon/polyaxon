@@ -21,3 +21,8 @@ message Versions {
     Version platform = 3;
     Version agent = 4;
 }
+
+message LogHandler {
+    string dsn = 1;
+    string environment = 2;
+}

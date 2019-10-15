@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.VersionServiceApi();
+    instance = new PolyaxonSdk.V1LogHandler();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,27 +64,25 @@
       object[property] = value;
   }
 
-  describe('VersionServiceApi', function() {
-    describe('getLogHandler', function() {
-      it('should call getLogHandler successfully', function(done) {
-        //uncomment below and update the code to test getLogHandler
-        //instance.getLogHandler(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
+  describe('V1LogHandler', function() {
+    it('should create an instance of V1LogHandler', function() {
+      // uncomment below and update the code to test V1LogHandler
+      //var instance = new PolyaxonSdk.V1LogHandler();
+      //expect(instance).to.be.a(PolyaxonSdk.V1LogHandler);
     });
-    describe('getVersions', function() {
-      it('should call getVersions successfully', function(done) {
-        //uncomment below and update the code to test getVersions
-        //instance.getVersions(function(error) {
-        //  if (error) throw error;
-        //expect().to.be();
-        //});
-        done();
-      });
+
+    it('should have the property dsn (base name: "dsn")', function() {
+      // uncomment below and update the code to test the property dsn
+      //var instance = new PolyaxonSdk.V1LogHandler();
+      //expect(instance).to.be();
     });
+
+    it('should have the property environment (base name: "environment")', function() {
+      // uncomment below and update the code to test the property environment
+      //var instance = new PolyaxonSdk.V1LogHandler();
+      //expect(instance).to.be();
+    });
+
   });
 
 }));

@@ -152,6 +152,7 @@ Class | Method | HTTP request | Description
 *RunServiceApi* | [**unBookmarkRun**](docs/RunServiceApi.md#unBookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
 *RunServiceApi* | [**updateRun**](docs/RunServiceApi.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *UserServiceApi* | [**getUser**](docs/UserServiceApi.md#getUser) | **GET** /api/v1/users | List runs
+*VersionServiceApi* | [**getLogHandler**](docs/VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs
 *VersionServiceApi* | [**getVersions**](docs/VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 
@@ -165,6 +166,7 @@ Class | Method | HTTP request | Description
  - [V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
+ - [V1LogHandler](docs/V1LogHandler.md)
  - [V1OwnedEntityUUIdRequest](docs/V1OwnedEntityUUIdRequest.md)
  - [V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [V1Project](docs/V1Project.md)

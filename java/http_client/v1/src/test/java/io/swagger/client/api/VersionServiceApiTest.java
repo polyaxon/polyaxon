@@ -28,6 +28,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.V1LogHandler;
 import io.swagger.client.model.V1Versions;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -45,6 +46,21 @@ public class VersionServiceApiTest {
 
     private final VersionServiceApi api = new VersionServiceApi();
 
+    
+    /**
+     * List bookmarked runs
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getLogHandlerTest() throws ApiException {
+        V1LogHandler response = api.getLogHandler();
+
+        // TODO: test validations
+    }
     
     /**
      * List runs

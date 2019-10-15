@@ -50,6 +50,7 @@ from polyaxon_sdk.models.v1_entity_status_request import V1EntityStatusRequest
 from polyaxon_sdk.models.v1_list_code_ref_response import V1ListCodeRefResponse
 from polyaxon_sdk.models.v1_list_projects_response import V1ListProjectsResponse
 from polyaxon_sdk.models.v1_list_runs_response import V1ListRunsResponse
+from polyaxon_sdk.models.v1_log_handler import V1LogHandler
 from polyaxon_sdk.models.v1_owned_entity_uu_id_request import V1OwnedEntityUUIdRequest
 from polyaxon_sdk.models.v1_owner_body_request import V1OwnerBodyRequest
 from polyaxon_sdk.models.v1_project import V1Project

@@ -385,7 +385,7 @@ service AuthService {
 
 // Service to get user
 service UserService {
-    // Get versions
+    // Get users
     rpc getUser(google.protobuf.Empty) returns (User) {
         option (google.api.http) = {
             get: "/api/v1/users"
@@ -399,6 +399,13 @@ service VersionService {
     rpc GetVersions(google.protobuf.Empty) returns (Versions) {
         option (google.api.http) = {
             get: "/api/v1/versions"
+        };
+    }
+
+    // Get log handler
+    rpc GetLogHandler(google.protobuf.Empty) returns (LogHandler) {
+        option (google.api.http) = {
+            get: "/api/v1/log_handler"
         };
     }
 }
