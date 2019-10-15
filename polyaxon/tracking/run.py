@@ -12,19 +12,19 @@ from polyaxon.client import settings
 from polyaxon.client.exceptions import AuthenticationError, PolyaxonClientException
 from polyaxon.client.handlers.conf import setup_logging
 from polyaxon.client.logger import logger
-from polyaxon.client.tracking.base import BaseTracker
-from polyaxon.client.tracking.is_managed import ensure_is_managed
-from polyaxon.client.tracking.no_op import check_no_op
-from polyaxon.client.tracking.offline import check_offline
-from polyaxon.client.tracking.paths import (
+from polyaxon.tracking.base import BaseTracker
+from polyaxon.tracking.is_managed import ensure_is_managed
+from polyaxon.tracking.no_op import check_no_op
+from polyaxon.tracking.offline import check_offline
+from polyaxon.tracking.paths import (
     get_artifacts_paths,
     get_base_outputs_path,
     get_log_level,
     get_outputs_path,
 )
-from polyaxon.client.tracking.utils.backend import OTHER_BACKEND
-from polyaxon.client.tracking.utils.code_reference import get_code_reference
-from polyaxon.client.tracking.utils.env import get_run_env
+from polyaxon.tracking.utils.backend import OTHER_BACKEND
+from polyaxon.tracking.utils.code_reference import get_code_reference
+from polyaxon.tracking.utils.env import get_run_env
 
 
 class Run(BaseTracker):
@@ -93,7 +93,7 @@ class Run(BaseTracker):
     @check_no_op
     def get_entity_data(self):
         self._entity_data = self.client.experiment.get_experiment(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
         )
@@ -139,7 +139,7 @@ class Run(BaseTracker):
                 )
 
             experiment = self.client.project.create_experiment(
-                username=self.username,
+                owner=self.owner,
                 project_name=self.project_name,
                 experiment_config=experiment_config,
                 group=self.group_id,
@@ -158,7 +158,7 @@ class Run(BaseTracker):
             if self.group_id:
                 outputs_path = "{}/{}/{}/{}/{}".format(
                     base_outputs_path,
-                    self.username,
+                    self.owner,
                     self.project_name,
                     self.group_id,
                     self.experiment_id,
@@ -166,7 +166,7 @@ class Run(BaseTracker):
             else:
                 outputs_path = "{}/{}/{}/{}".format(
                     base_outputs_path,
-                    self.username,
+                    self.owner,
                     self.project_name,
                     self.experiment_id,
                 )
@@ -184,7 +184,7 @@ class Run(BaseTracker):
     @check_offline
     def _update(self, patch_dict):
         self.client.experiment.update_experiment(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
             patch_dict=patch_dict,
@@ -195,7 +195,7 @@ class Run(BaseTracker):
     @check_offline
     def _set_health_url(self):
         health_url = self.client.experiment.get_heartbeat_url(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
         )
@@ -206,7 +206,7 @@ class Run(BaseTracker):
     @check_offline
     def _unset_health_url(self):
         health_url = self.client.experiment.get_heartbeat_url(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
         )
@@ -217,7 +217,7 @@ class Run(BaseTracker):
     @check_offline
     def send_logs(self, log_line):
         self.client.experiment.send_logs(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
             log_lines=log_line,
@@ -228,7 +228,7 @@ class Run(BaseTracker):
     @check_offline
     def log_status(self, status, message=None, traceback=None):
         self.client.experiment.create_status(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
             status=status,
@@ -241,7 +241,7 @@ class Run(BaseTracker):
     @check_offline
     def log_code_ref(self):
         self.client.experiment.create_code_reference(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
             coderef=get_code_reference(),
@@ -252,7 +252,7 @@ class Run(BaseTracker):
     @check_offline
     def log_metrics(self, **metrics):
         self.client.experiment.create_metric(
-            username=self.username,
+            owner=self.owner,
             project_name=self.project_name,
             experiment_id=self.experiment_id,
             values=metrics,

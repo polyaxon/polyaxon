@@ -12,7 +12,7 @@ from polyaxon.client.exceptions import (
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
-from polyaxon.client.tracking.utils.hashing import hash_value
+from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.exceptions import PolyaxonConfigurationError
 from polyaxon.utils.formatting import Printer

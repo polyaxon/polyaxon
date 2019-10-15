@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from polyaxon.client import settings
 from polyaxon.client.exceptions import PolyaxonClientException
-from polyaxon.client.tracking import Experiment
+from polyaxon.tracking import Run
 
 try:
     from fastai.callbacks import TrackerCallback
@@ -12,11 +12,11 @@ except ImportError:
 
 
 class PolyaxonFastai(TrackerCallback):
-    def __init__(self, learn, experiment=None, monitor="val_loss", mode="auto"):
+    def __init__(self, learn, run=None, monitor="val_loss", mode="auto"):
         super(PolyaxonFastai, self).__init__(learn, monitor=monitor, mode=mode)
-        self.experiment = experiment
+        self.run = run
         if settings.IS_MANAGED:
-            self.experiment = self.experiment or Experiment()
+            self.run = self.run or Run()
 
     def on_epoch_end(self, epoch, smooth_loss, last_metrics, **kwargs):
         if not self.experiment:
@@ -28,4 +28,4 @@ class PolyaxonFastai(TrackerCallback):
             )[1:]
         }
 
-        self.experiment.log_metrics(**metrics)
+        self.run.log_metrics(**metrics)

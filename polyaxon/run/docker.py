@@ -8,6 +8,7 @@ import sys
 import tempfile
 import time
 
+from hestia.env_var_keys import POLYAXON_KEYS_NO_OP
 from hestia.user_path import polyaxon_user_path
 from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
@@ -18,15 +19,12 @@ from polyaxon.client.exceptions import (
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
-from polyaxon.client.tracking import (
-    POLYAXON_NO_OP_KEY,
-    TMP_POLYAXON_PATH,
-    BuildJob,
-    Experiment,
-    hash_value,
-)
+from polyaxon.client.settings import TMP_POLYAXON_PATH
+
+from polyaxon.tracking import Run
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.exceptions import PolyaxonConfigurationError
+from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
 
 POLYAXON_DOCKERFILE_NAME = "Dockerfile"
@@ -47,8 +45,8 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
             ),
         ),
     ]
-    if POLYAXON_NO_OP_KEY in os.environ:
-        env_vars += [(POLYAXON_NO_OP_KEY, "true")]
+    if POLYAXON_KEYS_NO_OP in os.environ:
+        env_vars += [(POLYAXON_KEYS_NO_OP, "true")]
     if "POLYAXON_IS_OFFLINE" in os.environ:
         env_vars += [("POLYAXON_IS_OFFLINE", "true")]
 
@@ -159,7 +157,7 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
 
     # Create Build
     project = "{}.{}".format(user, project_name)
-    build_job = BuildJob(project=project, track_logs=False)
+    build_job = Run(project=project, track_logs=False)
 
     specification.apply_context()
     build_config = specification.config
@@ -168,12 +166,11 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
     )
     image = _create_docker_build(build_job, build_config, project)
 
-    experiment = Experiment(project=project, track_logs=False)
+    experiment = Run(project=project, track_logs=False)
     experiment.create(
         name=name,
         tags=tags,
         description=description,
-        build_id=build_job.job_id,
         content=specification.raw_data,
     )
 

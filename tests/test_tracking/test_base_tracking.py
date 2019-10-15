@@ -10,7 +10,7 @@ from tests.utils import TestEnvVarsCase
 
 from polyaxon.client import settings
 from polyaxon.client.exceptions import PolyaxonClientException
-from polyaxon.client.tracking import paths
+from polyaxon.tracking import paths
 
 
 class TestTracker(TestEnvVarsCase):

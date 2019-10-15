@@ -13,14 +13,14 @@ from polystores.stores.manager import StoreManager
 from polyaxon.client import PolyaxonClient, settings
 from polyaxon.client.exceptions import PolyaxonClientException
 from polyaxon.client.logger import logger
-from polyaxon.client.tracking.is_managed import ensure_is_managed
-from polyaxon.client.tracking.no_op import check_no_op
-from polyaxon.client.tracking.offline import check_offline
-from polyaxon.client.tracking.paths import get_outputs_path
-from polyaxon.client.tracking.utils.env import get_run_env, is_notebook
-from polyaxon.client.tracking.utils.hashing import hash_value
-from polyaxon.client.tracking.utils.project import get_project_info
-from polyaxon.client.tracking.utils.tags import validate_tags
+from polyaxon.tracking.is_managed import ensure_is_managed
+from polyaxon.tracking.no_op import check_no_op
+from polyaxon.tracking.offline import check_offline
+from polyaxon.tracking.paths import get_outputs_path
+from polyaxon.tracking.utils.env import get_run_env, is_notebook
+from polyaxon.tracking.utils.hashing import hash_value
+from polyaxon.tracking.utils.project import get_project_info
+from polyaxon.tracking.utils.tags import validate_tags
 
 
 class BaseTracker(object):
@@ -29,6 +29,7 @@ class BaseTracker(object):
     @check_no_op
     def __init__(
         self,
+        owner=None,
         project=None,
         client=None,
         track_logs=True,
@@ -54,14 +55,14 @@ class BaseTracker(object):
                 else self.client.auth.get_user().get("username")
             )
 
-        username, project_name = get_project_info(
-            current_user=self.user, project=project
+        owner, project_name = get_project_info(
+            owner=owner, project=project
         )
         self.track_logs = track_logs
         self.track_code = track_code
         self.track_env = track_env
+        self.owner = owner
         self.project = project
-        self.username = username
         self.project_name = project_name
         self.outputs_store = outputs_store
         self._entity_data = None

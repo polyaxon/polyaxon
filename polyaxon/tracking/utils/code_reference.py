@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon.client.tracking.utils.cmd import run_command
+from polyaxon.tracking.utils.cmd import run_command
 
 
 def is_git_initialized(path="."):

@@ -10,8 +10,8 @@ from hestia.env_var_keys import (
     POLYAXON_KEYS_OUTPUTS_PATH,
 )
 
-from polyaxon.client.tracking.is_managed import ensure_is_managed
-from polyaxon.client.tracking.no_op import check_no_op
+from polyaxon.tracking.is_managed import ensure_is_managed
+from polyaxon.tracking.no_op import check_no_op
 
 
 @check_no_op

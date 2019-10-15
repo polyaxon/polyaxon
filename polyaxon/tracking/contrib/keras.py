@@ -5,7 +5,7 @@ import os
 
 from polyaxon.client import settings
 from polyaxon.client.exceptions import PolyaxonClientException
-from polyaxon.client.tracking import Experiment
+from polyaxon.tracking import Run
 
 try:
     from keras.callbacks import Callback
@@ -19,14 +19,14 @@ except ImportError:
 
 
 class PolyaxonKeras(Callback):
-    def __init__(self, experiment=None, metrics=None):
-        self.experiment = experiment
+    def __init__(self, run=None, metrics=None):
+        self.run = run
         if settings.IS_MANAGED:
-            self.experiment = self.experiment or Experiment()
+            self.run = self.run or Run()
         self.metrics = metrics
 
     def on_epoch_end(self, epoch, logs=None):
-        if not logs or not self.experiment:
+        if not logs or not self.run:
             return
         if self.metrics:
             metrics = {
@@ -35,24 +35,24 @@ class PolyaxonKeras(Callback):
         else:
             metrics = logs  # Log all metrics
 
-        self.experiment.log_metrics(**metrics)
+        self.run.log_metrics(**metrics)
 
 
 class PolyaxonModelCheckpoint(ModelCheckpoint):
     """Save model checkpoint with polyaxon."""
 
-    def __init__(self, experiment, filepath, **kwargs):
+    def __init__(self, run, filepath, **kwargs):
         super(PolyaxonModelCheckpoint, self).__init__(filepath, **kwargs)
-        self.experiment = experiment
+        self.run = run
 
     def on_epoch_end(self, epoch, logs=None):
         super(PolyaxonModelCheckpoint, self).on_epoch_end(epoch, logs=logs)
 
         # Upload files with polyaxon.
-        if self.experiment.get_experiment_info():
+        if self.run.get_run_info():
             if os.path.isdir(self.filepath):
-                self.experiment.log_outputs(self.filepath)
+                self.run.log_outputs(self.filepath)
             elif os.path.isfile(self.filepath):
-                self.experiment.log_output(self.filepath)
+                self.run.log_output(self.filepath)
             else:
                 raise ValueError("Unknow file type: ", self.filepath)
