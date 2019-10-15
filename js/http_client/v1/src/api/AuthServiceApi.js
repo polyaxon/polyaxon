@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Auth'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CredsBodyRequest'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'), require('../model/V1CredsBodyRequest'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.AuthServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth);
+    root.PolyaxonSdk.AuthServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CredsBodyRequest);
   }
-}(this, function(ApiClient, V1Auth) {
+}(this, function(ApiClient, V1Auth, V1CredsBodyRequest) {
   'use strict';
 
   /**
@@ -72,22 +72,22 @@
 
     /**
      * List runs
-     * @param {Object} opts Optional parameters
-     * @param {String} opts.user User email.
-     * @param {String} opts.password Project where the experiement will be assigned.
+     * @param {module:model/V1CredsBodyRequest} body 
      * @param {module:api/AuthServiceApi~loginCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Auth}
      */
-    this.login = function(opts, callback) {
-      opts = opts || {};
-      var postBody = null;
+    this.login = function(body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling login");
+      }
 
 
       var pathParams = {
       };
       var queryParams = {
-        'user': opts['user'],
-        'password': opts['password'],
       };
       var collectionQueryParams = {
       };
@@ -102,7 +102,7 @@
       var returnType = V1Auth;
 
       return this.apiClient.callApi(
-        '/api/v1/users/token', 'GET',
+        '/api/v1/users/token', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

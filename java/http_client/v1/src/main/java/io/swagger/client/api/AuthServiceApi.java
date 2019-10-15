@@ -42,6 +42,7 @@ import java.io.IOException;
 
 
 import io.swagger.client.model.V1Auth;
+import io.swagger.client.model.V1CredsBodyRequest;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -70,25 +71,20 @@ public class AuthServiceApi {
 
     /**
      * Build call for login
-     * @param user User email. (optional)
-     * @param password Project where the experiement will be assigned. (optional)
+     * @param body  (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call loginCall(String user, String password, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        Object localVarPostBody = null;
+    public com.squareup.okhttp.Call loginCall(V1CredsBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/api/v1/users/token";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (user != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("user", user));
-        if (password != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("password", password));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -119,14 +115,19 @@ public class AuthServiceApi {
         }
 
         String[] localVarAuthNames = new String[] { "ApiKey" };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call loginValidateBeforeCall(String user, String password, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call loginValidateBeforeCall(V1CredsBodyRequest body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling login(Async)");
+        }
         
 
-        com.squareup.okhttp.Call call = loginCall(user, password, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = loginCall(body, progressListener, progressRequestListener);
         return call;
 
     }
@@ -134,26 +135,24 @@ public class AuthServiceApi {
     /**
      * List runs
      * 
-     * @param user User email. (optional)
-     * @param password Project where the experiement will be assigned. (optional)
+     * @param body  (required)
      * @return V1Auth
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Auth login(String user, String password) throws ApiException {
-        ApiResponse<V1Auth> resp = loginWithHttpInfo(user, password);
+    public V1Auth login(V1CredsBodyRequest body) throws ApiException {
+        ApiResponse<V1Auth> resp = loginWithHttpInfo(body);
         return resp.getData();
     }
 
     /**
      * List runs
      * 
-     * @param user User email. (optional)
-     * @param password Project where the experiement will be assigned. (optional)
+     * @param body  (required)
      * @return ApiResponse&lt;V1Auth&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Auth> loginWithHttpInfo(String user, String password) throws ApiException {
-        com.squareup.okhttp.Call call = loginValidateBeforeCall(user, password, null, null);
+    public ApiResponse<V1Auth> loginWithHttpInfo(V1CredsBodyRequest body) throws ApiException {
+        com.squareup.okhttp.Call call = loginValidateBeforeCall(body, null, null);
         Type localVarReturnType = new TypeToken<V1Auth>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -161,13 +160,12 @@ public class AuthServiceApi {
     /**
      * List runs (asynchronously)
      * 
-     * @param user User email. (optional)
-     * @param password Project where the experiement will be assigned. (optional)
+     * @param body  (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call loginAsync(String user, String password, final ApiCallback<V1Auth> callback) throws ApiException {
+    public com.squareup.okhttp.Call loginAsync(V1CredsBodyRequest body, final ApiCallback<V1Auth> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -188,7 +186,7 @@ public class AuthServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = loginValidateBeforeCall(user, password, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = loginValidateBeforeCall(body, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1Auth>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

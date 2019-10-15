@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+[**login**](AuthServiceApi.md#login) | **POST** /api/v1/users/token | List runs
 
 
 <a name="login"></a>
 # **login**
-> V1Auth login(user, password)
+> V1Auth login(body)
 
 List runs
 
@@ -31,10 +31,9 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 AuthServiceApi apiInstance = new AuthServiceApi();
-String user = "user_example"; // String | User email.
-String password = "password_example"; // String | Project where the experiement will be assigned.
+V1CredsBodyRequest body = new V1CredsBodyRequest(); // V1CredsBodyRequest | 
 try {
-    V1Auth result = apiInstance.login(user, password);
+    V1Auth result = apiInstance.login(body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling AuthServiceApi#login");
@@ -46,8 +45,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| User email. | [optional]
- **password** | **String**| Project where the experiement will be assigned. | [optional]
+ **body** | [**V1CredsBodyRequest**](V1CredsBodyRequest.md)|  |
 
 ### Return type
 

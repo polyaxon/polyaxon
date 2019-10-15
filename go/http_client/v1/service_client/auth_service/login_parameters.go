@@ -29,6 +29,8 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
+
+	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
 // NewLoginParams creates a new LoginParams object
@@ -75,16 +77,8 @@ for the login operation typically these are written to a http.Request
 */
 type LoginParams struct {
 
-	/*Password
-	  Project where the experiement will be assigned.
-
-	*/
-	Password *string
-	/*User
-	  User email.
-
-	*/
-	User *string
+	/*Body*/
+	Body *service_model.V1CredsBodyRequest
 
 	timeout    time.Duration
 	Context    context.Context
@@ -124,26 +118,15 @@ func (o *LoginParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithPassword adds the password to the login params
-func (o *LoginParams) WithPassword(password *string) *LoginParams {
-	o.SetPassword(password)
+// WithBody adds the body to the login params
+func (o *LoginParams) WithBody(body *service_model.V1CredsBodyRequest) *LoginParams {
+	o.SetBody(body)
 	return o
 }
 
-// SetPassword adds the password to the login params
-func (o *LoginParams) SetPassword(password *string) {
-	o.Password = password
-}
-
-// WithUser adds the user to the login params
-func (o *LoginParams) WithUser(user *string) *LoginParams {
-	o.SetUser(user)
-	return o
-}
-
-// SetUser adds the user to the login params
-func (o *LoginParams) SetUser(user *string) {
-	o.User = user
+// SetBody adds the body to the login params
+func (o *LoginParams) SetBody(body *service_model.V1CredsBodyRequest) {
+	o.Body = body
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -154,36 +137,10 @@ func (o *LoginParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registr
 	}
 	var res []error
 
-	if o.Password != nil {
-
-		// query param password
-		var qrPassword string
-		if o.Password != nil {
-			qrPassword = *o.Password
+	if o.Body != nil {
+		if err := r.SetBodyParam(o.Body); err != nil {
+			return err
 		}
-		qPassword := qrPassword
-		if qPassword != "" {
-			if err := r.SetQueryParam("password", qPassword); err != nil {
-				return err
-			}
-		}
-
-	}
-
-	if o.User != nil {
-
-		// query param user
-		var qrUser string
-		if o.User != nil {
-			qrUser = *o.User
-		}
-		qUser := qrUser
-		if qUser != "" {
-			if err := r.SetQueryParam("user", qUser); err != nil {
-				return err
-			}
-		}
-
 	}
 
 	if len(res) > 0 {

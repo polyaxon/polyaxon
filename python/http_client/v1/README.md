@@ -60,12 +60,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.AuthServiceApi(polyaxon_sdk.ApiClient(configuration))
-user = 'user_example' # str | User email. (optional)
-password = 'password_example' # str | Project where the experiement will be assigned. (optional)
+body = polyaxon_sdk.V1CredsBodyRequest() # V1CredsBodyRequest | 
 
 try:
     # List runs
-    api_response = api_instance.login(user=user, password=password)
+    api_response = api_instance.login(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AuthServiceApi->login: %s\n" % e)
@@ -78,7 +77,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+*AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **POST** /api/v1/users/token | List runs
 *ProjectServiceApi* | [**archive_project**](docs/ProjectServiceApi.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectServiceApi* | [**bookmark_project**](docs/ProjectServiceApi.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *ProjectServiceApi* | [**create_project**](docs/ProjectServiceApi.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
@@ -126,6 +125,7 @@ Class | Method | HTTP request | Description
  - [V1Auth](docs/V1Auth.md)
  - [V1CodeRefBodyRequest](docs/V1CodeRefBodyRequest.md)
  - [V1CodeReference](docs/V1CodeReference.md)
+ - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
  - [V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)

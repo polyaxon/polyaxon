@@ -171,7 +171,7 @@
       }
     },
     "/api/v1/users/token": {
-      "get": {
+      "post": {
         "summary": "List runs",
         "operationId": "Login",
         "responses": {
@@ -195,18 +195,12 @@
         },
         "parameters": [
           {
-            "name": "user",
-            "description": "User email.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "description": "Project where the experiement will be assigned.",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CredsBodyRequest"
+            }
           }
         ],
         "tags": [
@@ -2075,6 +2069,20 @@
         }
       },
       "title": "Code Reference specification"
+    },
+    "v1CredsBodyRequest": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "type": "string",
+          "title": "User email"
+        },
+        "password": {
+          "type": "string",
+          "title": "Project where the experiement will be assigned"
+        }
+      },
+      "title": "Login"
     },
     "v1EntityStatusRequest": {
       "type": "object",

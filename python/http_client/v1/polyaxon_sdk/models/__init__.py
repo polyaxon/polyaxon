@@ -34,6 +34,7 @@ from __future__ import absolute_import
 from polyaxon_sdk.models.v1_auth import V1Auth
 from polyaxon_sdk.models.v1_code_ref_body_request import V1CodeRefBodyRequest
 from polyaxon_sdk.models.v1_code_reference import V1CodeReference
+from polyaxon_sdk.models.v1_creds_body_request import V1CredsBodyRequest
 from polyaxon_sdk.models.v1_entity_status_request import V1EntityStatusRequest
 from polyaxon_sdk.models.v1_list_code_ref_response import V1ListCodeRefResponse
 from polyaxon_sdk.models.v1_list_projects_response import V1ListProjectsResponse

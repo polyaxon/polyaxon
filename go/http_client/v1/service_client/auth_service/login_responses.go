@@ -76,7 +76,7 @@ type LoginOK struct {
 }
 
 func (o *LoginOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/users/token][%d] loginOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginOK  %+v", 200, o.Payload)
 }
 
 func (o *LoginOK) GetPayload() *service_model.V1Auth {
@@ -109,7 +109,7 @@ type LoginForbidden struct {
 }
 
 func (o *LoginForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/users/token][%d] loginForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginForbidden  %+v", 403, o.Payload)
 }
 
 func (o *LoginForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type LoginNotFound struct {
 }
 
 func (o *LoginNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/users/token][%d] loginNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/users/token][%d] loginNotFound  %+v", 404, o.Payload)
 }
 
 func (o *LoginNotFound) GetPayload() string {

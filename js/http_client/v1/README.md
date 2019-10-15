@@ -106,10 +106,8 @@ ApiKey.apiKey = "YOUR API KEY"
 
 var api = new PolyaxonSdk.AuthServiceApi()
 
-var opts = { 
-  'user': "user_example", // {String} User email.
-  'password': "password_example" // {String} Project where the experiement will be assigned.
-};
+var body = new PolyaxonSdk.V1CredsBodyRequest(); // {V1CredsBodyRequest} 
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -118,7 +116,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.login(opts, callback);
+api.login(body, callback);
 
 ```
 
@@ -128,7 +126,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*PolyaxonSdk.AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+*PolyaxonSdk.AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **POST** /api/v1/users/token | List runs
 *PolyaxonSdk.ProjectServiceApi* | [**archiveProject**](docs/ProjectServiceApi.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *PolyaxonSdk.ProjectServiceApi* | [**bookmarkProject**](docs/ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *PolyaxonSdk.ProjectServiceApi* | [**createProject**](docs/ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
@@ -176,6 +174,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1Auth](docs/V1Auth.md)
  - [PolyaxonSdk.V1CodeRefBodyRequest](docs/V1CodeRefBodyRequest.md)
  - [PolyaxonSdk.V1CodeReference](docs/V1CodeReference.md)
+ - [PolyaxonSdk.V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [PolyaxonSdk.V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
  - [PolyaxonSdk.V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
  - [PolyaxonSdk.V1ListProjectsResponse](docs/V1ListProjectsResponse.md)

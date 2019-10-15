@@ -51,7 +51,7 @@ func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWrite
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "Login",
-		Method:             "GET",
+		Method:             "POST",
 		PathPattern:        "/api/v1/users/token",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},

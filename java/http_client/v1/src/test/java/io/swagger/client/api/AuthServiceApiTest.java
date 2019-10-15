@@ -29,6 +29,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.V1Auth;
+import io.swagger.client.model.V1CredsBodyRequest;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -56,9 +57,8 @@ public class AuthServiceApiTest {
      */
     @Test
     public void loginTest() throws ApiException {
-        String user = null;
-        String password = null;
-        V1Auth response = api.login(user, password);
+        V1CredsBodyRequest body = null;
+        V1Auth response = api.login(body);
 
         // TODO: test validations
     }

@@ -4,12 +4,12 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+[**login**](AuthServiceApi.md#login) | **POST** /api/v1/users/token | List runs
 
 
 <a name="login"></a>
 # **login**
-> V1Auth login(opts)
+> V1Auth login(body)
 
 List runs
 
@@ -26,10 +26,8 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.AuthServiceApi();
 
-var opts = { 
-  'user': "user_example", // String | User email.
-  'password': "password_example" // String | Project where the experiement will be assigned.
-};
+var body = new PolyaxonSdk.V1CredsBodyRequest(); // V1CredsBodyRequest | 
+
 
 var callback = function(error, data, response) {
   if (error) {
@@ -38,15 +36,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.login(opts, callback);
+apiInstance.login(body, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| User email. | [optional] 
- **password** | **String**| Project where the experiement will be assigned. | [optional] 
+ **body** | [**V1CredsBodyRequest**](V1CredsBodyRequest.md)|  | 
 
 ### Return type
 

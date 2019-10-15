@@ -376,7 +376,8 @@ service AuthService {
     // Login
     rpc Login(CredsBodyRequest) returns (Auth) {
         option (google.api.http) = {
-            get: "/api/v1/users/token"
+            post: "/api/v1/users/token"
+            body: "*"
         };
     }
 }

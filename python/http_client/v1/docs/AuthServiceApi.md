@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+[**login**](AuthServiceApi.md#login) | **POST** /api/v1/users/token | List runs
 
 
 # **login**
-> V1Auth login(user=user, password=password)
+> V1Auth login(body)
 
 List runs
 
@@ -28,12 +28,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.AuthServiceApi(polyaxon_sdk.ApiClient(configuration))
-user = 'user_example' # str | User email. (optional)
-password = 'password_example' # str | Project where the experiement will be assigned. (optional)
+body = polyaxon_sdk.V1CredsBodyRequest() # V1CredsBodyRequest | 
 
 try:
     # List runs
-    api_response = api_instance.login(user=user, password=password)
+    api_response = api_instance.login(body)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling AuthServiceApi->login: %s\n" % e)
@@ -43,8 +42,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **str**| User email. | [optional] 
- **password** | **str**| Project where the experiement will be assigned. | [optional] 
+ **body** | [**V1CredsBodyRequest**](V1CredsBodyRequest.md)|  | 
 
 ### Return type
 

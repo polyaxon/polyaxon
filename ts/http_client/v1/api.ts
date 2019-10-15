@@ -173,6 +173,26 @@ export interface V1CodeReference {
 /**
  * 
  * @export
+ * @interface V1CredsBodyRequest
+ */
+export interface V1CredsBodyRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CredsBodyRequest
+     */
+    user?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1CredsBodyRequest
+     */
+    password?: string;
+}
+
+/**
+ * 
+ * @export
  * @interface V1EntityStatusRequest
  */
 export interface V1EntityStatusRequest {
@@ -680,15 +700,18 @@ export const AuthServiceApiFetchParamCreator = function (configuration?: Configu
         /**
          * 
          * @summary List runs
-         * @param {string} [user] User email.
-         * @param {string} [password] Project where the experiement will be assigned.
+         * @param {V1CredsBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login(user?: string, password?: string, options: any = {}): FetchArgs {
+        login(body: V1CredsBodyRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling login.');
+            }
             const localVarPath = `/api/v1/users/token`;
             const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -700,18 +723,14 @@ export const AuthServiceApiFetchParamCreator = function (configuration?: Configu
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (user !== undefined) {
-                localVarQueryParameter['user'] = user;
-            }
-
-            if (password !== undefined) {
-                localVarQueryParameter['password'] = password;
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1CredsBodyRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -730,13 +749,12 @@ export const AuthServiceApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List runs
-         * @param {string} [user] User email.
-         * @param {string} [password] Project where the experiement will be assigned.
+         * @param {V1CredsBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login(user?: string, password?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Auth> {
-            const localVarFetchArgs = AuthServiceApiFetchParamCreator(configuration).login(user, password, options);
+        login(body: V1CredsBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Auth> {
+            const localVarFetchArgs = AuthServiceApiFetchParamCreator(configuration).login(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -759,13 +777,12 @@ export const AuthServiceApiFactory = function (configuration?: Configuration, fe
         /**
          * 
          * @summary List runs
-         * @param {string} [user] User email.
-         * @param {string} [password] Project where the experiement will be assigned.
+         * @param {V1CredsBodyRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        login(user?: string, password?: string, options?: any) {
-            return AuthServiceApiFp(configuration).login(user, password, options)(fetch, basePath);
+        login(body: V1CredsBodyRequest, options?: any) {
+            return AuthServiceApiFp(configuration).login(body, options)(fetch, basePath);
         },
     };
 };
@@ -780,14 +797,13 @@ export class AuthServiceApi extends BaseAPI {
     /**
      * 
      * @summary List runs
-     * @param {string} [user] User email.
-     * @param {string} [password] Project where the experiement will be assigned.
+     * @param {V1CredsBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthServiceApi
      */
-    public login(user?: string, password?: string, options?: any) {
-        return AuthServiceApiFp(this.configuration).login(user, password, options)(this.fetch, this.basePath);
+    public login(body: V1CredsBodyRequest, options?: any) {
+        return AuthServiceApiFp(this.configuration).login(body, options)(this.fetch, this.basePath);
     }
 
 }

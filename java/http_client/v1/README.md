@@ -92,10 +92,9 @@ public class AuthServiceApiExample {
         //ApiKey.setApiKeyPrefix("Token");
 
         AuthServiceApi apiInstance = new AuthServiceApi();
-        String user = "user_example"; // String | User email.
-        String password = "password_example"; // String | Project where the experiement will be assigned.
+        V1CredsBodyRequest body = new V1CredsBodyRequest(); // V1CredsBodyRequest | 
         try {
-            V1Auth result = apiInstance.login(user, password);
+            V1Auth result = apiInstance.login(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AuthServiceApi#login");
@@ -112,7 +111,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **GET** /api/v1/users/token | List runs
+*AuthServiceApi* | [**login**](docs/AuthServiceApi.md#login) | **POST** /api/v1/users/token | List runs
 *ProjectServiceApi* | [**archiveProject**](docs/ProjectServiceApi.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectServiceApi* | [**bookmarkProject**](docs/ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *ProjectServiceApi* | [**createProject**](docs/ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
@@ -160,6 +159,7 @@ Class | Method | HTTP request | Description
  - [V1Auth](docs/V1Auth.md)
  - [V1CodeRefBodyRequest](docs/V1CodeRefBodyRequest.md)
  - [V1CodeReference](docs/V1CodeReference.md)
+ - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
  - [V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
  - [V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
