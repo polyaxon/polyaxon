@@ -27,7 +27,7 @@ from polyaxon_client.tracking.utils.code_reference import get_code_reference
 from polyaxon_client.tracking.utils.env import get_run_env
 
 
-class Experiment(BaseTracker):
+class Run(BaseTracker):
     @check_no_op
     def __init__(
         self,
@@ -48,7 +48,7 @@ class Experiment(BaseTracker):
             experiment_info = self.get_experiment_info()
             project = experiment_info["project_name"]
             experiment_id = experiment_info["experiment_name"].split(".")[-1]
-        super(Experiment, self).__init__(
+        super(Run, self).__init__(
             project=project,
             client=client,
             track_logs=track_logs,
@@ -157,6 +157,7 @@ class Experiment(BaseTracker):
         if self.outputs_store is None and base_outputs_path:
             if self.group_id:
                 outputs_path = "{}/{}/{}/{}/{}".format(
+
                     base_outputs_path,
                     self.username,
                     self.project_name,
