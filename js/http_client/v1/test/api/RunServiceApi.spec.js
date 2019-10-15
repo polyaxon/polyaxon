@@ -85,6 +85,16 @@
         done();
       });
     });
+    describe('copyRun', function() {
+      it('should call copyRun successfully', function(done) {
+        //uncomment below and update the code to test copyRun
+        //instance.copyRun(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('createRun', function() {
       it('should call createRun successfully', function(done) {
         //uncomment below and update the code to test createRun

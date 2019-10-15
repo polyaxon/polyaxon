@@ -82,8 +82,8 @@ Class | Method | HTTP request | Description
 *ProjectServiceApi* | [**bookmark_project**](docs/ProjectServiceApi.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *ProjectServiceApi* | [**create_project**](docs/ProjectServiceApi.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
 *ProjectServiceApi* | [**delete_experiment**](docs/ProjectServiceApi.md#delete_experiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-*ProjectServiceApi* | [**disable_project_ci**](docs/ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
-*ProjectServiceApi* | [**enable_project_ci**](docs/ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run
+*ProjectServiceApi* | [**disable_project_ci**](docs/ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+*ProjectServiceApi* | [**enable_project_ci**](docs/ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *ProjectServiceApi* | [**get_project**](docs/ProjectServiceApi.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
 *ProjectServiceApi* | [**list_archived_projects**](docs/ProjectServiceApi.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Create new run
 *ProjectServiceApi* | [**list_bookmarked_projects**](docs/ProjectServiceApi.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
@@ -94,6 +94,7 @@ Class | Method | HTTP request | Description
 *ProjectServiceApi* | [**update_project**](docs/ProjectServiceApi.md#update_project) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
 *RunServiceApi* | [**archive_run**](docs/RunServiceApi.md#archive_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *RunServiceApi* | [**bookmark_run**](docs/RunServiceApi.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+*RunServiceApi* | [**copy_run**](docs/RunServiceApi.md#copy_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/copy | Restart run with copy
 *RunServiceApi* | [**create_run**](docs/RunServiceApi.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 *RunServiceApi* | [**create_run_code_ref**](docs/RunServiceApi.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 *RunServiceApi* | [**create_run_status**](docs/RunServiceApi.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status

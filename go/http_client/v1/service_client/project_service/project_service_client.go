@@ -181,7 +181,7 @@ func (a *Client) DeleteExperiment(params *DeleteExperimentParams, authInfo runti
 }
 
 /*
-DisableProjectCI resumes run
+DisableProjectCI restarts run
 */
 func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*DisableProjectCIOK, error) {
 	// TODO: Validate the params before sending
@@ -216,7 +216,7 @@ func (a *Client) DisableProjectCI(params *DisableProjectCIParams, authInfo runti
 }
 
 /*
-EnableProjectCI restarts run
+EnableProjectCI restarts run with copy
 */
 func (a *Client) EnableProjectCI(params *EnableProjectCIParams, authInfo runtime.ClientAuthInfoWriter) (*EnableProjectCIOK, error) {
 	// TODO: Validate the params before sending

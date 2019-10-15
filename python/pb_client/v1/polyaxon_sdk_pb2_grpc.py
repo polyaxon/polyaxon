@@ -102,6 +102,11 @@ class RunServiceStub(object):
         request_serializer=v1_dot_base__pb2.ProjectBodyRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
+    self.CopyRun = channel.unary_unary(
+        '/v1.RunService/CopyRun',
+        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        response_deserializer=v1_dot_run__pb2.Run.FromString,
+        )
     self.RestartRun = channel.unary_unary(
         '/v1.RunService/RestartRun',
         request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
@@ -259,6 +264,13 @@ class RunServiceServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def CopyRun(self, request, context):
+    """Restart run with copy
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
   def RestartRun(self, request, context):
     """Restart run
     """
@@ -411,6 +423,11 @@ def add_RunServiceServicer_to_server(servicer, server):
           servicer.InvalidateRuns,
           request_deserializer=v1_dot_base__pb2.ProjectBodyRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+      ),
+      'CopyRun': grpc.unary_unary_rpc_method_handler(
+          servicer.CopyRun,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          response_serializer=v1_dot_run__pb2.Run.SerializeToString,
       ),
       'RestartRun': grpc.unary_unary_rpc_method_handler(
           servicer.RestartRun,

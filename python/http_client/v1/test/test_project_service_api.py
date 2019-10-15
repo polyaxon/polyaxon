@@ -76,14 +76,14 @@ class TestProjectServiceApi(unittest.TestCase):
     def test_disable_project_ci(self):
         """Test case for disable_project_ci
 
-        Resume run  # noqa: E501
+        Restart run  # noqa: E501
         """
         pass
 
     def test_enable_project_ci(self):
         """Test case for enable_project_ci
 
-        Restart run  # noqa: E501
+        Restart run with copy  # noqa: E501
         """
         pass
 

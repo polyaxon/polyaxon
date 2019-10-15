@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**archiveRun**](RunServiceApi.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 [**bookmarkRun**](RunServiceApi.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
+[**copyRun**](RunServiceApi.md#copyRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/copy | Restart run with copy
 [**createRun**](RunServiceApi.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
 [**createRunCodeRef**](RunServiceApi.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 [**createRunStatus**](RunServiceApi.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
@@ -135,6 +136,65 @@ Name | Type | Description  | Notes
 ### Return type
 
 **Object**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="copyRun"></a>
+# **copyRun**
+> V1Run copyRun(owner, project, uuid, body)
+
+Restart run with copy
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.RunServiceApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+RunServiceApi apiInstance = new RunServiceApi();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project where the experiement will be assigned
+String uuid = "uuid_example"; // String | Unique integer identifier of the entity
+V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+try {
+    V1Run result = apiInstance.copyRun(owner, project, uuid, body);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RunServiceApi#copyRun");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project where the experiement will be assigned |
+ **uuid** | **String**| Unique integer identifier of the entity |
+ **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+
+### Return type
+
+[**V1Run**](V1Run.md)
 
 ### Authorization
 

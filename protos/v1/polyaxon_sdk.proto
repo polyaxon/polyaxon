@@ -167,6 +167,14 @@ service RunService {
         };
     }
 
+     // Restart run with copy
+     rpc CopyRun(OwnedEntityUUIdRequest) returns (Run) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/{project}/runs/{uuid}/copy"
+            body: "*"
+        };
+    }
+
     // Restart run
     rpc RestartRun(OwnedEntityUUIdRequest) returns (Run) {
         option (google.api.http) = {

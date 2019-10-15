@@ -185,6 +185,73 @@
     }
 
     /**
+     * Callback function to receive the result of the copyRun operation.
+     * @callback module:api/RunServiceApi~copyRunCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Run} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Restart run with copy
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the experiement will be assigned
+     * @param {String} uuid Unique integer identifier of the entity
+     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:api/RunServiceApi~copyRunCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Run}
+     */
+    this.copyRun = function(owner, project, uuid, body, callback) {
+      var postBody = body;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling copyRun");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling copyRun");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling copyRun");
+      }
+
+      // verify the required parameter 'body' is set
+      if (body === undefined || body === null) {
+        throw new Error("Missing the required parameter 'body' when calling copyRun");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Run;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/copy', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the createRun operation.
      * @callback module:api/RunServiceApi~createRunCallback
      * @param {String} error Error message, if any.

@@ -749,7 +749,7 @@
     },
     "/api/v1/{owner}/{project}/ci": {
       "post": {
-        "summary": "Restart run",
+        "summary": "Restart run with copy",
         "operationId": "EnableProjectCI",
         "responses": {
           "200": {
@@ -1459,6 +1459,66 @@
         ]
       }
     },
+    "/api/v1/{owner}/{project}/runs/{uuid}/copy": {
+      "post": {
+        "summary": "Restart run with copy",
+        "operationId": "CopyRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RunService"
+        ]
+      }
+    },
     "/api/v1/{owner}/{project}/runs/{uuid}/invalidate": {
       "post": {
         "summary": "Stop run",
@@ -2027,7 +2087,7 @@
     },
     "/api/v1/{owner}/{project}/unbookmark": {
       "delete": {
-        "summary": "Resume run",
+        "summary": "Restart run",
         "operationId": "DisableProjectCI",
         "responses": {
           "200": {

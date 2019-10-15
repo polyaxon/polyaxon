@@ -1037,7 +1037,7 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Resume run
+         * @summary Restart run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
@@ -1080,7 +1080,7 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Restart run
+         * @summary Restart run with copy
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
@@ -1550,7 +1550,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Resume run
+         * @summary Restart run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
@@ -1570,7 +1570,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Restart run
+         * @summary Restart run with copy
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
@@ -1801,7 +1801,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
-         * @summary Resume run
+         * @summary Restart run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
@@ -1812,7 +1812,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
         },
         /**
          * 
-         * @summary Restart run
+         * @summary Restart run with copy
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
          * @param {*} [options] Override http request option.
@@ -1971,7 +1971,7 @@ export class ProjectServiceApi extends BaseAPI {
 
     /**
      * 
-     * @summary Resume run
+     * @summary Restart run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
@@ -1984,7 +1984,7 @@ export class ProjectServiceApi extends BaseAPI {
 
     /**
      * 
-     * @summary Restart run
+     * @summary Restart run with copy
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
@@ -2197,6 +2197,64 @@ export const RunServiceApiFetchParamCreator = function (configuration?: Configur
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Restart run with copy
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling copyRun.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling copyRun.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling copyRun.');
+            }
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling copyRun.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/copy`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
                 url: url.format(localVarUrlObj),
@@ -3446,6 +3504,28 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Restart run with copy
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).copyRun(owner, project, uuid, body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Create new run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -3966,6 +4046,19 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
         },
         /**
          * 
+         * @summary Restart run with copy
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+            return RunServiceApiFp(configuration).copyRun(owner, project, uuid, body, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Create new run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -4280,6 +4373,21 @@ export class RunServiceApi extends BaseAPI {
      */
     public bookmarkRun(owner: string, project: string, uuid: string, options?: any) {
         return RunServiceApiFp(this.configuration).bookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Restart run with copy
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunServiceApi
+     */
+    public copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        return RunServiceApiFp(this.configuration).copyRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**

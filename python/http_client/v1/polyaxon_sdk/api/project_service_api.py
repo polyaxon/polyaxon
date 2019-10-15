@@ -470,7 +470,7 @@ class ProjectServiceApi(object):
             collection_formats=collection_formats)
 
     def disable_project_ci(self, owner, project, **kwargs):  # noqa: E501
-        """Resume run  # noqa: E501
+        """Restart run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -492,7 +492,7 @@ class ProjectServiceApi(object):
             return data
 
     def disable_project_ci_with_http_info(self, owner, project, **kwargs):  # noqa: E501
-        """Resume run  # noqa: E501
+        """Restart run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -575,7 +575,7 @@ class ProjectServiceApi(object):
             collection_formats=collection_formats)
 
     def enable_project_ci(self, owner, project, **kwargs):  # noqa: E501
-        """Restart run  # noqa: E501
+        """Restart run with copy  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -597,7 +597,7 @@ class ProjectServiceApi(object):
             return data
 
     def enable_project_ci_with_http_info(self, owner, project, **kwargs):  # noqa: E501
-        """Restart run  # noqa: E501
+        """Restart run with copy  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

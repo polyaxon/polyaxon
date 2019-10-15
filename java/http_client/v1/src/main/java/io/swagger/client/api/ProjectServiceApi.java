@@ -674,7 +674,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * Resume run
+     * Restart run
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -687,7 +687,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * Resume run
+     * Restart run
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -701,7 +701,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * Resume run (asynchronously)
+     * Restart run (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -807,7 +807,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * Restart run
+     * Restart run with copy
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -820,7 +820,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * Restart run
+     * Restart run with copy
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
@@ -834,7 +834,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * Restart run (asynchronously)
+     * Restart run with copy (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)

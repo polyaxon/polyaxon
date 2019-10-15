@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**bookmark_project**](ProjectServiceApi.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**create_project**](ProjectServiceApi.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
 [**delete_experiment**](ProjectServiceApi.md#delete_experiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-[**disable_project_ci**](ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
-[**enable_project_ci**](ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run
+[**disable_project_ci**](ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+[**enable_project_ci**](ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**get_project**](ProjectServiceApi.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
 [**list_archived_projects**](ProjectServiceApi.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Create new run
 [**list_bookmarked_projects**](ProjectServiceApi.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 # **disable_project_ci**
 > object disable_project_ci(owner, project)
 
-Resume run
+Restart run
 
 ### Example
 ```python
@@ -261,7 +261,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Resume run
+    # Restart run
     api_response = api_instance.disable_project_ci(owner, project)
     pprint(api_response)
 except ApiException as e:
@@ -293,7 +293,7 @@ Name | Type | Description  | Notes
 # **enable_project_ci**
 > object enable_project_ci(owner, project)
 
-Restart run
+Restart run with copy
 
 ### Example
 ```python
@@ -315,7 +315,7 @@ owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
 
 try:
-    # Restart run
+    # Restart run with copy
     api_response = api_instance.enable_project_ci(owner, project)
     pprint(api_response)
 except ApiException as e:

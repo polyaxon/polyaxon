@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**bookmarkProject**](ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**createProject**](ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
 [**deleteExperiment**](ProjectServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-[**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
-[**enableProjectCI**](ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run
+[**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+[**enableProjectCI**](ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
 [**listArchivedProjects**](ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
 [**listBookmarkedProjects**](ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
@@ -240,7 +240,7 @@ Name | Type | Description  | Notes
 # **disableProjectCI**
 > Object disableProjectCI(owner, project)
 
-Resume run
+Restart run
 
 ### Example
 ```javascript
@@ -294,7 +294,7 @@ Name | Type | Description  | Notes
 # **enableProjectCI**
 > Object enableProjectCI(owner, project)
 
-Restart run
+Restart run with copy
 
 ### Example
 ```javascript

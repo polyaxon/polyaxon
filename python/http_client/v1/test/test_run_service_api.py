@@ -59,6 +59,13 @@ class TestRunServiceApi(unittest.TestCase):
         """
         pass
 
+    def test_copy_run(self):
+        """Test case for copy_run
+
+        Restart run with copy  # noqa: E501
+        """
+        pass
+
     def test_create_run(self):
         """Test case for create_run
 

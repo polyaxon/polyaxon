@@ -92,6 +92,25 @@ public class RunServiceApiTest {
     }
     
     /**
+     * Restart run with copy
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void copyRunTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        String uuid = null;
+        V1OwnedEntityUUIdRequest body = null;
+        V1Run response = api.copyRun(owner, project, uuid, body);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Create new run
      *
      * 

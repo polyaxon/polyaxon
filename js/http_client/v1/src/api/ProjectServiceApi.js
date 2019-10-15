@@ -286,7 +286,7 @@
      */
 
     /**
-     * Resume run
+     * Restart run
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:api/ProjectServiceApi~disableProjectCICallback} callback The callback function, accepting three arguments: error, data, response
@@ -340,7 +340,7 @@
      */
 
     /**
-     * Restart run
+     * Restart run with copy
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:api/ProjectServiceApi~enableProjectCICallback} callback The callback function, accepting three arguments: error, data, response

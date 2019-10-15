@@ -118,7 +118,7 @@ public class ProjectServiceApiTest {
     }
     
     /**
-     * Resume run
+     * Restart run
      *
      * 
      *
@@ -135,7 +135,7 @@ public class ProjectServiceApiTest {
     }
     
     /**
-     * Restart run
+     * Restart run with copy
      *
      * 
      *
