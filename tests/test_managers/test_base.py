@@ -7,7 +7,7 @@ from unittest import TestCase
 
 from mock import patch
 
-from polyaxon_cli.managers.base import BaseConfigManager
+from polyaxon.managers.base import BaseConfigManager
 
 
 class TestBaseConfigManger(TestCase):
@@ -17,7 +17,7 @@ class TestBaseConfigManger(TestCase):
         assert BaseConfigManager.CONFIG_FILE_NAME is None
         assert BaseConfigManager.CONFIG is None
 
-    @patch('polyaxon_cli.managers.base.os.path.expanduser')
+    @patch('polyaxon.managers.base.os.path.expanduser')
     def test_get_config_file_path(self, expanduser):
         expanduser.return_value = '/tmp/'
         BaseConfigManager.CONFIG_FILE_NAME = 'testing'
@@ -66,7 +66,7 @@ class TestBaseConfigManger(TestCase):
 
     def test_is_initialized(self):
         with patch.object(BaseConfigManager, 'get_config_file_path') as path_fct1:
-            with patch('polyaxon_cli.managers.base.os.path.isfile') as path_fct2:
+            with patch('polyaxon.managers.base.os.path.isfile') as path_fct2:
                 BaseConfigManager.is_initialized()
 
         assert path_fct1.call_count == 1

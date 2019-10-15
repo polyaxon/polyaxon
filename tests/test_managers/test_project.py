@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_cli.managers.project import ProjectManager
-from polyaxon_cli.schemas import ProjectConfig
+from polyaxon.managers.project import ProjectManager
+from polyaxon.schemas import ProjectConfig
 
 
 class TestProjectManager(TestCase):

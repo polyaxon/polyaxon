@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_cli.managers.auth import AuthConfigManager
-from polyaxon_cli.schemas import AccessTokenConfig
+from polyaxon.managers.auth import AuthConfigManager
+from polyaxon.schemas import AccessTokenConfig
 
 
 class TestAuthConfigManager(TestCase):

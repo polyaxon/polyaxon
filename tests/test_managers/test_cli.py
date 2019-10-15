@@ -8,8 +8,8 @@ from unittest import TestCase
 
 from mock import patch
 
-from polyaxon_cli.managers.cli import CliConfigManager
-from polyaxon_cli.schemas.cli_configuration import CliConfigurationConfig
+from polyaxon.managers.cli import CliConfigManager
+from polyaxon.schemas.cli_configuration import CliConfigurationConfig
 
 
 class TestCliConfigManager(TestCase):

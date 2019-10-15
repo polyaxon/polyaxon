@@ -1,0 +1,64 @@
+---
+version: 0.6
+
+kind: pipeline
+
+name: test-pipeline
+
+tags: [native]
+
+ops:
+  - name: job1
+    template: {name: job-template}
+    params:
+      bucket: s3://foo
+  - name: job2
+    template: {name: job-template}
+    params:
+      bucket: s3://bar
+    dependencies: [job1]
+  - name: experiment1
+    template: {name: experiment-template}
+    dependencies: [job2]
+  - name: experiment2
+    template: {name: experiment-template}
+    dependencies: [experiment1]
+
+templates:
+  - kind: job
+    name: experiment-template
+    description: experiment to predict something
+    tags: [tag11, tag12]
+    inputs:
+      - name: lr
+        type: float
+        value: 0.1
+        is_optional: true
+      - name: loss
+        type: str
+        value: MSE
+        is_optional: true
+    environment:
+      resources: {requests: {cpu: 1}}
+      node_selector: {polyaxon: experiments}
+      service_account: service
+      image_pull_secrets: [secret1, secret2]
+    termination:
+      max_retries: 2
+    container: {image: test}
+
+  - kind: job
+    name: job-template
+    description: job to process something
+    tags: [tag11, tag12]
+    inputs:
+    - name: bucket
+      type: s3_path
+    environment:
+      resources: {requests: {cpu: 1}}
+      node_selector: {polyaxon: experiments}
+      service_account: service
+      image_pull_secrets: [secret1, secret2]
+    termination:
+      max_retries: 2
+    container: {image: test}

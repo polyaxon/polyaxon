@@ -4,15 +4,15 @@ from __future__ import absolute_import, division, print_function
 from mock import patch
 from tests.test_cli.utils import BaseCommandTestCase
 
-from polyaxon_cli.cli.experiment_group import group
+from polyaxon.cli.experiment_group import group
 
 
 class TestExperimentGroup(BaseCommandTestCase):
 
     @patch('polyaxon_client.api.experiment_group.ExperimentGroupApi.get_experiment_group')
-    @patch('polyaxon_cli.managers.project.ProjectManager.is_initialized')
-    @patch('polyaxon_cli.managers.experiment_group.GroupManager.set_config')
-    @patch('polyaxon_cli.cli.experiment_group.get_group_details')
+    @patch('polyaxon.managers.project.ProjectManager.is_initialized')
+    @patch('polyaxon.managers.experiment_group.GroupManager.set_config')
+    @patch('polyaxon.cli.experiment_group.get_group_details')
     def test_get_group(self,
                        get_group_details,
                        set_config,

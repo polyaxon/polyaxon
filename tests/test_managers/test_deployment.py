@@ -7,7 +7,7 @@ from polyaxon_deploy.operators.helm import HelmOperator
 from polyaxon_deploy.operators.kubectl import KubectlOperator
 from polyaxon_deploy.schemas.deployment import DeploymentConfig, DeploymentTypes
 
-from polyaxon_cli.managers.deploy import DeployManager
+from polyaxon.managers.deploy import DeployManager
 
 
 class TestDeployManager(TestCase):

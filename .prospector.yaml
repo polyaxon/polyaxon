@@ -6,7 +6,6 @@ doc-warnings: true
 
 max-line-length: 100
 
-
 ignore-patterns:
   - __init__.py
   - src
@@ -33,6 +32,10 @@ pylint:
     - too-many-instance-attributes
     - too-many-locals
     - unused-argument
+    - too-many-return-statements
+    - inconsistent-return-statements
+    - useless-object-inheritance
+
   enable:
     - missing-final-newline
   options:

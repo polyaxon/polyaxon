@@ -13,6 +13,6 @@ class BaseCommandTestCase(TestCase):
         self.mock_config()
 
     def mock_config(self):
-        patcher = patch('polyaxon_cli.managers.config.GlobalConfigManager.get_value')
+        patcher = patch('polyaxon.managers.config.GlobalConfigManager.get_value')
         patcher.start()
         self.addCleanup(patcher.stop)

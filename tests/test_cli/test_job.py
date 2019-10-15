@@ -4,15 +4,15 @@ from __future__ import absolute_import, division, print_function
 from mock import patch
 from tests.test_cli.utils import BaseCommandTestCase
 
-from polyaxon_cli.cli.job import job
+from polyaxon.cli.job import job
 
 
 class TestJob(BaseCommandTestCase):
 
     @patch('polyaxon_client.api.job.JobApi.get_job')
-    @patch('polyaxon_cli.managers.project.ProjectManager.is_initialized')
-    @patch('polyaxon_cli.managers.job.JobManager.set_config')
-    @patch('polyaxon_cli.cli.job.get_job_details')
+    @patch('polyaxon.managers.project.ProjectManager.is_initialized')
+    @patch('polyaxon.managers.job.JobManager.set_config')
+    @patch('polyaxon.cli.job.get_job_details')
     def test_get_job(self,
                      get_job_details,
                      set_config,

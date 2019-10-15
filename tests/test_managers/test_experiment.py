@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon_cli.managers.experiment import ExperimentManager
-from polyaxon_cli.schemas import ExperimentConfig
+from polyaxon.managers.experiment import ExperimentManager
+from polyaxon.schemas import ExperimentConfig
 
 
 class TestExperimentManager(TestCase):

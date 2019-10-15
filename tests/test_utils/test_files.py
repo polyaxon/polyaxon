@@ -4,7 +4,7 @@ import tarfile
 
 from unittest import TestCase
 
-from polyaxon_cli.utils.files import create_tarfile, get_files_in_current_directory
+from polyaxon.utils.files import create_tarfile, get_files_in_current_directory
 
 
 class TestFiles(TestCase):

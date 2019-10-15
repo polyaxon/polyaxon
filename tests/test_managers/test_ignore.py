@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from mock import mock_open, patch
 
-from polyaxon_cli.managers.ignore import IgnoreManager
+from polyaxon.managers.ignore import IgnoreManager
 
 
 class TestIgnoreManager(TestCase):
@@ -25,8 +25,8 @@ class TestIgnoreManager(TestCase):
     def get_whitelisted(patterns):
         return [r.pattern for r in patterns if not r.is_exclude]
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=True)
-    @patch('polyaxon_cli.managers.ignore.open', new_callable=mock_open)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=True)
+    @patch('polyaxon.managers.ignore.open', new_callable=mock_open)
     def test_ignored_lines(self, mock_open, _):
         configs = [
             ('foo.c', 'foo.[dh]'),
@@ -44,8 +44,8 @@ class TestIgnoreManager(TestCase):
                 ([pattern], []))
             assert list(IgnoreManager.find_matching(path, patterns)) == []
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=True)
-    @patch('polyaxon_cli.managers.ignore.open', new_callable=mock_open)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=True)
+    @patch('polyaxon.managers.ignore.open', new_callable=mock_open)
     def test_whitelisted_lines(self, mock_open, _):
         configs = [
             ('foo.c', '*.c'),
@@ -74,8 +74,8 @@ class TestIgnoreManager(TestCase):
                 ([pattern], []))
             assert len(list(IgnoreManager.find_matching(path, patterns))) == 1
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=True)
-    @patch('polyaxon_cli.managers.ignore.open', new_callable=mock_open)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=True)
+    @patch('polyaxon.managers.ignore.open', new_callable=mock_open)
     def test_ignores_commented_lines(self, mock_open, _):
         file_data = ['', '# comment', '', '*.py']
         mock_open.return_value.__iter__.return_value = file_data
@@ -85,8 +85,8 @@ class TestIgnoreManager(TestCase):
             (self.get_ignored(patterns), self.get_whitelisted(patterns)),
             (['*.py'], []))
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=True)
-    @patch('polyaxon_cli.managers.ignore.open', new_callable=mock_open)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=True)
+    @patch('polyaxon.managers.ignore.open', new_callable=mock_open)
     def test_trims_slash_prefix_from_abs_paths(self, mock_open, _):
         file_data = ['/test', '!/ignore']
         mock_open.return_value.__iter__.return_value = file_data
@@ -96,8 +96,8 @@ class TestIgnoreManager(TestCase):
             (self.get_ignored(patterns), self.get_whitelisted(patterns)),
             (['/test'], ['/ignore']))
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=True)
-    @patch('polyaxon_cli.managers.ignore.open', new_callable=mock_open)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=True)
+    @patch('polyaxon.managers.ignore.open', new_callable=mock_open)
     def test_properly_interprets_whitelisted_globs(self, mock_open, _):
         file_data = ['', '# comment', '*.py', '!file1.py']
         mock_open.return_value.__iter__.return_value = file_data
@@ -107,13 +107,13 @@ class TestIgnoreManager(TestCase):
             (self.get_ignored(patterns), self.get_whitelisted(patterns)),
             (['*.py'], ['file1.py']))
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=False)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=False)
     def test_returns_two_empty_lists_if_file_is_not_present(self, _):
         patterns = IgnoreManager.get_config()
         self.assertEqual(patterns, [])
 
-    @patch('polyaxon_cli.managers.ignore.os.path.isfile', return_value=True)
-    @patch('polyaxon_cli.managers.ignore.open', new_callable=mock_open)
+    @patch('polyaxon.managers.ignore.os.path.isfile', return_value=True)
+    @patch('polyaxon.managers.ignore.open', new_callable=mock_open)
     def test_escaping_of_globs_that_start_with_reserved_chars(self, mock_open, _):
         file_data = ['', '# comment', '\#file1', '\!file2']
         mock_open.return_value.__iter__.return_value = file_data

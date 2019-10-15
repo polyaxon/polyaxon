@@ -1,0 +1,21 @@
+---
+version: 0.6
+
+kind: job
+
+environment:
+  resources:
+    requests:
+      nvidia.com/gpu: 1
+    limits:
+      nvidia.com/gpu: 1
+  outputs: False
+
+mounts:
+  secrets:
+    - name: my_s3_connnexion_secret
+      mount_path: ~/.aws/credentials
+
+container:
+  image: python-with-boto3
+  command: python download-s3-bucket

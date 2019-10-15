@@ -1,0 +1,66 @@
+---
+version: 0.6
+
+kind: job
+
+tags: [tensorflow]
+
+environment:
+  log_level: INFO
+
+  resources:
+    requests:
+      cpu: 1
+    limits:
+      cpu: 2
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: kubernetes.io/e2e-az-name
+            operator: In
+            values:
+            - e2e-az1
+            - e2e-az2
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: another-node-label-key
+            operator: In
+            values:
+            - another-node-label-value
+
+replica_spec:
+  Worker:
+    replicas: 5
+    termination:
+      restart_policy: OnFailure
+    environment:
+      resources:
+        requests:
+          memory: 300
+        limits:
+          memory: 300
+
+  PS:
+    replicas: 10
+    environment:
+      tolerations:
+        - key: "key"
+          operator: "Exists"
+          effect: "NoSchedule"
+      resources:
+        requests:
+          cpu: 3
+          memory: 256
+        limits:
+          cpu: 3
+          memory: 256
+
+container:
+  image: my_image
+  command: [video_prediction_train, --model=DNA, --num_masks=1]
+...

@@ -3,3 +3,11 @@ click-completion==0.5.1
 pathlib==1.0.1
 raven==6.7.0
 tabulate==0.8.2
+hestia==0.4.9
+Jinja2==2.10.1
+marshmallow==3.0.0rc5
+numpy>=1.15.2
+python-dateutil>=2.7.3
+pytz>=2019.2
+rhea==0.5.4
+ujson>=1.35

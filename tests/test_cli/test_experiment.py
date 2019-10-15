@@ -4,15 +4,15 @@ from __future__ import absolute_import, division, print_function
 from mock import patch
 from tests.test_cli.utils import BaseCommandTestCase
 
-from polyaxon_cli.cli.experiment import experiment
+from polyaxon.cli.experiment import experiment
 
 
 class TestExperiment(BaseCommandTestCase):
 
     @patch('polyaxon_client.api.experiment.ExperimentApi.get_experiment')
-    @patch('polyaxon_cli.managers.project.ProjectManager.is_initialized')
-    @patch('polyaxon_cli.managers.experiment.ExperimentManager.set_config')
-    @patch('polyaxon_cli.cli.experiment.get_experiment_details')
+    @patch('polyaxon.managers.project.ProjectManager.is_initialized')
+    @patch('polyaxon.managers.experiment.ExperimentManager.set_config')
+    @patch('polyaxon.cli.experiment.get_experiment_details')
     def test_get_experiment(self, get_experiment_details,
                             set_config,
                             is_initialized,

@@ -1,0 +1,18 @@
+---
+version: 0.6
+
+kind: job
+
+tags: [foo, bar]
+
+inputs:
+  - name: loss
+    type: str
+  - name: flag
+    type: bool
+    is_flag: true
+
+container:
+  image: my_image
+  command: ["/bin/sh", "-c"]
+  args: video_prediction_train --loss={{loss}} {{ flag }}

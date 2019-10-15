@@ -1,0 +1,25 @@
+---
+version: 0.6
+
+kind: job
+
+tags: [foo, bar]
+
+outputs:
+  - name: path
+    type: path
+
+
+init:
+  build:
+    image: my_image
+    build_steps:
+      - pip install package1
+    env_vars:
+      - ['KEY1', 'en_US.UTF-8']
+      - ['KEY2', 2]
+
+container:
+  image: my_image
+  command: ["/bin/sh", "-c"]
+  args: build -c /plx-context/build
