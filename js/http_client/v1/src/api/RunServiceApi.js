@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityUUIdRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1StatusResponse'], factory);
+    define(['ApiClient', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityUUIdRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityUUIdRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1StatusResponse'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityUUIdRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1Status'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.RunServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityUUIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1StatusResponse);
+    root.PolyaxonSdk.RunServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityUUIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1Status);
   }
-}(this, function(ApiClient, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityUUIdRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1StatusResponse) {
+}(this, function(ApiClient, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityUUIdRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status) {
   'use strict';
 
   /**
@@ -382,7 +382,7 @@
      * Callback function to receive the result of the createRunStatus operation.
      * @callback module:api/RunServiceApi~createRunStatusCallback
      * @param {String} error Error message, if any.
-     * @param {Object} data The data returned by the service call.
+     * @param {module:model/V1Status} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -393,7 +393,7 @@
      * @param {String} uuid Unique integer identifier of the entity
      * @param {module:model/V1EntityStatusRequest} body 
      * @param {module:api/RunServiceApi~createRunStatusCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Object}
+     * data is of type: {@link module:model/V1Status}
      */
     this.createRunStatus = function(owner, project, uuid, body, callback) {
       var postBody = body;
@@ -436,7 +436,7 @@
       var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = Object;
+      var returnType = V1Status;
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'POST',
@@ -692,7 +692,7 @@
      * Callback function to receive the result of the getRunStatuses operation.
      * @callback module:api/RunServiceApi~getRunStatusesCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/V1StatusResponse} data The data returned by the service call.
+     * @param {module:model/V1Status} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -702,7 +702,7 @@
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
      * @param {module:api/RunServiceApi~getRunStatusesCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1StatusResponse}
+     * data is of type: {@link module:model/V1Status}
      */
     this.getRunStatuses = function(owner, project, uuid, callback) {
       var postBody = null;
@@ -740,7 +740,7 @@
       var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = V1StatusResponse;
+      var returnType = V1Status;
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'GET',

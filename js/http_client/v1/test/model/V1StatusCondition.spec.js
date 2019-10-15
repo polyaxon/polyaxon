@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.V1StatusResponse();
+    instance = new PolyaxonSdk.V1StatusCondition();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,16 +64,46 @@
       object[property] = value;
   }
 
-  describe('V1StatusResponse', function() {
-    it('should create an instance of V1StatusResponse', function() {
-      // uncomment below and update the code to test V1StatusResponse
-      //var instance = new PolyaxonSdk.V1StatusResponse();
-      //expect(instance).to.be.a(PolyaxonSdk.V1StatusResponse);
+  describe('V1StatusCondition', function() {
+    it('should create an instance of V1StatusCondition', function() {
+      // uncomment below and update the code to test V1StatusCondition
+      //var instance = new PolyaxonSdk.V1StatusCondition();
+      //expect(instance).to.be.a(PolyaxonSdk.V1StatusCondition);
+    });
+
+    it('should have the property type (base name: "type")', function() {
+      // uncomment below and update the code to test the property type
+      //var instance = new PolyaxonSdk.V1StatusCondition();
+      //expect(instance).to.be();
     });
 
     it('should have the property status (base name: "status")', function() {
       // uncomment below and update the code to test the property status
-      //var instance = new PolyaxonSdk.V1StatusResponse();
+      //var instance = new PolyaxonSdk.V1StatusCondition();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property reason (base name: "reason")', function() {
+      // uncomment below and update the code to test the property reason
+      //var instance = new PolyaxonSdk.V1StatusCondition();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property message (base name: "message")', function() {
+      // uncomment below and update the code to test the property message
+      //var instance = new PolyaxonSdk.V1StatusCondition();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property last_update_time (base name: "last_update_time")', function() {
+      // uncomment below and update the code to test the property last_update_time
+      //var instance = new PolyaxonSdk.V1StatusCondition();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property last_transition_time (base name: "last_transition_time")', function() {
+      // uncomment below and update the code to test the property last_transition_time
+      //var instance = new PolyaxonSdk.V1StatusCondition();
       //expect(instance).to.be();
     });
 

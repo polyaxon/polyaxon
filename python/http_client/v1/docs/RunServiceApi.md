@@ -317,7 +317,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **create_run_status**
-> object create_run_status(owner, project, uuid, body)
+> V1Status create_run_status(owner, project, uuid, body)
 
 Create new run status
 
@@ -361,7 +361,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**object**
+[**V1Status**](V1Status.md)
 
 ### Authorization
 
@@ -599,7 +599,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_run_statuses**
-> V1StatusResponse get_run_statuses(owner, project, uuid)
+> V1Status get_run_statuses(owner, project, uuid)
 
 Get run status
 
@@ -641,7 +641,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1StatusResponse**](V1StatusResponse.md)
+[**V1Status**](V1Status.md)
 
 ### Authorization
 

@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1f\n\x0fUserBodyRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"F\n\x16OwnedEntityUUIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"S\n\x13\x45ntityStatusRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\x12\x0e\n\x06status\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1f\n\x0fUserBodyRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"F\n\x16OwnedEntityUUIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\x62\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -226,97 +226,12 @@ _OWNEDENTITYUUIDREQUEST = _descriptor.Descriptor(
   serialized_end=296,
 )
 
-
-_STATUSRESPONSE = _descriptor.Descriptor(
-  name='StatusResponse',
-  full_name='v1.StatusResponse',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='status', full_name='v1.StatusResponse.status', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=298,
-  serialized_end=330,
-)
-
-
-_ENTITYSTATUSREQUEST = _descriptor.Descriptor(
-  name='EntityStatusRequest',
-  full_name='v1.EntityStatusRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='owner', full_name='v1.EntityStatusRequest.owner', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='project', full_name='v1.EntityStatusRequest.project', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='uuid', full_name='v1.EntityStatusRequest.uuid', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='status', full_name='v1.EntityStatusRequest.status', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=332,
-  serialized_end=415,
-)
-
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 DESCRIPTOR.message_types_by_name['KV'] = _KV
 DESCRIPTOR.message_types_by_name['UserBodyRequest'] = _USERBODYREQUEST
 DESCRIPTOR.message_types_by_name['OwnerBodyRequest'] = _OWNERBODYREQUEST
 DESCRIPTOR.message_types_by_name['ProjectBodyRequest'] = _PROJECTBODYREQUEST
 DESCRIPTOR.message_types_by_name['OwnedEntityUUIdRequest'] = _OWNEDENTITYUUIDREQUEST
-DESCRIPTOR.message_types_by_name['StatusResponse'] = _STATUSRESPONSE
-DESCRIPTOR.message_types_by_name['EntityStatusRequest'] = _ENTITYSTATUSREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 KV = _reflection.GeneratedProtocolMessageType('KV', (_message.Message,), {
@@ -353,20 +268,6 @@ OwnedEntityUUIdRequest = _reflection.GeneratedProtocolMessageType('OwnedEntityUU
   # @@protoc_insertion_point(class_scope:v1.OwnedEntityUUIdRequest)
   })
 _sym_db.RegisterMessage(OwnedEntityUUIdRequest)
-
-StatusResponse = _reflection.GeneratedProtocolMessageType('StatusResponse', (_message.Message,), {
-  'DESCRIPTOR' : _STATUSRESPONSE,
-  '__module__' : 'v1.base_pb2'
-  # @@protoc_insertion_point(class_scope:v1.StatusResponse)
-  })
-_sym_db.RegisterMessage(StatusResponse)
-
-EntityStatusRequest = _reflection.GeneratedProtocolMessageType('EntityStatusRequest', (_message.Message,), {
-  'DESCRIPTOR' : _ENTITYSTATUSREQUEST,
-  '__module__' : 'v1.base_pb2'
-  # @@protoc_insertion_point(class_scope:v1.EntityStatusRequest)
-  })
-_sym_db.RegisterMessage(EntityStatusRequest)
 
 
 # @@protoc_insertion_point(module_scope)

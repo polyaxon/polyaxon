@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.V1EntityStatusRequest();
+    instance = new PolyaxonSdk.V1Status();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,40 +64,28 @@
       object[property] = value;
   }
 
-  describe('V1EntityStatusRequest', function() {
-    it('should create an instance of V1EntityStatusRequest', function() {
-      // uncomment below and update the code to test V1EntityStatusRequest
-      //var instance = new PolyaxonSdk.V1EntityStatusRequest();
-      //expect(instance).to.be.a(PolyaxonSdk.V1EntityStatusRequest);
-    });
-
-    it('should have the property owner (base name: "owner")', function() {
-      // uncomment below and update the code to test the property owner
-      //var instance = new PolyaxonSdk.V1EntityStatusRequest();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property project (base name: "project")', function() {
-      // uncomment below and update the code to test the property project
-      //var instance = new PolyaxonSdk.V1EntityStatusRequest();
-      //expect(instance).to.be();
+  describe('V1Status', function() {
+    it('should create an instance of V1Status', function() {
+      // uncomment below and update the code to test V1Status
+      //var instance = new PolyaxonSdk.V1Status();
+      //expect(instance).to.be.a(PolyaxonSdk.V1Status);
     });
 
     it('should have the property uuid (base name: "uuid")', function() {
       // uncomment below and update the code to test the property uuid
-      //var instance = new PolyaxonSdk.V1EntityStatusRequest();
+      //var instance = new PolyaxonSdk.V1Status();
       //expect(instance).to.be();
     });
 
     it('should have the property status (base name: "status")', function() {
       // uncomment below and update the code to test the property status
-      //var instance = new PolyaxonSdk.V1EntityStatusRequest();
+      //var instance = new PolyaxonSdk.V1Status();
       //expect(instance).to.be();
     });
 
-    it('should have the property status_condition (base name: "status_condition")', function() {
-      // uncomment below and update the code to test the property status_condition
-      //var instance = new PolyaxonSdk.V1EntityStatusRequest();
+    it('should have the property status_conditions (base name: "status_conditions")', function() {
+      // uncomment below and update the code to test the property status_conditions
+      //var instance = new PolyaxonSdk.V1Status();
       //expect(instance).to.be();
     });
 

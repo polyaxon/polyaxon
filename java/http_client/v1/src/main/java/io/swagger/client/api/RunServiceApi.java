@@ -50,7 +50,7 @@ import io.swagger.client.model.V1OwnedEntityUUIdRequest;
 import io.swagger.client.model.V1ProjectBodyRequest;
 import io.swagger.client.model.V1Run;
 import io.swagger.client.model.V1RunBodyRequest;
-import io.swagger.client.model.V1StatusResponse;
+import io.swagger.client.model.V1Status;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -900,11 +900,11 @@ public class RunServiceApi {
      * @param project Project where the experiement will be assigned (required)
      * @param uuid Unique integer identifier of the entity (required)
      * @param body  (required)
-     * @return Object
+     * @return V1Status
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object createRunStatus(String owner, String project, String uuid, V1EntityStatusRequest body) throws ApiException {
-        ApiResponse<Object> resp = createRunStatusWithHttpInfo(owner, project, uuid, body);
+    public V1Status createRunStatus(String owner, String project, String uuid, V1EntityStatusRequest body) throws ApiException {
+        ApiResponse<V1Status> resp = createRunStatusWithHttpInfo(owner, project, uuid, body);
         return resp.getData();
     }
 
@@ -915,12 +915,12 @@ public class RunServiceApi {
      * @param project Project where the experiement will be assigned (required)
      * @param uuid Unique integer identifier of the entity (required)
      * @param body  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;V1Status&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> createRunStatusWithHttpInfo(String owner, String project, String uuid, V1EntityStatusRequest body) throws ApiException {
+    public ApiResponse<V1Status> createRunStatusWithHttpInfo(String owner, String project, String uuid, V1EntityStatusRequest body) throws ApiException {
         com.squareup.okhttp.Call call = createRunStatusValidateBeforeCall(owner, project, uuid, body, null, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -935,7 +935,7 @@ public class RunServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createRunStatusAsync(String owner, String project, String uuid, V1EntityStatusRequest body, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call createRunStatusAsync(String owner, String project, String uuid, V1EntityStatusRequest body, final ApiCallback<V1Status> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -957,7 +957,7 @@ public class RunServiceApi {
         }
 
         com.squareup.okhttp.Call call = createRunStatusValidateBeforeCall(owner, project, uuid, body, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
@@ -1616,11 +1616,11 @@ public class RunServiceApi {
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param uuid Unique integer identifier of the entity (required)
-     * @return V1StatusResponse
+     * @return V1Status
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1StatusResponse getRunStatuses(String owner, String project, String uuid) throws ApiException {
-        ApiResponse<V1StatusResponse> resp = getRunStatusesWithHttpInfo(owner, project, uuid);
+    public V1Status getRunStatuses(String owner, String project, String uuid) throws ApiException {
+        ApiResponse<V1Status> resp = getRunStatusesWithHttpInfo(owner, project, uuid);
         return resp.getData();
     }
 
@@ -1630,12 +1630,12 @@ public class RunServiceApi {
      * @param owner Owner of the namespace (required)
      * @param project Project where the experiement will be assigned (required)
      * @param uuid Unique integer identifier of the entity (required)
-     * @return ApiResponse&lt;V1StatusResponse&gt;
+     * @return ApiResponse&lt;V1Status&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1StatusResponse> getRunStatusesWithHttpInfo(String owner, String project, String uuid) throws ApiException {
+    public ApiResponse<V1Status> getRunStatusesWithHttpInfo(String owner, String project, String uuid) throws ApiException {
         com.squareup.okhttp.Call call = getRunStatusesValidateBeforeCall(owner, project, uuid, null, null);
-        Type localVarReturnType = new TypeToken<V1StatusResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1649,7 +1649,7 @@ public class RunServiceApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getRunStatusesAsync(String owner, String project, String uuid, final ApiCallback<V1StatusResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call getRunStatusesAsync(String owner, String project, String uuid, final ApiCallback<V1Status> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1671,7 +1671,7 @@ public class RunServiceApi {
         }
 
         com.squareup.okhttp.Call call = getRunStatusesValidateBeforeCall(owner, project, uuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<V1StatusResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

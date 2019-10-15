@@ -220,6 +220,12 @@ export interface V1EntityStatusRequest {
      * @memberof V1EntityStatusRequest
      */
     status?: string;
+    /**
+     * 
+     * @type {V1StatusCondition}
+     * @memberof V1EntityStatusRequest
+     */
+    status_condition?: V1StatusCondition;
 }
 
 /**
@@ -647,15 +653,71 @@ export interface V1RunBodyRequest {
 /**
  * 
  * @export
- * @interface V1StatusResponse
+ * @interface V1Status
  */
-export interface V1StatusResponse {
+export interface V1Status {
     /**
      * 
      * @type {string}
-     * @memberof V1StatusResponse
+     * @memberof V1Status
+     */
+    uuid?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1Status
      */
     status?: string;
+    /**
+     * 
+     * @type {Array<V1StatusCondition>}
+     * @memberof V1Status
+     */
+    status_conditions?: Array<V1StatusCondition>;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1StatusCondition
+ */
+export interface V1StatusCondition {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1StatusCondition
+     */
+    type?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof V1StatusCondition
+     */
+    status?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1StatusCondition
+     */
+    reason?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1StatusCondition
+     */
+    message?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1StatusCondition
+     */
+    last_update_time?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1StatusCondition
+     */
+    last_transition_time?: string;
 }
 
 /**
@@ -3577,7 +3639,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Status> {
             const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRunStatus(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -3682,7 +3744,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRunStatuses(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1StatusResponse> {
+        getRunStatuses(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Status> {
             const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRunStatuses(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {

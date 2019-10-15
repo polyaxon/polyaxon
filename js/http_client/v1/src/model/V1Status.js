@@ -40,7 +40,7 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1EntityStatusRequest = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1StatusCondition);
+    root.PolyaxonSdk.V1Status = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1StatusCondition);
   }
 }(this, function(ApiClient, V1StatusCondition) {
   'use strict';
@@ -49,14 +49,14 @@
 
 
   /**
-   * The V1EntityStatusRequest model module.
-   * @module model/V1EntityStatusRequest
+   * The V1Status model module.
+   * @module model/V1Status
    * @version 1.14.4
    */
 
   /**
-   * Constructs a new <code>V1EntityStatusRequest</code>.
-   * @alias module:model/V1EntityStatusRequest
+   * Constructs a new <code>V1Status</code>.
+   * @alias module:model/V1Status
    * @class
    */
   var exports = function() {
@@ -65,48 +65,32 @@
 
 
 
-
-
   };
 
   /**
-   * Constructs a <code>V1EntityStatusRequest</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1Status</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1EntityStatusRequest} obj Optional instance to populate.
-   * @return {module:model/V1EntityStatusRequest} The populated <code>V1EntityStatusRequest</code> instance.
+   * @param {module:model/V1Status} obj Optional instance to populate.
+   * @return {module:model/V1Status} The populated <code>V1Status</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
 
-      if (data.hasOwnProperty('owner')) {
-        obj['owner'] = ApiClient.convertToType(data['owner'], 'String');
-      }
-      if (data.hasOwnProperty('project')) {
-        obj['project'] = ApiClient.convertToType(data['project'], 'String');
-      }
       if (data.hasOwnProperty('uuid')) {
         obj['uuid'] = ApiClient.convertToType(data['uuid'], 'String');
       }
       if (data.hasOwnProperty('status')) {
         obj['status'] = ApiClient.convertToType(data['status'], 'String');
       }
-      if (data.hasOwnProperty('status_condition')) {
-        obj['status_condition'] = V1StatusCondition.constructFromObject(data['status_condition']);
+      if (data.hasOwnProperty('status_conditions')) {
+        obj['status_conditions'] = ApiClient.convertToType(data['status_conditions'], [V1StatusCondition]);
       }
     }
     return obj;
   }
 
-  /**
-   * @member {String} owner
-   */
-  exports.prototype['owner'] = undefined;
-  /**
-   * @member {String} project
-   */
-  exports.prototype['project'] = undefined;
   /**
    * @member {String} uuid
    */
@@ -116,9 +100,9 @@
    */
   exports.prototype['status'] = undefined;
   /**
-   * @member {module:model/V1StatusCondition} status_condition
+   * @member {Array.<module:model/V1StatusCondition>} status_conditions
    */
-  exports.prototype['status_condition'] = undefined;
+  exports.prototype['status_conditions'] = undefined;
 
 
 

@@ -1,13 +1,14 @@
-# V1EntityStatusRequest
+# V1StatusCondition
 
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**owner** | **str** |  | [optional] 
-**project** | **str** |  | [optional] 
-**uuid** | **str** |  | [optional] 
-**status** | **str** |  | [optional] 
-**status_condition** | [**V1StatusCondition**](V1StatusCondition.md) |  | [optional] 
+**type** | **str** |  | [optional] 
+**status** | **bool** |  | [optional] 
+**reason** | **str** |  | [optional] 
+**message** | **str** |  | [optional] 
+**last_update_time** | **str** |  | [optional] 
+**last_transition_time** | **str** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

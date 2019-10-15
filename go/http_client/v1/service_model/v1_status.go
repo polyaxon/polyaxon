@@ -20,37 +20,33 @@ package service_model
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
 )
 
-// V1EntityStatusRequest Request data to create/update entity status
-// swagger:model v1EntityStatusRequest
-type V1EntityStatusRequest struct {
+// V1Status Status specification
+// swagger:model v1Status
+type V1Status struct {
 
-	// Owner of the namespace
-	Owner string `json:"owner,omitempty"`
-
-	// Project where the experiement will be assigned
-	Project string `json:"project,omitempty"`
-
-	// Status to set
+	// The current status
 	Status string `json:"status,omitempty"`
 
-	// Status condition
-	StatusCondition *V1StatusCondition `json:"status_condition,omitempty"`
+	// The status conditions timeline
+	StatusConditions []*V1StatusCondition `json:"status_conditions"`
 
-	// Unique integer identifier of the entity
+	// The uuid of the status
 	UUID string `json:"uuid,omitempty"`
 }
 
-// Validate validates this v1 entity status request
-func (m *V1EntityStatusRequest) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 status
+func (m *V1Status) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateStatusCondition(formats); err != nil {
+	if err := m.validateStatusConditions(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -60,26 +56,33 @@ func (m *V1EntityStatusRequest) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *V1EntityStatusRequest) validateStatusCondition(formats strfmt.Registry) error {
+func (m *V1Status) validateStatusConditions(formats strfmt.Registry) error {
 
-	if swag.IsZero(m.StatusCondition) { // not required
+	if swag.IsZero(m.StatusConditions) { // not required
 		return nil
 	}
 
-	if m.StatusCondition != nil {
-		if err := m.StatusCondition.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("status_condition")
-			}
-			return err
+	for i := 0; i < len(m.StatusConditions); i++ {
+		if swag.IsZero(m.StatusConditions[i]) { // not required
+			continue
 		}
+
+		if m.StatusConditions[i] != nil {
+			if err := m.StatusConditions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("status_conditions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1EntityStatusRequest) MarshalBinary() ([]byte, error) {
+func (m *V1Status) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -87,8 +90,8 @@ func (m *V1EntityStatusRequest) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1EntityStatusRequest) UnmarshalBinary(b []byte) error {
-	var res V1EntityStatusRequest
+func (m *V1Status) UnmarshalBinary(b []byte) error {
+	var res V1Status
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

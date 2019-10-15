@@ -1759,7 +1759,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1StatusResponse"
+              "$ref": "#/definitions/v1Status"
             }
           },
           "403": {
@@ -1809,7 +1809,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/v1Status"
             }
           },
           "403": {
@@ -2218,7 +2218,11 @@
         },
         "status": {
           "type": "string",
-          "title": "Status: TODO: add one of validation and body information details once decided for all entities"
+          "title": "Status to set"
+        },
+        "status_condition": {
+          "$ref": "#/definitions/v1StatusCondition",
+          "title": "Status condition"
         }
       },
       "title": "Request data to create/update entity status"
@@ -2534,15 +2538,57 @@
       },
       "title": "Request data to create/update run"
     },
-    "v1StatusResponse": {
+    "v1Status": {
       "type": "object",
       "properties": {
+        "uuid": {
+          "type": "string",
+          "title": "The uuid of the status"
+        },
         "status": {
           "type": "string",
-          "title": "The status of the entity"
+          "title": "The current status"
+        },
+        "status_conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1StatusCondition"
+          },
+          "title": "The status conditions timeline"
         }
       },
-      "title": "Request data for a status"
+      "title": "Status specification"
+    },
+    "v1StatusCondition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Status type"
+        },
+        "status": {
+          "type": "boolean",
+          "format": "boolean",
+          "title": "Status state"
+        },
+        "reason": {
+          "type": "string",
+          "title": "Status reason"
+        },
+        "message": {
+          "type": "string",
+          "title": "Status message"
+        },
+        "last_update_time": {
+          "type": "string",
+          "title": "last update time"
+        },
+        "last_transition_time": {
+          "type": "string",
+          "title": "last transition time"
+        }
+      },
+      "title": "Status condition specification"
     },
     "v1User": {
       "type": "object",

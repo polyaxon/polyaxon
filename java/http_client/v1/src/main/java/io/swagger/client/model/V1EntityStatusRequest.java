@@ -36,6 +36,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1StatusCondition;
 import java.io.IOException;
 
 /**
@@ -54,6 +55,9 @@ public class V1EntityStatusRequest {
 
   @SerializedName("status")
   private String status = null;
+
+  @SerializedName("status_condition")
+  private V1StatusCondition statusCondition = null;
 
   public V1EntityStatusRequest owner(String owner) {
     this.owner = owner;
@@ -127,6 +131,24 @@ public class V1EntityStatusRequest {
     this.status = status;
   }
 
+  public V1EntityStatusRequest statusCondition(V1StatusCondition statusCondition) {
+    this.statusCondition = statusCondition;
+    return this;
+  }
+
+   /**
+   * Get statusCondition
+   * @return statusCondition
+  **/
+  @ApiModelProperty(value = "")
+  public V1StatusCondition getStatusCondition() {
+    return statusCondition;
+  }
+
+  public void setStatusCondition(V1StatusCondition statusCondition) {
+    this.statusCondition = statusCondition;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -140,12 +162,13 @@ public class V1EntityStatusRequest {
     return Objects.equals(this.owner, v1EntityStatusRequest.owner) &&
         Objects.equals(this.project, v1EntityStatusRequest.project) &&
         Objects.equals(this.uuid, v1EntityStatusRequest.uuid) &&
-        Objects.equals(this.status, v1EntityStatusRequest.status);
+        Objects.equals(this.status, v1EntityStatusRequest.status) &&
+        Objects.equals(this.statusCondition, v1EntityStatusRequest.statusCondition);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(owner, project, uuid, status);
+    return Objects.hash(owner, project, uuid, status, statusCondition);
   }
 
 
@@ -158,6 +181,7 @@ public class V1EntityStatusRequest {
     sb.append("    project: ").append(toIndentedString(project)).append("\n");
     sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    statusCondition: ").append(toIndentedString(statusCondition)).append("\n");
     sb.append("}");
     return sb.toString();
   }

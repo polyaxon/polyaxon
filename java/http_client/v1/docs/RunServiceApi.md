@@ -323,7 +323,7 @@ Name | Type | Description  | Notes
 
 <a name="createRunStatus"></a>
 # **createRunStatus**
-> Object createRunStatus(owner, project, uuid, body)
+> V1Status createRunStatus(owner, project, uuid, body)
 
 Create new run status
 
@@ -350,7 +350,7 @@ String project = "project_example"; // String | Project where the experiement wi
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 V1EntityStatusRequest body = new V1EntityStatusRequest(); // V1EntityStatusRequest | 
 try {
-    Object result = apiInstance.createRunStatus(owner, project, uuid, body);
+    V1Status result = apiInstance.createRunStatus(owner, project, uuid, body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunServiceApi#createRunStatus");
@@ -369,7 +369,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1Status**](V1Status.md)
 
 ### Authorization
 
@@ -610,7 +610,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunStatuses"></a>
 # **getRunStatuses**
-> V1StatusResponse getRunStatuses(owner, project, uuid)
+> V1Status getRunStatuses(owner, project, uuid)
 
 Get run status
 
@@ -636,7 +636,7 @@ String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
 try {
-    V1StatusResponse result = apiInstance.getRunStatuses(owner, project, uuid);
+    V1Status result = apiInstance.getRunStatuses(owner, project, uuid);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunServiceApi#getRunStatuses");
@@ -654,7 +654,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1StatusResponse**](V1StatusResponse.md)
+[**V1Status**](V1Status.md)
 
 ### Authorization
 

@@ -72,20 +72,20 @@ func NewGetRunStatusesOK() *GetRunStatusesOK {
 A successful response.
 */
 type GetRunStatusesOK struct {
-	Payload *service_model.V1StatusResponse
+	Payload *service_model.V1Status
 }
 
 func (o *GetRunStatusesOK) Error() string {
 	return fmt.Sprintf("[GET /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] getRunStatusesOK  %+v", 200, o.Payload)
 }
 
-func (o *GetRunStatusesOK) GetPayload() *service_model.V1StatusResponse {
+func (o *GetRunStatusesOK) GetPayload() *service_model.V1Status {
 	return o.Payload
 }
 
 func (o *GetRunStatusesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(service_model.V1StatusResponse)
+	o.Payload = new(service_model.V1Status)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {

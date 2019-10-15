@@ -26,6 +26,8 @@ import (
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
+
+	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
 // CreateRunStatusReader is a Reader for the CreateRunStatus structure.
@@ -70,21 +72,23 @@ func NewCreateRunStatusOK() *CreateRunStatusOK {
 A successful response.
 */
 type CreateRunStatusOK struct {
-	Payload interface{}
+	Payload *service_model.V1Status
 }
 
 func (o *CreateRunStatusOK) Error() string {
 	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/statuses][%d] createRunStatusOK  %+v", 200, o.Payload)
 }
 
-func (o *CreateRunStatusOK) GetPayload() interface{} {
+func (o *CreateRunStatusOK) GetPayload() *service_model.V1Status {
 	return o.Payload
 }
 
 func (o *CreateRunStatusOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
+	o.Payload = new(service_model.V1Status)
+
 	// response payload
-	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

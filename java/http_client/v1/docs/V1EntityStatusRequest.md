@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **project** | **String** |  |  [optional]
 **uuid** | **String** |  |  [optional]
 **status** | **String** |  |  [optional]
+**statusCondition** | [**V1StatusCondition**](V1StatusCondition.md) |  |  [optional]
 
 
 

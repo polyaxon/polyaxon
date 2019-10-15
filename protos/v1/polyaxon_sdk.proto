@@ -13,6 +13,7 @@ import "v1/project.proto";
 import "v1/version.proto";
 import "v1/auth.proto";
 import "v1/user.proto";
+import "v1/status.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
@@ -235,14 +236,14 @@ service RunService {
     }
 
     // Get run status
-    rpc GetRunStatuses(OwnedEntityUUIdRequest) returns (StatusResponse) {
+    rpc GetRunStatuses(OwnedEntityUUIdRequest) returns (Status) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
         };
     }
 
     // Create new run status
-    rpc CreateRunStatus(EntityStatusRequest) returns (google.protobuf.Empty) {
+    rpc CreateRunStatus(EntityStatusRequest) returns (Status) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
             body: "*"

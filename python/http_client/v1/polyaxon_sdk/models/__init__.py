@@ -46,7 +46,8 @@ from polyaxon_sdk.models.v1_project import V1Project
 from polyaxon_sdk.models.v1_project_body_request import V1ProjectBodyRequest
 from polyaxon_sdk.models.v1_run import V1Run
 from polyaxon_sdk.models.v1_run_body_request import V1RunBodyRequest
-from polyaxon_sdk.models.v1_status_response import V1StatusResponse
+from polyaxon_sdk.models.v1_status import V1Status
+from polyaxon_sdk.models.v1_status_condition import V1StatusCondition
 from polyaxon_sdk.models.v1_user import V1User
 from polyaxon_sdk.models.v1_version import V1Version
 from polyaxon_sdk.models.v1_versions import V1Versions

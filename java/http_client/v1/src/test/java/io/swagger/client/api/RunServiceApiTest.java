@@ -37,7 +37,7 @@ import io.swagger.client.model.V1OwnedEntityUUIdRequest;
 import io.swagger.client.model.V1ProjectBodyRequest;
 import io.swagger.client.model.V1Run;
 import io.swagger.client.model.V1RunBodyRequest;
-import io.swagger.client.model.V1StatusResponse;
+import io.swagger.client.model.V1Status;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -161,7 +161,7 @@ public class RunServiceApiTest {
         String project = null;
         String uuid = null;
         V1EntityStatusRequest body = null;
-        Object response = api.createRunStatus(owner, project, uuid, body);
+        V1Status response = api.createRunStatus(owner, project, uuid, body);
 
         // TODO: test validations
     }
@@ -251,7 +251,7 @@ public class RunServiceApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1StatusResponse response = api.getRunStatuses(owner, project, uuid);
+        V1Status response = api.getRunStatuses(owner, project, uuid);
 
         // TODO: test validations
     }

@@ -40,7 +40,7 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1StatusResponse = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1StatusCondition = factory(root.PolyaxonSdk.ApiClient);
   }
 }(this, function(ApiClient) {
   'use strict';
@@ -49,44 +49,84 @@
 
 
   /**
-   * The V1StatusResponse model module.
-   * @module model/V1StatusResponse
+   * The V1StatusCondition model module.
+   * @module model/V1StatusCondition
    * @version 1.14.4
    */
 
   /**
-   * Constructs a new <code>V1StatusResponse</code>.
-   * @alias module:model/V1StatusResponse
+   * Constructs a new <code>V1StatusCondition</code>.
+   * @alias module:model/V1StatusCondition
    * @class
    */
   var exports = function() {
     var _this = this;
 
 
+
+
+
+
+
   };
 
   /**
-   * Constructs a <code>V1StatusResponse</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1StatusCondition</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1StatusResponse} obj Optional instance to populate.
-   * @return {module:model/V1StatusResponse} The populated <code>V1StatusResponse</code> instance.
+   * @param {module:model/V1StatusCondition} obj Optional instance to populate.
+   * @return {module:model/V1StatusCondition} The populated <code>V1StatusCondition</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
       obj = obj || new exports();
 
+      if (data.hasOwnProperty('type')) {
+        obj['type'] = ApiClient.convertToType(data['type'], 'String');
+      }
       if (data.hasOwnProperty('status')) {
-        obj['status'] = ApiClient.convertToType(data['status'], 'String');
+        obj['status'] = ApiClient.convertToType(data['status'], 'Boolean');
+      }
+      if (data.hasOwnProperty('reason')) {
+        obj['reason'] = ApiClient.convertToType(data['reason'], 'String');
+      }
+      if (data.hasOwnProperty('message')) {
+        obj['message'] = ApiClient.convertToType(data['message'], 'String');
+      }
+      if (data.hasOwnProperty('last_update_time')) {
+        obj['last_update_time'] = ApiClient.convertToType(data['last_update_time'], 'String');
+      }
+      if (data.hasOwnProperty('last_transition_time')) {
+        obj['last_transition_time'] = ApiClient.convertToType(data['last_transition_time'], 'String');
       }
     }
     return obj;
   }
 
   /**
-   * @member {String} status
+   * @member {String} type
+   */
+  exports.prototype['type'] = undefined;
+  /**
+   * @member {Boolean} status
    */
   exports.prototype['status'] = undefined;
+  /**
+   * @member {String} reason
+   */
+  exports.prototype['reason'] = undefined;
+  /**
+   * @member {String} message
+   */
+  exports.prototype['message'] = undefined;
+  /**
+   * @member {String} last_update_time
+   */
+  exports.prototype['last_update_time'] = undefined;
+  /**
+   * @member {String} last_transition_time
+   */
+  exports.prototype['last_transition_time'] = undefined;
 
 
 

@@ -25,21 +25,36 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1StatusResponse Request data for a status
-// swagger:model v1StatusResponse
-type V1StatusResponse struct {
+// V1StatusCondition Status condition specification
+// swagger:model v1StatusCondition
+type V1StatusCondition struct {
 
-	// The status of the entity
-	Status string `json:"status,omitempty"`
+	// last transition time
+	LastTransitionTime string `json:"last_transition_time,omitempty"`
+
+	// last update time
+	LastUpdateTime string `json:"last_update_time,omitempty"`
+
+	// Status message
+	Message string `json:"message,omitempty"`
+
+	// Status reason
+	Reason string `json:"reason,omitempty"`
+
+	// Status state
+	Status bool `json:"status,omitempty"`
+
+	// Status type
+	Type string `json:"type,omitempty"`
 }
 
-// Validate validates this v1 status response
-func (m *V1StatusResponse) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 status condition
+func (m *V1StatusCondition) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1StatusResponse) MarshalBinary() ([]byte, error) {
+func (m *V1StatusCondition) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -47,8 +62,8 @@ func (m *V1StatusResponse) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1StatusResponse) UnmarshalBinary(b []byte) error {
-	var res V1StatusResponse
+func (m *V1StatusCondition) UnmarshalBinary(b []byte) error {
+	var res V1StatusCondition
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -23,6 +23,7 @@ from v1 import base_pb2 as v1_dot_base__pb2
 from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 from v1 import project_pb2 as v1_dot_project__pb2
 from v1 import run_pb2 as v1_dot_run__pb2
+from v1 import status_pb2 as v1_dot_status__pb2
 from v1 import user_pb2 as v1_dot_user__pb2
 from v1 import version_pb2 as v1_dot_version__pb2
 
@@ -150,12 +151,12 @@ class RunServiceStub(object):
     self.GetRunStatuses = channel.unary_unary(
         '/v1.RunService/GetRunStatuses',
         request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
-        response_deserializer=v1_dot_base__pb2.StatusResponse.FromString,
+        response_deserializer=v1_dot_status__pb2.Status.FromString,
         )
     self.CreateRunStatus = channel.unary_unary(
         '/v1.RunService/CreateRunStatus',
-        request_serializer=v1_dot_base__pb2.EntityStatusRequest.SerializeToString,
-        response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+        request_serializer=v1_dot_status__pb2.EntityStatusRequest.SerializeToString,
+        response_deserializer=v1_dot_status__pb2.Status.FromString,
         )
     self.GetRunCodeRefs = channel.unary_unary(
         '/v1.RunService/GetRunCodeRefs',
@@ -472,12 +473,12 @@ def add_RunServiceServicer_to_server(servicer, server):
       'GetRunStatuses': grpc.unary_unary_rpc_method_handler(
           servicer.GetRunStatuses,
           request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
-          response_serializer=v1_dot_base__pb2.StatusResponse.SerializeToString,
+          response_serializer=v1_dot_status__pb2.Status.SerializeToString,
       ),
       'CreateRunStatus': grpc.unary_unary_rpc_method_handler(
           servicer.CreateRunStatus,
-          request_deserializer=v1_dot_base__pb2.EntityStatusRequest.FromString,
-          response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+          request_deserializer=v1_dot_status__pb2.EntityStatusRequest.FromString,
+          response_serializer=v1_dot_status__pb2.Status.SerializeToString,
       ),
       'GetRunCodeRefs': grpc.unary_unary_rpc_method_handler(
           servicer.GetRunCodeRefs,

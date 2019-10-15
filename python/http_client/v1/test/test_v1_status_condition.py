@@ -32,12 +32,12 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_status_response import V1StatusResponse  # noqa: E501
+from polyaxon_sdk.models.v1_status_condition import V1StatusCondition  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestV1StatusResponse(unittest.TestCase):
-    """V1StatusResponse unit test stubs"""
+class TestV1StatusCondition(unittest.TestCase):
+    """V1StatusCondition unit test stubs"""
 
     def setUp(self):
         pass
@@ -45,10 +45,10 @@ class TestV1StatusResponse(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testV1StatusResponse(self):
-        """Test V1StatusResponse"""
+    def testV1StatusCondition(self):
+        """Test V1StatusCondition"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = polyaxon_sdk.models.v1_status_response.V1StatusResponse()  # noqa: E501
+        # model = polyaxon_sdk.models.v1_status_condition.V1StatusCondition()  # noqa: E501
         pass
 
 

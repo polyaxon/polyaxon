@@ -36,17 +36,44 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.client.model.V1StatusCondition;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * V1StatusResponse
+ * V1Status
  */
 
-public class V1StatusResponse {
+public class V1Status {
+  @SerializedName("uuid")
+  private String uuid = null;
+
   @SerializedName("status")
   private String status = null;
 
-  public V1StatusResponse status(String status) {
+  @SerializedName("status_conditions")
+  private List<V1StatusCondition> statusConditions = null;
+
+  public V1Status uuid(String uuid) {
+    this.uuid = uuid;
+    return this;
+  }
+
+   /**
+   * Get uuid
+   * @return uuid
+  **/
+  @ApiModelProperty(value = "")
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
+
+  public V1Status status(String status) {
     this.status = status;
     return this;
   }
@@ -64,6 +91,32 @@ public class V1StatusResponse {
     this.status = status;
   }
 
+  public V1Status statusConditions(List<V1StatusCondition> statusConditions) {
+    this.statusConditions = statusConditions;
+    return this;
+  }
+
+  public V1Status addStatusConditionsItem(V1StatusCondition statusConditionsItem) {
+    if (this.statusConditions == null) {
+      this.statusConditions = new ArrayList<V1StatusCondition>();
+    }
+    this.statusConditions.add(statusConditionsItem);
+    return this;
+  }
+
+   /**
+   * Get statusConditions
+   * @return statusConditions
+  **/
+  @ApiModelProperty(value = "")
+  public List<V1StatusCondition> getStatusConditions() {
+    return statusConditions;
+  }
+
+  public void setStatusConditions(List<V1StatusCondition> statusConditions) {
+    this.statusConditions = statusConditions;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -73,22 +126,26 @@ public class V1StatusResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1StatusResponse v1StatusResponse = (V1StatusResponse) o;
-    return Objects.equals(this.status, v1StatusResponse.status);
+    V1Status v1Status = (V1Status) o;
+    return Objects.equals(this.uuid, v1Status.uuid) &&
+        Objects.equals(this.status, v1Status.status) &&
+        Objects.equals(this.statusConditions, v1Status.statusConditions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(status);
+    return Objects.hash(uuid, status, statusConditions);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1StatusResponse {\n");
+    sb.append("class V1Status {\n");
     
+    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
+    sb.append("    statusConditions: ").append(toIndentedString(statusConditions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

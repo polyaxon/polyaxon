@@ -325,7 +325,7 @@ Name | Type | Description  | Notes
 
 <a name="createRunStatus"></a>
 # **createRunStatus**
-> Object createRunStatus(owner, project, uuid, body)
+> V1Status createRunStatus(owner, project, uuid, body)
 
 Create new run status
 
@@ -372,7 +372,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**V1Status**](V1Status.md)
 
 ### Authorization
 
@@ -613,7 +613,7 @@ Name | Type | Description  | Notes
 
 <a name="getRunStatuses"></a>
 # **getRunStatuses**
-> V1StatusResponse getRunStatuses(owner, project, uuid)
+> V1Status getRunStatuses(owner, project, uuid)
 
 Get run status
 
@@ -657,7 +657,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**V1StatusResponse**](V1StatusResponse.md)
+[**V1Status**](V1Status.md)
 
 ### Authorization
 
