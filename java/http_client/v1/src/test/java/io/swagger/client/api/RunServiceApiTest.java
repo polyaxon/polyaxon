@@ -275,7 +275,7 @@ public class RunServiceApiTest {
     }
     
     /**
-     * List archived runs
+     * List archived runs for user
      *
      * 
      *
@@ -284,14 +284,14 @@ public class RunServiceApiTest {
      */
     @Test
     public void listArchivedRunsTest() throws ApiException {
-        String owner = null;
-        V1ListRunsResponse response = api.listArchivedRuns(owner);
+        String user = null;
+        V1ListRunsResponse response = api.listArchivedRuns(user);
 
         // TODO: test validations
     }
     
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      *
      * 
      *
@@ -300,8 +300,8 @@ public class RunServiceApiTest {
      */
     @Test
     public void listBookmarkedRunsTest() throws ApiException {
-        String owner = null;
-        V1ListRunsResponse response = api.listBookmarkedRuns(owner);
+        String user = null;
+        V1ListRunsResponse response = api.listBookmarkedRuns(user);
 
         // TODO: test validations
     }

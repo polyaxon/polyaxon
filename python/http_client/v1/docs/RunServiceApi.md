@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**get_run_statuses**](RunServiceApi.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**invalidate_run**](RunServiceApi.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
 [**invalidate_runs**](RunServiceApi.md#invalidate_runs) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
-[**list_archived_runs**](RunServiceApi.md#list_archived_runs) | **GET** /api/v1/archives/{owner}/runs | List archived runs
-[**list_bookmarked_runs**](RunServiceApi.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{owner}/runs | List bookmarked runs
+[**list_archived_runs**](RunServiceApi.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
+[**list_bookmarked_runs**](RunServiceApi.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**list_runs**](RunServiceApi.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**patch_run**](RunServiceApi.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restart_run**](RunServiceApi.md#restart_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
@@ -710,9 +710,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_archived_runs**
-> V1ListRunsResponse list_archived_runs(owner)
+> V1ListRunsResponse list_archived_runs(user)
 
-List archived runs
+List archived runs for user
 
 ### Example
 ```python
@@ -730,11 +730,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunServiceApi(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+user = 'user_example' # str | Owner of the namespace
 
 try:
-    # List archived runs
-    api_response = api_instance.list_archived_runs(owner)
+    # List archived runs for user
+    api_response = api_instance.list_archived_runs(user)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunServiceApi->list_archived_runs: %s\n" % e)
@@ -744,7 +744,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
+ **user** | **str**| Owner of the namespace | 
 
 ### Return type
 
@@ -762,9 +762,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_runs**
-> V1ListRunsResponse list_bookmarked_runs(owner)
+> V1ListRunsResponse list_bookmarked_runs(user)
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```python
@@ -782,11 +782,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunServiceApi(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+user = 'user_example' # str | Owner of the namespace
 
 try:
-    # List bookmarked runs
-    api_response = api_instance.list_bookmarked_runs(owner)
+    # List bookmarked runs for user
+    api_response = api_instance.list_bookmarked_runs(user)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunServiceApi->list_bookmarked_runs: %s\n" % e)
@@ -796,7 +796,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
+ **user** | **str**| Owner of the namespace | 
 
 ### Return type
 

@@ -1003,18 +1003,18 @@ public class ProjectServiceApi {
     }
     /**
      * Build call for listArchivedProjects
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listArchivedProjectsCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedProjectsCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/archives/{owner}/projects"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
+        String localVarPath = "/api/v1/archives/{user}/projects"
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1052,15 +1052,15 @@ public class ProjectServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listArchivedProjectsValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listArchivedProjectsValidateBeforeCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listArchivedProjects(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling listArchivedProjects(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listArchivedProjectsCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedProjectsCall(user, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1068,24 +1068,24 @@ public class ProjectServiceApi {
     /**
      * Create new run
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return V1ListProjectsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListProjectsResponse listArchivedProjects(String owner) throws ApiException {
-        ApiResponse<V1ListProjectsResponse> resp = listArchivedProjectsWithHttpInfo(owner);
+    public V1ListProjectsResponse listArchivedProjects(String user) throws ApiException {
+        ApiResponse<V1ListProjectsResponse> resp = listArchivedProjectsWithHttpInfo(user);
         return resp.getData();
     }
 
     /**
      * Create new run
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListProjectsResponse> listArchivedProjectsWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListProjectsResponse> listArchivedProjectsWithHttpInfo(String user) throws ApiException {
+        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(user, null, null);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1093,12 +1093,12 @@ public class ProjectServiceApi {
     /**
      * Create new run (asynchronously)
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listArchivedProjectsAsync(String owner, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedProjectsAsync(String user, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1119,25 +1119,25 @@ public class ProjectServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
      * Build call for listBookmarkedProjects
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedProjectsCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedProjectsCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/bookmarks/{owner}/projects"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
+        String localVarPath = "/api/v1/bookmarks/{user}/projects"
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1175,53 +1175,53 @@ public class ProjectServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listBookmarkedProjectsValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listBookmarkedProjectsValidateBeforeCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listBookmarkedProjects(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling listBookmarkedProjects(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listBookmarkedProjectsCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedProjectsCall(user, progressListener, progressRequestListener);
         return call;
 
     }
 
     /**
-     * List archived runs
+     * List archived runs for user
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return V1ListProjectsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListProjectsResponse listBookmarkedProjects(String owner) throws ApiException {
-        ApiResponse<V1ListProjectsResponse> resp = listBookmarkedProjectsWithHttpInfo(owner);
+    public V1ListProjectsResponse listBookmarkedProjects(String user) throws ApiException {
+        ApiResponse<V1ListProjectsResponse> resp = listBookmarkedProjectsWithHttpInfo(user);
         return resp.getData();
     }
 
     /**
-     * List archived runs
+     * List archived runs for user
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListProjectsResponse> listBookmarkedProjectsWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListProjectsResponse> listBookmarkedProjectsWithHttpInfo(String user) throws ApiException {
+        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(user, null, null);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
-     * List archived runs (asynchronously)
+     * List archived runs for user (asynchronously)
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedProjectsAsync(String owner, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedProjectsAsync(String user, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1242,7 +1242,7 @@ public class ProjectServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1312,7 +1312,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      * 
      * @param owner Owner of the namespace (required)
      * @return V1ListProjectsResponse
@@ -1324,7 +1324,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      * 
      * @param owner Owner of the namespace (required)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
@@ -1337,7 +1337,7 @@ public class ProjectServiceApi {
     }
 
     /**
-     * List bookmarked runs (asynchronously)
+     * List bookmarked runs for user (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
      * @param callback The callback to be executed when the API call finishes

@@ -784,43 +784,43 @@ class ProjectServiceApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def list_archived_projects(self, owner, **kwargs):  # noqa: E501
+    def list_archived_projects(self, user, **kwargs):  # noqa: E501
         """Create new run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_archived_projects(owner, async_req=True)
+        >>> thread = api.list_archived_projects(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
+        :param str user: Owner of the namespace (required)
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.list_archived_projects_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.list_archived_projects_with_http_info(user, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_archived_projects_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.list_archived_projects_with_http_info(user, **kwargs)  # noqa: E501
             return data
 
-    def list_archived_projects_with_http_info(self, owner, **kwargs):  # noqa: E501
+    def list_archived_projects_with_http_info(self, user, **kwargs):  # noqa: E501
         """Create new run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_archived_projects_with_http_info(owner, async_req=True)
+        >>> thread = api.list_archived_projects_with_http_info(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
+        :param str user: Owner of the namespace (required)
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner']  # noqa: E501
+        all_params = ['user']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -835,16 +835,16 @@ class ProjectServiceApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `list_archived_projects`")  # noqa: E501
+        # verify the required parameter 'user' is set
+        if ('user' not in params or
+                params['user'] is None):
+            raise ValueError("Missing the required parameter `user` when calling `list_archived_projects`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
+        if 'user' in params:
+            path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
 
@@ -866,7 +866,7 @@ class ProjectServiceApi(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/archives/{owner}/projects', 'GET',
+            '/api/v1/archives/{user}/projects', 'GET',
             path_params,
             query_params,
             header_params,
@@ -881,43 +881,43 @@ class ProjectServiceApi(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def list_bookmarked_projects(self, owner, **kwargs):  # noqa: E501
-        """List archived runs  # noqa: E501
+    def list_bookmarked_projects(self, user, **kwargs):  # noqa: E501
+        """List archived runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_bookmarked_projects(owner, async_req=True)
+        >>> thread = api.list_bookmarked_projects(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
+        :param str user: Owner of the namespace (required)
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.list_bookmarked_projects_with_http_info(owner, **kwargs)  # noqa: E501
+            return self.list_bookmarked_projects_with_http_info(user, **kwargs)  # noqa: E501
         else:
-            (data) = self.list_bookmarked_projects_with_http_info(owner, **kwargs)  # noqa: E501
+            (data) = self.list_bookmarked_projects_with_http_info(user, **kwargs)  # noqa: E501
             return data
 
-    def list_bookmarked_projects_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List archived runs  # noqa: E501
+    def list_bookmarked_projects_with_http_info(self, user, **kwargs):  # noqa: E501
+        """List archived runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.list_bookmarked_projects_with_http_info(owner, async_req=True)
+        >>> thread = api.list_bookmarked_projects_with_http_info(user, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
+        :param str user: Owner of the namespace (required)
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner']  # noqa: E501
+        all_params = ['user']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -932,16 +932,16 @@ class ProjectServiceApi(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `list_bookmarked_projects`")  # noqa: E501
+        # verify the required parameter 'user' is set
+        if ('user' not in params or
+                params['user'] is None):
+            raise ValueError("Missing the required parameter `user` when calling `list_bookmarked_projects`")  # noqa: E501
 
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
+        if 'user' in params:
+            path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
 
@@ -963,7 +963,7 @@ class ProjectServiceApi(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/bookmarks/{owner}/projects', 'GET',
+            '/api/v1/bookmarks/{user}/projects', 'GET',
             path_params,
             query_params,
             header_params,
@@ -979,7 +979,7 @@ class ProjectServiceApi(object):
             collection_formats=collection_formats)
 
     def list_project_names(self, owner, **kwargs):  # noqa: E501
-        """List bookmarked runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1000,7 +1000,7 @@ class ProjectServiceApi(object):
             return data
 
     def list_project_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List bookmarked runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

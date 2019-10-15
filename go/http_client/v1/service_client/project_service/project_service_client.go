@@ -297,7 +297,7 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArchivedProjects",
 		Method:             "GET",
-		PathPattern:        "/api/v1/archives/{owner}/projects",
+		PathPattern:        "/api/v1/archives/{user}/projects",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -321,7 +321,7 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 }
 
 /*
-ListBookmarkedProjects lists archived runs
+ListBookmarkedProjects lists archived runs for user
 */
 func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -332,7 +332,7 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBookmarkedProjects",
 		Method:             "GET",
-		PathPattern:        "/api/v1/bookmarks/{owner}/projects",
+		PathPattern:        "/api/v1/bookmarks/{user}/projects",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -356,7 +356,7 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 }
 
 /*
-ListProjectNames lists bookmarked runs
+ListProjectNames lists bookmarked runs for user
 */
 func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, error) {
 	// TODO: Validate the params before sending

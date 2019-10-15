@@ -76,7 +76,7 @@ type ListArchivedProjectsOK struct {
 }
 
 func (o *ListArchivedProjectsOK) Error() string {
-	return fmt.Sprintf("[GET /api/v1/archives/{owner}/projects][%d] listArchivedProjectsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsOK  %+v", 200, o.Payload)
 }
 
 func (o *ListArchivedProjectsOK) GetPayload() *service_model.V1ListProjectsResponse {
@@ -109,7 +109,7 @@ type ListArchivedProjectsForbidden struct {
 }
 
 func (o *ListArchivedProjectsForbidden) Error() string {
-	return fmt.Sprintf("[GET /api/v1/archives/{owner}/projects][%d] listArchivedProjectsForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ListArchivedProjectsForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type ListArchivedProjectsNotFound struct {
 }
 
 func (o *ListArchivedProjectsNotFound) Error() string {
-	return fmt.Sprintf("[GET /api/v1/archives/{owner}/projects][%d] listArchivedProjectsNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[GET /api/v1/archives/{user}/projects][%d] listArchivedProjectsNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ListArchivedProjectsNotFound) GetPayload() string {

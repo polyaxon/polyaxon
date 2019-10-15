@@ -75,17 +75,17 @@ service RunService {
         };
     }
 
-    // List bookmarked runs
-    rpc ListBookmarkedRuns(OwnerBodyRequest) returns (ListRunsResponse) {
+    // List bookmarked runs for user
+    rpc ListBookmarkedRuns(UserBodyRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
-            get: "/api/v1/bookmarks/{owner}/runs"
+            get: "/api/v1/bookmarks/{user}/runs"
         };
     }
 
-    // List archived runs
-    rpc ListArchivedRuns(OwnerBodyRequest) returns (ListRunsResponse) {
+    // List archived runs for user
+    rpc ListArchivedRuns(UserBodyRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
-            get: "/api/v1/archives/{owner}/runs"
+            get: "/api/v1/archives/{user}/runs"
         };
     }
 
@@ -276,17 +276,17 @@ service ProjectService {
         };
     }
 
-    // List bookmarked projects
-    rpc ListBookmarkedProjects(OwnerBodyRequest) returns (ListProjectsResponse) {
+    // List bookmarked projects for user
+    rpc ListBookmarkedProjects(UserBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
-            get: "/api/v1/bookmarks/{owner}/projects"
+            get: "/api/v1/bookmarks/{user}/projects"
         };
     }
 
-    // List archived projects
-    rpc ListArchivedProjects(OwnerBodyRequest) returns (ListProjectsResponse) {
+    // List archived projects for user
+    rpc ListArchivedProjects(UserBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
-            get: "/api/v1/archives/{owner}/projects"
+            get: "/api/v1/archives/{user}/projects"
         };
     }
 
@@ -383,14 +383,15 @@ service AuthService {
     }
 }
 
-// Service to get user
+// Service to get user level infotmation
 service UserService {
-    // Get users
+    // Get current user
     rpc getUser(google.protobuf.Empty) returns (User) {
         option (google.api.http) = {
             get: "/api/v1/users"
         };
     }
+
 }
 
 // Service to get versions

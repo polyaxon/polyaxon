@@ -75,11 +75,11 @@ for the list bookmarked projects operation typically these are written to a http
 */
 type ListBookmarkedProjectsParams struct {
 
-	/*Owner
+	/*User
 	  Owner of the namespace
 
 	*/
-	Owner string
+	User string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,15 +119,15 @@ func (o *ListBookmarkedProjectsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithOwner adds the owner to the list bookmarked projects params
-func (o *ListBookmarkedProjectsParams) WithOwner(owner string) *ListBookmarkedProjectsParams {
-	o.SetOwner(owner)
+// WithUser adds the user to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) WithUser(user string) *ListBookmarkedProjectsParams {
+	o.SetUser(user)
 	return o
 }
 
-// SetOwner adds the owner to the list bookmarked projects params
-func (o *ListBookmarkedProjectsParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetUser adds the user to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) SetUser(user string) {
+	o.User = user
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -138,8 +138,8 @@ func (o *ListBookmarkedProjectsParams) WriteToRequest(r runtime.ClientRequest, r
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param user
+	if err := r.SetPathParam("user", o.User); err != nil {
 		return err
 	}
 

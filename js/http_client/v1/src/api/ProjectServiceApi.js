@@ -449,21 +449,21 @@
 
     /**
      * Create new run
-     * @param {String} owner Owner of the namespace
+     * @param {String} user Owner of the namespace
      * @param {module:api/ProjectServiceApi~listArchivedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listArchivedProjects = function(owner, callback) {
+    this.listArchivedProjects = function(user, callback) {
       var postBody = null;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listArchivedProjects");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling listArchivedProjects");
       }
 
 
       var pathParams = {
-        'owner': owner
+        'user': user
       };
       var queryParams = {
       };
@@ -480,7 +480,7 @@
       var returnType = V1ListProjectsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/archives/{owner}/projects', 'GET',
+        '/api/v1/archives/{user}/projects', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -495,22 +495,22 @@
      */
 
     /**
-     * List archived runs
-     * @param {String} owner Owner of the namespace
+     * List archived runs for user
+     * @param {String} user Owner of the namespace
      * @param {module:api/ProjectServiceApi~listBookmarkedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listBookmarkedProjects = function(owner, callback) {
+    this.listBookmarkedProjects = function(user, callback) {
       var postBody = null;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listBookmarkedProjects");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling listBookmarkedProjects");
       }
 
 
       var pathParams = {
-        'owner': owner
+        'user': user
       };
       var queryParams = {
       };
@@ -527,7 +527,7 @@
       var returnType = V1ListProjectsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/bookmarks/{owner}/projects', 'GET',
+        '/api/v1/bookmarks/{user}/projects', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -542,7 +542,7 @@
      */
 
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      * @param {String} owner Owner of the namespace
      * @param {module:api/ProjectServiceApi~listProjectNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}

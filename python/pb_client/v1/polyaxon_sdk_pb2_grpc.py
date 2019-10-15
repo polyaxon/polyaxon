@@ -44,12 +44,12 @@ class RunServiceStub(object):
         )
     self.ListBookmarkedRuns = channel.unary_unary(
         '/v1.RunService/ListBookmarkedRuns',
-        request_serializer=v1_dot_base__pb2.OwnerBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.ListArchivedRuns = channel.unary_unary(
         '/v1.RunService/ListArchivedRuns',
-        request_serializer=v1_dot_base__pb2.OwnerBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.CreateRun = channel.unary_unary(
@@ -176,14 +176,14 @@ class RunServiceServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def ListBookmarkedRuns(self, request, context):
-    """List bookmarked runs
+    """List bookmarked runs for user
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def ListArchivedRuns(self, request, context):
-    """List archived runs
+    """List archived runs for user
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -354,12 +354,12 @@ def add_RunServiceServicer_to_server(servicer, server):
       ),
       'ListBookmarkedRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListBookmarkedRuns,
-          request_deserializer=v1_dot_base__pb2.OwnerBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'ListArchivedRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListArchivedRuns,
-          request_deserializer=v1_dot_base__pb2.OwnerBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'CreateRun': grpc.unary_unary_rpc_method_handler(
@@ -500,12 +500,12 @@ class ProjectServiceStub(object):
         )
     self.ListBookmarkedProjects = channel.unary_unary(
         '/v1.ProjectService/ListBookmarkedProjects',
-        request_serializer=v1_dot_base__pb2.OwnerBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.ListArchivedProjects = channel.unary_unary(
         '/v1.ProjectService/ListArchivedProjects',
-        request_serializer=v1_dot_base__pb2.OwnerBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.CreateProject = channel.unary_unary(
@@ -584,14 +584,14 @@ class ProjectServiceServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def ListBookmarkedProjects(self, request, context):
-    """List bookmarked projects
+    """List bookmarked projects for user
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def ListArchivedProjects(self, request, context):
-    """List archived projects
+    """List archived projects for user
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
@@ -689,12 +689,12 @@ def add_ProjectServiceServicer_to_server(servicer, server):
       ),
       'ListBookmarkedProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListBookmarkedProjects,
-          request_deserializer=v1_dot_base__pb2.OwnerBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'ListArchivedProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListArchivedProjects,
-          request_deserializer=v1_dot_base__pb2.OwnerBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'CreateProject': grpc.unary_unary_rpc_method_handler(
@@ -801,7 +801,7 @@ def add_AuthServiceServicer_to_server(servicer, server):
 
 
 class UserServiceStub(object):
-  """Service to get user
+  """Service to get user level infotmation
   """
 
   def __init__(self, channel):
@@ -818,11 +818,11 @@ class UserServiceStub(object):
 
 
 class UserServiceServicer(object):
-  """Service to get user
+  """Service to get user level infotmation
   """
 
   def getUser(self, request, context):
-    """Get users
+    """Get current user
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')

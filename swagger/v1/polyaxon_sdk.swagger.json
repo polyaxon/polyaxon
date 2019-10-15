@@ -22,7 +22,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/archives/{owner}/projects": {
+    "/api/v1/archives/{user}/projects": {
       "get": {
         "summary": "Create new run",
         "operationId": "ListArchivedProjects",
@@ -47,7 +47,7 @@
         },
         "parameters": [
           {
-            "name": "owner",
+            "name": "user",
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
@@ -59,9 +59,9 @@
         ]
       }
     },
-    "/api/v1/archives/{owner}/runs": {
+    "/api/v1/archives/{user}/runs": {
       "get": {
-        "summary": "List archived runs",
+        "summary": "List archived runs for user",
         "operationId": "ListArchivedRuns",
         "responses": {
           "200": {
@@ -84,7 +84,7 @@
         },
         "parameters": [
           {
-            "name": "owner",
+            "name": "user",
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
@@ -96,9 +96,9 @@
         ]
       }
     },
-    "/api/v1/bookmarks/{owner}/projects": {
+    "/api/v1/bookmarks/{user}/projects": {
       "get": {
-        "summary": "List archived runs",
+        "summary": "List archived runs for user",
         "operationId": "ListBookmarkedProjects",
         "responses": {
           "200": {
@@ -121,7 +121,7 @@
         },
         "parameters": [
           {
-            "name": "owner",
+            "name": "user",
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
@@ -133,9 +133,9 @@
         ]
       }
     },
-    "/api/v1/bookmarks/{owner}/runs": {
+    "/api/v1/bookmarks/{user}/runs": {
       "get": {
-        "summary": "List bookmarked runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "ListBookmarkedRuns",
         "responses": {
           "200": {
@@ -158,7 +158,7 @@
         },
         "parameters": [
           {
-            "name": "owner",
+            "name": "user",
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
@@ -172,7 +172,7 @@
     },
     "/api/v1/log_handler": {
       "get": {
-        "summary": "List bookmarked runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "GetLogHandler",
         "responses": {
           "200": {
@@ -480,7 +480,7 @@
     },
     "/api/v1/{owner}/projects/names": {
       "get": {
-        "summary": "List bookmarked runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "ListProjectNames",
         "responses": {
           "200": {

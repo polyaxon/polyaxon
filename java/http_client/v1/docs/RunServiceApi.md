@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**getRunStatuses**](RunServiceApi.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**invalidateRun**](RunServiceApi.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
 [**invalidateRuns**](RunServiceApi.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
-[**listArchivedRuns**](RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{owner}/runs | List archived runs
-[**listBookmarkedRuns**](RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{owner}/runs | List bookmarked runs
+[**listArchivedRuns**](RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
+[**listBookmarkedRuns**](RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**listRuns**](RunServiceApi.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**patchRun**](RunServiceApi.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunServiceApi.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
@@ -723,9 +723,9 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
-> V1ListRunsResponse listArchivedRuns(owner)
+> V1ListRunsResponse listArchivedRuns(user)
 
-List archived runs
+List archived runs for user
 
 ### Example
 ```java
@@ -745,9 +745,9 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 RunServiceApi apiInstance = new RunServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
+String user = "user_example"; // String | Owner of the namespace
 try {
-    V1ListRunsResponse result = apiInstance.listArchivedRuns(owner);
+    V1ListRunsResponse result = apiInstance.listArchivedRuns(user);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunServiceApi#listArchivedRuns");
@@ -759,7 +759,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
+ **user** | **String**| Owner of the namespace |
 
 ### Return type
 
@@ -776,9 +776,9 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListRunsResponse listBookmarkedRuns(owner)
+> V1ListRunsResponse listBookmarkedRuns(user)
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```java
@@ -798,9 +798,9 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 RunServiceApi apiInstance = new RunServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
+String user = "user_example"; // String | Owner of the namespace
 try {
-    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(owner);
+    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunServiceApi#listBookmarkedRuns");
@@ -812,7 +812,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
+ **user** | **String**| Owner of the namespace |
 
 ### Return type
 

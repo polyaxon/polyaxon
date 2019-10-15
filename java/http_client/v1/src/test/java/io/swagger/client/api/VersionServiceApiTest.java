@@ -48,7 +48,7 @@ public class VersionServiceApiTest {
 
     
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      *
      * 
      *

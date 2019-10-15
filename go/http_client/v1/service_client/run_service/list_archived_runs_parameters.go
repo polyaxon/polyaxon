@@ -75,11 +75,11 @@ for the list archived runs operation typically these are written to a http.Reque
 */
 type ListArchivedRunsParams struct {
 
-	/*Owner
+	/*User
 	  Owner of the namespace
 
 	*/
-	Owner string
+	User string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,15 +119,15 @@ func (o *ListArchivedRunsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithOwner adds the owner to the list archived runs params
-func (o *ListArchivedRunsParams) WithOwner(owner string) *ListArchivedRunsParams {
-	o.SetOwner(owner)
+// WithUser adds the user to the list archived runs params
+func (o *ListArchivedRunsParams) WithUser(user string) *ListArchivedRunsParams {
+	o.SetUser(user)
 	return o
 }
 
-// SetOwner adds the owner to the list archived runs params
-func (o *ListArchivedRunsParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetUser adds the user to the list archived runs params
+func (o *ListArchivedRunsParams) SetUser(user string) {
+	o.User = user
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -138,8 +138,8 @@ func (o *ListArchivedRunsParams) WriteToRequest(r runtime.ClientRequest, reg str
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param user
+	if err := r.SetPathParam("user", o.User); err != nil {
 		return err
 	}
 

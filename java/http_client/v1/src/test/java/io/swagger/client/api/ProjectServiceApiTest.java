@@ -178,14 +178,14 @@ public class ProjectServiceApiTest {
      */
     @Test
     public void listArchivedProjectsTest() throws ApiException {
-        String owner = null;
-        V1ListProjectsResponse response = api.listArchivedProjects(owner);
+        String user = null;
+        V1ListProjectsResponse response = api.listArchivedProjects(user);
 
         // TODO: test validations
     }
     
     /**
-     * List archived runs
+     * List archived runs for user
      *
      * 
      *
@@ -194,14 +194,14 @@ public class ProjectServiceApiTest {
      */
     @Test
     public void listBookmarkedProjectsTest() throws ApiException {
-        String owner = null;
-        V1ListProjectsResponse response = api.listBookmarkedProjects(owner);
+        String user = null;
+        V1ListProjectsResponse response = api.listBookmarkedProjects(user);
 
         // TODO: test validations
     }
     
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      *
      * 
      *

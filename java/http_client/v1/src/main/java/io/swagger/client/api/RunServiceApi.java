@@ -1819,18 +1819,18 @@ public class RunServiceApi {
     }
     /**
      * Build call for listArchivedRuns
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listArchivedRunsCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedRunsCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/archives/{owner}/runs"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
+        String localVarPath = "/api/v1/archives/{user}/runs"
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1868,53 +1868,53 @@ public class RunServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listArchivedRunsValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listArchivedRunsValidateBeforeCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listArchivedRuns(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling listArchivedRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listArchivedRunsCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedRunsCall(user, progressListener, progressRequestListener);
         return call;
 
     }
 
     /**
-     * List archived runs
+     * List archived runs for user
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listArchivedRuns(String owner) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listArchivedRunsWithHttpInfo(owner);
+    public V1ListRunsResponse listArchivedRuns(String user) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = listArchivedRunsWithHttpInfo(user);
         return resp.getData();
     }
 
     /**
-     * List archived runs
+     * List archived runs for user
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String user) throws ApiException {
+        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
-     * List archived runs (asynchronously)
+     * List archived runs for user (asynchronously)
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listArchivedRunsAsync(String owner, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedRunsAsync(String user, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1935,25 +1935,25 @@ public class RunServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
      * Build call for listBookmarkedRuns
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedRunsCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedRunsCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/api/v1/bookmarks/{owner}/runs"
-            .replaceAll("\\{" + "owner" + "\\}", apiClient.escapeString(owner.toString()));
+        String localVarPath = "/api/v1/bookmarks/{user}/runs"
+            .replaceAll("\\{" + "user" + "\\}", apiClient.escapeString(user.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -1991,53 +1991,53 @@ public class RunServiceApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listBookmarkedRunsValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listBookmarkedRunsValidateBeforeCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
-        // verify the required parameter 'owner' is set
-        if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling listBookmarkedRuns(Async)");
+        // verify the required parameter 'user' is set
+        if (user == null) {
+            throw new ApiException("Missing the required parameter 'user' when calling listBookmarkedRuns(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = listBookmarkedRunsCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedRunsCall(user, progressListener, progressRequestListener);
         return call;
 
     }
 
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listBookmarkedRuns(String owner) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listBookmarkedRunsWithHttpInfo(owner);
+    public V1ListRunsResponse listBookmarkedRuns(String user) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = listBookmarkedRunsWithHttpInfo(user);
         return resp.getData();
     }
 
     /**
-     * List bookmarked runs
+     * List bookmarked runs for user
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listBookmarkedRunsWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListRunsResponse> listBookmarkedRunsWithHttpInfo(String user) throws ApiException {
+        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
     /**
-     * List bookmarked runs (asynchronously)
+     * List bookmarked runs for user (asynchronously)
      * 
-     * @param owner Owner of the namespace (required)
+     * @param user Owner of the namespace (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedRunsAsync(String owner, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedRunsAsync(String user, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2058,7 +2058,7 @@ public class RunServiceApi {
             };
         }
 
-        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

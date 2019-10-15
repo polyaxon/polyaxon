@@ -123,7 +123,7 @@ func local_request_RunService_ListRuns_0(ctx context.Context, marshaler runtime.
 }
 
 func request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -133,15 +133,15 @@ func request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runt
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.ListBookmarkedRuns(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -150,7 +150,7 @@ func request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runt
 }
 
 func local_request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -160,15 +160,15 @@ func local_request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshale
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.ListBookmarkedRuns(ctx, &protoReq)
@@ -177,7 +177,7 @@ func local_request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshale
 }
 
 func request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -187,15 +187,15 @@ func request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtim
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.ListArchivedRuns(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -204,7 +204,7 @@ func request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -214,15 +214,15 @@ func local_request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler 
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.ListArchivedRuns(ctx, &protoReq)
@@ -2615,7 +2615,7 @@ func local_request_ProjectService_ListProjectNames_0(ctx context.Context, marsha
 }
 
 func request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2625,15 +2625,15 @@ func request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marsha
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.ListBookmarkedProjects(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -2642,7 +2642,7 @@ func request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marsha
 }
 
 func local_request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2652,15 +2652,15 @@ func local_request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, 
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.ListBookmarkedProjects(ctx, &protoReq)
@@ -2669,7 +2669,7 @@ func local_request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, 
 }
 
 func request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2679,15 +2679,15 @@ func request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshale
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := client.ListArchivedProjects(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -2696,7 +2696,7 @@ func request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshale
 }
 
 func local_request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2706,15 +2706,15 @@ func local_request_ProjectService_ListArchivedProjects_0(ctx context.Context, ma
 		_   = err
 	)
 
-	val, ok = pathParams["owner"]
+	val, ok = pathParams["user"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "owner")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user")
 	}
 
-	protoReq.Owner, err = runtime.String(val)
+	protoReq.User, err = runtime.String(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
 	}
 
 	msg, err := server.ListArchivedProjects(ctx, &protoReq)
@@ -5136,9 +5136,9 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 var (
 	pattern_RunService_ListRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_ListBookmarkedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "owner", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunService_ListBookmarkedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "user", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_ListArchivedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "owner", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunService_ListArchivedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "user", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_RunService_CreateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -5583,9 +5583,9 @@ var (
 
 	pattern_ProjectService_ListProjectNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_ListBookmarkedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "owner", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectService_ListBookmarkedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "user", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_ListArchivedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "owner", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectService_ListArchivedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "user", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ProjectService_CreateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 

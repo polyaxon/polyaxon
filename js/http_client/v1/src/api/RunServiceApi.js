@@ -818,22 +818,22 @@
      */
 
     /**
-     * List archived runs
-     * @param {String} owner Owner of the namespace
+     * List archived runs for user
+     * @param {String} user Owner of the namespace
      * @param {module:api/RunServiceApi~listArchivedRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listArchivedRuns = function(owner, callback) {
+    this.listArchivedRuns = function(user, callback) {
       var postBody = null;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listArchivedRuns");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling listArchivedRuns");
       }
 
 
       var pathParams = {
-        'owner': owner
+        'user': user
       };
       var queryParams = {
       };
@@ -850,7 +850,7 @@
       var returnType = V1ListRunsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/archives/{owner}/runs', 'GET',
+        '/api/v1/archives/{user}/runs', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -865,22 +865,22 @@
      */
 
     /**
-     * List bookmarked runs
-     * @param {String} owner Owner of the namespace
+     * List bookmarked runs for user
+     * @param {String} user Owner of the namespace
      * @param {module:api/RunServiceApi~listBookmarkedRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listBookmarkedRuns = function(owner, callback) {
+    this.listBookmarkedRuns = function(user, callback) {
       var postBody = null;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling listBookmarkedRuns");
+      // verify the required parameter 'user' is set
+      if (user === undefined || user === null) {
+        throw new Error("Missing the required parameter 'user' when calling listBookmarkedRuns");
       }
 
 
       var pathParams = {
-        'owner': owner
+        'user': user
       };
       var queryParams = {
       };
@@ -897,7 +897,7 @@
       var returnType = V1ListRunsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/bookmarks/{owner}/runs', 'GET',
+        '/api/v1/bookmarks/{user}/runs', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

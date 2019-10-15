@@ -4,7 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs
+[**getLogHandler**](VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs for user
 [**getVersions**](VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 # **getLogHandler**
 > V1LogHandler getLogHandler()
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```javascript

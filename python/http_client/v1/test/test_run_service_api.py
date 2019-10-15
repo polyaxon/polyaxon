@@ -132,14 +132,14 @@ class TestRunServiceApi(unittest.TestCase):
     def test_list_archived_runs(self):
         """Test case for list_archived_runs
 
-        List archived runs  # noqa: E501
+        List archived runs for user  # noqa: E501
         """
         pass
 
     def test_list_bookmarked_runs(self):
         """Test case for list_bookmarked_runs
 
-        List bookmarked runs  # noqa: E501
+        List bookmarked runs for user  # noqa: E501
         """
         pass
 

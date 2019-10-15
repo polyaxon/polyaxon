@@ -104,14 +104,14 @@ class TestProjectServiceApi(unittest.TestCase):
     def test_list_bookmarked_projects(self):
         """Test case for list_bookmarked_projects
 
-        List archived runs  # noqa: E501
+        List archived runs for user  # noqa: E501
         """
         pass
 
     def test_list_project_names(self):
         """Test case for list_project_names
 
-        List bookmarked runs  # noqa: E501
+        List bookmarked runs for user  # noqa: E501
         """
         pass
 

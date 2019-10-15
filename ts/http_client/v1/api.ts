@@ -1167,17 +1167,17 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
         /**
          * 
          * @summary Create new run
-         * @param {string} owner Owner of the namespace
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedProjects.');
+        listArchivedProjects(user: string, options: any = {}): FetchArgs {
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling listArchivedProjects.');
             }
-            const localVarPath = `/api/v1/archives/{owner}/projects`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarPath = `/api/v1/archives/{user}/projects`
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -1203,18 +1203,18 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary List archived runs
-         * @param {string} owner Owner of the namespace
+         * @summary List archived runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedProjects.');
+        listBookmarkedProjects(user: string, options: any = {}): FetchArgs {
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling listBookmarkedProjects.');
             }
-            const localVarPath = `/api/v1/bookmarks/{owner}/projects`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarPath = `/api/v1/bookmarks/{user}/projects`
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -1240,7 +1240,7 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary List bookmarked runs
+         * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1611,12 +1611,12 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create new run
-         * @param {string} owner Owner of the namespace
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listArchivedProjects(owner, options);
+        listArchivedProjects(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listArchivedProjects(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1629,13 +1629,13 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List archived runs
-         * @param {string} owner Owner of the namespace
+         * @summary List archived runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listBookmarkedProjects(owner, options);
+        listBookmarkedProjects(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listBookmarkedProjects(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1648,7 +1648,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List bookmarked runs
+         * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1835,26 +1835,26 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
         /**
          * 
          * @summary Create new run
-         * @param {string} owner Owner of the namespace
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(owner: string, options?: any) {
-            return ProjectServiceApiFp(configuration).listArchivedProjects(owner, options)(fetch, basePath);
+        listArchivedProjects(user: string, options?: any) {
+            return ProjectServiceApiFp(configuration).listArchivedProjects(user, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary List archived runs
-         * @param {string} owner Owner of the namespace
+         * @summary List archived runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(owner: string, options?: any) {
-            return ProjectServiceApiFp(configuration).listBookmarkedProjects(owner, options)(fetch, basePath);
+        listBookmarkedProjects(user: string, options?: any) {
+            return ProjectServiceApiFp(configuration).listBookmarkedProjects(user, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary List bookmarked runs
+         * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2011,30 +2011,30 @@ export class ProjectServiceApi extends BaseAPI {
     /**
      * 
      * @summary Create new run
-     * @param {string} owner Owner of the namespace
+     * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectServiceApi
      */
-    public listArchivedProjects(owner: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).listArchivedProjects(owner, options)(this.fetch, this.basePath);
+    public listArchivedProjects(user: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).listArchivedProjects(user, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary List archived runs
-     * @param {string} owner Owner of the namespace
+     * @summary List archived runs for user
+     * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectServiceApi
      */
-    public listBookmarkedProjects(owner: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).listBookmarkedProjects(owner, options)(this.fetch, this.basePath);
+    public listBookmarkedProjects(user: string, options?: any) {
+        return ProjectServiceApiFp(this.configuration).listBookmarkedProjects(user, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary List bookmarked runs
+     * @summary List bookmarked runs for user
      * @param {string} owner Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2731,18 +2731,18 @@ export const RunServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary List archived runs
-         * @param {string} owner Owner of the namespace
+         * @summary List archived runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listArchivedRuns.');
+        listArchivedRuns(user: string, options: any = {}): FetchArgs {
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling listArchivedRuns.');
             }
-            const localVarPath = `/api/v1/archives/{owner}/runs`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarPath = `/api/v1/archives/{user}/runs`
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -2768,18 +2768,18 @@ export const RunServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary List bookmarked runs
-         * @param {string} owner Owner of the namespace
+         * @summary List bookmarked runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(owner: string, options: any = {}): FetchArgs {
-            // verify required parameter 'owner' is not null or undefined
-            if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling listBookmarkedRuns.');
+        listBookmarkedRuns(user: string, options: any = {}): FetchArgs {
+            // verify required parameter 'user' is not null or undefined
+            if (user === null || user === undefined) {
+                throw new RequiredError('user','Required parameter user was null or undefined when calling listBookmarkedRuns.');
             }
-            const localVarPath = `/api/v1/bookmarks/{owner}/runs`
-                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)));
+            const localVarPath = `/api/v1/bookmarks/{user}/runs`
+                .replace(`{${"user"}}`, encodeURIComponent(String(user)));
             const localVarUrlObj = url.parse(localVarPath, true);
             const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
             const localVarHeaderParameter = {} as any;
@@ -3659,13 +3659,13 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List archived runs
-         * @param {string} owner Owner of the namespace
+         * @summary List archived runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listArchivedRuns(owner, options);
+        listArchivedRuns(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listArchivedRuns(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3678,13 +3678,13 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List bookmarked runs
-         * @param {string} owner Owner of the namespace
+         * @summary List bookmarked runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listBookmarkedRuns(owner, options);
+        listBookmarkedRuns(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listBookmarkedRuns(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4089,23 +4089,23 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
         },
         /**
          * 
-         * @summary List archived runs
-         * @param {string} owner Owner of the namespace
+         * @summary List archived runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(owner: string, options?: any) {
-            return RunServiceApiFp(configuration).listArchivedRuns(owner, options)(fetch, basePath);
+        listArchivedRuns(user: string, options?: any) {
+            return RunServiceApiFp(configuration).listArchivedRuns(user, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary List bookmarked runs
-         * @param {string} owner Owner of the namespace
+         * @summary List bookmarked runs for user
+         * @param {string} user Owner of the namespace
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(owner: string, options?: any) {
-            return RunServiceApiFp(configuration).listBookmarkedRuns(owner, options)(fetch, basePath);
+        listBookmarkedRuns(user: string, options?: any) {
+            return RunServiceApiFp(configuration).listBookmarkedRuns(user, options)(fetch, basePath);
         },
         /**
          * 
@@ -4427,26 +4427,26 @@ export class RunServiceApi extends BaseAPI {
 
     /**
      * 
-     * @summary List archived runs
-     * @param {string} owner Owner of the namespace
+     * @summary List archived runs for user
+     * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunServiceApi
      */
-    public listArchivedRuns(owner: string, options?: any) {
-        return RunServiceApiFp(this.configuration).listArchivedRuns(owner, options)(this.fetch, this.basePath);
+    public listArchivedRuns(user: string, options?: any) {
+        return RunServiceApiFp(this.configuration).listArchivedRuns(user, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary List bookmarked runs
-     * @param {string} owner Owner of the namespace
+     * @summary List bookmarked runs for user
+     * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunServiceApi
      */
-    public listBookmarkedRuns(owner: string, options?: any) {
-        return RunServiceApiFp(this.configuration).listBookmarkedRuns(owner, options)(this.fetch, this.basePath);
+    public listBookmarkedRuns(user: string, options?: any) {
+        return RunServiceApiFp(this.configuration).listBookmarkedRuns(user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4723,7 +4723,7 @@ export const VersionServiceApiFetchParamCreator = function (configuration?: Conf
     return {
         /**
          * 
-         * @summary List bookmarked runs
+         * @summary List bookmarked runs for user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4794,7 +4794,7 @@ export const VersionServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary List bookmarked runs
+         * @summary List bookmarked runs for user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4839,7 +4839,7 @@ export const VersionServiceApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @summary List bookmarked runs
+         * @summary List bookmarked runs for user
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4867,7 +4867,7 @@ export const VersionServiceApiFactory = function (configuration?: Configuration,
 export class VersionServiceApi extends BaseAPI {
     /**
      * 
-     * @summary List bookmarked runs
+     * @summary List bookmarked runs for user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof VersionServiceApi

@@ -75,11 +75,11 @@ for the list bookmarked runs operation typically these are written to a http.Req
 */
 type ListBookmarkedRunsParams struct {
 
-	/*Owner
+	/*User
 	  Owner of the namespace
 
 	*/
-	Owner string
+	User string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -119,15 +119,15 @@ func (o *ListBookmarkedRunsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithOwner adds the owner to the list bookmarked runs params
-func (o *ListBookmarkedRunsParams) WithOwner(owner string) *ListBookmarkedRunsParams {
-	o.SetOwner(owner)
+// WithUser adds the user to the list bookmarked runs params
+func (o *ListBookmarkedRunsParams) WithUser(user string) *ListBookmarkedRunsParams {
+	o.SetUser(user)
 	return o
 }
 
-// SetOwner adds the owner to the list bookmarked runs params
-func (o *ListBookmarkedRunsParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetUser adds the user to the list bookmarked runs params
+func (o *ListBookmarkedRunsParams) SetUser(user string) {
+	o.User = user
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -138,8 +138,8 @@ func (o *ListBookmarkedRunsParams) WriteToRequest(r runtime.ClientRequest, reg s
 	}
 	var res []error
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param user
+	if err := r.SetPathParam("user", o.User); err != nil {
 		return err
 	}
 

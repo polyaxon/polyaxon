@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"F\n\x16OwnedEntityUUIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"S\n\x13\x45ntityStatusRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\x12\x0e\n\x06status\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1f\n\x0fUserBodyRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"F\n\x16OwnedEntityUUIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\" \n\x0eStatusResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"S\n\x13\x45ntityStatusRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\x12\x0e\n\x06status\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -82,6 +82,37 @@ _KV = _descriptor.Descriptor(
 )
 
 
+_USERBODYREQUEST = _descriptor.Descriptor(
+  name='UserBodyRequest',
+  full_name='v1.UserBodyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user', full_name='v1.UserBodyRequest.user', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=104,
+  serialized_end=135,
+)
+
+
 _OWNERBODYREQUEST = _descriptor.Descriptor(
   name='OwnerBodyRequest',
   full_name='v1.OwnerBodyRequest',
@@ -108,8 +139,8 @@ _OWNERBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=104,
-  serialized_end=137,
+  serialized_start=137,
+  serialized_end=170,
 )
 
 
@@ -146,8 +177,8 @@ _PROJECTBODYREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=139,
-  serialized_end=191,
+  serialized_start=172,
+  serialized_end=224,
 )
 
 
@@ -191,8 +222,8 @@ _OWNEDENTITYUUIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=193,
-  serialized_end=263,
+  serialized_start=226,
+  serialized_end=296,
 )
 
 
@@ -222,8 +253,8 @@ _STATUSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=265,
-  serialized_end=297,
+  serialized_start=298,
+  serialized_end=330,
 )
 
 
@@ -274,12 +305,13 @@ _ENTITYSTATUSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=299,
-  serialized_end=382,
+  serialized_start=332,
+  serialized_end=415,
 )
 
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
 DESCRIPTOR.message_types_by_name['KV'] = _KV
+DESCRIPTOR.message_types_by_name['UserBodyRequest'] = _USERBODYREQUEST
 DESCRIPTOR.message_types_by_name['OwnerBodyRequest'] = _OWNERBODYREQUEST
 DESCRIPTOR.message_types_by_name['ProjectBodyRequest'] = _PROJECTBODYREQUEST
 DESCRIPTOR.message_types_by_name['OwnedEntityUUIdRequest'] = _OWNEDENTITYUUIDREQUEST
@@ -293,6 +325,13 @@ KV = _reflection.GeneratedProtocolMessageType('KV', (_message.Message,), {
   # @@protoc_insertion_point(class_scope:v1.KV)
   })
 _sym_db.RegisterMessage(KV)
+
+UserBodyRequest = _reflection.GeneratedProtocolMessageType('UserBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _USERBODYREQUEST,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.UserBodyRequest)
+  })
+_sym_db.RegisterMessage(UserBodyRequest)
 
 OwnerBodyRequest = _reflection.GeneratedProtocolMessageType('OwnerBodyRequest', (_message.Message,), {
   'DESCRIPTOR' : _OWNERBODYREQUEST,

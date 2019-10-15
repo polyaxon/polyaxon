@@ -46,7 +46,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=_b('\222A\251\002\022g\n\014Polyaxon sdk\"O\n\014Polyaxon sdk\022)https://github.com/polyaxon/polyaxon-sdks\032\024contact@polyaxon.com2\0061.14.4*\004\001\002\003\0042\020application/json:\020application/jsonR:\n\003403\0223\n1You don\'t have permission to access the resource.R)\n\003404\022\"\n\030Resource does not exist.\022\006\n\004\232\002\001\007Z\037\n\035\n\006ApiKey\022\023\010\002\032\rAuthorization \002b\014\n\n\n\006ApiKey\022\000'),
-  serialized_pb=_b('\n\x15v1/polyaxon_sdk.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\x1a\x0cv1/run.proto\x1a\x10v1/project.proto\x1a\x10v1/version.proto\x1a\rv1/auth.proto\x1a\rv1/user.proto2\xd3\x16\n\nRunService\x12`\n\x08ListRuns\x12\x16.v1.ProjectBodyRequest\x1a\x14.v1.ListRunsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/{project}/runs\x12h\n\x12ListBookmarkedRuns\x12\x14.v1.OwnerBodyRequest\x1a\x14.v1.ListRunsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/bookmarks/{owner}/runs\x12\x65\n\x10ListArchivedRuns\x12\x14.v1.OwnerBodyRequest\x1a\x14.v1.ListRunsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/archives/{owner}/runs\x12S\n\tCreateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\")\x82\xd3\xe4\x93\x02#\"\x1e/api/v1/{owner}/{project}/runs:\x01*\x12\\\n\x06GetRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x07.v1.Run\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/{project}/runs/{uuid}\x12^\n\tUpdateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"4\x82\xd3\xe4\x93\x02.\x1a)/api/v1/{owner}/{project}/runs/{run.uuid}:\x01*\x12]\n\x08PatchRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"4\x82\xd3\xe4\x93\x02.2)/api/v1/{owner}/{project}/runs/{run.uuid}:\x01*\x12n\n\tDeleteRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02\'*%/api/v1/{owner}/{project}/runs/{uuid}\x12n\n\nDeleteRuns\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"0\x82\xd3\xe4\x93\x02**%/api/v1/{owner}/{project}/runs/delete:\x01*\x12t\n\x07StopRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"*/api/v1/{owner}/{project}/runs/{uuid}/stop:\x01*\x12j\n\x08StopRuns\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(\"#/api/v1/{owner}/{project}/runs/stop:\x01*\x12\x80\x01\n\rInvalidateRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\";\x82\xd3\xe4\x93\x02\x35\"0/api/v1/{owner}/{project}/runs/{uuid}/invalidate:\x01*\x12v\n\x0eInvalidateRuns\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.\")/api/v1/{owner}/{project}/runs/invalidate:\x01*\x12k\n\nRestartRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x07.v1.Run\"8\x82\xd3\xe4\x93\x02\x32\"-/api/v1/{owner}/{project}/runs/{uuid}/restart:\x01*\x12i\n\tResumeRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x07.v1.Run\"7\x82\xd3\xe4\x93\x02\x31\",/api/v1/{owner}/{project}/runs/{uuid}/resume:\x01*\x12w\n\nArchiveRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/archive\x12w\n\nRestoreRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/restore\x12y\n\x0b\x42ookmarkRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./api/v1/{owner}/{project}/runs/{uuid}/bookmark\x12}\n\rUnBookmarkRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x02\x32*0/api/v1/{owner}/{project}/runs/{uuid}/unbookmark\x12\x8d\x01\n\x13StartRunTensorboard\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"B\x82\xd3\xe4\x93\x02<\"7/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start:\x01*\x12\x88\x01\n\x12StopRunTensorboard\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\">\x82\xd3\xe4\x93\x02\x38*6/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop\x12x\n\x0eGetRunStatuses\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x12.v1.StatusResponse\"6\x82\xd3\xe4\x93\x02\x30\x12./api/v1/{owner}/{project}/runs/{uuid}/statuses\x12}\n\x0f\x43reateRunStatus\x12\x17.v1.EntityStatusRequest\x1a\x16.google.protobuf.Empty\"9\x82\xd3\xe4\x93\x02\x33\"./api/v1/{owner}/{project}/runs/{uuid}/statuses:\x01*\x12|\n\x0eGetRunCodeRefs\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x17.v1.ListCodeRefResponse\"5\x82\xd3\xe4\x93\x02/\x12-/api/v1/{owner}/{project}/runs/{uuid}/coderef\x12\x8c\x01\n\x10\x43reateRunCodeRef\x12\x16.v1.CodeRefBodyRequest\x1a\x11.v1.CodeReference\"M\x82\xd3\xe4\x93\x02G\"B/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef:\x01*2\xdd\x0c\n\x0eProjectService\x12\x65\n\x0cListProjects\x12\x14.v1.OwnerBodyRequest\x1a\x18.v1.ListProjectsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{owner}/projects/list\x12j\n\x10ListProjectNames\x12\x14.v1.OwnerBodyRequest\x1a\x18.v1.ListProjectsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/projects/names\x12t\n\x16ListBookmarkedProjects\x12\x14.v1.OwnerBodyRequest\x1a\x18.v1.ListProjectsResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/bookmarks/{owner}/projects\x12q\n\x14ListArchivedProjects\x12\x14.v1.OwnerBodyRequest\x1a\x18.v1.ListProjectsResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/archives/{owner}/projects\x12^\n\rCreateProject\x12\x14.v1.OwnerBodyRequest\x1a\x0b.v1.Project\"*\x82\xd3\xe4\x93\x02$\"\x1f/api/v1/{owner}/projects/create:\x01*\x12]\n\nGetProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/projects/{project}\x12\x63\n\rUpdateProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"-\x82\xd3\xe4\x93\x02\'\x1a\"/api/v1/{owner}/projects/{project}:\x01*\x12\x62\n\x0cPatchProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"-\x82\xd3\xe4\x93\x02\'2\"/api/v1/{owner}/projects/{project}:\x01*\x12m\n\x10\x44\x65leteExperiment\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/api/v1/{owner}/projecs/{project}\x12k\n\x0e\x41rchiveProject\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/archive\x12n\n\x11RestoreExperiment\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/restore\x12m\n\x0f\x42ookmarkProject\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$\"\"/api/v1/{owner}/{project}/bookmark\x12q\n\x11UnBookmarkProject\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&*$/api/v1/{owner}/{project}/unbookmark\x12g\n\x0f\x45nableProjectCI\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e\"\x1c/api/v1/{owner}/{project}/ci\x12p\n\x10\x44isableProjectCI\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&*$/api/v1/{owner}/{project}/unbookmark2V\n\x0b\x41uthService\x12G\n\x05Login\x12\x14.v1.CredsBodyRequest\x1a\x08.v1.Auth\"\x1e\x82\xd3\xe4\x93\x02\x18\"\x13/api/v1/users/token:\x01*2Q\n\x0bUserService\x12\x42\n\x07getUser\x12\x16.google.protobuf.Empty\x1a\x08.v1.User\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users2\xb5\x01\n\x0eVersionService\x12M\n\x0bGetVersions\x12\x16.google.protobuf.Empty\x1a\x0c.v1.Versions\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/api/v1/versions\x12T\n\rGetLogHandler\x12\x16.google.protobuf.Empty\x1a\x0e.v1.LogHandler\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/log_handlerB\xad\x02\x92\x41\xa9\x02\x12g\n\x0cPolyaxon sdk\"O\n\x0cPolyaxon sdk\x12)https://github.com/polyaxon/polyaxon-sdks\x1a\x14\x63ontact@polyaxon.com2\x06\x31.14.4*\x04\x01\x02\x03\x04\x32\x10\x61pplication/json:\x10\x61pplication/jsonR:\n\x03\x34\x30\x33\x12\x33\n1You don\'t have permission to access the resource.R)\n\x03\x34\x30\x34\x12\"\n\x18Resource does not exist.\x12\x06\n\x04\x9a\x02\x01\x07Z\x1f\n\x1d\n\x06\x41piKey\x12\x13\x08\x02\x1a\rAuthorization \x02\x62\x0c\n\n\n\x06\x41piKey\x12\x00\x62\x06proto3')
+  serialized_pb=_b('\n\x15v1/polyaxon_sdk.proto\x12\x02v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a,protoc-gen-swagger/options/annotations.proto\x1a\rv1/base.proto\x1a\x11v1/code_ref.proto\x1a\x0cv1/run.proto\x1a\x10v1/project.proto\x1a\x10v1/version.proto\x1a\rv1/auth.proto\x1a\rv1/user.proto2\xcf\x16\n\nRunService\x12`\n\x08ListRuns\x12\x16.v1.ProjectBodyRequest\x1a\x14.v1.ListRunsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/{project}/runs\x12\x66\n\x12ListBookmarkedRuns\x12\x13.v1.UserBodyRequest\x1a\x14.v1.ListRunsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/bookmarks/{user}/runs\x12\x63\n\x10ListArchivedRuns\x12\x13.v1.UserBodyRequest\x1a\x14.v1.ListRunsResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/api/v1/archives/{user}/runs\x12S\n\tCreateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\")\x82\xd3\xe4\x93\x02#\"\x1e/api/v1/{owner}/{project}/runs:\x01*\x12\\\n\x06GetRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x07.v1.Run\"-\x82\xd3\xe4\x93\x02\'\x12%/api/v1/{owner}/{project}/runs/{uuid}\x12^\n\tUpdateRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"4\x82\xd3\xe4\x93\x02.\x1a)/api/v1/{owner}/{project}/runs/{run.uuid}:\x01*\x12]\n\x08PatchRun\x12\x12.v1.RunBodyRequest\x1a\x07.v1.Run\"4\x82\xd3\xe4\x93\x02.2)/api/v1/{owner}/{project}/runs/{run.uuid}:\x01*\x12n\n\tDeleteRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02\'*%/api/v1/{owner}/{project}/runs/{uuid}\x12n\n\nDeleteRuns\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"0\x82\xd3\xe4\x93\x02**%/api/v1/{owner}/{project}/runs/delete:\x01*\x12t\n\x07StopRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"*/api/v1/{owner}/{project}/runs/{uuid}/stop:\x01*\x12j\n\x08StopRuns\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(\"#/api/v1/{owner}/{project}/runs/stop:\x01*\x12\x80\x01\n\rInvalidateRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\";\x82\xd3\xe4\x93\x02\x35\"0/api/v1/{owner}/{project}/runs/{uuid}/invalidate:\x01*\x12v\n\x0eInvalidateRuns\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.\")/api/v1/{owner}/{project}/runs/invalidate:\x01*\x12k\n\nRestartRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x07.v1.Run\"8\x82\xd3\xe4\x93\x02\x32\"-/api/v1/{owner}/{project}/runs/{uuid}/restart:\x01*\x12i\n\tResumeRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x07.v1.Run\"7\x82\xd3\xe4\x93\x02\x31\",/api/v1/{owner}/{project}/runs/{uuid}/resume:\x01*\x12w\n\nArchiveRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/archive\x12w\n\nRestoreRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"5\x82\xd3\xe4\x93\x02/\"-/api/v1/{owner}/{project}/runs/{uuid}/restore\x12y\n\x0b\x42ookmarkRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x02\x30\"./api/v1/{owner}/{project}/runs/{uuid}/bookmark\x12}\n\rUnBookmarkRun\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x02\x32*0/api/v1/{owner}/{project}/runs/{uuid}/unbookmark\x12\x8d\x01\n\x13StartRunTensorboard\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\"B\x82\xd3\xe4\x93\x02<\"7/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start:\x01*\x12\x88\x01\n\x12StopRunTensorboard\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x16.google.protobuf.Empty\">\x82\xd3\xe4\x93\x02\x38*6/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop\x12x\n\x0eGetRunStatuses\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x12.v1.StatusResponse\"6\x82\xd3\xe4\x93\x02\x30\x12./api/v1/{owner}/{project}/runs/{uuid}/statuses\x12}\n\x0f\x43reateRunStatus\x12\x17.v1.EntityStatusRequest\x1a\x16.google.protobuf.Empty\"9\x82\xd3\xe4\x93\x02\x33\"./api/v1/{owner}/{project}/runs/{uuid}/statuses:\x01*\x12|\n\x0eGetRunCodeRefs\x12\x1a.v1.OwnedEntityUUIdRequest\x1a\x17.v1.ListCodeRefResponse\"5\x82\xd3\xe4\x93\x02/\x12-/api/v1/{owner}/{project}/runs/{uuid}/coderef\x12\x8c\x01\n\x10\x43reateRunCodeRef\x12\x16.v1.CodeRefBodyRequest\x1a\x11.v1.CodeReference\"M\x82\xd3\xe4\x93\x02G\"B/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef:\x01*2\xd9\x0c\n\x0eProjectService\x12\x65\n\x0cListProjects\x12\x14.v1.OwnerBodyRequest\x1a\x18.v1.ListProjectsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/api/v1/{owner}/projects/list\x12j\n\x10ListProjectNames\x12\x14.v1.OwnerBodyRequest\x1a\x18.v1.ListProjectsResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/api/v1/{owner}/projects/names\x12r\n\x16ListBookmarkedProjects\x12\x13.v1.UserBodyRequest\x1a\x18.v1.ListProjectsResponse\")\x82\xd3\xe4\x93\x02#\x12!/api/v1/bookmarks/{user}/projects\x12o\n\x14ListArchivedProjects\x12\x13.v1.UserBodyRequest\x1a\x18.v1.ListProjectsResponse\"(\x82\xd3\xe4\x93\x02\"\x12 /api/v1/archives/{user}/projects\x12^\n\rCreateProject\x12\x14.v1.OwnerBodyRequest\x1a\x0b.v1.Project\"*\x82\xd3\xe4\x93\x02$\"\x1f/api/v1/{owner}/projects/create:\x01*\x12]\n\nGetProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"*\x82\xd3\xe4\x93\x02$\x12\"/api/v1/{owner}/projects/{project}\x12\x63\n\rUpdateProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"-\x82\xd3\xe4\x93\x02\'\x1a\"/api/v1/{owner}/projects/{project}:\x01*\x12\x62\n\x0cPatchProject\x12\x16.v1.ProjectBodyRequest\x1a\x0b.v1.Project\"-\x82\xd3\xe4\x93\x02\'2\"/api/v1/{owner}/projects/{project}:\x01*\x12m\n\x10\x44\x65leteExperiment\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/api/v1/{owner}/projecs/{project}\x12k\n\x0e\x41rchiveProject\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/archive\x12n\n\x11RestoreExperiment\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#\"!/api/v1/{owner}/{project}/restore\x12m\n\x0f\x42ookmarkProject\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$\"\"/api/v1/{owner}/{project}/bookmark\x12q\n\x11UnBookmarkProject\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&*$/api/v1/{owner}/{project}/unbookmark\x12g\n\x0f\x45nableProjectCI\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e\"\x1c/api/v1/{owner}/{project}/ci\x12p\n\x10\x44isableProjectCI\x12\x16.v1.ProjectBodyRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&*$/api/v1/{owner}/{project}/unbookmark2V\n\x0b\x41uthService\x12G\n\x05Login\x12\x14.v1.CredsBodyRequest\x1a\x08.v1.Auth\"\x1e\x82\xd3\xe4\x93\x02\x18\"\x13/api/v1/users/token:\x01*2Q\n\x0bUserService\x12\x42\n\x07getUser\x12\x16.google.protobuf.Empty\x1a\x08.v1.User\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/v1/users2\xb5\x01\n\x0eVersionService\x12M\n\x0bGetVersions\x12\x16.google.protobuf.Empty\x1a\x0c.v1.Versions\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/api/v1/versions\x12T\n\rGetLogHandler\x12\x16.google.protobuf.Empty\x1a\x0e.v1.LogHandler\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/api/v1/log_handlerB\xad\x02\x92\x41\xa9\x02\x12g\n\x0cPolyaxon sdk\"O\n\x0cPolyaxon sdk\x12)https://github.com/polyaxon/polyaxon-sdks\x1a\x14\x63ontact@polyaxon.com2\x06\x31.14.4*\x04\x01\x02\x03\x04\x32\x10\x61pplication/json:\x10\x61pplication/jsonR:\n\x03\x34\x30\x33\x12\x33\n1You don\'t have permission to access the resource.R)\n\x03\x34\x30\x34\x12\"\n\x18Resource does not exist.\x12\x06\n\x04\x9a\x02\x01\x07Z\x1f\n\x1d\n\x06\x41piKey\x12\x13\x08\x02\x1a\rAuthorization \x02\x62\x0c\n\n\n\x06\x41piKey\x12\x00\x62\x06proto3')
   ,
   dependencies=[google_dot_api_dot_annotations__pb2.DESCRIPTOR,google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,protoc__gen__swagger_dot_options_dot_annotations__pb2.DESCRIPTOR,v1_dot_base__pb2.DESCRIPTOR,v1_dot_code__ref__pb2.DESCRIPTOR,v1_dot_run__pb2.DESCRIPTOR,v1_dot_project__pb2.DESCRIPTOR,v1_dot_version__pb2.DESCRIPTOR,v1_dot_auth__pb2.DESCRIPTOR,v1_dot_user__pb2.DESCRIPTOR,])
 
@@ -64,7 +64,7 @@ _RUNSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   serialized_start=249,
-  serialized_end=3148,
+  serialized_end=3144,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListRuns',
@@ -80,18 +80,18 @@ _RUNSERVICE = _descriptor.ServiceDescriptor(
     full_name='v1.RunService.ListBookmarkedRuns',
     index=1,
     containing_service=None,
-    input_type=v1_dot_base__pb2._OWNERBODYREQUEST,
+    input_type=v1_dot_base__pb2._USERBODYREQUEST,
     output_type=v1_dot_run__pb2._LISTRUNSRESPONSE,
-    serialized_options=_b('\202\323\344\223\002 \022\036/api/v1/bookmarks/{owner}/runs'),
+    serialized_options=_b('\202\323\344\223\002\037\022\035/api/v1/bookmarks/{user}/runs'),
   ),
   _descriptor.MethodDescriptor(
     name='ListArchivedRuns',
     full_name='v1.RunService.ListArchivedRuns',
     index=2,
     containing_service=None,
-    input_type=v1_dot_base__pb2._OWNERBODYREQUEST,
+    input_type=v1_dot_base__pb2._USERBODYREQUEST,
     output_type=v1_dot_run__pb2._LISTRUNSRESPONSE,
-    serialized_options=_b('\202\323\344\223\002\037\022\035/api/v1/archives/{owner}/runs'),
+    serialized_options=_b('\202\323\344\223\002\036\022\034/api/v1/archives/{user}/runs'),
   ),
   _descriptor.MethodDescriptor(
     name='CreateRun',
@@ -303,8 +303,8 @@ _PROJECTSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=1,
   serialized_options=None,
-  serialized_start=3151,
-  serialized_end=4780,
+  serialized_start=3147,
+  serialized_end=4772,
   methods=[
   _descriptor.MethodDescriptor(
     name='ListProjects',
@@ -329,18 +329,18 @@ _PROJECTSERVICE = _descriptor.ServiceDescriptor(
     full_name='v1.ProjectService.ListBookmarkedProjects',
     index=2,
     containing_service=None,
-    input_type=v1_dot_base__pb2._OWNERBODYREQUEST,
+    input_type=v1_dot_base__pb2._USERBODYREQUEST,
     output_type=v1_dot_project__pb2._LISTPROJECTSRESPONSE,
-    serialized_options=_b('\202\323\344\223\002$\022\"/api/v1/bookmarks/{owner}/projects'),
+    serialized_options=_b('\202\323\344\223\002#\022!/api/v1/bookmarks/{user}/projects'),
   ),
   _descriptor.MethodDescriptor(
     name='ListArchivedProjects',
     full_name='v1.ProjectService.ListArchivedProjects',
     index=3,
     containing_service=None,
-    input_type=v1_dot_base__pb2._OWNERBODYREQUEST,
+    input_type=v1_dot_base__pb2._USERBODYREQUEST,
     output_type=v1_dot_project__pb2._LISTPROJECTSRESPONSE,
-    serialized_options=_b('\202\323\344\223\002#\022!/api/v1/archives/{owner}/projects'),
+    serialized_options=_b('\202\323\344\223\002\"\022 /api/v1/archives/{user}/projects'),
   ),
   _descriptor.MethodDescriptor(
     name='CreateProject',
@@ -453,8 +453,8 @@ _AUTHSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=2,
   serialized_options=None,
-  serialized_start=4782,
-  serialized_end=4868,
+  serialized_start=4774,
+  serialized_end=4860,
   methods=[
   _descriptor.MethodDescriptor(
     name='Login',
@@ -477,8 +477,8 @@ _USERSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=3,
   serialized_options=None,
-  serialized_start=4870,
-  serialized_end=4951,
+  serialized_start=4862,
+  serialized_end=4943,
   methods=[
   _descriptor.MethodDescriptor(
     name='getUser',
@@ -501,8 +501,8 @@ _VERSIONSERVICE = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=4,
   serialized_options=None,
-  serialized_start=4954,
-  serialized_end=5135,
+  serialized_start=4946,
+  serialized_end=5127,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetVersions',

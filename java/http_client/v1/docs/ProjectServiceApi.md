@@ -11,9 +11,9 @@ Method | HTTP request | Description
 [**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
 [**enableProjectCI**](ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run
 [**getProject**](ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
-[**listArchivedProjects**](ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{owner}/projects | Create new run
-[**listBookmarkedProjects**](ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{owner}/projects | List archived runs
-[**listProjectNames**](ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs
+[**listArchivedProjects**](ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
+[**listBookmarkedProjects**](ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
+[**listProjectNames**](ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
 [**listProjects**](ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
 [**patchProject**](ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 [**restoreExperiment**](ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
@@ -407,7 +407,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedProjects"></a>
 # **listArchivedProjects**
-> V1ListProjectsResponse listArchivedProjects(owner)
+> V1ListProjectsResponse listArchivedProjects(user)
 
 Create new run
 
@@ -429,9 +429,9 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 ProjectServiceApi apiInstance = new ProjectServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
+String user = "user_example"; // String | Owner of the namespace
 try {
-    V1ListProjectsResponse result = apiInstance.listArchivedProjects(owner);
+    V1ListProjectsResponse result = apiInstance.listArchivedProjects(user);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectServiceApi#listArchivedProjects");
@@ -443,7 +443,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
+ **user** | **String**| Owner of the namespace |
 
 ### Return type
 
@@ -460,9 +460,9 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
-> V1ListProjectsResponse listBookmarkedProjects(owner)
+> V1ListProjectsResponse listBookmarkedProjects(user)
 
-List archived runs
+List archived runs for user
 
 ### Example
 ```java
@@ -482,9 +482,9 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 ProjectServiceApi apiInstance = new ProjectServiceApi();
-String owner = "owner_example"; // String | Owner of the namespace
+String user = "user_example"; // String | Owner of the namespace
 try {
-    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(owner);
+    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectServiceApi#listBookmarkedProjects");
@@ -496,7 +496,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
+ **user** | **String**| Owner of the namespace |
 
 ### Return type
 
@@ -515,7 +515,7 @@ Name | Type | Description  | Notes
 # **listProjectNames**
 > V1ListProjectsResponse listProjectNames(owner)
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```java

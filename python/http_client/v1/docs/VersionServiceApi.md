@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_log_handler**](VersionServiceApi.md#get_log_handler) | **GET** /api/v1/log_handler | List bookmarked runs
+[**get_log_handler**](VersionServiceApi.md#get_log_handler) | **GET** /api/v1/log_handler | List bookmarked runs for user
 [**get_versions**](VersionServiceApi.md#get_versions) | **GET** /api/v1/versions | List runs
 
 
 # **get_log_handler**
 > V1LogHandler get_log_handler()
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```python
@@ -31,7 +31,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.VersionServiceApi(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # List bookmarked runs
+    # List bookmarked runs for user
     api_response = api_instance.get_log_handler()
     pprint(api_response)
 except ApiException as e:

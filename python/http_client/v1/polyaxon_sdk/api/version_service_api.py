@@ -50,7 +50,7 @@ class VersionServiceApi(object):
         self.api_client = api_client
 
     def get_log_handler(self, **kwargs):  # noqa: E501
-        """List bookmarked runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -70,7 +70,7 @@ class VersionServiceApi(object):
             return data
 
     def get_log_handler_with_http_info(self, **kwargs):  # noqa: E501
-        """List bookmarked runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

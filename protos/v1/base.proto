@@ -10,6 +10,12 @@ message KV {
 }
 
 // Request data with owner namespace
+message UserBodyRequest {
+    // Owner of the namespace
+    string user = 1;
+}
+
+// Request data with owner namespace
 message OwnerBodyRequest {
     // Owner of the namespace
     string owner = 1;

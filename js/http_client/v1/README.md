@@ -134,9 +134,9 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectServiceApi* | [**disableProjectCI**](docs/ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
 *PolyaxonSdk.ProjectServiceApi* | [**enableProjectCI**](docs/ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run
 *PolyaxonSdk.ProjectServiceApi* | [**getProject**](docs/ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
-*PolyaxonSdk.ProjectServiceApi* | [**listArchivedProjects**](docs/ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{owner}/projects | Create new run
-*PolyaxonSdk.ProjectServiceApi* | [**listBookmarkedProjects**](docs/ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{owner}/projects | List archived runs
-*PolyaxonSdk.ProjectServiceApi* | [**listProjectNames**](docs/ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs
+*PolyaxonSdk.ProjectServiceApi* | [**listArchivedProjects**](docs/ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
+*PolyaxonSdk.ProjectServiceApi* | [**listBookmarkedProjects**](docs/ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
+*PolyaxonSdk.ProjectServiceApi* | [**listProjectNames**](docs/ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
 *PolyaxonSdk.ProjectServiceApi* | [**listProjects**](docs/ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
 *PolyaxonSdk.ProjectServiceApi* | [**patchProject**](docs/ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 *PolyaxonSdk.ProjectServiceApi* | [**restoreExperiment**](docs/ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
@@ -153,8 +153,8 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunServiceApi* | [**getRunStatuses**](docs/RunServiceApi.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *PolyaxonSdk.RunServiceApi* | [**invalidateRun**](docs/RunServiceApi.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
 *PolyaxonSdk.RunServiceApi* | [**invalidateRuns**](docs/RunServiceApi.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
-*PolyaxonSdk.RunServiceApi* | [**listArchivedRuns**](docs/RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{owner}/runs | List archived runs
-*PolyaxonSdk.RunServiceApi* | [**listBookmarkedRuns**](docs/RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{owner}/runs | List bookmarked runs
+*PolyaxonSdk.RunServiceApi* | [**listArchivedRuns**](docs/RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
+*PolyaxonSdk.RunServiceApi* | [**listBookmarkedRuns**](docs/RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 *PolyaxonSdk.RunServiceApi* | [**listRuns**](docs/RunServiceApi.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 *PolyaxonSdk.RunServiceApi* | [**patchRun**](docs/RunServiceApi.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 *PolyaxonSdk.RunServiceApi* | [**restartRun**](docs/RunServiceApi.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
@@ -167,7 +167,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunServiceApi* | [**unBookmarkRun**](docs/RunServiceApi.md#unBookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
 *PolyaxonSdk.RunServiceApi* | [**updateRun**](docs/RunServiceApi.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *PolyaxonSdk.UserServiceApi* | [**getUser**](docs/UserServiceApi.md#getUser) | **GET** /api/v1/users | List runs
-*PolyaxonSdk.VersionServiceApi* | [**getLogHandler**](docs/VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs
+*PolyaxonSdk.VersionServiceApi* | [**getLogHandler**](docs/VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs for user
 *PolyaxonSdk.VersionServiceApi* | [**getVersions**](docs/VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 

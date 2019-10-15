@@ -41,7 +41,7 @@ type Client struct {
 }
 
 /*
-GetLogHandler lists bookmarked runs
+GetLogHandler lists bookmarked runs for user
 */
 func (a *Client) GetLogHandler(params *GetLogHandlerParams, authInfo runtime.ClientAuthInfoWriter) (*GetLogHandlerOK, error) {
 	// TODO: Validate the params before sending

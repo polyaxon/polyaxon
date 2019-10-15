@@ -119,9 +119,9 @@ Class | Method | HTTP request | Description
 *ProjectServiceApi* | [**disableProjectCI**](docs/ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
 *ProjectServiceApi* | [**enableProjectCI**](docs/ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectServiceApi* | [**getProject**](docs/ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
-*ProjectServiceApi* | [**listArchivedProjects**](docs/ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{owner}/projects | Create new run
-*ProjectServiceApi* | [**listBookmarkedProjects**](docs/ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{owner}/projects | List archived runs
-*ProjectServiceApi* | [**listProjectNames**](docs/ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs
+*ProjectServiceApi* | [**listArchivedProjects**](docs/ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
+*ProjectServiceApi* | [**listBookmarkedProjects**](docs/ProjectServiceApi.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
+*ProjectServiceApi* | [**listProjectNames**](docs/ProjectServiceApi.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
 *ProjectServiceApi* | [**listProjects**](docs/ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
 *ProjectServiceApi* | [**patchProject**](docs/ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 *ProjectServiceApi* | [**restoreExperiment**](docs/ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
@@ -138,8 +138,8 @@ Class | Method | HTTP request | Description
 *RunServiceApi* | [**getRunStatuses**](docs/RunServiceApi.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *RunServiceApi* | [**invalidateRun**](docs/RunServiceApi.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
 *RunServiceApi* | [**invalidateRuns**](docs/RunServiceApi.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
-*RunServiceApi* | [**listArchivedRuns**](docs/RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{owner}/runs | List archived runs
-*RunServiceApi* | [**listBookmarkedRuns**](docs/RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{owner}/runs | List bookmarked runs
+*RunServiceApi* | [**listArchivedRuns**](docs/RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
+*RunServiceApi* | [**listBookmarkedRuns**](docs/RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 *RunServiceApi* | [**listRuns**](docs/RunServiceApi.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 *RunServiceApi* | [**patchRun**](docs/RunServiceApi.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 *RunServiceApi* | [**restartRun**](docs/RunServiceApi.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
@@ -152,7 +152,7 @@ Class | Method | HTTP request | Description
 *RunServiceApi* | [**unBookmarkRun**](docs/RunServiceApi.md#unBookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
 *RunServiceApi* | [**updateRun**](docs/RunServiceApi.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
 *UserServiceApi* | [**getUser**](docs/UserServiceApi.md#getUser) | **GET** /api/v1/users | List runs
-*VersionServiceApi* | [**getLogHandler**](docs/VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs
+*VersionServiceApi* | [**getLogHandler**](docs/VersionServiceApi.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs for user
 *VersionServiceApi* | [**getVersions**](docs/VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 

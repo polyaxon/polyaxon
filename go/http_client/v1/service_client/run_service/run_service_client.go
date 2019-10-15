@@ -461,7 +461,7 @@ func (a *Client) InvalidateRuns(params *InvalidateRunsParams, authInfo runtime.C
 }
 
 /*
-ListArchivedRuns lists archived runs
+ListArchivedRuns lists archived runs for user
 */
 func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListArchivedRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -472,7 +472,7 @@ func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runti
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListArchivedRuns",
 		Method:             "GET",
-		PathPattern:        "/api/v1/archives/{owner}/runs",
+		PathPattern:        "/api/v1/archives/{user}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -496,7 +496,7 @@ func (a *Client) ListArchivedRuns(params *ListArchivedRunsParams, authInfo runti
 }
 
 /*
-ListBookmarkedRuns lists bookmarked runs
+ListBookmarkedRuns lists bookmarked runs for user
 */
 func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedRunsOK, error) {
 	// TODO: Validate the params before sending
@@ -507,7 +507,7 @@ func (a *Client) ListBookmarkedRuns(params *ListBookmarkedRunsParams, authInfo r
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListBookmarkedRuns",
 		Method:             "GET",
-		PathPattern:        "/api/v1/bookmarks/{owner}/runs",
+		PathPattern:        "/api/v1/bookmarks/{user}/runs",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},

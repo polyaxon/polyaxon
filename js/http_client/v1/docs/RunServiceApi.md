@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**getRunStatuses**](RunServiceApi.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 [**invalidateRun**](RunServiceApi.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
 [**invalidateRuns**](RunServiceApi.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
-[**listArchivedRuns**](RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{owner}/runs | List archived runs
-[**listBookmarkedRuns**](RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{owner}/runs | List bookmarked runs
+[**listArchivedRuns**](RunServiceApi.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
+[**listBookmarkedRuns**](RunServiceApi.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
 [**listRuns**](RunServiceApi.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
 [**patchRun**](RunServiceApi.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
 [**restartRun**](RunServiceApi.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
@@ -726,9 +726,9 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
-> V1ListRunsResponse listArchivedRuns(owner)
+> V1ListRunsResponse listArchivedRuns(user)
 
-List archived runs
+List archived runs for user
 
 ### Example
 ```javascript
@@ -743,7 +743,7 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.RunServiceApi();
 
-var owner = "owner_example"; // String | Owner of the namespace
+var user = "user_example"; // String | Owner of the namespace
 
 
 var callback = function(error, data, response) {
@@ -753,14 +753,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listArchivedRuns(owner, callback);
+apiInstance.listArchivedRuns(user, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
+ **user** | **String**| Owner of the namespace | 
 
 ### Return type
 
@@ -777,9 +777,9 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListRunsResponse listBookmarkedRuns(owner)
+> V1ListRunsResponse listBookmarkedRuns(user)
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```javascript
@@ -794,7 +794,7 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.RunServiceApi();
 
-var owner = "owner_example"; // String | Owner of the namespace
+var user = "user_example"; // String | Owner of the namespace
 
 
 var callback = function(error, data, response) {
@@ -804,14 +804,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listBookmarkedRuns(owner, callback);
+apiInstance.listBookmarkedRuns(user, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace | 
+ **user** | **String**| Owner of the namespace | 
 
 ### Return type
 

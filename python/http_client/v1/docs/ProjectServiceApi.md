@@ -11,9 +11,9 @@ Method | HTTP request | Description
 [**disable_project_ci**](ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Resume run
 [**enable_project_ci**](ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run
 [**get_project**](ProjectServiceApi.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
-[**list_archived_projects**](ProjectServiceApi.md#list_archived_projects) | **GET** /api/v1/archives/{owner}/projects | Create new run
-[**list_bookmarked_projects**](ProjectServiceApi.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{owner}/projects | List archived runs
-[**list_project_names**](ProjectServiceApi.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs
+[**list_archived_projects**](ProjectServiceApi.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Create new run
+[**list_bookmarked_projects**](ProjectServiceApi.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
+[**list_project_names**](ProjectServiceApi.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
 [**list_projects**](ProjectServiceApi.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List runs
 [**patch_project**](ProjectServiceApi.md#patch_project) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 [**restore_experiment**](ProjectServiceApi.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
@@ -399,7 +399,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_archived_projects**
-> V1ListProjectsResponse list_archived_projects(owner)
+> V1ListProjectsResponse list_archived_projects(user)
 
 Create new run
 
@@ -419,11 +419,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectServiceApi(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+user = 'user_example' # str | Owner of the namespace
 
 try:
     # Create new run
-    api_response = api_instance.list_archived_projects(owner)
+    api_response = api_instance.list_archived_projects(user)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectServiceApi->list_archived_projects: %s\n" % e)
@@ -433,7 +433,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
+ **user** | **str**| Owner of the namespace | 
 
 ### Return type
 
@@ -451,9 +451,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_projects**
-> V1ListProjectsResponse list_bookmarked_projects(owner)
+> V1ListProjectsResponse list_bookmarked_projects(user)
 
-List archived runs
+List archived runs for user
 
 ### Example
 ```python
@@ -471,11 +471,11 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectServiceApi(polyaxon_sdk.ApiClient(configuration))
-owner = 'owner_example' # str | Owner of the namespace
+user = 'user_example' # str | Owner of the namespace
 
 try:
-    # List archived runs
-    api_response = api_instance.list_bookmarked_projects(owner)
+    # List archived runs for user
+    api_response = api_instance.list_bookmarked_projects(user)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectServiceApi->list_bookmarked_projects: %s\n" % e)
@@ -485,7 +485,7 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **owner** | **str**| Owner of the namespace | 
+ **user** | **str**| Owner of the namespace | 
 
 ### Return type
 
@@ -505,7 +505,7 @@ Name | Type | Description  | Notes
 # **list_project_names**
 > V1ListProjectsResponse list_project_names(owner)
 
-List bookmarked runs
+List bookmarked runs for user
 
 ### Example
 ```python
@@ -526,7 +526,7 @@ api_instance = polyaxon_sdk.ProjectServiceApi(polyaxon_sdk.ApiClient(configurati
 owner = 'owner_example' # str | Owner of the namespace
 
 try:
-    # List bookmarked runs
+    # List bookmarked runs for user
     api_response = api_instance.list_project_names(owner)
     pprint(api_response)
 except ApiException as e:
