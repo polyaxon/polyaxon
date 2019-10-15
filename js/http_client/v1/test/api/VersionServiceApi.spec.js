@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.V1CredsBodyRequest();
+    instance = new PolyaxonSdk.VersionServiceApi();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,25 +64,17 @@
       object[property] = value;
   }
 
-  describe('V1CredsBodyRequest', function() {
-    it('should create an instance of V1CredsBodyRequest', function() {
-      // uncomment below and update the code to test V1CredsBodyRequest
-      //var instance = new PolyaxonSdk.V1CredsBodyRequest();
-      //expect(instance).to.be.a(PolyaxonSdk.V1CredsBodyRequest);
+  describe('VersionServiceApi', function() {
+    describe('getVersions', function() {
+      it('should call getVersions successfully', function(done) {
+        //uncomment below and update the code to test getVersions
+        //instance.getVersions(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
     });
-
-    it('should have the property username (base name: "username")', function() {
-      // uncomment below and update the code to test the property username
-      //var instance = new PolyaxonSdk.V1CredsBodyRequest();
-      //expect(instance).to.be();
-    });
-
-    it('should have the property password (base name: "password")', function() {
-      // uncomment below and update the code to test the property password
-      //var instance = new PolyaxonSdk.V1CredsBodyRequest();
-      //expect(instance).to.be();
-    });
-
   });
 
 }));

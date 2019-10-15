@@ -1,10 +1,10 @@
-# PolyaxonSdk.VersionsServiceApi
+# PolyaxonSdk.VersionServiceApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getVersions**](VersionsServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
+[**getVersions**](VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 
 <a name="getVersions"></a>
@@ -24,7 +24,7 @@ ApiKey.apiKey = 'YOUR API KEY';
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.apiKeyPrefix = 'Token';
 
-var apiInstance = new PolyaxonSdk.VersionsServiceApi();
+var apiInstance = new PolyaxonSdk.VersionServiceApi();
 
 var callback = function(error, data, response) {
   if (error) {

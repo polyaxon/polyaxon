@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.V1CredsBodyRequest();
+    instance = new PolyaxonSdk.V1User();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,22 +64,28 @@
       object[property] = value;
   }
 
-  describe('V1CredsBodyRequest', function() {
-    it('should create an instance of V1CredsBodyRequest', function() {
-      // uncomment below and update the code to test V1CredsBodyRequest
-      //var instance = new PolyaxonSdk.V1CredsBodyRequest();
-      //expect(instance).to.be.a(PolyaxonSdk.V1CredsBodyRequest);
+  describe('V1User', function() {
+    it('should create an instance of V1User', function() {
+      // uncomment below and update the code to test V1User
+      //var instance = new PolyaxonSdk.V1User();
+      //expect(instance).to.be.a(PolyaxonSdk.V1User);
     });
 
     it('should have the property username (base name: "username")', function() {
       // uncomment below and update the code to test the property username
-      //var instance = new PolyaxonSdk.V1CredsBodyRequest();
+      //var instance = new PolyaxonSdk.V1User();
       //expect(instance).to.be();
     });
 
-    it('should have the property password (base name: "password")', function() {
-      // uncomment below and update the code to test the property password
-      //var instance = new PolyaxonSdk.V1CredsBodyRequest();
+    it('should have the property email (base name: "email")', function() {
+      // uncomment below and update the code to test the property email
+      //var instance = new PolyaxonSdk.V1User();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property role (base name: "role")', function() {
+      // uncomment below and update the code to test the property role
+      //var instance = new PolyaxonSdk.V1User();
       //expect(instance).to.be();
     });
 

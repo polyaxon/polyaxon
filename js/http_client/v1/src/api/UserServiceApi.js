@@ -31,29 +31,29 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Versions'], factory);
+    define(['ApiClient', 'model/V1User'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1Versions'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1User'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.VersionsServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Versions);
+    root.PolyaxonSdk.UserServiceApi = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1User);
   }
-}(this, function(ApiClient, V1Versions) {
+}(this, function(ApiClient, V1User) {
   'use strict';
 
   /**
-   * VersionsService service.
-   * @module api/VersionsServiceApi
+   * UserService service.
+   * @module api/UserServiceApi
    * @version 1.14.4
    */
 
   /**
-   * Constructs a new VersionsServiceApi. 
-   * @alias module:api/VersionsServiceApi
+   * Constructs a new UserServiceApi. 
+   * @alias module:api/UserServiceApi
    * @class
    * @param {module:ApiClient} [apiClient] Optional API client implementation to use,
    * default to {@link module:ApiClient#instance} if unspecified.
@@ -63,19 +63,19 @@
 
 
     /**
-     * Callback function to receive the result of the getVersions operation.
-     * @callback module:api/VersionsServiceApi~getVersionsCallback
+     * Callback function to receive the result of the getUser operation.
+     * @callback module:api/UserServiceApi~getUserCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/V1Versions} data The data returned by the service call.
+     * @param {module:model/V1User} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
      * List runs
-     * @param {module:api/VersionsServiceApi~getVersionsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1Versions}
+     * @param {module:api/UserServiceApi~getUserCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1User}
      */
-    this.getVersions = function(callback) {
+    this.getUser = function(callback) {
       var postBody = null;
 
 
@@ -93,10 +93,10 @@
       var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = V1Versions;
+      var returnType = V1User;
 
       return this.apiClient.callApi(
-        '/api/v1/versions', 'GET',
+        '/api/v1/users', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

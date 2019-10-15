@@ -1,15 +1,15 @@
-# VersionsServiceApi
+# UserServiceApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getVersions**](VersionsServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
+[**getUser**](UserServiceApi.md#getUser) | **GET** /api/v1/users | List runs
 
 
-<a name="getVersions"></a>
-# **getVersions**
-> V1Versions getVersions()
+<a name="getUser"></a>
+# **getUser**
+> V1User getUser()
 
 List runs
 
@@ -20,7 +20,7 @@ List runs
 //import io.swagger.client.ApiException;
 //import io.swagger.client.Configuration;
 //import io.swagger.client.auth.*;
-//import io.swagger.client.api.VersionsServiceApi;
+//import io.swagger.client.api.UserServiceApi;
 
 ApiClient defaultClient = Configuration.getDefaultApiClient();
 
@@ -30,12 +30,12 @@ ApiKey.setApiKey("YOUR API KEY");
 // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
 //ApiKey.setApiKeyPrefix("Token");
 
-VersionsServiceApi apiInstance = new VersionsServiceApi();
+UserServiceApi apiInstance = new UserServiceApi();
 try {
-    V1Versions result = apiInstance.getVersions();
+    V1User result = apiInstance.getUser();
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling VersionsServiceApi#getVersions");
+    System.err.println("Exception when calling UserServiceApi#getUser");
     e.printStackTrace();
 }
 ```
@@ -45,7 +45,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**V1Versions**](V1Versions.md)
+[**V1User**](V1User.md)
 
 ### Authorization
 

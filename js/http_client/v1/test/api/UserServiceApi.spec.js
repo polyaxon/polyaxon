@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.VersionsServiceApi();
+    instance = new PolyaxonSdk.UserServiceApi();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,11 +64,11 @@
       object[property] = value;
   }
 
-  describe('VersionsServiceApi', function() {
-    describe('getVersions', function() {
-      it('should call getVersions successfully', function(done) {
-        //uncomment below and update the code to test getVersions
-        //instance.getVersions(function(error) {
+  describe('UserServiceApi', function() {
+    describe('getUser', function() {
+      it('should call getUser successfully', function(done) {
+        //uncomment below and update the code to test getUser
+        //instance.getUser(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

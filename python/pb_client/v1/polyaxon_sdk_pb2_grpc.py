@@ -23,7 +23,8 @@ from v1 import base_pb2 as v1_dot_base__pb2
 from v1 import code_ref_pb2 as v1_dot_code__ref__pb2
 from v1 import project_pb2 as v1_dot_project__pb2
 from v1 import run_pb2 as v1_dot_run__pb2
-from v1 import versions_pb2 as v1_dot_versions__pb2
+from v1 import user_pb2 as v1_dot_user__pb2
+from v1 import version_pb2 as v1_dot_version__pb2
 
 
 class RunServiceStub(object):
@@ -799,7 +800,49 @@ def add_AuthServiceServicer_to_server(servicer, server):
   server.add_generic_rpc_handlers((generic_handler,))
 
 
-class VersionsServiceStub(object):
+class UserServiceStub(object):
+  """Service to get user
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.getUser = channel.unary_unary(
+        '/v1.UserService/getUser',
+        request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+        response_deserializer=v1_dot_user__pb2.User.FromString,
+        )
+
+
+class UserServiceServicer(object):
+  """Service to get user
+  """
+
+  def getUser(self, request, context):
+    """Get versions
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_UserServiceServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'getUser': grpc.unary_unary_rpc_method_handler(
+          servicer.getUser,
+          request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+          response_serializer=v1_dot_user__pb2.User.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'v1.UserService', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class VersionServiceStub(object):
   """Service to get versions
   """
 
@@ -810,13 +853,13 @@ class VersionsServiceStub(object):
       channel: A grpc.Channel.
     """
     self.GetVersions = channel.unary_unary(
-        '/v1.VersionsService/GetVersions',
+        '/v1.VersionService/GetVersions',
         request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-        response_deserializer=v1_dot_versions__pb2.Versions.FromString,
+        response_deserializer=v1_dot_version__pb2.Versions.FromString,
         )
 
 
-class VersionsServiceServicer(object):
+class VersionServiceServicer(object):
   """Service to get versions
   """
 
@@ -828,14 +871,14 @@ class VersionsServiceServicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_VersionsServiceServicer_to_server(servicer, server):
+def add_VersionServiceServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'GetVersions': grpc.unary_unary_rpc_method_handler(
           servicer.GetVersions,
           request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-          response_serializer=v1_dot_versions__pb2.Versions.SerializeToString,
+          response_serializer=v1_dot_version__pb2.Versions.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'v1.VersionsService', rpc_method_handlers)
+      'v1.VersionService', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

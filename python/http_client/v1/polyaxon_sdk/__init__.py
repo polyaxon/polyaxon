@@ -35,7 +35,8 @@ from __future__ import absolute_import
 from polyaxon_sdk.api.auth_service_api import AuthServiceApi
 from polyaxon_sdk.api.project_service_api import ProjectServiceApi
 from polyaxon_sdk.api.run_service_api import RunServiceApi
-from polyaxon_sdk.api.versions_service_api import VersionsServiceApi
+from polyaxon_sdk.api.user_service_api import UserServiceApi
+from polyaxon_sdk.api.version_service_api import VersionServiceApi
 
 # import ApiClient
 from polyaxon_sdk.api_client import ApiClient
@@ -56,5 +57,6 @@ from polyaxon_sdk.models.v1_project_body_request import V1ProjectBodyRequest
 from polyaxon_sdk.models.v1_run import V1Run
 from polyaxon_sdk.models.v1_run_body_request import V1RunBodyRequest
 from polyaxon_sdk.models.v1_status_response import V1StatusResponse
+from polyaxon_sdk.models.v1_user import V1User
 from polyaxon_sdk.models.v1_version import V1Version
 from polyaxon_sdk.models.v1_versions import V1Versions

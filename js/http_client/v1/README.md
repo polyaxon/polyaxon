@@ -166,7 +166,8 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunServiceApi* | [**stopRuns**](docs/RunServiceApi.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *PolyaxonSdk.RunServiceApi* | [**unBookmarkRun**](docs/RunServiceApi.md#unBookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
 *PolyaxonSdk.RunServiceApi* | [**updateRun**](docs/RunServiceApi.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
-*PolyaxonSdk.VersionsServiceApi* | [**getVersions**](docs/VersionsServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
+*PolyaxonSdk.UserServiceApi* | [**getUser**](docs/UserServiceApi.md#getUser) | **GET** /api/v1/users | List runs
+*PolyaxonSdk.VersionServiceApi* | [**getVersions**](docs/VersionServiceApi.md#getVersions) | **GET** /api/v1/versions | List runs
 
 
 ## Documentation for Models
@@ -186,6 +187,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1Run](docs/V1Run.md)
  - [PolyaxonSdk.V1RunBodyRequest](docs/V1RunBodyRequest.md)
  - [PolyaxonSdk.V1StatusResponse](docs/V1StatusResponse.md)
+ - [PolyaxonSdk.V1User](docs/V1User.md)
  - [PolyaxonSdk.V1Version](docs/V1Version.md)
  - [PolyaxonSdk.V1Versions](docs/V1Versions.md)
 

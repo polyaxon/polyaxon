@@ -25,24 +25,27 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1CredsBodyRequest Login
-// swagger:model v1CredsBodyRequest
-type V1CredsBodyRequest struct {
+// V1User Auth specification
+// swagger:model v1User
+type V1User struct {
 
-	// Project where the experiement will be assigned
-	Password string `json:"password,omitempty"`
+	// Email
+	Email string `json:"email,omitempty"`
 
-	// User username or email
+	// Role
+	Role string `json:"role,omitempty"`
+
+	// Username
 	Username string `json:"username,omitempty"`
 }
 
-// Validate validates this v1 creds body request
-func (m *V1CredsBodyRequest) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 user
+func (m *V1User) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1CredsBodyRequest) MarshalBinary() ([]byte, error) {
+func (m *V1User) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -50,8 +53,8 @@ func (m *V1CredsBodyRequest) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1CredsBodyRequest) UnmarshalBinary(b []byte) error {
-	var res V1CredsBodyRequest
+func (m *V1User) UnmarshalBinary(b []byte) error {
+	var res V1User
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -39,17 +39,20 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * V1CredsBodyRequest
+ * V1User
  */
 
-public class V1CredsBodyRequest {
+public class V1User {
   @SerializedName("username")
   private String username = null;
 
-  @SerializedName("password")
-  private String password = null;
+  @SerializedName("email")
+  private String email = null;
 
-  public V1CredsBodyRequest username(String username) {
+  @SerializedName("role")
+  private String role = null;
+
+  public V1User username(String username) {
     this.username = username;
     return this;
   }
@@ -67,22 +70,40 @@ public class V1CredsBodyRequest {
     this.username = username;
   }
 
-  public V1CredsBodyRequest password(String password) {
-    this.password = password;
+  public V1User email(String email) {
+    this.email = email;
     return this;
   }
 
    /**
-   * Get password
-   * @return password
+   * Get email
+   * @return email
   **/
   @ApiModelProperty(value = "")
-  public String getPassword() {
-    return password;
+  public String getEmail() {
+    return email;
   }
 
-  public void setPassword(String password) {
-    this.password = password;
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public V1User role(String role) {
+    this.role = role;
+    return this;
+  }
+
+   /**
+   * Get role
+   * @return role
+  **/
+  @ApiModelProperty(value = "")
+  public String getRole() {
+    return role;
+  }
+
+  public void setRole(String role) {
+    this.role = role;
   }
 
 
@@ -94,24 +115,26 @@ public class V1CredsBodyRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1CredsBodyRequest v1CredsBodyRequest = (V1CredsBodyRequest) o;
-    return Objects.equals(this.username, v1CredsBodyRequest.username) &&
-        Objects.equals(this.password, v1CredsBodyRequest.password);
+    V1User v1User = (V1User) o;
+    return Objects.equals(this.username, v1User.username) &&
+        Objects.equals(this.email, v1User.email) &&
+        Objects.equals(this.role, v1User.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(username, password);
+    return Objects.hash(username, email, role);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1CredsBodyRequest {\n");
+    sb.append("class V1User {\n");
     
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    password: ").append(toIndentedString(password)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    role: ").append(toIndentedString(role)).append("\n");
     sb.append("}");
     return sb.toString();
   }

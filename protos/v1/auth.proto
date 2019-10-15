@@ -13,8 +13,8 @@ message Auth {
 
 // Login
 message CredsBodyRequest{
-    // User email
-    string user = 1;
+    // User username or email
+    string username = 1;
 
     // Project where the experiement will be assigned
     string password = 2;

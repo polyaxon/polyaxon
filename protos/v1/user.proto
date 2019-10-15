@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package v1;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+// Auth specification
+message User {
+    // Username
+    string username = 1;
+
+    // Email
+    string email = 2;
+
+    // Role
+    string role = 3;
+}

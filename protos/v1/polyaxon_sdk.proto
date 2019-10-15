@@ -10,8 +10,9 @@ import "v1/base.proto";
 import "v1/code_ref.proto";
 import "v1/run.proto";
 import "v1/project.proto";
-import "v1/versions.proto";
+import "v1/version.proto";
 import "v1/auth.proto";
+import "v1/user.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 	info: {
@@ -382,10 +383,18 @@ service AuthService {
     }
 }
 
-
+// Service to get user
+service UserService {
+    // Get versions
+    rpc getUser(google.protobuf.Empty) returns (User) {
+        option (google.api.http) = {
+            get: "/api/v1/users"
+        };
+    }
+}
 
 // Service to get versions
-service VersionsService {
+service VersionService {
     // Get versions
     rpc GetVersions(google.protobuf.Empty) returns (Versions) {
         option (google.api.http) = {

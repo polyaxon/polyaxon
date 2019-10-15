@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "v1/versions.proto",
+    "title": "v1/version.proto",
     "version": "version not set"
   },
   "schemes": [

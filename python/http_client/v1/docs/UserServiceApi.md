@@ -1,14 +1,14 @@
-# polyaxon_sdk.VersionsServiceApi
+# polyaxon_sdk.UserServiceApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_versions**](VersionsServiceApi.md#get_versions) | **GET** /api/v1/versions | List runs
+[**get_user**](UserServiceApi.md#get_user) | **GET** /api/v1/users | List runs
 
 
-# **get_versions**
-> V1Versions get_versions()
+# **get_user**
+> V1User get_user()
 
 List runs
 
@@ -27,14 +27,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # configuration.api_key_prefix['Authorization'] = 'Bearer'
 
 # create an instance of the API class
-api_instance = polyaxon_sdk.VersionsServiceApi(polyaxon_sdk.ApiClient(configuration))
+api_instance = polyaxon_sdk.UserServiceApi(polyaxon_sdk.ApiClient(configuration))
 
 try:
     # List runs
-    api_response = api_instance.get_versions()
+    api_response = api_instance.get_user()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling VersionsServiceApi->get_versions: %s\n" % e)
+    print("Exception when calling UserServiceApi->get_user: %s\n" % e)
 ```
 
 ### Parameters
@@ -42,7 +42,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**V1Versions**](V1Versions.md)
+[**V1User**](V1User.md)
 
 ### Authorization
 

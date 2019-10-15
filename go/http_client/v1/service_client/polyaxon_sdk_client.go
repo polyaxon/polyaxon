@@ -28,7 +28,8 @@ import (
 	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/auth_service"
 	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/project_service"
 	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/run_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/versions_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/user_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/version_service"
 )
 
 // Default polyaxon sdk HTTP client.
@@ -80,7 +81,9 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 
 	cli.RunService = run_service.New(transport, formats)
 
-	cli.VersionsService = versions_service.New(transport, formats)
+	cli.UserService = user_service.New(transport, formats)
+
+	cli.VersionService = version_service.New(transport, formats)
 
 	return cli
 }
@@ -132,7 +135,9 @@ type PolyaxonSdk struct {
 
 	RunService *run_service.Client
 
-	VersionsService *versions_service.Client
+	UserService *user_service.Client
+
+	VersionService *version_service.Client
 
 	Transport runtime.ClientTransport
 }
@@ -147,6 +152,8 @@ func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 
 	c.RunService.SetTransport(transport)
 
-	c.VersionsService.SetTransport(transport)
+	c.UserService.SetTransport(transport)
+
+	c.VersionService.SetTransport(transport)
 
 }

@@ -28,7 +28,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
-import io.swagger.client.model.V1Versions;
+import io.swagger.client.model.V1User;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -38,12 +38,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * API tests for VersionsServiceApi
+ * API tests for UserServiceApi
  */
 @Ignore
-public class VersionsServiceApiTest {
+public class UserServiceApiTest {
 
-    private final VersionsServiceApi api = new VersionsServiceApi();
+    private final UserServiceApi api = new UserServiceApi();
 
     
     /**
@@ -55,8 +55,8 @@ public class VersionsServiceApiTest {
      *          if the Api call fails
      */
     @Test
-    public void getVersionsTest() throws ApiException {
-        V1Versions response = api.getVersions();
+    public void getUserTest() throws ApiException {
+        V1User response = api.getUser();
 
         // TODO: test validations
     }

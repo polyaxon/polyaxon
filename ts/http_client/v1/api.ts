@@ -181,7 +181,7 @@ export interface V1CredsBodyRequest {
      * @type {string}
      * @memberof V1CredsBodyRequest
      */
-    user?: string;
+    username?: string;
     /**
      * 
      * @type {string}
@@ -636,6 +636,32 @@ export interface V1StatusResponse {
      * @memberof V1StatusResponse
      */
     status?: string;
+}
+
+/**
+ * 
+ * @export
+ * @interface V1User
+ */
+export interface V1User {
+    /**
+     * 
+     * @type {string}
+     * @memberof V1User
+     */
+    username?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1User
+     */
+    email?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof V1User
+     */
+    role?: string;
 }
 
 /**
@@ -4565,10 +4591,115 @@ export class RunServiceApi extends BaseAPI {
 }
 
 /**
- * VersionsServiceApi - fetch parameter creator
+ * UserServiceApi - fetch parameter creator
  * @export
  */
-export const VersionsServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const UserServiceApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/users`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * UserServiceApi - functional programming interface
+ * @export
+ */
+export const UserServiceApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1User> {
+            const localVarFetchArgs = UserServiceApiFetchParamCreator(configuration).getUser(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * UserServiceApi - factory interface
+ * @export
+ */
+export const UserServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 
+         * @summary List runs
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getUser(options?: any) {
+            return UserServiceApiFp(configuration).getUser(options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * UserServiceApi - object-oriented interface
+ * @export
+ * @class UserServiceApi
+ * @extends {BaseAPI}
+ */
+export class UserServiceApi extends BaseAPI {
+    /**
+     * 
+     * @summary List runs
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserServiceApi
+     */
+    public getUser(options?: any) {
+        return UserServiceApiFp(this.configuration).getUser(options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * VersionServiceApi - fetch parameter creator
+ * @export
+ */
+export const VersionServiceApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -4605,10 +4736,10 @@ export const VersionsServiceApiFetchParamCreator = function (configuration?: Con
 };
 
 /**
- * VersionsServiceApi - functional programming interface
+ * VersionServiceApi - functional programming interface
  * @export
  */
-export const VersionsServiceApiFp = function(configuration?: Configuration) {
+export const VersionServiceApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -4617,7 +4748,7 @@ export const VersionsServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getVersions(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Versions> {
-            const localVarFetchArgs = VersionsServiceApiFetchParamCreator(configuration).getVersions(options);
+            const localVarFetchArgs = VersionServiceApiFetchParamCreator(configuration).getVersions(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4632,10 +4763,10 @@ export const VersionsServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * VersionsServiceApi - factory interface
+ * VersionServiceApi - factory interface
  * @export
  */
-export const VersionsServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const VersionServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -4644,27 +4775,27 @@ export const VersionsServiceApiFactory = function (configuration?: Configuration
          * @throws {RequiredError}
          */
         getVersions(options?: any) {
-            return VersionsServiceApiFp(configuration).getVersions(options)(fetch, basePath);
+            return VersionServiceApiFp(configuration).getVersions(options)(fetch, basePath);
         },
     };
 };
 
 /**
- * VersionsServiceApi - object-oriented interface
+ * VersionServiceApi - object-oriented interface
  * @export
- * @class VersionsServiceApi
+ * @class VersionServiceApi
  * @extends {BaseAPI}
  */
-export class VersionsServiceApi extends BaseAPI {
+export class VersionServiceApi extends BaseAPI {
     /**
      * 
      * @summary List runs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VersionsServiceApi
+     * @memberof VersionServiceApi
      */
     public getVersions(options?: any) {
-        return VersionsServiceApiFp(this.configuration).getVersions(options)(this.fetch, this.basePath);
+        return VersionServiceApiFp(this.configuration).getVersions(options)(this.fetch, this.basePath);
     }
 
 }

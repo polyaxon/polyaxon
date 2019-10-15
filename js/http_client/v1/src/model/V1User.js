@@ -40,7 +40,7 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1CredsBodyRequest = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1User = factory(root.PolyaxonSdk.ApiClient);
   }
 }(this, function(ApiClient) {
   'use strict';
@@ -49,14 +49,14 @@
 
 
   /**
-   * The V1CredsBodyRequest model module.
-   * @module model/V1CredsBodyRequest
+   * The V1User model module.
+   * @module model/V1User
    * @version 1.14.4
    */
 
   /**
-   * Constructs a new <code>V1CredsBodyRequest</code>.
-   * @alias module:model/V1CredsBodyRequest
+   * Constructs a new <code>V1User</code>.
+   * @alias module:model/V1User
    * @class
    */
   var exports = function() {
@@ -64,14 +64,15 @@
 
 
 
+
   };
 
   /**
-   * Constructs a <code>V1CredsBodyRequest</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1User</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1CredsBodyRequest} obj Optional instance to populate.
-   * @return {module:model/V1CredsBodyRequest} The populated <code>V1CredsBodyRequest</code> instance.
+   * @param {module:model/V1User} obj Optional instance to populate.
+   * @return {module:model/V1User} The populated <code>V1User</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
@@ -80,8 +81,11 @@
       if (data.hasOwnProperty('username')) {
         obj['username'] = ApiClient.convertToType(data['username'], 'String');
       }
-      if (data.hasOwnProperty('password')) {
-        obj['password'] = ApiClient.convertToType(data['password'], 'String');
+      if (data.hasOwnProperty('email')) {
+        obj['email'] = ApiClient.convertToType(data['email'], 'String');
+      }
+      if (data.hasOwnProperty('role')) {
+        obj['role'] = ApiClient.convertToType(data['role'], 'String');
       }
     }
     return obj;
@@ -92,9 +96,13 @@
    */
   exports.prototype['username'] = undefined;
   /**
-   * @member {String} password
+   * @member {String} email
    */
-  exports.prototype['password'] = undefined;
+  exports.prototype['email'] = undefined;
+  /**
+   * @member {String} role
+   */
+  exports.prototype['role'] = undefined;
 
 
 

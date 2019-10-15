@@ -32,21 +32,21 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.api.versions_service_api import VersionsServiceApi  # noqa: E501
+from polyaxon_sdk.api.user_service_api import UserServiceApi  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestVersionsServiceApi(unittest.TestCase):
-    """VersionsServiceApi unit test stubs"""
+class TestUserServiceApi(unittest.TestCase):
+    """UserServiceApi unit test stubs"""
 
     def setUp(self):
-        self.api = polyaxon_sdk.api.versions_service_api.VersionsServiceApi()  # noqa: E501
+        self.api = polyaxon_sdk.api.user_service_api.UserServiceApi()  # noqa: E501
 
     def tearDown(self):
         pass
 
-    def test_get_versions(self):
-        """Test case for get_versions
+    def test_get_user(self):
+        """Test case for get_user
 
         List runs  # noqa: E501
         """

@@ -117,7 +117,8 @@ Class | Method | HTTP request | Description
 *RunServiceApi* | [**stop_runs**](docs/RunServiceApi.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *RunServiceApi* | [**un_bookmark_run**](docs/RunServiceApi.md#un_bookmark_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | UnBookmark run
 *RunServiceApi* | [**update_run**](docs/RunServiceApi.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
-*VersionsServiceApi* | [**get_versions**](docs/VersionsServiceApi.md#get_versions) | **GET** /api/v1/versions | List runs
+*UserServiceApi* | [**get_user**](docs/UserServiceApi.md#get_user) | **GET** /api/v1/users | List runs
+*VersionServiceApi* | [**get_versions**](docs/VersionServiceApi.md#get_versions) | **GET** /api/v1/versions | List runs
 
 
 ## Documentation For Models
@@ -137,6 +138,7 @@ Class | Method | HTTP request | Description
  - [V1Run](docs/V1Run.md)
  - [V1RunBodyRequest](docs/V1RunBodyRequest.md)
  - [V1StatusResponse](docs/V1StatusResponse.md)
+ - [V1User](docs/V1User.md)
  - [V1Version](docs/V1Version.md)
  - [V1Versions](docs/V1Versions.md)
 

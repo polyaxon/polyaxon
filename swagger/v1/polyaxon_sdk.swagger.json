@@ -170,6 +170,34 @@
         ]
       }
     },
+    "/api/v1/users": {
+      "get": {
+        "summary": "List runs",
+        "operationId": "getUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1User"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "tags": [
+          "UserService"
+        ]
+      }
+    },
     "/api/v1/users/token": {
       "post": {
         "summary": "List runs",
@@ -232,7 +260,7 @@
           }
         },
         "tags": [
-          "VersionsService"
+          "VersionService"
         ]
       }
     },
@@ -2073,9 +2101,9 @@
     "v1CredsBodyRequest": {
       "type": "object",
       "properties": {
-        "user": {
+        "username": {
           "type": "string",
-          "title": "User email"
+          "title": "User username or email"
         },
         "password": {
           "type": "string",
@@ -2416,6 +2444,24 @@
         }
       },
       "title": "Request data for a status"
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "title": "Username"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email"
+        },
+        "role": {
+          "type": "string",
+          "title": "Role"
+        }
+      },
+      "title": "Auth specification"
     },
     "v1Version": {
       "type": "object",
