@@ -227,7 +227,7 @@ container:
   args:
    - ls {{ARTIFACTS_CONTEXTS}}/  # Result should be "images-data-in-volume-claim/path1/cat-images" "images-data-in-volume-claim/path2/dog-images"
    - ls /user/knows/where/mount/path/is  # user can hard code the path if the path is known and does not change, this is equivalent to the ls in next arg
-   - ls {{ARTIFACTS_PATHS_audio-data-in-read-only-volume-claim}} #  user relies on the env var that Polyaxon will expose: ARTIFACTS_PATHS + name of the artifact
+   - ls {{ARTIFACTS_PATHS_0}} #  user relies on the env var that Polyaxon will expose: ARTIFACTS_PATHS + order of the artifact: this is important if the name will eb resolved in later steps
 
 
 
@@ -252,8 +252,7 @@ container:
   args:
    - ls {{ARTIFACTS_CONTEXTS}}/  # Result should be "images-data-in-volume-claim/path1/cat-images" "images-data-in-volume-claim/path2/dog-images"
    - ls /user/knows/where/mount/path/is  # user can hard code the path if the path is known and does not change, this is equivalent to the ls in next arg
-   - ls {{ARTIFACTS_PATHS_audio-data-in-read-only-volume-claim}} #  user relies on the env var that Polyaxon will expose: ARTIFACTS_PATHS + name of the artifact
-
+   - ls {{ARTIFACTS_PATHS_1}} #  user relies on the env var that Polyaxon will expose: ARTIFACTS_PATHS + name of the artifact
 
 
 
@@ -304,9 +303,9 @@ container:
     - /bin/bash
     - -c
   args:
-   - aws sync {{ARTIFACTS_PATHS_my-s3-artifact}}/relative-path ...
-   - gcs upload {{ARTIFACTS_PATHS_my-gcs-artifact}}/relative-path ...
-   - az upload {{ARTIFACTS_PATHS_my-azure-artifact}}/relative-path ...
+   - aws sync {{ARTIFACTS_PATHS_0}}/relative-path ...
+   - gcs upload {{ARTIFACTS_PATHS_1}}/relative-path ...
+   - az upload {{ARTIFACTS_PATHS_2}}/relative-path ...
 
 
 
