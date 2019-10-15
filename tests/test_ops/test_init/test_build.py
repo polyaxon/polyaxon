@@ -6,7 +6,7 @@ from unittest import TestCase
 import pytest
 from marshmallow import ValidationError
 
-from schemas.ops.init.build_context import BuildContextConfig
+from polyaxon.schemas.ops.init.build_context import BuildContextConfig
 
 
 @pytest.mark.init_mark

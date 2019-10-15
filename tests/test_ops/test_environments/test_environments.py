@@ -7,7 +7,7 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from schemas.ops.environments import EnvironmentConfig
+from polyaxon.schemas.ops.environments import EnvironmentConfig
 
 
 @pytest.mark.environment_mark

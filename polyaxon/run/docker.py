@@ -27,7 +27,6 @@ from polyaxon.client.tracking import (
     hash_value
 )
 from polyaxon.exceptions import PolyaxonConfigurationError
-from polyaxon.schemas import BuildSpecification
 from polyaxon.utils.formatting import Printer
 
 POLYAXON_DOCKERFILE_NAME = 'Dockerfile'
@@ -153,13 +152,12 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
     project = '{}.{}'.format(user, project_name)
     build_job = BuildJob(project=project, track_logs=False)
 
-    build_spec = BuildSpecification.create_specification(specification.build, to_dict=False)
-    build_spec.apply_context()
-    build_config = build_spec.config
+    specification.apply_context()
+    build_config = specification.config
     build_job.create(name=name,
                      description=description,
                      tags=tags,
-                     content=build_spec.raw_data)
+                     content=specification.raw_data)
     image = _create_docker_build(build_job, build_config, project)
 
     experiment = Experiment(project=project, track_logs=False)

@@ -8,7 +8,7 @@ import pytest
 from marshmallow import ValidationError
 from mock import MagicMock
 
-from schemas.ops.container import ContainerConfig, get_container_command_args
+from polyaxon.schemas.ops.container import ContainerConfig, get_container_command_args
 
 
 @pytest.mark.container_mark

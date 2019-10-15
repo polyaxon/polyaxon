@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from schemas.exceptions import PolyaxonSchemaError
-from schemas.polyflow import dags
+from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.schemas.polyflow import dags
 
 
 class TestDags(TestCase):

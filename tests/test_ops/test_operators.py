@@ -5,9 +5,9 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.ops.operators import ForConfig, IfConfig
-from schemas.specs import JobSpecification
-from schemas.specs.libs.parser import Parser
+from polyaxon.schemas.ops.operators import ForConfig, IfConfig
+from polyaxon.schemas.specs import JobSpecification
+from polyaxon.schemas.specs.libs.parser import Parser
 
 
 @pytest.mark.ops_mark

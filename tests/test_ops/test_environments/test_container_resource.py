@@ -7,7 +7,7 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from schemas.ops.environments.container_resources import (
+from polyaxon.schemas.ops.environments.container_resources import (
     ContainerResourcesConfig,
 )
 

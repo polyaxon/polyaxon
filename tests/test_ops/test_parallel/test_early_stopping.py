@@ -7,11 +7,11 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from schemas.ops.parallel.early_stopping_policies import (
+from polyaxon.schemas.ops.parallel.early_stopping_policies import (
     FailureEarlyStoppingConfig,
     MetricEarlyStoppingConfig,
 )
-from schemas.ops.parallel.metrics import Optimization
+from polyaxon.schemas.ops.parallel.metrics import Optimization
 
 
 @pytest.mark.parallel_mark

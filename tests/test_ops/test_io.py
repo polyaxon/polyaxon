@@ -9,7 +9,7 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from schemas.ops.io import IOConfig, IOTypes
+from polyaxon.schemas.ops.io import IOConfig, IOTypes
 
 
 @pytest.mark.ops_mark

@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.ops.init import InitConfig
+from polyaxon.schemas.ops.init import InitConfig
 from tests.utils import assert_equal_dict
 
 

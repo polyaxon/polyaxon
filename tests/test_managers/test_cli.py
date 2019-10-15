@@ -9,7 +9,7 @@ from unittest import TestCase
 from mock import patch
 
 from polyaxon.managers.cli import CliConfigManager
-from polyaxon.schemas.cli_configuration import CliConfigurationConfig
+from polyaxon.schemas.cli.cli_configuration import CliConfigurationConfig
 
 
 class TestCliConfigManager(TestCase):

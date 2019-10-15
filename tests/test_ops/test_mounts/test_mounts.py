@@ -7,7 +7,7 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from schemas.ops.mounts import MountsConfig
+from polyaxon.schemas.ops.mounts import MountsConfig
 
 
 @pytest.mark.mounts_mark

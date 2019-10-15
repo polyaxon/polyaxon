@@ -7,7 +7,7 @@ import pytest
 
 from marshmallow import ValidationError
 
-from schemas.fields.docker_image import validate_image
+from polyaxon.schemas.fields.docker_image import validate_image
 
 
 @pytest.mark.ops_mark

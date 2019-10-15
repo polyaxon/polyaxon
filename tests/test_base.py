@@ -5,7 +5,7 @@ from unittest import TestCase
 
 from marshmallow import Schema, ValidationError, fields
 
-from schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
+from polyaxon.schemas.base import BaseConfig, BaseOneOfSchema, BaseSchema
 
 REQUIRED_ERROR = u"Missing data for required field."
 

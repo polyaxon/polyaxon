@@ -8,13 +8,13 @@ import pytest
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
-from schemas.exceptions import PolyaxonSchemaError
-from schemas.ops.io import IOTypes
-from schemas.ops import params as ops_params
-from schemas.polyflow import dags
-from schemas.polyflow.ops import OpConfig
-from schemas.polyflow.pipeline import PipelineConfig
-from schemas.polyflow.template_ref import TemplateRefConfig
+from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.schemas.ops.io import IOTypes
+from polyaxon.schemas.ops import params as ops_params
+from polyaxon.schemas.polyflow import dags
+from polyaxon.schemas.polyflow.ops import OpConfig
+from polyaxon.schemas.polyflow.pipeline import PipelineConfig
+from polyaxon.schemas.polyflow.template_ref import TemplateRefConfig
 
 
 @pytest.mark.polyflow_mark

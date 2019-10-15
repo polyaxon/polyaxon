@@ -7,9 +7,9 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.exceptions import PolyaxonSchemaError
-from schemas.polyaxonfile import PolyaxonFile
-from schemas.specs import OperationSpecification, get_specification
+from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.schemas.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.specs import OperationSpecification, get_specification
 
 
 @pytest.mark.polyaxonfile_mark

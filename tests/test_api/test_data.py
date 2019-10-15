@@ -9,7 +9,7 @@ import pytest
 
 from hestia.tz_utils import local_now
 
-from schemas.api.data import DataConfig, DataDetailsConfig, DatasetConfig
+from polyaxon.schemas.api.data import DataConfig, DataDetailsConfig, DatasetConfig
 
 
 @pytest.mark.api_mark

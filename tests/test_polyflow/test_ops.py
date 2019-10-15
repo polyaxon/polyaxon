@@ -7,7 +7,7 @@ import pytest
 
 from marshmallow import ValidationError
 
-from schemas.polyflow.ops import OpConfig
+from polyaxon.schemas.polyflow.ops import OpConfig
 
 
 @pytest.mark.polyflow_mark

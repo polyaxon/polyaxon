@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.job import JobLabelConfig
+from polyaxon.schemas.api.job import JobLabelConfig
 
 
 @pytest.mark.api_mark

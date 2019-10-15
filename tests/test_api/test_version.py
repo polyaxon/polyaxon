@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.version import (
+from polyaxon.schemas.api.version import (
     ChartVersionConfig,
     CliVersionConfig,
     LibVersionConfig,

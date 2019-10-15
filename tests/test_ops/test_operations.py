@@ -7,9 +7,9 @@ import pytest
 
 from marshmallow import ValidationError
 
-from schemas.ops import params as ops_params
-from schemas.ops.io import IOTypes
-from schemas.ops.operation import BaseOpConfig
+from polyaxon.schemas.ops import params as ops_params
+from polyaxon.schemas.ops.io import IOTypes
+from polyaxon.schemas.ops.operation import BaseOpConfig
 
 
 @pytest.mark.ops_mark

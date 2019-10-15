@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.schemas import AccessTokenConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig
 
 
 class AuthConfigManager(BaseConfigManager):

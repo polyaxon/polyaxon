@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.log_handler import LogHandlerConfig
+from polyaxon.schemas.api.log_handler import LogHandlerConfig
 
 
 @pytest.mark.api_mark

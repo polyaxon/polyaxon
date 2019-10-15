@@ -7,25 +7,25 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.exceptions import PolyaxonfileError
-from schemas.ops.init import InitConfig
-from schemas.ops.environments import EnvironmentConfig
-from schemas.ops.parallel import (
+from polyaxon.schemas.exceptions import PolyaxonfileError
+from polyaxon.schemas.ops.init import InitConfig
+from polyaxon.schemas.ops.environments import EnvironmentConfig
+from polyaxon.schemas.ops.parallel import (
     GridSearchConfig,
     HyperbandConfig,
     ParallelConfig,
     RandomSearchConfig,
 )
-from schemas.ops.parallel.early_stopping_policies import (
+from polyaxon.schemas.ops.parallel.early_stopping_policies import (
     MetricEarlyStoppingConfig,
 )
-from schemas.ops.parallel.matrix import (
+from polyaxon.schemas.ops.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixLinSpaceConfig,
 )
-from schemas.ops.termination import TerminationConfig
-from schemas.polyaxonfile import PolyaxonFile
-from schemas.specs import JobSpecification
+from polyaxon.schemas.ops.termination import TerminationConfig
+from polyaxon.schemas.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.specs import JobSpecification
 
 
 @pytest.mark.polyaxonfile_mark

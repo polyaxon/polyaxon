@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.code_reference import CodeReferenceConfig
+from polyaxon.schemas.api.code_reference import CodeReferenceConfig
 
 
 @pytest.mark.api_mark

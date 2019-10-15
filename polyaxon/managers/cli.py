@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from distutils.version import LooseVersion  # pylint:disable=import-error
 
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.schemas.cli_configuration import CliConfigurationConfig
+from polyaxon.schemas.cli.cli_configuration import CliConfigurationConfig
 
 
 class CliConfigManager(BaseConfigManager):

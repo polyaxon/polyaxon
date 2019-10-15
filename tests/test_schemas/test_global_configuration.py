@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
-from polyaxon.schemas.global_configuration import GlobalConfigurationConfig
+from polyaxon.schemas.cli.global_configuration import GlobalConfigurationConfig
 
 
 class TestGlobalConfigs(TestCase):

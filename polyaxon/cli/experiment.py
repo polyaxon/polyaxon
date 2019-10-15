@@ -6,10 +6,8 @@ import sys
 import click
 import rhea
 
-from polyaxon.cli.getters.experiment import (
-    get_experiment_job_or_local,
-    get_project_experiment_or_local
-)
+from polyaxon.cli.getters.run import get_project_experiment_or_local
+
 from polyaxon.cli.upload import upload
 from polyaxon.client import PolyaxonClient
 from polyaxon.client.exceptions import (
@@ -18,14 +16,12 @@ from polyaxon.client.exceptions import (
     PolyaxonShouldExitError
 )
 from polyaxon.logger import clean_outputs
-from polyaxon.managers.experiment import ExperimentManager
-from polyaxon.managers.experiment_job import ExperimentJobManager
+from polyaxon.managers.run import RunManager
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
     get_meta_response,
-    get_resources,
     list_dicts_to_tabulate
 )
 from polyaxon.utils.log_handler import get_logs_handler
@@ -36,9 +32,6 @@ def get_experiment_details(experiment):  # pylint:disable=redefined-outer-name
     if experiment.description:
         Printer.print_header("Experiment description:")
         click.echo('{}\n'.format(experiment.description))
-
-    if experiment.resources:
-        get_resources(experiment.resources.to_dict(), header="Experiment resources:")
 
     if experiment.params:
         Printer.print_header("Experiment params:")
@@ -72,10 +65,9 @@ def experiment(ctx, project, experiment):  # pylint:disable=redefined-outer-name
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job id.")
 @click.pass_context
 @clean_outputs
-def get(ctx, job):
+def get(ctx):
     """Get experiment or experiment job.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -128,7 +120,7 @@ def get(ctx, job):
     def get_experiment():
         try:
             response = PolyaxonClient().experiment.get_experiment(user, project_name, _experiment)
-            cache.cache(config_manager=ExperimentManager, response=response)
+            cache.cache(config_manager=RunManager, response=response)
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not load experiment `{}` info.'.format(_experiment))
             Printer.print_error('Error message `{}`.'.format(e))
@@ -136,36 +128,10 @@ def get(ctx, job):
 
         get_experiment_details(response)
 
-    def get_experiment_job():
-        try:
-            response = PolyaxonClient().experiment_job.get_job(user,
-                                                               project_name,
-                                                               _experiment,
-                                                               _job)
-            cache.cache(config_manager=ExperimentJobManager, response=response)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not get job `{}`.'.format(_job))
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
-        if response.resources:
-            get_resources(response.resources.to_dict(), header="Job resources:")
-
-        response = Printer.add_status_color(response.to_light_dict(
-            humanize_values=True,
-            exclude_attrs=['uuid', 'definition', 'experiment', 'unique_name', 'resources']
-        ))
-        Printer.print_header("Job info:")
-        dict_tabulate(response)
-
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
                                                                       ctx.obj.get('experiment'))
 
-    if job:
-        _job = get_experiment_job_or_local(job)
-        get_experiment_job()
-    else:
-        get_experiment()
+    get_experiment()
 
 
 @experiment.command()
@@ -193,7 +159,7 @@ def delete(ctx):
         response = PolyaxonClient().experiment.delete_experiment(
             user, project_name, _experiment)
         # Purge caching
-        ExperimentManager.purge()
+        RunManager.purge()
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error('Could not delete experiment `{}`.'.format(_experiment))
         Printer.print_error('Error message `{}`.'.format(e))
@@ -431,11 +397,10 @@ def jobs(ctx, page):
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job id.")
 @click.option('--page', type=int, help="To paginate through the list of statuses.")
 @click.pass_context
 @clean_outputs
-def statuses(ctx, job, page):
+def statuses(ctx, page):
     """Get experiment or experiment job statuses.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -490,52 +455,19 @@ def statuses(ctx, job, page):
             objects.pop('experiment', None)
             dict_tabulate(objects, is_list_dict=True)
 
-    def get_experiment_job_statuses():
-        try:
-            response = PolyaxonClient().experiment_job.get_statuses(user,
-                                                                    project_name,
-                                                                    _experiment,
-                                                                    _job,
-                                                                    page=page)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not get status for job `{}`.'.format(job))
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
-        meta = get_meta_response(response)
-        if meta:
-            Printer.print_header('Statuses for Job `{}`.'.format(_job))
-            Printer.print_header('Navigation:')
-            dict_tabulate(meta)
-        else:
-            Printer.print_header('No statuses found for job `{}`.'.format(_job))
-
-        objects = list_dicts_to_tabulate(
-            [Printer.add_status_color(o.to_light_dict(humanize_values=True), status_key='status')
-             for o in response['results']])
-        if objects:
-            Printer.print_header("Statuses:")
-            objects.pop('job', None)
-            dict_tabulate(objects, is_list_dict=True)
-
     page = page or 1
 
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
                                                                       ctx.obj.get('experiment'))
 
-    if job:
-        _job = get_experiment_job_or_local(job)
-        get_experiment_job_statuses()
-    else:
-        get_experiment_statuses()
+    get_experiment_statuses()
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job id.")
 @click.option('--gpu', '-g', is_flag=True, help="List experiment GPU resources.")
 @click.pass_context
 @clean_outputs
-def resources(ctx, job, gpu):
+def resources(ctx, gpu):
     """Get experiment or experiment job resources.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -579,31 +511,13 @@ def resources(ctx, job, gpu):
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
-    def get_experiment_job_resources():
-        try:
-            message_handler = Printer.gpu_resources if gpu else Printer.resources
-            PolyaxonClient().experiment_job.resources(user,
-                                                      project_name,
-                                                      _experiment,
-                                                      _job,
-                                                      message_handler=message_handler)
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not get resources for job `{}`.'.format(_job))
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
                                                                       ctx.obj.get('experiment'))
 
-    if job:
-        _job = get_experiment_job_or_local(job)
-        get_experiment_job_resources()
-    else:
-        get_experiment_resources()
+    get_experiment_resources()
 
 
 @experiment.command()
-@click.option('--job', '-j', type=int, help="The job id.")
 @click.option('--past', '-p', is_flag=True, help="Show the past logs.")
 @click.option('--follow', '-f', is_flag=True, default=False,
               help="Stream logs after showing past logs.")
@@ -611,7 +525,7 @@ def resources(ctx, job, gpu):
               help="Whether or not to hide timestamps from the log stream.")
 @click.pass_context
 @clean_outputs
-def logs(ctx, job, past, follow, hide_time):
+def logs(ctx, past, follow, hide_time):
     """Get experiment or experiment job logs.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -668,51 +582,10 @@ def logs(ctx, job, past, follow, hide_time):
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
-    def get_experiment_job_logs():
-        if past:
-            try:
-                response = PolyaxonClient().experiment_job.logs(
-                    user,
-                    project_name,
-                    _experiment,
-                    _job,
-                    stream=False)
-                get_logs_handler(handle_job_info=True,
-                                 show_timestamp=not hide_time,
-                                 stream=False)(response.content.decode().split('\n'))
-                print()
-
-                if not follow:
-                    return
-            except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-                if not follow:
-                    Printer.print_error(
-                        'Could not get logs for experiment `{}`.'.format(_experiment))
-                    Printer.print_error(
-                        'Error message `{}`.'.format(e))
-                    sys.exit(1)
-
-        try:
-            PolyaxonClient().experiment_job.logs(
-                user,
-                project_name,
-                _experiment,
-                _job,
-                message_handler=get_logs_handler(handle_job_info=True,
-                                                 show_timestamp=not hide_time))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not get logs for job `{}`.'.format(_job))
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
     user, project_name, _experiment = get_project_experiment_or_local(ctx.obj.get('project'),
                                                                       ctx.obj.get('experiment'))
 
-    if job:
-        _job = get_experiment_job_or_local(job)
-        get_experiment_job_logs()
-    else:
-        get_experiment_logs()
+    get_experiment_logs()
 
 
 @experiment.command()

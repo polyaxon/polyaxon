@@ -8,20 +8,20 @@ import pytest
 from marshmallow.exceptions import ValidationError
 from tests.utils import assert_equal_dict
 
-from schemas.ops.parallel import (
+from polyaxon.schemas.ops.parallel import (
     BOConfig,
     GridSearchConfig,
     HyperbandConfig,
     ParallelConfig,
     RandomSearchConfig,
 )
-from schemas.ops.parallel.bo import (
+from polyaxon.schemas.ops.parallel.bo import (
     AcquisitionFunctions,
     GaussianProcessConfig,
     GaussianProcessesKernels,
     UtilityFunctionConfig,
 )
-from schemas.ops.parallel.metrics import Optimization, SearchMetricConfig
+from polyaxon.schemas.ops.parallel.metrics import Optimization, SearchMetricConfig
 
 
 @pytest.mark.parallel_mark

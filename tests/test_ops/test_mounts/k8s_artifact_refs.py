@@ -8,7 +8,7 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from schemas.ops.mounts.artifact_refs import ArtifactRefConfig
+from polyaxon.schemas.ops.mounts.artifact_refs import ArtifactRefConfig
 
 
 @pytest.mark.mounts_mark

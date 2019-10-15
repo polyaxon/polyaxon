@@ -5,8 +5,6 @@ import six
 
 from collections import Mapping
 
-from schemas.specs import JobSpecification, kinds
-
 
 def assert_equal_dict(dict1, dict2):
     for k, v in six.iteritems(dict1):

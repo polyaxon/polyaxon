@@ -7,13 +7,13 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.exceptions import PolyaxonfileError
-from schemas.ops.container import ContainerConfig
-from schemas.ops.io import IOConfig
-from schemas.ops.parallel import GridSearchConfig, ParallelConfig
-from schemas.ops.parallel.matrix import MatrixChoiceConfig
-from schemas.ops.params import get_params_with_refs
-from schemas.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.exceptions import PolyaxonfileError
+from polyaxon.schemas.ops.container import ContainerConfig
+from polyaxon.schemas.ops.io import IOConfig
+from polyaxon.schemas.ops.parallel import GridSearchConfig, ParallelConfig
+from polyaxon.schemas.ops.parallel.matrix import MatrixChoiceConfig
+from polyaxon.schemas.ops.params import get_params_with_refs
+from polyaxon.schemas.polyaxonfile import PolyaxonFile
 
 
 @pytest.mark.polyaxonfile_mark

@@ -5,21 +5,16 @@ import sys
 
 import click
 
-from polyaxon.cli.build import logs as build_logs
-from polyaxon.cli.check import get_group_experiments_info
 from polyaxon.cli.experiment import logs as experiment_logs
-from polyaxon.cli.job import logs as job_logs
 from polyaxon.cli.upload import upload as upload_cmd
 from polyaxon.client import PolyaxonClient
 from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
-from polyaxon.managers.build_job import BuildJobManager
-from polyaxon.managers.experiment import ExperimentManager
-from polyaxon.managers.experiment_group import GroupManager
-from polyaxon.managers.job import JobManager
-from polyaxon.schemas import BuildJobConfig, ExperimentConfig, GroupConfig, JobConfig
+from polyaxon.managers.run import RunManager
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
 from polyaxon_client.exceptions import PolyaxonClientException
+
+from polyaxon.schemas.polyflow.ops import OpConfig
 
 
 def run(ctx,
@@ -33,11 +28,10 @@ def run(ctx,
         upload,
         log,
         can_upload):
-    project_client = PolyaxonClient().project
 
     def run_experiment():
         click.echo('Creating an independent experiment.')
-        experiment = ExperimentConfig(
+        experiment = OpConfig(
             name=name,
             description=description,
             tags=tags,
@@ -49,74 +43,10 @@ def run(ctx,
             response = PolyaxonClient().project.create_experiment(user,
                                                                   project_name,
                                                                   experiment)
-            cache.cache(config_manager=ExperimentManager, response=response)
+            cache.cache(config_manager=RunManager, response=response)
             Printer.print_success('Experiment `{}` was created'.format(response.id))
         except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
             Printer.print_error('Could not create experiment.')
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
-    def run_group():
-        click.echo('Creating an experiment group with the following definition:')
-        experiments_def = specification.experiments_def
-        get_group_experiments_info(**experiments_def)
-        experiment_group = GroupConfig(
-            name=name,
-            description=description,
-            tags=tags,
-            content=specification.raw_data,
-            is_managed=True,
-        )
-        try:
-            response = project_client.create_experiment_group(user,
-                                                              project_name,
-                                                              experiment_group)
-            cache.cache(config_manager=GroupManager, response=response)
-            Printer.print_success('Experiment group {} was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not create experiment group.')
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
-    def run_job():
-        click.echo('Creating a job.')
-        job = JobConfig(
-            name=name,
-            description=description,
-            tags=tags,
-            content=specification.raw_data,
-            ttl=ttl,
-            is_managed=True,
-        )
-        try:
-            response = project_client.create_job(user,
-                                                 project_name,
-                                                 job)
-            cache.cache(config_manager=JobManager, response=response)
-            Printer.print_success('Job {} was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not create job.')
-            Printer.print_error('Error message `{}`.'.format(e))
-            sys.exit(1)
-
-    def run_build():
-        click.echo('Creating a build.')
-        job = BuildJobConfig(
-            name=name,
-            description=description,
-            tags=tags,
-            content=specification.raw_data,
-            ttl=ttl,
-            is_managed=True,
-        )
-        try:
-            response = project_client.create_build(user,
-                                                   project_name,
-                                                   job)
-            cache.cache(config_manager=BuildJobManager, response=response)
-            Printer.print_success('Build {} was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not create build.')
             Printer.print_error('Error message `{}`.'.format(e))
             sys.exit(1)
 
@@ -128,18 +58,8 @@ def run(ctx,
             sys.exit(1)
         ctx.invoke(upload_cmd, sync=False)
 
-    logs_cmd = None
-    if specification.is_experiment:
-        run_experiment()
-        logs_cmd = experiment_logs
-    elif specification.is_group:
-        run_group()
-    elif specification.is_job:
-        run_job()
-        logs_cmd = job_logs
-    elif specification.is_build:
-        run_build()
-        logs_cmd = build_logs
+    run_experiment()
+    logs_cmd = experiment_logs
 
     # Check if we need to invoke logs
     if log and logs_cmd:

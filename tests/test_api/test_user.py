@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.user import UserConfig
+from polyaxon.schemas.api.user import UserConfig
 
 
 @pytest.mark.api_mark

@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import uuid
-
 from unittest import TestCase
 
 import pytest
 
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
-from tests.utils import assert_equal_dict
 
-from schemas.api.experiment import ExperimentConfig
-from schemas.api.group import GroupConfig
-from schemas.api.project import ProjectConfig
+from polyaxon.schemas.api.project import ProjectConfig
 
 
 @pytest.mark.api_mark
@@ -64,26 +59,3 @@ class TestProjectConfigs(TestCase):
 
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop("created_at") == "a few seconds ago"
-
-    def test_project_experiments_and_groups_config(self):
-        uuid_value = uuid.uuid4().hex
-        config_dict = {
-            "name": "test",
-            "description": "",
-            "is_public": True,
-            "experiment_groups": [
-                GroupConfig(
-                    content="content", uuid=uuid_value, project=uuid_value
-                ).to_dict()
-            ],
-            "experiments": [
-                ExperimentConfig(uuid=uuid_value, project=uuid_value).to_dict()
-            ],
-        }
-        config = ProjectConfig.from_dict(config_dict)
-        assert_equal_dict(config_dict, config.to_dict())
-
-        config_dict.pop("description")
-        config_dict.pop("experiment_groups")
-        config_dict.pop("experiments")
-        assert_equal_dict(config_dict, config.to_light_dict())

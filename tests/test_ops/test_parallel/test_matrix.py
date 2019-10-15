@@ -9,7 +9,7 @@ import pytest
 
 from marshmallow.exceptions import ValidationError
 
-from schemas.ops.parallel.matrix import (
+from polyaxon.schemas.ops.parallel.matrix import (
     MatrixChoiceConfig,
     MatrixGeomSpaceConfig,
     MatrixLinSpaceConfig,

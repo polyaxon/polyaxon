@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 from polyaxon.managers.auth import AuthConfigManager
-from polyaxon.schemas import AccessTokenConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig
 
 
 class TestAuthConfigManager(TestCase):

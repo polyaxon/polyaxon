@@ -15,7 +15,7 @@ from polyaxon.client.exceptions import (
 from polyaxon.logger import clean_outputs, logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
-from polyaxon.schemas import AccessTokenConfig, CredentialsConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig, CredentialsConfig
 from polyaxon.utils.formatting import Printer
 
 

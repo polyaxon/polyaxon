@@ -9,11 +9,10 @@ import pytest
 
 from hestia.tz_utils import local_now
 
-from schemas.api.experiment import (
+from polyaxon.schemas.api.experiment import (
     ContainerGPUResourcesConfig,
     ContainerResourcesConfig,
     ExperimentConfig,
-    ExperimentJobConfig,
     ExperimentJobStatusConfig,
     ExperimentMetricConfig,
     ExperimentStatusConfig,
@@ -99,15 +98,6 @@ class TestExperimentConfigs(TestCase):
             "has_tensorboard": False,
             "is_managed": False,
             "tags": ["tag"],
-            "jobs": [
-                ExperimentJobConfig(
-                    uuid=uuid.uuid4().hex,
-                    experiment=2,
-                    created_at=local_now(),
-                    updated_at=local_now(),
-                    definition={},
-                ).to_dict()
-            ],
         }
         config = ExperimentConfig.from_dict(config_dict)
         config_to_dict = config.to_dict()
@@ -126,43 +116,6 @@ class TestExperimentConfigs(TestCase):
         assert config_to_dict == config_dict
 
         config_dict.pop("tags")
-        config_to_dict = config.to_light_dict(humanize_values=True)
-        assert config_to_dict.pop("total_run") == "0s"
-        assert config_to_dict.pop("created_at") == "a few seconds ago"
-        assert config_to_dict.pop("started_at") == "a few seconds ago"
-        assert config_to_dict.pop("finished_at") == "a few seconds ago"
-
-    def test_experiment_job_config(self):
-        config_dict = {
-            "uuid": uuid.uuid4().hex,
-            "experiment": 1,
-            "created_at": local_now().isoformat(),
-            "updated_at": local_now().isoformat(),
-            "started_at": local_now().isoformat(),
-            "finished_at": local_now().isoformat(),
-            "definition": {},
-            "role": "master",
-            "id": 1,
-            "pod_id": "job_1",
-            "unique_name": "project.1.1.master",
-        }
-        config = ExperimentJobConfig.from_dict(config_dict)
-        config_to_dict = config.to_dict()
-        assert config_to_dict.pop("total_run") == "0s"
-        config_to_dict.pop("last_status")
-        config_to_dict.pop("resources")
-        assert config_to_dict == config_dict
-
-        config_dict.pop("definition")
-        config_dict.pop("experiment")
-        config_dict.pop("updated_at")
-        config_dict.pop("uuid")
-        config_to_dict = config.to_light_dict()
-        assert config_to_dict.pop("total_run") == "0s"
-        config_dict.pop("unique_name")
-        config_to_dict.pop("last_status")
-        assert config_to_dict == config_dict
-
         config_to_dict = config.to_light_dict(humanize_values=True)
         assert config_to_dict.pop("total_run") == "0s"
         assert config_to_dict.pop("created_at") == "a few seconds ago"

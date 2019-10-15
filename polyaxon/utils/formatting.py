@@ -13,7 +13,7 @@ from hestia.list_utils import to_list
 from hestia.units import to_percentage, to_unit_memory
 from tabulate import tabulate
 
-from polyaxon.schemas import ContainerResourcesConfig, K8SResourcesConfig
+from polyaxon.schemas.api.experiment import ContainerResourcesConfig
 
 
 def get_meta_response(response):
@@ -203,16 +203,3 @@ def get_experiments_with_metrics(response):
 
 def get_experiments_with_params(response):
     return get_experiments_with_keys(response=response, params_key='params')
-
-
-def get_resources(resources, header=None):
-    header = header or 'Resources:'
-    Printer.print_header(header)
-    objects = []
-    for item in six.iterkeys(resources):
-        item_dict = OrderedDict()
-        item_dict['resource'] = item
-        item_dict.update(resources[item] or K8SResourcesConfig().to_dict())
-        objects.append(item_dict)
-    objects = list_dicts_to_tabulate(objects)
-    dict_tabulate(objects, is_list_dict=True)

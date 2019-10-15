@@ -8,7 +8,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.clusters import (
+from polyaxon.schemas.api.clusters import (
     ClusterNodeConfig,
     NodeGPUConfig,
     PolyaxonClusterConfig,

@@ -7,7 +7,7 @@ import pytest
 
 from tests.utils import assert_equal_dict
 
-from schemas.ops.termination import TerminationConfig
+from polyaxon.schemas.ops.termination import TerminationConfig
 
 
 @pytest.mark.termination_mark

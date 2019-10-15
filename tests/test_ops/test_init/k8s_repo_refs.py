@@ -8,7 +8,7 @@ import pytest
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from schemas.ops.mounts.repo_refs import RepoRefConfig
+from polyaxon.schemas.ops.mounts.repo_refs import RepoRefConfig
 
 
 @pytest.mark.init_mark

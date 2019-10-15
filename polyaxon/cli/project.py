@@ -18,7 +18,7 @@ from polyaxon.client.exceptions import (
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.project import ProjectManager
-from polyaxon.schemas import ProjectConfig
+from polyaxon.schemas.api.project import ProjectConfig
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,

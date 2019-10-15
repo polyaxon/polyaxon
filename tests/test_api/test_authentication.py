@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pytest
 
-from schemas.api.authentication import AccessTokenConfig, CredentialsConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig, CredentialsConfig
 
 
 @pytest.mark.api_mark

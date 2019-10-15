@@ -11,18 +11,17 @@ from flaky import flaky
 from marshmallow import ValidationError
 from tests.utils import assert_equal_dict
 
-from schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
-from schemas.ops.environments import EnvironmentConfig
-from schemas.ops.io import IOTypes
-from schemas.ops.job import JobConfig
-from schemas.specs import (
+from polyaxon.schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon.schemas.ops.environments import EnvironmentConfig
+from polyaxon.schemas.ops.io import IOTypes
+from polyaxon.schemas.specs import (
     JobSpecification,
     OperationSpecification,
     PipelineSpecification,
     ServiceSpecification,
     get_specification,
 )
-from schemas.utils import TaskType
+from polyaxon.schemas.utils import TaskType
 
 
 @pytest.mark.polyaxonfile_mark

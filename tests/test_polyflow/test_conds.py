@@ -7,7 +7,7 @@ import pytest
 
 from marshmallow import ValidationError
 
-from schemas.polyflow.conditions import (
+from polyaxon.schemas.polyflow.conditions import (
     ConditionSchema,
     OutputsConditionConfig,
     StatusConditionConfig,
