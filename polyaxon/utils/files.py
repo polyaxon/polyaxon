@@ -16,8 +16,12 @@ def get_files_in_current_directory(file_type, file_paths):
     total_file_size = 0
 
     for file_path in file_paths:
-        local_files.append((file_type,
-                            (unix_style_path(file_path), open(file_path, 'rb'), 'text/plain')))
+        local_files.append(
+            (
+                file_type,
+                (unix_style_path(file_path), open(file_path, "rb"), "text/plain"),
+            )
+        )
         total_file_size += os.path.getsize(file_path)
 
     yield local_files, total_file_size
@@ -28,8 +32,8 @@ def get_files_in_current_directory(file_type, file_paths):
 
 
 def unix_style_path(path):
-    if os.path.sep != '/':
-        return path.replace(os.path.sep, '/')
+    if os.path.sep != "/":
+        return path.replace(os.path.sep, "/")
     return path
 
 
@@ -37,7 +41,7 @@ def create_init_file(init_file_type):
     if os.path.exists(constants.INIT_FILE):
         return False
 
-    with open(constants.INIT_FILE, 'w') as f:
+    with open(constants.INIT_FILE, "w") as f:
         f.write(constants.INIT_FILE_TEMPLATES[init_file_type])
 
     return True
@@ -46,7 +50,9 @@ def create_init_file(init_file_type):
 @contextmanager
 def create_tarfile(files, project_name):
     """Create a tar file based on the list of files passed"""
-    fd, filename = tempfile.mkstemp(prefix="polyaxon_{}".format(project_name), suffix='.tar.gz')
+    fd, filename = tempfile.mkstemp(
+        prefix="polyaxon_{}".format(project_name), suffix=".tar.gz"
+    )
     with tarfile.open(filename, "w:gz") as tar:
         for f in files:
             tar.add(f)

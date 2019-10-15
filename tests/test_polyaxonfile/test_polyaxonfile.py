@@ -8,8 +8,8 @@ from unittest import TestCase
 import pytest
 
 from polyaxon.schemas.exceptions import PolyaxonfileError
-from polyaxon.schemas.ops.init import InitConfig
 from polyaxon.schemas.ops.environments import EnvironmentConfig
+from polyaxon.schemas.ops.init import InitConfig
 from polyaxon.schemas.ops.parallel import (
     GridSearchConfig,
     HyperbandConfig,
@@ -83,7 +83,7 @@ class TestPolyaxonfile(TestCase):
         spec = spec.apply_context()
         spec = spec.apply_container_contexts()
         assert spec.version == 0.6
-        assert spec.tags == ['foo', 'bar']
+        assert spec.tags == ["foo", "bar"]
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=some-loss --flag"

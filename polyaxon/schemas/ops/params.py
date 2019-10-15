@@ -133,7 +133,9 @@ def validate_param(param, context, is_template=False, check_runs=False):
         )
 
 
-def validate_params(params, inputs, outputs, context=None, is_template=True, check_runs=False):
+def validate_params(
+    params, inputs, outputs, context=None, is_template=True, check_runs=False
+):
     """
     Validates Params given inputs, and an optional context.
 

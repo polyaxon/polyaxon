@@ -18,12 +18,12 @@ from polyaxon.schemas.api.experiment import ContainerResourcesConfig
 
 def get_meta_response(response):
     results = {}
-    if response.get('next'):
-        results['next'] = '--page={}'.format(response['next'])
-    if response.get('previous'):
-        results['previous'] = '--page={}'.format(response['previous'])
-    if response.get('count'):
-        results['count'] = response['count']
+    if response.get("next"):
+        results["next"] = "--page={}".format(response["next"])
+    if response.get("previous"):
+        results["previous"] = "--page={}".format(response["previous"])
+    if response.get("count"):
+        results["count"] = response["count"]
     return results
 
 
@@ -49,51 +49,47 @@ def dict_tabulate(dict_value, is_list_dict=False):
 
 def pprint(value):
     """Prints as formatted JSON"""
-    click.echo(
-        json.dumps(value,
-                   sort_keys=True,
-                   indent=4,
-                   separators=(',', ': ')))
+    click.echo(json.dumps(value, sort_keys=True, indent=4, separators=(",", ": ")))
 
 
 class Printer(object):
-    COLORS = ['yellow', 'blue', 'magenta', 'green', 'cyan', 'red', 'white']
+    COLORS = ["yellow", "blue", "magenta", "green", "cyan", "red", "white"]
 
     @staticmethod
     def print_header(text):
-        click.secho('\n{}\n'.format(text), fg='yellow')
+        click.secho("\n{}\n".format(text), fg="yellow")
 
     @staticmethod
     def print_warning(text):
-        click.secho('\n{}\n'.format(text), fg='magenta')
+        click.secho("\n{}\n".format(text), fg="magenta")
 
     @staticmethod
     def print_success(text):
-        click.secho(text, fg='green')
+        click.secho(text, fg="green")
 
     @staticmethod
     def print_error(text):
-        click.secho(text, fg='red')
+        click.secho(text, fg="red")
 
     @staticmethod
     def add_color(value, color):
-        return click.style('{}'.format(value), fg=color)
+        return click.style("{}".format(value), fg=color)
 
     @classmethod
     def get_colored_status(cls, status):
-        if status == 'created':
-            return cls.add_color(status, 'cyan')
-        elif status == 'succeeded':
-            return cls.add_color(status, color='green')
-        elif status in ['failed', 'stopped']:
-            return cls.add_color(status, color='red')
-        elif status == 'done':
-            return cls.add_color(status, color='white')
+        if status == "created":
+            return cls.add_color(status, "cyan")
+        elif status == "succeeded":
+            return cls.add_color(status, color="green")
+        elif status in ["failed", "stopped"]:
+            return cls.add_color(status, color="red")
+        elif status == "done":
+            return cls.add_color(status, color="white")
 
-        return cls.add_color(status, color='yellow')
+        return cls.add_color(status, color="yellow")
 
     @classmethod
-    def add_status_color(cls, obj_dict, status_key='last_status'):
+    def add_status_color(cls, obj_dict, status_key="last_status"):
         if obj_dict.get(status_key) is None:
             return obj_dict
 
@@ -121,15 +117,20 @@ class Printer(object):
     def resources(cls, jobs_resources):
         jobs_resources = to_list(jobs_resources)
         click.clear()
-        data = [['Job', 'Mem Usage / Total', 'CPU% - CPUs']]
+        data = [["Job", "Mem Usage / Total", "CPU% - CPUs"]]
         for job_resources in jobs_resources:
             job_resources = ContainerResourcesConfig.from_dict(job_resources)
             line = [
                 job_resources.job_name,
-                '{} / {}'.format(to_unit_memory(job_resources.memory_used),
-                                 to_unit_memory(job_resources.memory_limit)),
-                '{} - {}'.format(to_percentage(job_resources.cpu_percentage / 100),
-                                 job_resources.n_cpus)]
+                "{} / {}".format(
+                    to_unit_memory(job_resources.memory_used),
+                    to_unit_memory(job_resources.memory_limit),
+                ),
+                "{} - {}".format(
+                    to_percentage(job_resources.cpu_percentage / 100),
+                    job_resources.n_cpus,
+                ),
+            ]
             data.append(line)
         click.echo(tabulate(data, headers="firstrow"))
         sys.stdout.flush()
@@ -139,8 +140,14 @@ class Printer(object):
         jobs_resources = to_list(jobs_resources)
         click.clear()
         data = [
-            ['job_name', 'name', 'GPU Usage', 'GPU Mem Usage / Total', 'GPU Temperature',
-             'Power Draw / Limit']
+            [
+                "job_name",
+                "name",
+                "GPU Usage",
+                "GPU Mem Usage / Total",
+                "GPU Temperature",
+                "Power Draw / Limit",
+            ]
         ]
         non_gpu_jobs = 0
         for job_resources in jobs_resources:
@@ -154,16 +161,20 @@ class Printer(object):
                     job_resources.job_name,
                     gpu_resources.name,
                     to_percentage(gpu_resources.utilization_gpu / 100),
-                    '{} / {}'.format(
+                    "{} / {}".format(
                         to_unit_memory(gpu_resources.memory_used),
-                        to_unit_memory(gpu_resources.memory_total)),
+                        to_unit_memory(gpu_resources.memory_total),
+                    ),
                     gpu_resources.temperature_gpu,
-                    '{} / {}'.format(gpu_resources.power_draw, gpu_resources.power_limit),
+                    "{} / {}".format(
+                        gpu_resources.power_draw, gpu_resources.power_limit
+                    ),
                 ]
             data.append(line)
         if non_gpu_jobs == len(jobs_resources):
             Printer.print_error(
-                'No GPU job was found, please run `resources` command without `-g | --gpu` option.')
+                "No GPU job was found, please run `resources` command without `-g | --gpu` option."
+            )
             exit(1)
         click.echo(tabulate(data, headers="firstrow"))
         sys.stdout.flush()
@@ -174,8 +185,8 @@ def get_experiments_with_keys(response, params_key, extra_attrs=None):
         extra_attrs = [params_key]
     extra_attrs.append(params_key)
     objects = [
-        o.to_light_dict(include_attrs=['id', 'unique_name'] + extra_attrs)
-        for o in response['results']
+        o.to_light_dict(include_attrs=["id", "unique_name"] + extra_attrs)
+        for o in response["results"]
     ]
     # Extend experiment with metrics
     params_keys = set([])
@@ -196,10 +207,10 @@ def get_experiments_with_keys(response, params_key, extra_attrs=None):
 
 
 def get_experiments_with_metrics(response):
-    return get_experiments_with_keys(response=response,
-                                     params_key='last_metric',
-                                     extra_attrs=['total_run'])
+    return get_experiments_with_keys(
+        response=response, params_key="last_metric", extra_attrs=["total_run"]
+    )
 
 
 def get_experiments_with_params(response):
-    return get_experiments_with_keys(response=response, params_key='params')
+    return get_experiments_with_keys(response=response, params_key="params")

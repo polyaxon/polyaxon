@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-NEWLINES = ('\n', '\r', '\r\n')
+NEWLINES = ("\n", "\r", "\r\n")
 
 INIT_COMMAND = "`polyaxon init PROJECT_NAME [--polyaxonfile]`"
 
@@ -20,7 +20,7 @@ var
 ./.polyaxon
 """
 
-INIT_FILE = 'polyaxonfile.yaml'
+INIT_FILE = "polyaxonfile.yaml"
 
 INIT_FILE_MODEL_TEMPLATE = """---
 version: 1
@@ -46,10 +46,10 @@ run:
   # cmd: # Command to use
 """
 
-INIT_FILE_MODEL = 'model'
-INIT_FILE_RUN = 'run'
+INIT_FILE_MODEL = "model"
+INIT_FILE_RUN = "run"
 
 INIT_FILE_TEMPLATES = {
     INIT_FILE_MODEL: INIT_FILE_MODEL_TEMPLATE,
-    INIT_FILE_RUN: INIT_FILE_RUN_TEMPLATE
+    INIT_FILE_RUN: INIT_FILE_RUN_TEMPLATE,
 }

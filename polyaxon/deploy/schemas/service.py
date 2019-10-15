@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import EXCLUDE, fields
 
-from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.deploy.schemas.celery import CelerySchema
+from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.ops.environments import ContainerResourcesSchema
 
 
@@ -28,23 +28,25 @@ class ServiceSchema(BaseSchema):
 class ServiceConfig(BaseConfig):
     SCHEMA = ServiceSchema
     REDUCED_ATTRIBUTES = [
-        'enabled',
-        'image',
-        'imageTag',
-        'imagePullPolicy',
-        'replicas',
-        'concurrency',
-        'resources'
+        "enabled",
+        "image",
+        "imageTag",
+        "imagePullPolicy",
+        "replicas",
+        "concurrency",
+        "resources",
     ]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 concurrency=None,
-                 resources=None):
+    def __init__(
+        self,  # noqa
+        enabled=None,
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        concurrency=None,
+        resources=None,
+    ):
         self.enabled = enabled
         self.image = image
         self.imageTag = imageTag
@@ -64,16 +66,18 @@ class WorkerSchema(ServiceSchema):
 
 class WorkerConfig(ServiceConfig):
     SCHEMA = WorkerSchema
-    REDUCED_ATTRIBUTES = ServiceConfig.REDUCED_ATTRIBUTES + ['celery']
+    REDUCED_ATTRIBUTES = ServiceConfig.REDUCED_ATTRIBUTES + ["celery"]
 
-    def __init__(self,  # noqa
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 concurrency=None,
-                 resources=None,
-                 celery=None):
+    def __init__(
+        self,  # noqa
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        concurrency=None,
+        resources=None,
+        celery=None,
+    ):
         super(WorkerConfig, self).__init__(
             image=image,
             imageTag=imageTag,
@@ -95,16 +99,18 @@ class ApiSchema(ServiceSchema):
 
 class ApiConfig(ServiceConfig):
     SCHEMA = ApiSchema
-    REDUCED_ATTRIBUTES = ['replicas', 'namespace', 'statuses']
+    REDUCED_ATTRIBUTES = ["replicas", "namespace", "statuses"]
 
-    def __init__(self,  # noqa
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 concurrency=None,
-                 resources=None,
-                 service=None):
+    def __init__(
+        self,  # noqa
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        concurrency=None,
+        resources=None,
+        service=None,
+    ):
         super(ApiConfig, self).__init__(
             image=image,
             imageTag=imageTag,
@@ -128,7 +134,7 @@ class EventMonitorsSchema(BaseSchema):
 
 class EventMonitorsConfig(BaseConfig):
     SCHEMA = EventMonitorsSchema
-    REDUCED_ATTRIBUTES = ['replicas', 'namespace', 'statuses']
+    REDUCED_ATTRIBUTES = ["replicas", "namespace", "statuses"]
 
     def __init__(self, replicas=None, namespace=None, statuses=None):
         self.replicas = replicas
@@ -146,23 +152,26 @@ class HooksSchema(ServiceSchema):
 
 class HooksConfig(ServiceConfig):
     SCHEMA = HooksSchema
-    REDUCED_ATTRIBUTES = ServiceConfig.REDUCED_ATTRIBUTES + ['loadFixtures']
+    REDUCED_ATTRIBUTES = ServiceConfig.REDUCED_ATTRIBUTES + ["loadFixtures"]
 
-    def __init__(self,  # noqa
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 concurrency=None,
-                 resources=None,
-                 loadFixtures=None):
+    def __init__(
+        self,  # noqa
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        concurrency=None,
+        resources=None,
+        loadFixtures=None,
+    ):
         super(HooksConfig, self).__init__(
             image=image,
             imageTag=imageTag,
             imagePullPolicy=imagePullPolicy,
             replicas=replicas,
             concurrency=concurrency,
-            resources=resources)
+            resources=resources,
+        )
         self.loadFixtures = loadFixtures
 
 
@@ -181,30 +190,32 @@ class ThirdPartyServiceSchema(ServiceSchema):
 class ThirdPartyServiceConfig(ServiceConfig):
     SCHEMA = ThirdPartyServiceSchema
     REDUCED_ATTRIBUTES = [
-        'enabled',
-        'image',
-        'imageTag',
-        'imagePullPolicy',
-        'replicas',
-        'concurrency',
-        'resources',
-        'persistence',
-        'nodeSelector',
-        'affinity',
-        'tolerations'
+        "enabled",
+        "image",
+        "imageTag",
+        "imagePullPolicy",
+        "replicas",
+        "concurrency",
+        "resources",
+        "persistence",
+        "nodeSelector",
+        "affinity",
+        "tolerations",
     ]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 resources=None,
-                 persistence=None,
-                 nodeSelector=None,
-                 affinity=None,
-                 tolerations=None):
+    def __init__(
+        self,  # noqa
+        enabled=None,
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        resources=None,
+        persistence=None,
+        nodeSelector=None,
+        affinity=None,
+        tolerations=None,
+    ):
         super(ThirdPartyServiceConfig, self).__init__(
             image=image,
             imageTag=imageTag,
@@ -233,27 +244,29 @@ class PostgresqlSchema(ThirdPartyServiceSchema):
 class PostgresqlConfig(ThirdPartyServiceConfig):
     SCHEMA = PostgresqlSchema
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
-        'postgresUser',
-        'postgresPassword',
-        'postgresDatabase',
-        'connMaxAge',
+        "postgresUser",
+        "postgresPassword",
+        "postgresDatabase",
+        "connMaxAge",
     ]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 postgresUser=None,
-                 postgresPassword=None,
-                 postgresDatabase=None,
-                 connMaxAge=None,
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 resources=None,
-                 persistence=None,
-                 nodeSelector=None,
-                 affinity=None,
-                 tolerations=None):
+    def __init__(
+        self,  # noqa
+        enabled=None,
+        postgresUser=None,
+        postgresPassword=None,
+        postgresDatabase=None,
+        connMaxAge=None,
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        resources=None,
+        persistence=None,
+        nodeSelector=None,
+        affinity=None,
+        tolerations=None,
+    ):
         super(PostgresqlConfig, self).__init__(
             enabled=enabled,
             image=image,
@@ -264,7 +277,8 @@ class PostgresqlConfig(ThirdPartyServiceConfig):
             persistence=persistence,
             nodeSelector=nodeSelector,
             affinity=affinity,
-            tolerations=tolerations, )
+            tolerations=tolerations,
+        )
         self.postgresUser = postgresUser
         self.postgresPassword = postgresPassword
         self.postgresDatabase = postgresDatabase
@@ -284,23 +298,25 @@ class RedisSchema(ThirdPartyServiceSchema):
 class RedisConfig(ThirdPartyServiceConfig):
     SCHEMA = RedisSchema
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
-        'usePassword',
-        'password',
+        "usePassword",
+        "password",
     ]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 usePassword=None,
-                 password=None,
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 resources=None,
-                 persistence=None,
-                 nodeSelector=None,
-                 affinity=None,
-                 tolerations=None):
+    def __init__(
+        self,  # noqa
+        enabled=None,
+        usePassword=None,
+        password=None,
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        resources=None,
+        persistence=None,
+        nodeSelector=None,
+        affinity=None,
+        tolerations=None,
+    ):
         super(RedisConfig, self).__init__(
             enabled=enabled,
             image=image,
@@ -311,7 +327,8 @@ class RedisConfig(ThirdPartyServiceConfig):
             persistence=persistence,
             nodeSelector=nodeSelector,
             affinity=affinity,
-            tolerations=tolerations, )
+            tolerations=tolerations,
+        )
         self.usePassword = usePassword
         self.password = password
 
@@ -328,23 +345,25 @@ class RabbitmqSchema(ThirdPartyServiceSchema):
 class RabbitmqConfig(ThirdPartyServiceConfig):
     SCHEMA = RabbitmqSchema
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
-        'rabbitmqUsername',
-        'rabbitmqPassword',
+        "rabbitmqUsername",
+        "rabbitmqPassword",
     ]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 rabbitmqUsername=None,
-                 rabbitmqPassword=None,
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 resources=None,
-                 persistence=None,
-                 nodeSelector=None,
-                 affinity=None,
-                 tolerations=None):
+    def __init__(
+        self,  # noqa
+        enabled=None,
+        rabbitmqUsername=None,
+        rabbitmqPassword=None,
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        resources=None,
+        persistence=None,
+        nodeSelector=None,
+        affinity=None,
+        tolerations=None,
+    ):
         super(RabbitmqConfig, self).__init__(
             enabled=enabled,
             image=image,
@@ -355,7 +374,8 @@ class RabbitmqConfig(ThirdPartyServiceConfig):
             persistence=persistence,
             nodeSelector=nodeSelector,
             affinity=affinity,
-            tolerations=tolerations, )
+            tolerations=tolerations,
+        )
         self.rabbitmqUsername = rabbitmqUsername
         self.rabbitmqPassword = rabbitmqPassword
 
@@ -372,23 +392,25 @@ class DockerRegistrySchema(ThirdPartyServiceSchema):
 class DockerRegistryConfig(ThirdPartyServiceConfig):
     SCHEMA = DockerRegistrySchema
     REDUCED_ATTRIBUTES = ThirdPartyServiceConfig.REDUCED_ATTRIBUTES + [
-        'registryUser',
-        'registryPassword',
+        "registryUser",
+        "registryPassword",
     ]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 registryUser=None,
-                 registryPassword=None,
-                 image=None,
-                 imageTag=None,
-                 imagePullPolicy=None,
-                 replicas=None,
-                 resources=None,
-                 persistence=None,
-                 nodeSelector=None,
-                 affinity=None,
-                 tolerations=None):
+    def __init__(
+        self,  # noqa
+        enabled=None,
+        registryUser=None,
+        registryPassword=None,
+        image=None,
+        imageTag=None,
+        imagePullPolicy=None,
+        replicas=None,
+        resources=None,
+        persistence=None,
+        nodeSelector=None,
+        affinity=None,
+        tolerations=None,
+    ):
         super(DockerRegistryConfig, self).__init__(
             enabled=enabled,
             image=image,
@@ -399,7 +421,8 @@ class DockerRegistryConfig(ThirdPartyServiceConfig):
             persistence=persistence,
             nodeSelector=nodeSelector,
             affinity=affinity,
-            tolerations=tolerations, )
+            tolerations=tolerations,
+        )
         self.registryUser = registryUser
         self.registryPassword = registryPassword
 
@@ -421,23 +444,25 @@ class ExternalServiceSchema(BaseSchema):
 class ExternalServiceConfig(BaseConfig):
     SCHEMA = ExternalServiceSchema
     REDUCED_ATTRIBUTES = [
-        'user',
-        'password',
-        'host',
-        'port',
-        'database',
-        'usePassword',
-        'connMaxAge'
+        "user",
+        "password",
+        "host",
+        "port",
+        "database",
+        "usePassword",
+        "connMaxAge",
     ]
 
-    def __init__(self,  # noqa
-                 user=None,
-                 password=None,
-                 host=None,
-                 port=None,
-                 database=None,
-                 usePassword=None,
-                 connMaxAge=None):
+    def __init__(
+        self,  # noqa
+        user=None,
+        password=None,
+        host=None,
+        port=None,
+        database=None,
+        usePassword=None,
+        connMaxAge=None,
+    ):
         self.user = user
         self.password = password
         self.host = host
@@ -459,16 +484,9 @@ class ExternalServicesSchema(BaseSchema):
 
 class ExternalServicesConfig(BaseConfig):
     SCHEMA = ExternalServicesSchema
-    REDUCED_ATTRIBUTES = [
-        'redis',
-        'rabbitmq',
-        'postgresql',
-    ]
+    REDUCED_ATTRIBUTES = ["redis", "rabbitmq", "postgresql"]
 
-    def __init__(self,
-                 redis=None,
-                 rabbitmq=None,
-                 postgresql=None):
+    def __init__(self, redis=None, rabbitmq=None, postgresql=None):
         self.redis = redis
         self.rabbitmq = rabbitmq
         self.postgresql = postgresql

@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import sys
+
 from datetime import datetime
 
 from hestia.tz_utils import utc
@@ -16,7 +17,6 @@ from polyaxon.client.api.user import UserApi
 from polyaxon.client.api.version import VersionApi
 from polyaxon.client.api_config import ApiConfig
 from polyaxon.client.transport import Transport
-
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.config import GlobalConfigManager
 from polyaxon.utils.formatting import Printer
@@ -257,14 +257,16 @@ class PolyaxonClient(object):
 
 class PolyaxonCliClient(PolyaxonClient):
     def __init__(self):
-        host = GlobalConfigManager.get_value('host')
+        host = GlobalConfigManager.get_value("host")
         if not host:
-            Printer.print_error('Received an invalid config, you need to provide a valid host.')
+            Printer.print_error(
+                "Received an invalid config, you need to provide a valid host."
+            )
             sys.exit(1)
-        port = GlobalConfigManager.get_value('port')
-        use_https = GlobalConfigManager.get_value('use_https')
-        verify_ssl = GlobalConfigManager.get_value('verify_ssl')
-        token = AuthConfigManager.get_value('token')
+        port = GlobalConfigManager.get_value("port")
+        use_https = GlobalConfigManager.get_value("use_https")
+        verify_ssl = GlobalConfigManager.get_value("verify_ssl")
+        token = AuthConfigManager.get_value("token")
         super(PolyaxonClient, self).__init__(
             host=host,
             http_port=port,

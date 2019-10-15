@@ -6,10 +6,12 @@ from hestia.list_utils import to_list
 
 from polyaxon.utils.formatting import Printer
 
-MASTER_REGEX = re.compile(r'master\.\d+')
-WORKER_REGEX = re.compile(r'worker\.\d+')
-PS_REGEX = re.compile(r'ps\.\d+')
-TIMESTAMP_REGEX = re.compile(r'\d{2}(?:\d{2})?-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\s\w+\s')
+MASTER_REGEX = re.compile(r"master\.\d+")
+WORKER_REGEX = re.compile(r"worker\.\d+")
+PS_REGEX = re.compile(r"ps\.\d+")
+TIMESTAMP_REGEX = re.compile(
+    r"\d{2}(?:\d{2})?-\d{1,2}-\d{1,2}\s\d{1,2}:\d{1,2}:\d{1,2}\s\w+\s"
+)
 
 
 def get_logs_handler(handle_job_info=False, show_timestamp=True, stream=True):
@@ -46,14 +48,16 @@ def get_logs_handler(handle_job_info=False, show_timestamp=True, stream=True):
             return log_line
 
         if not show_timestamp:
-            return re.sub(TIMESTAMP_REGEX, '', log_line)
+            return re.sub(TIMESTAMP_REGEX, "", log_line)
 
         timestamp_info = log_search.group()
-        return re.sub(TIMESTAMP_REGEX, Printer.add_color(timestamp_info, 'white'), log_line)
+        return re.sub(
+            TIMESTAMP_REGEX, Printer.add_color(timestamp_info, "white"), log_line
+        )
 
     def handle_status(status, log_lines):
         status = Printer.get_colored_status(status)
-        Printer.log('{} ...'.format(status), nl=True)
+        Printer.log("{} ...".format(status), nl=True)
         for log_line in log_lines:
             if log_line:
                 log_line = handle_timestamp(log_line)
@@ -68,8 +72,8 @@ def get_logs_handler(handle_job_info=False, show_timestamp=True, stream=True):
                 Printer.log(log_line, nl=True)
 
     def handle_logs(message):
-        log_lines = to_list(message['log_lines'])
-        status = message.get('status')
+        log_lines = to_list(message["log_lines"])
+        status = message.get("status")
         if not status and log_lines:
             handle_log_lines(log_lines)
         else:

@@ -66,9 +66,7 @@ class TestExperimentTracking(TestEnvVarsCase):
         self.check_empty_value(POLYAXON_KEYS_JOB_INFO, Run.get_experiment_info)
 
     def test_non_dict_experiment_info(self):
-        self.check_non_dict_value(
-            POLYAXON_KEYS_JOB_INFO, Run.get_experiment_info
-        )
+        self.check_non_dict_value(POLYAXON_KEYS_JOB_INFO, Run.get_experiment_info)
 
     def test_dict_experiment_info(self):
         experiment_info = {
@@ -96,9 +94,7 @@ class TestExperimentTracking(TestEnvVarsCase):
 
     def test_dict_task_info(self):
         task_info = {"type": "master", "index": 0}
-        self.check_valid_dict_value(
-            "POLYAXON_TASK_INFO", Run.get_task_info, task_info
-        )
+        self.check_valid_dict_value("POLYAXON_TASK_INFO", Run.get_task_info, task_info)
 
     def test_tf_config_checks_is_managed(self):
         settings.IS_MANAGED = False

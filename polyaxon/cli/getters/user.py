@@ -5,4 +5,4 @@ from polyaxon.managers.auth import AuthConfigManager
 
 
 def get_username_or_local(username):
-    return username or AuthConfigManager.get_value('username')
+    return username or AuthConfigManager.get_value("username")

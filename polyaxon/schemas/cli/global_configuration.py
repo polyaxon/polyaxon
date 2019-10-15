@@ -20,14 +20,11 @@ class GlobalConfigurationSchema(BaseSchema):
 
 class GlobalConfigurationConfig(BaseConfig):
     SCHEMA = GlobalConfigurationSchema
-    IDENTIFIER = 'global'
+    IDENTIFIER = "global"
 
-    def __init__(self,
-                 verbose=False,
-                 host='localhost',
-                 port=80,
-                 use_https=False,
-                 verify_ssl=None):
+    def __init__(
+        self, verbose=False, host="localhost", port=80, use_https=False, verify_ssl=None
+    ):
         self.verbose = verbose
         self.host = host
         self.port = str(port)

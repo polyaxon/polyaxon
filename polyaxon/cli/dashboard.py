@@ -10,11 +10,17 @@ from polyaxon.logger import clean_outputs
 
 
 @click.command()
-@click.option('--yes', '-y', is_flag=True, default=False,
-              help='Automatic yes to prompts. '
-                   'Assume "yes" as answer to all prompts and run non-interactively.')
-@click.option('--url', is_flag=True, default=False,
-              help='Print the url of the dashboard.')
+@click.option(
+    "--yes",
+    "-y",
+    is_flag=True,
+    default=False,
+    help="Automatic yes to prompts. "
+    'Assume "yes" as answer to all prompts and run non-interactively.',
+)
+@click.option(
+    "--url", is_flag=True, default=False, help="Print the url of the dashboard."
+)
 @clean_outputs
 def dashboard(yes, url):
     """Open dashboard in browser."""
@@ -23,7 +29,10 @@ def dashboard(yes, url):
         click.echo(dashboard_url)
         sys.exit(0)
     if not yes:
-        click.confirm('Dashboard page will now open in your browser. Continue?',
-                      abort=True, default=True)
+        click.confirm(
+            "Dashboard page will now open in your browser. Continue?",
+            abort=True,
+            default=True,
+        )
 
     click.launch(dashboard_url)

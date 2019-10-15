@@ -9,5 +9,5 @@ class GlobalConfigManager(BaseConfigManager):
     """Manages global configuration .polyaxonconfig file."""
 
     IS_GLOBAL = True
-    CONFIG_FILE_NAME = '.polyaxonconfig'
+    CONFIG_FILE_NAME = ".polyaxonconfig"
     CONFIG = GlobalConfigurationConfig

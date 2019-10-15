@@ -25,16 +25,16 @@ class BaseConfigManager(object):
             except OSError:
                 # Except permission denied and potential race conditions
                 # in multi-threaded environments.
-                logger.error('Could not create config directory `%s`', dir_path)
+                logger.error("Could not create config directory `%s`", dir_path)
 
     @classmethod
     def get_config_file_path(cls, create=True):
         if not cls.IS_GLOBAL:
             # local to this directory
-            base_path = os.path.join('.')
+            base_path = os.path.join(".")
             if cls.IS_POLYAXON_DIR:
                 # Add it to the current "./.polyaxon"
-                base_path = os.path.join(base_path, '.polyaxon')
+                base_path = os.path.join(base_path, ".polyaxon")
                 if create:
                     cls._create_dir(base_path)
         else:
@@ -59,18 +59,19 @@ class BaseConfigManager(object):
         config_file_path = cls.get_config_file_path()
 
         if os.path.isfile(config_file_path) and init:
-            logger.debug("%s file already present at %s",
-                         cls.CONFIG_FILE_NAME, config_file_path)
+            logger.debug(
+                "%s file already present at %s", cls.CONFIG_FILE_NAME, config_file_path
+            )
             return
 
         with open(config_file_path, "w") as config_file:
-            if hasattr(config, 'to_dict'):
+            if hasattr(config, "to_dict"):
                 logger.debug(
-                    "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME)
+                    "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME
+                )
                 config_file.write(json.dumps(config.to_dict()))
             else:
-                logger.debug(
-                    "Setting %s in the file %s", config, cls.CONFIG_FILE_NAME)
+                logger.debug("Setting %s in the file %s", config, cls.CONFIG_FILE_NAME)
                 config_file.write(config)
 
     @classmethod

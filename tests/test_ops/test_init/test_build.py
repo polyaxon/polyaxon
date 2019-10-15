@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from unittest import TestCase
 
 import pytest
+
 from marshmallow import ValidationError
 
 from polyaxon.schemas.ops.init.build_context import BuildContextConfig
@@ -130,18 +131,12 @@ class TestBuildConfigs(TestCase):
             "image": "tensorflow:1.3.0",
             "build_steps": ["pip install tensor2tensor"],
             "env_vars": [["LC_ALL", "en_US.UTF-8"]],
-            "security_context": {
-                "runAsUser": 1000,
-                "runAsGroup": 3000,
-            }
+            "security_context": {"runAsUser": 1000, "runAsGroup": 3000},
         }
         config = BuildContextConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
         assert config.image_tag == "1.3.0"
-        assert config.security_context == {
-                "runAsUser": 1000,
-                "runAsGroup": 3000,
-            }
+        assert config.security_context == {"runAsUser": 1000, "runAsGroup": 3000}
 
     def test_build_config_with_dockerfile(self):
         config_dict = {"image": "some_image_name"}

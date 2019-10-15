@@ -142,12 +142,8 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "init": {
-                    "repos": [{"name": "foo", "branch": "dev"}],
-                },
-                "mounts": {
-                    "config_maps": [{"name": "config_map1"}],
-                },
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "mounts": {"config_maps": [{"name": "config_map1"}]},
                 "container": {"image": "jupyterlab"},
             },
         }
@@ -167,12 +163,8 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "init": {
-                    "repos": [{"name": "foo", "branch": "dev"}],
-                },
-                "mounts": {
-                    "config_maps": [{"name": "config_map1"}],
-                },
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "mounts": {"config_maps": [{"name": "config_map1"}]},
             },
         }
         with self.assertRaises(TypeError):
@@ -191,12 +183,8 @@ class TestOpConfigs(TestCase):
                 "environment": {
                     "node_selector": {"polyaxon.com": "node_for_notebook_jobs"}
                 },
-                "init": {
-                    "repos": [{"name": "foo", "branch": "dev"}],
-                },
-                "mounts": {
-                    "config_maps": [{"name": "config_map1"}],
-                },
+                "init": {"repos": [{"name": "foo", "branch": "dev"}]},
+                "mounts": {"config_maps": [{"name": "config_map1"}]},
                 "container": {"image": "jupyterlab"},
             },
         }

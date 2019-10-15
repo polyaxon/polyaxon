@@ -10,11 +10,11 @@ from polyaxon.utils.formatting import Printer
 
 
 def get_project_info(project):
-    parts = project.replace('.', '/').split('/')
+    parts = project.replace(".", "/").split("/")
     if len(parts) == 2:
         user, project_name = parts
     else:
-        user = AuthConfigManager.get_value('username')
+        user = AuthConfigManager.get_value("username")
         project_name = project
 
     return user, project_name
@@ -22,8 +22,10 @@ def get_project_info(project):
 
 def get_project_or_local(project=None):
     if not project and not ProjectManager.is_initialized():
-        Printer.print_error('Please provide a valid project, or init a new project. '
-                            ' {}'.format(constants.INIT_COMMAND))
+        Printer.print_error(
+            "Please provide a valid project, or init a new project. "
+            " {}".format(constants.INIT_COMMAND)
+        )
         sys.exit(1)
 
     if project:
@@ -33,7 +35,9 @@ def get_project_or_local(project=None):
         user, project_name = project.user, project.name
 
     if not all([user, project_name]):
-        Printer.print_error('Please provide a valid project, or init a new project.'
-                            ' {}'.format(constants.INIT_COMMAND))
+        Printer.print_error(
+            "Please provide a valid project, or init a new project."
+            " {}".format(constants.INIT_COMMAND)
+        )
         sys.exit(1)
     return user, project_name

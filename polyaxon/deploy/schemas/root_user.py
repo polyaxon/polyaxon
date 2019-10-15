@@ -7,8 +7,8 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 class RootUserSchema(BaseSchema):
-    username = fields.Str(allow_none=True, default='root')
-    password = fields.Str(allow_none=True, default='rootpassword')
+    username = fields.Str(allow_none=True, default="root")
+    password = fields.Str(allow_none=True, default="rootpassword")
     email = fields.Email(allow_none=True)
 
     @staticmethod
@@ -18,7 +18,7 @@ class RootUserSchema(BaseSchema):
 
 class RootUserConfig(BaseConfig):
     SCHEMA = RootUserSchema
-    REDUCED_ATTRIBUTES = ['username', 'password', 'email']
+    REDUCED_ATTRIBUTES = ["username", "password", "email"]
 
     def __init__(self, username=None, password=None, email=None):
         self.username = username

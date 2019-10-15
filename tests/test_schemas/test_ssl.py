@@ -8,6 +8,6 @@ from polyaxon.deploy.schemas.ssl import SSLConfig
 
 class TestSSLConfig(TestCase):
     def test_ssl_config(self):
-        config_dict = {'enabled': True, 'secretName': 'foo', 'path': '/etc/ssl'}
+        config_dict = {"enabled": True, "secretName": "foo", "path": "/etc/ssl"}
         config = SSLConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict

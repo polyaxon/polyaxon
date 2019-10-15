@@ -10,7 +10,9 @@ from polyaxon.schemas.fields.ref_or_obj import RefOrObject
 
 def validate_build_context_image(image, dockerfile):
     if not image and not dockerfile:
-        raise ValidationError("Invalid Build context, an image or path to dockerfile is required.")
+        raise ValidationError(
+            "Invalid Build context, an image or path to dockerfile is required."
+        )
     validate_image(image)
 
 
@@ -36,8 +38,7 @@ class BuildContextSchema(BaseSchema):
     @validates_schema
     def validate(self, data):
         validate_build_context_image(
-            image=data.get("image"),
-            dockerfile=data.get("dockerfile"),
+            image=data.get("image"), dockerfile=data.get("dockerfile")
         )
 
 
@@ -52,7 +53,7 @@ class BuildContextConfig(BaseConfig):
         "lang_env",
         "env_vars",
         "security_context",
-        "commit"
+        "commit",
     ]
 
     def __init__(

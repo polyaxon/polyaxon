@@ -8,11 +8,11 @@ from polyaxon.deploy.schemas.rbac import RBACConfig
 
 class TestRBACConfig(TestCase):
     def test_rbac_config(self):
-        config_dict = {'enabled': True}
+        config_dict = {"enabled": True}
         config = RBACConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 
-        config_dict = {'enabled': False}
+        config_dict = {"enabled": False}
         config = RBACConfig.from_dict(config_dict)
         assert config.to_dict() == config_dict
 

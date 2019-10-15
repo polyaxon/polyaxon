@@ -11,5 +11,5 @@ class TestProjectManager(TestCase):
     def test_default_props(self):
         assert ProjectManager.IS_GLOBAL is False
         assert ProjectManager.IS_POLYAXON_DIR is True
-        assert ProjectManager.CONFIG_FILE_NAME == '.polyaxonproject'
+        assert ProjectManager.CONFIG_FILE_NAME == ".polyaxonproject"
         assert ProjectManager.CONFIG == ProjectConfig

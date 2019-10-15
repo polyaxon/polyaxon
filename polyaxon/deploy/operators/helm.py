@@ -5,7 +5,7 @@ from polyaxon.deploy.operators.cmd_operator import CmdOperator
 
 
 class HelmOperator(CmdOperator):
-    CMD = 'helm'
+    CMD = "helm"
 
     @classmethod
     def params(cls, args):
@@ -17,7 +17,7 @@ class HelmOperator(CmdOperator):
         command_exist = cls.execute(args=[])
         if not command_exist:
             return False
-        command_exist = cls.execute(args=['version'])
+        command_exist = cls.execute(args=["version"])
         if not command_exist:
             return False
         return True

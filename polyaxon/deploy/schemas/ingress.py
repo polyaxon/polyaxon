@@ -20,14 +20,11 @@ class IngressSchema(BaseSchema):
 
 class IngressConfig(BaseConfig):
     SCHEMA = IngressSchema
-    REDUCED_ATTRIBUTES = ['enabled', 'hostName', 'tls', 'annotations', 'path']
+    REDUCED_ATTRIBUTES = ["enabled", "hostName", "tls", "annotations", "path"]
 
-    def __init__(self,  # noqa
-                 enabled=None,
-                 hostName=None,
-                 path=None,
-                 tls=None,
-                 annotations=None,):
+    def __init__(
+        self, enabled=None, hostName=None, path=None, tls=None, annotations=None  # noqa
+    ):
         self.enabled = enabled
         self.hostName = hostName
         self.path = path

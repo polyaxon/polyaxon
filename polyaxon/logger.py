@@ -12,7 +12,7 @@ except ImportError:
     from io import StringIO
 
 
-logger = logging.getLogger('polyaxon.cli')
+logger = logging.getLogger("polyaxon.cli")
 
 
 def configure_logger(verbose):
@@ -28,14 +28,15 @@ def configure_logger(verbose):
                 release=cli_config.current_version,
                 environment=cli_config.log_handler.environment,
                 tags=cli_config.log_handler.tags,
-                processors=('raven.processors.SanitizePasswordsProcessor',))
+                processors=("raven.processors.SanitizePasswordsProcessor",),
+            )
             client.error_logger.disabled = True
             return client
         return None
 
     set_raven_client()
     log_level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(format='%(message)s', level=log_level, stream=sys.stdout)
+    logging.basicConfig(format="%(message)s", level=log_level, stream=sys.stdout)
 
 
 def clean_outputs(fn):

@@ -5,8 +5,9 @@ from unittest import TestCase
 
 import pytest
 
-from polyaxon.schemas.ops.init import InitConfig
 from tests.utils import assert_equal_dict
+
+from polyaxon.schemas.ops.init import InitConfig
 
 
 @pytest.mark.init_mark

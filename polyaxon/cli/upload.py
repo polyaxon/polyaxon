@@ -9,7 +9,7 @@ from polyaxon.client import PolyaxonClient
 from polyaxon.client.exceptions import (
     PolyaxonClientException,
     PolyaxonHTTPError,
-    PolyaxonShouldExitError
+    PolyaxonShouldExitError,
 )
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreManager
@@ -26,25 +26,32 @@ def upload(sync=True):  # pylint:disable=assign-to-new-keyword
     files = IgnoreManager.get_unignored_file_paths()
     try:
         with create_tarfile(files, project.name) as file_path:
-            with get_files_in_current_directory('repo', [file_path]) as (files, files_size):
+            with get_files_in_current_directory("repo", [file_path]) as (
+                files,
+                files_size,
+            ):
                 try:
-                    PolyaxonClient().project.upload_repo(project.user,
-                                                         project.name,
-                                                         files,
-                                                         files_size,
-                                                         sync=sync)
-                except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+                    PolyaxonClient().project.upload_repo(
+                        project.user, project.name, files, files_size, sync=sync
+                    )
+                except (
+                    PolyaxonHTTPError,
+                    PolyaxonShouldExitError,
+                    PolyaxonClientException,
+                ) as e:
                     Printer.print_error(
-                        'Could not upload code for project `{}`.'.format(project.name))
-                    Printer.print_error('Error message `{}`.'.format(e))
+                        "Could not upload code for project `{}`.".format(project.name)
+                    )
+                    Printer.print_error("Error message `{}`.".format(e))
                     Printer.print_error(
-                        'Check the project exists, '
-                        'and that you have access rights, '
-                        'this could happen as well when uploading large files. '
-                        'Please also make sure that you have enough space to upload the data.')
+                        "Check the project exists, "
+                        "and that you have access rights, "
+                        "this could happen as well when uploading large files. "
+                        "Please also make sure that you have enough space to upload the data."
+                    )
                     sys.exit(1)
-                Printer.print_success('Files uploaded.')
+                Printer.print_success("Files uploaded.")
     except Exception as e:
         Printer.print_error("Could not upload the file.")
-        Printer.print_error('Error message `{}`.'.format(e))
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)

@@ -8,29 +8,32 @@ import click
 from polyaxon.cli.experiment import logs as experiment_logs
 from polyaxon.cli.upload import upload as upload_cmd
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError,
+)
 from polyaxon.managers.run import RunManager
+from polyaxon.schemas.polyflow.ops import OpConfig
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
-from polyaxon.client.exceptions import PolyaxonClientException
-
-from polyaxon.schemas.polyflow.ops import OpConfig
 
 
-def run(ctx,
-        name,
-        user,
-        project_name,
-        description,
-        tags,
-        specification,
-        ttl,
-        upload,
-        log,
-        can_upload):
-
+def run(
+    ctx,
+    name,
+    user,
+    project_name,
+    description,
+    tags,
+    specification,
+    ttl,
+    upload,
+    log,
+    can_upload,
+):
     def run_experiment():
-        click.echo('Creating an independent experiment.')
+        click.echo("Creating an independent experiment.")
         experiment = OpConfig(
             name=name,
             description=description,
@@ -40,21 +43,29 @@ def run(ctx,
             is_managed=True,
         )
         try:
-            response = PolyaxonClient().project.create_experiment(user,
-                                                                  project_name,
-                                                                  experiment)
+            response = PolyaxonClient().project.create_experiment(
+                user, project_name, experiment
+            )
             cache.cache(config_manager=RunManager, response=response)
-            Printer.print_success('Experiment `{}` was created'.format(response.id))
-        except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-            Printer.print_error('Could not create experiment.')
-            Printer.print_error('Error message `{}`.'.format(e))
+            Printer.print_success("Experiment `{}` was created".format(response.id))
+        except (
+            PolyaxonHTTPError,
+            PolyaxonShouldExitError,
+            PolyaxonClientException,
+        ) as e:
+            Printer.print_error("Could not create experiment.")
+            Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
 
     # Check if we need to upload
     if upload:
         if can_upload:
-            Printer.print_error('Uploading is not supported when switching project context!')
-            click.echo('Please, either omit the `-u` option or `-p` / `--project=` option.')
+            Printer.print_error(
+                "Uploading is not supported when switching project context!"
+            )
+            click.echo(
+                "Please, either omit the `-u` option or `-p` / `--project=` option."
+            )
             sys.exit(1)
         ctx.invoke(upload_cmd, sync=False)
 
@@ -63,5 +74,5 @@ def run(ctx,
 
     # Check if we need to invoke logs
     if log and logs_cmd:
-        ctx.obj = {'project': '{}/{}'.format(user, project_name)}
+        ctx.obj = {"project": "{}/{}".format(user, project_name)}
         ctx.invoke(logs_cmd)

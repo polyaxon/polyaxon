@@ -21,15 +21,24 @@ class EmailSchema(BaseSchema):
 
 class EmailConfig(BaseConfig):
     SCHEMA = EmailSchema
-    REDUCED_ATTRIBUTES = ['host', 'port', 'useTls', 'hostUser', 'hostPassword', 'backend']
+    REDUCED_ATTRIBUTES = [
+        "host",
+        "port",
+        "useTls",
+        "hostUser",
+        "hostPassword",
+        "backend",
+    ]
 
-    def __init__(self,  # noqa
-                 host=None,
-                 port=None,
-                 useTls=None,
-                 hostUser=None,
-                 hostPassword=None,
-                 backend=None):
+    def __init__(
+        self,  # noqa
+        host=None,
+        port=None,
+        useTls=None,
+        hostUser=None,
+        hostPassword=None,
+        backend=None,
+    ):
         self.host = host
         self.port = port
         self.useTls = useTls

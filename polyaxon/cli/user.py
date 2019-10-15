@@ -6,10 +6,13 @@ import sys
 import click
 
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError,
+)
 from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import Printer
-from polyaxon.client.exceptions import PolyaxonClientException
 
 
 @click.group()
@@ -19,7 +22,7 @@ def user():
 
 
 @user.command()
-@click.argument('username', type=str)
+@click.argument("username", type=str)
 @clean_outputs
 def activate(username):
     """Activate a user.
@@ -34,15 +37,15 @@ def activate(username):
     try:
         PolyaxonClient().user.activate_user(username)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error('Could not activate user `{}`.'.format(username))
-        Printer.print_error('Error message `{}`.'.format(e))
+        Printer.print_error("Could not activate user `{}`.".format(username))
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     Printer.print_success("User `{}` was activated successfully.".format(username))
 
 
 @user.command()
-@click.argument('username', type=str)
+@click.argument("username", type=str)
 @clean_outputs
 def delete(username):
     """Delete a user.
@@ -57,8 +60,8 @@ def delete(username):
     try:
         PolyaxonClient().user.delete_user(username)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error('Could not delete user `{}`.'.format(username))
-        Printer.print_error('Error message `{}`.'.format(e))
+        Printer.print_error("Could not delete user `{}`.".format(username))
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     Printer.print_success("User `{}` was deleted successfully.".format(username))

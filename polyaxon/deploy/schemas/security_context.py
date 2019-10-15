@@ -9,7 +9,8 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 def validate_security_context(user, group):
     if any([user, group]) and not all([user, group]):
         raise ValidationError(
-            "Security context requires both `user` and `group` or none.")
+            "Security context requires both `user` and `group` or none."
+        )
 
 
 class SecurityContextSchema(BaseSchema):
@@ -23,12 +24,12 @@ class SecurityContextSchema(BaseSchema):
 
     @validates_schema
     def validate_security_context(self, data):
-        validate_security_context(data.get('user'), data.get('group'))
+        validate_security_context(data.get("user"), data.get("group"))
 
 
 class SecurityContextConfig(BaseConfig):
     SCHEMA = SecurityContextSchema
-    REDUCED_ATTRIBUTES = ['enabled', 'user', 'group']
+    REDUCED_ATTRIBUTES = ["enabled", "user", "group"]
 
     def __init__(self, enabled=None, user=None, group=None):
         validate_security_context(user, group)

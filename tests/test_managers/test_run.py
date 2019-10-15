@@ -11,5 +11,5 @@ class TestRunManager(TestCase):
     def test_default_props(self):
         assert RunManager.IS_GLOBAL is False
         assert RunManager.IS_POLYAXON_DIR is True
-        assert RunManager.CONFIG_FILE_NAME == '.polyaxonrun'
+        assert RunManager.CONFIG_FILE_NAME == ".polyaxonrun"
         assert RunManager.CONFIG == ExperimentConfig

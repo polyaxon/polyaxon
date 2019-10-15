@@ -5,7 +5,7 @@ from polyaxon.deploy.operators.cmd_operator import CmdOperator
 
 
 class CondaOperator(CmdOperator):
-    CMD = 'conda'
+    CMD = "conda"
 
     @classmethod
     def params(cls, args):
@@ -14,7 +14,7 @@ class CondaOperator(CmdOperator):
 
     @classmethod
     def check(cls):
-        command_exist = cls.execute(args=['-V'])
+        command_exist = cls.execute(args=["-V"])
         if not command_exist:
             return False
         return True

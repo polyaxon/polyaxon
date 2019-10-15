@@ -4,10 +4,10 @@ from __future__ import absolute_import, division, print_function
 from marshmallow import fields, validate
 
 from polyaxon.schemas.base import NAME_REGEX, BaseConfig, BaseSchema
-from polyaxon.schemas.ops.init import InitSchema
-from polyaxon.schemas.ops.mounts import MountsSchema
 from polyaxon.schemas.ops.environments import EnvironmentSchema
+from polyaxon.schemas.ops.init import InitSchema
 from polyaxon.schemas.ops.job.replicas import OpReplicaSchema
+from polyaxon.schemas.ops.mounts import MountsSchema
 from polyaxon.schemas.ops.termination import TerminationSchema
 from polyaxon.schemas.polyflow.conditions import ConditionSchema
 from polyaxon.schemas.polyflow.template_ref import TemplateRefSchema

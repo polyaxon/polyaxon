@@ -32,9 +32,7 @@ class TerminationConfig(BaseConfig):
     SCHEMA = TerminationSchema
     REDUCED_ATTRIBUTES = ["max_retries", "timeout", "restart_policy", "ttl"]
 
-    def __init__(
-        self, max_retries=None, timeout=None, restart_policy=None, ttl=None
-    ):
+    def __init__(self, max_retries=None, timeout=None, restart_policy=None, ttl=None):
         self.max_retries = max_retries
         self.timeout = timeout
         self.restart_policy = restart_policy

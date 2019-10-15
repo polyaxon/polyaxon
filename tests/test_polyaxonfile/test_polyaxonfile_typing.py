@@ -48,7 +48,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec = spec.apply_context()
         spec = spec.apply_container_contexts()
         assert spec.version == 0.6
-        assert spec.tags == ['foo', 'bar']
+        assert spec.tags == ["foo", "bar"]
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar "
@@ -67,7 +67,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec = spec.apply_context()
         spec = spec.apply_container_contexts()
         assert spec.version == 0.6
-        assert spec.tags == ['foo', 'bar']
+        assert spec.tags == ["foo", "bar"]
         assert spec.container.image == "my_image"
         assert spec.container.command == ["/bin/sh", "-c"]
         assert spec.container.args == "video_prediction_train --loss=bar --flag"
@@ -162,7 +162,7 @@ class TestPolyaxonfileWithTypes(TestCase):
         new_spec = spec.apply_context()
         new_spec = new_spec.apply_container_contexts()
         assert new_spec.version == 0.6
-        assert new_spec.tags == ['foo', 'bar']
+        assert new_spec.tags == ["foo", "bar"]
         assert new_spec.is_job
         assert new_spec.environment is None
         container = new_spec.container
@@ -201,8 +201,13 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec.apply_params(
             params=params,
             context={
-                "runs.64332180bfce46eba80a65caf73c5396.outputs.doo": IOConfig(name="model_path", value="model_path", is_optional=True, iotype="path")
-            }
+                "runs.64332180bfce46eba80a65caf73c5396.outputs.doo": IOConfig(
+                    name="model_path",
+                    value="model_path",
+                    is_optional=True,
+                    iotype="path",
+                )
+            },
         )
 
         params = {"num_masks": 2, "model_path": "{{ ops.A.outputs.doo }}"}
@@ -222,6 +227,11 @@ class TestPolyaxonfileWithTypes(TestCase):
         spec.apply_params(
             params=params,
             context={
-                "ops.A.outputs.doo": IOConfig(name="model_path", value="model_path", is_optional=True, iotype="path")
-            }
+                "ops.A.outputs.doo": IOConfig(
+                    name="model_path",
+                    value="model_path",
+                    is_optional=True,
+                    iotype="path",
+                )
+            },
         )

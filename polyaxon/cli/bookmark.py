@@ -7,29 +7,32 @@ import click
 
 from polyaxon.cli.getters.user import get_username_or_local
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import PolyaxonHTTPError, PolyaxonShouldExitError
+from polyaxon.client.exceptions import (
+    PolyaxonClientException,
+    PolyaxonHTTPError,
+    PolyaxonShouldExitError,
+)
 from polyaxon.logger import clean_outputs
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
     get_meta_response,
-    list_dicts_to_tabulate
+    list_dicts_to_tabulate,
 )
-from polyaxon.client.exceptions import PolyaxonClientException
 
 
 @click.group()
-@click.option('--username', '-u', type=str)
+@click.option("--username", "-u", type=str)
 @click.pass_context
 @clean_outputs
 def bookmark(ctx, username):  # pylint:disable=redefined-outer-name
     """Commands for bookmarks."""
     ctx.obj = ctx.obj or {}
-    ctx.obj['username'] = username
+    ctx.obj["username"] = username
 
 
 @bookmark.command()
-@click.option('--page', type=int, help='To paginate through the list of projects.')
+@click.option("--page", type=int, help="To paginate through the list of projects.")
 @click.pass_context
 @clean_outputs
 def projects(ctx, page):
@@ -49,27 +52,30 @@ def projects(ctx, page):
     $ polyaxon bookmark -u adam projects
     ```
     """
-    user = get_username_or_local(ctx.obj.get('username'))
+    user = get_username_or_local(ctx.obj.get("username"))
 
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.projects(username=user, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
-            'Could not get bookmarked projects for user `{}`.'.format(user))
-        Printer.print_error('Error message `{}`.'.format(e))
+            "Could not get bookmarked projects for user `{}`.".format(user)
+        )
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Bookmarked projects for user `{}`.'.format(user))
-        Printer.print_header('Navigation:')
+        Printer.print_header("Bookmarked projects for user `{}`.".format(user))
+        Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header('No bookmarked projects found for user `{}`.'.format(user))
+        Printer.print_header("No bookmarked projects found for user `{}`.".format(user))
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    objects = [
+        Printer.add_status_color(o.to_light_dict(humanize_values=True))
+        for o in response["results"]
+    ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Projects:")
@@ -77,7 +83,7 @@ def projects(ctx, page):
 
 
 @bookmark.command()
-@click.option('--page', type=int, help='To paginate through the list of groups.')
+@click.option("--page", type=int, help="To paginate through the list of groups.")
 @click.pass_context
 @clean_outputs
 def groups(ctx, page):
@@ -97,27 +103,32 @@ def groups(ctx, page):
     $ polyaxon bookmark -u adam groups
     ```
     """
-    user = get_username_or_local(ctx.obj.get('username'))
+    user = get_username_or_local(ctx.obj.get("username"))
 
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.groups(username=user, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
-            'Could not get bookmarked experiment groups for user `{}`.'.format(user))
-        Printer.print_error('Error message `{}`.'.format(e))
+            "Could not get bookmarked experiment groups for user `{}`.".format(user)
+        )
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Bookmarked experiment groups for user `{}`.'.format(user))
-        Printer.print_header('Navigation:')
+        Printer.print_header("Bookmarked experiment groups for user `{}`.".format(user))
+        Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header('No bookmarked experiment groups found for user `{}`.'.format(user))
+        Printer.print_header(
+            "No bookmarked experiment groups found for user `{}`.".format(user)
+        )
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    objects = [
+        Printer.add_status_color(o.to_light_dict(humanize_values=True))
+        for o in response["results"]
+    ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiment groups:")
@@ -125,7 +136,7 @@ def groups(ctx, page):
 
 
 @bookmark.command()
-@click.option('--page', type=int, help='To paginate through the list of experiments.')
+@click.option("--page", type=int, help="To paginate through the list of experiments.")
 @click.pass_context
 @clean_outputs
 def experiments(ctx, page):
@@ -145,27 +156,32 @@ def experiments(ctx, page):
     $ polyaxon bookmark -u adam experiments
     ```
     """
-    user = get_username_or_local(ctx.obj.get('username'))
+    user = get_username_or_local(ctx.obj.get("username"))
 
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.experiments(username=user, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
-            'Could not get bookmarked experiments for user `{}`.'.format(user))
-        Printer.print_error('Error message `{}`.'.format(e))
+            "Could not get bookmarked experiments for user `{}`.".format(user)
+        )
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Bookmarked experiments for user `{}`.'.format(user))
-        Printer.print_header('Navigation:')
+        Printer.print_header("Bookmarked experiments for user `{}`.".format(user))
+        Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header('No bookmarked experiments found for user `{}`.'.format(user))
+        Printer.print_header(
+            "No bookmarked experiments found for user `{}`.".format(user)
+        )
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    objects = [
+        Printer.add_status_color(o.to_light_dict(humanize_values=True))
+        for o in response["results"]
+    ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Experiments:")
@@ -173,7 +189,7 @@ def experiments(ctx, page):
 
 
 @bookmark.command()
-@click.option('--page', type=int, help='To paginate through the list of jobs.')
+@click.option("--page", type=int, help="To paginate through the list of jobs.")
 @click.pass_context
 @clean_outputs
 def jobs(ctx, page):
@@ -193,27 +209,28 @@ def jobs(ctx, page):
     $ polyaxon bookmark -u adam jobs
     ```
     """
-    user = get_username_or_local(ctx.obj.get('username'))
+    user = get_username_or_local(ctx.obj.get("username"))
 
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.jobs(username=user, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error(
-            'Could not get bookmarked jobs for user `{}`.'.format(user))
-        Printer.print_error('Error message `{}`.'.format(e))
+        Printer.print_error("Could not get bookmarked jobs for user `{}`.".format(user))
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Bookmarked jobs for user `{}`.'.format(user))
-        Printer.print_header('Navigation:')
+        Printer.print_header("Bookmarked jobs for user `{}`.".format(user))
+        Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header('No bookmarked jobs found for user `{}`.'.format(user))
+        Printer.print_header("No bookmarked jobs found for user `{}`.".format(user))
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    objects = [
+        Printer.add_status_color(o.to_light_dict(humanize_values=True))
+        for o in response["results"]
+    ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Jobs:")
@@ -221,7 +238,7 @@ def jobs(ctx, page):
 
 
 @bookmark.command()
-@click.option('--page', type=int, help='To paginate through the list of builds.')
+@click.option("--page", type=int, help="To paginate through the list of builds.")
 @click.pass_context
 @clean_outputs
 def builds(ctx, page):
@@ -241,27 +258,30 @@ def builds(ctx, page):
     $ polyaxon bookmark -u adam builds
     ```
     """
-    user = get_username_or_local(ctx.obj.get('username'))
+    user = get_username_or_local(ctx.obj.get("username"))
 
     page = page or 1
     try:
         response = PolyaxonClient().bookmark.builds(username=user, page=page)
     except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
         Printer.print_error(
-            'Could not get bookmarked builds for user `{}`.'.format(user))
-        Printer.print_error('Error message `{}`.'.format(e))
+            "Could not get bookmarked builds for user `{}`.".format(user)
+        )
+        Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     meta = get_meta_response(response)
     if meta:
-        Printer.print_header('Bookmarked builds for user `{}`.'.format(user))
-        Printer.print_header('Navigation:')
+        Printer.print_header("Bookmarked builds for user `{}`.".format(user))
+        Printer.print_header("Navigation:")
         dict_tabulate(meta)
     else:
-        Printer.print_header('No bookmarked builds found for user `{}`.'.format(user))
+        Printer.print_header("No bookmarked builds found for user `{}`.".format(user))
 
-    objects = [Printer.add_status_color(o.to_light_dict(humanize_values=True))
-               for o in response['results']]
+    objects = [
+        Printer.add_status_color(o.to_light_dict(humanize_values=True))
+        for o in response["results"]
+    ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
         Printer.print_header("Builds:")

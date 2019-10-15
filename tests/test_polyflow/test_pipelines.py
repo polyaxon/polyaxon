@@ -9,8 +9,8 @@ from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
 from polyaxon.schemas.exceptions import PolyaxonSchemaError
-from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.ops import params as ops_params
+from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.polyflow import dags
 from polyaxon.schemas.polyflow.ops import OpConfig
 from polyaxon.schemas.polyflow.pipeline import PipelineConfig
@@ -1864,15 +1864,15 @@ class TestPipelineConfigs(TestCase):
         assert sorted_dag[1] == ["B"]
         assert sorted_dag[2] == ["C"]
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
-            params=config.dag["A"].op.params,
+            params=config.dag["A"].op.params
         )
         assert op_upstream_by_names == {}
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
-            params=config.dag["B"].op.params,
+            params=config.dag["B"].op.params
         )
         assert op_upstream_by_names == {}
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
-            params=config.dag["C"].op.params,
+            params=config.dag["C"].op.params
         )
         assert op_upstream_by_names["B"] == [
             ops_params.ParamSpec(
@@ -1896,11 +1896,11 @@ class TestPipelineConfigs(TestCase):
         ]
 
         op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
-            params=config.dag["A"].op.params,
+            params=config.dag["A"].op.params
         )
         assert op_upstream_by_names == {}
         op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
-            params=config.dag["B"].op.params,
+            params=config.dag["B"].op.params
         )
         assert op_upstream_by_names["64332180bfce46eba80a65caf73c5396"] == [
             ops_params.ParamSpec(
@@ -1911,9 +1911,9 @@ class TestPipelineConfigs(TestCase):
                 entity_ref="64332180bfce46eba80a65caf73c5396",
                 entity_value="foo",
                 is_flag=None,
-            ),
+            )
         ]
         op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
-            params=config.dag["C"].op.params,
+            params=config.dag["C"].op.params
         )
         assert op_upstream_by_names == {}

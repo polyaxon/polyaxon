@@ -3,7 +3,6 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import ValidationError, fields, validate, validates_schema
 
-from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.deploy.schemas.deployment_types import DeploymentTypes
 from polyaxon.deploy.schemas.email import EmailSchema
 from polyaxon.deploy.schemas.ingress import IngressSchema
@@ -23,10 +22,11 @@ from polyaxon.deploy.schemas.service import (
     RedisSchema,
     ServiceSchema,
     ThirdPartyServiceSchema,
-    WorkerSchema
+    WorkerSchema,
 )
 from polyaxon.deploy.schemas.service_types import ServiceTypes
 from polyaxon.deploy.schemas.ssl import SSLSchema
+from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 def check_redis(redis, external_services):
@@ -36,8 +36,10 @@ def check_redis(redis, external_services):
         external_redis = external_services.redis
 
     if redis_disabled and not external_redis:
-        raise ValidationError('A redis instance is required, please enable the in-cluster redis, '
-                              'or provide an external instance.')
+        raise ValidationError(
+            "A redis instance is required, please enable the in-cluster redis, "
+            "or provide an external instance."
+        )
 
 
 def check_postgres(postgresql, external_services):
@@ -47,27 +49,33 @@ def check_postgres(postgresql, external_services):
         external_postgresql = external_services.postgresql
 
     if postgresql_disabled and not external_postgresql:
-        raise ValidationError('A postgresql instance is required, '
-                              'please enable the in-cluster postgresql, '
-                              'or provide an external instance.')
+        raise ValidationError(
+            "A postgresql instance is required, "
+            "please enable the in-cluster postgresql, "
+            "or provide an external instance."
+        )
 
 
 def check_rabbitmq(rabbitmq, external_services, broker):
     rabbitmq_disabled = rabbitmq.enabled is False if rabbitmq else False
     external_rabbitmq = None
-    rabbitmq_borker = broker != 'redis'
+    rabbitmq_borker = broker != "redis"
     if external_services:
         external_rabbitmq = external_services.rabbitmq
 
     if rabbitmq_disabled and rabbitmq_borker and not external_rabbitmq:
-        raise ValidationError('Rabbitmq is used as a broker, '
-                              'an instance is required, '
-                              'please enable the in-cluster rabbitmq, '
-                              'or provide an external instance.')
+        raise ValidationError(
+            "Rabbitmq is used as a broker, "
+            "an instance is required, "
+            "please enable the in-cluster rabbitmq, "
+            "or provide an external instance."
+        )
 
 
 class DeploymentSchema(BaseSchema):
-    deploymentType = fields.Str(allow_none=True, validate=validate.OneOf(DeploymentTypes.VALUES))
+    deploymentType = fields.Str(
+        allow_none=True, validate=validate.OneOf(DeploymentTypes.VALUES)
+    )
     deploymentVersion = fields.Str(allow_none=True)
     clusterId = fields.Str(allow_none=True)
     namespace = fields.Str(allow_none=True)
@@ -77,7 +85,9 @@ class DeploymentSchema(BaseSchema):
     passwordLength = fields.Int(allow_none=True)
     ssl = fields.Nested(SSLSchema, allow_none=True)
     encryptionSecret = fields.Str(allow_none=True)
-    serviceType = fields.Str(allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES))
+    serviceType = fields.Str(
+        allow_none=True, validate=validate.OneOf(ServiceTypes.VALUES)
+    )
     adminViewEnabled = fields.Bool(allow_none=True)
     timeZone = fields.Str(allow_none=True)
     environment = fields.Str(allow_none=True)
@@ -104,13 +114,11 @@ class DeploymentSchema(BaseSchema):
     hooks = fields.Nested(HooksSchema, allow_none=True)
     postgresql = fields.Nested(PostgresqlSchema, allow_none=True)
     redis = fields.Nested(RedisSchema, allow_none=True)
-    rabbitmq = fields.Nested(RabbitmqSchema,
-                             data_key="rabbitmq-ha",
-                             allow_none=True)
-    broker = fields.Str(allow_none=True, validate=validate.OneOf(['redis', 'rabbitmq']))
-    dockerRegistry = fields.Nested(DockerRegistrySchema,
-                                   data_key="docker-registry",
-                                   allow_none=True)
+    rabbitmq = fields.Nested(RabbitmqSchema, data_key="rabbitmq-ha", allow_none=True)
+    broker = fields.Str(allow_none=True, validate=validate.OneOf(["redis", "rabbitmq"]))
+    dockerRegistry = fields.Nested(
+        DockerRegistrySchema, data_key="docker-registry", allow_none=True
+    )
     email = fields.Nested(EmailSchema, allow_none=True)
     ldap = fields.Raw(allow_none=True)
     hostName = fields.Str(allow_none=True)
@@ -137,72 +145,76 @@ class DeploymentSchema(BaseSchema):
 
     @validates_schema
     def validate_deployment(self, data):
-        check_redis(data.get('redis'), data.get('externalServices'))
-        check_postgres(data.get('postgresql'), data.get('externalServices'))
-        check_rabbitmq(data.get('rabbitmq'), data.get('externalServices'), data.get('broker'))
+        check_redis(data.get("redis"), data.get("externalServices"))
+        check_postgres(data.get("postgresql"), data.get("externalServices"))
+        check_rabbitmq(
+            data.get("rabbitmq"), data.get("externalServices"), data.get("broker")
+        )
 
 
 class DeploymentConfig(BaseConfig):
     SCHEMA = DeploymentSchema
 
-    def __init__(self,  # noqa
-                 deploymentType=None,
-                 deploymentVersion=None,
-                 clusterId=None,
-                 namespace=None,
-                 rbac=None,
-                 polyaxonSecret=None,
-                 internalToken=None,
-                 passwordLength=None,
-                 ssl=None,
-                 dns=None,
-                 encryptionSecret=None,
-                 serviceType=None,
-                 adminViewEnabled=None,
-                 timeZone=None,
-                 environment=None,
-                 ingress=None,
-                 user=None,
-                 nodeSelector=None,
-                 tolerations=None,
-                 affinity=None,
-                 limitResources=None,
-                 globalReplicas=None,
-                 globalConcurrency=None,
-                 api=None,
-                 streams=None,
-                 scheduler=None,
-                 worker=None,
-                 hpsearch=None,
-                 eventsHandlers=None,
-                 k8sEventsHandlers=None,
-                 beat=None,
-                 crons=None,
-                 eventMonitors=None,
-                 resourcesDaemon=None,
-                 tablesHook=None,
-                 hooks=None,
-                 postgresql=None,
-                 redis=None,
-                 rabbitmq=None,
-                 broker=None,
-                 dockerRegistry=None,
-                 email=None,
-                 ldap=None,
-                 hostName=None,
-                 allowedHosts=None,
-                 intervals=None,
-                 persistence=None,
-                 adminModels=None,
-                 reposAccessToken=None,
-                 logLevel=None,
-                 trackerBackend=None,
-                 dirs=None,
-                 mountPaths=None,
-                 securityContext=None,
-                 externalServices=None,
-                 debugMode=None,
-                 plugins=None):
+    def __init__(
+        self,  # noqa
+        deploymentType=None,
+        deploymentVersion=None,
+        clusterId=None,
+        namespace=None,
+        rbac=None,
+        polyaxonSecret=None,
+        internalToken=None,
+        passwordLength=None,
+        ssl=None,
+        dns=None,
+        encryptionSecret=None,
+        serviceType=None,
+        adminViewEnabled=None,
+        timeZone=None,
+        environment=None,
+        ingress=None,
+        user=None,
+        nodeSelector=None,
+        tolerations=None,
+        affinity=None,
+        limitResources=None,
+        globalReplicas=None,
+        globalConcurrency=None,
+        api=None,
+        streams=None,
+        scheduler=None,
+        worker=None,
+        hpsearch=None,
+        eventsHandlers=None,
+        k8sEventsHandlers=None,
+        beat=None,
+        crons=None,
+        eventMonitors=None,
+        resourcesDaemon=None,
+        tablesHook=None,
+        hooks=None,
+        postgresql=None,
+        redis=None,
+        rabbitmq=None,
+        broker=None,
+        dockerRegistry=None,
+        email=None,
+        ldap=None,
+        hostName=None,
+        allowedHosts=None,
+        intervals=None,
+        persistence=None,
+        adminModels=None,
+        reposAccessToken=None,
+        logLevel=None,
+        trackerBackend=None,
+        dirs=None,
+        mountPaths=None,
+        securityContext=None,
+        externalServices=None,
+        debugMode=None,
+        plugins=None,
+    ):
         check_redis(redis, externalServices)
         check_postgres(postgresql, externalServices)
         check_rabbitmq(rabbitmq, externalServices, broker)

@@ -9,12 +9,12 @@ import uuid
 
 from collections import Mapping
 
-from polyaxon.schemas.api.code_reference import CodeReferenceConfig
 from tests.test_client_api.utils import TestBaseApi
 
 from polyaxon.client.api.base import BaseApiHandler
 from polyaxon.client.api.experiment import ExperimentApi
 from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon.schemas.api.code_reference import CodeReferenceConfig
 from polyaxon.schemas.api.experiment import (
     ExperimentConfig,
     ExperimentMetricConfig,

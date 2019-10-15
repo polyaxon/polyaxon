@@ -30,18 +30,24 @@ from polyaxon.cli.tensorboard import tensorboard
 from polyaxon.cli.upload import upload
 from polyaxon.cli.user import user
 from polyaxon.cli.version import check_cli_version, upgrade, version
+from polyaxon.client import settings
 from polyaxon.logger import clean_outputs, configure_logger
 from polyaxon.managers.config import GlobalConfigManager
-from polyaxon.client import settings
 
 click_completion.init()
 
 
 @click.group()
-@click.option('-v', '--verbose', is_flag=True, default=False, help='Turn on debug logging')
-@click.option('--offline', is_flag=True, default=False,
-              help='Run command in offline mode if supported. '
-              'Currently used for run command in --local mode.')
+@click.option(
+    "-v", "--verbose", is_flag=True, default=False, help="Turn on debug logging"
+)
+@click.option(
+    "--offline",
+    is_flag=True,
+    default=False,
+    help="Run command in offline mode if supported. "
+    "Currently used for run command in --local mode.",
+)
 @click.pass_context
 @clean_outputs
 def cli(context, verbose, offline):
@@ -57,16 +63,23 @@ def cli(context, verbose, offline):
     """
 
     try:
-        configure_logger(verbose or GlobalConfigManager.get_value('verbose'))
+        configure_logger(verbose or GlobalConfigManager.get_value("verbose"))
     except ValidationError:
         GlobalConfigManager.purge()
     non_check_cmds = [
-        'completion', 'config', 'version', 'login', 'logout', 'deploy', 'admin', 'teardown'
+        "completion",
+        "config",
+        "version",
+        "login",
+        "logout",
+        "deploy",
+        "admin",
+        "teardown",
     ]
     context.obj = context.obj or {}
     context.obj["offline"] = offline
     if offline:
-        os.environ['POLYAXON_IS_OFFLINE'] = 'true'
+        os.environ["POLYAXON_IS_OFFLINE"] = "true"
         settings.IS_OFFLINE = True
     if not (context.invoked_subcommand in non_check_cmds or offline):
         check_cli_version()

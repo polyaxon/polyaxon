@@ -6,7 +6,7 @@ from polyaxon.deploy.operators.exceptions import OperatorException
 
 
 class DockerOperator(CmdOperator):
-    CMD = 'docker'
+    CMD = "docker"
 
     @classmethod
     def params(cls, args):
@@ -15,7 +15,7 @@ class DockerOperator(CmdOperator):
 
     @classmethod
     def check(cls):
-        command_exist = cls.execute(args=['version'])
+        command_exist = cls.execute(args=["version"])
         if not command_exist:
             return False
         return True
@@ -27,11 +27,9 @@ class DockerOperator(CmdOperator):
 
     @classmethod
     def set_volume(cls, volume):
-        args = ['volume', 'create', '--name={}'.format(volume)]
+        args = ["volume", "create", "--name={}".format(volume)]
         if not volume:
-            raise OperatorException('docker',
-                                    args,
-                                    None,
-                                    None,
-                                    'Volume name was not provided')
+            raise OperatorException(
+                "docker", args, None, None, "Volume name was not provided"
+            )
         return cls.execute(args)

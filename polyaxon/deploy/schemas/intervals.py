@@ -23,23 +23,25 @@ class IntervalsSchema(BaseSchema):
 class IntervalsConfig(BaseConfig):
     SCHEMA = IntervalsSchema
     REDUCED_ATTRIBUTES = [
-        'experimentsScheduler',
-        'experimentsSync',
-        'clustersUpdateSystemInfo',
-        'clustersUpdateSystemNodes',
-        'pipelinesScheduler',
-        'operationsDefaultRetryDelay',
-        'operationsMaxRetryDelay',
+        "experimentsScheduler",
+        "experimentsSync",
+        "clustersUpdateSystemInfo",
+        "clustersUpdateSystemNodes",
+        "pipelinesScheduler",
+        "operationsDefaultRetryDelay",
+        "operationsMaxRetryDelay",
     ]
 
-    def __init__(self,  # noqa
-                 experimentsScheduler=None,
-                 experimentsSync=None,
-                 clustersUpdateSystemInfo=None,
-                 clustersUpdateSystemNodes=None,
-                 pipelinesScheduler=None,
-                 operationsDefaultRetryDelay=None,
-                 operationsMaxRetryDelay=None):
+    def __init__(
+        self,  # noqa
+        experimentsScheduler=None,
+        experimentsSync=None,
+        clustersUpdateSystemInfo=None,
+        clustersUpdateSystemNodes=None,
+        pipelinesScheduler=None,
+        operationsDefaultRetryDelay=None,
+        operationsMaxRetryDelay=None,
+    ):
         self.experimentsScheduler = experimentsScheduler
         self.experimentsSync = experimentsSync
         self.clustersUpdateSystemInfo = clustersUpdateSystemInfo

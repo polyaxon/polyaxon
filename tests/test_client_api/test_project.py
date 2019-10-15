@@ -11,9 +11,9 @@ from tests.test_client_api.utils import TestBaseApi
 
 from polyaxon.client.api.base import BaseApiHandler
 from polyaxon.client.api.project import ProjectApi
-from polyaxon.schemas.api.project import ProjectConfig
 from polyaxon.schemas.api.experiment import ExperimentConfig
 from polyaxon.schemas.api.job import TensorboardJobConfig
+from polyaxon.schemas.api.project import ProjectConfig
 
 
 class TestProjectApi(TestBaseApi):

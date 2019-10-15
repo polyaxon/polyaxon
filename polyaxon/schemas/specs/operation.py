@@ -66,7 +66,7 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
             self.MOUNTS,
             self.REPLICA_SPEC,
             self.PROFILE,
-            self.NOCACHE
+            self.NOCACHE,
         ]:
             override_field = getattr(self.config, field)
             if override_field:

@@ -11,7 +11,7 @@ class CliConfigManager(BaseConfigManager):
     """Manages access cli configuration .polyaxoncli file."""
 
     IS_GLOBAL = True
-    CONFIG_FILE_NAME = '.polyaxoncli'
+    CONFIG_FILE_NAME = ".polyaxoncli"
     CONFIG = CliConfigurationConfig
     FREQUENCY = 3
 
@@ -21,7 +21,9 @@ class CliConfigManager(BaseConfigManager):
         return config.check_count + 1
 
     @classmethod
-    def reset(cls, check_count=None, current_version=None, min_version=None, log_handler=None):
+    def reset(
+        cls, check_count=None, current_version=None, min_version=None, log_handler=None
+    ):
         if not any([check_count, current_version, min_version, log_handler]):
             return
         cli_config = cls.get_config_or_default()

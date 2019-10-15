@@ -57,7 +57,7 @@ class EnvironmentConfig(BaseConfig):
         "shm",
         "outputs",
         "logs",
-        "registry"
+        "registry",
     ]
 
     def __init__(

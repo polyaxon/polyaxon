@@ -8,32 +8,34 @@ from polyaxon.cli.version import upgrade, version
 
 
 class TestVersion(BaseCommandTestCase):
-    @patch('polyaxon.cli.version.pip_upgrade')
-    @patch('polyaxon.cli.version.sys')
+    @patch("polyaxon.cli.version.pip_upgrade")
+    @patch("polyaxon.cli.version.sys")
     def test_upgrade(self, mock_sys, pip_upgrade):
-        mock_sys.version = '2.7.13 (default, Jan 19 2017, 14:48:08) \n[GCC 6.3.0 20170118]'
+        mock_sys.version = (
+            "2.7.13 (default, Jan 19 2017, 14:48:08) \n[GCC 6.3.0 20170118]"
+        )
         self.runner.invoke(upgrade)
         pip_upgrade.assert_called_once()
 
-    @patch('polyaxon.client.api.version.VersionApi.get_cli_version')
-    @patch('polyaxon.cli.version.dict_tabulate')
+    @patch("polyaxon.client.api.version.VersionApi.get_cli_version")
+    @patch("polyaxon.cli.version.dict_tabulate")
     def test_version_cli_default(self, dict_tabulate, get_cli_version):
         self.runner.invoke(version)
         get_cli_version.assert_called_once()
         dict_tabulate.assert_called_once()
 
-    @patch('polyaxon.client.api.version.VersionApi.get_cli_version')
-    @patch('polyaxon.cli.version.dict_tabulate')
+    @patch("polyaxon.client.api.version.VersionApi.get_cli_version")
+    @patch("polyaxon.cli.version.dict_tabulate")
     def test_version_cli(self, dict_tabulate, get_cli_version):
-        self.runner.invoke(version, ['--cli'])
+        self.runner.invoke(version, ["--cli"])
         get_cli_version.assert_called_once()
         dict_tabulate.assert_called_once()
 
-    @patch('polyaxon.client.api.version.VersionApi.get_platform_version')
-    @patch('polyaxon.client.api.version.VersionApi.get_chart_version')
-    @patch('polyaxon.cli.version.dict_tabulate')
+    @patch("polyaxon.client.api.version.VersionApi.get_platform_version")
+    @patch("polyaxon.client.api.version.VersionApi.get_chart_version")
+    @patch("polyaxon.cli.version.dict_tabulate")
     def test_version(self, dict_tabulate, get_chart_version, get_platform_version):
-        self.runner.invoke(version, ['--platform'])
+        self.runner.invoke(version, ["--platform"])
         get_platform_version.assert_called_once()
         get_chart_version.assert_called_once()
         dict_tabulate.assert_called_once()

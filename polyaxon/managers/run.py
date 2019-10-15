@@ -13,14 +13,14 @@ class RunManager(BaseConfigManager):
 
     IS_GLOBAL = False
     IS_POLYAXON_DIR = True
-    CONFIG_FILE_NAME = '.polyaxonrun'
+    CONFIG_FILE_NAME = ".polyaxonrun"
     CONFIG = ExperimentConfig
 
     @classmethod
     def get_config_or_raise(cls):
         experiment = cls.get_config()
         if not experiment:
-            Printer.print_error('No run uuid was provided.')
+            Printer.print_error("No run uuid was provided.")
             sys.exit(1)
 
         return experiment

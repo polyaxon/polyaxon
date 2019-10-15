@@ -11,7 +11,7 @@ def validate_tags(tags):
         return None
 
     if isinstance(tags, six.string_types):
-        tags = [tag.strip() for tag in tags.split(',')]
+        tags = [tag.strip() for tag in tags.split(",")]
     tags = to_list(tags)
     tags = [tag for tag in tags if (tag and isinstance(tag, six.string_types))]
     return tags

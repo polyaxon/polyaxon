@@ -23,23 +23,25 @@ class CelerySchema(BaseSchema):
 class CeleryConfig(BaseConfig):
     SCHEMA = CelerySchema
     REDUCED_ATTRIBUTES = [
-        'taskTrackStarted',
-        'brokerPoolLimit',
-        'confirmPublish',
-        'workerPrefetchMultiplier',
-        'workerMaxTasksPerChild',
-        'workerMaxMemoryPerChild',
-        'taskAlwaysEager'
+        "taskTrackStarted",
+        "brokerPoolLimit",
+        "confirmPublish",
+        "workerPrefetchMultiplier",
+        "workerMaxTasksPerChild",
+        "workerMaxMemoryPerChild",
+        "taskAlwaysEager",
     ]
 
-    def __init__(self,  # noqa
-                 taskTrackStarted=None,
-                 brokerPoolLimit=None,
-                 confirmPublish=None,
-                 workerPrefetchMultiplier=None,
-                 workerMaxTasksPerChild=None,
-                 workerMaxMemoryPerChild=None,
-                 taskAlwaysEager=None):
+    def __init__(
+        self,  # noqa
+        taskTrackStarted=None,
+        brokerPoolLimit=None,
+        confirmPublish=None,
+        workerPrefetchMultiplier=None,
+        workerMaxTasksPerChild=None,
+        workerMaxMemoryPerChild=None,
+        taskAlwaysEager=None,
+    ):
         self.taskTrackStarted = taskTrackStarted
         self.brokerPoolLimit = brokerPoolLimit
         self.confirmPublish = confirmPublish

@@ -25,18 +25,9 @@ class MountsConfig(BaseConfig):
 
     IDENTIFIER = "mounts"
     SCHEMA = MountsSchema
-    REDUCED_ATTRIBUTES = [
-        "secrets",
-        "config_maps",
-        "artifacts",
-    ]
+    REDUCED_ATTRIBUTES = ["secrets", "config_maps", "artifacts"]
 
-    def __init__(
-        self,
-        secrets=None,
-        config_maps=None,
-        artifacts=None,
-    ):
+    def __init__(self, secrets=None, config_maps=None, artifacts=None):
         self.secrets = secrets
         self.config_maps = config_maps
         self.artifacts = artifacts

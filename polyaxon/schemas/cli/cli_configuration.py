@@ -20,9 +20,11 @@ class CliConfigurationSchema(BaseSchema):
 
 class CliConfigurationConfig(BaseConfig):
     SCHEMA = CliConfigurationSchema
-    IDENTIFIER = 'cli'
+    IDENTIFIER = "cli"
 
-    def __init__(self, check_count=0, current_version=None, min_version=None, log_handler=None):
+    def __init__(
+        self, check_count=0, current_version=None, min_version=None, log_handler=None
+    ):
         self.check_count = check_count
         self.current_version = current_version
         self.min_version = min_version

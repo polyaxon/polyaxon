@@ -11,15 +11,16 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 def validate_persistence(existing_claim, host_path, store):
     if len([i for i in [existing_claim, host_path, store] if i]) > 1:
         raise ValidationError(
-            'Only one of the option existingClaim, hostPath, and store '
-            'can be used to define a persistence.')
+            "Only one of the option existingClaim, hostPath, and store "
+            "can be used to define a persistence."
+        )
 
 
 class PersistenceEntitySchema(BaseSchema):
     existingClaim = fields.Str(allow_none=True)
     mountPath = fields.Str(allow_none=True)
     hostPath = fields.Str(allow_none=True)
-    store = fields.Str(allow_none=True, validate=validate.OneOf(['s3', 'gcs', 'azure']))
+    store = fields.Str(allow_none=True, validate=validate.OneOf(["s3", "gcs", "azure"]))
     bucket = fields.Str(allow_none=True)
     secret = fields.Str(allow_none=True)
     secretKey = fields.Str(allow_none=True)
@@ -31,34 +32,36 @@ class PersistenceEntitySchema(BaseSchema):
 
     @validates_schema
     def validate_persistence(self, data):
-        existing_claim = data.get('existingClaim')
-        host_path = data.get('hostPath')
-        store = data.get('store')
+        existing_claim = data.get("existingClaim")
+        host_path = data.get("hostPath")
+        store = data.get("store")
         validate_persistence(existing_claim, host_path, store)
 
 
 class PersistenceEntityConfig(BaseConfig):
     SCHEMA = PersistenceEntitySchema
     REDUCED_ATTRIBUTES = [
-        'existingClaim',
-        'mountPath',
-        'hostPath',
-        'store',
-        'bucket',
-        'secret',
-        'secretKey',
-        'readOnly'
+        "existingClaim",
+        "mountPath",
+        "hostPath",
+        "store",
+        "bucket",
+        "secret",
+        "secretKey",
+        "readOnly",
     ]
 
-    def __init__(self,  # noqa
-                 existingClaim=None,
-                 mountPath=None,
-                 hostPath=None,
-                 store=None,
-                 bucket=None,
-                 secret=None,
-                 secretKey=None,
-                 readOnly=None):
+    def __init__(
+        self,  # noqa
+        existingClaim=None,
+        mountPath=None,
+        hostPath=None,
+        store=None,
+        bucket=None,
+        secret=None,
+        secretKey=None,
+        readOnly=None,
+    ):
         validate_persistence(existingClaim, hostPath, store)
         self.existingClaim = existingClaim
         self.mountPath = mountPath
@@ -78,7 +81,10 @@ def validate_named_persistence(values, persistence):
             PersistenceEntityConfig.from_dict(value)
         except (KeyError, ValidationError):
             raise ValidationError(
-                "Persistence name `{}` under `{}` is not valid.".format(key, persistence))
+                "Persistence name `{}` under `{}` is not valid.".format(
+                    key, persistence
+                )
+            )
 
 
 class PersistenceSchema(BaseSchema):
@@ -94,21 +100,21 @@ class PersistenceSchema(BaseSchema):
 
     @validates_schema
     def validate_named_persistence(self, data):
-        validate_named_persistence(data.get('data'), 'data')
-        validate_named_persistence(data.get('outputs'), 'outputs')
+        validate_named_persistence(data.get("data"), "data")
+        validate_named_persistence(data.get("outputs"), "outputs")
 
 
 class PersistenceConfig(BaseConfig):
     SCHEMA = PersistenceSchema
-    REDUCED_ATTRIBUTES = ['logs', 'repos', 'upload', 'data', 'outputs']
+    REDUCED_ATTRIBUTES = ["logs", "repos", "upload", "data", "outputs"]
 
     def __init__(self, logs=None, repos=None, upload=None, data=None, outputs=None):
         self.logs = logs
         self.repos = repos
         self.upload = upload
         if data:
-            validate_named_persistence(data, 'data')
+            validate_named_persistence(data, "data")
         self.data = data
         if outputs:
-            validate_named_persistence(outputs, 'outputs')
+            validate_named_persistence(outputs, "outputs")
         self.outputs = outputs

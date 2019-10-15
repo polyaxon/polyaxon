@@ -16,7 +16,7 @@ class RBACSchema(BaseSchema):
 
 class RBACConfig(BaseConfig):
     SCHEMA = RBACSchema
-    REDUCED_ATTRIBUTES = ['enabled']
+    REDUCED_ATTRIBUTES = ["enabled"]
 
     def __init__(self, enabled=None):
         self.enabled = enabled

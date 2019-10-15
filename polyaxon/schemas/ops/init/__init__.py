@@ -26,18 +26,9 @@ class InitConfig(BaseConfig):
 
     IDENTIFIER = "init"
     SCHEMA = InitSchema
-    REDUCED_ATTRIBUTES = [
-        "repos",
-        "artifacts",
-        "build",
-    ]
+    REDUCED_ATTRIBUTES = ["repos", "artifacts", "build"]
 
-    def __init__(
-        self,
-        repos=None,
-        artifacts=None,
-        build=None,
-    ):
+    def __init__(self, repos=None, artifacts=None, build=None):
         self.repos = repos
         self.artifacts = artifacts
         self.build = build

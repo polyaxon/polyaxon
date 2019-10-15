@@ -270,10 +270,7 @@ class TestContainerCmdArgs(TestCase):
         )
 
     def test_none_cmd_args(self):
-        assert get_container_command_args(self.null_cmd1) == (
-            [],
-            [],
-        )
+        assert get_container_command_args(self.null_cmd1) == ([], [])
 
 
 @pytest.mark.container_mark

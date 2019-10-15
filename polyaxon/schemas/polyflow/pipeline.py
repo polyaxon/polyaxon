@@ -205,7 +205,7 @@ class PipelineConfig(BaseOpConfig):
                 outputs=template.outputs,
                 context=self._context,
                 is_template=False,
-                check_runs=False
+                check_runs=False,
             )
 
     def set_op_template(self, op_name):

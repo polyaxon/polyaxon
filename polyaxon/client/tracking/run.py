@@ -157,7 +157,6 @@ class Run(BaseTracker):
         if self.outputs_store is None and base_outputs_path:
             if self.group_id:
                 outputs_path = "{}/{}/{}/{}/{}".format(
-
                     base_outputs_path,
                     self.username,
                     self.project_name,

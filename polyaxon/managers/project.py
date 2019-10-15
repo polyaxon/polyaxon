@@ -14,15 +14,17 @@ class ProjectManager(BaseConfigManager):
 
     IS_GLOBAL = False
     IS_POLYAXON_DIR = True
-    CONFIG_FILE_NAME = '.polyaxonproject'
+    CONFIG_FILE_NAME = ".polyaxonproject"
     CONFIG = ProjectConfig
 
     @classmethod
     def get_config_or_raise(cls):
         project = cls.get_config()
         if not project:
-            Printer.print_error('Please initialize your project before uploading any code.'
-                                ' {}'.format(constants.INIT_COMMAND))
+            Printer.print_error(
+                "Please initialize your project before uploading any code."
+                " {}".format(constants.INIT_COMMAND)
+            )
             sys.exit(1)
 
         return project

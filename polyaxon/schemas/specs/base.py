@@ -350,7 +350,9 @@ class BaseSpecification(
         parsed_data = Parser.parse(self, self.config, params)
         return self.read(parsed_data)
 
-    def validate_params(self, params=None, context=None, is_template=True, check_runs=False):
+    def validate_params(
+        self, params=None, context=None, is_template=True, check_runs=False
+    ):
         try:
             return ops_params.validate_params(
                 inputs=self.config.inputs,
@@ -358,7 +360,7 @@ class BaseSpecification(
                 params=params,
                 context=context,
                 is_template=is_template,
-                check_runs=check_runs
+                check_runs=check_runs,
             )
         except ValidationError as e:
             raise PolyaxonfileError(e)
@@ -411,7 +413,8 @@ class BaseSpecification(
                 entity=None,
                 entity_ref=None,
                 entity_value=None,
-                is_flag=False)
+                is_flag=False,
+            )
             for k, v in six.iteritems(contexts)
         }
         params.update(contexts)
