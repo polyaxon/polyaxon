@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon.cli.experiment import logs as experiment_logs
+from polyaxon.cli.runs import logs as run_logs
 from polyaxon.cli.upload import upload as upload_cmd
 from polyaxon.client import PolyaxonClient
 from polyaxon.client.exceptions import (
@@ -70,7 +70,7 @@ def run(
         ctx.invoke(upload_cmd, sync=False)
 
     run_experiment()
-    logs_cmd = experiment_logs
+    logs_cmd = run_logs
 
     # Check if we need to invoke logs
     if log and logs_cmd:

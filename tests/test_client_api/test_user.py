@@ -12,14 +12,14 @@ from polyaxon.client.api.user import UserApi
 class TestUserApi(TestBaseApi):
     def setUp(self):
         super(TestUserApi, self).setUp()
-        self.api_handler = UserApi(transport=self.transport, config=self.api_config)
+        self.api_handler = UserApi(transport=self.transport, config=self.config)
 
     @httpretty.activate
     def test_activate_user(self):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/users", "activate", "test-username"
+                self.config.base_url, "/users", "activate", "test-username"
             ),
             content_type="application/json",
             status=200,
@@ -33,7 +33,7 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.DELETE,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/users", "delete", "test-username"
+                self.config.base_url, "/users", "delete", "test-username"
             ),
             content_type="application/json",
             status=204,
@@ -47,7 +47,7 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/superusers", "grant", "test-username"
+                self.config.base_url, "/superusers", "grant", "test-username"
             ),
             content_type="application/json",
             status=200,
@@ -61,7 +61,7 @@ class TestUserApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/superusers", "revoke", "test-username"
+                self.config.base_url, "/superusers", "revoke", "test-username"
             ),
             content_type="application/json",
             status=200,

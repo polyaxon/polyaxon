@@ -7,7 +7,7 @@ import platform
 import socket
 import sys
 
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 
 PROJECT_CLIENT_NAME = "polyaxon-client"
 

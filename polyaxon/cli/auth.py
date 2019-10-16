@@ -4,35 +4,32 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.version import (
     get_current_version,
     get_log_handler,
-    get_server_version,
+    get_server_versions,
 )
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import (
-    PolyaxonClientException,
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-)
 from polyaxon.logger import clean_outputs, logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
-from polyaxon.schemas.api.authentication import AccessTokenConfig, CredentialsConfig
+from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon.utils.formatting import Printer
 
 
 @click.command()
 @click.option("--token", "-t", help="Polyaxon token.")
-@click.option("--username", "-u", help="Polyaxon username.")
+@click.option("--username", "-u", help="Polyaxon username or email.")
 @click.option("--password", "-p", help="Polyaxon password.")
 @clean_outputs
 def login(token, username, password):
     """Login to Polyaxon."""
-    auth_client = PolyaxonClient().auth
+    polyaxon_client = PolyaxonClient()
     if username:
-        # Use username / password login
+        # Use user or email / password login
         if not password:
             password = click.prompt(
                 "Please enter your password", type=str, hide_input=True
@@ -45,24 +42,20 @@ def login(token, username, password):
                 )
                 sys.exit(1)
 
-        credentials = CredentialsConfig(username=username, password=password)
         try:
-            access_code = auth_client.login(credentials=credentials)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
+            body = polyaxon_sdk.models.V1CredsBodyRequest(username=username, password=password)
+            access_auth = polyaxon_client.auth_service.login(body=body)
+        except ApiException as e:
             Printer.print_error("Could not login.")
             Printer.print_error("Error Message `{}`.".format(e))
             sys.exit(1)
 
-        if not access_code:
+        if not access_auth.token:
             Printer.print_error("Failed to login")
             return
     else:
         if not token:
-            token_url = "{}/app/token".format(auth_client.config.http_host)
+            token_url = "{}/app/token".format(polyaxon_client.config.host)
             click.confirm(
                 "Authentication token page will now open in your browser. Continue?",
                 abort=True,
@@ -87,28 +80,29 @@ def login(token, username, password):
             )
             return
 
-        access_code = token.strip(" ")
+        access_auth = polyaxon_sdk.models.V1Auth(token=token.strip(" "))
 
     # Set user
     try:
         AuthConfigManager.purge()
-        user = PolyaxonClient().auth.get_user(token=access_code)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient(token=access_auth.token)
+        user = polyaxon_client.user_service.get_user()
+    except ApiException as e:
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
-    access_token = AccessTokenConfig(username=user.username, token=access_code)
+    access_token = AccessTokenConfig(username=user.username, token=access_auth.token)
     AuthConfigManager.set_config(access_token)
     Printer.print_success("Login successful")
 
     # Reset current cli
-    server_version = get_server_version()
+    server_versions = get_server_versions(polyaxon_client=polyaxon_client)
     current_version = get_current_version()
     log_handler = get_log_handler()
     CliConfigManager.reset(
         check_count=0,
         current_version=current_version,
-        min_version=server_version.min_version,
+        server_versions=server_versions.to_dict(),
         log_handler=log_handler,
     )
 
@@ -127,8 +121,9 @@ def logout():
 def whoami():
     """Show current logged Polyaxon user."""
     try:
-        user = PolyaxonClient().auth.get_user()
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        user = polyaxon_client.user_service.get_user()
+    except ApiException as e:
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)

@@ -7,7 +7,7 @@ import time
 from flaky import flaky
 from tests.test_transports.utils import BaseTestCaseTransport
 
-from polyaxon.client.api_config import ApiConfig
+from polyaxon.client.config import ClientConfig
 from polyaxon.client.transport.periodic_transport import PeriodicHttpTransportMixin
 from polyaxon.client.workers.periodic_worker import PeriodicWorker
 
@@ -17,7 +17,7 @@ class DummyTransport(PeriodicHttpTransportMixin):
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
-        self.config = ApiConfig(is_managed=True, timeout=0.01, interval=0)
+        self.config = ClientConfig(is_managed=True, timeout=0.01, interval=0)
         self._periodic_http_exceptions = 0
         self._periodic_http_done = 0
 
@@ -30,7 +30,7 @@ class ExceptionTransport(PeriodicHttpTransportMixin):
     # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.delay = delay
-        self.config = ApiConfig(is_managed=True, timeout=0.01, interval=0)
+        self.config = ClientConfig(is_managed=True, timeout=0.01, interval=0)
         self._periodic_http_exceptions = 0
         self._periodic_http_done = 0
 

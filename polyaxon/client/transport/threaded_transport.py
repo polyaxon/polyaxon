@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 from polyaxon.client.transport.retry_transport import RetryTransportMixin
 from polyaxon.client.workers.queue_worker import QueueWorker
 

@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 
 
 def create_polyaxon_tmp():

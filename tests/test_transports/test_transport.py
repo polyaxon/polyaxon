@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 from hestia.auth import AuthenticationTypes
 from tests.test_transports.utils import BaseTestCaseTransport
 
-from polyaxon.client.api_config import ApiConfig
+from polyaxon.client.config import ClientConfig
 from polyaxon.client.transport import Transport
 
 
@@ -18,7 +18,7 @@ class TestTransport(BaseTestCaseTransport):
         assert self.transport._get_headers() == {}
         assert self.transport._get_headers({"foo": "bar"}) == {"foo": "bar"}
 
-        self.transport.config = ApiConfig(token="token", host="host")
+        self.transport.config = ClientConfig(token="token", host="host")
 
         assert self.transport._get_headers() == {
             "Authorization": "{} {}".format(AuthenticationTypes.TOKEN, "token")

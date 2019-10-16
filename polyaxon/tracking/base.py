@@ -12,7 +12,7 @@ from polystores.stores.manager import StoreManager
 
 from polyaxon.client import PolyaxonClient, settings
 from polyaxon.client.exceptions import PolyaxonClientException
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
 from polyaxon.tracking.offline import check_offline
@@ -51,7 +51,7 @@ class BaseTracker(object):
         if self.client and not settings.IS_MANAGED:
             self.user = (
                 self.client.auth.get_user().username
-                if self.client.api_config.schema_response
+                if self.client.config.schema_response
                 else self.client.auth.get_user().get("username")
             )
 
@@ -76,7 +76,7 @@ class BaseTracker(object):
         if self.client:
             return (
                 entity.id
-                if self.client.api_config.schema_response
+                if self.client.config.schema_response
                 else entity.get("id")
             )
         return int(time.time())

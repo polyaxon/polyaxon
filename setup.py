@@ -66,7 +66,7 @@ setup(
         "click-completion==0.5.1",
         "pathlib==1.0.1",
         "polyaxon-dockerizer==0.0.9",
-        "raven==6.7.0",
+        "sentry-sdk==0.12.3",
         "tabulate==0.8.2",
         "hestia==0.4.9",
         "Jinja2==2.10.1",

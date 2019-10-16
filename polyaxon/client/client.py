@@ -1,37 +1,22 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-import sys
-
 from datetime import datetime
 
+import polyaxon_sdk
 from hestia.tz_utils import utc
 
 from polyaxon.client import settings
-from polyaxon.client.api.auth import AuthApi
-from polyaxon.client.api.bookmark import BookmarkApi
-from polyaxon.client.api.cluster import ClusterApi
-from polyaxon.client.api.experiment import ExperimentApi
-from polyaxon.client.api.project import ProjectApi
-from polyaxon.client.api.user import UserApi
-from polyaxon.client.api.version import VersionApi
-from polyaxon.client.api_config import ApiConfig
+from polyaxon.client.config import ClientConfig
 from polyaxon.client.transport import Transport
-from polyaxon.managers.auth import AuthConfigManager
-from polyaxon.managers.config import GlobalConfigManager
-from polyaxon.utils.formatting import Printer
 
 
 class PolyaxonClient(object):
     def __init__(
         self,
-        api_config=None,
+        config=None,
         host=None,
         token=None,
-        port=None,
-        http_port=None,
-        ws_port=None,
-        use_https=None,
         verify_ssl=None,
         is_managed=None,
         authentication_type=None,
@@ -41,15 +26,11 @@ class PolyaxonClient(object):
         timeout=None,
     ):
 
-        self._api_config = api_config or ApiConfig(
+        self._config = config or ClientConfig(
             host=host,
-            port=port,
-            http_port=http_port,
-            ws_port=ws_port,
             token=token,
             authentication_type=authentication_type,
             version=api_version,
-            use_https=use_https,
             verify_ssl=verify_ssl,
             is_managed=is_managed,
             schema_response=schema_response,
@@ -58,114 +39,103 @@ class PolyaxonClient(object):
         )
 
         self._transport = None
-        self._auth_api = None
-        self._cluster_api = None
-        self._version_api = None
-        self._project_api = None
-        self._experiment_group_api = None
-        self._experiment_api = None
-        self._experiment_job_api = None
-        self._job_api = None
-        self._build_job_api = None
-        self._user_api = None
-        self._bookmark_api = None
+        self.api_client = polyaxon_sdk.ApiClient(self.config.sdk_config)
+        self._project_service = None
+        self._run_service = None
+        self._auth_service = None
+        self._version_service = None
+        self._user_service = None
 
     def reset(self):
         self._transport = None
-        self._auth_api = None
-        self._cluster_api = None
-        self._version_api = None
-        self._project_api = None
-        self._experiment_group_api = None
-        self._experiment_api = None
-        self._experiment_job_api = None
-        self._job_api = None
-        self._build_job_api = None
-        self._user_api = None
-        self._bookmark_api = None
+        self._project_service = None
+        self._run_service = None
+        self._auth_service = None
+        self._user_service = None
+        self._version_service = None
 
     @property
     def host(self):
-        return self.api_config.host
+        return self.config.host
 
     @property
     def http_port(self):
-        return self.api_config.http_port
+        return self.config.http_port
 
     @property
     def ws_port(self):
-        return self.api_config.ws_port
+        return self.config.ws_port
 
     @property
     def use_https(self):
-        return self.api_config.use_https
+        return self.config.use_https
 
     @property
     def verify_ssl(self):
-        return self.api_config.verify_ssl
+        return self.config.verify_ssl
 
     @property
     def token(self):
-        return self.api_config.token
+        return self.config.token
 
     @property
     def authentication_type(self):
-        return self.api_config.authentication_type
+        return self.config.authentication_type
 
     @property
     def is_managed(self):
-        return self.api_config.is_managed
+        return self.config.is_managed
 
     @property
     def api_version(self):
-        return self.api_config.version
+        return self.config.version
 
     @property
     def reraise(self):
-        return self.api_config.reraise
+        return self.config.reraise
 
     @property
     def timeout(self):
-        return self.api_config.timeout
+        return self.config.timeout
 
     def set_host(self, host):
-        self.api_config.host = host
+        self.config.host = host
         self.reset()
 
     def set_http_port(self, http_port):
-        self.api_config.http_port = http_port
+        self.config.http_port = http_port
         self.reset()
 
     def set_ws_port(self, ws_port):
-        self.api_config.ws_port = ws_port
+        self.config.ws_port = ws_port
         self.reset()
 
     def set_use_https(self, use_https):
-        self.api_config.use_https = use_https
+        self.config.use_https = use_https
         self.reset()
 
     def set_verify_ssl(self, verify_ssl):
-        self.api_config.verify_ssl = verify_ssl
+        self.config.verify_ssl = verify_ssl
         self.reset()
 
     def set_token(self, token):
-        self.api_config.token = token
+        self.config.token = token
         self.reset()
 
     def set_is_managed(self, is_managed):
-        self.api_config.is_managed = is_managed
+        self.config.is_managed = is_managed
         self.reset()
 
     def set_authentication_type(self, authentication_type):
-        self.api_config.authentication_type = authentication_type
+        self.config.authentication_type = authentication_type
         self.reset()
 
     def set_version_api(self, version_api):
-        self.api_config.version = version_api
+        self.config.version = version_api
         self.reset()
 
     def set_reraise(self, reraise):
-        self.api_config.reraise = reraise
+        self.config.reraise = reraise
         self.reset()
 
     def set_health_check(self, url):
@@ -177,14 +147,14 @@ class PolyaxonClient(object):
     def set_internal_health_check(self):
         if settings.HEALTH_CHECK_URL:
             self.set_health_check(
-                self.auth.build_url(self.api_config.base_url, settings.HEALTH_CHECK_URL)
+                self.auth.build_url(self.config.base_url, settings.HEALTH_CHECK_URL)
             )
 
     def reconcile(self, status):
         if settings.RECONCILE_URL:
             self.transport.post(
                 url=self.auth.build_url(
-                    self.api_config.base_url, settings.RECONCILE_URL
+                    self.config.base_url, settings.RECONCILE_URL
                 ),
                 json_data={
                     "status": status,
@@ -195,85 +165,39 @@ class PolyaxonClient(object):
     @property
     def transport(self):
         if not self._transport:
-            self._transport = Transport(config=self.api_config)
+            self._transport = Transport(config=self.config)
         return self._transport
 
     @property
-    def api_config(self):
-        return self._api_config
+    def config(self):
+        return self._config
 
     @property
-    def auth(self):
-        if not self._auth_api:
-            self._auth_api = AuthApi(transport=self.transport, config=self.api_config)
-        return self._auth_api
+    def project_service(self):
+        if not self._project_service:
+            self._project_service = polyaxon_sdk.ProjectServiceApi(self.api_client)
+        return self._project_service
 
     @property
-    def cluster(self):
-        if not self._cluster_api:
-            self._cluster_api = ClusterApi(
-                transport=self.transport, config=self.api_config
-            )
-        return self._cluster_api
+    def run_service(self):
+        if not self._run_service:
+            self._run_service = polyaxon_sdk.RunServiceApi(self.api_client)
+        return self._run_service
 
     @property
-    def version(self):
-        if not self._version_api:
-            self._version_api = VersionApi(
-                transport=self.transport, config=self.api_config
-            )
-        return self._version_api
+    def auth_service(self):
+        if not self._auth_service:
+            self._auth_service = polyaxon_sdk.AuthServiceApi(self.api_client)
+        return self._auth_service
 
     @property
-    def project(self):
-        if not self._project_api:
-            self._project_api = ProjectApi(
-                transport=self.transport, config=self.api_config
-            )
-        return self._project_api
+    def user_service(self):
+        if not self._user_service:
+            self._user_service = polyaxon_sdk.UserServiceApi(self.api_client)
+        return self._user_service
 
     @property
-    def experiment(self):
-        if not self._experiment_api:
-            self._experiment_api = ExperimentApi(
-                transport=self.transport, config=self.api_config
-            )
-        return self._experiment_api
-
-    @property
-    def user(self):
-        if not self._user_api:
-            self._user_api = UserApi(transport=self.transport, config=self.api_config)
-        return self._user_api
-
-    @property
-    def bookmark(self):
-        if not self._bookmark_api:
-            self._bookmark_api = BookmarkApi(
-                transport=self.transport, config=self.api_config
-            )
-        return self._bookmark_api
-
-
-class PolyaxonCliClient(PolyaxonClient):
-    def __init__(self):
-        host = GlobalConfigManager.get_value("host")
-        if not host:
-            Printer.print_error(
-                "Received an invalid config, you need to provide a valid host."
-            )
-            sys.exit(1)
-        port = GlobalConfigManager.get_value("port")
-        use_https = GlobalConfigManager.get_value("use_https")
-        verify_ssl = GlobalConfigManager.get_value("verify_ssl")
-        token = AuthConfigManager.get_value("token")
-        super(PolyaxonClient, self).__init__(
-            host=host,
-            http_port=port,
-            ws_port=port,
-            use_https=use_https,
-            verify_ssl=verify_ssl,
-            token=token,
-            schema_response=True,
-            reraise=True,
-        )
+    def version_service(self):
+        if not self._version_service:
+            self._version_service = polyaxon_sdk.VersionServiceApi(self.api_client)
+        return self._version_service

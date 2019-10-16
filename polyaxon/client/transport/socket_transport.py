@@ -5,7 +5,7 @@ import json
 import six
 import websocket
 
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 
 
 class SocketTransportMixin(object):

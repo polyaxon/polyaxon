@@ -22,21 +22,22 @@ class CliConfigManager(BaseConfigManager):
 
     @classmethod
     def reset(
-        cls, check_count=None, current_version=None, min_version=None, log_handler=None
+        cls, check_count=None, current_version=None, server_versions=None, log_handler=None
     ):
-        if not any([check_count, current_version, min_version, log_handler]):
+        if not any([check_count, current_version, server_versions, log_handler]):
             return
         cli_config = cls.get_config_or_default()
         if check_count is not None:
             cli_config.check_count = check_count
         if current_version is not None:
             cli_config.current_version = current_version
-        if min_version is not None:
-            cli_config.min_version = min_version
+        if server_versions is not None:
+            cli_config.server_versions = server_versions
         if log_handler is not None:
             cli_config.log_handler = log_handler
 
         CliConfigManager.set_config(config=cli_config)
+        return cli_config
 
     @classmethod
     def should_check(cls):

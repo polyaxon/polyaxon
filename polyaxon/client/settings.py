@@ -6,6 +6,7 @@ import os
 import rhea
 
 from hestia.auth import AuthenticationTypes
+from hestia.contexts import CONTEXT_MOUNT_AUTH
 from hestia.env_var_keys import (
     POLYAXON_KEYS_API_HOST,
     POLYAXON_KEYS_API_PORT,
@@ -33,7 +34,6 @@ from rhea import RheaError  # noqa
 TMP_POLYAXON_PATH = "/tmp/.polyaxon/"
 
 TMP_AUTH_TOKEN_PATH = os.path.join(TMP_POLYAXON_PATH, ".authtoken")
-CONTEXT_AUTH_TOKEN_PATH = "/plx-context/.authtoken"
 
 TMP_CLIENT_CONFIG_PATH = os.path.join(TMP_POLYAXON_PATH, ".polyaxonclient")
 TMP_CONFIG_PATH = os.path.join(TMP_POLYAXON_PATH, ".polyaxonconfig")
@@ -69,7 +69,7 @@ config = rhea.Rhea.read_configs(
             TMP_AUTH_TOKEN_PATH, config_type=".json", check_if_exists=False
         ),
         rhea.ConfigSpec(
-            CONTEXT_AUTH_TOKEN_PATH, config_type=".json", check_if_exists=False
+            CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False
         ),
     ]
 )

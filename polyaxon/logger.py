@@ -19,20 +19,18 @@ def configure_logger(verbose):
     def set_raven_client():
         from polyaxon.managers.cli import CliConfigManager
 
+        import pdb; pdb.set_trace()
         cli_config = CliConfigManager.get_config()
         if cli_config and cli_config.log_handler and cli_config.log_handler.decoded_dsn:
-            import raven
+            import sentry_sdk
+            from sentry_sdk import capture_exception
+            from sentry_sdk import capture_message
 
-            client = raven.Client(
+            sentry_sdk.init(
                 dsn=cli_config.log_handler.decoded_dsn,
                 release=cli_config.current_version,
                 environment=cli_config.log_handler.environment,
-                tags=cli_config.log_handler.tags,
-                processors=("raven.processors.SanitizePasswordsProcessor",),
             )
-            client.error_logger.disabled = True
-            return client
-        return None
 
     set_raven_client()
     log_level = logging.DEBUG if verbose else logging.INFO

@@ -21,14 +21,14 @@ class TestProjectApi(TestBaseApi):
 
     def setUp(self):
         super(TestProjectApi, self).setUp()
-        self.api_handler = ProjectApi(transport=self.transport, config=self.api_config)
+        self.api_handler = ProjectApi(transport=self.transport, config=self.config)
 
     @httpretty.activate
     def test_list_projects(self):
         projects = [ProjectConfig("proj_{}".format(i)).to_dict() for i in range(10)]
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/", "user"),
+            BaseApiHandler.build_url(self.config.base_url, "/", "user"),
             body=json.dumps({"results": projects, "count": 10, "next": None}),
             content_type="application/json",
             status=200,
@@ -56,7 +56,7 @@ class TestProjectApi(TestBaseApi):
         obj = ProjectConfig("proj").to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/", "user", "project"),
+            BaseApiHandler.build_url(self.config.base_url, "/", "user", "project"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -76,7 +76,7 @@ class TestProjectApi(TestBaseApi):
         obj = ProjectConfig("proj").to_dict()
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler.build_url(self.api_config.base_url, "projects"),
+            BaseApiHandler.build_url(self.config.base_url, "projects"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -96,7 +96,7 @@ class TestProjectApi(TestBaseApi):
         obj = ProjectConfig("proj").to_dict()
         httpretty.register_uri(
             httpretty.PATCH,
-            BaseApiHandler.build_url(self.api_config.base_url, "/", "user", "project"),
+            BaseApiHandler.build_url(self.config.base_url, "/", "user", "project"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -123,7 +123,7 @@ class TestProjectApi(TestBaseApi):
     def test_delete_project(self):
         httpretty.register_uri(
             httpretty.DELETE,
-            BaseApiHandler.build_url(self.api_config.base_url, "/", "user", "project"),
+            BaseApiHandler.build_url(self.config.base_url, "/", "user", "project"),
             content_type="application/json",
             status=204,
         )
@@ -143,7 +143,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "username", "project_name", "ci"
+                self.config.base_url, "/", "username", "project_name", "ci"
             ),
             content_type="application/json",
             status=201,
@@ -164,7 +164,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.DELETE,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "username", "project_name", "ci"
+                self.config.base_url, "/", "username", "project_name", "ci"
             ),
             content_type="application/json",
             status=204,
@@ -185,7 +185,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -212,7 +212,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -239,7 +239,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.PUT,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "repo", "upload"
+                self.config.base_url, "/", "user", "project", "repo", "upload"
             ),
             content_type="application/json",
             status=200,
@@ -272,7 +272,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.PUT,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "repo", "upload"
+                self.config.base_url, "/", "user", "project", "repo", "upload"
             ),
             content_type="application/json",
             status=200,
@@ -316,7 +316,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             ),
             body=json.dumps({"results": xps, "count": 10, "next": None}),
             content_type="application/json",
@@ -338,7 +338,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             )
             + "?offset=2",
             body=json.dumps({"results": xps, "count": 10, "next": None}),
@@ -366,7 +366,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             )
             + "?metrics=true",
             body=json.dumps({"results": xps, "count": 10, "next": None}),
@@ -382,7 +382,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             )
             + "?params=true",
             body=json.dumps({"results": xps, "count": 10, "next": None}),
@@ -399,7 +399,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "username", "project_name", "experiments"
+                self.config.base_url, "/", "username", "project_name", "experiments"
             )
             + "?independent=true&query=started_at:>=2010-10-10,sort=created_at",
             body=json.dumps({"results": xps, "count": 10, "next": None}),
@@ -431,7 +431,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             ),
             body=json.dumps(obj_dict),
             content_type="application/json",
@@ -459,7 +459,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             ),
             body=json.dumps(obj_dict),
             content_type="application/json",
@@ -489,7 +489,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "experiments"
+                self.config.base_url, "/", "user", "project", "experiments"
             ),
             body=json.dumps(obj_dict),
             content_type="application/json",
@@ -527,7 +527,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "tensorboards"
+                self.config.base_url, "/", "user", "project", "tensorboards"
             ),
             body=json.dumps({"results": xps, "count": 10, "next": None}),
             content_type="application/json",
@@ -549,7 +549,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "user", "project", "tensorboards"
+                self.config.base_url, "/", "user", "project", "tensorboards"
             )
             + "?offset=2",
             body=json.dumps({"results": xps, "count": 10, "next": None}),
@@ -573,7 +573,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -606,7 +606,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -632,7 +632,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -659,7 +659,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -686,7 +686,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -712,7 +712,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -739,7 +739,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -766,7 +766,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -792,7 +792,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "username",
                 "project_name",
@@ -820,7 +820,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "username", "project_name", "bookmark"
+                self.config.base_url, "/", "username", "project_name", "bookmark"
             ),
             content_type="application/json",
             status=200,
@@ -841,7 +841,7 @@ class TestProjectApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.DELETE,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/", "username", "project_name", "unbookmark"
+                self.config.base_url, "/", "username", "project_name", "unbookmark"
             ),
             content_type="application/json",
             status=200,
@@ -856,3 +856,30 @@ class TestProjectApi(TestBaseApi):
             ),
             method="delete",
         )
+
+    @httpretty.activate
+    def test_get_bookmarked_projects(self):
+        projects = [
+            {"content_object": ProjectConfig("proj").to_dict()} for _ in range(10)
+        ]
+        httpretty.register_uri(
+            httpretty.GET,
+            BaseApiHandler.build_url(
+                self.config.base_url, "/bookmarks", "user", "projects"
+            ),
+            body=json.dumps({"results": projects, "count": 10, "next": None}),
+            content_type="application/json",
+            status=200,
+        )
+
+        # Schema response
+        result = self.api_handler.projects("user")
+        assert len(result["results"]) == 10
+        assert isinstance(result["results"][0], ProjectConfig)
+
+        # Raw response
+        self.set_raw_response()
+        result = self.api_handler.projects("user")
+        assert len(result["results"]) == 10
+        assert isinstance(result["results"][0], Mapping)
+

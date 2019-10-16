@@ -24,14 +24,14 @@ class TestAuthApi(TestBaseApi):
             tempfile.mkdtemp(), ".authtoken"
         )
         settings.TMP_AUTH_TOKEN_PATH = "{}/{}".format(tempfile.mkdtemp(), ".authtoken")
-        self.api_handler = AuthApi(transport=self.transport, config=self.api_config)
+        self.api_handler = AuthApi(transport=self.transport, config=self.config)
 
     @httpretty.activate
     def test_get_user(self):
         user = UserConfig("user", "user@test.com").to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/users"),
+            BaseApiHandler.build_url(self.config.base_url, "/users"),
             body=json.dumps(user),
             content_type="application/json",
             status=200,
@@ -51,22 +51,22 @@ class TestAuthApi(TestBaseApi):
         token = uuid.uuid4().hex
         httpretty.register_uri(
             httpretty.POST,
-            BaseApiHandler.build_url(self.api_config.base_url, "/users", "token"),
+            BaseApiHandler.build_url(self.config.base_url, "/users", "token"),
             body=json.dumps({"token": token}),
             content_type="application/json",
             status=200,
         )
 
         # Login without updating the token
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         credentials = CredentialsConfig("user", "password")
         assert token == self.api_handler.login(credentials=credentials, set_token=False)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
 
         # Login and update the token
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login(credentials=credentials, set_token=True)
-        assert self.api_config.token == token
+        assert self.config.token == token
 
     @httpretty.activate
     def test_login_experiment_ephemeral_token(self):
@@ -74,7 +74,7 @@ class TestAuthApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "user",
                 "project",
@@ -90,7 +90,7 @@ class TestAuthApi(TestBaseApi):
         # Login without updating the token and without persistence
         if os.path.exists(settings.TMP_AUTH_TOKEN_PATH):
             os.remove(settings.TMP_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_experiment_ephemeral_token(
             username="user",
             project_name="project",
@@ -99,13 +99,13 @@ class TestAuthApi(TestBaseApi):
             set_token=False,
             persist_token=False,
         )
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert os.path.exists(settings.TMP_AUTH_TOKEN_PATH) is False
 
         # Login and update the token and persistence
         if os.path.exists(settings.TMP_AUTH_TOKEN_PATH):
             os.remove(settings.TMP_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_experiment_ephemeral_token(
             username="user",
             project_name="project",
@@ -114,7 +114,7 @@ class TestAuthApi(TestBaseApi):
             set_token=True,
             persist_token=True,
         )
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.path.exists(settings.TMP_AUTH_TOKEN_PATH) is True
 
         # Login remove ephemeral token from env var and settings
@@ -122,7 +122,7 @@ class TestAuthApi(TestBaseApi):
         settings.SECRET_EPHEMERAL_TOKEN = "eph_token"  # noqa
         if os.path.exists(settings.TMP_AUTH_TOKEN_PATH):
             os.remove(settings.TMP_AUTH_TOKEN_PATH)
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.environ.get(POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN) == "value"
         assert settings.SECRET_EPHEMERAL_TOKEN == "eph_token"
         assert token == self.api_handler.login_experiment_ephemeral_token(
@@ -133,7 +133,7 @@ class TestAuthApi(TestBaseApi):
             set_token=True,
             persist_token=True,
         )
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.path.exists(settings.TMP_AUTH_TOKEN_PATH) is True
         assert os.environ.get(POLYAXON_KEYS_SECRET_EPHEMERAL_TOKEN) is None
         assert not hasattr(settings, "SECRET_EPHEMERAL_TOKEN")
@@ -153,7 +153,7 @@ class TestAuthApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "user",
                 "project",
@@ -169,7 +169,7 @@ class TestAuthApi(TestBaseApi):
         # Login without updating the token and without persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_experiment_impersonate_token(
             username="user",
             project_name="project",
@@ -178,13 +178,13 @@ class TestAuthApi(TestBaseApi):
             set_token=False,
             persist_token=False,
         )
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
 
         # Login and update the token and persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_experiment_impersonate_token(
             username="user",
             project_name="project",
@@ -193,7 +193,7 @@ class TestAuthApi(TestBaseApi):
             set_token=True,
             persist_token=True,
         )
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True
 
     @httpretty.activate
@@ -202,7 +202,7 @@ class TestAuthApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "user",
                 "project",
@@ -218,7 +218,7 @@ class TestAuthApi(TestBaseApi):
         # Login without updating the token and without persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_job_impersonate_token(
             username="user",
             project_name="project",
@@ -227,13 +227,13 @@ class TestAuthApi(TestBaseApi):
             set_token=False,
             persist_token=False,
         )
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
 
         # Login and update the token and persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_job_impersonate_token(
             username="user",
             project_name="project",
@@ -242,7 +242,7 @@ class TestAuthApi(TestBaseApi):
             set_token=True,
             persist_token=True,
         )
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True
 
     @httpretty.activate
@@ -251,7 +251,7 @@ class TestAuthApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "user",
                 "project",
@@ -267,7 +267,7 @@ class TestAuthApi(TestBaseApi):
         # Login without updating the token and without persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_build_impersonate_token(
             username="user",
             project_name="project",
@@ -276,13 +276,13 @@ class TestAuthApi(TestBaseApi):
             set_token=False,
             persist_token=False,
         )
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
 
         # Login and update the token and persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_build_impersonate_token(
             username="user",
             project_name="project",
@@ -291,7 +291,7 @@ class TestAuthApi(TestBaseApi):
             set_token=True,
             persist_token=True,
         )
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True
 
     @httpretty.activate
@@ -300,7 +300,7 @@ class TestAuthApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.POST,
             BaseApiHandler.build_url(
-                self.api_config.base_url,
+                self.config.base_url,
                 "/",
                 "user",
                 "project",
@@ -315,7 +315,7 @@ class TestAuthApi(TestBaseApi):
         # Login without updating the token and without persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_notebook_impersonate_token(
             username="user",
             project_name="project",
@@ -323,13 +323,13 @@ class TestAuthApi(TestBaseApi):
             set_token=False,
             persist_token=False,
         )
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is False
 
         # Login and update the token and persistence
         if os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH):
             os.remove(settings.CONTEXT_AUTH_TOKEN_PATH)
-        assert self.api_config.token == "token"
+        assert self.config.token == "token"
         assert token == self.api_handler.login_notebook_impersonate_token(
             username="user",
             project_name="project",
@@ -337,5 +337,5 @@ class TestAuthApi(TestBaseApi):
             set_token=True,
             persist_token=True,
         )
-        assert self.api_config.token == token
+        assert self.config.token == token
         assert os.path.exists(settings.CONTEXT_AUTH_TOKEN_PATH) is True

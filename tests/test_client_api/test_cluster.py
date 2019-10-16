@@ -15,14 +15,14 @@ from polyaxon.schemas.api.clusters import ClusterNodeConfig, PolyaxonClusterConf
 class TestClusterApi(TestBaseApi):
     def setUp(self):
         super(TestClusterApi, self).setUp()
-        self.api_handler = ClusterApi(transport=self.transport, config=self.api_config)
+        self.api_handler = ClusterApi(transport=self.transport, config=self.config)
 
     @httpretty.activate
     def test_get_cluster(self):
         obj = PolyaxonClusterConfig(version_api={}).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/cluster"),
+            BaseApiHandler.build_url(self.config.base_url, "/cluster"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -58,7 +58,7 @@ class TestClusterApi(TestBaseApi):
 
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/nodes", 1),
+            BaseApiHandler.build_url(self.config.base_url, "/nodes", 1),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,

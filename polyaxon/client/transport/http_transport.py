@@ -11,7 +11,7 @@ from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon.client import settings
 from polyaxon.client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 from polyaxon.client.transport.utils import Bar, progress_bar
 
 

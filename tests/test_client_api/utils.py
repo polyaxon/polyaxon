@@ -9,7 +9,7 @@ from unittest import TestCase
 from mock import patch
 
 from polyaxon.client import settings
-from polyaxon.client.api_config import ApiConfig
+from polyaxon.client.config import ClientConfig
 from polyaxon.client.transport import Transport
 
 
@@ -18,28 +18,25 @@ class TestBaseApi(TestCase):
         self.host = "localhost"
         self.http_port = 8000
         self.ws_port = 1337
-        self.api_config = ApiConfig(
+        self.config = ClientConfig(
             host=self.host,
-            http_port=self.http_port,
-            ws_port=self.ws_port,
             version="v1",
             token="token",
             reraise=True,
-            use_https=False,
             is_managed=False,
             interval=0,
             timeout=0.01,
             schema_response=True,
         )
-        self.transport = Transport(config=self.api_config)
+        self.transport = Transport(config=self.config)
         settings.TMP_AUTH_TOKEN_PATH = "{}/{}".format(tempfile.mkdtemp(), ".plx")
         settings.USER_CLIENT_CONFIG_PATH = "{}/{}".format(tempfile.mkdtemp(), ".plx")
 
     def set_raw_response(self):
-        self.api_config.schema_response = False
+        self.config.schema_response = False
 
     def set_schema_response(self):
-        self.api_config.schema_response = True
+        self.config.schema_response = True
 
     def assert_async_call(self, api_handler_call, method):
         with patch.object(Transport, method) as mock_fct:

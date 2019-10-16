@@ -5,14 +5,10 @@ import os
 import sys
 
 import click
+from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import (
-    PolyaxonClientException,
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-)
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.ignore import IgnoreManager
 from polyaxon.managers.project import ProjectManager
@@ -58,10 +54,11 @@ def create_polyaxonfile():
 @clean_outputs
 def init(project, polyaxonfile):
     """Initialize a new polyaxonfile specification."""
-    user, project_name = get_project_or_local(project)
+    owner, project_name = get_project_or_local(project)
     try:
-        project_config = PolyaxonClient().project.get_project(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        project_config = polyaxon_client.project_service.get_project(owner, project_name)
+    except ApiException as e:
         Printer.print_error(
             "Make sure you have a project with this name `{}`".format(project)
         )

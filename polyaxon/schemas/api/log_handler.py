@@ -11,7 +11,6 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 class LogHandlerSchema(BaseSchema):
     dsn = fields.Str(allow_none=True)
     environment = fields.Str()
-    tags = fields.Dict()
 
     @staticmethod
     def schema_config():
@@ -22,10 +21,9 @@ class LogHandlerConfig(BaseConfig):
     SCHEMA = LogHandlerSchema
     IDENTIFIER = "log_handler"
 
-    def __init__(self, environment, tags, dsn=None):
+    def __init__(self, environment, dsn=None):
         self.dsn = dsn
         self.environment = environment
-        self.tags = tags
 
     @property
     def decoded_dsn(self):

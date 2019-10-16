@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.schemas.cli.global_configuration import GlobalConfigurationConfig
+from polyaxon.schemas.cli.client_configuration import GlobalConfigurationConfig
 
 
 class GlobalConfigManager(BaseConfigManager):

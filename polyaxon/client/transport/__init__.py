@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 from polyaxon.client.exceptions import AuthenticationError
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 from polyaxon.client.transport.http_transport import HttpTransportMixin
 from polyaxon.client.transport.periodic_transport import (
     PeriodicHttpTransportMixin,

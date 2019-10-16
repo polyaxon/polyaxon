@@ -4,15 +4,10 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+from polyaxon_sdk.rest import ApiException
 
 from polyaxon import pkg
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import (
-    AuthorizationError,
-    PolyaxonClientException,
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-)
 from polyaxon.deploy.operators.pip import PipOperator
 from polyaxon.logger import clean_outputs, logger
 from polyaxon.managers.auth import AuthConfigManager
@@ -48,25 +43,27 @@ def get_current_version():
     return pkg.VERSION
 
 
-def get_server_version():
+def get_server_versions(polyaxon_client=None):
+    polyaxon_client = polyaxon_client or PolyaxonClient()
     try:
-        return PolyaxonClient().version.get_cli_version()
-    except AuthorizationError:
-        session_expired()
-        sys.exit(1)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        return polyaxon_client.version_service.get_versions()
+    except ApiException as e:
+        if e.status == 403:
+            session_expired()
+            sys.exit(1)
         Printer.print_error("Could not get cli version.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
 
-def get_log_handler():
+def get_log_handler(polyaxon_client=None):
+    polyaxon_client = polyaxon_client or PolyaxonClient()
     try:
-        return PolyaxonClient().version.get_log_handler()
-    except AuthorizationError:
-        session_expired()
-        sys.exit(1)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        return polyaxon_client.version_service.get_log_handler()
+    except ApiException as e:
+        if e.status == 403:
+            session_expired()
+            sys.exit(1)
         Printer.print_error("Could not get cli version.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -74,18 +71,19 @@ def get_log_handler():
 
 def check_cli_version():
     """Check if the current cli version satisfies the server requirements"""
+    import pdb; pdb.set_trace()
     if not CliConfigManager.should_check():
         return
 
     from distutils.version import LooseVersion  # pylint:disable=import-error
 
-    server_version = get_server_version()
+    server_versions = get_server_versions()
     current_version = get_current_version()
-    CliConfigManager.reset(
-        current_version=current_version, min_version=server_version.min_version
+    cli_config = CliConfigManager.reset(
+        current_version=current_version, server_versions=server_versions.to_dict()
     )
 
-    if LooseVersion(current_version) < LooseVersion(server_version.min_version):
+    if LooseVersion(current_version) < LooseVersion(cli_config.min_version):
         click.echo(
             """Your version of CLI ({}) is no longer compatible with server.""".format(
                 current_version
@@ -93,7 +91,7 @@ def check_cli_version():
         )
         if click.confirm(
             "Do you want to upgrade to "
-            "version {} now?".format(server_version.latest_version)
+            "version {} now?".format(cli_config.latest_version)
         ):
             pip_upgrade()
             sys.exit(0)
@@ -103,78 +101,47 @@ def check_cli_version():
                 indentation.puts("pip install -U polyaxon-cli")
             indentation.puts(
                 "to upgrade to the latest version `{}`".format(
-                    server_version.latest_version
+                    cli_config.latest_version
                 )
             )
 
             sys.exit(0)
-    elif LooseVersion(current_version) < LooseVersion(server_version.latest_version):
+    elif LooseVersion(current_version) < LooseVersion(cli_config.latest_version):
         indentation.puts(
             "New version of CLI ({}) is now available. To upgrade run:".format(
-                server_version.latest_version
+                cli_config.latest_version
             )
         )
         with indentation.indent(4):
             indentation.puts("pip install -U polyaxon-cli")
-    elif LooseVersion(current_version) > LooseVersion(server_version.latest_version):
+    elif LooseVersion(current_version) > LooseVersion(cli_config.latest_version):
         indentation.puts(
             "You version of CLI ({}) is ahead of the latest version "
             "supported by Polyaxon Platform ({}) on your cluster, "
             "and might be incompatible.".format(
-                current_version, server_version.latest_version
+                current_version, cli_config.latest_version
             )
         )
 
 
 @click.command()
-@click.option("--cli", is_flag=True, default=False, help="Version of the Polyaxon cli.")
-@click.option(
-    "--platform", is_flag=True, default=False, help="Version of the Polyaxon platform."
-)
 @clean_outputs
-def version(cli, platform):
+def version():
     """Print the current version of the cli and platform."""
-    version_client = PolyaxonClient().version
-    cli = cli or not any([cli, platform])
-    if cli:
-        try:
-            server_version = version_client.get_cli_version()
-        except AuthorizationError:
+    polyaxon_client = PolyaxonClient()
+    try:
+        server_versions = polyaxon_client.version_service.get_versions()
+    except ApiException as e:
+        if e.status == 403:
             session_expired()
             sys.exit(1)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
-            Printer.print_error("Could not get cli version.")
-            Printer.print_error("Error message `{}`.".format(e))
-            sys.exit(1)
-        cli_version = get_current_version()
-        Printer.print_header("Current cli version: {}.".format(cli_version))
-        Printer.print_header("Supported cli versions:")
-        dict_tabulate(server_version.to_dict())
-
-    if platform:
-        try:
-            platform_version = version_client.get_platform_version()
-        except AuthorizationError:
-            session_expired()
-            sys.exit(1)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
-            Printer.print_error("Could not get platform version.")
-            Printer.print_error("Error message `{}`.".format(e))
-            sys.exit(1)
-        chart_version = version_client.get_chart_version()
-        Printer.print_header(
-            "Current platform version: {}.".format(chart_version.version)
-        )
-        Printer.print_header("Supported platform versions:")
-        dict_tabulate(platform_version.to_dict())
+        Printer.print_error("Could not get cli version.")
+        Printer.print_error("Error message `{}`.".format(e))
+        sys.exit(1)
+    cli_version = get_current_version()
+    Printer.print_header("Current cli version: {}.".format(cli_version))
+    Printer.print_header("Supported cli versions:")
+    dict_tabulate(server_versions.to_dict())
 
 
 @click.command()

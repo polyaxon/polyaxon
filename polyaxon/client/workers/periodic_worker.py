@@ -7,7 +7,7 @@ import six
 from time import sleep, time
 
 from polyaxon.client import settings
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 from polyaxon.client.workers.queue_worker import QueueWorker
 
 

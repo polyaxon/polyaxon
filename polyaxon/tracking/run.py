@@ -11,7 +11,7 @@ from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
 from polyaxon.client import settings
 from polyaxon.client.exceptions import AuthenticationError, PolyaxonClientException
 from polyaxon.client.handlers.conf import setup_logging
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 from polyaxon.tracking.base import BaseTracker
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op

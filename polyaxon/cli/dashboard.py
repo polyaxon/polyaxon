@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from polyaxon.client import PolyaxonClient
+from polyaxon.client.config import ClientConfig
 from polyaxon.logger import clean_outputs
 
 
@@ -24,7 +24,7 @@ from polyaxon.logger import clean_outputs
 @clean_outputs
 def dashboard(yes, url):
     """Open dashboard in browser."""
-    dashboard_url = "{}/app".format(PolyaxonClient().api_config.http_host)
+    dashboard_url = "{}/app".format(ClientConfig().host)
     if url:
         click.echo(dashboard_url)
         sys.exit(0)

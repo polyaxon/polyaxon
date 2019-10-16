@@ -6,15 +6,11 @@ import sys
 import click
 
 from marshmallow import ValidationError
+from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.cli.init import init as init_project
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import (
-    PolyaxonClientException,
-    PolyaxonHTTPError,
-    PolyaxonShouldExitError,
-)
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.project import ProjectManager
@@ -22,22 +18,22 @@ from polyaxon.schemas.api.project import ProjectConfig
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
-    get_experiments_with_metrics,
-    get_experiments_with_params,
+    get_runs_with_inputs,
+    get_runs_with_outputs,
     get_meta_response,
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.validation import validate_tags
 
 
-def get_project_details(_project):
-    if _project.description:
+def get_project_details(project):
+    if project.description:
         Printer.print_header("Project description:")
-        click.echo("{}\n".format(_project.description))
+        click.echo("{}\n".format(project.description))
 
-    response = _project.to_light_dict(
+    response = project.to_light_dict(
         humanize_values=True,
-        exclude_attrs=["uuid", "experiment_groups", "experiments", "description"],
+        exclude_attrs=["uuid", "runs", "description"],
     )
 
     Printer.print_header("Project info:")
@@ -48,29 +44,34 @@ def get_project_details(_project):
 @click.option("--project", "-p", type=str)
 @click.pass_context
 @clean_outputs
-def project(ctx, project):  # pylint:disable=redefined-outer-name
+def projects(ctx, project):  # pylint:disable=redefined-outer-name
     """Commands for projects."""
     if ctx.invoked_subcommand not in ["create", "list"]:
         ctx.obj = ctx.obj or {}
         ctx.obj["project"] = project
 
 
-@project.command()
+@projects.command()
 @click.option(
     "--name",
     required=True,
     type=str,
-    help="Name of the project, must be unique for the same user.",
+    help="Name of the project, must be unique for the owner namespace.",
+)
+@click.option(
+    "--owner",
+    type=str,
+    help="Name of the owner/namespace, "
+         "if not provided it will default to the namespace of the current user.",
 )
 @click.option("--description", type=str, help="Description of the project.")
-@click.option("--tags", type=str, help="Tags, comma separated values, of the project.")
 @click.option(
     "--private", is_flag=True, help="Set the visibility of the project to private."
 )
 @click.option("--init", is_flag=True, help="Initialize the project after creation.")
 @click.pass_context
 @clean_outputs
-def create(ctx, name, description, tags, private, init):
+def create(ctx, name, owner, description, tags, private, init):
     """Create a new project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -82,6 +83,7 @@ def create(ctx, name, description, tags, private, init):
     $ polyaxon project create --name=cats-vs-dogs --description="Image Classification with DL"
     ```
     """
+    owner = owner or AuthConfigManager.get_value("username")
     try:
         tags = tags.split(",") if tags else None
         project_dict = dict(
@@ -95,8 +97,9 @@ def create(ctx, name, description, tags, private, init):
         sys.exit(1)
 
     try:
-        _project = PolyaxonClient().project.create_project(project_config)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        _project = polyaxon_client.project_service.create_project(owner, project_config)
+    except ApiException as e:
         Printer.print_error("Could not create project `{}`.".format(name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -110,22 +113,29 @@ def create(ctx, name, description, tags, private, init):
         ctx.invoke(init_project, project=name)
 
 
-@project.command()
+@projects.command()
+@click.option(
+    "--owner",
+    type=str,
+    help="Name of the owner/namespace, "
+         "if not provided it will default to the namespace of the current user.",
+)
 @click.option("--page", type=int, help="To paginate through the list of projects.")
 @clean_outputs
-def list(page):  # pylint:disable=redefined-builtin
+def list(owner, page):  # pylint:disable=redefined-builtin
     """List projects.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
     """
-    user = AuthConfigManager.get_value("username")
-    if not user:
+    owner = owner or AuthConfigManager.get_value("username")
+    if not owner:
         Printer.print_error("Please login first. `polyaxon login --help`")
 
     page = page or 1
     try:
-        response = PolyaxonClient().project.list_projects(user, page=page)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.project_service.list_projects(owner, page=page)
+    except ApiException as e:
         Printer.print_error("Could not get list of projects.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -163,7 +173,7 @@ def list(page):  # pylint:disable=redefined-builtin
         dict_tabulate(objects, is_list_dict=True)
 
 
-@project.command()
+@projects.command()
 @click.pass_context
 @clean_outputs
 def get(ctx):
@@ -187,11 +197,12 @@ def get(ctx):
     $ polyaxon project get user/project
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
     try:
-        response = PolyaxonClient().project.get_project(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.project_service.get_project(owner, project_name)
+    except ApiException as e:
         Printer.print_error("Could not get project `{}`.".format(project_name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -199,7 +210,7 @@ def get(ctx):
     get_project_details(response)
 
 
-@project.command()
+@projects.command()
 @click.pass_context
 @clean_outputs
 def delete(ctx):
@@ -207,37 +218,38 @@ def delete(ctx):
 
     Uses [Caching](/references/polyaxon-cli/#caching)
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
     if not click.confirm(
-        "Are sure you want to delete project `{}/{}`".format(user, project_name)
+        "Are sure you want to delete project `{}/{}`".format(owner, project_name)
     ):
         click.echo("Existing without deleting project.")
         sys.exit(1)
 
     try:
-        response = PolyaxonClient().project.delete_project(user, project_name)
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.project_service.delete_project(owner, project_name)
         local_project = ProjectManager.get_config()
-        if local_project and (user, project_name) == (
+        if local_project and (owner, project_name) == (
             local_project.user,
             local_project.name,
         ):
             # Purge caching
             ProjectManager.purge()
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+    except ApiException as e:
         Printer.print_error(
-            "Could not delete project `{}/{}`.".format(user, project_name)
+            "Could not delete project `{}/{}`.".format(owner, project_name)
         )
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
     if response.status_code == 204:
         Printer.print_success(
-            "Project `{}/{}` was delete successfully".format(user, project_name)
+            "Project `{}/{}` was delete successfully".format(owner, project_name)
         )
 
 
-@project.command()
+@projects.command()
 @click.option(
     "--name", type=str, help="Name of the project, must be unique for the same user."
 )
@@ -270,7 +282,7 @@ def update(ctx, name, description, tags, private):
     $ polyaxon update --tags="foo, bar"
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
     update_dict = {}
     if name:
@@ -291,10 +303,11 @@ def update(ctx, name, description, tags, private):
         sys.exit(1)
 
     try:
-        response = PolyaxonClient().project.update_project(
-            user, project_name, update_dict
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.project_service.update_project(
+            owner, project_name, update_dict
         )
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+    except ApiException as e:
         Printer.print_error("Could not update project `{}`.".format(project_name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -303,80 +316,70 @@ def update(ctx, name, description, tags, private):
     get_project_details(response)
 
 
-@project.command()
+@projects.command()
 @click.option(
-    "--metrics", "-m", is_flag=True, help="List experiments with their metrics."
-)
-@click.option(
-    "--params", "-p", is_flag=True, help="List experiments with their params."
-)
-@click.option(
-    "--independent", "-i", is_flag=True, help="To return only independent experiments."
-)
-@click.option(
-    "--group", "-g", type=int, help="To filter experiments for a specific group."
+    "--io", "-io",
+    is_flag=True,
+    help="List runs with their inputs/outputs (params, metrics, results, ...)."
 )
 @click.option(
     "--query",
     "-q",
     type=str,
-    help="To filter the experiments based on this query spec.",
+    help="To filter the runs based on this query spec.",
 )
-@click.option("--sort", "-s", type=str, help="To change order by of the experiments.")
-@click.option("--page", type=int, help="To paginate through the list of experiments.")
+@click.option("--sort", "-s", type=str, help="To change order by of the runs.")
+@click.option("--page", type=int, help="To paginate through the list of runs.")
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def experiments(ctx, metrics, params, independent, group, query, sort, page):
-    """List experiments for this project.
+def runs(ctx, io, query, sort, page):
+    """List runs for this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
 
     Examples:
 
-    Get all experiments:
+    Get all runs:
 
     \b
     ```bash
-    $ polyaxon project experiments
+    $ polyaxon project runs
     ```
 
-    Get all experiments with with status {created or running}, and
+    Get all runs with with status {created or running}, and
     creation date between 2018-01-01 and 2018-01-02, and params activation equal to sigmoid
     and metric loss less or equal to 0.2
 
     \b
     ```bash
-    $ polyaxon project experiments \
+    $ polyaxon project runs \
       -q "status:created|running, started_at:2018-01-01..2018-01-02, \
           params.activation:sigmoid, metric.loss:<=0.2"
     ```
 
-    Get all experiments sorted by update date
+    Get all runs sorted by update date
 
     \b
     ```bash
-    $ polyaxon project experiments -s "-updated_at"
+    $ polyaxon project runs -s "-updated_at"
     ```
     """
     user, project_name = get_project_or_local(ctx.obj.get("project"))
 
     page = page or 1
     try:
-        response = PolyaxonClient().project.list_experiments(
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.project_service.list_runs(
             username=user,
             project_name=project_name,
-            independent=independent,
-            group=group,
-            metrics=metrics,
-            params=params,
             query=query,
             sort=sort,
             page=page,
         )
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+    except ApiException as e:
         Printer.print_error(
-            "Could not get experiments for project `{}`.".format(project_name)
+            "Could not get runs for project `{}`.".format(project_name)
         )
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -390,13 +393,12 @@ def experiments(ctx, metrics, params, independent, group, query, sort, page):
         dict_tabulate(meta)
     else:
         Printer.print_header(
-            "No experiments found for project `{}/{}`.".format(user, project_name)
+            "No runs found for project `{}/{}`.".format(user, project_name)
         )
 
-    if metrics:
-        objects = get_experiments_with_metrics(response)
-    elif params:
-        objects = get_experiments_with_params(response)
+    if io:
+        objects = get_runs_with_outputs(response)
+        objects = get_runs_with_inputs(response)
     else:
         objects = [
             Printer.add_status_color(o.to_light_dict(humanize_values=True))
@@ -409,64 +411,7 @@ def experiments(ctx, metrics, params, independent, group, query, sort, page):
         dict_tabulate(objects, is_list_dict=True)
 
 
-@project.command()
-@click.option(
-    "--page", type=int, help="To paginate through the list of tensorboard jobs."
-)
-@click.option(
-    "--query",
-    "-q",
-    type=str,
-    help="To filter the tensorboard jobs based on this query spec.",
-)
-@click.option(
-    "--sort", "-s", type=str, help="To change order by of the tensorboard jobss."
-)
-@click.pass_context
-@clean_outputs
-def tensorboards(ctx, query, sort, page):
-    """List tensorboard jobs for this project.
-
-    Uses [Caching](/references/polyaxon-cli/#caching)
-    """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
-
-    page = page or 1
-    try:
-        response = PolyaxonClient().project.list_tensorboards(
-            username=user, project_name=project_name, query=query, sort=sort, page=page
-        )
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
-        Printer.print_error(
-            "Could not get tensorboards for project `{}`.".format(project_name)
-        )
-        Printer.print_error("Error message `{}`.".format(e))
-        sys.exit(1)
-
-    meta = get_meta_response(response)
-    if meta:
-        Printer.print_header(
-            "Tensorboards for project `{}/{}`.".format(user, project_name)
-        )
-        Printer.print_header("Navigation:")
-        dict_tabulate(meta)
-    else:
-        Printer.print_header(
-            "No tensorboards found for project `{}/{}`.".format(user, project_name)
-        )
-
-    objects = [
-        Printer.add_status_color(o.to_light_dict(humanize_values=True))
-        for o in response["results"]
-    ]
-    objects = list_dicts_to_tabulate(objects)
-    if objects:
-        Printer.print_header("Tensorboards:")
-        objects.pop("project_name", None)
-        dict_tabulate(objects, is_list_dict=True)
-
-
-@project.command()
+@projects.command()
 @click.option("--url", type=str, help="The url of the git repo.")
 @click.option(
     "--private", is_flag=True, help="Set the visibility of the repo to private."
@@ -477,7 +422,7 @@ def tensorboards(ctx, query, sort, page):
 @click.pass_context
 @clean_outputs
 def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
-    """Set/Sync git repo on this project.
+    """Set/Sync git repo on this project. TODO
 
     Uses [Caching](/references/polyaxon-cli/#caching)
 
@@ -511,11 +456,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
 
         try:
             PolyaxonClient().project.set_repo(user, project_name, url, not private)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
+        except ApiException as e:
             Printer.print_error(
                 "Could not set git repo on project `{}`.".format(project_name)
             )
@@ -529,11 +470,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
     def git_sync_repo():
         try:
             response = PolyaxonClient().project.sync_repo(user, project_name)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
+        except ApiException as e:
             Printer.print_error(
                 "Could not sync git repo on project `{}`.".format(project_name)
             )
@@ -549,7 +486,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
         git_sync_repo()
 
 
-@project.command()
+@projects.command()
 @click.option("--enable", is_flag=True, help="Enable CI on this project.")
 @click.option("--disable", is_flag=True, help="Disable CI on this project.")
 @click.pass_context
@@ -571,16 +508,14 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
     $ polyaxon project ci --disable
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
+
+    polyaxon_client = PolyaxonClient()
 
     def enable_ci():
         try:
-            PolyaxonClient().project.enable_ci(user, project_name)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
+            polyaxon_client.project_service.enable_ci(owner, project_name)
+        except ApiException as e:
             Printer.print_error(
                 "Could not enable CI on project `{}`.".format(project_name)
             )
@@ -595,12 +530,8 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
 
     def disable_ci():
         try:
-            PolyaxonClient().project.disable_ci(user, project_name)
-        except (
-            PolyaxonHTTPError,
-            PolyaxonShouldExitError,
-            PolyaxonClientException,
-        ) as e:
+            polyaxon_client.project_service.disable_ci(owner, project_name)
+        except ApiException as e:
             Printer.print_error(
                 "Could not disable CI on project `{}`.".format(project_name)
             )
@@ -619,7 +550,7 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
         disable_ci()
 
 
-@project.command()
+@projects.command()
 @click.option("--commit", "-c", type=str, help="The Commit to download.")
 @click.pass_context
 @clean_outputs
@@ -627,8 +558,9 @@ def download(ctx, commit):
     """Download code of the current project."""
     user, project_name = get_project_or_local(ctx.obj.get("project"))
     try:
-        PolyaxonClient().project.download_repo(user, project_name, commit=commit)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        polyaxon_client.project_service.download_repo(user, project_name, commit=commit)
+    except ApiException as e:
         Printer.print_error(
             "Could not download code for project `{}`.".format(project_name)
         )
@@ -637,7 +569,7 @@ def download(ctx, commit):
     Printer.print_success("Files downloaded.")
 
 
-@project.command()
+@projects.command()
 @click.pass_context
 @clean_outputs
 def bookmark(ctx):
@@ -645,21 +577,22 @@ def bookmark(ctx):
 
     Uses [Caching](/references/polyaxon-cli/#caching)
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
     try:
-        PolyaxonClient().project.bookmark(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        polyaxon_client.project_service.bookmark_project(owner, project_name)
+    except ApiException as e:
         Printer.print_error(
-            "Could not bookmark project `{}/{}`.".format(user, project_name)
+            "Could not bookmark project `{}/{}`.".format(owner, project_name)
         )
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
-    Printer.print_success("Project `{}/{}` is bookmarked.".format(user, project_name))
+    Printer.print_success("Project `{}/{}` is bookmarked.".format(owner, project_name))
 
 
-@project.command()
+@projects.command()
 @click.pass_context
 @clean_outputs
 def unbookmark(ctx):
@@ -667,25 +600,26 @@ def unbookmark(ctx):
 
     Uses [Caching](/references/polyaxon-cli/#caching)
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
     try:
-        PolyaxonClient().project.unbookmark(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        polyaxon_client.project_service.unbookmark(owner, project_name)
+    except ApiException as e:
         Printer.print_error(
-            "Could not unbookmark project `{}/{}`.".format(user, project_name)
+            "Could not unbookmark project `{}/{}`.".format(owner, project_name)
         )
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
-    Printer.print_success("Project `{}/{}` is unbookmarked.".format(user, project_name))
+    Printer.print_success("Project `{}/{}` is unbookmarked.".format(owner, project_name))
 
 
-@project.command()
+@projects.command()
 @click.pass_context
 @clean_outputs
-def invalidate_builds(ctx):
-    """Invalidate build job.
+def invalidate_runs(ctx):
+    """Invalidate runs' cache inside this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
 
@@ -696,11 +630,12 @@ def invalidate_builds(ctx):
     $ polyaxon invalidate_builds
     ```
     """
-    user, project_name = get_project_or_local(ctx.obj.get("project"))
+    owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
     try:
-        PolyaxonClient().project.invalidate_builds(user, project_name)
-    except (PolyaxonHTTPError, PolyaxonShouldExitError, PolyaxonClientException) as e:
+        polyaxon_client = PolyaxonClient()
+        polyaxon_client.project_service.invalidate_builds(owner, project_name)
+    except ApiException as e:
         Printer.print_error(
             "Could not invalidate build jobs for project `{}`.".format(project_name)
         )

@@ -3,7 +3,7 @@ import logging
 from hestia.logging_utils import LogSpec
 
 from polyaxon.client import settings
-from polyaxon.client.logger import logger
+from polyaxon.logger import logger
 
 
 class PolyaxonHandler(logging.Handler):

@@ -11,22 +11,16 @@ from marshmallow import ValidationError
 from polyaxon.cli.admin import admin
 from polyaxon.cli.auth import login, logout, whoami
 from polyaxon.cli.bookmark import bookmark
-from polyaxon.cli.build import build
 from polyaxon.cli.check import check
 from polyaxon.cli.cluster import cluster
 from polyaxon.cli.completion import completion
 from polyaxon.cli.config import config
 from polyaxon.cli.dashboard import dashboard
 from polyaxon.cli.deploy import deploy, teardown
-from polyaxon.cli.experiment import experiment
-from polyaxon.cli.experiment_group import group
+from polyaxon.cli.runs import runs
 from polyaxon.cli.init import init
-from polyaxon.cli.job import job
-from polyaxon.cli.notebook import notebook
-from polyaxon.cli.project import project
+from polyaxon.cli.projects import projects
 from polyaxon.cli.run import run
-from polyaxon.cli.superuser import superuser
-from polyaxon.cli.tensorboard import tensorboard
 from polyaxon.cli.upload import upload
 from polyaxon.cli.user import user
 from polyaxon.cli.version import check_cli_version, upgrade, version
@@ -89,20 +83,14 @@ cli.add_command(login)
 cli.add_command(logout)
 cli.add_command(whoami)
 cli.add_command(user)
-cli.add_command(superuser)
 cli.add_command(upgrade)
 cli.add_command(version)
 cli.add_command(config)
 cli.add_command(check)
 cli.add_command(init)
 cli.add_command(cluster)
-cli.add_command(project)
-cli.add_command(build)
-cli.add_command(tensorboard)
-cli.add_command(notebook)
-cli.add_command(group)
-cli.add_command(experiment)
-cli.add_command(job)
+cli.add_command(projects)
+cli.add_command(runs)
 cli.add_command(upload)
 cli.add_command(run)
 cli.add_command(dashboard)

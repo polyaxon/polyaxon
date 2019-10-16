@@ -20,14 +20,14 @@ from polyaxon.schemas.api.version import (
 class TestVersionApi(TestBaseApi):
     def setUp(self):
         super(TestVersionApi, self).setUp()
-        self.api_handler = VersionApi(transport=self.transport, config=self.api_config)
+        self.api_handler = VersionApi(transport=self.transport, config=self.config)
 
     @httpretty.activate
     def test_get_cli_version(self):
         obj = CliVersionConfig(latest_version="1.0", min_version="0.5").to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/versions/", "cli"),
+            BaseApiHandler.build_url(self.config.base_url, "/versions/", "cli"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -48,7 +48,7 @@ class TestVersionApi(TestBaseApi):
         httpretty.register_uri(
             httpretty.GET,
             BaseApiHandler.build_url(
-                self.api_config.base_url, "/versions/", "platform"
+                self.config.base_url, "/versions/", "platform"
             ),
             body=json.dumps(obj),
             content_type="application/json",
@@ -69,7 +69,7 @@ class TestVersionApi(TestBaseApi):
         obj = LibVersionConfig(latest_version="1.0", min_version="0.5").to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/versions/", "lib"),
+            BaseApiHandler.build_url(self.config.base_url, "/versions/", "lib"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -89,7 +89,7 @@ class TestVersionApi(TestBaseApi):
         obj = ChartVersionConfig(version="1.0").to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/versions/", "chart"),
+            BaseApiHandler.build_url(self.config.base_url, "/versions/", "chart"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
@@ -109,17 +109,10 @@ class TestVersionApi(TestBaseApi):
         obj = LogHandlerConfig(
             dsn="test",
             environment="staging",
-            tags={
-                "cli_min_version": "0.0.1",
-                "cli_latest_version": "0.0.2",
-                "platform_min_version": "0.0.1",
-                "platform_latest_version": "0.0.1",
-                "chart_version": "0.0.1",
-            },
         ).to_dict()
         httpretty.register_uri(
             httpretty.GET,
-            BaseApiHandler.build_url(self.api_config.base_url, "/log_handler"),
+            BaseApiHandler.build_url(self.config.base_url, "/log_handler"),
             body=json.dumps(obj),
             content_type="application/json",
             status=200,
