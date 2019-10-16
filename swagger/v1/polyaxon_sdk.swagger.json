@@ -2543,7 +2543,7 @@
       "properties": {
         "uuid": {
           "type": "string",
-          "title": "The uuid of the status"
+          "title": "The uuid of the run"
         },
         "status": {
           "type": "string",

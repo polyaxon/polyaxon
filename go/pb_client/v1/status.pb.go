@@ -123,7 +123,7 @@ func (m *StatusCondition) GetLastTransitionTime() string {
 
 // Status specification
 type Status struct {
-	// The uuid of the status
+	// The uuid of the run
 	Uuid string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 	// The current status
 	Status string `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`

@@ -29,7 +29,7 @@ message StatusCondition {
 
 // Status specification
 message Status {
-    // The uuid of the status
+    // The uuid of the run
     string uuid = 1;
 
     // The current status
