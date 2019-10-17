@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from marshmallow import fields
+from hestia.env_var_keys import POLYAXON_KEYS_AUTH_USERNAME, POLYAXON_KEYS_AUTH_TOKEN
+from marshmallow import fields, EXCLUDE
 
 from polyaxon.schemas.base import BaseConfig, BaseSchema
 
 
 class AccessTokenSchema(BaseSchema):
-    username = fields.Str()
-    token = fields.Str()
+    username = fields.Str(data_key=POLYAXON_KEYS_AUTH_USERNAME)
+    token = fields.Str(data_key=POLYAXON_KEYS_AUTH_TOKEN)
 
     @staticmethod
     def schema_config():
@@ -28,7 +29,9 @@ class AccessTokenConfig(BaseConfig):
     SCHEMA = AccessTokenSchema
     IDENTIFIER = "token"
 
-    def __init__(self, username, token):
+    UNKNOWN_BEHAVIOUR = EXCLUDE
+
+    def __init__(self, username=None, token=None, **kwargs):
         self.username = username
         self.token = token
 

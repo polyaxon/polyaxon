@@ -5,7 +5,7 @@ import six
 
 from hestia.list_utils import to_list
 
-from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon.exceptions import PolyaxonClientException
 
 
 def validate_tags(tags):

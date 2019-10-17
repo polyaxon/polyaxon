@@ -6,7 +6,7 @@ import sys
 import click
 
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import (
+from polyaxon.exceptions import (
     PolyaxonClientException,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,

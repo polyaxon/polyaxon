@@ -85,6 +85,16 @@ class BaseConfigManager(object):
         return cls.CONFIG.from_dict(json.loads(config_str))
 
     @classmethod
+    def get_model(cls):
+        if not cls.is_initialized():
+            return None
+
+        config_file_path = cls.get_config_file_path()
+        with open(config_file_path, "r") as config_file:
+            config_str = config_file.read()
+        return cls.CONFIG(**json.loads(config_str))
+
+    @classmethod
     def get_config_or_default(cls):
         if not cls.is_initialized():
             return cls.CONFIG()  # pylint:disable=not-callable

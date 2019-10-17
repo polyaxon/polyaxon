@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.client import settings
+from polyaxon import settings
 
 
 def check_offline(f):
@@ -23,7 +23,7 @@ def check_offline(f):
     """
 
     def wrapper(*args, **kwargs):
-        if settings.IS_OFFLINE:
+        if settings.CLIENT_CONFIG.is_offline:
             return None
         return f(*args, **kwargs)
 

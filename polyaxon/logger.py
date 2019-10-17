@@ -19,12 +19,9 @@ def configure_logger(verbose):
     def set_raven_client():
         from polyaxon.managers.cli import CliConfigManager
 
-        import pdb; pdb.set_trace()
         cli_config = CliConfigManager.get_config()
         if cli_config and cli_config.log_handler and cli_config.log_handler.decoded_dsn:
             import sentry_sdk
-            from sentry_sdk import capture_exception
-            from sentry_sdk import capture_message
 
             sentry_sdk.init(
                 dsn=cli_config.log_handler.decoded_dsn,

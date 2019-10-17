@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 from unittest import TestCase
 
+from polyaxon_sdk import V1Run
+
 from polyaxon.managers.run import RunManager
-from polyaxon.schemas.api.experiment import ExperimentConfig
 
 
 class TestRunManager(TestCase):
@@ -12,4 +13,4 @@ class TestRunManager(TestCase):
         assert RunManager.IS_GLOBAL is False
         assert RunManager.IS_POLYAXON_DIR is True
         assert RunManager.CONFIG_FILE_NAME == ".polyaxonrun"
-        assert RunManager.CONFIG == ExperimentConfig
+        assert RunManager.CONFIG == V1Run

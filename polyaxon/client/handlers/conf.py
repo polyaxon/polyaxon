@@ -1,13 +1,13 @@
 import logging
 
-from polyaxon.client import settings
+from polyaxon import settings
 from polyaxon.client.handlers.handler import PolyaxonHandler
 
 EXCLUDE_DEFAULT_LOGGERS = ("polyaxon.client", "polyaxon.cli")
 
 
 def setup_logging(send_logs, exclude=EXCLUDE_DEFAULT_LOGGERS):
-    if settings.IS_MANAGED:
+    if settings.CLIENT_CONFIG.is_managed:
         return
 
     logger = logging.getLogger()

@@ -9,7 +9,7 @@ import rhea
 
 from hestia.list_utils import to_list
 
-from polyaxon.schemas.exceptions import PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.schemas.specs import get_specification
 
 DEFAULT_POLYAXON_FILE_NAME = [

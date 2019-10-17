@@ -5,11 +5,11 @@ from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.managers.run import RunManager
 
 
-def get_run_or_local(experiment=None):
-    return experiment or RunManager.get_config_or_raise().id
+def get_run_or_local(run_uuid=None):
+    return run_uuid or RunManager.get_config_or_raise().uuid
 
 
-def get_project_run_or_local(project=None, experiment=None):
+def get_project_run_or_local(project=None, run_uuid=None):
     user, project_name = get_project_or_local(project)
-    experiment = get_run_or_local(experiment)
-    return user, project_name, experiment
+    run_uuid = get_run_or_local(run_uuid)
+    return user, project_name, run_uuid

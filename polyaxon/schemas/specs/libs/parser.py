@@ -12,7 +12,7 @@ from collections import Mapping, defaultdict
 from hestia.list_utils import to_list
 from rhea.utils import deep_update
 
-from polyaxon.schemas.exceptions import PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError
 
 
 class Parser(object):

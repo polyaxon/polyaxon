@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.polyflow import dags
 
 

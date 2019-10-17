@@ -44,7 +44,7 @@ def login(token, username, password):
 
         try:
             body = polyaxon_sdk.models.V1CredsBodyRequest(username=username, password=password)
-            access_auth = polyaxon_client.auth_service.login(body=body)
+            access_auth = polyaxon_client.auth_v1.login(body=body)
         except ApiException as e:
             Printer.print_error("Could not login.")
             Printer.print_error("Error Message `{}`.".format(e))
@@ -86,7 +86,7 @@ def login(token, username, password):
     try:
         AuthConfigManager.purge()
         polyaxon_client = PolyaxonClient(token=access_auth.token)
-        user = polyaxon_client.user_service.get_user()
+        user = polyaxon_client.users_v1.get_user()
     except ApiException as e:
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))
@@ -122,7 +122,7 @@ def whoami():
     """Show current logged Polyaxon user."""
     try:
         polyaxon_client = PolyaxonClient()
-        user = polyaxon_client.user_service.get_user()
+        user = polyaxon_client.users_v1.get_user()
     except ApiException as e:
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))

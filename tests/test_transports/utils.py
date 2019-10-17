@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from polyaxon.client import settings
+from polyaxon import settings
 
 
 class BaseTestCaseTransport(TestCase):

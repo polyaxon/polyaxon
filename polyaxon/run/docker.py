@@ -14,12 +14,12 @@ from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
 
-from polyaxon.client.exceptions import (
+from polyaxon.exceptions import (
     PolyaxonClientException,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
-from polyaxon.client.settings import TMP_POLYAXON_PATH
+from polyaxon.settings import TMP_POLYAXON_PATH
 
 from polyaxon.tracking import Run
 from polyaxon.deploy.operators.docker import DockerOperator

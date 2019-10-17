@@ -57,7 +57,7 @@ def init(project, polyaxonfile):
     owner, project_name = get_project_or_local(project)
     try:
         polyaxon_client = PolyaxonClient()
-        project_config = polyaxon_client.project_service.get_project(owner, project_name)
+        project_config = polyaxon_client.projects_v1.get_project(owner, project_name)
     except ApiException as e:
         Printer.print_error(
             "Make sure you have a project with this name `{}`".format(project)

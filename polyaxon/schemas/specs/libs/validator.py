@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import copy
 
-from polyaxon.schemas.exceptions import PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.schemas.ops.container import ContainerConfig
 from polyaxon.schemas.ops.environments import EnvironmentConfig
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.client.exceptions import AuthenticationError
+from polyaxon.exceptions import AuthenticationError
 from polyaxon.logger import logger
 from polyaxon.client.transport.http_transport import HttpTransportMixin
 from polyaxon.client.transport.periodic_transport import (
@@ -36,8 +36,8 @@ class Transport(
                         )
                     }
                 )
-            if self.config.service_header:
-                request_headers.update(self.config.service_header)
+            if self.config.client_header:
+                request_headers.update(self.config.client_header)
         return request_headers
 
     def handle_exception(self, e, log_message=None):

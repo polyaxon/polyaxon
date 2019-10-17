@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.schemas.exceptions import PolyaxonConfigurationError
+from polyaxon.exceptions import PolyaxonConfigurationError
 from polyaxon.schemas.polyflow.pipeline import PipelineConfig
 from polyaxon.schemas.specs import kinds
 from polyaxon.schemas.specs.base import BaseSpecification

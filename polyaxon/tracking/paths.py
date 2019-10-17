@@ -6,10 +6,10 @@ import os
 
 from hestia.env_var_keys import (
     POLYAXON_KEYS_ARTIFACTS_PATHS,
-    POLYAXON_KEYS_LOG_LEVEL,
     POLYAXON_KEYS_OUTPUTS_PATH,
 )
 
+from polyaxon import settings
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
 
@@ -57,4 +57,4 @@ def get_outputs_path():
 def get_log_level():
     """If set on the polyaxonfile it will return the log level."""
     ensure_is_managed()
-    return os.getenv(POLYAXON_KEYS_LOG_LEVEL, None)
+    return settings.CLIENT_CONFIG.log_level

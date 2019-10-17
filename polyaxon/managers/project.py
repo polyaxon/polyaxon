@@ -3,8 +3,9 @@ from __future__ import absolute_import, division, print_function
 
 import sys
 
+from polyaxon_sdk import V1Project
+
 from polyaxon.managers.base import BaseConfigManager
-from polyaxon.schemas.api.project import ProjectConfig
 from polyaxon.utils import constants
 from polyaxon.utils.formatting import Printer
 
@@ -15,7 +16,7 @@ class ProjectManager(BaseConfigManager):
     IS_GLOBAL = False
     IS_POLYAXON_DIR = True
     CONFIG_FILE_NAME = ".polyaxonproject"
-    CONFIG = ProjectConfig
+    CONFIG = V1Project
 
     @classmethod
     def get_config_or_raise(cls):

@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import pytest
 
-from polyaxon.schemas.exceptions import PolyaxonfileError
+from polyaxon.exceptions import PolyaxonfileError
 from polyaxon.schemas.ops.container import ContainerConfig
 from polyaxon.schemas.ops.io import IOConfig
 from polyaxon.schemas.ops.parallel import GridSearchConfig, ParallelConfig

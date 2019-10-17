@@ -4,99 +4,49 @@ from __future__ import absolute_import, division, print_function
 import tempfile
 
 from unittest import TestCase
+
+import polyaxon_sdk
 from mock import patch
 
-from polyaxon.client import settings
-from polyaxon.client.config import ClientConfig
+from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
-from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.client.transport import Transport
+from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 
 class TestPolyaxonClient(TestCase):
     def setUp(self):
         super(TestPolyaxonClient, self).setUp()
         settings.CONTEXT_AUTH_TOKEN_PATH = "{}/{}".format(
-            tempfile.mkdtemp(), ".authtoken"
+            tempfile.mkdtemp(), ".polyaxonauth"
         )
 
     def test_client_services(self):
-        settings.SECRET_USER_TOKEN = None
-        with self.assertRaises(PolyaxonClientException):
-            PolyaxonClient(host=None, token=None)
-        client = PolyaxonClient(host=None, token=None, is_managed=True)
-        assert client.host is None
-        assert client.http_port == 80
-        assert client.ws_port == 80
-        assert client.use_https is False
-        assert client.token is None
+        client = PolyaxonClient(token=None)
+        assert client.config.token is None
 
         assert isinstance(client.transport, Transport)
         assert isinstance(client.config, ClientConfig)
 
-        # assert isinstance(client.auth, AuthApi)
-        # assert isinstance(client.cluster, ClusterApi)
-        # assert isinstance(client.version, VersionApi)
-        # assert isinstance(client.project, ProjectApi)
-        # assert isinstance(client.experiment, ExperimentApi)
-        # assert isinstance(client.user, UserApi)
+        assert isinstance(client.auth_v1, polyaxon_sdk.AuthV1Api)
+        assert isinstance(client.versions_v1, polyaxon_sdk.VersionsV1Api)
+        assert isinstance(client.projects_v1, polyaxon_sdk.ProjectsV1Api)
+        assert isinstance(client.runs_v1, polyaxon_sdk.RunsV1Api)
+        assert isinstance(client.users_v1, polyaxon_sdk.UsersV1Api)
 
     def test_from_config(self):
-        settings.SECRET_USER_TOKEN = "token"  # noqa
-        settings.API_HOST = "localhost"
+        settings.config.host = "localhost"
         client = PolyaxonClient(config=ClientConfig())
-        assert client.is_managed is False
-        assert client.host == "localhost"
-        assert client.http_port == 80
-        assert client.ws_port == 80
-        assert client.use_https is False
-        assert client.token == "token"
-        assert client.config.host == "http://localhost:80"
+        assert client.config.is_managed is False
+        assert client.config.host == "https://cloud.polyaxon.com"
+        assert client.config.token is None
 
-        settings.IS_MANAGED = True
-        settings.API_HOST = "api_host"
-        client = PolyaxonClient(config=ClientConfig())
-        assert client.is_managed is True
-        assert client.host == "api_host"
-        assert client.http_port == 80
-        assert client.ws_port == 80
-        assert client.use_https is False
-        assert client.token == "token"
-        assert client.config.host == "http://api_host:80"
-
-    def test_from_env(self):
-        settings.IS_MANAGED = False
-        with self.assertRaises(PolyaxonClientException):
-            PolyaxonClient()
-
-        settings.SECRET_USER_TOKEN = "token"  # noqa
-        settings.API_HOST = "localhost"
-        client = PolyaxonClient()
-        assert client.is_managed is False
-        assert client.host == "localhost"
-        assert client.http_port == 80
-        assert client.ws_port == 80
-        assert client.use_https is False
-        assert client.token == "token"
-        assert client.config.host == "http://localhost:80"
-
-        settings.IS_MANAGED = True
-        settings.API_HOST = "api_host"
-        client = PolyaxonClient()
-        assert client.is_managed is True
-        assert client.host == "api_host"
-        assert client.http_port == 80
-        assert client.ws_port == 80
-        assert client.use_https is False
-        assert client.token == "token"
-        assert client.config.host == "http://api_host:80"
-
-    @patch("polyaxon.client.client.GlobalConfigManager.get_value")
-    @patch("polyaxon.client.client.AuthConfigManager.get_value")
-    def test_client(self, get_value_mock1, get_value_mock2):
-        get_value_mock1.return_value = "token"
-        get_value_mock2.return_value = "host"
-        client = PolyaxonClient()
-
-        assert client.host == "host"
-        assert client.token == "token"
+    def test_from_settings(self):
+        settings.CLIENT_CONFIG.is_managed = True
+        settings.CLIENT_CONFIG.host = "api_host"
+        client = PolyaxonClient(token="token")
+        assert client.config.is_managed is True
+        assert client.config.host == "api_host"
+        assert client.config.token == "token"
+        assert client.config.base_url == "api_host/api/v1"

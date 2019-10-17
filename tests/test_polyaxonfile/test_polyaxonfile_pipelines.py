@@ -7,7 +7,7 @@ from unittest import TestCase
 
 import pytest
 
-from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.polyaxonfile import PolyaxonFile
 from polyaxon.schemas.specs import OperationSpecification, get_specification
 

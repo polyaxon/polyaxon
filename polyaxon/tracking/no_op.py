@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.client import settings
+from polyaxon import settings
 
 
 def check_no_op(f):
@@ -22,7 +22,7 @@ def check_no_op(f):
     """
 
     def wrapper(*args, **kwargs):
-        if settings.NO_OP:
+        if settings.CLIENT_CONFIG.no_op:
             return None
         return f(*args, **kwargs)
 

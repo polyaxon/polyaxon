@@ -11,7 +11,7 @@ import rhea
 from hestia.list_utils import to_list
 from marshmallow import ValidationError
 
-from polyaxon.schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon.schemas.ops import params as ops_params
 from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.ops.operators import ForConfig, IfConfig

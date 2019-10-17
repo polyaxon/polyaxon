@@ -3,8 +3,8 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from polyaxon.client import settings
-from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon import settings
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking import Run
 
 try:
@@ -21,7 +21,7 @@ except ImportError:
 class PolyaxonKeras(Callback):
     def __init__(self, run=None, metrics=None):
         self.run = run
-        if settings.IS_MANAGED:
+        if settings.CLIENT_CONFIG.is_managed:
             self.run = self.run or Run()
         self.metrics = metrics
 

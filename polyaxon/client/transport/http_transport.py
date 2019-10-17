@@ -9,8 +9,8 @@ import tarfile
 from hestia.list_utils import to_list
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
-from polyaxon.client import settings
-from polyaxon.client.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
+from polyaxon import settings
+from polyaxon.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
 from polyaxon.logger import logger
 from polyaxon.client.transport.utils import Bar, progress_bar
 

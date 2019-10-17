@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+import pytest
 from mock import patch
 from tests.test_cli.utils import BaseCommandTestCase
 
 from polyaxon.cli.check import check
 
 
-class TestCheck(BaseCommandTestCase):
+@pytest.mark.cli_mark
+class TestCliCheck(BaseCommandTestCase):
     @patch("polyaxon.cli.check.check_polyaxonfile")
     def test_check_file(self, check_polyaxonfile):
         self.runner.invoke(check)

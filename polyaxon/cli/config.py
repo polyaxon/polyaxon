@@ -7,7 +7,7 @@ import click
 
 from polyaxon.logger import clean_outputs
 from polyaxon.managers.cli import CliConfigManager
-from polyaxon.managers.config import GlobalConfigManager
+from polyaxon.managers.client import ClientConfigManager
 from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
@@ -28,7 +28,7 @@ def validate_options(ctx, param, value):
 def config(list):  # pylint:disable=redefined-builtin
     """Set and get the global configurations."""
     if list:
-        _config = GlobalConfigManager.get_config_or_default()
+        _config = ClientConfigManager.get_config_or_default()
         Printer.print_header("Current config:")
         dict_tabulate(_config.to_dict())
 
@@ -46,7 +46,7 @@ def get(keys):
     $ polyaxon config get host port
     ```
     """
-    _config = GlobalConfigManager.get_config_or_default()
+    _config = ClientConfigManager.get_config_or_default()
 
     if not keys:
         return
@@ -83,7 +83,7 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
     ```
     """
     try:
-        _config = GlobalConfigManager.get_config_or_default()
+        _config = ClientConfigManager.get_config_or_default()
     except Exception as e:
         Printer.print_error("Polyaxon load configuration.")
         Printer.print_error("Error message `{}`.".format(e))
@@ -96,26 +96,17 @@ def set(**kwargs):  # pylint:disable=redefined-builtin
         if value is not None:
             setattr(_config, key, value)
 
-    GlobalConfigManager.set_config(_config)
+    ClientConfigManager.set_config(_config)
     Printer.print_success("Config was updated.")
     # Reset cli config
     CliConfigManager.purge()
 
 
 @config.command()
-@click.option("--verbose", type=bool, help="To set the verbosity of the client.")
-@click.option("--host", type=str, help="To set the server endpoint.")
-@click.option("--port", type=int, help="To set the http port.")
-@click.option("--use_https", type=bool, help="To set whether or not to use https.")
-@click.option(
-    "--verify_ssl",
-    type=bool,
-    help="To set whether or not to verify the SSL certificate.",
-)
 @clean_outputs
-def purge(**kwargs):  # pylint:disable=redefined-builtin
+def purge():
     """Purge the global config values."""
-    GlobalConfigManager.purge()
+    ClientConfigManager.purge()
     Printer.print_success("Config was removed.")
     # Reset cli config
     CliConfigManager.purge()

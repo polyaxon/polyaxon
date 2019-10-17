@@ -1,10 +1,9 @@
 click==7.0
 click-completion==0.5.1
 pathlib==1.0.1
-raven==6.7.0
 tabulate==0.8.2
-hestia==0.4.9
-Jinja2==2.10.1
+hestia==0.5.0
+Jinja2==2.10.3
 marshmallow==3.0.0rc5
 numpy>=1.15.2
 python-dateutil>=2.7.3
@@ -15,4 +14,4 @@ polystores>=0.2.4
 psutil>=5.4.7
 requests>=2.20.1
 requests-toolbelt>=0.8.0
-websocket-client>=0.53.0
+sentry-sdk==0.12.3

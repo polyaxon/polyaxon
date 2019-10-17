@@ -24,9 +24,9 @@ from polyaxon.cli.run import run
 from polyaxon.cli.upload import upload
 from polyaxon.cli.user import user
 from polyaxon.cli.version import check_cli_version, upgrade, version
-from polyaxon.client import settings
+from polyaxon import settings
 from polyaxon.logger import clean_outputs, configure_logger
-from polyaxon.managers.config import GlobalConfigManager
+from polyaxon.managers.client import ClientConfigManager
 
 click_completion.init()
 
@@ -57,9 +57,9 @@ def cli(context, verbose, offline):
     """
 
     try:
-        configure_logger(verbose or GlobalConfigManager.get_value("verbose"))
+        configure_logger(verbose or ClientConfigManager.get_value("debug"))
     except ValidationError:
-        GlobalConfigManager.purge()
+        ClientConfigManager.purge()
     non_check_cmds = [
         "completion",
         "config",
@@ -74,9 +74,9 @@ def cli(context, verbose, offline):
     context.obj["offline"] = offline
     if offline:
         os.environ["POLYAXON_IS_OFFLINE"] = "true"
-        settings.IS_OFFLINE = True
-    if not (context.invoked_subcommand in non_check_cmds or offline):
-        check_cli_version()
+        settings.CLIENT_CONFIG.is_offline = True
+    # if not (context.invoked_subcommand in non_check_cmds or offline):
+    #     check_cli_version()
 
 
 cli.add_command(login)

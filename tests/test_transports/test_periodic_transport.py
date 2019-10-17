@@ -5,9 +5,10 @@ import requests
 import time
 
 from flaky import flaky
+
+from polyaxon.schemas.cli.client_configuration import ClientConfig
 from tests.test_transports.utils import BaseTestCaseTransport
 
-from polyaxon.client.config import ClientConfig
 from polyaxon.client.transport.periodic_transport import PeriodicHttpTransportMixin
 from polyaxon.client.workers.periodic_worker import PeriodicWorker
 

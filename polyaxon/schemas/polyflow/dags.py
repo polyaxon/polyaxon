@@ -1,6 +1,6 @@
 import six
 
-from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.polyflow.spec import DagOpSpec
 
 

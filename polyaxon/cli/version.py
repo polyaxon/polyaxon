@@ -46,7 +46,7 @@ def get_current_version():
 def get_server_versions(polyaxon_client=None):
     polyaxon_client = polyaxon_client or PolyaxonClient()
     try:
-        return polyaxon_client.version_service.get_versions()
+        return polyaxon_client.versions_v1.get_versions()
     except ApiException as e:
         if e.status == 403:
             session_expired()
@@ -59,7 +59,7 @@ def get_server_versions(polyaxon_client=None):
 def get_log_handler(polyaxon_client=None):
     polyaxon_client = polyaxon_client or PolyaxonClient()
     try:
-        return polyaxon_client.version_service.get_log_handler()
+        return polyaxon_client.versions_v1.get_log_handler()
     except ApiException as e:
         if e.status == 403:
             session_expired()
@@ -71,7 +71,6 @@ def get_log_handler(polyaxon_client=None):
 
 def check_cli_version():
     """Check if the current cli version satisfies the server requirements"""
-    import pdb; pdb.set_trace()
     if not CliConfigManager.should_check():
         return
 
@@ -130,7 +129,7 @@ def version():
     """Print the current version of the cli and platform."""
     polyaxon_client = PolyaxonClient()
     try:
-        server_versions = polyaxon_client.version_service.get_versions()
+        server_versions = polyaxon_client.versions_v1.get_versions()
     except ApiException as e:
         if e.status == 403:
             session_expired()

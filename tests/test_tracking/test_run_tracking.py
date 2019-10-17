@@ -8,18 +8,18 @@ import uuid
 from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
 from tests.utils import TestEnvVarsCase
 
-from polyaxon.client import settings
-from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon import settings
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking.run import Run
 
 
 class TestExperimentTracking(TestEnvVarsCase):
     def setUp(self):
         super(TestExperimentTracking, self).setUp()
-        settings.IS_MANAGED = True
+        settings.CLIENT_CONFIG.is_managed = True
 
     def test_cluster_def_checks_is_managed(self):
-        settings.IS_MANAGED = False
+        settings.CLIENT_CONFIG.is_managed = False
         with self.assertRaises(PolyaxonClientException):
             Run.get_cluster_def()
 
@@ -43,7 +43,7 @@ class TestExperimentTracking(TestEnvVarsCase):
         )
 
     def test_params_checks_is_managed(self):
-        settings.IS_MANAGED = False
+        settings.CLIENT_CONFIG.is_managed = False
         with self.assertRaises(PolyaxonClientException):
             Run.get_params()
 
@@ -58,7 +58,7 @@ class TestExperimentTracking(TestEnvVarsCase):
         self.check_valid_dict_value(POLYAXON_KEYS_PARAMS, Run.get_params, params)
 
     def test_experiment_info_checks_is_managed(self):
-        settings.IS_MANAGED = False
+        settings.CLIENT_CONFIG.is_managed = False
         with self.assertRaises(PolyaxonClientException):
             Run.get_experiment_info()
 
@@ -82,7 +82,7 @@ class TestExperimentTracking(TestEnvVarsCase):
         )
 
     def test_task_info_checks_is_managed(self):
-        settings.IS_MANAGED = False
+        settings.CLIENT_CONFIG.is_managed = False
         with self.assertRaises(PolyaxonClientException):
             Run.get_task_info()
 
@@ -97,7 +97,7 @@ class TestExperimentTracking(TestEnvVarsCase):
         self.check_valid_dict_value("POLYAXON_TASK_INFO", Run.get_task_info, task_info)
 
     def test_tf_config_checks_is_managed(self):
-        settings.IS_MANAGED = False
+        settings.CLIENT_CONFIG.is_managed = False
         with self.assertRaises(PolyaxonClientException):
             Run.get_tf_config()
 

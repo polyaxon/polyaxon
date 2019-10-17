@@ -8,7 +8,7 @@ import click
 from polyaxon.cli.runs import logs as run_logs
 from polyaxon.cli.upload import upload as upload_cmd
 from polyaxon.client import PolyaxonClient
-from polyaxon.client.exceptions import (
+from polyaxon.exceptions import (
     PolyaxonClientException,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,

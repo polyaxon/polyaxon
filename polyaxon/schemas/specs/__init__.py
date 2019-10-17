@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import rhea
 
-from polyaxon.schemas.exceptions import PolyaxonConfigurationError, PolyaxonfileError
+from polyaxon.exceptions import PolyaxonConfigurationError, PolyaxonfileError
 from polyaxon.schemas.specs import kinds
 from polyaxon.schemas.specs.base import BaseSpecification
 from polyaxon.schemas.specs.job import JobSpecification

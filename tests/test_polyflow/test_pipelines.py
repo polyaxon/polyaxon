@@ -8,7 +8,7 @@ import pytest
 from hestia.tz_utils import local_now
 from marshmallow import ValidationError
 
-from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.ops import params as ops_params
 from polyaxon.schemas.ops.io import IOTypes
 from polyaxon.schemas.polyflow import dags

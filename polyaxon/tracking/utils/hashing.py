@@ -1,4 +1,4 @@
-from polyaxon.client import settings
+from polyaxon import settings
 
 
 def hash_value(value):

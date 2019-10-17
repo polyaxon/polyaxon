@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon.exceptions import PolyaxonClientException
 
 
 def get_project_info(project, owner=None):

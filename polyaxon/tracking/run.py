@@ -8,10 +8,9 @@ from datetime import datetime
 
 from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
 
-from polyaxon.client import settings
-from polyaxon.client.exceptions import AuthenticationError, PolyaxonClientException
+from polyaxon import settings
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.client.handlers.conf import setup_logging
-from polyaxon.logger import logger
 from polyaxon.tracking.base import BaseTracker
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
@@ -41,10 +40,10 @@ class Run(BaseTracker):
         outputs_store=None,
     ):
 
-        if settings.NO_OP:
+        if settings.CLIENT_CONFIG.no_op:
             return
 
-        if project is None and settings.IS_MANAGED and not self.is_notebook_job:
+        if project is None and settings.CLIENT_CONFIG.is_managed and not self.is_notebook_job:
             experiment_info = self.get_experiment_info()
             project = experiment_info["project_name"]
             experiment_id = experiment_info["experiment_name"].split(".")[-1]
@@ -61,33 +60,14 @@ class Run(BaseTracker):
         self.group_id = group_id
         self.experiment = None
 
-        if settings.IS_OFFLINE:
+        if settings.CLIENT_CONFIG.is_offline:
             return
 
-        # Check if there's an ephemeral token
-        check_ephemeral_token = (
-            settings.IS_MANAGED
-            and hasattr(settings, "SECRET_EPHEMERAL_TOKEN")
-            and settings.SECRET_EPHEMERAL_TOKEN
-        )
-        if check_ephemeral_token:
-            try:
-                self.client.auth.login_experiment_ephemeral_token(
-                    username=self.username,
-                    project_name=self.project_name,
-                    experiment_id=self.experiment_id,
-                    ephemeral_token=settings.SECRET_EPHEMERAL_TOKEN,
-                    set_token=True,
-                    persist_token=True,
-                )
-            except AuthenticationError:
-                logger.debug("Could not log with ephemeral token.")
-
-        if settings.IS_MANAGED:
+        if settings.CLIENT_CONFIG.is_managed:
             self._set_health_url()
 
         # Track run env
-        if settings.IS_MANAGED and self.track_env and not self.is_notebook_job:
+        if settings.CLIENT_CONFIG.is_managed and self.track_env and not self.is_notebook_job:
             self.log_run_env()
 
     @check_no_op
@@ -128,7 +108,7 @@ class Run(BaseTracker):
             )
         if build_id:
             experiment_config["build_job"] = str(build_id)
-        experiment_config["is_managed"] = settings.IS_MANAGED
+        experiment_config["is_managed"] = settings.CLIENT_CONFIG.is_managed
 
         experiment = None
 
@@ -146,7 +126,7 @@ class Run(BaseTracker):
             )
             if not experiment:
                 raise PolyaxonClientException("Could not create experiment.")
-        if not settings.IS_MANAGED and self.track_logs:
+        if not settings.CLIENT_CONFIG.is_managed and self.track_logs:
             setup_logging(send_logs=self.send_logs)
         self.experiment_id = self._get_entity_id(experiment)
         self.experiment = experiment
@@ -175,7 +155,7 @@ class Run(BaseTracker):
         if self.track_code:
             self.log_code_ref()
 
-        if not settings.IS_MANAGED:
+        if not settings.CLIENT_CONFIG.is_managed:
             self._start()
             self._set_health_url()
 
@@ -311,7 +291,7 @@ class Run(BaseTracker):
         Returns the TF_CONFIG defining the cluster and the current task.
         if `envvar` is not null, it will set and env variable with `envvar`.
         """
-        if settings.NO_OP:
+        if settings.CLIENT_CONFIG.no_op:
             return None
 
         ensure_is_managed()
@@ -397,6 +377,6 @@ class Run(BaseTracker):
 
     @staticmethod
     def get_artifacts_paths():
-        if settings.NO_OP:
+        if settings.CLIENT_CONFIG.no_op:
             return None
         return get_artifacts_paths()

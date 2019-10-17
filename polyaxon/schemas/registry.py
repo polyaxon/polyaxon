@@ -5,7 +5,7 @@ from copy import copy
 
 from hestia.imports import import_string
 
-from polyaxon.schemas.exceptions import PolyaxonConfigurationError
+from polyaxon.exceptions import PolyaxonConfigurationError
 from polyaxon.schemas.ops.operation import BaseOpSchema
 
 

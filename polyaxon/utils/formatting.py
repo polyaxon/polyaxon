@@ -13,7 +13,7 @@ from hestia.list_utils import to_list
 from hestia.units import to_percentage, to_unit_memory
 from tabulate import tabulate
 
-from polyaxon.schemas.api.experiment import ContainerResourcesConfig
+from polyaxon.schemas.api.resources import ContainerResourcesConfig
 
 
 def get_meta_response(response):
@@ -27,14 +27,31 @@ def get_meta_response(response):
     return results
 
 
-def list_dicts_to_tabulate(list_dicts):
+def list_dicts_to_tabulate(list_dicts, exclude_attrs=False, humanize_values=True):
     results = OrderedDict()
     for d_value in list_dicts:
         for k, v in six.iteritems(d_value):
+            if k in exclude_attrs:
+                continue
+
             if k in results:
                 results[k].append(v)
             else:
                 results[k] = [v]
+
+    return results
+
+
+def dict_to_tabulate(d_value, exclude_attrs=False, humanize_values=True):
+    results = OrderedDict()
+    for k, v in six.iteritems(d_value):
+        if k in exclude_attrs:
+            continue
+
+        if k in results:
+            results[k].append(v)
+        else:
+            results[k] = [v]
 
     return results
 

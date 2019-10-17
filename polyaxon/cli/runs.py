@@ -7,6 +7,7 @@ import click
 import rhea
 from polyaxon_sdk.rest import ApiException
 
+from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.cli.getters.run import get_project_run_or_local
 from polyaxon.cli.upload import upload
 from polyaxon.client import PolyaxonClient
@@ -18,7 +19,7 @@ from polyaxon.utils.formatting import (
     dict_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
-)
+    get_runs_with_outputs, get_runs_with_inputs, dict_to_tabulate)
 from polyaxon.utils.log_handler import get_logs_handler
 from polyaxon.utils.validation import validate_tags
 
@@ -40,18 +41,15 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         Printer.print_header("Run last metrics:")
         dict_tabulate(run.last_metric)
 
-    response = run.to_light_dict(
+    response = dict_to_tabulate(
+        run.to_dict(),
         humanize_values=True,
         exclude_attrs=[
-            "uuid",
-            "config",
+            "description"
             "project",
-            "runs",
             "description",
-            "params",
-            "last_metric",
-            "resources",
-            "jobs",
+            "inputs",
+            "outputs",
             "run_env",
         ],
     )
@@ -64,14 +62,110 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
 @click.option(
     "--project", "-p", type=str, help="The project name, e.g. 'mnist' or 'adam/mnist'."
 )
-@click.option("--uid", "-uid", type=int, help="The run uuid.")
+@click.option("--uid", "-uid", type=str, help="The run uuid.")
 @click.pass_context
 @clean_outputs
-def runs(ctx, project, run_uuid):
+def runs(ctx, project, uid):
     """Commands for runs."""
     ctx.obj = ctx.obj or {}
     ctx.obj["project"] = project
-    ctx.obj["run_uuid"] = run_uuid
+    if ctx.invoked_subcommand not in ["list"]:
+        ctx.obj["run_uuid"] = uid
+
+
+@runs.command()
+@click.option(
+    "--io", "-io",
+    is_flag=True,
+    help="List runs with their inputs/outputs (params, metrics, results, ...)."
+)
+@click.option(
+    "--query",
+    "-q",
+    type=str,
+    help="To filter the runs based on this query spec.",
+)
+@click.option("--sort", "-s", type=str, help="To change order by of the runs.")
+@click.option("--page", type=int, help="To paginate through the list of runs.")
+@click.pass_context
+@clean_outputs
+@clean_outputs
+def list(ctx, io, query, sort, page):
+    """List runs for this project.
+
+    Uses [Caching](/references/polyaxon-cli/#caching)
+
+    Examples:
+
+    Get all runs:
+
+    \b
+    ```bash
+    $ polyaxon project runs
+    ```
+
+    Get all runs with with status {created or running}, and
+    creation date between 2018-01-01 and 2018-01-02, and params activation equal to sigmoid
+    and metric loss less or equal to 0.2
+
+    \b
+    ```bash
+    $ polyaxon project runs \
+      -q "status:created|running, started_at:2018-01-01..2018-01-02, \
+          params.activation:sigmoid, metric.loss:<=0.2"
+    ```
+
+    Get all runs sorted by update date
+
+    \b
+    ```bash
+    $ polyaxon project runs -s "-updated_at"
+    ```
+    """
+    user, project_name = get_project_or_local(ctx.obj.get("project"))
+
+    page = page or 1
+    try:
+        polyaxon_client = PolyaxonClient()
+        response = polyaxon_client.runs_v1.list_runs(
+            username=user,
+            project_name=project_name,
+            query=query,
+            sort=sort,
+            page=page,
+        )
+    except ApiException as e:
+        Printer.print_error(
+            "Could not get runs for project `{}`.".format(project_name)
+        )
+        Printer.print_error("Error message `{}`.".format(e))
+        sys.exit(1)
+
+    meta = get_meta_response(response)
+    if meta:
+        Printer.print_header(
+            "Experiments for project `{}/{}`.".format(user, project_name)
+        )
+        Printer.print_header("Navigation:")
+        dict_tabulate(meta)
+    else:
+        Printer.print_header(
+            "No runs found for project `{}/{}`.".format(user, project_name)
+        )
+
+    if io:
+        objects = get_runs_with_outputs(response)
+        objects = get_runs_with_inputs(response)
+    else:
+        objects = [
+            Printer.add_status_color(o.to_light_dict(humanize_values=True))
+            for o in response["results"]
+        ]
+    objects = list_dicts_to_tabulate(objects)
+    if objects:
+        Printer.print_header("Experiments:")
+        objects.pop("project_name", None)
+        dict_tabulate(objects, is_list_dict=True)
 
 
 @runs.command()
@@ -105,27 +199,24 @@ def get(ctx):
     ```
     """
 
-    def get_run():
-        polyaxon_client = PolyaxonClient()
-        try:
-            response = polyaxon_client.run_service.get_run(
-                owner, project_name, run_uuid
-            )
-            cache.cache(config_manager=RunManager, response=response)
-        except ApiException as e:
-            Printer.print_error(
-                "Could not load run `{}` info.".format(run_uuid)
-            )
-            Printer.print_error("Error message `{}`.".format(e))
-            sys.exit(1)
-
-        get_run_details(response)
-
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid")
     )
 
-    get_run()
+    polyaxon_client = PolyaxonClient()
+    try:
+        response = polyaxon_client.runs_v1.get_run(
+            owner, project_name, run_uuid
+        )
+        cache.cache(config_manager=RunManager, response=response)
+    except ApiException as e:
+        Printer.print_error(
+            "Could not load run `{}` info.".format(run_uuid)
+        )
+        Printer.print_error("Error message `{}`.".format(e))
+        sys.exit(1)
+
+    get_run_details(response)
 
 
 @runs.command()
@@ -164,7 +255,7 @@ def delete(ctx):
 
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.run_service.delete_run(
+        response = polyaxon_client.runs_v1.delete_run(
             owner, project_name, run_uuid
         )
         # Purge caching
@@ -232,7 +323,7 @@ def update(ctx, name, description, tags):
 
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.run_service.update_run(
+        response = polyaxon_client.runs_v1.update_run(
             owner, project_name, run_uuid, update_dict
         )
     except ApiException as e:
@@ -283,7 +374,7 @@ def stop(ctx, yes):
 
     try:
         polyaxon_client = PolyaxonClient()
-        polyaxon_client.run_service.stop_run(user, project_name, run_uuid)
+        polyaxon_client.runs_v1.stop_run(user, project_name, run_uuid)
     except ApiException as e:
         Printer.print_error("Could not stop run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
@@ -340,7 +431,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
     try:
         polyaxon_client = PolyaxonClient()
         if copy:
-            response = polyaxon_client.run_service.copy_run(
+            response = polyaxon_client.runs_v1.copy_run(
                 user,
                 project_name,
                 run_uuid,
@@ -351,7 +442,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
                 "Run was copied with uid {}".format(response.id)
             )
         else:
-            response = polyaxon_client.run_service.restart_run(
+            response = polyaxon_client.runs_v1.restart_run(
                 user,
                 project_name,
                 run_uuid,
@@ -407,7 +498,7 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     )
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.run_service.resume_run(
+        response = polyaxon_client.runs_v1.resume_run(
             user, project_name, run_uuid, content=content, update_code=update_code
         )
         Printer.print_success("Run was resumed with id {}".format(response.id))
@@ -454,7 +545,7 @@ def statuses(ctx, page):
     def get_run_statuses():
         try:
             polyaxon_client = PolyaxonClient()
-            response = polyaxon_client.run_service.get_run_statuses(
+            response = polyaxon_client.runs_v1.get_run_statuses(
                 user, project_name, run_uuid, page=page
             )
         except ApiException as e:
@@ -689,7 +780,7 @@ def code(ctx):
     )
     try:
         polyaxon_client = PolyaxonClient()
-        code_ref = polyaxon_client.run_service.get_run_code_refs(
+        code_ref = polyaxon_client.runs_v1.get_run_code_refs(
             user, project_name, run_uuid
         )
         commit = None
@@ -737,7 +828,7 @@ def bookmark(ctx):
     )
     try:
         polyaxon_client = PolyaxonClient()
-        polyaxon_client.run_service.bookmark_run(user, project_name, run_uuid)
+        polyaxon_client.runs_v1.bookmark_run(user, project_name, run_uuid)
     except ApiException as e:
         Printer.print_error("Could not bookmark run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
@@ -771,7 +862,7 @@ def unbookmark(ctx):
     )
     try:
         polyaxon_client = PolyaxonClient()
-        polyaxon_client.run_service.unbookmark_run(user, project_name, run_uuid)
+        polyaxon_client.runs_v1.unbookmark_run(user, project_name, run_uuid)
     except ApiException as e:
         Printer.print_error("Could not unbookmark run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))

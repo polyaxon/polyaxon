@@ -6,7 +6,7 @@ import os
 from six.moves.queue import Queue
 from time import sleep, time
 
-from polyaxon.client import settings
+from polyaxon import settings
 from polyaxon.logger import logger
 from polyaxon.client.workers.base_worker import BaseWorker
 
@@ -20,7 +20,7 @@ class QueueWorker(BaseWorker):
     def __init__(self, timeout=None, queue_size=None):
         super(QueueWorker, self).__init__()
         self._queue = Queue(queue_size or self.QUEUE_SIZE)
-        self._timeout = timeout if timeout is not None else settings.TIMEOUT
+        self._timeout = timeout if timeout is not None else settings.CLIENT_CONFIG.timeout
 
     def atexit(self):
         with self._lock:
@@ -54,7 +54,7 @@ class QueueWorker(BaseWorker):
                 # Queue still has message, try another time
                 size = self._queue.qsize()
 
-                if not settings.IS_MANAGED:
+                if not settings.CLIENT_CONFIG.is_managed:
                     print(
                         "Polyaxon %s is attempting to send %i pending messages"
                         % (self.NAME, size)

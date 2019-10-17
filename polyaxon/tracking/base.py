@@ -10,8 +10,9 @@ import time
 from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO
 from polystores.stores.manager import StoreManager
 
-from polyaxon.client import PolyaxonClient, settings
-from polyaxon.client.exceptions import PolyaxonClientException
+from polyaxon import settings
+from polyaxon.client import PolyaxonClient
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.logger import logger
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
@@ -37,7 +38,7 @@ class BaseTracker(object):
         track_env=True,
         outputs_store=None,
     ):
-        if not settings.IS_MANAGED and project is None:
+        if not settings.CLIENT_CONFIG.is_managed and project is None:
             raise PolyaxonClientException("Please provide a valid project.")
         elif self.is_notebook_job:
             job_info = self.get_notebook_job_info()
@@ -46,14 +47,10 @@ class BaseTracker(object):
         self.last_status = None
         self.client = client
         self.user = None
-        if not (self.client or settings.IS_OFFLINE):
+        if not (self.client or settings.CLIENT_CONFIG.is_offline):
             self.client = PolyaxonClient()
-        if self.client and not settings.IS_MANAGED:
-            self.user = (
-                self.client.auth.get_user().username
-                if self.client.config.schema_response
-                else self.client.auth.get_user().get("username")
-            )
+        if self.client and not settings.CLIENT_CONFIG.is_managed:
+            self.user = self.client.users_v1.get_user().username
 
         owner, project_name = get_project_info(
             owner=owner, project=project
@@ -69,7 +66,7 @@ class BaseTracker(object):
         self._health_is_running = False
 
         # Setup the outputs store
-        if outputs_store is None and settings.IS_MANAGED and self.REQUIRES_OUTPUTS:
+        if outputs_store is None and settings.CLIENT_CONFIG.is_managed and self.REQUIRES_OUTPUTS:
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
 
     def _get_entity_id(self, entity):
@@ -97,10 +94,10 @@ class BaseTracker(object):
 
     @property
     def is_notebook_job(self):
-        if settings.NO_OP:
+        if settings.CLIENT_CONFIG.no_op:
             return None
 
-        return settings.IS_MANAGED and is_notebook()
+        return settings.CLIENT_CONFIG.is_managed and is_notebook()
 
     def _update(self, patch_dict):
         raise NotImplementedError

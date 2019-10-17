@@ -13,7 +13,7 @@ from hestia.units import to_percentage, to_unit_memory
 from marshmallow import RAISE, Schema, ValidationError, post_dump, post_load
 from marshmallow.utils import EXCLUDE, utc
 
-from polyaxon.schemas.exceptions import PolyaxonSchemaError
+from polyaxon.exceptions import PolyaxonSchemaError
 from polyaxon.schemas.utils import to_camel_case
 
 
