@@ -7,14 +7,14 @@ import sys
 
 import click
 
+from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.exceptions import (
     PolyaxonClientException,
+    PolyaxonConfigurationError,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
-    PolyaxonConfigurationError,
 )
 from polyaxon.tracking.utils.hashing import hash_value
-from polyaxon.deploy.operators.conda import CondaOperator
 from polyaxon.utils.formatting import Printer
 
 

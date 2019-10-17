@@ -29,9 +29,7 @@ auth_config = rhea.Rhea.read_configs(
     [
         rhea.ConfigSpec(TMP_AUTH_PATH, config_type=".json", check_if_exists=False),
         rhea.ConfigSpec(USER_AUTH_PATH, config_type=".json", check_if_exists=False),
-        rhea.ConfigSpec(
-            CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False
-        ),
+        rhea.ConfigSpec(CONTEXT_MOUNT_AUTH, config_type=".json", check_if_exists=False),
         {"dummy": "dummy"},
     ]
 )
@@ -49,7 +47,7 @@ config = rhea.Rhea.read_configs(
 
 AUTH_CONFIG = AccessTokenConfig.from_dict(config.data)
 CLIENT_CONFIG = ClientConfig.from_dict(config.data)
-CLIENT_CONFIG.token = AUTH_CONFIG.token,
+CLIENT_CONFIG.token = (AUTH_CONFIG.token,)
 
 HASH_LENGTH = config.get_int(POLYAXON_KEYS_HASH_LENGTH, is_optional=True, default=12)
 HEALTH_CHECK_URL = config.get_string(POLYAXON_KEYS_HEALTH_CHECK_URL, is_optional=True)

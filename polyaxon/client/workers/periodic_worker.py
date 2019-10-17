@@ -7,8 +7,8 @@ import six
 from time import sleep, time
 
 from polyaxon import settings
-from polyaxon.logger import logger
 from polyaxon.client.workers.queue_worker import QueueWorker
+from polyaxon.logger import logger
 
 
 class PeriodicWorker(QueueWorker):
@@ -26,7 +26,9 @@ class PeriodicWorker(QueueWorker):
             timeout=worker_timeout, queue_size=queue_size
         )
         self._interval = (
-            worker_interval if worker_interval is not None else settings.CLIENT_CONFIG.interval
+            worker_interval
+            if worker_interval is not None
+            else settings.CLIENT_CONFIG.interval
         )
         self._callback = callback
         self._kwargs = kwargs

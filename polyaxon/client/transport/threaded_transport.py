@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.logger import logger
 from polyaxon.client.transport.retry_transport import RetryTransportMixin
 from polyaxon.client.workers.queue_worker import QueueWorker
+from polyaxon.logger import logger
 
 
 class ThreadedTransportMixin(RetryTransportMixin):

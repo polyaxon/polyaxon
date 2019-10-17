@@ -48,7 +48,9 @@ class TestCliConfigManagerMethods(TestCase):
         assert patch_fct.call_count == 1
         assert result is True
 
-        CliConfigManager.reset(current_version="0.0.5", min_version="0.0.4")
+        CliConfigManager.reset(
+            current_version="0.0.5", server_versions={"cli": {"min_version": "0.0.4"}}
+        )
         with patch.object(CliConfigManager, "reset") as patch_fct:
             result = CliConfigManager.should_check()
 
@@ -56,7 +58,9 @@ class TestCliConfigManagerMethods(TestCase):
         assert result is False
 
         CliConfigManager.reset(
-            check_count=4, current_version="0.0.5", min_version="0.0.4"
+            check_count=4,
+            current_version="0.0.5",
+            server_versions={"cli": {"min_version": "0.0.4"}},
         )
         with patch.object(CliConfigManager, "reset") as patch_fct:
             result = CliConfigManager.should_check()
@@ -64,7 +68,9 @@ class TestCliConfigManagerMethods(TestCase):
         assert patch_fct.call_count == 1
         assert result is True
 
-        CliConfigManager.reset(current_version="0.0.2", min_version="0.0.4")
+        CliConfigManager.reset(
+            current_version="0.0.2", server_versions={"cli": {"min_version": "0.0.4"}}
+        )
         with patch.object(CliConfigManager, "reset") as patch_fct:
             result = CliConfigManager.should_check()
 

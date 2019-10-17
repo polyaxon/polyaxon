@@ -10,7 +10,10 @@ class PolyaxonHandler(logging.Handler):
     def __init__(self, send_logs, **kwargs):
         self._send_logs = send_logs
         logging.Handler.__init__(
-            self, level=kwargs.get("level", settings.CLIENT_CONFIG.log_level or logging.NOTSET)
+            self,
+            level=kwargs.get(
+                "level", settings.CLIENT_CONFIG.log_level or logging.NOTSET
+            ),
         )
 
     def set_send_logs(self, send_logs):

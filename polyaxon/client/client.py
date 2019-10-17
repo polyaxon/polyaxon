@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 from datetime import datetime
 
 import polyaxon_sdk
+
 from hestia.tz_utils import utc
 
 from polyaxon import settings
@@ -14,7 +15,9 @@ from polyaxon.schemas.cli.client_configuration import ClientConfig
 class PolyaxonClient(object):
     def __init__(self, config=None, token=None):
 
-        self._config = config or ClientConfig.from_dict(settings.CLIENT_CONFIG.to_dict())
+        self._config = config or ClientConfig.from_dict(
+            settings.CLIENT_CONFIG.to_dict()
+        )
         if token:
             self._config.token = token
 
@@ -49,9 +52,7 @@ class PolyaxonClient(object):
     def reconcile(self, status):
         if settings.RECONCILE_URL:
             self.transport.post(
-                url=self.auth.build_url(
-                    self.config.base_url, settings.RECONCILE_URL
-                ),
+                url=self.auth.build_url(self.config.base_url, settings.RECONCILE_URL),
                 json_data={
                     "status": status,
                     "created_at": str(utc.localize(datetime.utcnow())),

@@ -5,6 +5,7 @@ import sys
 
 import click
 import rhea
+
 from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.getters.project import get_project_or_local
@@ -17,9 +18,12 @@ from polyaxon.utils import cache
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
+    dict_to_tabulate,
     get_meta_response,
+    get_runs_with_inputs,
+    get_runs_with_outputs,
     list_dicts_to_tabulate,
-    get_runs_with_outputs, get_runs_with_inputs, dict_to_tabulate)
+)
 from polyaxon.utils.log_handler import get_logs_handler
 from polyaxon.utils.validation import validate_tags
 
@@ -45,8 +49,7 @@ def get_run_details(run):  # pylint:disable=redefined-outer-name
         run.to_dict(),
         humanize_values=True,
         exclude_attrs=[
-            "description"
-            "project",
+            "description" "project",
             "description",
             "inputs",
             "outputs",
@@ -75,15 +78,13 @@ def runs(ctx, project, uid):
 
 @runs.command()
 @click.option(
-    "--io", "-io",
+    "--io",
+    "-io",
     is_flag=True,
-    help="List runs with their inputs/outputs (params, metrics, results, ...)."
+    help="List runs with their inputs/outputs (params, metrics, results, ...).",
 )
 @click.option(
-    "--query",
-    "-q",
-    type=str,
-    help="To filter the runs based on this query spec.",
+    "--query", "-q", type=str, help="To filter the runs based on this query spec."
 )
 @click.option("--sort", "-s", type=str, help="To change order by of the runs.")
 @click.option("--page", type=int, help="To paginate through the list of runs.")
@@ -128,16 +129,10 @@ def list(ctx, io, query, sort, page):
     try:
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.runs_v1.list_runs(
-            username=user,
-            project_name=project_name,
-            query=query,
-            sort=sort,
-            page=page,
+            username=user, project_name=project_name, query=query, sort=sort, page=page
         )
     except ApiException as e:
-        Printer.print_error(
-            "Could not get runs for project `{}`.".format(project_name)
-        )
+        Printer.print_error("Could not get runs for project `{}`.".format(project_name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
@@ -205,14 +200,10 @@ def get(ctx):
 
     polyaxon_client = PolyaxonClient()
     try:
-        response = polyaxon_client.runs_v1.get_run(
-            owner, project_name, run_uuid
-        )
+        response = polyaxon_client.runs_v1.get_run(owner, project_name, run_uuid)
         cache.cache(config_manager=RunManager, response=response)
     except ApiException as e:
-        Printer.print_error(
-            "Could not load run `{}` info.".format(run_uuid)
-        )
+        Printer.print_error("Could not load run `{}` info.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
@@ -247,17 +238,13 @@ def delete(ctx):
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid")
     )
-    if not click.confirm(
-        "Are sure you want to delete run `{}`".format(run_uuid)
-    ):
+    if not click.confirm("Are sure you want to delete run `{}`".format(run_uuid)):
         click.echo("Existing without deleting the run.")
         sys.exit(1)
 
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.runs_v1.delete_run(
-            owner, project_name, run_uuid
-        )
+        response = polyaxon_client.runs_v1.delete_run(owner, project_name, run_uuid)
         # Purge caching
         RunManager.purge()
     except ApiException as e:
@@ -266,17 +253,11 @@ def delete(ctx):
         sys.exit(1)
 
     if response.status_code == 204:
-        Printer.print_success(
-            "Run `{}` was delete successfully".format(run_uuid)
-        )
+        Printer.print_success("Run `{}` was delete successfully".format(run_uuid))
 
 
 @runs.command()
-@click.option(
-    "--name",
-    type=str,
-    help="Name of the run (optional).",
-)
+@click.option("--name", type=str, help="Name of the run (optional).")
 @click.option("--description", type=str, help="Description of the run (optional).")
 @click.option(
     "--tags", type=str, help="Tags of the run, comma separated values (optional)."
@@ -432,26 +413,14 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
         polyaxon_client = PolyaxonClient()
         if copy:
             response = polyaxon_client.runs_v1.copy_run(
-                user,
-                project_name,
-                run_uuid,
-                content=content,
-                update_code=update_code,
+                user, project_name, run_uuid, content=content, update_code=update_code
             )
-            Printer.print_success(
-                "Run was copied with uid {}".format(response.id)
-            )
+            Printer.print_success("Run was copied with uid {}".format(response.id))
         else:
             response = polyaxon_client.runs_v1.restart_run(
-                user,
-                project_name,
-                run_uuid,
-                content=content,
-                update_code=update_code,
+                user, project_name, run_uuid, content=content, update_code=update_code
             )
-            Printer.print_success(
-                "Run was restarted with id {}".format(response.id)
-            )
+            Printer.print_success("Run was restarted with id {}".format(response.id))
     except ApiException as e:
         Printer.print_error("Could not restart run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
@@ -549,9 +518,7 @@ def statuses(ctx, page):
                 user, project_name, run_uuid, page=page
             )
         except ApiException as e:
-            Printer.print_error(
-                "Could get status for run `{}`.".format(run_uuid)
-            )
+            Printer.print_error("Could get status for run `{}`.".format(run_uuid))
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
 
@@ -561,9 +528,7 @@ def statuses(ctx, page):
             Printer.print_header("Navigation:")
             dict_tabulate(meta)
         else:
-            Printer.print_header(
-                "No statuses found for run `{}`.".format(run_uuid)
-            )
+            Printer.print_header("No statuses found for run `{}`.".format(run_uuid))
 
         objects = list_dicts_to_tabulate(
             [
@@ -718,9 +683,7 @@ def logs(ctx, past, follow, hide_time):
                 ),
             )
         except ApiException as e:
-            Printer.print_error(
-                "Could not get logs for run `{}`.".format(run_uuid)
-            )
+            Printer.print_error("Could not get logs for run `{}`.".format(run_uuid))
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
 
@@ -752,9 +715,7 @@ def outputs(ctx):
     try:
         PolyaxonClient().run.download_outputs(user, project_name, run_uuid)
     except ApiException as e:
-        Printer.print_error(
-            "Could not download outputs for run `{}`.".format(run_uuid)
-        )
+        Printer.print_error("Could not download outputs for run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
     Printer.print_success("Files downloaded.")
@@ -790,14 +751,10 @@ def code(ctx):
                 "Run has code ref: `{}`, downloading ...".format(commit)
             )
         else:
-            Printer.print_warning(
-                "Run has no code ref, downloading latest code..."
-            )
+            Printer.print_warning("Run has no code ref, downloading latest code...")
         PolyaxonClient().project.download_repo(user, project_name, commit=commit)
     except ApiException as e:
-        Printer.print_error(
-            "Could not download outputs for run `{}`.".format(run_uuid)
-        )
+        Printer.print_error("Could not download outputs for run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
     Printer.print_success("Files downloaded.")

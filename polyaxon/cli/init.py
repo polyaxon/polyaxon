@@ -5,6 +5,7 @@ import os
 import sys
 
 import click
+
 from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.getters.project import get_project_or_local

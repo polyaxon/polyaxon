@@ -2,6 +2,7 @@
 from __future__ import absolute_import, division, print_function
 
 import pytest
+
 from mock import patch
 from tests.test_cli.utils import BaseCommandTestCase
 
@@ -19,12 +20,10 @@ class TestCliRuns(BaseCommandTestCase):
     @patch("polyaxon.managers.project.ProjectManager.is_initialized")
     @patch("polyaxon.managers.run.RunManager.set_config")
     @patch("polyaxon.cli.runs.get_run_details")
-    def test_get_run(
-        self, get_run_details, set_config, is_initialized, get_run
-    ):
+    def test_get_run(self, get_run_details, set_config, is_initialized, get_run):
         self.runner.invoke(
             runs,
-            ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "get"]
+            ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "get"],
         )
         assert get_run.call_count == 1
         assert set_config.call_count == 1
@@ -42,8 +41,8 @@ class TestCliRuns(BaseCommandTestCase):
                 "--project=admin/foo",
                 "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
                 "update",
-                "--description=foo"
-             ],
+                "--description=foo",
+            ],
         )
         assert update_run.call_count == 1
 
@@ -53,7 +52,13 @@ class TestCliRuns(BaseCommandTestCase):
         assert stop.call_count == 0
 
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "stop", "-y"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "stop",
+                "-y",
+            ],
         )
         assert stop.call_count == 1
 
@@ -63,7 +68,12 @@ class TestCliRuns(BaseCommandTestCase):
         assert restart.call_count == 0
 
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "restart"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "restart",
+            ],
         )
         assert restart.call_count == 1
 
@@ -73,7 +83,13 @@ class TestCliRuns(BaseCommandTestCase):
         assert copy.call_count == 0
 
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "restart", "-c"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "restart",
+                "-c",
+            ],
         )
         assert copy.call_count == 1
 
@@ -83,34 +99,55 @@ class TestCliRuns(BaseCommandTestCase):
         assert resume.call_count == 0
 
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "resume"]
+            runs,
+            ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "resume"],
         )
         assert resume.call_count == 1
 
     @patch("polyaxon_sdk.RunsV1Api.get_run_statuses")
     def test_run_statuses(self, get_statuses):
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "statuses"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "statuses",
+            ],
         )
         assert get_statuses.call_count == 1
 
     @patch("polyaxon_sdk.RunsV1Api.download_outputs")
     def test_run_download_repo(self, download_outputs):
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "outputs"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "outputs",
+            ],
         )
         assert download_outputs.call_count == 1
 
     @patch("polyaxon_sdk.RunsV1Api.bookmark_run")
     def test_run_bookmark(self, bookmark):
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "bookmark"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "bookmark",
+            ],
         )
         assert bookmark.call_count == 1
 
     @patch("polyaxon_sdk.RunsV1Api.unbookmark_run")
     def test_run_unbookmark(self, unbookmark):
         self.runner.invoke(
-            runs, ["--project=admin/foo", "--uid=8aac02e3a62a4f0aaa257c59da5eab80", "unbookmark"]
+            runs,
+            [
+                "--project=admin/foo",
+                "--uid=8aac02e3a62a4f0aaa257c59da5eab80",
+                "unbookmark",
+            ],
         )
         assert unbookmark.call_count == 1

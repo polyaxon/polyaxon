@@ -25,7 +25,11 @@ class CliConfigurationConfig(BaseConfig):
     LATEST = "9.9.9"
 
     def __init__(
-        self, check_count=0, current_version=None, server_versions=None, log_handler=None
+        self,
+        check_count=0,
+        current_version=None,
+        server_versions=None,
+        log_handler=None,
     ):
         self.check_count = check_count
         self.current_version = current_version

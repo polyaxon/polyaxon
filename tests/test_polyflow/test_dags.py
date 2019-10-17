@@ -92,7 +92,7 @@ class TestDags(TestCase):
             (MagicMock(id=9), {10, 11}),
         )
         self.cycle2_processed = dags.process_dag(self.cycle2)
-        return super().setUp()
+        return super(TestDags, self).setUp()
 
     def test_get_orphan_nodes(self):
         assert dags.get_orphan_ops(self.dag0_processed) == {3, 19}

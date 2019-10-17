@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+
 from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.getters.user import get_username_or_local
@@ -53,7 +54,9 @@ def projects(ctx, page):
     page = page or 1
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.projects_v1.list_bookmarked_projects(username=user, page=page)
+        response = polyaxon_client.projects_v1.list_bookmarked_projects(
+            username=user, page=page
+        )
     except ApiException as e:
         Printer.print_error(
             "Could not get bookmarked projects for user `{}`.".format(user)
@@ -105,7 +108,9 @@ def runs(ctx, page):
     page = page or 1
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.runs_v1.list_bookmarked_runs(username=user, page=page)
+        response = polyaxon_client.runs_v1.list_bookmarked_runs(
+            username=user, page=page
+        )
     except ApiException as e:
         Printer.print_error(
             "Could not get bookmarked experiments for user `{}`.".format(user)

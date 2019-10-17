@@ -92,6 +92,6 @@ setup(
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
     ],
-    tests_require=["pytest", "httpretty==0.8.14", "fake-factory==0.7.2", "mock"],
+    tests_require=["pytest"],
     cmdclass={"test": PyTest},
 )

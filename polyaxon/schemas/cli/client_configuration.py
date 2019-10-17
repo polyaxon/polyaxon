@@ -1,22 +1,35 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from hestia.env_var_keys import POLYAXON_KEYS_AUTHENTICATION_TYPE, POLYAXON_KEYS_API_VERSION, \
-    POLYAXON_KEYS_IS_MANAGED, POLYAXON_KEYS_IS_LOCAL, POLYAXON_KEYS_VERIFY_SSL, \
-    POLYAXON_KEYS_API_HOST, POLYAXON_KEYS_HEADER, POLYAXON_KEYS_HEADER_SERVICE, POLYAXON_KEYS_DEBUG, \
-    POLYAXON_KEYS_TIMEOUT, POLYAXON_KEYS_INTERVAL, POLYAXON_KEYS_SSL_CA_CERT, \
-    POLYAXON_KEYS_CERT_FILE, POLYAXON_KEYS_KEY_FILE, POLYAXON_KEYS_ASSERT_HOSTNAME, \
-    POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE, POLYAXON_KEYS_IN_CLUSTER, POLYAXON_KEYS_NO_OP, \
-    POLYAXON_KEYS_LOG_LEVEL
-from marshmallow import fields, EXCLUDE
-
 import polyaxon_sdk
 
 from hestia.auth import AuthenticationTypes
+from hestia.env_var_keys import (
+    POLYAXON_KEYS_API_HOST,
+    POLYAXON_KEYS_API_VERSION,
+    POLYAXON_KEYS_ASSERT_HOSTNAME,
+    POLYAXON_KEYS_AUTHENTICATION_TYPE,
+    POLYAXON_KEYS_CERT_FILE,
+    POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE,
+    POLYAXON_KEYS_DEBUG,
+    POLYAXON_KEYS_HEADER,
+    POLYAXON_KEYS_HEADER_SERVICE,
+    POLYAXON_KEYS_IN_CLUSTER,
+    POLYAXON_KEYS_INTERVAL,
+    POLYAXON_KEYS_IS_LOCAL,
+    POLYAXON_KEYS_IS_MANAGED,
+    POLYAXON_KEYS_KEY_FILE,
+    POLYAXON_KEYS_LOG_LEVEL,
+    POLYAXON_KEYS_NO_OP,
+    POLYAXON_KEYS_SSL_CA_CERT,
+    POLYAXON_KEYS_TIMEOUT,
+    POLYAXON_KEYS_VERIFY_SSL,
+)
+from marshmallow import EXCLUDE, fields
 
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.schemas.base import BaseConfig, BaseSchema
-from polyaxon.exceptions import PolyaxonClientException
 
 
 class ClientSchema(BaseSchema):
@@ -24,7 +37,9 @@ class ClientSchema(BaseSchema):
     version = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_API_VERSION)
     debug = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_DEBUG)
     log_level = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_LOG_LEVEL)
-    authentication_type = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_AUTHENTICATION_TYPE)
+    authentication_type = fields.Str(
+        allow_none=True, data_key=POLYAXON_KEYS_AUTHENTICATION_TYPE
+    )
     is_managed = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_MANAGED)
     in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IN_CLUSTER)
     is_local = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_LOCAL)
@@ -35,8 +50,12 @@ class ClientSchema(BaseSchema):
     ssl_ca_cert = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_SSL_CA_CERT)
     cert_file = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_CERT_FILE)
     key_file = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_KEY_FILE)
-    assert_hostname = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_ASSERT_HOSTNAME)
-    connection_pool_maxsize = fields.Int(allow_none=True, data_key=POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE)
+    assert_hostname = fields.Bool(
+        allow_none=True, data_key=POLYAXON_KEYS_ASSERT_HOSTNAME
+    )
+    connection_pool_maxsize = fields.Int(
+        allow_none=True, data_key=POLYAXON_KEYS_CONNECTION_POOL_MAXSIZE
+    )
 
     header = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER)
     header_service = fields.Str(allow_none=True, data_key=POLYAXON_KEYS_HEADER_SERVICE)
@@ -134,8 +153,8 @@ class ClientConfig(BaseConfig):
         if self.connection_pool_maxsize:
             config.connection_pool_maxsize = self.connection_pool_maxsize
         if self.token:
-            config.api_key['Authorization'] = self.token
-            config.api_key_prefix['Authorization'] = self.authentication_type
+            config.api_key["Authorization"] = self.token
+            config.api_key_prefix["Authorization"] = self.authentication_type
         return config
 
     @staticmethod

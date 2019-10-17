@@ -2,10 +2,14 @@
 from __future__ import absolute_import, division, print_function
 
 import os
+
 from unittest import TestCase
 
-from hestia.env_var_keys import POLYAXON_KEYS_API_HOST, POLYAXON_KEYS_VERIFY_SSL, \
-    POLYAXON_KEYS_DEBUG
+from hestia.env_var_keys import (
+    POLYAXON_KEYS_API_HOST,
+    POLYAXON_KEYS_DEBUG,
+    POLYAXON_KEYS_VERIFY_SSL,
+)
 
 from polyaxon.schemas.cli.client_configuration import ClientConfig
 
@@ -13,11 +17,7 @@ from polyaxon.schemas.cli.client_configuration import ClientConfig
 class TestClientConfig(TestCase):
     def setUp(self):
         self.host = "http://localhost:8000"
-        self.config = ClientConfig(
-            host=self.host,
-            version="v1",
-            token="token",
-        )
+        self.config = ClientConfig(host=self.host, version="v1", token="token")
 
     def test_client_config(self):
         config_dict = {
@@ -38,4 +38,4 @@ class TestClientConfig(TestCase):
         config = ClientConfig(host=None, is_managed=True)
         assert config.is_managed is True
         assert config.version == "v1"
-        assert config.host == 'https://cloud.polyaxon.com'
+        assert config.host == "https://cloud.polyaxon.com"

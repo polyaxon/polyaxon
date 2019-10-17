@@ -1874,8 +1874,9 @@ class TestPipelineConfigs(TestCase):
         op_upstream_by_names = ops_params.get_upstream_op_params_by_names(
             params=config.dag["C"].op.params
         )
-        assert op_upstream_by_names["B"] == [
-            ops_params.ParamSpec(
+        assert len(op_upstream_by_names["B"]) == 2
+        if op_upstream_by_names["B"][0].name == "input1":
+            assert op_upstream_by_names["B"][0] == ops_params.ParamSpec(
                 name="input1",
                 iotype=None,
                 value="ops.B.outputs.output1",
@@ -1883,8 +1884,8 @@ class TestPipelineConfigs(TestCase):
                 entity_ref="B",
                 entity_value="output1",
                 is_flag=None,
-            ),
-            ops_params.ParamSpec(
+            )
+            assert op_upstream_by_names["B"][1] == ops_params.ParamSpec(
                 name="input2",
                 iotype=None,
                 value="ops.B.outputs.output2",
@@ -1892,8 +1893,27 @@ class TestPipelineConfigs(TestCase):
                 entity_ref="B",
                 entity_value="output2",
                 is_flag=None,
-            ),
-        ]
+            )
+
+        else:
+            assert op_upstream_by_names["B"][1] == ops_params.ParamSpec(
+                name="input1",
+                iotype=None,
+                value="ops.B.outputs.output1",
+                entity="ops",
+                entity_ref="B",
+                entity_value="output1",
+                is_flag=None,
+            )
+            assert op_upstream_by_names["B"][0] == ops_params.ParamSpec(
+                name="input2",
+                iotype=None,
+                value="ops.B.outputs.output2",
+                entity="ops",
+                entity_ref="B",
+                entity_value="output2",
+                is_flag=None,
+            )
 
         op_upstream_by_names = ops_params.get_upstream_run_params_by_names(
             params=config.dag["A"].op.params

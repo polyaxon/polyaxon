@@ -64,9 +64,9 @@ class TestIOConfigs(TestCase):
         }
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
-        expected_repr = OrderedDict(name="input1", type="int", value=3)
+        expected_repr = OrderedDict((("name", "input1"), ("type", "int"), ("value", 3)))
         assert config.get_repr_from_value(3) == expected_repr
-        assert config.get_repr() == OrderedDict(name="input1", type="int")
+        assert config.get_repr() == OrderedDict((("name", "input1"), ("type", "int")))
 
         config_dict = {
             "name": "input1",
@@ -76,10 +76,12 @@ class TestIOConfigs(TestCase):
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
         expected_repr = OrderedDict(
-            name="input1", type=IOTypes.S3_PATH, value="s3://foo"
+            (("name", "input1"), ("type", IOTypes.S3_PATH), ("value", "s3://foo"))
         )
         assert config.get_repr_from_value("s3://foo") == expected_repr
-        assert config.get_repr() == OrderedDict(name="input1", type=IOTypes.S3_PATH)
+        assert config.get_repr() == OrderedDict(
+            (("name", "input1"), ("type", IOTypes.S3_PATH))
+        )
 
     def test_io_config_default(self):
         config_dict = {
@@ -91,7 +93,9 @@ class TestIOConfigs(TestCase):
         }
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
-        expected_repr = OrderedDict(name="input1", type="bool", value=True)
+        expected_repr = OrderedDict(
+            (("name", "input1"), ("type", "bool"), ("value", True))
+        )
         assert config.get_repr_from_value(None) == expected_repr
         assert config.get_repr() == expected_repr
 
@@ -104,7 +108,9 @@ class TestIOConfigs(TestCase):
         }
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
-        expected_repr = OrderedDict(name="input1", type="float", value=3.4)
+        expected_repr = OrderedDict(
+            (("name", "input1"), ("type", "float"), ("value", 3.4))
+        )
         assert config.get_repr_from_value(None) == expected_repr
         assert config.get_repr() == expected_repr
 
@@ -137,9 +143,11 @@ class TestIOConfigs(TestCase):
         }
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
-        expected_repr = OrderedDict(name="input1", type="float", value=1.1)
+        expected_repr = OrderedDict(
+            (("name", "input1"), ("type", "float"), ("value", 1.1))
+        )
         assert config.get_repr_from_value(1.1) == expected_repr
-        assert config.get_repr() == OrderedDict(name="input1", type="float")
+        assert config.get_repr() == OrderedDict((("name", "input1"), ("type", "float")))
 
     def test_io_config_flag(self):
         config_dict = {
@@ -150,7 +158,9 @@ class TestIOConfigs(TestCase):
         }
         config = IOConfig.from_dict(config_dict)
         assert_equal_dict(config.to_dict(), config_dict)
-        expected_repr = OrderedDict(name="input1", type="bool", value=False)
+        expected_repr = OrderedDict(
+            (("name", "input1"), ("type", "bool"), ("value", False))
+        )
         assert config.get_repr_from_value(False) == expected_repr
 
     def test_value_non_typed_input(self):
@@ -160,7 +170,7 @@ class TestIOConfigs(TestCase):
         assert config.validate_value(1) == 1
         assert config.validate_value(True) is True
 
-        expected_repr = OrderedDict(name="input1", value="foo")
+        expected_repr = OrderedDict((("name", "input1"), ("value", "foo")))
         assert config.get_repr_from_value("foo") == expected_repr
         assert config.get_repr() == OrderedDict(name="input1")
 
@@ -191,6 +201,8 @@ class TestIOConfigs(TestCase):
         assert config.validate_value(0) == 0
         assert config.validate_value(-1) == -1
         assert config.validate_value(None) == 12
-        expected_repr = OrderedDict(name="input1", type="int", value=12)
+        expected_repr = OrderedDict(
+            (("name", "input1"), ("type", "int"), ("value", 12))
+        )
         assert config.get_repr_from_value(None) == expected_repr
         assert config.get_repr() == expected_repr

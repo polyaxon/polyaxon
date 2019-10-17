@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.exceptions import AuthenticationError
-from polyaxon.logger import logger
 from polyaxon.client.transport.http_transport import HttpTransportMixin
 from polyaxon.client.transport.periodic_transport import (
     PeriodicHttpTransportMixin,
@@ -10,6 +8,8 @@ from polyaxon.client.transport.periodic_transport import (
 )
 from polyaxon.client.transport.socket_transport import SocketTransportMixin
 from polyaxon.client.transport.threaded_transport import ThreadedTransportMixin
+from polyaxon.exceptions import AuthenticationError
+from polyaxon.logger import logger
 
 
 class Transport(

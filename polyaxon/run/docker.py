@@ -14,16 +14,15 @@ from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
 
+from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.exceptions import (
     PolyaxonClientException,
+    PolyaxonConfigurationError,
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
 from polyaxon.settings import TMP_POLYAXON_PATH
-
 from polyaxon.tracking import Run
-from polyaxon.deploy.operators.docker import DockerOperator
-from polyaxon.exceptions import PolyaxonConfigurationError
 from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
 
@@ -168,10 +167,7 @@ def _run(ctx, name, user, project_name, description, tags, specification, log):
 
     experiment = Run(project=project, track_logs=False)
     experiment.create(
-        name=name,
-        tags=tags,
-        description=description,
-        content=specification.raw_data,
+        name=name, tags=tags, description=description, content=specification.raw_data
     )
 
     cmd_args = ["run", "--rm"]

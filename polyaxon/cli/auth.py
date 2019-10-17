@@ -5,6 +5,7 @@ import sys
 
 import click
 import polyaxon_sdk
+
 from polyaxon_sdk.rest import ApiException
 
 from polyaxon.cli.version import (
@@ -43,7 +44,9 @@ def login(token, username, password):
                 sys.exit(1)
 
         try:
-            body = polyaxon_sdk.models.V1CredsBodyRequest(username=username, password=password)
+            body = polyaxon_sdk.models.V1CredsBodyRequest(
+                username=username, password=password
+            )
             access_auth = polyaxon_client.auth_v1.login(body=body)
         except ApiException as e:
             Printer.print_error("Could not login.")

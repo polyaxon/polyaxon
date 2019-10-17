@@ -3,7 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 from marshmallow import fields
 
-from polyaxon.schemas.base import BaseSchema, BaseConfig
+from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.fields import UUID
 
 

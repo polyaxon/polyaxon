@@ -52,9 +52,7 @@ class BaseTracker(object):
         if self.client and not settings.CLIENT_CONFIG.is_managed:
             self.user = self.client.users_v1.get_user().username
 
-        owner, project_name = get_project_info(
-            owner=owner, project=project
-        )
+        owner, project_name = get_project_info(owner=owner, project=project)
         self.track_logs = track_logs
         self.track_code = track_code
         self.track_env = track_env
@@ -66,16 +64,16 @@ class BaseTracker(object):
         self._health_is_running = False
 
         # Setup the outputs store
-        if outputs_store is None and settings.CLIENT_CONFIG.is_managed and self.REQUIRES_OUTPUTS:
+        if (
+            outputs_store is None
+            and settings.CLIENT_CONFIG.is_managed
+            and self.REQUIRES_OUTPUTS
+        ):
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
 
     def _get_entity_id(self, entity):
         if self.client:
-            return (
-                entity.id
-                if self.client.config.schema_response
-                else entity.get("id")
-            )
+            return entity.id if self.client.config.schema_response else entity.get("id")
         return int(time.time())
 
     @check_no_op

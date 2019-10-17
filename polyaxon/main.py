@@ -8,6 +8,7 @@ import click_completion
 
 from marshmallow import ValidationError
 
+from polyaxon import settings
 from polyaxon.cli.admin import admin
 from polyaxon.cli.auth import login, logout, whoami
 from polyaxon.cli.bookmark import bookmark
@@ -17,14 +18,13 @@ from polyaxon.cli.completion import completion
 from polyaxon.cli.config import config
 from polyaxon.cli.dashboard import dashboard
 from polyaxon.cli.deploy import deploy, teardown
-from polyaxon.cli.runs import runs
 from polyaxon.cli.init import init
 from polyaxon.cli.projects import projects
 from polyaxon.cli.run import run
+from polyaxon.cli.runs import runs
 from polyaxon.cli.upload import upload
 from polyaxon.cli.user import user
 from polyaxon.cli.version import check_cli_version, upgrade, version
-from polyaxon import settings
 from polyaxon.logger import clean_outputs, configure_logger
 from polyaxon.managers.client import ClientConfigManager
 

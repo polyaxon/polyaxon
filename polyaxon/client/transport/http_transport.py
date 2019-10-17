@@ -10,9 +10,9 @@ from hestia.list_utils import to_list
 from requests_toolbelt import MultipartEncoder, MultipartEncoderMonitor
 
 from polyaxon import settings
+from polyaxon.client.transport.utils import Bar, progress_bar
 from polyaxon.exceptions import ERRORS_MAPPING, PolyaxonShouldExitError
 from polyaxon.logger import logger
-from polyaxon.client.transport.utils import Bar, progress_bar
 
 
 class HttpTransportMixin(object):

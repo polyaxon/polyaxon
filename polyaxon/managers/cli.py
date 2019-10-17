@@ -22,7 +22,11 @@ class CliConfigManager(BaseConfigManager):
 
     @classmethod
     def reset(
-        cls, check_count=None, current_version=None, server_versions=None, log_handler=None
+        cls,
+        check_count=None,
+        current_version=None,
+        server_versions=None,
+        log_handler=None,
     ):
         if not any([check_count, current_version, server_versions, log_handler]):
             return

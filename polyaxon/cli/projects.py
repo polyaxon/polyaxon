@@ -17,9 +17,10 @@ from polyaxon.managers.project import ProjectManager
 from polyaxon.utils.formatting import (
     Printer,
     dict_tabulate,
+    dict_to_tabulate,
     get_meta_response,
     list_dicts_to_tabulate,
-    dict_to_tabulate)
+)
 
 
 def get_project_details(project):
@@ -28,9 +29,7 @@ def get_project_details(project):
         click.echo("{}\n".format(project.description))
 
     response = dict_to_tabulate(
-        project.to_dict(),
-        humanize_values=True,
-        exclude_attrs=["description"],
+        project.to_dict(), humanize_values=True, exclude_attrs=["description"]
     )
 
     Printer.print_header("Project info:")
@@ -59,7 +58,7 @@ def projects(ctx, project):  # pylint:disable=redefined-outer-name
     "--owner",
     type=str,
     help="Name of the owner/namespace, "
-         "if not provided it will default to the namespace of the current user.",
+    "if not provided it will default to the namespace of the current user.",
 )
 @click.option("--description", type=str, help="Description of the project.")
 @click.option(
@@ -107,7 +106,7 @@ def create(ctx, name, owner, description, private, init):
     "--owner",
     type=str,
     help="Name of the owner/namespace, "
-         "if not provided it will default to the namespace of the current user.",
+    "if not provided it will default to the namespace of the current user.",
 )
 @click.option("--page", type=int, help="To paginate through the list of projects.")
 @clean_outputs
@@ -138,15 +137,9 @@ def list(owner, page):  # pylint:disable=redefined-builtin
         Printer.print_header("No projects found for current user")
 
     objects = list_dicts_to_tabulate(
-        [
-            o.to_dict()
-            for o in response["results"]
-        ],
+        [o.to_dict() for o in response["results"]],
         humanize_values=True,
-        exclude_attrs=[
-            "uuid",
-            "description",
-        ],
+        exclude_attrs=["uuid", "description"],
     )
     if objects:
         Printer.print_header("Projects:")
@@ -492,7 +485,9 @@ def unbookmark(ctx):
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
-    Printer.print_success("Project `{}/{}` is unbookmarked.".format(owner, project_name))
+    Printer.print_success(
+        "Project `{}/{}` is unbookmarked.".format(owner, project_name)
+    )
 
 
 @projects.command()

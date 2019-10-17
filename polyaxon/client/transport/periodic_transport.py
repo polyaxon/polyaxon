@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
-from polyaxon.exceptions import PolyaxonClientException
-from polyaxon.logger import logger
 from polyaxon.client.transport.retry_transport import RetryTransportMixin
 from polyaxon.client.workers.periodic_worker import PeriodicWorker
+from polyaxon.exceptions import PolyaxonClientException
+from polyaxon.logger import logger
 
 
 class PeriodicHttpTransportMixin(RetryTransportMixin):

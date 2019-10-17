@@ -9,8 +9,8 @@ from datetime import datetime
 from hestia.env_var_keys import POLYAXON_KEYS_JOB_INFO, POLYAXON_KEYS_PARAMS
 
 from polyaxon import settings
-from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.client.handlers.conf import setup_logging
+from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.tracking.base import BaseTracker
 from polyaxon.tracking.is_managed import ensure_is_managed
 from polyaxon.tracking.no_op import check_no_op
@@ -43,7 +43,11 @@ class Run(BaseTracker):
         if settings.CLIENT_CONFIG.no_op:
             return
 
-        if project is None and settings.CLIENT_CONFIG.is_managed and not self.is_notebook_job:
+        if (
+            project is None
+            and settings.CLIENT_CONFIG.is_managed
+            and not self.is_notebook_job
+        ):
             experiment_info = self.get_experiment_info()
             project = experiment_info["project_name"]
             experiment_id = experiment_info["experiment_name"].split(".")[-1]
@@ -67,7 +71,11 @@ class Run(BaseTracker):
             self._set_health_url()
 
         # Track run env
-        if settings.CLIENT_CONFIG.is_managed and self.track_env and not self.is_notebook_job:
+        if (
+            settings.CLIENT_CONFIG.is_managed
+            and self.track_env
+            and not self.is_notebook_job
+        ):
             self.log_run_env()
 
     @check_no_op
@@ -145,10 +153,7 @@ class Run(BaseTracker):
                 )
             else:
                 outputs_path = "{}/{}/{}/{}".format(
-                    base_outputs_path,
-                    self.owner,
-                    self.project_name,
-                    self.experiment_id,
+                    base_outputs_path, self.owner, self.project_name, self.experiment_id
                 )
             self.set_outputs_store(outputs_path=outputs_path)
 
