@@ -175,6 +175,16 @@
         done();
       });
     });
+    describe('impersonateToken', function() {
+      it('should call impersonateToken successfully', function(done) {
+        //uncomment below and update the code to test impersonateToken
+        //instance.impersonateToken(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('invalidateRun', function() {
       it('should call invalidateRun successfully', function(done) {
         //uncomment below and update the code to test invalidateRun

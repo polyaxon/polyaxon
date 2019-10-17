@@ -28,6 +28,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.V1Auth;
 import io.swagger.client.model.V1CodeRefBodyRequest;
 import io.swagger.client.model.V1CodeReference;
 import io.swagger.client.model.V1EntityStatusRequest;
@@ -252,6 +253,24 @@ public class RunsV1ApiTest {
         String project = null;
         String uuid = null;
         V1Status response = api.getRunStatuses(owner, project, uuid);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Impersonate run token
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void impersonateTokenTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        String uuid = null;
+        V1Auth response = api.impersonateToken(owner, project, uuid);
 
         // TODO: test validations
     }

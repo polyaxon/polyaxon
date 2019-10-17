@@ -122,6 +122,13 @@ class TestRunsV1Api(unittest.TestCase):
         """
         pass
 
+    def test_impersonate_token(self):
+        """Test case for impersonate_token
+
+        Impersonate run token  # noqa: E501
+        """
+        pass
+
     def test_invalidate_run(self):
         """Test case for invalidate_run
 

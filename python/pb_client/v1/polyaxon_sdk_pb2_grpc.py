@@ -168,6 +168,11 @@ class RunsV1Stub(object):
         request_serializer=v1_dot_code__ref__pb2.CodeRefBodyRequest.SerializeToString,
         response_deserializer=v1_dot_code__ref__pb2.CodeReference.FromString,
         )
+    self.ImpersonateToken = channel.unary_unary(
+        '/v1.RunsV1/ImpersonateToken',
+        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        response_deserializer=v1_dot_auth__pb2.Auth.FromString,
+        )
 
 
 class RunsV1Servicer(object):
@@ -357,6 +362,13 @@ class RunsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def ImpersonateToken(self, request, context):
+    """Impersonate run token
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_RunsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -489,6 +501,11 @@ def add_RunsV1Servicer_to_server(servicer, server):
           servicer.CreateRunCodeRef,
           request_deserializer=v1_dot_code__ref__pb2.CodeRefBodyRequest.FromString,
           response_serializer=v1_dot_code__ref__pb2.CodeReference.SerializeToString,
+      ),
+      'ImpersonateToken': grpc.unary_unary_rpc_method_handler(
+          servicer.ImpersonateToken,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          response_serializer=v1_dot_auth__pb2.Auth.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

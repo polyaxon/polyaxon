@@ -426,6 +426,41 @@ func (a *Client) GetRunStatuses(params *GetRunStatusesParams, authInfo runtime.C
 }
 
 /*
+ImpersonateToken impersonates run token
+*/
+func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runtime.ClientAuthInfoWriter) (*ImpersonateTokenOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewImpersonateTokenParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "ImpersonateToken",
+		Method:             "POST",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https", "ws", "wss"},
+		Params:             params,
+		Reader:             &ImpersonateTokenReader{formats: a.formats},
+		AuthInfo:           authInfo,
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ImpersonateTokenOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for ImpersonateToken: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
 InvalidateRun stops run
 */
 func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, error) {

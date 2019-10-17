@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityUUIdRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityUUIdRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityUUIdRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1Status'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityUUIdRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1Status'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityUUIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1Status);
+    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityUUIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1Status);
   }
-}(this, function(ApiClient, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityUUIdRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status) {
+}(this, function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityUUIdRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status) {
   'use strict';
 
   /**
@@ -744,6 +744,67 @@
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/runs/{uuid}/statuses', 'GET',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the impersonateToken operation.
+     * @callback module:api/RunsV1Api~impersonateTokenCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/V1Auth} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Impersonate run token
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project where the experiement will be assigned
+     * @param {String} uuid Unique integer identifier of the entity
+     * @param {module:api/RunsV1Api~impersonateTokenCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/V1Auth}
+     */
+    this.impersonateToken = function(owner, project, uuid, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling impersonateToken");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling impersonateToken");
+      }
+
+      // verify the required parameter 'uuid' is set
+      if (uuid === undefined || uuid === null) {
+        throw new Error("Missing the required parameter 'uuid' when calling impersonateToken");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project,
+        'uuid': uuid
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = V1Auth;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

@@ -264,6 +264,13 @@ service RunsV1 {
         };
     }
 
+    // Impersonate run token
+    rpc ImpersonateToken(OwnedEntityUUIdRequest) returns (Auth) {
+        option (google.api.http) = {
+            post: "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken"
+        };
+    }
+
     // Upload/Download logs
     // Upload/Download artifacts
 }

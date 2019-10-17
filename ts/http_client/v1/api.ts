@@ -2828,6 +2828,55 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
+         * @summary Impersonate run token
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        impersonateToken(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+            // verify required parameter 'owner' is not null or undefined
+            if (owner === null || owner === undefined) {
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling impersonateToken.');
+            }
+            // verify required parameter 'project' is not null or undefined
+            if (project === null || project === undefined) {
+                throw new RequiredError('project','Required parameter project was null or undefined when calling impersonateToken.');
+            }
+            // verify required parameter 'uuid' is not null or undefined
+            if (uuid === null || uuid === undefined) {
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling impersonateToken.');
+            }
+            const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken`
+                .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
+                .replace(`{${"project"}}`, encodeURIComponent(String(project)))
+                .replace(`{${"uuid"}}`, encodeURIComponent(String(uuid)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKey required
+            if (configuration && configuration.apiKey) {
+                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+					? configuration.apiKey("Authorization")
+					: configuration.apiKey;
+                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -3845,6 +3894,27 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Impersonate run token
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        impersonateToken(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Auth> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).impersonateToken(owner, project, uuid, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -4306,6 +4376,18 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
         },
         /**
          * 
+         * @summary Impersonate run token
+         * @param {string} owner Owner of the namespace
+         * @param {string} project Project where the experiement will be assigned
+         * @param {string} uuid Unique integer identifier of the entity
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        impersonateToken(owner: string, project: string, uuid: string, options?: any) {
+            return RunsV1ApiFp(configuration).impersonateToken(owner, project, uuid, options)(fetch, basePath);
+        },
+        /**
+         * 
          * @summary Stop run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
@@ -4651,6 +4733,20 @@ export class RunsV1Api extends BaseAPI {
      */
     public getRunStatuses(owner: string, project: string, uuid: string, options?: any) {
         return RunsV1ApiFp(this.configuration).getRunStatuses(owner, project, uuid, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 
+     * @summary Impersonate run token
+     * @param {string} owner Owner of the namespace
+     * @param {string} project Project where the experiement will be assigned
+     * @param {string} uuid Unique integer identifier of the entity
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RunsV1Api
+     */
+    public impersonateToken(owner: string, project: string, uuid: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).impersonateToken(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**

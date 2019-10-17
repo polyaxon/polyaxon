@@ -104,6 +104,7 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**get_run**](docs/RunsV1Api.md#get_run) | **GET** /api/v1/{owner}/{project}/runs/{uuid} | Get run
 *RunsV1Api* | [**get_run_code_refs**](docs/RunsV1Api.md#get_run_code_refs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 *RunsV1Api* | [**get_run_statuses**](docs/RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
+*RunsV1Api* | [**impersonate_token**](docs/RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken | Impersonate run token
 *RunsV1Api* | [**invalidate_run**](docs/RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
 *RunsV1Api* | [**invalidate_runs**](docs/RunsV1Api.md#invalidate_runs) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 *RunsV1Api* | [**list_archived_runs**](docs/RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
