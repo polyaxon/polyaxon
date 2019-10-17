@@ -42,24 +42,24 @@ class K8SResourcesOption(Option):
 
 class K8SResourcesBuildJobs(K8SResourcesOption):
     key = K8S_RESOURCES_BUILD_JOBS
-    description = 'K8S resources configuration for build jobs'
+    description = 'K8S resources configuration for build jobs (given in polyaxon syntax not k8s).'
 
 
 class K8SResourcesJobs(K8SResourcesOption):
     key = K8S_RESOURCES_JOBS
-    description = 'K8S resources configuration for jobs'
+    description = 'K8S resources configuration for jobs (given in polyaxon syntax not k8s).'
 
 
 class K8SResourcesExperiments(K8SResourcesOption):
     key = K8S_RESOURCES_EXPERIMENTS
-    description = 'K8S resources configuration for experiments'
+    description = 'K8S resources configuration for experiments (given in polyaxon syntax not k8s).'
 
 
 class K8SResourcesNotebooks(K8SResourcesOption):
     key = K8S_RESOURCES_NOTEBOOKS
-    description = 'K8S resources configuration for notebooks'
+    description = 'K8S resources configuration for notebooks (given in polyaxon syntax not k8s).'
 
 
 class K8SResourcesTensorboards(K8SResourcesOption):
     key = K8S_RESOURCES_TENSORBOARDS
-    description = 'K8S resources configuration for tensorboards'
+    description = 'K8S resources configuration for tensorboards (given in polyaxon syntax not k8s).'
