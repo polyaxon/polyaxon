@@ -68,7 +68,7 @@ setup(
         "polyaxon-dockerizer==0.0.9",
         "sentry-sdk==0.12.3",
         "tabulate==0.8.2",
-        "hestia==0.5.0",
+        "hestia==0.5.1",
         "Jinja2==2.10.3",
         "marshmallow==3.0.0rc5",
         "numpy>=1.15.2",

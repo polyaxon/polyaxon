@@ -7,12 +7,9 @@ from unittest import TestCase
 
 import polyaxon_sdk
 
-from mock import patch
-
 from polyaxon import settings
 from polyaxon.client.client import PolyaxonClient
 from polyaxon.client.transport import Transport
-from polyaxon.exceptions import PolyaxonClientException
 from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 
