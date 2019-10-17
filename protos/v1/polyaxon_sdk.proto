@@ -67,8 +67,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 };
 
 
-// Service to manage runs
-service RunService {
+service RunsV1 {
     // List runs
     rpc ListRuns(ProjectBodyRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
@@ -213,8 +212,8 @@ service RunService {
         };
     }
 
-    // UnBookmark run
-    rpc UnBookmarkRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    // Unbookmark run
+    rpc UnbookmarkRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark"
         };
@@ -270,7 +269,7 @@ service RunService {
 }
 
 // Service to manage project
-service ProjectService {
+service ProjectsV1 {
     // List projects
     rpc ListProjects(OwnerBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
@@ -358,8 +357,8 @@ service ProjectService {
         };
     }
 
-    // UnBookmark project
-    rpc UnBookmarkProject(ProjectBodyRequest) returns (google.protobuf.Empty) {
+    // Unbookmark project
+    rpc UnbookmarkProject(ProjectBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/unbookmark"
         };
@@ -382,7 +381,7 @@ service ProjectService {
 
 
 // Service to manage auth
-service AuthService {
+service AuthV1 {
     // Login
     rpc Login(CredsBodyRequest) returns (Auth) {
         option (google.api.http) = {
@@ -393,7 +392,7 @@ service AuthService {
 }
 
 // Service to get user level infotmation
-service UserService {
+service UsersV1 {
     // Get current user
     rpc getUser(google.protobuf.Empty) returns (User) {
         option (google.api.http) = {
@@ -404,7 +403,7 @@ service UserService {
 }
 
 // Service to get versions
-service VersionService {
+service VersionsV1 {
     // Get versions
     rpc GetVersions(google.protobuf.Empty) returns (Versions) {
         option (google.api.http) = {

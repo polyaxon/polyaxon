@@ -46,7 +46,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 
-func request_RunService_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -84,7 +84,7 @@ func request_RunService_ListRuns_0(ctx context.Context, marshaler runtime.Marsha
 
 }
 
-func local_request_RunService_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -122,7 +122,7 @@ func local_request_RunService_ListRuns_0(ctx context.Context, marshaler runtime.
 
 }
 
-func request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -149,7 +149,7 @@ func request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runt
 
 }
 
-func local_request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -176,7 +176,7 @@ func local_request_RunService_ListBookmarkedRuns_0(ctx context.Context, marshale
 
 }
 
-func request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -203,7 +203,7 @@ func request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -230,7 +230,7 @@ func local_request_RunService_ListArchivedRuns_0(ctx context.Context, marshaler 
 
 }
 
-func request_RunService_CreateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_CreateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RunBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -276,7 +276,7 @@ func request_RunService_CreateRun_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RunService_CreateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_CreateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RunBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -322,7 +322,7 @@ func local_request_RunService_CreateRun_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RunService_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -371,7 +371,7 @@ func request_RunService_GetRun_0(ctx context.Context, marshaler runtime.Marshale
 
 }
 
-func local_request_RunService_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -420,7 +420,7 @@ func local_request_RunService_GetRun_0(ctx context.Context, marshaler runtime.Ma
 
 }
 
-func request_RunService_UpdateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_UpdateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RunBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -477,7 +477,7 @@ func request_RunService_UpdateRun_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RunService_UpdateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_UpdateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RunBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -534,7 +534,7 @@ func local_request_RunService_UpdateRun_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RunService_PatchRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_PatchRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RunBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -591,7 +591,7 @@ func request_RunService_PatchRun_0(ctx context.Context, marshaler runtime.Marsha
 
 }
 
-func local_request_RunService_PatchRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_PatchRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RunBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -648,7 +648,7 @@ func local_request_RunService_PatchRun_0(ctx context.Context, marshaler runtime.
 
 }
 
-func request_RunService_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -697,7 +697,7 @@ func request_RunService_DeleteRun_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RunService_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -746,7 +746,7 @@ func local_request_RunService_DeleteRun_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RunService_DeleteRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_DeleteRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -792,7 +792,7 @@ func request_RunService_DeleteRuns_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_RunService_DeleteRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_DeleteRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -838,7 +838,7 @@ func local_request_RunService_DeleteRuns_0(ctx context.Context, marshaler runtim
 
 }
 
-func request_RunService_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -895,7 +895,7 @@ func request_RunService_StopRun_0(ctx context.Context, marshaler runtime.Marshal
 
 }
 
-func local_request_RunService_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -952,7 +952,7 @@ func local_request_RunService_StopRun_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func request_RunService_StopRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_StopRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -998,7 +998,7 @@ func request_RunService_StopRuns_0(ctx context.Context, marshaler runtime.Marsha
 
 }
 
-func local_request_RunService_StopRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_StopRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -1044,7 +1044,7 @@ func local_request_RunService_StopRuns_0(ctx context.Context, marshaler runtime.
 
 }
 
-func request_RunService_InvalidateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_InvalidateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1101,7 +1101,7 @@ func request_RunService_InvalidateRun_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func local_request_RunService_InvalidateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_InvalidateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1158,7 +1158,7 @@ func local_request_RunService_InvalidateRun_0(ctx context.Context, marshaler run
 
 }
 
-func request_RunService_InvalidateRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_InvalidateRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -1204,7 +1204,7 @@ func request_RunService_InvalidateRuns_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_RunService_InvalidateRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_InvalidateRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -1250,7 +1250,7 @@ func local_request_RunService_InvalidateRuns_0(ctx context.Context, marshaler ru
 
 }
 
-func request_RunService_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1307,7 +1307,7 @@ func request_RunService_CopyRun_0(ctx context.Context, marshaler runtime.Marshal
 
 }
 
-func local_request_RunService_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1364,7 +1364,7 @@ func local_request_RunService_CopyRun_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func request_RunService_RestartRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_RestartRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1421,7 +1421,7 @@ func request_RunService_RestartRun_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_RunService_RestartRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_RestartRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1478,7 +1478,7 @@ func local_request_RunService_RestartRun_0(ctx context.Context, marshaler runtim
 
 }
 
-func request_RunService_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1535,7 +1535,7 @@ func request_RunService_ResumeRun_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RunService_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1592,7 +1592,7 @@ func local_request_RunService_ResumeRun_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RunService_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1641,7 +1641,7 @@ func request_RunService_ArchiveRun_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_RunService_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1690,7 +1690,7 @@ func local_request_RunService_ArchiveRun_0(ctx context.Context, marshaler runtim
 
 }
 
-func request_RunService_RestoreRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_RestoreRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1739,7 +1739,7 @@ func request_RunService_RestoreRun_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_RunService_RestoreRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_RestoreRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1788,7 +1788,7 @@ func local_request_RunService_RestoreRun_0(ctx context.Context, marshaler runtim
 
 }
 
-func request_RunService_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1837,7 +1837,7 @@ func request_RunService_BookmarkRun_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func local_request_RunService_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1886,7 +1886,7 @@ func local_request_RunService_BookmarkRun_0(ctx context.Context, marshaler runti
 
 }
 
-func request_RunService_UnBookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_UnbookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1930,12 +1930,12 @@ func request_RunService_UnBookmarkRun_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
 	}
 
-	msg, err := client.UnBookmarkRun(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UnbookmarkRun(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_RunService_UnBookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_UnbookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -1979,12 +1979,12 @@ func local_request_RunService_UnBookmarkRun_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uuid", err)
 	}
 
-	msg, err := server.UnBookmarkRun(ctx, &protoReq)
+	msg, err := server.UnbookmarkRun(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_RunService_StartRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_StartRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2041,7 +2041,7 @@ func request_RunService_StartRunTensorboard_0(ctx context.Context, marshaler run
 
 }
 
-func local_request_RunService_StartRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_StartRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2098,7 +2098,7 @@ func local_request_RunService_StartRunTensorboard_0(ctx context.Context, marshal
 
 }
 
-func request_RunService_StopRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_StopRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2147,7 +2147,7 @@ func request_RunService_StopRunTensorboard_0(ctx context.Context, marshaler runt
 
 }
 
-func local_request_RunService_StopRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_StopRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2196,7 +2196,7 @@ func local_request_RunService_StopRunTensorboard_0(ctx context.Context, marshale
 
 }
 
-func request_RunService_GetRunStatuses_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_GetRunStatuses_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2245,7 +2245,7 @@ func request_RunService_GetRunStatuses_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_RunService_GetRunStatuses_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_GetRunStatuses_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2294,7 +2294,7 @@ func local_request_RunService_GetRunStatuses_0(ctx context.Context, marshaler ru
 
 }
 
-func request_RunService_CreateRunStatus_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_CreateRunStatus_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq EntityStatusRequest
 	var metadata runtime.ServerMetadata
 
@@ -2351,7 +2351,7 @@ func request_RunService_CreateRunStatus_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_RunService_CreateRunStatus_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_CreateRunStatus_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq EntityStatusRequest
 	var metadata runtime.ServerMetadata
 
@@ -2408,7 +2408,7 @@ func local_request_RunService_CreateRunStatus_0(ctx context.Context, marshaler r
 
 }
 
-func request_RunService_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2457,7 +2457,7 @@ func request_RunService_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_RunService_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnedEntityUUIdRequest
 	var metadata runtime.ServerMetadata
 
@@ -2506,7 +2506,7 @@ func local_request_RunService_GetRunCodeRefs_0(ctx context.Context, marshaler ru
 
 }
 
-func request_RunService_CreateRunCodeRef_0(ctx context.Context, marshaler runtime.Marshaler, client RunServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_RunsV1_CreateRunCodeRef_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CodeRefBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2563,7 +2563,7 @@ func request_RunService_CreateRunCodeRef_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_RunService_CreateRunCodeRef_0(ctx context.Context, marshaler runtime.Marshaler, server RunServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_RunsV1_CreateRunCodeRef_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CodeRefBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2620,7 +2620,7 @@ func local_request_RunService_CreateRunCodeRef_0(ctx context.Context, marshaler 
 
 }
 
-func request_ProjectService_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2647,7 +2647,7 @@ func request_ProjectService_ListProjects_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_ProjectService_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2674,7 +2674,7 @@ func local_request_ProjectService_ListProjects_0(ctx context.Context, marshaler 
 
 }
 
-func request_ProjectService_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2701,7 +2701,7 @@ func request_ProjectService_ListProjectNames_0(ctx context.Context, marshaler ru
 
 }
 
-func local_request_ProjectService_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2728,7 +2728,7 @@ func local_request_ProjectService_ListProjectNames_0(ctx context.Context, marsha
 
 }
 
-func request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2755,7 +2755,7 @@ func request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marsha
 
 }
 
-func local_request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2782,7 +2782,7 @@ func local_request_ProjectService_ListBookmarkedProjects_0(ctx context.Context, 
 
 }
 
-func request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2809,7 +2809,7 @@ func request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshale
 
 }
 
-func local_request_ProjectService_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UserBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2836,7 +2836,7 @@ func local_request_ProjectService_ListArchivedProjects_0(ctx context.Context, ma
 
 }
 
-func request_ProjectService_CreateProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_CreateProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2871,7 +2871,7 @@ func request_ProjectService_CreateProject_0(ctx context.Context, marshaler runti
 
 }
 
-func local_request_ProjectService_CreateProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_CreateProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OwnerBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2906,7 +2906,7 @@ func local_request_ProjectService_CreateProject_0(ctx context.Context, marshaler
 
 }
 
-func request_ProjectService_GetProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_GetProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2944,7 +2944,7 @@ func request_ProjectService_GetProject_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_ProjectService_GetProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_GetProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -2982,7 +2982,7 @@ func local_request_ProjectService_GetProject_0(ctx context.Context, marshaler ru
 
 }
 
-func request_ProjectService_UpdateProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_UpdateProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3028,7 +3028,7 @@ func request_ProjectService_UpdateProject_0(ctx context.Context, marshaler runti
 
 }
 
-func local_request_ProjectService_UpdateProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_UpdateProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3074,7 +3074,7 @@ func local_request_ProjectService_UpdateProject_0(ctx context.Context, marshaler
 
 }
 
-func request_ProjectService_PatchProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_PatchProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3120,7 +3120,7 @@ func request_ProjectService_PatchProject_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_ProjectService_PatchProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_PatchProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3166,7 +3166,7 @@ func local_request_ProjectService_PatchProject_0(ctx context.Context, marshaler 
 
 }
 
-func request_ProjectService_DeleteExperiment_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_DeleteExperiment_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3204,7 +3204,7 @@ func request_ProjectService_DeleteExperiment_0(ctx context.Context, marshaler ru
 
 }
 
-func local_request_ProjectService_DeleteExperiment_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_DeleteExperiment_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3242,7 +3242,7 @@ func local_request_ProjectService_DeleteExperiment_0(ctx context.Context, marsha
 
 }
 
-func request_ProjectService_ArchiveProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_ArchiveProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3280,7 +3280,7 @@ func request_ProjectService_ArchiveProject_0(ctx context.Context, marshaler runt
 
 }
 
-func local_request_ProjectService_ArchiveProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_ArchiveProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3318,7 +3318,7 @@ func local_request_ProjectService_ArchiveProject_0(ctx context.Context, marshale
 
 }
 
-func request_ProjectService_RestoreExperiment_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_RestoreExperiment_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3356,7 +3356,7 @@ func request_ProjectService_RestoreExperiment_0(ctx context.Context, marshaler r
 
 }
 
-func local_request_ProjectService_RestoreExperiment_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_RestoreExperiment_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3394,7 +3394,7 @@ func local_request_ProjectService_RestoreExperiment_0(ctx context.Context, marsh
 
 }
 
-func request_ProjectService_BookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_BookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3432,7 +3432,7 @@ func request_ProjectService_BookmarkProject_0(ctx context.Context, marshaler run
 
 }
 
-func local_request_ProjectService_BookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_BookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3470,7 +3470,7 @@ func local_request_ProjectService_BookmarkProject_0(ctx context.Context, marshal
 
 }
 
-func request_ProjectService_UnBookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_UnbookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3503,12 +3503,12 @@ func request_ProjectService_UnBookmarkProject_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := client.UnBookmarkProject(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UnbookmarkProject(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ProjectService_UnBookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_UnbookmarkProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3541,12 +3541,12 @@ func local_request_ProjectService_UnBookmarkProject_0(ctx context.Context, marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := server.UnBookmarkProject(ctx, &protoReq)
+	msg, err := server.UnbookmarkProject(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_ProjectService_EnableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_EnableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3584,7 +3584,7 @@ func request_ProjectService_EnableProjectCI_0(ctx context.Context, marshaler run
 
 }
 
-func local_request_ProjectService_EnableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_EnableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3622,7 +3622,7 @@ func local_request_ProjectService_EnableProjectCI_0(ctx context.Context, marshal
 
 }
 
-func request_ProjectService_DisableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_DisableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3660,7 +3660,7 @@ func request_ProjectService_DisableProjectCI_0(ctx context.Context, marshaler ru
 
 }
 
-func local_request_ProjectService_DisableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_DisableProjectCI_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3698,7 +3698,7 @@ func local_request_ProjectService_DisableProjectCI_0(ctx context.Context, marsha
 
 }
 
-func request_AuthService_Login_0(ctx context.Context, marshaler runtime.Marshaler, client AuthServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_AuthV1_Login_0(ctx context.Context, marshaler runtime.Marshaler, client AuthV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CredsBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3715,7 +3715,7 @@ func request_AuthService_Login_0(ctx context.Context, marshaler runtime.Marshale
 
 }
 
-func local_request_AuthService_Login_0(ctx context.Context, marshaler runtime.Marshaler, server AuthServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_AuthV1_Login_0(ctx context.Context, marshaler runtime.Marshaler, server AuthV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CredsBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3732,7 +3732,7 @@ func local_request_AuthService_Login_0(ctx context.Context, marshaler runtime.Ma
 
 }
 
-func request_UserService_GetUser_0(ctx context.Context, marshaler runtime.Marshaler, client UserServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_UsersV1_GetUser_0(ctx context.Context, marshaler runtime.Marshaler, client UsersV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -3741,7 +3741,7 @@ func request_UserService_GetUser_0(ctx context.Context, marshaler runtime.Marsha
 
 }
 
-func local_request_UserService_GetUser_0(ctx context.Context, marshaler runtime.Marshaler, server UserServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_UsersV1_GetUser_0(ctx context.Context, marshaler runtime.Marshaler, server UsersV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -3750,7 +3750,7 @@ func local_request_UserService_GetUser_0(ctx context.Context, marshaler runtime.
 
 }
 
-func request_VersionService_GetVersions_0(ctx context.Context, marshaler runtime.Marshaler, client VersionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_VersionsV1_GetVersions_0(ctx context.Context, marshaler runtime.Marshaler, client VersionsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -3759,7 +3759,7 @@ func request_VersionService_GetVersions_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_VersionService_GetVersions_0(ctx context.Context, marshaler runtime.Marshaler, server VersionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_VersionsV1_GetVersions_0(ctx context.Context, marshaler runtime.Marshaler, server VersionsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -3768,7 +3768,7 @@ func local_request_VersionService_GetVersions_0(ctx context.Context, marshaler r
 
 }
 
-func request_VersionService_GetLogHandler_0(ctx context.Context, marshaler runtime.Marshaler, client VersionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_VersionsV1_GetLogHandler_0(ctx context.Context, marshaler runtime.Marshaler, client VersionsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -3777,7 +3777,7 @@ func request_VersionService_GetLogHandler_0(ctx context.Context, marshaler runti
 
 }
 
-func local_request_VersionService_GetLogHandler_0(ctx context.Context, marshaler runtime.Marshaler, server VersionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_VersionsV1_GetLogHandler_0(ctx context.Context, marshaler runtime.Marshaler, server VersionsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
 
@@ -3786,12 +3786,12 @@ func local_request_VersionService_GetLogHandler_0(ctx context.Context, marshaler
 
 }
 
-// RegisterRunServiceHandlerServer registers the http handlers for service RunService to "mux".
-// UnaryRPC     :call RunServiceServer directly.
+// RegisterRunsV1HandlerServer registers the http handlers for service RunsV1 to "mux".
+// UnaryRPC     :call RunsV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RunServiceServer) error {
+func RegisterRunsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server RunsV1Server) error {
 
-	mux.Handle("GET", pattern_RunService_ListRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_ListRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3800,18 +3800,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_ListRuns_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_ListRuns_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ListRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ListRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_ListBookmarkedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_ListBookmarkedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3820,18 +3820,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_ListBookmarkedRuns_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_ListBookmarkedRuns_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ListBookmarkedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ListBookmarkedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_ListArchivedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_ListArchivedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3840,18 +3840,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_ListArchivedRuns_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_ListArchivedRuns_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ListArchivedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ListArchivedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CreateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CreateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3860,18 +3860,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_CreateRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_CreateRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CreateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CreateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_GetRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_GetRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3880,18 +3880,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_GetRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_GetRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_GetRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_GetRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_RunService_UpdateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_RunsV1_UpdateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3900,18 +3900,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_UpdateRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_UpdateRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_UpdateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_UpdateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_RunService_PatchRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_RunsV1_PatchRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3920,18 +3920,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_PatchRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_PatchRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_PatchRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_PatchRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_DeleteRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_DeleteRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3940,18 +3940,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_DeleteRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_DeleteRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_DeleteRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_DeleteRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_DeleteRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_DeleteRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3960,18 +3960,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_DeleteRuns_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_DeleteRuns_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_DeleteRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_DeleteRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_StopRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_StopRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -3980,18 +3980,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_StopRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_StopRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StopRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StopRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_StopRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_StopRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4000,18 +4000,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_StopRuns_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_StopRuns_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StopRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StopRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_InvalidateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_InvalidateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4020,18 +4020,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_InvalidateRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_InvalidateRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_InvalidateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_InvalidateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_InvalidateRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_InvalidateRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4040,18 +4040,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_InvalidateRuns_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_InvalidateRuns_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_InvalidateRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_InvalidateRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CopyRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CopyRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4060,18 +4060,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_CopyRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_CopyRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CopyRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CopyRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_RestartRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_RestartRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4080,18 +4080,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_RestartRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_RestartRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_RestartRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_RestartRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_ResumeRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_ResumeRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4100,18 +4100,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_ResumeRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_ResumeRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ResumeRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ResumeRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_ArchiveRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_ArchiveRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4120,18 +4120,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_ArchiveRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_ArchiveRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ArchiveRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ArchiveRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_RestoreRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_RestoreRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4140,18 +4140,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_RestoreRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_RestoreRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_RestoreRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_RestoreRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_BookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_BookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4160,18 +4160,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_BookmarkRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_BookmarkRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_BookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_BookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_UnBookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_UnbookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4180,18 +4180,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_UnBookmarkRun_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_UnbookmarkRun_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_UnBookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_UnbookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_StartRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_StartRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4200,18 +4200,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_StartRunTensorboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_StartRunTensorboard_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StartRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StartRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_StopRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_StopRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4220,18 +4220,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_StopRunTensorboard_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_StopRunTensorboard_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StopRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StopRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_GetRunStatuses_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_GetRunStatuses_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4240,18 +4240,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_GetRunStatuses_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_GetRunStatuses_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_GetRunStatuses_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_GetRunStatuses_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CreateRunStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CreateRunStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4260,18 +4260,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_CreateRunStatus_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_CreateRunStatus_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CreateRunStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CreateRunStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_GetRunCodeRefs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_GetRunCodeRefs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4280,18 +4280,18 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_GetRunCodeRefs_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_GetRunCodeRefs_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_GetRunCodeRefs_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_GetRunCodeRefs_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CreateRunCodeRef_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CreateRunCodeRef_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4300,26 +4300,26 @@ func RegisterRunServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RunService_CreateRunCodeRef_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_RunsV1_CreateRunCodeRef_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CreateRunCodeRef_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CreateRunCodeRef_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterProjectServiceHandlerServer registers the http handlers for service ProjectService to "mux".
-// UnaryRPC     :call ProjectServiceServer directly.
+// RegisterProjectsV1HandlerServer registers the http handlers for service ProjectsV1 to "mux".
+// UnaryRPC     :call ProjectsV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ProjectServiceServer) error {
+func RegisterProjectsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server ProjectsV1Server) error {
 
-	mux.Handle("GET", pattern_ProjectService_ListProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4328,18 +4328,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_ListProjects_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_ListProjects_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_ListProjectNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListProjectNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4348,18 +4348,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_ListProjectNames_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_ListProjectNames_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListProjectNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListProjectNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_ListBookmarkedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListBookmarkedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4368,18 +4368,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_ListBookmarkedProjects_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_ListBookmarkedProjects_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListBookmarkedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListBookmarkedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_ListArchivedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListArchivedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4388,18 +4388,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_ListArchivedProjects_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_ListArchivedProjects_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListArchivedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListArchivedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_CreateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_CreateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4408,18 +4408,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_CreateProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_CreateProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_CreateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_CreateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_GetProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_GetProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4428,18 +4428,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_GetProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_GetProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_GetProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_GetProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_ProjectService_UpdateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ProjectsV1_UpdateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4448,18 +4448,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_UpdateProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_UpdateProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_UpdateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_UpdateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_ProjectService_PatchProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ProjectsV1_PatchProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4468,18 +4468,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_PatchProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_PatchProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_PatchProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_PatchProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectService_DeleteExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_DeleteExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4488,18 +4488,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_DeleteExperiment_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_DeleteExperiment_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_DeleteExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_DeleteExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_ArchiveProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_ArchiveProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4508,18 +4508,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_ArchiveProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_ArchiveProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ArchiveProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ArchiveProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_RestoreExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_RestoreExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4528,18 +4528,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_RestoreExperiment_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_RestoreExperiment_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_RestoreExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_RestoreExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_BookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_BookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4548,18 +4548,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_BookmarkProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_BookmarkProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_BookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_BookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectService_UnBookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_UnbookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4568,18 +4568,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_UnBookmarkProject_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_UnbookmarkProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_UnBookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_UnbookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_EnableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_EnableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4588,18 +4588,18 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_EnableProjectCI_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_EnableProjectCI_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_EnableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_EnableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectService_DisableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_DisableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4608,26 +4608,26 @@ func RegisterProjectServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectService_DisableProjectCI_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_DisableProjectCI_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_DisableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_DisableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterAuthServiceHandlerServer registers the http handlers for service AuthService to "mux".
-// UnaryRPC     :call AuthServiceServer directly.
+// RegisterAuthV1HandlerServer registers the http handlers for service AuthV1 to "mux".
+// UnaryRPC     :call AuthV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterAuthServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server AuthServiceServer) error {
+func RegisterAuthV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server AuthV1Server) error {
 
-	mux.Handle("POST", pattern_AuthService_Login_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_AuthV1_Login_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4636,26 +4636,26 @@ func RegisterAuthServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_AuthService_Login_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_AuthV1_Login_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_AuthService_Login_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AuthV1_Login_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterUserServiceHandlerServer registers the http handlers for service UserService to "mux".
-// UnaryRPC     :call UserServiceServer directly.
+// RegisterUsersV1HandlerServer registers the http handlers for service UsersV1 to "mux".
+// UnaryRPC     :call UsersV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterUserServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server UserServiceServer) error {
+func RegisterUsersV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server UsersV1Server) error {
 
-	mux.Handle("GET", pattern_UserService_GetUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_UsersV1_GetUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4664,26 +4664,26 @@ func RegisterUserServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UserService_GetUser_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UsersV1_GetUser_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_UserService_GetUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_UsersV1_GetUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterVersionServiceHandlerServer registers the http handlers for service VersionService to "mux".
-// UnaryRPC     :call VersionServiceServer directly.
+// RegisterVersionsV1HandlerServer registers the http handlers for service VersionsV1 to "mux".
+// UnaryRPC     :call VersionsV1Server directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterVersionServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server VersionServiceServer) error {
+func RegisterVersionsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux, server VersionsV1Server) error {
 
-	mux.Handle("GET", pattern_VersionService_GetVersions_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_VersionsV1_GetVersions_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4692,18 +4692,18 @@ func RegisterVersionServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_VersionService_GetVersions_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_VersionsV1_GetVersions_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VersionService_GetVersions_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VersionsV1_GetVersions_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_VersionService_GetLogHandler_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_VersionsV1_GetLogHandler_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4712,23 +4712,23 @@ func RegisterVersionServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_VersionService_GetLogHandler_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_VersionsV1_GetLogHandler_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VersionService_GetLogHandler_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VersionsV1_GetLogHandler_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterRunServiceHandlerFromEndpoint is same as RegisterRunServiceHandler but
+// RegisterRunsV1HandlerFromEndpoint is same as RegisterRunsV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterRunServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterRunsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -4748,23 +4748,23 @@ func RegisterRunServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Ser
 		}()
 	}()
 
-	return RegisterRunServiceHandler(ctx, mux, conn)
+	return RegisterRunsV1Handler(ctx, mux, conn)
 }
 
-// RegisterRunServiceHandler registers the http handlers for service RunService to "mux".
+// RegisterRunsV1Handler registers the http handlers for service RunsV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterRunServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterRunServiceHandlerClient(ctx, mux, NewRunServiceClient(conn))
+func RegisterRunsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterRunsV1HandlerClient(ctx, mux, NewRunsV1Client(conn))
 }
 
-// RegisterRunServiceHandlerClient registers the http handlers for service RunService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RunServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RunServiceClient"
+// RegisterRunsV1HandlerClient registers the http handlers for service RunsV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RunsV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RunsV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "RunServiceClient" to call the correct interceptors.
-func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RunServiceClient) error {
+// "RunsV1Client" to call the correct interceptors.
+func RegisterRunsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client RunsV1Client) error {
 
-	mux.Handle("GET", pattern_RunService_ListRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_ListRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4773,18 +4773,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_ListRuns_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_ListRuns_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ListRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ListRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_ListBookmarkedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_ListBookmarkedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4793,18 +4793,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_ListBookmarkedRuns_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_ListBookmarkedRuns_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ListBookmarkedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ListBookmarkedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_ListArchivedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_ListArchivedRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4813,18 +4813,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_ListArchivedRuns_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_ListArchivedRuns_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ListArchivedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ListArchivedRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CreateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CreateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4833,18 +4833,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_CreateRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_CreateRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CreateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CreateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_GetRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_GetRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4853,18 +4853,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_GetRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_GetRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_GetRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_GetRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_RunService_UpdateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_RunsV1_UpdateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4873,18 +4873,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_UpdateRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_UpdateRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_UpdateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_UpdateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_RunService_PatchRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_RunsV1_PatchRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4893,18 +4893,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_PatchRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_PatchRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_PatchRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_PatchRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_DeleteRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_DeleteRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4913,18 +4913,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_DeleteRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_DeleteRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_DeleteRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_DeleteRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_DeleteRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_DeleteRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4933,18 +4933,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_DeleteRuns_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_DeleteRuns_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_DeleteRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_DeleteRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_StopRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_StopRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4953,18 +4953,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_StopRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_StopRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StopRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StopRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_StopRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_StopRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4973,18 +4973,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_StopRuns_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_StopRuns_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StopRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StopRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_InvalidateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_InvalidateRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4993,18 +4993,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_InvalidateRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_InvalidateRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_InvalidateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_InvalidateRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_InvalidateRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_InvalidateRuns_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5013,18 +5013,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_InvalidateRuns_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_InvalidateRuns_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_InvalidateRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_InvalidateRuns_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CopyRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CopyRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5033,18 +5033,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_CopyRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_CopyRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CopyRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CopyRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_RestartRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_RestartRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5053,18 +5053,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_RestartRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_RestartRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_RestartRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_RestartRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_ResumeRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_ResumeRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5073,18 +5073,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_ResumeRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_ResumeRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ResumeRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ResumeRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_ArchiveRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_ArchiveRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5093,18 +5093,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_ArchiveRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_ArchiveRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_ArchiveRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_ArchiveRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_RestoreRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_RestoreRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5113,18 +5113,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_RestoreRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_RestoreRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_RestoreRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_RestoreRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_BookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_BookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5133,18 +5133,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_BookmarkRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_BookmarkRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_BookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_BookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_UnBookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_UnbookmarkRun_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5153,18 +5153,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_UnBookmarkRun_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_UnbookmarkRun_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_UnBookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_UnbookmarkRun_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_StartRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_StartRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5173,18 +5173,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_StartRunTensorboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_StartRunTensorboard_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StartRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StartRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_RunService_StopRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_RunsV1_StopRunTensorboard_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5193,18 +5193,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_StopRunTensorboard_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_StopRunTensorboard_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_StopRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_StopRunTensorboard_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_GetRunStatuses_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_GetRunStatuses_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5213,18 +5213,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_GetRunStatuses_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_GetRunStatuses_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_GetRunStatuses_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_GetRunStatuses_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CreateRunStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CreateRunStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5233,18 +5233,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_CreateRunStatus_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_CreateRunStatus_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CreateRunStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CreateRunStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RunService_GetRunCodeRefs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_RunsV1_GetRunCodeRefs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5253,18 +5253,18 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_GetRunCodeRefs_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_GetRunCodeRefs_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_GetRunCodeRefs_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_GetRunCodeRefs_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RunService_CreateRunCodeRef_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_RunsV1_CreateRunCodeRef_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5273,14 +5273,14 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RunService_CreateRunCodeRef_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_RunsV1_CreateRunCodeRef_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RunService_CreateRunCodeRef_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_RunsV1_CreateRunCodeRef_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -5288,116 +5288,116 @@ func RegisterRunServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_RunService_ListRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_ListRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_ListBookmarkedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "user", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_ListBookmarkedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "user", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_ListArchivedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "user", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_ListArchivedRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "user", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_CreateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_CreateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "runs"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_GetRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_GetRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_UpdateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "run.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_UpdateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "run.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_PatchRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "run.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_PatchRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "run.uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_DeleteRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_DeleteRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"api", "v1", "owner", "project", "runs", "uuid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_DeleteRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "runs", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_DeleteRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "runs", "delete"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_StopRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_StopRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_StopRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "runs", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_StopRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "runs", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_InvalidateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "invalidate"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_InvalidateRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "invalidate"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_InvalidateRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "runs", "invalidate"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_InvalidateRuns_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "v1", "owner", "project", "runs", "invalidate"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_CopyRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "copy"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_CopyRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "copy"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_RestartRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_RestartRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "restart"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_ResumeRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_ResumeRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "resume"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_ArchiveRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_ArchiveRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_RestoreRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_RestoreRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_BookmarkRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_BookmarkRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_UnBookmarkRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_UnbookmarkRun_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_StartRunTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "owner", "project", "runs", "uuid", "tensorboard", "start"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_StartRunTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "owner", "project", "runs", "uuid", "tensorboard", "start"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_StopRunTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "owner", "project", "runs", "uuid", "tensorboard", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_StopRunTensorboard_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6, 2, 7}, []string{"api", "v1", "owner", "project", "runs", "uuid", "tensorboard", "stop"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_GetRunStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_GetRunStatuses_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_CreateRunStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_CreateRunStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "statuses"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_GetRunCodeRefs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_GetRunCodeRefs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "owner", "project", "runs", "uuid", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_RunService_CreateRunCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "entity.owner", "entity.project", "runs", "entity.uuid", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_RunsV1_CreateRunCodeRef_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"api", "v1", "entity.owner", "entity.project", "runs", "entity.uuid", "coderef"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_RunService_ListRuns_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_ListRuns_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_ListBookmarkedRuns_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_ListBookmarkedRuns_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_ListArchivedRuns_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_ListArchivedRuns_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_CreateRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_CreateRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_GetRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_GetRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_UpdateRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_UpdateRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_PatchRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_PatchRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_DeleteRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_DeleteRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_DeleteRuns_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_DeleteRuns_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_StopRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_StopRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_StopRuns_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_StopRuns_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_InvalidateRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_InvalidateRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_InvalidateRuns_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_InvalidateRuns_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_CopyRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_CopyRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_RestartRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_RestartRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_ResumeRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_ResumeRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_ArchiveRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_ArchiveRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_RestoreRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_RestoreRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_BookmarkRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_BookmarkRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_UnBookmarkRun_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_UnbookmarkRun_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_StartRunTensorboard_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_StartRunTensorboard_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_StopRunTensorboard_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_StopRunTensorboard_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_GetRunStatuses_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_GetRunStatuses_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_CreateRunStatus_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_CreateRunStatus_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_GetRunCodeRefs_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_GetRunCodeRefs_0 = runtime.ForwardResponseMessage
 
-	forward_RunService_CreateRunCodeRef_0 = runtime.ForwardResponseMessage
+	forward_RunsV1_CreateRunCodeRef_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterProjectServiceHandlerFromEndpoint is same as RegisterProjectServiceHandler but
+// RegisterProjectsV1HandlerFromEndpoint is same as RegisterProjectsV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterProjectServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterProjectsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -5417,23 +5417,23 @@ func RegisterProjectServiceHandlerFromEndpoint(ctx context.Context, mux *runtime
 		}()
 	}()
 
-	return RegisterProjectServiceHandler(ctx, mux, conn)
+	return RegisterProjectsV1Handler(ctx, mux, conn)
 }
 
-// RegisterProjectServiceHandler registers the http handlers for service ProjectService to "mux".
+// RegisterProjectsV1Handler registers the http handlers for service ProjectsV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterProjectServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterProjectServiceHandlerClient(ctx, mux, NewProjectServiceClient(conn))
+func RegisterProjectsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterProjectsV1HandlerClient(ctx, mux, NewProjectsV1Client(conn))
 }
 
-// RegisterProjectServiceHandlerClient registers the http handlers for service ProjectService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ProjectServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ProjectServiceClient"
+// RegisterProjectsV1HandlerClient registers the http handlers for service ProjectsV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "ProjectsV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "ProjectsV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "ProjectServiceClient" to call the correct interceptors.
-func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ProjectServiceClient) error {
+// "ProjectsV1Client" to call the correct interceptors.
+func RegisterProjectsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client ProjectsV1Client) error {
 
-	mux.Handle("GET", pattern_ProjectService_ListProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5442,18 +5442,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_ListProjects_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_ListProjects_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_ListProjectNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListProjectNames_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5462,18 +5462,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_ListProjectNames_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_ListProjectNames_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListProjectNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListProjectNames_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_ListBookmarkedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListBookmarkedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5482,18 +5482,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_ListBookmarkedProjects_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_ListBookmarkedProjects_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListBookmarkedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListBookmarkedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_ListArchivedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_ListArchivedProjects_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5502,18 +5502,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_ListArchivedProjects_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_ListArchivedProjects_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ListArchivedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ListArchivedProjects_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_CreateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_CreateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5522,18 +5522,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_CreateProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_CreateProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_CreateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_CreateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_ProjectService_GetProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ProjectsV1_GetProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5542,18 +5542,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_GetProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_GetProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_GetProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_GetProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_ProjectService_UpdateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_ProjectsV1_UpdateProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5562,18 +5562,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_UpdateProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_UpdateProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_UpdateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_UpdateProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_ProjectService_PatchProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ProjectsV1_PatchProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5582,18 +5582,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_PatchProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_PatchProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_PatchProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_PatchProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectService_DeleteExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_DeleteExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5602,18 +5602,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_DeleteExperiment_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_DeleteExperiment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_DeleteExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_DeleteExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_ArchiveProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_ArchiveProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5622,18 +5622,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_ArchiveProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_ArchiveProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_ArchiveProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_ArchiveProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_RestoreExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_RestoreExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5642,18 +5642,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_RestoreExperiment_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_RestoreExperiment_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_RestoreExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_RestoreExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_BookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_BookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5662,18 +5662,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_BookmarkProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_BookmarkProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_BookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_BookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectService_UnBookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_UnbookmarkProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5682,18 +5682,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_UnBookmarkProject_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_UnbookmarkProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_UnBookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_UnbookmarkProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ProjectService_EnableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ProjectsV1_EnableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5702,18 +5702,18 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_EnableProjectCI_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_EnableProjectCI_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_EnableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_EnableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectService_DisableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_DisableProjectCI_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5722,14 +5722,14 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectService_DisableProjectCI_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_DisableProjectCI_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectService_DisableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_DisableProjectCI_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -5737,72 +5737,72 @@ func RegisterProjectServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_ProjectService_ListProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "list"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_ListProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "list"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_ListProjectNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "names"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_ListProjectNames_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "names"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_ListBookmarkedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "user", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_ListBookmarkedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "bookmarks", "user", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_ListArchivedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "user", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_ListArchivedProjects_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "archives", "user", "projects"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_CreateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "create"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_CreateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 2, 4}, []string{"api", "v1", "owner", "projects", "create"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_GetProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_GetProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_UpdateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_UpdateProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_PatchProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_PatchProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_DeleteExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projecs", "project"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_DeleteExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projecs", "project"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_ArchiveProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_ArchiveProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_RestoreExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_RestoreExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "restore"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_BookmarkProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_BookmarkProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "bookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_UnBookmarkProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_UnbookmarkProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_EnableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "ci"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_EnableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "ci"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_DisableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "ci"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_DisableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "ci"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_ProjectService_ListProjects_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_ListProjects_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_ListProjectNames_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_ListProjectNames_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_ListBookmarkedProjects_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_ListBookmarkedProjects_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_ListArchivedProjects_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_ListArchivedProjects_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_CreateProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_CreateProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_GetProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_GetProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_UpdateProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_UpdateProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_PatchProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_PatchProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_DeleteExperiment_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_DeleteExperiment_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_ArchiveProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_ArchiveProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_RestoreExperiment_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_RestoreExperiment_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_BookmarkProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_BookmarkProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_UnBookmarkProject_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_UnbookmarkProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_EnableProjectCI_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_EnableProjectCI_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectService_DisableProjectCI_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_DisableProjectCI_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterAuthServiceHandlerFromEndpoint is same as RegisterAuthServiceHandler but
+// RegisterAuthV1HandlerFromEndpoint is same as RegisterAuthV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterAuthServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterAuthV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -5822,23 +5822,23 @@ func RegisterAuthServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Se
 		}()
 	}()
 
-	return RegisterAuthServiceHandler(ctx, mux, conn)
+	return RegisterAuthV1Handler(ctx, mux, conn)
 }
 
-// RegisterAuthServiceHandler registers the http handlers for service AuthService to "mux".
+// RegisterAuthV1Handler registers the http handlers for service AuthV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterAuthServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterAuthServiceHandlerClient(ctx, mux, NewAuthServiceClient(conn))
+func RegisterAuthV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterAuthV1HandlerClient(ctx, mux, NewAuthV1Client(conn))
 }
 
-// RegisterAuthServiceHandlerClient registers the http handlers for service AuthService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "AuthServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "AuthServiceClient"
+// RegisterAuthV1HandlerClient registers the http handlers for service AuthV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "AuthV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "AuthV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "AuthServiceClient" to call the correct interceptors.
-func RegisterAuthServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client AuthServiceClient) error {
+// "AuthV1Client" to call the correct interceptors.
+func RegisterAuthV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client AuthV1Client) error {
 
-	mux.Handle("POST", pattern_AuthService_Login_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_AuthV1_Login_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5847,14 +5847,14 @@ func RegisterAuthServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_AuthService_Login_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_AuthV1_Login_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_AuthService_Login_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_AuthV1_Login_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -5862,16 +5862,16 @@ func RegisterAuthServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_AuthService_Login_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "users", "token"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_AuthV1_Login_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v1", "users", "token"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_AuthService_Login_0 = runtime.ForwardResponseMessage
+	forward_AuthV1_Login_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterUserServiceHandlerFromEndpoint is same as RegisterUserServiceHandler but
+// RegisterUsersV1HandlerFromEndpoint is same as RegisterUsersV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterUserServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterUsersV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -5891,23 +5891,23 @@ func RegisterUserServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Se
 		}()
 	}()
 
-	return RegisterUserServiceHandler(ctx, mux, conn)
+	return RegisterUsersV1Handler(ctx, mux, conn)
 }
 
-// RegisterUserServiceHandler registers the http handlers for service UserService to "mux".
+// RegisterUsersV1Handler registers the http handlers for service UsersV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterUserServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterUserServiceHandlerClient(ctx, mux, NewUserServiceClient(conn))
+func RegisterUsersV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterUsersV1HandlerClient(ctx, mux, NewUsersV1Client(conn))
 }
 
-// RegisterUserServiceHandlerClient registers the http handlers for service UserService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "UserServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "UserServiceClient"
+// RegisterUsersV1HandlerClient registers the http handlers for service UsersV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "UsersV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "UsersV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "UserServiceClient" to call the correct interceptors.
-func RegisterUserServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client UserServiceClient) error {
+// "UsersV1Client" to call the correct interceptors.
+func RegisterUsersV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client UsersV1Client) error {
 
-	mux.Handle("GET", pattern_UserService_GetUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_UsersV1_GetUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5916,14 +5916,14 @@ func RegisterUserServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UserService_GetUser_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UsersV1_GetUser_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_UserService_GetUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_UsersV1_GetUser_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -5931,16 +5931,16 @@ func RegisterUserServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_UserService_GetUser_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "users"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_UsersV1_GetUser_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "users"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_UserService_GetUser_0 = runtime.ForwardResponseMessage
+	forward_UsersV1_GetUser_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterVersionServiceHandlerFromEndpoint is same as RegisterVersionServiceHandler but
+// RegisterVersionsV1HandlerFromEndpoint is same as RegisterVersionsV1Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterVersionServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterVersionsV1HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -5960,23 +5960,23 @@ func RegisterVersionServiceHandlerFromEndpoint(ctx context.Context, mux *runtime
 		}()
 	}()
 
-	return RegisterVersionServiceHandler(ctx, mux, conn)
+	return RegisterVersionsV1Handler(ctx, mux, conn)
 }
 
-// RegisterVersionServiceHandler registers the http handlers for service VersionService to "mux".
+// RegisterVersionsV1Handler registers the http handlers for service VersionsV1 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterVersionServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterVersionServiceHandlerClient(ctx, mux, NewVersionServiceClient(conn))
+func RegisterVersionsV1Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterVersionsV1HandlerClient(ctx, mux, NewVersionsV1Client(conn))
 }
 
-// RegisterVersionServiceHandlerClient registers the http handlers for service VersionService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "VersionServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "VersionServiceClient"
+// RegisterVersionsV1HandlerClient registers the http handlers for service VersionsV1
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "VersionsV1Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "VersionsV1Client"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "VersionServiceClient" to call the correct interceptors.
-func RegisterVersionServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client VersionServiceClient) error {
+// "VersionsV1Client" to call the correct interceptors.
+func RegisterVersionsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux, client VersionsV1Client) error {
 
-	mux.Handle("GET", pattern_VersionService_GetVersions_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_VersionsV1_GetVersions_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5985,18 +5985,18 @@ func RegisterVersionServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_VersionService_GetVersions_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_VersionsV1_GetVersions_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VersionService_GetVersions_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VersionsV1_GetVersions_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_VersionService_GetLogHandler_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_VersionsV1_GetLogHandler_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -6005,14 +6005,14 @@ func RegisterVersionServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_VersionService_GetLogHandler_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_VersionsV1_GetLogHandler_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_VersionService_GetLogHandler_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_VersionsV1_GetLogHandler_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -6020,13 +6020,13 @@ func RegisterVersionServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_VersionService_GetVersions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "versions"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_VersionsV1_GetVersions_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "versions"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_VersionService_GetLogHandler_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "log_handler"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_VersionsV1_GetLogHandler_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "log_handler"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_VersionService_GetVersions_0 = runtime.ForwardResponseMessage
+	forward_VersionsV1_GetVersions_0 = runtime.ForwardResponseMessage
 
-	forward_VersionService_GetLogHandler_0 = runtime.ForwardResponseMessage
+	forward_VersionsV1_GetLogHandler_0 = runtime.ForwardResponseMessage
 )

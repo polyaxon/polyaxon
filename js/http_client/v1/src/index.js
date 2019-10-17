@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1CredsBodyRequest', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1LogHandler', 'model/V1OwnedEntityUUIdRequest', 'model/V1OwnerBodyRequest', 'model/V1Project', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Version', 'model/V1Versions', 'api/AuthServiceApi', 'api/ProjectServiceApi', 'api/RunServiceApi', 'api/UserServiceApi', 'api/VersionServiceApi'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1CredsBodyRequest', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1LogHandler', 'model/V1OwnedEntityUUIdRequest', 'model/V1OwnerBodyRequest', 'model/V1Project', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Version', 'model/V1Versions', 'api/AuthV1Api', 'api/ProjectsV1Api', 'api/RunsV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/V1Auth'), require('./model/V1CodeRefBodyRequest'), require('./model/V1CodeReference'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityStatusRequest'), require('./model/V1ListCodeRefResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1LogHandler'), require('./model/V1OwnedEntityUUIdRequest'), require('./model/V1OwnerBodyRequest'), require('./model/V1Project'), require('./model/V1ProjectBodyRequest'), require('./model/V1Run'), require('./model/V1RunBodyRequest'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/AuthServiceApi'), require('./api/ProjectServiceApi'), require('./api/RunServiceApi'), require('./api/UserServiceApi'), require('./api/VersionServiceApi'));
+    module.exports = factory(require('./ApiClient'), require('./model/V1Auth'), require('./model/V1CodeRefBodyRequest'), require('./model/V1CodeReference'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityStatusRequest'), require('./model/V1ListCodeRefResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1LogHandler'), require('./model/V1OwnedEntityUUIdRequest'), require('./model/V1OwnerBodyRequest'), require('./model/V1Project'), require('./model/V1ProjectBodyRequest'), require('./model/V1Run'), require('./model/V1RunBodyRequest'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/AuthV1Api'), require('./api/ProjectsV1Api'), require('./api/RunsV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
   }
-}(function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1CredsBodyRequest, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListProjectsResponse, V1ListRunsResponse, V1LogHandler, V1OwnedEntityUUIdRequest, V1OwnerBodyRequest, V1Project, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status, V1StatusCondition, V1User, V1Version, V1Versions, AuthServiceApi, ProjectServiceApi, RunServiceApi, UserServiceApi, VersionServiceApi) {
+}(function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1CredsBodyRequest, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListProjectsResponse, V1ListRunsResponse, V1LogHandler, V1OwnedEntityUUIdRequest, V1OwnerBodyRequest, V1Project, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status, V1StatusCondition, V1User, V1Version, V1Versions, AuthV1Api, ProjectsV1Api, RunsV1Api, UsersV1Api, VersionsV1Api) {
   'use strict';
 
   /**
@@ -177,30 +177,30 @@
      */
     V1Versions: V1Versions,
     /**
-     * The AuthServiceApi service constructor.
-     * @property {module:api/AuthServiceApi}
+     * The AuthV1Api service constructor.
+     * @property {module:api/AuthV1Api}
      */
-    AuthServiceApi: AuthServiceApi,
+    AuthV1Api: AuthV1Api,
     /**
-     * The ProjectServiceApi service constructor.
-     * @property {module:api/ProjectServiceApi}
+     * The ProjectsV1Api service constructor.
+     * @property {module:api/ProjectsV1Api}
      */
-    ProjectServiceApi: ProjectServiceApi,
+    ProjectsV1Api: ProjectsV1Api,
     /**
-     * The RunServiceApi service constructor.
-     * @property {module:api/RunServiceApi}
+     * The RunsV1Api service constructor.
+     * @property {module:api/RunsV1Api}
      */
-    RunServiceApi: RunServiceApi,
+    RunsV1Api: RunsV1Api,
     /**
-     * The UserServiceApi service constructor.
-     * @property {module:api/UserServiceApi}
+     * The UsersV1Api service constructor.
+     * @property {module:api/UsersV1Api}
      */
-    UserServiceApi: UserServiceApi,
+    UsersV1Api: UsersV1Api,
     /**
-     * The VersionServiceApi service constructor.
-     * @property {module:api/VersionServiceApi}
+     * The VersionsV1Api service constructor.
+     * @property {module:api/VersionsV1Api}
      */
-    VersionServiceApi: VersionServiceApi
+    VersionsV1Api: VersionsV1Api
   };
 
   return exports;

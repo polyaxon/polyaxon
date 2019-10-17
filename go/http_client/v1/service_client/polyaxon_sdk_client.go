@@ -25,11 +25,11 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/auth_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/project_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/run_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/user_service"
-	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/version_service"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/auth_v1"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/projects_v1"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/runs_v1"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/users_v1"
+	"github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_client/versions_v1"
 )
 
 // Default polyaxon sdk HTTP client.
@@ -75,15 +75,15 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *PolyaxonSd
 	cli := new(PolyaxonSdk)
 	cli.Transport = transport
 
-	cli.AuthService = auth_service.New(transport, formats)
+	cli.AuthV1 = auth_v1.New(transport, formats)
 
-	cli.ProjectService = project_service.New(transport, formats)
+	cli.ProjectsV1 = projects_v1.New(transport, formats)
 
-	cli.RunService = run_service.New(transport, formats)
+	cli.RunsV1 = runs_v1.New(transport, formats)
 
-	cli.UserService = user_service.New(transport, formats)
+	cli.UsersV1 = users_v1.New(transport, formats)
 
-	cli.VersionService = version_service.New(transport, formats)
+	cli.VersionsV1 = versions_v1.New(transport, formats)
 
 	return cli
 }
@@ -129,15 +129,15 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // PolyaxonSdk is a client for polyaxon sdk
 type PolyaxonSdk struct {
-	AuthService *auth_service.Client
+	AuthV1 *auth_v1.Client
 
-	ProjectService *project_service.Client
+	ProjectsV1 *projects_v1.Client
 
-	RunService *run_service.Client
+	RunsV1 *runs_v1.Client
 
-	UserService *user_service.Client
+	UsersV1 *users_v1.Client
 
-	VersionService *version_service.Client
+	VersionsV1 *versions_v1.Client
 
 	Transport runtime.ClientTransport
 }
@@ -146,14 +146,14 @@ type PolyaxonSdk struct {
 func (c *PolyaxonSdk) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
-	c.AuthService.SetTransport(transport)
+	c.AuthV1.SetTransport(transport)
 
-	c.ProjectService.SetTransport(transport)
+	c.ProjectsV1.SetTransport(transport)
 
-	c.RunService.SetTransport(transport)
+	c.RunsV1.SetTransport(transport)
 
-	c.UserService.SetTransport(transport)
+	c.UsersV1.SetTransport(transport)
 
-	c.VersionService.SetTransport(transport)
+	c.VersionsV1.SetTransport(transport)
 
 }

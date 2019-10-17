@@ -800,10 +800,10 @@ export interface V1Versions {
 
 
 /**
- * AuthServiceApi - fetch parameter creator
+ * AuthV1Api - fetch parameter creator
  * @export
  */
-export const AuthServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const AuthV1ApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -849,10 +849,10 @@ export const AuthServiceApiFetchParamCreator = function (configuration?: Configu
 };
 
 /**
- * AuthServiceApi - functional programming interface
+ * AuthV1Api - functional programming interface
  * @export
  */
-export const AuthServiceApiFp = function(configuration?: Configuration) {
+export const AuthV1ApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -862,7 +862,7 @@ export const AuthServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         login(body: V1CredsBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Auth> {
-            const localVarFetchArgs = AuthServiceApiFetchParamCreator(configuration).login(body, options);
+            const localVarFetchArgs = AuthV1ApiFetchParamCreator(configuration).login(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -877,10 +877,10 @@ export const AuthServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * AuthServiceApi - factory interface
+ * AuthV1Api - factory interface
  * @export
  */
-export const AuthServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const AuthV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -890,37 +890,37 @@ export const AuthServiceApiFactory = function (configuration?: Configuration, fe
          * @throws {RequiredError}
          */
         login(body: V1CredsBodyRequest, options?: any) {
-            return AuthServiceApiFp(configuration).login(body, options)(fetch, basePath);
+            return AuthV1ApiFp(configuration).login(body, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * AuthServiceApi - object-oriented interface
+ * AuthV1Api - object-oriented interface
  * @export
- * @class AuthServiceApi
+ * @class AuthV1Api
  * @extends {BaseAPI}
  */
-export class AuthServiceApi extends BaseAPI {
+export class AuthV1Api extends BaseAPI {
     /**
      * 
      * @summary List runs
      * @param {V1CredsBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthServiceApi
+     * @memberof AuthV1Api
      */
     public login(body: V1CredsBodyRequest, options?: any) {
-        return AuthServiceApiFp(this.configuration).login(body, options)(this.fetch, this.basePath);
+        return AuthV1ApiFp(this.configuration).login(body, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * ProjectServiceApi - fetch parameter creator
+ * ProjectsV1Api - fetch parameter creator
  * @export
  */
-export const ProjectServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -1477,14 +1477,14 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkProject(owner: string, project: string, options: any = {}): FetchArgs {
+        unbookmarkProject(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unBookmarkProject.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unbookmarkProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling unBookmarkProject.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling unbookmarkProject.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/unbookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -1568,10 +1568,10 @@ export const ProjectServiceApiFetchParamCreator = function (configuration?: Conf
 };
 
 /**
- * ProjectServiceApi - functional programming interface
+ * ProjectsV1Api - functional programming interface
  * @export
  */
-export const ProjectServiceApiFp = function(configuration?: Configuration) {
+export const ProjectsV1ApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -1582,7 +1582,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         archiveProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).archiveProject(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).archiveProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1602,7 +1602,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         bookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).bookmarkProject(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).bookmarkProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1622,7 +1622,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createProject(owner: string, body: V1OwnerBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).createProject(owner, body, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).createProject(owner, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1642,7 +1642,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deleteExperiment(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).deleteExperiment(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).deleteExperiment(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1662,7 +1662,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         disableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).disableProjectCI(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).disableProjectCI(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1682,7 +1682,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         enableProjectCI(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).enableProjectCI(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).enableProjectCI(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1702,7 +1702,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).getProject(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).getProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1721,7 +1721,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listArchivedProjects(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listArchivedProjects(user, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listArchivedProjects(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1740,7 +1740,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listBookmarkedProjects(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listBookmarkedProjects(user, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listBookmarkedProjects(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1759,7 +1759,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listProjectNames(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listProjectNames(owner, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjectNames(owner, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1778,7 +1778,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).listProjects(owner, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjects(owner, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1799,7 +1799,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).patchProject(owner, project, body, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).patchProject(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1819,7 +1819,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         restoreExperiment(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).restoreExperiment(owner, project, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).restoreExperiment(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1838,8 +1838,8 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).unBookmarkProject(owner, project, options);
+        unbookmarkProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).unbookmarkProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1860,7 +1860,7 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Project> {
-            const localVarFetchArgs = ProjectServiceApiFetchParamCreator(configuration).updateProject(owner, project, body, options);
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).updateProject(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1875,10 +1875,10 @@ export const ProjectServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * ProjectServiceApi - factory interface
+ * ProjectsV1Api - factory interface
  * @export
  */
-export const ProjectServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const ProjectsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -1889,7 +1889,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         archiveProject(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).archiveProject(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).archiveProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1900,7 +1900,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         bookmarkProject(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).bookmarkProject(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).bookmarkProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1911,7 +1911,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         createProject(owner: string, body: V1OwnerBodyRequest, options?: any) {
-            return ProjectServiceApiFp(configuration).createProject(owner, body, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).createProject(owner, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -1922,7 +1922,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         deleteExperiment(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).deleteExperiment(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).deleteExperiment(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1933,7 +1933,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         disableProjectCI(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).disableProjectCI(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).disableProjectCI(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1944,7 +1944,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         enableProjectCI(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).enableProjectCI(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).enableProjectCI(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1955,7 +1955,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getProject(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).getProject(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).getProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1965,7 +1965,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         listArchivedProjects(user: string, options?: any) {
-            return ProjectServiceApiFp(configuration).listArchivedProjects(user, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).listArchivedProjects(user, options)(fetch, basePath);
         },
         /**
          * 
@@ -1975,7 +1975,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         listBookmarkedProjects(user: string, options?: any) {
-            return ProjectServiceApiFp(configuration).listBookmarkedProjects(user, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).listBookmarkedProjects(user, options)(fetch, basePath);
         },
         /**
          * 
@@ -1985,7 +1985,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         listProjectNames(owner: string, options?: any) {
-            return ProjectServiceApiFp(configuration).listProjectNames(owner, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).listProjectNames(owner, options)(fetch, basePath);
         },
         /**
          * 
@@ -1995,7 +1995,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         listProjects(owner: string, options?: any) {
-            return ProjectServiceApiFp(configuration).listProjects(owner, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).listProjects(owner, options)(fetch, basePath);
         },
         /**
          * 
@@ -2007,7 +2007,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return ProjectServiceApiFp(configuration).patchProject(owner, project, body, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).patchProject(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -2018,7 +2018,7 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         restoreExperiment(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).restoreExperiment(owner, project, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).restoreExperiment(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -2028,8 +2028,8 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkProject(owner: string, project: string, options?: any) {
-            return ProjectServiceApiFp(configuration).unBookmarkProject(owner, project, options)(fetch, basePath);
+        unbookmarkProject(owner: string, project: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).unbookmarkProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -2041,18 +2041,18 @@ export const ProjectServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return ProjectServiceApiFp(configuration).updateProject(owner, project, body, options)(fetch, basePath);
+            return ProjectsV1ApiFp(configuration).updateProject(owner, project, body, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * ProjectServiceApi - object-oriented interface
+ * ProjectsV1Api - object-oriented interface
  * @export
- * @class ProjectServiceApi
+ * @class ProjectsV1Api
  * @extends {BaseAPI}
  */
-export class ProjectServiceApi extends BaseAPI {
+export class ProjectsV1Api extends BaseAPI {
     /**
      * 
      * @summary Stop run
@@ -2060,10 +2060,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public archiveProject(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).archiveProject(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).archiveProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2073,10 +2073,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public bookmarkProject(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).bookmarkProject(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).bookmarkProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2086,10 +2086,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {V1OwnerBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public createProject(owner: string, body: V1OwnerBodyRequest, options?: any) {
-        return ProjectServiceApiFp(this.configuration).createProject(owner, body, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).createProject(owner, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2099,10 +2099,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public deleteExperiment(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).deleteExperiment(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).deleteExperiment(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2112,10 +2112,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public disableProjectCI(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).disableProjectCI(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).disableProjectCI(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2125,10 +2125,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public enableProjectCI(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).enableProjectCI(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).enableProjectCI(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2138,10 +2138,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public getProject(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).getProject(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).getProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2150,10 +2150,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public listArchivedProjects(user: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).listArchivedProjects(user, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).listArchivedProjects(user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2162,10 +2162,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public listBookmarkedProjects(user: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).listBookmarkedProjects(user, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).listBookmarkedProjects(user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2174,10 +2174,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public listProjectNames(owner: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).listProjectNames(owner, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).listProjectNames(owner, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2186,10 +2186,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public listProjects(owner: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).listProjects(owner, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).listProjects(owner, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2200,10 +2200,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public patchProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return ProjectServiceApiFp(this.configuration).patchProject(owner, project, body, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).patchProject(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2213,10 +2213,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public restoreExperiment(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).restoreExperiment(owner, project, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).restoreExperiment(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2226,10 +2226,10 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
-    public unBookmarkProject(owner: string, project: string, options?: any) {
-        return ProjectServiceApiFp(this.configuration).unBookmarkProject(owner, project, options)(this.fetch, this.basePath);
+    public unbookmarkProject(owner: string, project: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).unbookmarkProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2240,19 +2240,19 @@ export class ProjectServiceApi extends BaseAPI {
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProjectServiceApi
+     * @memberof ProjectsV1Api
      */
     public updateProject(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return ProjectServiceApiFp(this.configuration).updateProject(owner, project, body, options)(this.fetch, this.basePath);
+        return ProjectsV1ApiFp(this.configuration).updateProject(owner, project, body, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * RunServiceApi - fetch parameter creator
+ * RunsV1Api - fetch parameter creator
  * @export
  */
-export const RunServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const RunsV1ApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -3495,25 +3495,25 @@ export const RunServiceApiFetchParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary UnBookmark run
+         * @summary Unbookmark run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
+        unbookmarkRun(owner: string, project: string, uuid: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unBookmarkRun.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling unbookmarkRun.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling unBookmarkRun.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling unbookmarkRun.');
             }
             // verify required parameter 'uuid' is not null or undefined
             if (uuid === null || uuid === undefined) {
-                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling unBookmarkRun.');
+                throw new RequiredError('uuid','Required parameter uuid was null or undefined when calling unbookmarkRun.');
             }
             const localVarPath = `/api/v1/{owner}/{project}/runs/{uuid}/unbookmark`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -3604,10 +3604,10 @@ export const RunServiceApiFetchParamCreator = function (configuration?: Configur
 };
 
 /**
- * RunServiceApi - functional programming interface
+ * RunsV1Api - functional programming interface
  * @export
  */
-export const RunServiceApiFp = function(configuration?: Configuration) {
+export const RunsV1ApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -3619,7 +3619,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         archiveRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).archiveRun(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).archiveRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3640,7 +3640,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         bookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).bookmarkRun(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).bookmarkRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3662,7 +3662,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).copyRun(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).copyRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3683,7 +3683,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createRun(owner: string, project: string, body: V1RunBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRun(owner, project, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).createRun(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3705,7 +3705,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1CodeReference> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3727,7 +3727,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Status> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).createRunStatus(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).createRunStatus(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3748,7 +3748,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deleteRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).deleteRun(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).deleteRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3769,7 +3769,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).deleteRuns(owner, project, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).deleteRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3790,7 +3790,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRun(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3811,7 +3811,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getRunCodeRefs(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListCodeRefResponse> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRunCodeRefs(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunCodeRefs(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3832,7 +3832,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getRunStatuses(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Status> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).getRunStatuses(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).getRunStatuses(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3854,7 +3854,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).invalidateRun(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).invalidateRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3875,7 +3875,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).invalidateRuns(owner, project, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).invalidateRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3894,7 +3894,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listArchivedRuns(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listArchivedRuns(user, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listArchivedRuns(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3913,7 +3913,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listBookmarkedRuns(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listBookmarkedRuns(user, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listBookmarkedRuns(user, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3933,7 +3933,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         listRuns(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).listRuns(owner, project, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listRuns(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3955,7 +3955,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).patchRun(owner, project, run_uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).patchRun(owner, project, run_uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3977,7 +3977,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).restartRun(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).restartRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3998,7 +3998,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         restoreRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).restoreRun(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).restoreRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4020,7 +4020,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).resumeRun(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).resumeRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4042,7 +4042,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).startRunTensorboard(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).startRunTensorboard(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4064,7 +4064,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).stopRun(owner, project, uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4085,7 +4085,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         stopRunTensorboard(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).stopRunTensorboard(owner, project, uuid, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRunTensorboard(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4106,7 +4106,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).stopRuns(owner, project, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRuns(owner, project, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4119,15 +4119,15 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary UnBookmark run
+         * @summary Unbookmark run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).unBookmarkRun(owner, project, uuid, options);
+        unbookmarkRun(owner: string, project: string, uuid: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).unbookmarkRun(owner, project, uuid, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4149,7 +4149,7 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
-            const localVarFetchArgs = RunServiceApiFetchParamCreator(configuration).updateRun(owner, project, run_uuid, body, options);
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).updateRun(owner, project, run_uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4164,10 +4164,10 @@ export const RunServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * RunServiceApi - factory interface
+ * RunsV1Api - factory interface
  * @export
  */
-export const RunServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -4179,7 +4179,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         archiveRun(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).archiveRun(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).archiveRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4191,7 +4191,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         bookmarkRun(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).bookmarkRun(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).bookmarkRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4204,7 +4204,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-            return RunServiceApiFp(configuration).copyRun(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).copyRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4216,7 +4216,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         createRun(owner: string, project: string, body: V1RunBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).createRun(owner, project, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).createRun(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4229,7 +4229,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4242,7 +4242,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any) {
-            return RunServiceApiFp(configuration).createRunStatus(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).createRunStatus(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4254,7 +4254,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         deleteRun(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).deleteRun(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).deleteRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4266,7 +4266,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).deleteRuns(owner, project, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).deleteRuns(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4278,7 +4278,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         getRun(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).getRun(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).getRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4290,7 +4290,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         getRunCodeRefs(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).getRunCodeRefs(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).getRunCodeRefs(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4302,7 +4302,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         getRunStatuses(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).getRunStatuses(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).getRunStatuses(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4315,7 +4315,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-            return RunServiceApiFp(configuration).invalidateRun(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).invalidateRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4327,7 +4327,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).invalidateRuns(owner, project, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).invalidateRuns(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4337,7 +4337,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         listArchivedRuns(user: string, options?: any) {
-            return RunServiceApiFp(configuration).listArchivedRuns(user, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).listArchivedRuns(user, options)(fetch, basePath);
         },
         /**
          * 
@@ -4347,7 +4347,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         listBookmarkedRuns(user: string, options?: any) {
-            return RunServiceApiFp(configuration).listBookmarkedRuns(user, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).listBookmarkedRuns(user, options)(fetch, basePath);
         },
         /**
          * 
@@ -4358,7 +4358,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         listRuns(owner: string, project: string, options?: any) {
-            return RunServiceApiFp(configuration).listRuns(owner, project, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).listRuns(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -4371,7 +4371,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).patchRun(owner, project, run_uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).patchRun(owner, project, run_uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4384,7 +4384,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-            return RunServiceApiFp(configuration).restartRun(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).restartRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4396,7 +4396,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         restoreRun(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).restoreRun(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).restoreRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4409,7 +4409,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-            return RunServiceApiFp(configuration).resumeRun(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).resumeRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4422,7 +4422,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-            return RunServiceApiFp(configuration).startRunTensorboard(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).startRunTensorboard(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4435,7 +4435,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-            return RunServiceApiFp(configuration).stopRun(owner, project, uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).stopRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
          * 
@@ -4447,7 +4447,7 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         stopRunTensorboard(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).stopRunTensorboard(owner, project, uuid, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).stopRunTensorboard(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4459,19 +4459,19 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).stopRuns(owner, project, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).stopRuns(owner, project, body, options)(fetch, basePath);
         },
         /**
          * 
-         * @summary UnBookmark run
+         * @summary Unbookmark run
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unBookmarkRun(owner: string, project: string, uuid: string, options?: any) {
-            return RunServiceApiFp(configuration).unBookmarkRun(owner, project, uuid, options)(fetch, basePath);
+        unbookmarkRun(owner: string, project: string, uuid: string, options?: any) {
+            return RunsV1ApiFp(configuration).unbookmarkRun(owner, project, uuid, options)(fetch, basePath);
         },
         /**
          * 
@@ -4484,18 +4484,18 @@ export const RunServiceApiFactory = function (configuration?: Configuration, fet
          * @throws {RequiredError}
          */
         updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
-            return RunServiceApiFp(configuration).updateRun(owner, project, run_uuid, body, options)(fetch, basePath);
+            return RunsV1ApiFp(configuration).updateRun(owner, project, run_uuid, body, options)(fetch, basePath);
         },
     };
 };
 
 /**
- * RunServiceApi - object-oriented interface
+ * RunsV1Api - object-oriented interface
  * @export
- * @class RunServiceApi
+ * @class RunsV1Api
  * @extends {BaseAPI}
  */
-export class RunServiceApi extends BaseAPI {
+export class RunsV1Api extends BaseAPI {
     /**
      * 
      * @summary Archive run
@@ -4504,10 +4504,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public archiveRun(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).archiveRun(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).archiveRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4518,10 +4518,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public bookmarkRun(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).bookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).bookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4533,10 +4533,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1OwnedEntityUUIdRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).copyRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).copyRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4547,10 +4547,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1RunBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public createRun(owner: string, project: string, body: V1RunBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).createRun(owner, project, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).createRun(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4562,10 +4562,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1CodeRefBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public createRunCodeRef(entity_owner: string, entity_project: string, entity_uuid: string, body: V1CodeRefBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).createRunCodeRef(entity_owner, entity_project, entity_uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4577,10 +4577,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1EntityStatusRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public createRunStatus(owner: string, project: string, uuid: string, body: V1EntityStatusRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).createRunStatus(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).createRunStatus(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4591,10 +4591,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public deleteRun(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).deleteRun(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).deleteRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4605,10 +4605,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public deleteRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).deleteRuns(owner, project, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).deleteRuns(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4619,10 +4619,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public getRun(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).getRun(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).getRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4633,10 +4633,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public getRunCodeRefs(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).getRunCodeRefs(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).getRunCodeRefs(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4647,10 +4647,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public getRunStatuses(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).getRunStatuses(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).getRunStatuses(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4662,10 +4662,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1OwnedEntityUUIdRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).invalidateRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).invalidateRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4676,10 +4676,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public invalidateRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).invalidateRuns(owner, project, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).invalidateRuns(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4688,10 +4688,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public listArchivedRuns(user: string, options?: any) {
-        return RunServiceApiFp(this.configuration).listArchivedRuns(user, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).listArchivedRuns(user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4700,10 +4700,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} user Owner of the namespace
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public listBookmarkedRuns(user: string, options?: any) {
-        return RunServiceApiFp(this.configuration).listBookmarkedRuns(user, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).listBookmarkedRuns(user, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4713,10 +4713,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} project Project under namesapce
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public listRuns(owner: string, project: string, options?: any) {
-        return RunServiceApiFp(this.configuration).listRuns(owner, project, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).listRuns(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4728,10 +4728,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1RunBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public patchRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).patchRun(owner, project, run_uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).patchRun(owner, project, run_uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4743,10 +4743,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1OwnedEntityUUIdRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).restartRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).restartRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4757,10 +4757,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public restoreRun(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).restoreRun(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).restoreRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4772,10 +4772,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1OwnedEntityUUIdRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).resumeRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).resumeRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4787,10 +4787,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1OwnedEntityUUIdRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).startRunTensorboard(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).startRunTensorboard(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4802,10 +4802,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1OwnedEntityUUIdRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).stopRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).stopRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4816,10 +4816,10 @@ export class RunServiceApi extends BaseAPI {
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public stopRunTensorboard(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).stopRunTensorboard(owner, project, uuid, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).stopRunTensorboard(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4830,24 +4830,24 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1ProjectBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public stopRuns(owner: string, project: string, body: V1ProjectBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).stopRuns(owner, project, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).stopRuns(owner, project, body, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
-     * @summary UnBookmark run
+     * @summary Unbookmark run
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
-    public unBookmarkRun(owner: string, project: string, uuid: string, options?: any) {
-        return RunServiceApiFp(this.configuration).unBookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
+    public unbookmarkRun(owner: string, project: string, uuid: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).unbookmarkRun(owner, project, uuid, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4859,19 +4859,19 @@ export class RunServiceApi extends BaseAPI {
      * @param {V1RunBodyRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RunServiceApi
+     * @memberof RunsV1Api
      */
     public updateRun(owner: string, project: string, run_uuid: string, body: V1RunBodyRequest, options?: any) {
-        return RunServiceApiFp(this.configuration).updateRun(owner, project, run_uuid, body, options)(this.fetch, this.basePath);
+        return RunsV1ApiFp(this.configuration).updateRun(owner, project, run_uuid, body, options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * UserServiceApi - fetch parameter creator
+ * UsersV1Api - fetch parameter creator
  * @export
  */
-export const UserServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const UsersV1ApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -4908,10 +4908,10 @@ export const UserServiceApiFetchParamCreator = function (configuration?: Configu
 };
 
 /**
- * UserServiceApi - functional programming interface
+ * UsersV1Api - functional programming interface
  * @export
  */
-export const UserServiceApiFp = function(configuration?: Configuration) {
+export const UsersV1ApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -4920,7 +4920,7 @@ export const UserServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getUser(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1User> {
-            const localVarFetchArgs = UserServiceApiFetchParamCreator(configuration).getUser(options);
+            const localVarFetchArgs = UsersV1ApiFetchParamCreator(configuration).getUser(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4935,10 +4935,10 @@ export const UserServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * UserServiceApi - factory interface
+ * UsersV1Api - factory interface
  * @export
  */
-export const UserServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const UsersV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -4947,36 +4947,36 @@ export const UserServiceApiFactory = function (configuration?: Configuration, fe
          * @throws {RequiredError}
          */
         getUser(options?: any) {
-            return UserServiceApiFp(configuration).getUser(options)(fetch, basePath);
+            return UsersV1ApiFp(configuration).getUser(options)(fetch, basePath);
         },
     };
 };
 
 /**
- * UserServiceApi - object-oriented interface
+ * UsersV1Api - object-oriented interface
  * @export
- * @class UserServiceApi
+ * @class UsersV1Api
  * @extends {BaseAPI}
  */
-export class UserServiceApi extends BaseAPI {
+export class UsersV1Api extends BaseAPI {
     /**
      * 
      * @summary List runs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserServiceApi
+     * @memberof UsersV1Api
      */
     public getUser(options?: any) {
-        return UserServiceApiFp(this.configuration).getUser(options)(this.fetch, this.basePath);
+        return UsersV1ApiFp(this.configuration).getUser(options)(this.fetch, this.basePath);
     }
 
 }
 
 /**
- * VersionServiceApi - fetch parameter creator
+ * VersionsV1Api - fetch parameter creator
  * @export
  */
-export const VersionServiceApiFetchParamCreator = function (configuration?: Configuration) {
+export const VersionsV1ApiFetchParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -5044,10 +5044,10 @@ export const VersionServiceApiFetchParamCreator = function (configuration?: Conf
 };
 
 /**
- * VersionServiceApi - functional programming interface
+ * VersionsV1Api - functional programming interface
  * @export
  */
-export const VersionServiceApiFp = function(configuration?: Configuration) {
+export const VersionsV1ApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
@@ -5056,7 +5056,7 @@ export const VersionServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getLogHandler(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1LogHandler> {
-            const localVarFetchArgs = VersionServiceApiFetchParamCreator(configuration).getLogHandler(options);
+            const localVarFetchArgs = VersionsV1ApiFetchParamCreator(configuration).getLogHandler(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5074,7 +5074,7 @@ export const VersionServiceApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         getVersions(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Versions> {
-            const localVarFetchArgs = VersionServiceApiFetchParamCreator(configuration).getVersions(options);
+            const localVarFetchArgs = VersionsV1ApiFetchParamCreator(configuration).getVersions(options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -5089,10 +5089,10 @@ export const VersionServiceApiFp = function(configuration?: Configuration) {
 };
 
 /**
- * VersionServiceApi - factory interface
+ * VersionsV1Api - factory interface
  * @export
  */
-export const VersionServiceApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+export const VersionsV1ApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
     return {
         /**
          * 
@@ -5101,7 +5101,7 @@ export const VersionServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getLogHandler(options?: any) {
-            return VersionServiceApiFp(configuration).getLogHandler(options)(fetch, basePath);
+            return VersionsV1ApiFp(configuration).getLogHandler(options)(fetch, basePath);
         },
         /**
          * 
@@ -5110,27 +5110,27 @@ export const VersionServiceApiFactory = function (configuration?: Configuration,
          * @throws {RequiredError}
          */
         getVersions(options?: any) {
-            return VersionServiceApiFp(configuration).getVersions(options)(fetch, basePath);
+            return VersionsV1ApiFp(configuration).getVersions(options)(fetch, basePath);
         },
     };
 };
 
 /**
- * VersionServiceApi - object-oriented interface
+ * VersionsV1Api - object-oriented interface
  * @export
- * @class VersionServiceApi
+ * @class VersionsV1Api
  * @extends {BaseAPI}
  */
-export class VersionServiceApi extends BaseAPI {
+export class VersionsV1Api extends BaseAPI {
     /**
      * 
      * @summary List bookmarked runs for user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VersionServiceApi
+     * @memberof VersionsV1Api
      */
     public getLogHandler(options?: any) {
-        return VersionServiceApiFp(this.configuration).getLogHandler(options)(this.fetch, this.basePath);
+        return VersionsV1ApiFp(this.configuration).getLogHandler(options)(this.fetch, this.basePath);
     }
 
     /**
@@ -5138,10 +5138,10 @@ export class VersionServiceApi extends BaseAPI {
      * @summary List runs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof VersionServiceApi
+     * @memberof VersionsV1Api
      */
     public getVersions(options?: any) {
-        return VersionServiceApiFp(this.configuration).getVersions(options)(this.fetch, this.basePath);
+        return VersionsV1ApiFp(this.configuration).getVersions(options)(this.fetch, this.basePath);
     }
 
 }

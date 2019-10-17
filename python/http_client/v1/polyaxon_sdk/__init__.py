@@ -32,11 +32,11 @@
 from __future__ import absolute_import
 
 # import apis into sdk package
-from polyaxon_sdk.api.auth_service_api import AuthServiceApi
-from polyaxon_sdk.api.project_service_api import ProjectServiceApi
-from polyaxon_sdk.api.run_service_api import RunServiceApi
-from polyaxon_sdk.api.user_service_api import UserServiceApi
-from polyaxon_sdk.api.version_service_api import VersionServiceApi
+from polyaxon_sdk.api.auth_v1_api import AuthV1Api
+from polyaxon_sdk.api.projects_v1_api import ProjectsV1Api
+from polyaxon_sdk.api.runs_v1_api import RunsV1Api
+from polyaxon_sdk.api.users_v1_api import UsersV1Api
+from polyaxon_sdk.api.versions_v1_api import VersionsV1Api
 
 # import ApiClient
 from polyaxon_sdk.api_client import ApiClient

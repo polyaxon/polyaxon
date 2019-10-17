@@ -44,101 +44,101 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 func init() { proto.RegisterFile("v1/polyaxon_sdk.proto", fileDescriptor_5f2d65d1ab5d9ce0) }
 
 var fileDescriptor_5f2d65d1ab5d9ce0 = []byte{
-	// 1504 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0x5b, 0x73, 0xdb, 0x36,
-	0x16, 0xc7, 0x57, 0x4a, 0xd6, 0x97, 0x63, 0xcb, 0x17, 0xd8, 0x49, 0x3c, 0xca, 0x4d, 0x61, 0xae,
-	0xd6, 0xc4, 0xa4, 0x25, 0x3b, 0x97, 0xf5, 0xee, 0xec, 0xac, 0xed, 0x78, 0xbc, 0x99, 0x4d, 0x36,
-	0xa9, 0x1c, 0x67, 0xa6, 0x9d, 0x36, 0x29, 0x45, 0xc2, 0x12, 0x2d, 0x09, 0x60, 0x08, 0x50, 0x8e,
-	0xea, 0x7a, 0xa6, 0xd3, 0xa7, 0x3e, 0xb4, 0x2f, 0xed, 0x5b, 0x1f, 0xfb, 0xd6, 0x87, 0x3e, 0xf6,
-	0x83, 0x74, 0xfa, 0x15, 0xfa, 0x41, 0x3a, 0x00, 0x01, 0x46, 0x6a, 0x4c, 0x8b, 0x92, 0x3b, 0x7d,
-	0xb2, 0x71, 0x08, 0xfe, 0x7f, 0xe7, 0x1c, 0x1d, 0x00, 0x07, 0x84, 0x73, 0xed, 0x92, 0xe5, 0xd3,
-	0x66, 0xc7, 0x7e, 0x4b, 0xc9, 0x6b, 0xe6, 0x36, 0x4c, 0x3f, 0xa0, 0x9c, 0xa2, 0x6c, 0xbb, 0x94,
-	0xbf, 0x54, 0xa3, 0xb4, 0xd6, 0xc4, 0x96, 0xed, 0x7b, 0x96, 0x4d, 0x08, 0xe5, 0x36, 0xf7, 0x28,
-	0x61, 0xd1, 0x8c, 0xfc, 0x45, 0xf5, 0x54, 0x8e, 0xaa, 0xe1, 0x9e, 0x85, 0x5b, 0x3e, 0xef, 0xa8,
-	0x87, 0x77, 0xe5, 0x1f, 0x67, 0xa9, 0x86, 0xc9, 0x12, 0x3b, 0xb0, 0x6b, 0x35, 0x1c, 0x58, 0xd4,
-	0x97, 0xaf, 0x1f, 0x23, 0x95, 0x6b, 0x97, 0xac, 0xaa, 0xcd, 0xb0, 0x1a, 0xce, 0xb6, 0x4b, 0x96,
-	0x43, 0x5d, 0xfc, 0x3a, 0xc0, 0x7b, 0xca, 0x34, 0xd9, 0x2e, 0x59, 0x41, 0x48, 0xd4, 0x68, 0x46,
-	0xf8, 0x1c, 0xd0, 0x7d, 0xec, 0xf0, 0x2e, 0x4b, 0x1b, 0x07, 0xcc, 0xa3, 0xa4, 0x4b, 0xd3, 0x0e,
-	0x79, 0xbd, 0x6b, 0x18, 0x32, 0x1c, 0xa8, 0xe1, 0x74, 0xbb, 0x64, 0x31, 0x6e, 0xf3, 0x50, 0xb9,
-	0x50, 0xfe, 0xe1, 0x02, 0x40, 0x25, 0x24, 0x3b, 0x38, 0x68, 0x7b, 0x0e, 0x46, 0x9f, 0xc2, 0xd8,
-	0x13, 0x8f, 0xf1, 0x4a, 0x48, 0x18, 0x3a, 0x6f, 0xb6, 0x4b, 0xe6, 0xf3, 0x08, 0xb7, 0x41, 0xdd,
-	0x4e, 0x05, 0xbf, 0x09, 0x31, 0xe3, 0xf9, 0x79, 0x61, 0xd7, 0xb3, 0x2a, 0x98, 0xf9, 0x94, 0x30,
-	0x6c, 0xdc, 0xfa, 0xf2, 0xd7, 0xdf, 0xbe, 0xcb, 0x16, 0xd0, 0x15, 0x99, 0xb6, 0x76, 0xc9, 0x3a,
-	0xa4, 0x07, 0x04, 0x07, 0x47, 0xd6, 0xa1, 0xf2, 0xf8, 0x48, 0x04, 0xc2, 0xd0, 0x1e, 0x20, 0xf1,
-	0xee, 0x06, 0xa5, 0x8d, 0x96, 0x1d, 0x34, 0xb0, 0x2b, 0x59, 0x73, 0x42, 0x73, 0x97, 0xe1, 0xa0,
-	0x3f, 0xe8, 0xa6, 0x04, 0x5d, 0x45, 0x97, 0x35, 0xa8, 0xaa, 0xa4, 0x98, 0x75, 0x28, 0x22, 0x55,
-	0x1c, 0x07, 0x66, 0xc4, 0xab, 0xeb, 0x81, 0x53, 0xf7, 0xda, 0x83, 0x53, 0x6e, 0x48, 0xca, 0x15,
-	0x74, 0x49, 0x53, 0xec, 0x48, 0xa8, 0x17, 0xb2, 0x03, 0xe3, 0x9b, 0x01, 0xb6, 0x39, 0xae, 0x84,
-	0x04, 0x21, 0x21, 0x54, 0x09, 0x49, 0xb7, 0xf8, 0xa8, 0xb2, 0x19, 0x8b, 0x52, 0xef, 0xba, 0xd1,
-	0x27, 0x3d, 0x6b, 0x99, 0x22, 0xfa, 0x18, 0x46, 0xb6, 0xb1, 0xf0, 0x06, 0xe5, 0xc5, 0xdb, 0xcf,
-	0x0e, 0x08, 0x76, 0xb7, 0x08, 0xf7, 0x78, 0x67, 0x77, 0xf7, 0xb1, 0xfb, 0x9e, 0xf2, 0x92, 0x54,
-	0xbe, 0x8d, 0x6e, 0x9e, 0xac, 0x6c, 0x1d, 0x86, 0xa1, 0xe7, 0x1e, 0xa1, 0x57, 0x30, 0xbe, 0xeb,
-	0xbb, 0x69, 0x5c, 0x5e, 0x95, 0xc2, 0x66, 0x7e, 0xb1, 0x9f, 0xb0, 0x28, 0x50, 0x29, 0x2e, 0xbc,
-	0xff, 0x04, 0xc6, 0x9e, 0xdb, 0xdc, 0xa9, 0xa7, 0x95, 0x2f, 0x0f, 0x26, 0x4f, 0x60, 0xfc, 0x11,
-	0x6e, 0xe2, 0xc8, 0xfd, 0x93, 0xf2, 0x73, 0xde, 0x8c, 0xd6, 0xa9, 0xa9, 0xd7, 0xa9, 0xb9, 0x25,
-	0xd6, 0xa9, 0x4e, 0x57, 0x31, 0x65, 0xba, 0x08, 0x40, 0xcc, 0x4b, 0x5e, 0x12, 0x49, 0xb0, 0x65,
-	0x09, 0x2b, 0xf6, 0x85, 0xb9, 0x12, 0x21, 0xe2, 0xe3, 0x30, 0xba, 0xc3, 0xa9, 0x3f, 0x6c, 0x74,
-	0xf7, 0x24, 0xd0, 0x32, 0x8a, 0xa9, 0xa2, 0xb3, 0x18, 0xa7, 0xbe, 0xa0, 0xee, 0xc3, 0x98, 0xa2,
-	0x0e, 0x1e, 0xa3, 0x29, 0x91, 0x77, 0x8c, 0xeb, 0x7d, 0x90, 0x9a, 0xf5, 0x45, 0x06, 0x72, 0x8f,
-	0x49, 0xdb, 0x6e, 0x7a, 0xba, 0x0a, 0x87, 0x09, 0xf4, 0x9f, 0x92, 0x7a, 0xcf, 0x58, 0x4e, 0x17,
-	0xa8, 0x17, 0x03, 0x85, 0x0b, 0x6d, 0x98, 0xea, 0xf1, 0x60, 0xf0, 0xa0, 0x55, 0xf1, 0x1a, 0xfd,
-	0x8a, 0xb7, 0x97, 0x8b, 0x61, 0x74, 0x93, 0xfa, 0x9d, 0xd4, 0x4b, 0x7b, 0xc0, 0x5f, 0xd3, 0xa1,
-	0x7e, 0x47, 0x60, 0x1a, 0x00, 0x15, 0xcc, 0xb8, 0x1d, 0xa4, 0xdf, 0x44, 0x1e, 0x4a, 0x52, 0xd9,
-	0x58, 0x4a, 0x47, 0x0a, 0x22, 0x79, 0x01, 0xf3, 0x60, 0xbc, 0x82, 0x59, 0xd8, 0xc2, 0xa9, 0x59,
-	0x0f, 0x24, 0xab, 0x64, 0xdc, 0x4d, 0xcd, 0x0a, 0x5b, 0x32, 0x7d, 0x07, 0x00, 0x6a, 0x3b, 0x3f,
-	0xed, 0xf2, 0x48, 0x19, 0xa6, 0xda, 0xf3, 0x05, 0x58, 0x24, 0x94, 0x06, 0x7f, 0x15, 0x38, 0x88,
-	0x68, 0xa8, 0x03, 0x13, 0xfa, 0xa0, 0x1c, 0x96, 0x7c, 0x5f, 0x92, 0x97, 0x0d, 0x33, 0x1d, 0x59,
-	0x1f, 0xa6, 0xe8, 0x08, 0x72, 0xbb, 0xe4, 0xb4, 0x70, 0x55, 0x56, 0xc5, 0x94, 0xab, 0x34, 0x24,
-	0x31, 0xfe, 0x9b, 0x0c, 0xcc, 0xed, 0xa8, 0x12, 0x7e, 0x81, 0x09, 0xa3, 0x41, 0x95, 0xda, 0x81,
-	0x3b, 0x94, 0x17, 0x1b, 0xd2, 0x8b, 0x7f, 0x19, 0x0f, 0xd2, 0x79, 0xc1, 0xdf, 0xe1, 0xac, 0xb8,
-	0xcc, 0xbf, 0xca, 0x00, 0x52, 0x5b, 0xe4, 0x69, 0xdd, 0xf9, 0xb7, 0x74, 0xe7, 0x61, 0xf1, 0xfe,
-	0x30, 0xee, 0x50, 0x1f, 0xf9, 0x30, 0x15, 0xf5, 0x07, 0x3b, 0xb2, 0x91, 0xc3, 0xec, 0x44, 0x2f,
-	0x40, 0x3c, 0x8b, 0x66, 0xea, 0x5a, 0x40, 0x66, 0xda, 0xd3, 0x41, 0xe9, 0xbf, 0x81, 0xe9, 0xb8,
-	0xcd, 0x89, 0xa4, 0xd0, 0x05, 0x21, 0x1b, 0xd1, 0x22, 0xcb, 0x71, 0xbc, 0x7f, 0x48, 0xde, 0x8a,
-	0x31, 0x20, 0x4f, 0xe4, 0xfb, 0x73, 0x1d, 0xe4, 0x26, 0x75, 0x71, 0x05, 0xef, 0x9d, 0x1c, 0xe4,
-	0x05, 0xdd, 0xc3, 0xa9, 0xd9, 0x71, 0x1b, 0xa7, 0xd6, 0x1d, 0x5a, 0x4a, 0xbb, 0x83, 0xba, 0x38,
-	0xc0, 0x7b, 0xe8, 0xeb, 0x0c, 0xcc, 0xc4, 0x11, 0x2b, 0xcd, 0xe8, 0x8c, 0x50, 0x83, 0xee, 0x33,
-	0x62, 0xb6, 0xcb, 0x8e, 0x03, 0x4c, 0x1c, 0x6c, 0x3c, 0x95, 0xd8, 0x6d, 0x63, 0x23, 0xc6, 0x62,
-	0xe9, 0xb3, 0xa9, 0xe9, 0x6a, 0xf8, 0x07, 0x27, 0x94, 0xb5, 0xc7, 0x97, 0xb5, 0x4c, 0xb1, 0xfc,
-	0xcb, 0x24, 0x4c, 0xa9, 0xc3, 0x49, 0x37, 0xea, 0x18, 0x26, 0x45, 0xbc, 0xca, 0xca, 0xd0, 0xbc,
-	0xce, 0x4e, 0x4f, 0x6f, 0xbb, 0xa0, 0xf3, 0xa2, 0xe7, 0x25, 0x77, 0xd1, 0x3a, 0x31, 0xca, 0x25,
-	0x66, 0x35, 0x3d, 0xc6, 0xd1, 0x7e, 0xd4, 0x45, 0xab, 0xd7, 0xff, 0x6f, 0xb7, 0xf0, 0xe0, 0xa8,
-	0xc4, 0x9b, 0x41, 0x8c, 0x22, 0x52, 0x37, 0x80, 0xf3, 0xbd, 0x37, 0x83, 0x38, 0xb8, 0x63, 0xfb,
-	0xf6, 0x64, 0xa0, 0xea, 0xb5, 0xd1, 0xb5, 0xc4, 0x1b, 0x82, 0x26, 0x23, 0x0a, 0xf3, 0xdd, 0xb7,
-	0x84, 0x61, 0x89, 0x77, 0x24, 0xd1, 0x40, 0x85, 0xa4, 0xdb, 0x42, 0x0c, 0x7c, 0x05, 0xb9, 0xa8,
-	0xb0, 0x94, 0x46, 0x42, 0x36, 0x27, 0xba, 0xfa, 0x11, 0xa3, 0x28, 0xd5, 0x6f, 0x18, 0x57, 0x13,
-	0x13, 0xe8, 0x48, 0xc9, 0xa8, 0xfd, 0x86, 0x6d, 0xac, 0x1d, 0x4c, 0x6c, 0x6b, 0x8e, 0x93, 0x47,
-	0x46, 0xa2, 0x7c, 0xbc, 0x58, 0x90, 0x03, 0xb9, 0xe8, 0xf6, 0x30, 0x10, 0x41, 0xf5, 0xdc, 0xf9,
-	0x14, 0x04, 0x11, 0x43, 0x15, 0x26, 0xe5, 0x15, 0x62, 0x18, 0x46, 0x39, 0x25, 0xa3, 0x05, 0x33,
-	0x51, 0x5f, 0xbf, 0xf5, 0xd6, 0xc7, 0x81, 0xd7, 0xc2, 0x84, 0x0f, 0xdc, 0x04, 0xaa, 0x3a, 0x2b,
-	0x5e, 0x3b, 0x1e, 0xd9, 0x9d, 0xb7, 0x06, 0x4c, 0xa9, 0x1a, 0xeb, 0x17, 0x54, 0x1f, 0x98, 0x71,
-	0x2d, 0x79, 0x27, 0xd3, 0xed, 0x0a, 0x81, 0x59, 0xd5, 0xae, 0x9c, 0x3e, 0xb8, 0x93, 0x78, 0xba,
-	0x4b, 0x69, 0xc1, 0xb4, 0x5e, 0xb4, 0xc3, 0x46, 0xa7, 0x4b, 0xdc, 0x48, 0xa6, 0xc5, 0xad, 0xc1,
-	0x1b, 0x98, 0x7d, 0xd7, 0x99, 0x0c, 0x0b, 0xbc, 0x2b, 0x81, 0xb7, 0x8a, 0x37, 0x92, 0x81, 0x5d,
-	0xdd, 0x48, 0x0d, 0xa6, 0xb7, 0x88, 0x5d, 0x6d, 0xea, 0x5f, 0x6f, 0xf3, 0xf1, 0xc0, 0x40, 0xf5,
-	0x41, 0xc1, 0xb8, 0x94, 0x0c, 0x74, 0x3c, 0x54, 0x87, 0x99, 0x47, 0x1e, 0xfb, 0x53, 0x48, 0xc5,
-	0x13, 0x49, 0xe5, 0x97, 0x30, 0xb1, 0x1e, 0xf2, 0xba, 0x3e, 0x4f, 0xb6, 0xe1, 0xef, 0x4f, 0x68,
-	0xcd, 0x23, 0xd1, 0x7e, 0xb4, 0x19, 0x60, 0x97, 0x75, 0xb3, 0xc6, 0x84, 0x55, 0xcc, 0x37, 0xae,
-	0x48, 0xf5, 0x05, 0x63, 0x4e, 0xab, 0x8b, 0x0d, 0x8e, 0x59, 0x9c, 0x36, 0x30, 0x11, 0x67, 0xd5,
-	0x07, 0x30, 0x21, 0xf6, 0x4d, 0xad, 0xbb, 0x01, 0xa3, 0x35, 0xcc, 0x85, 0x05, 0x25, 0xf8, 0x1b,
-	0x69, 0x8b, 0x19, 0xc6, 0x39, 0xa9, 0x3d, 0x8d, 0x72, 0x3d, 0xda, 0xe5, 0x9f, 0x33, 0x30, 0xf5,
-	0x32, 0xfa, 0xc8, 0xa5, 0x65, 0x9f, 0xc2, 0xc4, 0x36, 0xe6, 0xca, 0xc8, 0x12, 0xa5, 0x27, 0x85,
-	0xb4, 0x9e, 0x65, 0x2c, 0x48, 0x79, 0x84, 0x66, 0xb4, 0x7c, 0x5b, 0xbf, 0xff, 0x02, 0x72, 0xdb,
-	0x98, 0x3f, 0xa1, 0xb5, 0xff, 0xda, 0xc4, 0x6d, 0x9e, 0xe0, 0xeb, 0x94, 0x3c, 0x02, 0xe2, 0x79,
-	0xc6, 0x45, 0x29, 0x79, 0x0e, 0xc5, 0xd9, 0x68, 0xd2, 0xda, 0xeb, 0x7a, 0xf4, 0x70, 0xe3, 0xa7,
-	0xec, 0xb7, 0xeb, 0x3f, 0x66, 0x51, 0x0d, 0x26, 0x9f, 0xab, 0x0f, 0x8d, 0x05, 0xe6, 0x36, 0x8c,
-	0x67, 0xbd, 0x63, 0xb4, 0x58, 0xe7, 0xdc, 0x67, 0x6b, 0x96, 0x55, 0xf3, 0x78, 0x3d, 0xac, 0x9a,
-	0x0e, 0x6d, 0xc5, 0x5f, 0x26, 0xe3, 0x7f, 0x96, 0x98, 0xdb, 0x60, 0xf9, 0x79, 0x87, 0x12, 0x6e,
-	0x3b, 0xfc, 0x3f, 0xda, 0x2c, 0x26, 0x97, 0x47, 0x4a, 0x66, 0x69, 0xd5, 0x5c, 0x2d, 0x9e, 0xcd,
-	0x64, 0xcf, 0x9c, 0x2d, 0xcf, 0xd8, 0xbe, 0xdf, 0xf4, 0x1c, 0xf9, 0xa1, 0xd1, 0xda, 0x67, 0x94,
-	0xac, 0xbd, 0x67, 0xa9, 0xac, 0xc1, 0x99, 0xd5, 0xe5, 0x15, 0xb4, 0x02, 0xa5, 0x0f, 0x69, 0x58,
-	0x70, 0x29, 0xb9, 0xcd, 0x0b, 0x75, 0xbb, 0x8d, 0x0b, 0x3e, 0x0e, 0x5a, 0x1e, 0x13, 0x49, 0x29,
-	0x70, 0x5a, 0xb0, 0x1d, 0x07, 0x33, 0x56, 0xe0, 0x75, 0x5c, 0x08, 0x30, 0xa3, 0x61, 0xe0, 0x60,
-	0xb3, 0xb2, 0x28, 0xde, 0x5d, 0x45, 0x06, 0x2c, 0x54, 0x94, 0xad, 0xe0, 0x52, 0xcc, 0x0a, 0x84,
-	0xf2, 0x02, 0x7e, 0xeb, 0x31, 0x6e, 0xa2, 0x11, 0x38, 0xfb, 0x7d, 0x36, 0x33, 0xfa, 0xd1, 0x55,
-	0xb8, 0x0c, 0x23, 0xeb, 0xbe, 0xf7, 0x3f, 0xdc, 0x41, 0x73, 0x63, 0xd9, 0x7c, 0x4e, 0x54, 0x10,
-	0x0d, 0xbc, 0xcf, 0xa4, 0x2b, 0x85, 0x6c, 0x75, 0x12, 0x20, 0x9e, 0xf0, 0xb7, 0xea, 0x88, 0x4c,
-	0xf6, 0xca, 0xef, 0x01, 0x00, 0x00, 0xff, 0xff, 0x05, 0x08, 0xdc, 0x69, 0x9b, 0x15, 0x00, 0x00,
+	// 1499 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0x4b, 0x73, 0xdb, 0xb6,
+	0x16, 0xc7, 0xaf, 0x94, 0x5c, 0x3f, 0x4e, 0x2c, 0x3f, 0x60, 0x27, 0xf1, 0x28, 0x2f, 0x85, 0x79,
+	0x5a, 0x13, 0x93, 0x96, 0xec, 0x3c, 0xae, 0xef, 0x9d, 0x3b, 0xb5, 0x1d, 0x8f, 0x9b, 0x69, 0xd2,
+	0xa4, 0x72, 0x9c, 0x99, 0x76, 0xda, 0xa4, 0x14, 0x09, 0x4b, 0xb4, 0x24, 0x80, 0x21, 0x40, 0x39,
+	0xaa, 0xeb, 0x99, 0x4e, 0x57, 0x5d, 0xb4, 0x9b, 0x76, 0xd7, 0x45, 0xf7, 0x5d, 0x74, 0xd1, 0x0f,
+	0xd2, 0x55, 0xbf, 0x42, 0x3f, 0x48, 0x07, 0x20, 0xc0, 0x48, 0x8d, 0x69, 0x51, 0x72, 0xa7, 0x2b,
+	0x1b, 0x87, 0xe0, 0xff, 0x77, 0xce, 0xd1, 0x01, 0x70, 0x40, 0x38, 0xdb, 0x2e, 0x59, 0x3e, 0x6d,
+	0x76, 0xec, 0x37, 0x94, 0xbc, 0x62, 0x6e, 0xc3, 0xf4, 0x03, 0xca, 0x29, 0xca, 0xb6, 0x4b, 0xf9,
+	0x8b, 0x35, 0x4a, 0x6b, 0x4d, 0x6c, 0xd9, 0xbe, 0x67, 0xd9, 0x84, 0x50, 0x6e, 0x73, 0x8f, 0x12,
+	0x16, 0xcd, 0xc8, 0x5f, 0x50, 0x4f, 0xe5, 0xa8, 0x1a, 0xee, 0x5a, 0xb8, 0xe5, 0xf3, 0x8e, 0x7a,
+	0x78, 0x47, 0xfe, 0x71, 0x16, 0x6b, 0x98, 0x2c, 0xb2, 0x7d, 0xbb, 0x56, 0xc3, 0x81, 0x45, 0x7d,
+	0xf9, 0xfa, 0x11, 0x52, 0xb9, 0x76, 0xc9, 0xaa, 0xda, 0x0c, 0xab, 0xe1, 0x4c, 0xbb, 0x64, 0x39,
+	0xd4, 0xc5, 0xaf, 0x02, 0xbc, 0xab, 0x4c, 0x13, 0xed, 0x92, 0x15, 0x84, 0x44, 0x8d, 0xa6, 0x85,
+	0xcf, 0x01, 0xdd, 0xc3, 0x0e, 0xef, 0xb2, 0xb4, 0x71, 0xc0, 0x3c, 0x4a, 0xba, 0x34, 0xed, 0x90,
+	0xd7, 0xbb, 0x86, 0x21, 0xc3, 0x81, 0x1a, 0x4e, 0xb5, 0x4b, 0x16, 0xe3, 0x36, 0x0f, 0x95, 0x0b,
+	0xe5, 0x9f, 0xce, 0xc3, 0x48, 0x25, 0x24, 0xec, 0x45, 0x09, 0x7d, 0x0e, 0x63, 0x8f, 0x3d, 0xc6,
+	0xc5, 0x08, 0x9d, 0x33, 0xdb, 0x25, 0xf3, 0x59, 0x84, 0x5a, 0xa7, 0x6e, 0xa7, 0x82, 0x5f, 0x87,
+	0x98, 0xf1, 0xfc, 0x9c, 0xb0, 0xeb, 0x59, 0x15, 0xcc, 0x7c, 0x4a, 0x18, 0x36, 0x6e, 0x7e, 0xfd,
+	0xfb, 0x1f, 0x3f, 0x64, 0x0b, 0xe8, 0xb2, 0x4c, 0x59, 0xbb, 0x64, 0x1d, 0xd0, 0x7d, 0x82, 0x83,
+	0x43, 0xeb, 0x40, 0x79, 0x7b, 0x28, 0x82, 0x60, 0x68, 0x17, 0x90, 0x78, 0x77, 0x9d, 0xd2, 0x46,
+	0xcb, 0x0e, 0x1a, 0xd8, 0x95, 0xac, 0x59, 0xa1, 0xb9, 0xc3, 0x70, 0xd0, 0x1f, 0x74, 0x43, 0x82,
+	0xae, 0xa0, 0x4b, 0x1a, 0x54, 0x55, 0x52, 0xcc, 0x3a, 0x10, 0x51, 0x2a, 0x8e, 0x03, 0xd3, 0xe2,
+	0xd5, 0xb5, 0xc0, 0xa9, 0x7b, 0xed, 0xc1, 0x29, 0xd7, 0x25, 0xe5, 0x32, 0xba, 0xa8, 0x29, 0x76,
+	0x24, 0xd4, 0x0b, 0xd9, 0x86, 0xf1, 0x8d, 0x00, 0xdb, 0x1c, 0x57, 0x42, 0x82, 0x90, 0x10, 0xaa,
+	0x84, 0xa4, 0x5b, 0x7c, 0x54, 0xd9, 0x8c, 0x05, 0xa9, 0x77, 0xcd, 0xe8, 0x93, 0x9e, 0xd5, 0x4c,
+	0x11, 0x7d, 0x0a, 0x23, 0x5b, 0x58, 0x78, 0x83, 0xf2, 0xe2, 0xed, 0xa7, 0xfb, 0x04, 0xbb, 0x9b,
+	0x84, 0x7b, 0xbc, 0xb3, 0xb3, 0xf3, 0xc8, 0x7d, 0x47, 0x79, 0x51, 0x2a, 0xdf, 0x42, 0x37, 0x8e,
+	0x57, 0xb6, 0x0e, 0xc2, 0xd0, 0x73, 0x0f, 0xd1, 0x4b, 0x18, 0xdf, 0xf1, 0xdd, 0x34, 0x2e, 0xaf,
+	0x48, 0x61, 0x33, 0xbf, 0xd0, 0x4f, 0x58, 0x14, 0xa7, 0x14, 0x17, 0xde, 0x7f, 0x06, 0x63, 0xcf,
+	0x6c, 0xee, 0xd4, 0xd3, 0xca, 0x97, 0x07, 0x93, 0x27, 0x30, 0xfe, 0x10, 0x37, 0x71, 0xe4, 0xfe,
+	0x71, 0xf9, 0x39, 0x67, 0x46, 0x6b, 0xd4, 0xd4, 0x6b, 0xd4, 0xdc, 0x14, 0x6b, 0x54, 0xa7, 0xab,
+	0x98, 0x32, 0x5d, 0x04, 0x20, 0xe6, 0x25, 0x2f, 0x89, 0x24, 0xd8, 0x92, 0x84, 0x15, 0xfb, 0xc2,
+	0x5c, 0x89, 0x10, 0xf1, 0x71, 0x18, 0xdd, 0xe6, 0xd4, 0x1f, 0x36, 0xba, 0xbb, 0x12, 0x68, 0x19,
+	0xc5, 0x54, 0xd1, 0x59, 0x8c, 0x53, 0x5f, 0x50, 0xf7, 0x60, 0x4c, 0x51, 0x07, 0x8f, 0xd1, 0x94,
+	0xc8, 0xdb, 0xc6, 0xb5, 0x3e, 0x48, 0xcd, 0xfa, 0x2a, 0x03, 0xb9, 0x47, 0xa4, 0x6d, 0x37, 0x3d,
+	0x5d, 0x85, 0xc3, 0x04, 0xfa, 0x5f, 0x49, 0xbd, 0x6b, 0x2c, 0xa5, 0x0b, 0xd4, 0x8b, 0x81, 0xc2,
+	0x85, 0x36, 0x4c, 0xf6, 0x78, 0x30, 0x78, 0xd0, 0xaa, 0x78, 0x8d, 0x7e, 0xc5, 0xdb, 0xcb, 0xc5,
+	0x30, 0xba, 0x41, 0xfd, 0x4e, 0xea, 0xa5, 0x3d, 0xe0, 0xaf, 0xe9, 0x50, 0xbf, 0x23, 0x30, 0x0d,
+	0x80, 0x0a, 0x66, 0xdc, 0x0e, 0xd2, 0x6f, 0x22, 0x0f, 0x24, 0xa9, 0x6c, 0x2c, 0xa6, 0x23, 0x05,
+	0x91, 0xbc, 0x80, 0x79, 0x30, 0x5e, 0xc1, 0x2c, 0x6c, 0xe1, 0xd4, 0xac, 0xfb, 0x92, 0x55, 0x32,
+	0xee, 0xa4, 0x66, 0x85, 0x2d, 0x99, 0xbe, 0x7d, 0x00, 0xb5, 0x9d, 0x9f, 0x74, 0x79, 0xa4, 0x0c,
+	0x53, 0xed, 0xf9, 0x02, 0x2c, 0x12, 0x4a, 0x83, 0x7f, 0x0a, 0x1c, 0x44, 0x34, 0xd4, 0x81, 0x33,
+	0xfa, 0xa0, 0x1c, 0x96, 0x7c, 0x4f, 0x92, 0x97, 0x0c, 0x33, 0x1d, 0x59, 0x1f, 0xa6, 0xe8, 0x10,
+	0x72, 0x3b, 0xa4, 0x7a, 0x42, 0xb8, 0x2a, 0xab, 0x62, 0xca, 0x55, 0x1a, 0xc6, 0x40, 0xf4, 0x5d,
+	0x06, 0x66, 0xb7, 0x55, 0x09, 0x3f, 0xc7, 0x84, 0xd1, 0xa0, 0x4a, 0xed, 0xc0, 0x1d, 0xca, 0x8b,
+	0x75, 0xe9, 0xc5, 0xff, 0x8c, 0xfb, 0xe9, 0xbc, 0xe0, 0x6f, 0x71, 0x56, 0x5c, 0xe6, 0xdf, 0x64,
+	0x00, 0xa9, 0x2d, 0xf2, 0xa4, 0xee, 0xfc, 0x5f, 0xba, 0xf3, 0xa0, 0x78, 0x6f, 0x18, 0x77, 0xa8,
+	0x8f, 0x7c, 0x98, 0x8c, 0xfa, 0x83, 0x6d, 0xd9, 0xc4, 0x61, 0x76, 0xac, 0x17, 0x20, 0x9e, 0x45,
+	0x33, 0x75, 0x2d, 0x20, 0x33, 0xed, 0xe9, 0xa0, 0xf4, 0x5f, 0xc3, 0x54, 0xdc, 0xe6, 0x44, 0x52,
+	0xe8, 0xbc, 0x90, 0x8d, 0x68, 0x91, 0xe5, 0x28, 0xde, 0x7f, 0x24, 0x6f, 0xd9, 0x18, 0x90, 0x27,
+	0xf2, 0xfd, 0xa5, 0x0e, 0x72, 0x83, 0xba, 0xb8, 0x82, 0x77, 0x8f, 0x0f, 0xf2, 0xbc, 0xee, 0xe1,
+	0xd4, 0xec, 0xb8, 0x8d, 0x53, 0xeb, 0x0e, 0x2d, 0xa6, 0xdd, 0x41, 0x5d, 0x1c, 0xe0, 0x5d, 0xf4,
+	0x6d, 0x06, 0xa6, 0xe3, 0x88, 0x95, 0x66, 0x74, 0x46, 0xa8, 0x41, 0xf7, 0x19, 0x31, 0xd3, 0x65,
+	0xc7, 0x01, 0x26, 0x0e, 0x36, 0x9e, 0x48, 0xec, 0x96, 0xb1, 0x1e, 0x63, 0xb1, 0xf4, 0xd9, 0xd4,
+	0x74, 0x35, 0xfc, 0x8b, 0x13, 0xca, 0xda, 0xe3, 0xcb, 0x6a, 0xa6, 0x58, 0xfe, 0x6d, 0x02, 0x40,
+	0x1d, 0x4e, 0xa2, 0x49, 0xc7, 0x30, 0x21, 0x62, 0xd5, 0x16, 0x34, 0xa7, 0x33, 0xd3, 0xd3, 0xd7,
+	0xce, 0xeb, 0x9c, 0xe8, 0x79, 0xc9, 0x1d, 0xb4, 0x4e, 0x8a, 0x72, 0x87, 0x59, 0x4d, 0x8f, 0x71,
+	0xb4, 0x17, 0x75, 0xd0, 0xea, 0xf5, 0x0f, 0xed, 0x16, 0x1e, 0x1c, 0x95, 0x78, 0x2b, 0x88, 0x51,
+	0x44, 0xea, 0x06, 0x70, 0xae, 0xf7, 0x56, 0x10, 0x07, 0x77, 0x64, 0xcf, 0x9e, 0x0c, 0x54, 0x7d,
+	0x36, 0xba, 0x9a, 0x78, 0x3b, 0xd0, 0x64, 0x44, 0x61, 0xae, 0xfb, 0x86, 0x30, 0x2c, 0xf1, 0xb6,
+	0x24, 0x1a, 0xa8, 0x90, 0x74, 0x53, 0x88, 0x81, 0x2f, 0x21, 0x17, 0x15, 0x95, 0xd2, 0x48, 0xc8,
+	0xe6, 0x99, 0xae, 0x5e, 0xc4, 0x28, 0x4a, 0xf5, 0xeb, 0xc6, 0x95, 0xc4, 0x04, 0x3a, 0x52, 0x32,
+	0x6a, 0xbd, 0x61, 0x0b, 0x6b, 0x07, 0x13, 0x5b, 0x9a, 0xa3, 0xe4, 0x91, 0x91, 0x28, 0x1f, 0x2f,
+	0x14, 0xe4, 0x40, 0x2e, 0xba, 0x39, 0x0c, 0x44, 0x50, 0xfd, 0x76, 0x3e, 0x05, 0x41, 0xc4, 0x50,
+	0x85, 0x09, 0x79, 0x7d, 0x18, 0x86, 0x51, 0x4e, 0xc9, 0x68, 0xc1, 0x74, 0xd4, 0xd3, 0x6f, 0xbe,
+	0xf1, 0x71, 0xe0, 0xb5, 0x30, 0xe1, 0x03, 0x37, 0x80, 0xaa, 0xce, 0x8a, 0x57, 0x8f, 0x46, 0x76,
+	0xe7, 0xad, 0x01, 0x93, 0xaa, 0xc6, 0xfa, 0x05, 0xd5, 0x07, 0x66, 0x5c, 0x4d, 0xde, 0xc5, 0x74,
+	0xab, 0x42, 0x60, 0x46, 0xb5, 0x2a, 0x27, 0x0f, 0xee, 0x38, 0x9e, 0xee, 0x50, 0x5a, 0x30, 0xa5,
+	0x17, 0xed, 0xb0, 0xd1, 0xe9, 0x12, 0x37, 0x92, 0x69, 0x71, 0x5b, 0xf0, 0x1a, 0x66, 0xde, 0x76,
+	0x25, 0xc3, 0x02, 0xef, 0x48, 0xe0, 0xcd, 0xe2, 0xf5, 0x64, 0x60, 0x57, 0x27, 0x52, 0x83, 0xa9,
+	0x4d, 0x62, 0x57, 0x9b, 0xfa, 0xd7, 0xdb, 0x78, 0x34, 0x30, 0x50, 0x7d, 0x4c, 0x30, 0x2e, 0x26,
+	0x03, 0x1d, 0x0f, 0xd5, 0x61, 0xfa, 0xa1, 0xc7, 0xfe, 0x16, 0x52, 0xf1, 0x58, 0x52, 0xf9, 0x23,
+	0x18, 0x59, 0x0b, 0x79, 0xfd, 0x45, 0x09, 0x6d, 0xc1, 0xbf, 0x1f, 0xd3, 0x9a, 0x47, 0xa2, 0xad,
+	0x68, 0x23, 0xc0, 0x2e, 0xeb, 0xc6, 0x8c, 0x09, 0xab, 0x98, 0x6a, 0x5c, 0x96, 0xc2, 0xf3, 0xc6,
+	0xac, 0x16, 0x16, 0x7b, 0x1b, 0xb3, 0x38, 0x6d, 0x60, 0x22, 0x8e, 0xa8, 0x27, 0x30, 0x2a, 0xb6,
+	0x4c, 0x71, 0x3c, 0xad, 0xc3, 0x68, 0x0d, 0x73, 0x31, 0x42, 0x09, 0x6e, 0x46, 0xba, 0x62, 0x86,
+	0x71, 0x56, 0xea, 0x4e, 0xa1, 0x5c, 0x8f, 0x6e, 0xf9, 0xd7, 0x0c, 0xc0, 0x8b, 0xe8, 0x9b, 0x96,
+	0x90, 0x7c, 0x02, 0x67, 0xb6, 0x30, 0xd7, 0x86, 0x44, 0xd9, 0x09, 0x21, 0xab, 0x67, 0x19, 0xf3,
+	0x52, 0x1a, 0xa1, 0x69, 0x2d, 0xdd, 0xd6, 0xef, 0x3f, 0x87, 0xdc, 0x16, 0xe6, 0x8f, 0x69, 0xed,
+	0x7d, 0x9b, 0xb8, 0xcd, 0x63, 0xfc, 0x9c, 0x94, 0xbb, 0x7e, 0x3c, 0xcf, 0xb8, 0x20, 0x25, 0xcf,
+	0xa2, 0x38, 0x0b, 0x4d, 0x5a, 0x7b, 0x55, 0x8f, 0x1e, 0xae, 0xff, 0x92, 0xfd, 0x7e, 0xed, 0xe7,
+	0x2c, 0xaa, 0xc1, 0xc4, 0x33, 0xf5, 0x4d, 0xb1, 0xc0, 0xdc, 0x86, 0xf1, 0xb4, 0x77, 0x8c, 0x16,
+	0xea, 0x9c, 0xfb, 0x6c, 0xd5, 0xb2, 0x6a, 0x1e, 0xaf, 0x87, 0x55, 0xd3, 0xa1, 0xad, 0xf8, 0x23,
+	0x64, 0xfc, 0xcf, 0x22, 0x73, 0x1b, 0x2c, 0x3f, 0xe7, 0x50, 0xc2, 0x6d, 0x87, 0xbf, 0xa7, 0xcd,
+	0x62, 0x72, 0x79, 0xa4, 0x64, 0x96, 0x56, 0xcc, 0x95, 0xe2, 0xe9, 0x4c, 0xf6, 0xd4, 0xe9, 0xf2,
+	0xb4, 0xed, 0xfb, 0x4d, 0xcf, 0x91, 0xdf, 0x14, 0xad, 0x3d, 0x46, 0xc9, 0xea, 0x3b, 0x96, 0xca,
+	0x2a, 0x9c, 0x5a, 0x59, 0x5a, 0x46, 0xcb, 0x50, 0xfa, 0x98, 0x86, 0x05, 0x97, 0x92, 0x5b, 0xbc,
+	0x50, 0xb7, 0xdb, 0xb8, 0xe0, 0xe3, 0xa0, 0xe5, 0x31, 0x91, 0x94, 0x02, 0xa7, 0x05, 0xdb, 0x71,
+	0x30, 0x63, 0x05, 0x5e, 0xc7, 0x85, 0x00, 0x33, 0x1a, 0x06, 0x0e, 0x36, 0x2b, 0x0b, 0xe2, 0xdd,
+	0x15, 0x64, 0xc0, 0x7c, 0x45, 0xd9, 0x0a, 0x2e, 0xc5, 0xac, 0x40, 0x28, 0x2f, 0xe0, 0x37, 0x1e,
+	0xe3, 0x26, 0x1a, 0x81, 0xd3, 0x3f, 0x66, 0x33, 0xa3, 0x9f, 0x5c, 0x81, 0x4b, 0x30, 0xb2, 0xe6,
+	0x7b, 0x1f, 0xe0, 0x0e, 0x9a, 0x1d, 0xcb, 0xe6, 0x73, 0xa2, 0x72, 0x68, 0xe0, 0x7d, 0x21, 0x5d,
+	0x29, 0x64, 0xab, 0x13, 0x00, 0xf1, 0x84, 0x7f, 0x55, 0x47, 0x64, 0xb2, 0x97, 0xff, 0x0c, 0x00,
+	0x00, 0xff, 0xff, 0xfc, 0x60, 0x24, 0xe5, 0x86, 0x15, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -149,10 +149,10 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// RunServiceClient is the client API for RunService service.
+// RunsV1Client is the client API for RunsV1 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type RunServiceClient interface {
+type RunsV1Client interface {
 	// List runs
 	ListRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
 	// List bookmarked runs for user
@@ -191,8 +191,8 @@ type RunServiceClient interface {
 	RestoreRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Bookmark run
 	BookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// UnBookmark run
-	UnBookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Unbookmark run
+	UnbookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Start run tensorboard
 	StartRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop run tensorboard
@@ -207,250 +207,250 @@ type RunServiceClient interface {
 	CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
 }
 
-type runServiceClient struct {
+type runsV1Client struct {
 	cc *grpc.ClientConn
 }
 
-func NewRunServiceClient(cc *grpc.ClientConn) RunServiceClient {
-	return &runServiceClient{cc}
+func NewRunsV1Client(cc *grpc.ClientConn) RunsV1Client {
+	return &runsV1Client{cc}
 }
 
-func (c *runServiceClient) ListRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+func (c *runsV1Client) ListRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
 	out := new(ListRunsResponse)
-	err := c.cc.Invoke(ctx, "/v1.RunService/ListRuns", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) ListBookmarkedRuns(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+func (c *runsV1Client) ListBookmarkedRuns(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
 	out := new(ListRunsResponse)
-	err := c.cc.Invoke(ctx, "/v1.RunService/ListBookmarkedRuns", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListBookmarkedRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) ListArchivedRuns(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+func (c *runsV1Client) ListArchivedRuns(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
 	out := new(ListRunsResponse)
-	err := c.cc.Invoke(ctx, "/v1.RunService/ListArchivedRuns", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListArchivedRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) CreateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) CreateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/CreateRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/CreateRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) GetRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) GetRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/GetRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) UpdateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) UpdateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/UpdateRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/UpdateRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) PatchRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) PatchRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/PatchRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/PatchRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) DeleteRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) DeleteRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/DeleteRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/DeleteRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) DeleteRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) DeleteRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/DeleteRuns", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/DeleteRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) StopRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/StopRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) StopRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/StopRuns", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) InvalidateRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) InvalidateRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/InvalidateRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/InvalidateRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) InvalidateRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) InvalidateRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/InvalidateRuns", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/InvalidateRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) CopyRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) CopyRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/CopyRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/CopyRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) RestartRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) RestartRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/RestartRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/RestartRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) ResumeRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) ResumeRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
-	err := c.cc.Invoke(ctx, "/v1.RunService/ResumeRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/ResumeRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) ArchiveRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) ArchiveRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/ArchiveRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/ArchiveRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) RestoreRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) RestoreRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/RestoreRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/RestoreRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) BookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) BookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/BookmarkRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/BookmarkRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) UnBookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/UnBookmarkRun", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/UnbookmarkRun", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) StartRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/StartRunTensorboard", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/StartRunTensorboard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) StopRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.RunService/StopRunTensorboard", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRunTensorboard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) GetRunStatuses(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Status, error) {
+func (c *runsV1Client) GetRunStatuses(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
-	err := c.cc.Invoke(ctx, "/v1.RunService/GetRunStatuses", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRunStatuses", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) CreateRunStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*Status, error) {
+func (c *runsV1Client) CreateRunStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
-	err := c.cc.Invoke(ctx, "/v1.RunService/CreateRunStatus", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/CreateRunStatus", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) GetRunCodeRefs(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*ListCodeRefResponse, error) {
+func (c *runsV1Client) GetRunCodeRefs(ctx context.Context, in *OwnedEntityUUIdRequest, opts ...grpc.CallOption) (*ListCodeRefResponse, error) {
 	out := new(ListCodeRefResponse)
-	err := c.cc.Invoke(ctx, "/v1.RunService/GetRunCodeRefs", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRunCodeRefs", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *runServiceClient) CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error) {
+func (c *runsV1Client) CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error) {
 	out := new(CodeReference)
-	err := c.cc.Invoke(ctx, "/v1.RunService/CreateRunCodeRef", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/CreateRunCodeRef", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RunServiceServer is the server API for RunService service.
-type RunServiceServer interface {
+// RunsV1Server is the server API for RunsV1 service.
+type RunsV1Server interface {
 	// List runs
 	ListRuns(context.Context, *ProjectBodyRequest) (*ListRunsResponse, error)
 	// List bookmarked runs for user
@@ -489,8 +489,8 @@ type RunServiceServer interface {
 	RestoreRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
 	// Bookmark run
 	BookmarkRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
-	// UnBookmark run
-	UnBookmarkRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
+	// Unbookmark run
+	UnbookmarkRun(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
 	// Start run tensorboard
 	StartRunTensorboard(context.Context, *OwnedEntityUUIdRequest) (*empty.Empty, error)
 	// Stop run tensorboard
@@ -505,678 +505,678 @@ type RunServiceServer interface {
 	CreateRunCodeRef(context.Context, *CodeRefBodyRequest) (*CodeReference, error)
 }
 
-// UnimplementedRunServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedRunServiceServer struct {
+// UnimplementedRunsV1Server can be embedded to have forward compatible implementations.
+type UnimplementedRunsV1Server struct {
 }
 
-func (*UnimplementedRunServiceServer) ListRuns(ctx context.Context, req *ProjectBodyRequest) (*ListRunsResponse, error) {
+func (*UnimplementedRunsV1Server) ListRuns(ctx context.Context, req *ProjectBodyRequest) (*ListRunsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListRuns not implemented")
 }
-func (*UnimplementedRunServiceServer) ListBookmarkedRuns(ctx context.Context, req *UserBodyRequest) (*ListRunsResponse, error) {
+func (*UnimplementedRunsV1Server) ListBookmarkedRuns(ctx context.Context, req *UserBodyRequest) (*ListRunsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedRuns not implemented")
 }
-func (*UnimplementedRunServiceServer) ListArchivedRuns(ctx context.Context, req *UserBodyRequest) (*ListRunsResponse, error) {
+func (*UnimplementedRunsV1Server) ListArchivedRuns(ctx context.Context, req *UserBodyRequest) (*ListRunsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedRuns not implemented")
 }
-func (*UnimplementedRunServiceServer) CreateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) CreateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRun not implemented")
 }
-func (*UnimplementedRunServiceServer) GetRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) GetRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRun not implemented")
 }
-func (*UnimplementedRunServiceServer) UpdateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) UpdateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateRun not implemented")
 }
-func (*UnimplementedRunServiceServer) PatchRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) PatchRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PatchRun not implemented")
 }
-func (*UnimplementedRunServiceServer) DeleteRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) DeleteRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRun not implemented")
 }
-func (*UnimplementedRunServiceServer) DeleteRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) DeleteRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRuns not implemented")
 }
-func (*UnimplementedRunServiceServer) StopRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRun not implemented")
 }
-func (*UnimplementedRunServiceServer) StopRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRuns not implemented")
 }
-func (*UnimplementedRunServiceServer) InvalidateRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) InvalidateRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRun not implemented")
 }
-func (*UnimplementedRunServiceServer) InvalidateRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) InvalidateRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRuns not implemented")
 }
-func (*UnimplementedRunServiceServer) CopyRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) CopyRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CopyRun not implemented")
 }
-func (*UnimplementedRunServiceServer) RestartRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) RestartRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestartRun not implemented")
 }
-func (*UnimplementedRunServiceServer) ResumeRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) ResumeRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResumeRun not implemented")
 }
-func (*UnimplementedRunServiceServer) ArchiveRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) ArchiveRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRun not implemented")
 }
-func (*UnimplementedRunServiceServer) RestoreRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) RestoreRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreRun not implemented")
 }
-func (*UnimplementedRunServiceServer) BookmarkRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) BookmarkRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BookmarkRun not implemented")
 }
-func (*UnimplementedRunServiceServer) UnBookmarkRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkRun not implemented")
+func (*UnimplementedRunsV1Server) UnbookmarkRun(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnbookmarkRun not implemented")
 }
-func (*UnimplementedRunServiceServer) StartRunTensorboard(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StartRunTensorboard(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartRunTensorboard not implemented")
 }
-func (*UnimplementedRunServiceServer) StopRunTensorboard(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRunTensorboard(ctx context.Context, req *OwnedEntityUUIdRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRunTensorboard not implemented")
 }
-func (*UnimplementedRunServiceServer) GetRunStatuses(ctx context.Context, req *OwnedEntityUUIdRequest) (*Status, error) {
+func (*UnimplementedRunsV1Server) GetRunStatuses(ctx context.Context, req *OwnedEntityUUIdRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRunStatuses not implemented")
 }
-func (*UnimplementedRunServiceServer) CreateRunStatus(ctx context.Context, req *EntityStatusRequest) (*Status, error) {
+func (*UnimplementedRunsV1Server) CreateRunStatus(ctx context.Context, req *EntityStatusRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRunStatus not implemented")
 }
-func (*UnimplementedRunServiceServer) GetRunCodeRefs(ctx context.Context, req *OwnedEntityUUIdRequest) (*ListCodeRefResponse, error) {
+func (*UnimplementedRunsV1Server) GetRunCodeRefs(ctx context.Context, req *OwnedEntityUUIdRequest) (*ListCodeRefResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRunCodeRefs not implemented")
 }
-func (*UnimplementedRunServiceServer) CreateRunCodeRef(ctx context.Context, req *CodeRefBodyRequest) (*CodeReference, error) {
+func (*UnimplementedRunsV1Server) CreateRunCodeRef(ctx context.Context, req *CodeRefBodyRequest) (*CodeReference, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRunCodeRef not implemented")
 }
 
-func RegisterRunServiceServer(s *grpc.Server, srv RunServiceServer) {
-	s.RegisterService(&_RunService_serviceDesc, srv)
+func RegisterRunsV1Server(s *grpc.Server, srv RunsV1Server) {
+	s.RegisterService(&_RunsV1_serviceDesc, srv)
 }
 
-func _RunService_ListRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_ListRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).ListRuns(ctx, in)
+		return srv.(RunsV1Server).ListRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/ListRuns",
+		FullMethod: "/v1.RunsV1/ListRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).ListRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).ListRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_ListBookmarkedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_ListBookmarkedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).ListBookmarkedRuns(ctx, in)
+		return srv.(RunsV1Server).ListBookmarkedRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/ListBookmarkedRuns",
+		FullMethod: "/v1.RunsV1/ListBookmarkedRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).ListBookmarkedRuns(ctx, req.(*UserBodyRequest))
+		return srv.(RunsV1Server).ListBookmarkedRuns(ctx, req.(*UserBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_ListArchivedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_ListArchivedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).ListArchivedRuns(ctx, in)
+		return srv.(RunsV1Server).ListArchivedRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/ListArchivedRuns",
+		FullMethod: "/v1.RunsV1/ListArchivedRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).ListArchivedRuns(ctx, req.(*UserBodyRequest))
+		return srv.(RunsV1Server).ListArchivedRuns(ctx, req.(*UserBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_CreateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_CreateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).CreateRun(ctx, in)
+		return srv.(RunsV1Server).CreateRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/CreateRun",
+		FullMethod: "/v1.RunsV1/CreateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).CreateRun(ctx, req.(*RunBodyRequest))
+		return srv.(RunsV1Server).CreateRun(ctx, req.(*RunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_GetRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_GetRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).GetRun(ctx, in)
+		return srv.(RunsV1Server).GetRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/GetRun",
+		FullMethod: "/v1.RunsV1/GetRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).GetRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).GetRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_UpdateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_UpdateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).UpdateRun(ctx, in)
+		return srv.(RunsV1Server).UpdateRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/UpdateRun",
+		FullMethod: "/v1.RunsV1/UpdateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).UpdateRun(ctx, req.(*RunBodyRequest))
+		return srv.(RunsV1Server).UpdateRun(ctx, req.(*RunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_PatchRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_PatchRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).PatchRun(ctx, in)
+		return srv.(RunsV1Server).PatchRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/PatchRun",
+		FullMethod: "/v1.RunsV1/PatchRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).PatchRun(ctx, req.(*RunBodyRequest))
+		return srv.(RunsV1Server).PatchRun(ctx, req.(*RunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).DeleteRun(ctx, in)
+		return srv.(RunsV1Server).DeleteRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/DeleteRun",
+		FullMethod: "/v1.RunsV1/DeleteRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).DeleteRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).DeleteRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_DeleteRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_DeleteRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).DeleteRuns(ctx, in)
+		return srv.(RunsV1Server).DeleteRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/DeleteRuns",
+		FullMethod: "/v1.RunsV1/DeleteRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).DeleteRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).DeleteRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_StopRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_StopRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).StopRun(ctx, in)
+		return srv.(RunsV1Server).StopRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/StopRun",
+		FullMethod: "/v1.RunsV1/StopRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).StopRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).StopRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_StopRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_StopRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).StopRuns(ctx, in)
+		return srv.(RunsV1Server).StopRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/StopRuns",
+		FullMethod: "/v1.RunsV1/StopRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).StopRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).StopRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).InvalidateRun(ctx, in)
+		return srv.(RunsV1Server).InvalidateRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/InvalidateRun",
+		FullMethod: "/v1.RunsV1/InvalidateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).InvalidateRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).InvalidateRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_InvalidateRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_InvalidateRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).InvalidateRuns(ctx, in)
+		return srv.(RunsV1Server).InvalidateRuns(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/InvalidateRuns",
+		FullMethod: "/v1.RunsV1/InvalidateRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).InvalidateRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).InvalidateRuns(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_CopyRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_CopyRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).CopyRun(ctx, in)
+		return srv.(RunsV1Server).CopyRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/CopyRun",
+		FullMethod: "/v1.RunsV1/CopyRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).CopyRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).CopyRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_RestartRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_RestartRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).RestartRun(ctx, in)
+		return srv.(RunsV1Server).RestartRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/RestartRun",
+		FullMethod: "/v1.RunsV1/RestartRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).RestartRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).RestartRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_ResumeRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_ResumeRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).ResumeRun(ctx, in)
+		return srv.(RunsV1Server).ResumeRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/ResumeRun",
+		FullMethod: "/v1.RunsV1/ResumeRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).ResumeRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).ResumeRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).ArchiveRun(ctx, in)
+		return srv.(RunsV1Server).ArchiveRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/ArchiveRun",
+		FullMethod: "/v1.RunsV1/ArchiveRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).ArchiveRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).ArchiveRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).RestoreRun(ctx, in)
+		return srv.(RunsV1Server).RestoreRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/RestoreRun",
+		FullMethod: "/v1.RunsV1/RestoreRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).RestoreRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).RestoreRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).BookmarkRun(ctx, in)
+		return srv.(RunsV1Server).BookmarkRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/BookmarkRun",
+		FullMethod: "/v1.RunsV1/BookmarkRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).BookmarkRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).BookmarkRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_UnBookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_UnbookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).UnBookmarkRun(ctx, in)
+		return srv.(RunsV1Server).UnbookmarkRun(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/UnBookmarkRun",
+		FullMethod: "/v1.RunsV1/UnbookmarkRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).UnBookmarkRun(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).UnbookmarkRun(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).StartRunTensorboard(ctx, in)
+		return srv.(RunsV1Server).StartRunTensorboard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/StartRunTensorboard",
+		FullMethod: "/v1.RunsV1/StartRunTensorboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).StartRunTensorboard(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).StartRunTensorboard(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).StopRunTensorboard(ctx, in)
+		return srv.(RunsV1Server).StopRunTensorboard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/StopRunTensorboard",
+		FullMethod: "/v1.RunsV1/StopRunTensorboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).StopRunTensorboard(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).StopRunTensorboard(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).GetRunStatuses(ctx, in)
+		return srv.(RunsV1Server).GetRunStatuses(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/GetRunStatuses",
+		FullMethod: "/v1.RunsV1/GetRunStatuses",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).GetRunStatuses(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).GetRunStatuses(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_CreateRunStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_CreateRunStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EntityStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).CreateRunStatus(ctx, in)
+		return srv.(RunsV1Server).CreateRunStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/CreateRunStatus",
+		FullMethod: "/v1.RunsV1/CreateRunStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).CreateRunStatus(ctx, req.(*EntityStatusRequest))
+		return srv.(RunsV1Server).CreateRunStatus(ctx, req.(*EntityStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnedEntityUUIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).GetRunCodeRefs(ctx, in)
+		return srv.(RunsV1Server).GetRunCodeRefs(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/GetRunCodeRefs",
+		FullMethod: "/v1.RunsV1/GetRunCodeRefs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).GetRunCodeRefs(ctx, req.(*OwnedEntityUUIdRequest))
+		return srv.(RunsV1Server).GetRunCodeRefs(ctx, req.(*OwnedEntityUUIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RunService_CreateRunCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RunsV1_CreateRunCodeRef_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CodeRefBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RunServiceServer).CreateRunCodeRef(ctx, in)
+		return srv.(RunsV1Server).CreateRunCodeRef(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.RunService/CreateRunCodeRef",
+		FullMethod: "/v1.RunsV1/CreateRunCodeRef",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunServiceServer).CreateRunCodeRef(ctx, req.(*CodeRefBodyRequest))
+		return srv.(RunsV1Server).CreateRunCodeRef(ctx, req.(*CodeRefBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _RunService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.RunService",
-	HandlerType: (*RunServiceServer)(nil),
+var _RunsV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.RunsV1",
+	HandlerType: (*RunsV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListRuns",
-			Handler:    _RunService_ListRuns_Handler,
+			Handler:    _RunsV1_ListRuns_Handler,
 		},
 		{
 			MethodName: "ListBookmarkedRuns",
-			Handler:    _RunService_ListBookmarkedRuns_Handler,
+			Handler:    _RunsV1_ListBookmarkedRuns_Handler,
 		},
 		{
 			MethodName: "ListArchivedRuns",
-			Handler:    _RunService_ListArchivedRuns_Handler,
+			Handler:    _RunsV1_ListArchivedRuns_Handler,
 		},
 		{
 			MethodName: "CreateRun",
-			Handler:    _RunService_CreateRun_Handler,
+			Handler:    _RunsV1_CreateRun_Handler,
 		},
 		{
 			MethodName: "GetRun",
-			Handler:    _RunService_GetRun_Handler,
+			Handler:    _RunsV1_GetRun_Handler,
 		},
 		{
 			MethodName: "UpdateRun",
-			Handler:    _RunService_UpdateRun_Handler,
+			Handler:    _RunsV1_UpdateRun_Handler,
 		},
 		{
 			MethodName: "PatchRun",
-			Handler:    _RunService_PatchRun_Handler,
+			Handler:    _RunsV1_PatchRun_Handler,
 		},
 		{
 			MethodName: "DeleteRun",
-			Handler:    _RunService_DeleteRun_Handler,
+			Handler:    _RunsV1_DeleteRun_Handler,
 		},
 		{
 			MethodName: "DeleteRuns",
-			Handler:    _RunService_DeleteRuns_Handler,
+			Handler:    _RunsV1_DeleteRuns_Handler,
 		},
 		{
 			MethodName: "StopRun",
-			Handler:    _RunService_StopRun_Handler,
+			Handler:    _RunsV1_StopRun_Handler,
 		},
 		{
 			MethodName: "StopRuns",
-			Handler:    _RunService_StopRuns_Handler,
+			Handler:    _RunsV1_StopRuns_Handler,
 		},
 		{
 			MethodName: "InvalidateRun",
-			Handler:    _RunService_InvalidateRun_Handler,
+			Handler:    _RunsV1_InvalidateRun_Handler,
 		},
 		{
 			MethodName: "InvalidateRuns",
-			Handler:    _RunService_InvalidateRuns_Handler,
+			Handler:    _RunsV1_InvalidateRuns_Handler,
 		},
 		{
 			MethodName: "CopyRun",
-			Handler:    _RunService_CopyRun_Handler,
+			Handler:    _RunsV1_CopyRun_Handler,
 		},
 		{
 			MethodName: "RestartRun",
-			Handler:    _RunService_RestartRun_Handler,
+			Handler:    _RunsV1_RestartRun_Handler,
 		},
 		{
 			MethodName: "ResumeRun",
-			Handler:    _RunService_ResumeRun_Handler,
+			Handler:    _RunsV1_ResumeRun_Handler,
 		},
 		{
 			MethodName: "ArchiveRun",
-			Handler:    _RunService_ArchiveRun_Handler,
+			Handler:    _RunsV1_ArchiveRun_Handler,
 		},
 		{
 			MethodName: "RestoreRun",
-			Handler:    _RunService_RestoreRun_Handler,
+			Handler:    _RunsV1_RestoreRun_Handler,
 		},
 		{
 			MethodName: "BookmarkRun",
-			Handler:    _RunService_BookmarkRun_Handler,
+			Handler:    _RunsV1_BookmarkRun_Handler,
 		},
 		{
-			MethodName: "UnBookmarkRun",
-			Handler:    _RunService_UnBookmarkRun_Handler,
+			MethodName: "UnbookmarkRun",
+			Handler:    _RunsV1_UnbookmarkRun_Handler,
 		},
 		{
 			MethodName: "StartRunTensorboard",
-			Handler:    _RunService_StartRunTensorboard_Handler,
+			Handler:    _RunsV1_StartRunTensorboard_Handler,
 		},
 		{
 			MethodName: "StopRunTensorboard",
-			Handler:    _RunService_StopRunTensorboard_Handler,
+			Handler:    _RunsV1_StopRunTensorboard_Handler,
 		},
 		{
 			MethodName: "GetRunStatuses",
-			Handler:    _RunService_GetRunStatuses_Handler,
+			Handler:    _RunsV1_GetRunStatuses_Handler,
 		},
 		{
 			MethodName: "CreateRunStatus",
-			Handler:    _RunService_CreateRunStatus_Handler,
+			Handler:    _RunsV1_CreateRunStatus_Handler,
 		},
 		{
 			MethodName: "GetRunCodeRefs",
-			Handler:    _RunService_GetRunCodeRefs_Handler,
+			Handler:    _RunsV1_GetRunCodeRefs_Handler,
 		},
 		{
 			MethodName: "CreateRunCodeRef",
-			Handler:    _RunService_CreateRunCodeRef_Handler,
+			Handler:    _RunsV1_CreateRunCodeRef_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/polyaxon_sdk.proto",
 }
 
-// ProjectServiceClient is the client API for ProjectService service.
+// ProjectsV1Client is the client API for ProjectsV1 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type ProjectServiceClient interface {
+type ProjectsV1Client interface {
 	// List projects
 	ListProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
 	// List project namess
@@ -1201,159 +1201,159 @@ type ProjectServiceClient interface {
 	RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Bookmark project
 	BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// UnBookmark project
-	UnBookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Unbookmark project
+	UnbookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Enable project CI
 	EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Disbale project CI
 	DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
-type projectServiceClient struct {
+type projectsV1Client struct {
 	cc *grpc.ClientConn
 }
 
-func NewProjectServiceClient(cc *grpc.ClientConn) ProjectServiceClient {
-	return &projectServiceClient{cc}
+func NewProjectsV1Client(cc *grpc.ClientConn) ProjectsV1Client {
+	return &projectsV1Client{cc}
 }
 
-func (c *projectServiceClient) ListProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListProjects(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListProjects", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListProjects", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) ListProjectNames(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListProjectNames(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListProjectNames", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListProjectNames", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) ListBookmarkedProjects(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListBookmarkedProjects(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListBookmarkedProjects", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListBookmarkedProjects", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) ListArchivedProjects(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListArchivedProjects(ctx context.Context, in *UserBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/ListArchivedProjects", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListArchivedProjects", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) CreateProject(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+func (c *projectsV1Client) CreateProject(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*Project, error) {
 	out := new(Project)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/CreateProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/CreateProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) GetProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+func (c *projectsV1Client) GetProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
 	out := new(Project)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/GetProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/GetProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) UpdateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+func (c *projectsV1Client) UpdateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
 	out := new(Project)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/UpdateProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/UpdateProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) PatchProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+func (c *projectsV1Client) PatchProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
 	out := new(Project)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/PatchProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/PatchProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) DeleteExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) DeleteExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/DeleteExperiment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/DeleteExperiment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) ArchiveProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) ArchiveProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/ArchiveProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ArchiveProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/RestoreExperiment", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/RestoreExperiment", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/BookmarkProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/BookmarkProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) UnBookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) UnbookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/UnBookmarkProject", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/UnbookmarkProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/EnableProjectCI", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/EnableProjectCI", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *projectServiceClient) DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/v1.ProjectService/DisableProjectCI", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/DisableProjectCI", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ProjectServiceServer is the server API for ProjectService service.
-type ProjectServiceServer interface {
+// ProjectsV1Server is the server API for ProjectsV1 service.
+type ProjectsV1Server interface {
 	// List projects
 	ListProjects(context.Context, *OwnerBodyRequest) (*ListProjectsResponse, error)
 	// List project namess
@@ -1378,661 +1378,661 @@ type ProjectServiceServer interface {
 	RestoreExperiment(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
 	// Bookmark project
 	BookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
-	// UnBookmark project
-	UnBookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	// Unbookmark project
+	UnbookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
 	// Enable project CI
 	EnableProjectCI(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
 	// Disbale project CI
 	DisableProjectCI(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
 }
 
-// UnimplementedProjectServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedProjectServiceServer struct {
+// UnimplementedProjectsV1Server can be embedded to have forward compatible implementations.
+type UnimplementedProjectsV1Server struct {
 }
 
-func (*UnimplementedProjectServiceServer) ListProjects(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListProjects(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProjects not implemented")
 }
-func (*UnimplementedProjectServiceServer) ListProjectNames(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListProjectNames(ctx context.Context, req *OwnerBodyRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProjectNames not implemented")
 }
-func (*UnimplementedProjectServiceServer) ListBookmarkedProjects(ctx context.Context, req *UserBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListBookmarkedProjects(ctx context.Context, req *UserBodyRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedProjects not implemented")
 }
-func (*UnimplementedProjectServiceServer) ListArchivedProjects(ctx context.Context, req *UserBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListArchivedProjects(ctx context.Context, req *UserBodyRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedProjects not implemented")
 }
-func (*UnimplementedProjectServiceServer) CreateProject(ctx context.Context, req *OwnerBodyRequest) (*Project, error) {
+func (*UnimplementedProjectsV1Server) CreateProject(ctx context.Context, req *OwnerBodyRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) GetProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+func (*UnimplementedProjectsV1Server) GetProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) UpdateProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+func (*UnimplementedProjectsV1Server) UpdateProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) PatchProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+func (*UnimplementedProjectsV1Server) PatchProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PatchProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) DeleteExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) DeleteExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperiment not implemented")
 }
-func (*UnimplementedProjectServiceServer) ArchiveProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) ArchiveProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) RestoreExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) RestoreExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreExperiment not implemented")
 }
-func (*UnimplementedProjectServiceServer) BookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) BookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BookmarkProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) UnBookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnBookmarkProject not implemented")
+func (*UnimplementedProjectsV1Server) UnbookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnbookmarkProject not implemented")
 }
-func (*UnimplementedProjectServiceServer) EnableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) EnableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EnableProjectCI not implemented")
 }
-func (*UnimplementedProjectServiceServer) DisableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) DisableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisableProjectCI not implemented")
 }
 
-func RegisterProjectServiceServer(s *grpc.Server, srv ProjectServiceServer) {
-	s.RegisterService(&_ProjectService_serviceDesc, srv)
+func RegisterProjectsV1Server(s *grpc.Server, srv ProjectsV1Server) {
+	s.RegisterService(&_ProjectsV1_serviceDesc, srv)
 }
 
-func _ProjectService_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).ListProjects(ctx, in)
+		return srv.(ProjectsV1Server).ListProjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/ListProjects",
+		FullMethod: "/v1.ProjectsV1/ListProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).ListProjects(ctx, req.(*OwnerBodyRequest))
+		return srv.(ProjectsV1Server).ListProjects(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_ListProjectNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_ListProjectNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).ListProjectNames(ctx, in)
+		return srv.(ProjectsV1Server).ListProjectNames(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/ListProjectNames",
+		FullMethod: "/v1.ProjectsV1/ListProjectNames",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).ListProjectNames(ctx, req.(*OwnerBodyRequest))
+		return srv.(ProjectsV1Server).ListProjectNames(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_ListBookmarkedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_ListBookmarkedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).ListBookmarkedProjects(ctx, in)
+		return srv.(ProjectsV1Server).ListBookmarkedProjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/ListBookmarkedProjects",
+		FullMethod: "/v1.ProjectsV1/ListBookmarkedProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).ListBookmarkedProjects(ctx, req.(*UserBodyRequest))
+		return srv.(ProjectsV1Server).ListBookmarkedProjects(ctx, req.(*UserBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_ListArchivedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_ListArchivedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).ListArchivedProjects(ctx, in)
+		return srv.(ProjectsV1Server).ListArchivedProjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/ListArchivedProjects",
+		FullMethod: "/v1.ProjectsV1/ListArchivedProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).ListArchivedProjects(ctx, req.(*UserBodyRequest))
+		return srv.(ProjectsV1Server).ListArchivedProjects(ctx, req.(*UserBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_CreateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_CreateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OwnerBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).CreateProject(ctx, in)
+		return srv.(ProjectsV1Server).CreateProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/CreateProject",
+		FullMethod: "/v1.ProjectsV1/CreateProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).CreateProject(ctx, req.(*OwnerBodyRequest))
+		return srv.(ProjectsV1Server).CreateProject(ctx, req.(*OwnerBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_GetProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_GetProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).GetProject(ctx, in)
+		return srv.(ProjectsV1Server).GetProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/GetProject",
+		FullMethod: "/v1.ProjectsV1/GetProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).GetProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).GetProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_UpdateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_UpdateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).UpdateProject(ctx, in)
+		return srv.(ProjectsV1Server).UpdateProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/UpdateProject",
+		FullMethod: "/v1.ProjectsV1/UpdateProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).UpdateProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).UpdateProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_PatchProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_PatchProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).PatchProject(ctx, in)
+		return srv.(ProjectsV1Server).PatchProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/PatchProject",
+		FullMethod: "/v1.ProjectsV1/PatchProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).PatchProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).PatchProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_DeleteExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_DeleteExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).DeleteExperiment(ctx, in)
+		return srv.(ProjectsV1Server).DeleteExperiment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/DeleteExperiment",
+		FullMethod: "/v1.ProjectsV1/DeleteExperiment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).DeleteExperiment(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).DeleteExperiment(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_ArchiveProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_ArchiveProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).ArchiveProject(ctx, in)
+		return srv.(ProjectsV1Server).ArchiveProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/ArchiveProject",
+		FullMethod: "/v1.ProjectsV1/ArchiveProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).ArchiveProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).ArchiveProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_RestoreExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_RestoreExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).RestoreExperiment(ctx, in)
+		return srv.(ProjectsV1Server).RestoreExperiment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/RestoreExperiment",
+		FullMethod: "/v1.ProjectsV1/RestoreExperiment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).RestoreExperiment(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).RestoreExperiment(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_BookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_BookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).BookmarkProject(ctx, in)
+		return srv.(ProjectsV1Server).BookmarkProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/BookmarkProject",
+		FullMethod: "/v1.ProjectsV1/BookmarkProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).BookmarkProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).BookmarkProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_UnBookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_UnbookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).UnBookmarkProject(ctx, in)
+		return srv.(ProjectsV1Server).UnbookmarkProject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/UnBookmarkProject",
+		FullMethod: "/v1.ProjectsV1/UnbookmarkProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).UnBookmarkProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).UnbookmarkProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_EnableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_EnableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).EnableProjectCI(ctx, in)
+		return srv.(ProjectsV1Server).EnableProjectCI(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/EnableProjectCI",
+		FullMethod: "/v1.ProjectsV1/EnableProjectCI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).EnableProjectCI(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).EnableProjectCI(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ProjectService_DisableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ProjectsV1_DisableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProjectServiceServer).DisableProjectCI(ctx, in)
+		return srv.(ProjectsV1Server).DisableProjectCI(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.ProjectService/DisableProjectCI",
+		FullMethod: "/v1.ProjectsV1/DisableProjectCI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectServiceServer).DisableProjectCI(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).DisableProjectCI(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _ProjectService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.ProjectService",
-	HandlerType: (*ProjectServiceServer)(nil),
+var _ProjectsV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.ProjectsV1",
+	HandlerType: (*ProjectsV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListProjects",
-			Handler:    _ProjectService_ListProjects_Handler,
+			Handler:    _ProjectsV1_ListProjects_Handler,
 		},
 		{
 			MethodName: "ListProjectNames",
-			Handler:    _ProjectService_ListProjectNames_Handler,
+			Handler:    _ProjectsV1_ListProjectNames_Handler,
 		},
 		{
 			MethodName: "ListBookmarkedProjects",
-			Handler:    _ProjectService_ListBookmarkedProjects_Handler,
+			Handler:    _ProjectsV1_ListBookmarkedProjects_Handler,
 		},
 		{
 			MethodName: "ListArchivedProjects",
-			Handler:    _ProjectService_ListArchivedProjects_Handler,
+			Handler:    _ProjectsV1_ListArchivedProjects_Handler,
 		},
 		{
 			MethodName: "CreateProject",
-			Handler:    _ProjectService_CreateProject_Handler,
+			Handler:    _ProjectsV1_CreateProject_Handler,
 		},
 		{
 			MethodName: "GetProject",
-			Handler:    _ProjectService_GetProject_Handler,
+			Handler:    _ProjectsV1_GetProject_Handler,
 		},
 		{
 			MethodName: "UpdateProject",
-			Handler:    _ProjectService_UpdateProject_Handler,
+			Handler:    _ProjectsV1_UpdateProject_Handler,
 		},
 		{
 			MethodName: "PatchProject",
-			Handler:    _ProjectService_PatchProject_Handler,
+			Handler:    _ProjectsV1_PatchProject_Handler,
 		},
 		{
 			MethodName: "DeleteExperiment",
-			Handler:    _ProjectService_DeleteExperiment_Handler,
+			Handler:    _ProjectsV1_DeleteExperiment_Handler,
 		},
 		{
 			MethodName: "ArchiveProject",
-			Handler:    _ProjectService_ArchiveProject_Handler,
+			Handler:    _ProjectsV1_ArchiveProject_Handler,
 		},
 		{
 			MethodName: "RestoreExperiment",
-			Handler:    _ProjectService_RestoreExperiment_Handler,
+			Handler:    _ProjectsV1_RestoreExperiment_Handler,
 		},
 		{
 			MethodName: "BookmarkProject",
-			Handler:    _ProjectService_BookmarkProject_Handler,
+			Handler:    _ProjectsV1_BookmarkProject_Handler,
 		},
 		{
-			MethodName: "UnBookmarkProject",
-			Handler:    _ProjectService_UnBookmarkProject_Handler,
+			MethodName: "UnbookmarkProject",
+			Handler:    _ProjectsV1_UnbookmarkProject_Handler,
 		},
 		{
 			MethodName: "EnableProjectCI",
-			Handler:    _ProjectService_EnableProjectCI_Handler,
+			Handler:    _ProjectsV1_EnableProjectCI_Handler,
 		},
 		{
 			MethodName: "DisableProjectCI",
-			Handler:    _ProjectService_DisableProjectCI_Handler,
+			Handler:    _ProjectsV1_DisableProjectCI_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/polyaxon_sdk.proto",
 }
 
-// AuthServiceClient is the client API for AuthService service.
+// AuthV1Client is the client API for AuthV1 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type AuthServiceClient interface {
+type AuthV1Client interface {
 	// Login
 	Login(ctx context.Context, in *CredsBodyRequest, opts ...grpc.CallOption) (*Auth, error)
 }
 
-type authServiceClient struct {
+type authV1Client struct {
 	cc *grpc.ClientConn
 }
 
-func NewAuthServiceClient(cc *grpc.ClientConn) AuthServiceClient {
-	return &authServiceClient{cc}
+func NewAuthV1Client(cc *grpc.ClientConn) AuthV1Client {
+	return &authV1Client{cc}
 }
 
-func (c *authServiceClient) Login(ctx context.Context, in *CredsBodyRequest, opts ...grpc.CallOption) (*Auth, error) {
+func (c *authV1Client) Login(ctx context.Context, in *CredsBodyRequest, opts ...grpc.CallOption) (*Auth, error) {
 	out := new(Auth)
-	err := c.cc.Invoke(ctx, "/v1.AuthService/Login", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.AuthV1/Login", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AuthServiceServer is the server API for AuthService service.
-type AuthServiceServer interface {
+// AuthV1Server is the server API for AuthV1 service.
+type AuthV1Server interface {
 	// Login
 	Login(context.Context, *CredsBodyRequest) (*Auth, error)
 }
 
-// UnimplementedAuthServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedAuthServiceServer struct {
+// UnimplementedAuthV1Server can be embedded to have forward compatible implementations.
+type UnimplementedAuthV1Server struct {
 }
 
-func (*UnimplementedAuthServiceServer) Login(ctx context.Context, req *CredsBodyRequest) (*Auth, error) {
+func (*UnimplementedAuthV1Server) Login(ctx context.Context, req *CredsBodyRequest) (*Auth, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 
-func RegisterAuthServiceServer(s *grpc.Server, srv AuthServiceServer) {
-	s.RegisterService(&_AuthService_serviceDesc, srv)
+func RegisterAuthV1Server(s *grpc.Server, srv AuthV1Server) {
+	s.RegisterService(&_AuthV1_serviceDesc, srv)
 }
 
-func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _AuthV1_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CredsBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AuthServiceServer).Login(ctx, in)
+		return srv.(AuthV1Server).Login(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.AuthService/Login",
+		FullMethod: "/v1.AuthV1/Login",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).Login(ctx, req.(*CredsBodyRequest))
+		return srv.(AuthV1Server).Login(ctx, req.(*CredsBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _AuthService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.AuthService",
-	HandlerType: (*AuthServiceServer)(nil),
+var _AuthV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.AuthV1",
+	HandlerType: (*AuthV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Login",
-			Handler:    _AuthService_Login_Handler,
+			Handler:    _AuthV1_Login_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/polyaxon_sdk.proto",
 }
 
-// UserServiceClient is the client API for UserService service.
+// UsersV1Client is the client API for UsersV1 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type UserServiceClient interface {
+type UsersV1Client interface {
 	// Get current user
 	GetUser(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*User, error)
 }
 
-type userServiceClient struct {
+type usersV1Client struct {
 	cc *grpc.ClientConn
 }
 
-func NewUserServiceClient(cc *grpc.ClientConn) UserServiceClient {
-	return &userServiceClient{cc}
+func NewUsersV1Client(cc *grpc.ClientConn) UsersV1Client {
+	return &usersV1Client{cc}
 }
 
-func (c *userServiceClient) GetUser(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*User, error) {
+func (c *usersV1Client) GetUser(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*User, error) {
 	out := new(User)
-	err := c.cc.Invoke(ctx, "/v1.UserService/getUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.UsersV1/getUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserServiceServer is the server API for UserService service.
-type UserServiceServer interface {
+// UsersV1Server is the server API for UsersV1 service.
+type UsersV1Server interface {
 	// Get current user
 	GetUser(context.Context, *empty.Empty) (*User, error)
 }
 
-// UnimplementedUserServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedUserServiceServer struct {
+// UnimplementedUsersV1Server can be embedded to have forward compatible implementations.
+type UnimplementedUsersV1Server struct {
 }
 
-func (*UnimplementedUserServiceServer) GetUser(ctx context.Context, req *empty.Empty) (*User, error) {
+func (*UnimplementedUsersV1Server) GetUser(ctx context.Context, req *empty.Empty) (*User, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 
-func RegisterUserServiceServer(s *grpc.Server, srv UserServiceServer) {
-	s.RegisterService(&_UserService_serviceDesc, srv)
+func RegisterUsersV1Server(s *grpc.Server, srv UsersV1Server) {
+	s.RegisterService(&_UsersV1_serviceDesc, srv)
 }
 
-func _UserService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsersV1_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).GetUser(ctx, in)
+		return srv.(UsersV1Server).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.UserService/GetUser",
+		FullMethod: "/v1.UsersV1/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).GetUser(ctx, req.(*empty.Empty))
+		return srv.(UsersV1Server).GetUser(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _UserService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.UserService",
-	HandlerType: (*UserServiceServer)(nil),
+var _UsersV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.UsersV1",
+	HandlerType: (*UsersV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "getUser",
-			Handler:    _UserService_GetUser_Handler,
+			Handler:    _UsersV1_GetUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "v1/polyaxon_sdk.proto",
 }
 
-// VersionServiceClient is the client API for VersionService service.
+// VersionsV1Client is the client API for VersionsV1 service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type VersionServiceClient interface {
+type VersionsV1Client interface {
 	// Get versions
 	GetVersions(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Versions, error)
 	// Get log handler
 	GetLogHandler(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LogHandler, error)
 }
 
-type versionServiceClient struct {
+type versionsV1Client struct {
 	cc *grpc.ClientConn
 }
 
-func NewVersionServiceClient(cc *grpc.ClientConn) VersionServiceClient {
-	return &versionServiceClient{cc}
+func NewVersionsV1Client(cc *grpc.ClientConn) VersionsV1Client {
+	return &versionsV1Client{cc}
 }
 
-func (c *versionServiceClient) GetVersions(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Versions, error) {
+func (c *versionsV1Client) GetVersions(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Versions, error) {
 	out := new(Versions)
-	err := c.cc.Invoke(ctx, "/v1.VersionService/GetVersions", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.VersionsV1/GetVersions", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *versionServiceClient) GetLogHandler(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LogHandler, error) {
+func (c *versionsV1Client) GetLogHandler(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*LogHandler, error) {
 	out := new(LogHandler)
-	err := c.cc.Invoke(ctx, "/v1.VersionService/GetLogHandler", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/v1.VersionsV1/GetLogHandler", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// VersionServiceServer is the server API for VersionService service.
-type VersionServiceServer interface {
+// VersionsV1Server is the server API for VersionsV1 service.
+type VersionsV1Server interface {
 	// Get versions
 	GetVersions(context.Context, *empty.Empty) (*Versions, error)
 	// Get log handler
 	GetLogHandler(context.Context, *empty.Empty) (*LogHandler, error)
 }
 
-// UnimplementedVersionServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedVersionServiceServer struct {
+// UnimplementedVersionsV1Server can be embedded to have forward compatible implementations.
+type UnimplementedVersionsV1Server struct {
 }
 
-func (*UnimplementedVersionServiceServer) GetVersions(ctx context.Context, req *empty.Empty) (*Versions, error) {
+func (*UnimplementedVersionsV1Server) GetVersions(ctx context.Context, req *empty.Empty) (*Versions, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVersions not implemented")
 }
-func (*UnimplementedVersionServiceServer) GetLogHandler(ctx context.Context, req *empty.Empty) (*LogHandler, error) {
+func (*UnimplementedVersionsV1Server) GetLogHandler(ctx context.Context, req *empty.Empty) (*LogHandler, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLogHandler not implemented")
 }
 
-func RegisterVersionServiceServer(s *grpc.Server, srv VersionServiceServer) {
-	s.RegisterService(&_VersionService_serviceDesc, srv)
+func RegisterVersionsV1Server(s *grpc.Server, srv VersionsV1Server) {
+	s.RegisterService(&_VersionsV1_serviceDesc, srv)
 }
 
-func _VersionService_GetVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VersionsV1_GetVersions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VersionServiceServer).GetVersions(ctx, in)
+		return srv.(VersionsV1Server).GetVersions(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.VersionService/GetVersions",
+		FullMethod: "/v1.VersionsV1/GetVersions",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VersionServiceServer).GetVersions(ctx, req.(*empty.Empty))
+		return srv.(VersionsV1Server).GetVersions(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _VersionService_GetLogHandler_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VersionsV1_GetLogHandler_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VersionServiceServer).GetLogHandler(ctx, in)
+		return srv.(VersionsV1Server).GetLogHandler(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/v1.VersionService/GetLogHandler",
+		FullMethod: "/v1.VersionsV1/GetLogHandler",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VersionServiceServer).GetLogHandler(ctx, req.(*empty.Empty))
+		return srv.(VersionsV1Server).GetLogHandler(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _VersionService_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "v1.VersionService",
-	HandlerType: (*VersionServiceServer)(nil),
+var _VersionsV1_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "v1.VersionsV1",
+	HandlerType: (*VersionsV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetVersions",
-			Handler:    _VersionService_GetVersions_Handler,
+			Handler:    _VersionsV1_GetVersions_Handler,
 		},
 		{
 			MethodName: "GetLogHandler",
-			Handler:    _VersionService_GetLogHandler_Handler,
+			Handler:    _VersionsV1_GetLogHandler_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
