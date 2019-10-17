@@ -82,7 +82,7 @@ Class | Method | HTTP request | Description
 *ProjectServiceApi* | [**bookmark_project**](docs/ProjectServiceApi.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *ProjectServiceApi* | [**create_project**](docs/ProjectServiceApi.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
 *ProjectServiceApi* | [**delete_experiment**](docs/ProjectServiceApi.md#delete_experiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-*ProjectServiceApi* | [**disable_project_ci**](docs/ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+*ProjectServiceApi* | [**disable_project_ci**](docs/ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectServiceApi* | [**enable_project_ci**](docs/ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *ProjectServiceApi* | [**get_project**](docs/ProjectServiceApi.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
 *ProjectServiceApi* | [**list_archived_projects**](docs/ProjectServiceApi.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Create new run
@@ -91,6 +91,7 @@ Class | Method | HTTP request | Description
 *ProjectServiceApi* | [**list_projects**](docs/ProjectServiceApi.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List runs
 *ProjectServiceApi* | [**patch_project**](docs/ProjectServiceApi.md#patch_project) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 *ProjectServiceApi* | [**restore_experiment**](docs/ProjectServiceApi.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+*ProjectServiceApi* | [**un_bookmark_project**](docs/ProjectServiceApi.md#un_bookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 *ProjectServiceApi* | [**update_project**](docs/ProjectServiceApi.md#update_project) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
 *RunServiceApi* | [**archive_run**](docs/RunServiceApi.md#archive_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *RunServiceApi* | [**bookmark_run**](docs/RunServiceApi.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run

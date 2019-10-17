@@ -679,14 +679,14 @@ class ProjectServiceServicer(object):
     raise NotImplementedError('Method not implemented!')
 
   def EnableProjectCI(self, request, context):
-    """Enable CI
+    """Enable project CI
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
   def DisableProjectCI(self, request, context):
-    """UnBookmark project
+    """Disbale project CI
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
     context.set_details('Method not implemented!')

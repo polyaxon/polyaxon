@@ -365,17 +365,17 @@ service ProjectService {
         };
     }
 
-    // Enable CI
+    // Enable project CI
     rpc EnableProjectCI(ProjectBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/ci"
         };
     }
 
-    // UnBookmark project
+    // Disbale project CI
     rpc DisableProjectCI(ProjectBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/api/v1/{owner}/{project}/unbookmark"
+            delete: "/api/v1/{owner}/{project}/ci"
         };
     }
 }

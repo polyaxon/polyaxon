@@ -195,6 +195,16 @@
         done();
       });
     });
+    describe('unBookmarkProject', function() {
+      it('should call unBookmarkProject successfully', function(done) {
+        //uncomment below and update the code to test unBookmarkProject
+        //instance.unBookmarkProject(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
     describe('updateProject', function() {
       it('should call updateProject successfully', function(done) {
         //uncomment below and update the code to test updateProject

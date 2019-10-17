@@ -131,7 +131,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectServiceApi* | [**bookmarkProject**](docs/ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *PolyaxonSdk.ProjectServiceApi* | [**createProject**](docs/ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
 *PolyaxonSdk.ProjectServiceApi* | [**deleteExperiment**](docs/ProjectServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-*PolyaxonSdk.ProjectServiceApi* | [**disableProjectCI**](docs/ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+*PolyaxonSdk.ProjectServiceApi* | [**disableProjectCI**](docs/ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *PolyaxonSdk.ProjectServiceApi* | [**enableProjectCI**](docs/ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *PolyaxonSdk.ProjectServiceApi* | [**getProject**](docs/ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
 *PolyaxonSdk.ProjectServiceApi* | [**listArchivedProjects**](docs/ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
@@ -140,6 +140,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectServiceApi* | [**listProjects**](docs/ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
 *PolyaxonSdk.ProjectServiceApi* | [**patchProject**](docs/ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 *PolyaxonSdk.ProjectServiceApi* | [**restoreExperiment**](docs/ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+*PolyaxonSdk.ProjectServiceApi* | [**unBookmarkProject**](docs/ProjectServiceApi.md#unBookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 *PolyaxonSdk.ProjectServiceApi* | [**updateProject**](docs/ProjectServiceApi.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
 *PolyaxonSdk.RunServiceApi* | [**archiveRun**](docs/RunServiceApi.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *PolyaxonSdk.RunServiceApi* | [**bookmarkRun**](docs/RunServiceApi.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run

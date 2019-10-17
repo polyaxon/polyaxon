@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**bookmark_project**](ProjectServiceApi.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**create_project**](ProjectServiceApi.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
 [**delete_experiment**](ProjectServiceApi.md#delete_experiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-[**disable_project_ci**](ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+[**disable_project_ci**](ProjectServiceApi.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enable_project_ci**](ProjectServiceApi.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**get_project**](ProjectServiceApi.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
 [**list_archived_projects**](ProjectServiceApi.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Create new run
@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**list_projects**](ProjectServiceApi.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List runs
 [**patch_project**](ProjectServiceApi.md#patch_project) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 [**restore_experiment**](ProjectServiceApi.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+[**un_bookmark_project**](ProjectServiceApi.md#un_bookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**update_project**](ProjectServiceApi.md#update_project) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
 
 
@@ -692,6 +693,60 @@ try:
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectServiceApi->restore_experiment: %s\n" % e)
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **str**| Owner of the namespace | 
+ **project** | **str**| Project under namesapce | 
+
+### Return type
+
+**object**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **un_bookmark_project**
+> object un_bookmark_project(owner, project)
+
+Invalidate runs
+
+### Example
+```python
+from __future__ import print_function
+import time
+import polyaxon_sdk
+from polyaxon_sdk.rest import ApiException
+from pprint import pprint
+
+# Configure API key authorization: ApiKey
+configuration = polyaxon_sdk.Configuration()
+configuration.api_key['Authorization'] = 'YOUR_API_KEY'
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['Authorization'] = 'Bearer'
+
+# create an instance of the API class
+api_instance = polyaxon_sdk.ProjectServiceApi(polyaxon_sdk.ApiClient(configuration))
+owner = 'owner_example' # str | Owner of the namespace
+project = 'project_example' # str | Project under namesapce
+
+try:
+    # Invalidate runs
+    api_response = api_instance.un_bookmark_project(owner, project)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling ProjectServiceApi->un_bookmark_project: %s\n" % e)
 ```
 
 ### Parameters

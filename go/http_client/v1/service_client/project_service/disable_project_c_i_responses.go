@@ -74,7 +74,7 @@ type DisableProjectCIOK struct {
 }
 
 func (o *DisableProjectCIOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] disableProjectCIOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIOK  %+v", 200, o.Payload)
 }
 
 func (o *DisableProjectCIOK) GetPayload() interface{} {
@@ -105,7 +105,7 @@ type DisableProjectCIForbidden struct {
 }
 
 func (o *DisableProjectCIForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] disableProjectCIForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCIForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DisableProjectCIForbidden) GetPayload() interface{} {
@@ -136,7 +136,7 @@ type DisableProjectCINotFound struct {
 }
 
 func (o *DisableProjectCINotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/unbookmark][%d] disableProjectCINotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}/ci][%d] disableProjectCINotFound  %+v", 404, o.Payload)
 }
 
 func (o *DisableProjectCINotFound) GetPayload() string {

@@ -136,6 +136,13 @@ class TestProjectServiceApi(unittest.TestCase):
         """
         pass
 
+    def test_un_bookmark_project(self):
+        """Test case for un_bookmark_project
+
+        Invalidate runs  # noqa: E501
+        """
+        pass
+
     def test_update_project(self):
         """Test case for update_project
 

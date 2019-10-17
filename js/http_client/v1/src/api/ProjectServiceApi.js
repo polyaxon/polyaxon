@@ -325,7 +325,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/unbookmark', 'DELETE',
+        '/api/v1/{owner}/{project}/ci', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -736,6 +736,60 @@
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/restore', 'POST',
+        pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the unBookmarkProject operation.
+     * @callback module:api/ProjectServiceApi~unBookmarkProjectCallback
+     * @param {String} error Error message, if any.
+     * @param {Object} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Invalidate runs
+     * @param {String} owner Owner of the namespace
+     * @param {String} project Project under namesapce
+     * @param {module:api/ProjectServiceApi~unBookmarkProjectCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object}
+     */
+    this.unBookmarkProject = function(owner, project, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'owner' is set
+      if (owner === undefined || owner === null) {
+        throw new Error("Missing the required parameter 'owner' when calling unBookmarkProject");
+      }
+
+      // verify the required parameter 'project' is set
+      if (project === undefined || project === null) {
+        throw new Error("Missing the required parameter 'project' when calling unBookmarkProject");
+      }
+
+
+      var pathParams = {
+        'owner': owner,
+        'project': project
+      };
+      var queryParams = {
+      };
+      var collectionQueryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = ['ApiKey'];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = Object;
+
+      return this.apiClient.callApi(
+        '/api/v1/{owner}/{project}/unbookmark', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

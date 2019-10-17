@@ -268,6 +268,23 @@ public class ProjectServiceApiTest {
     }
     
     /**
+     * Invalidate runs
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void unBookmarkProjectTest() throws ApiException {
+        String owner = null;
+        String project = null;
+        Object response = api.unBookmarkProject(owner, project);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Patch run
      *
      * 

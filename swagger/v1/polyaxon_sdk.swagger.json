@@ -748,6 +748,48 @@
       }
     },
     "/api/v1/{owner}/{project}/ci": {
+      "delete": {
+        "summary": "Restart run",
+        "operationId": "DisableProjectCI",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ProjectService"
+        ]
+      },
       "post": {
         "summary": "Restart run with copy",
         "operationId": "EnableProjectCI",
@@ -2087,8 +2129,8 @@
     },
     "/api/v1/{owner}/{project}/unbookmark": {
       "delete": {
-        "summary": "Restart run",
-        "operationId": "DisableProjectCI",
+        "summary": "Invalidate runs",
+        "operationId": "UnBookmarkProject",
         "responses": {
           "200": {
             "description": "A successful response.",

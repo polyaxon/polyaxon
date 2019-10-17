@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**bookmarkProject**](ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**createProject**](ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
 [**deleteExperiment**](ProjectServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-[**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+[**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
 [**listArchivedProjects**](ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**listProjects**](ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
 [**patchProject**](ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 [**restoreExperiment**](ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+[**unBookmarkProject**](ProjectServiceApi.md#unBookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**updateProject**](ProjectServiceApi.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
 
 
@@ -705,6 +706,61 @@ try {
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectServiceApi#restoreExperiment");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace |
+ **project** | **String**| Project under namesapce |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="unBookmarkProject"></a>
+# **unBookmarkProject**
+> Object unBookmarkProject(owner, project)
+
+Invalidate runs
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.ProjectServiceApi;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+ProjectServiceApi apiInstance = new ProjectServiceApi();
+String owner = "owner_example"; // String | Owner of the namespace
+String project = "project_example"; // String | Project under namesapce
+try {
+    Object result = apiInstance.unBookmarkProject(owner, project);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ProjectServiceApi#unBookmarkProject");
     e.printStackTrace();
 }
 ```

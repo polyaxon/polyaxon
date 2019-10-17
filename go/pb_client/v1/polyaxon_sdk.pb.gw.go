@@ -5765,7 +5765,7 @@ var (
 
 	pattern_ProjectService_EnableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "ci"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectService_DisableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "unbookmark"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectService_DisableProjectCI_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "ci"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

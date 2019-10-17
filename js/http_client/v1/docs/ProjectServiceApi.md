@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**bookmarkProject**](ProjectServiceApi.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**createProject**](ProjectServiceApi.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
 [**deleteExperiment**](ProjectServiceApi.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
-[**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Restart run
+[**disableProjectCI**](ProjectServiceApi.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectServiceApi.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectServiceApi.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
 [**listArchivedProjects**](ProjectServiceApi.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**listProjects**](ProjectServiceApi.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
 [**patchProject**](ProjectServiceApi.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
 [**restoreExperiment**](ProjectServiceApi.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
+[**unBookmarkProject**](ProjectServiceApi.md#unBookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
 [**updateProject**](ProjectServiceApi.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
 
 
@@ -691,6 +692,60 @@ var callback = function(error, data, response) {
   }
 };
 apiInstance.restoreExperiment(owner, project, callback);
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **String**| Owner of the namespace | 
+ **project** | **String**| Project under namesapce | 
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="unBookmarkProject"></a>
+# **unBookmarkProject**
+> Object unBookmarkProject(owner, project)
+
+Invalidate runs
+
+### Example
+```javascript
+var PolyaxonSdk = require('polyaxon-sdk');
+var defaultClient = PolyaxonSdk.ApiClient.instance;
+
+// Configure API key authorization: ApiKey
+var ApiKey = defaultClient.authentications['ApiKey'];
+ApiKey.apiKey = 'YOUR API KEY';
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.apiKeyPrefix = 'Token';
+
+var apiInstance = new PolyaxonSdk.ProjectServiceApi();
+
+var owner = "owner_example"; // String | Owner of the namespace
+
+var project = "project_example"; // String | Project under namesapce
+
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+apiInstance.unBookmarkProject(owner, project, callback);
 ```
 
 ### Parameters
