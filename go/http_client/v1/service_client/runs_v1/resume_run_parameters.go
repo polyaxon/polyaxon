@@ -78,7 +78,7 @@ for the resume run operation typically these are written to a http.Request
 type ResumeRunParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityUUIDRequest
+	Body *service_model.V1OwnedEntityRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +134,13 @@ func (o *ResumeRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the resume run params
-func (o *ResumeRunParams) WithBody(body *service_model.V1OwnedEntityUUIDRequest) *ResumeRunParams {
+func (o *ResumeRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *ResumeRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the resume run params
-func (o *ResumeRunParams) SetBody(body *service_model.V1OwnedEntityUUIDRequest) {
+func (o *ResumeRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
 	o.Body = body
 }
 

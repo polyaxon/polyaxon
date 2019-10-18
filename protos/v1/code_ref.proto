@@ -29,7 +29,7 @@ message CodeReference {
 // Request data to create/update CodeReference
 message CodeRefBodyRequest {
     // Owner of the code ref
-    OwnedEntityUUIdRequest entity = 1;
+    OwnedEntityRequest entity = 1;
 
     // Code ref object
     CodeReference CodeReference = 2;

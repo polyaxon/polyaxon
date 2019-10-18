@@ -115,7 +115,7 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *ProjectsV1Api* | [**createProject**](docs/ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-*ProjectsV1Api* | [**deleteExperiment**](docs/ProjectsV1Api.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+*ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
 *ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
@@ -170,7 +170,7 @@ Class | Method | HTTP request | Description
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1LogHandler](docs/V1LogHandler.md)
- - [V1OwnedEntityUUIdRequest](docs/V1OwnedEntityUUIdRequest.md)
+ - [V1OwnedEntityRequest](docs/V1OwnedEntityRequest.md)
  - [V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [V1Project](docs/V1Project.md)
  - [V1ProjectBodyRequest](docs/V1ProjectBodyRequest.md)

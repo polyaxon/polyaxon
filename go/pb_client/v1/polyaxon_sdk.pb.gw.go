@@ -46,8 +46,12 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 
+var (
+	filter_RunsV1_ListRuns_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0, "project": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+)
+
 func request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectBodyRequest
+	var protoReq ProjectListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -77,6 +81,13 @@ func request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler,
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_RunsV1_ListRuns_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListRuns(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -85,7 +96,7 @@ func request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler,
 }
 
 func local_request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ProjectBodyRequest
+	var protoReq ProjectListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -117,13 +128,21 @@ func local_request_RunsV1_ListRuns_0(ctx context.Context, marshaler runtime.Mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_RunsV1_ListRuns_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
 	msg, err := server.ListRuns(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
+var (
+	filter_RunsV1_ListBookmarkedRuns_0 = &utilities.DoubleArray{Encoding: map[string]int{"user": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -142,6 +161,13 @@ func request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_RunsV1_ListBookmarkedRuns_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListBookmarkedRuns(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -150,7 +176,7 @@ func request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.
 }
 
 func local_request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -169,6 +195,10 @@ func local_request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler ru
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_RunsV1_ListBookmarkedRuns_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListBookmarkedRuns(ctx, &protoReq)
@@ -176,8 +206,12 @@ func local_request_RunsV1_ListBookmarkedRuns_0(ctx context.Context, marshaler ru
 
 }
 
+var (
+	filter_RunsV1_ListArchivedRuns_0 = &utilities.DoubleArray{Encoding: map[string]int{"user": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -196,6 +230,13 @@ func request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Ma
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_RunsV1_ListArchivedRuns_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListArchivedRuns(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -204,7 +245,7 @@ func request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -223,6 +264,10 @@ func local_request_RunsV1_ListArchivedRuns_0(ctx context.Context, marshaler runt
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_RunsV1_ListArchivedRuns_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListArchivedRuns(ctx, &protoReq)
@@ -323,7 +368,7 @@ func local_request_RunsV1_CreateRun_0(ctx context.Context, marshaler runtime.Mar
 }
 
 func request_RunsV1_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -372,7 +417,7 @@ func request_RunsV1_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, c
 }
 
 func local_request_RunsV1_GetRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -649,7 +694,7 @@ func local_request_RunsV1_PatchRun_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func request_RunsV1_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -698,7 +743,7 @@ func request_RunsV1_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler
 }
 
 func local_request_RunsV1_DeleteRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -839,7 +884,7 @@ func local_request_RunsV1_DeleteRuns_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_RunsV1_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -896,7 +941,7 @@ func request_RunsV1_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, 
 }
 
 func local_request_RunsV1_StopRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1045,7 +1090,7 @@ func local_request_RunsV1_StopRuns_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func request_RunsV1_InvalidateRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1102,7 +1147,7 @@ func request_RunsV1_InvalidateRun_0(ctx context.Context, marshaler runtime.Marsh
 }
 
 func local_request_RunsV1_InvalidateRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1251,7 +1296,7 @@ func local_request_RunsV1_InvalidateRuns_0(ctx context.Context, marshaler runtim
 }
 
 func request_RunsV1_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1308,7 +1353,7 @@ func request_RunsV1_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, 
 }
 
 func local_request_RunsV1_CopyRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1365,7 +1410,7 @@ func local_request_RunsV1_CopyRun_0(ctx context.Context, marshaler runtime.Marsh
 }
 
 func request_RunsV1_RestartRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1422,7 +1467,7 @@ func request_RunsV1_RestartRun_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_RunsV1_RestartRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1479,7 +1524,7 @@ func local_request_RunsV1_RestartRun_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_RunsV1_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1536,7 +1581,7 @@ func request_RunsV1_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler
 }
 
 func local_request_RunsV1_ResumeRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -1593,7 +1638,7 @@ func local_request_RunsV1_ResumeRun_0(ctx context.Context, marshaler runtime.Mar
 }
 
 func request_RunsV1_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1642,7 +1687,7 @@ func request_RunsV1_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_RunsV1_ArchiveRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1691,7 +1736,7 @@ func local_request_RunsV1_ArchiveRun_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_RunsV1_RestoreRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1740,7 +1785,7 @@ func request_RunsV1_RestoreRun_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_RunsV1_RestoreRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1789,7 +1834,7 @@ func local_request_RunsV1_RestoreRun_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func request_RunsV1_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1838,7 +1883,7 @@ func request_RunsV1_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshal
 }
 
 func local_request_RunsV1_BookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1887,7 +1932,7 @@ func local_request_RunsV1_BookmarkRun_0(ctx context.Context, marshaler runtime.M
 }
 
 func request_RunsV1_UnbookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1936,7 +1981,7 @@ func request_RunsV1_UnbookmarkRun_0(ctx context.Context, marshaler runtime.Marsh
 }
 
 func local_request_RunsV1_UnbookmarkRun_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -1985,7 +2030,7 @@ func local_request_RunsV1_UnbookmarkRun_0(ctx context.Context, marshaler runtime
 }
 
 func request_RunsV1_StartRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -2042,7 +2087,7 @@ func request_RunsV1_StartRunTensorboard_0(ctx context.Context, marshaler runtime
 }
 
 func local_request_RunsV1_StartRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -2099,7 +2144,7 @@ func local_request_RunsV1_StartRunTensorboard_0(ctx context.Context, marshaler r
 }
 
 func request_RunsV1_StopRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2148,7 +2193,7 @@ func request_RunsV1_StopRunTensorboard_0(ctx context.Context, marshaler runtime.
 }
 
 func local_request_RunsV1_StopRunTensorboard_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2197,7 +2242,7 @@ func local_request_RunsV1_StopRunTensorboard_0(ctx context.Context, marshaler ru
 }
 
 func request_RunsV1_GetRunStatuses_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2246,7 +2291,7 @@ func request_RunsV1_GetRunStatuses_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_RunsV1_GetRunStatuses_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2409,7 +2454,7 @@ func local_request_RunsV1_CreateRunStatus_0(ctx context.Context, marshaler runti
 }
 
 func request_RunsV1_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2458,7 +2503,7 @@ func request_RunsV1_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_RunsV1_GetRunCodeRefs_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2621,7 +2666,7 @@ func local_request_RunsV1_CreateRunCodeRef_0(ctx context.Context, marshaler runt
 }
 
 func request_RunsV1_ImpersonateToken_0(ctx context.Context, marshaler runtime.Marshaler, client RunsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2670,7 +2715,7 @@ func request_RunsV1_ImpersonateToken_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_RunsV1_ImpersonateToken_0(ctx context.Context, marshaler runtime.Marshaler, server RunsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnedEntityUUIdRequest
+	var protoReq OwnedEntityRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2718,8 +2763,12 @@ func local_request_RunsV1_ImpersonateToken_0(ctx context.Context, marshaler runt
 
 }
 
+var (
+	filter_ProjectsV1_ListProjects_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq OwnerListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2738,6 +2787,13 @@ func request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Ma
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectsV1_ListProjects_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListProjects(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -2746,7 +2802,7 @@ func request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq OwnerListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2765,6 +2821,10 @@ func local_request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runt
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectsV1_ListProjects_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListProjects(ctx, &protoReq)
@@ -2772,8 +2832,12 @@ func local_request_ProjectsV1_ListProjects_0(ctx context.Context, marshaler runt
 
 }
 
+var (
+	filter_ProjectsV1_ListProjectNames_0 = &utilities.DoubleArray{Encoding: map[string]int{"owner": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq OwnerListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2792,6 +2856,13 @@ func request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtim
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectsV1_ListProjectNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListProjectNames(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -2800,7 +2871,7 @@ func request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OwnerBodyRequest
+	var protoReq OwnerListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2821,13 +2892,21 @@ func local_request_ProjectsV1_ListProjectNames_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "owner", err)
 	}
 
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectsV1_ListProjectNames_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
 	msg, err := server.ListProjectNames(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
+var (
+	filter_ProjectsV1_ListBookmarkedProjects_0 = &utilities.DoubleArray{Encoding: map[string]int{"user": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2846,6 +2925,13 @@ func request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler 
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectsV1_ListBookmarkedProjects_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListBookmarkedProjects(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -2854,7 +2940,7 @@ func request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler 
 }
 
 func local_request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2873,6 +2959,10 @@ func local_request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, mars
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectsV1_ListBookmarkedProjects_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListBookmarkedProjects(ctx, &protoReq)
@@ -2880,8 +2970,12 @@ func local_request_ProjectsV1_ListBookmarkedProjects_0(ctx context.Context, mars
 
 }
 
+var (
+	filter_ProjectsV1_ListArchivedProjects_0 = &utilities.DoubleArray{Encoding: map[string]int{"user": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+)
+
 func request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2900,6 +2994,13 @@ func request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler ru
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ProjectsV1_ListArchivedProjects_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.ListArchivedProjects(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -2908,7 +3009,7 @@ func request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler ru
 }
 
 func local_request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UserBodyRequest
+	var protoReq UserListBodyRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -2927,6 +3028,10 @@ func local_request_ProjectsV1_ListArchivedProjects_0(ctx context.Context, marsha
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user", err)
+	}
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_ProjectsV1_ListArchivedProjects_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.ListArchivedProjects(ctx, &protoReq)
@@ -3264,7 +3369,7 @@ func local_request_ProjectsV1_PatchProject_0(ctx context.Context, marshaler runt
 
 }
 
-func request_ProjectsV1_DeleteExperiment_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ProjectsV1_DeleteProject_0(ctx context.Context, marshaler runtime.Marshaler, client ProjectsV1Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3297,12 +3402,12 @@ func request_ProjectsV1_DeleteExperiment_0(ctx context.Context, marshaler runtim
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := client.DeleteExperiment(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DeleteProject(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ProjectsV1_DeleteExperiment_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ProjectsV1_DeleteProject_0(ctx context.Context, marshaler runtime.Marshaler, server ProjectsV1Server, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProjectBodyRequest
 	var metadata runtime.ServerMetadata
 
@@ -3335,7 +3440,7 @@ func local_request_ProjectsV1_DeleteExperiment_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "project", err)
 	}
 
-	msg, err := server.DeleteExperiment(ctx, &protoReq)
+	msg, err := server.DeleteProject(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -4597,7 +4702,7 @@ func RegisterProjectsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectsV1_DeleteExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_DeleteProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -4606,14 +4711,14 @@ func RegisterProjectsV1HandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ProjectsV1_DeleteExperiment_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ProjectsV1_DeleteProject_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectsV1_DeleteExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_DeleteProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -5735,7 +5840,7 @@ func RegisterProjectsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("DELETE", pattern_ProjectsV1_DeleteExperiment_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ProjectsV1_DeleteProject_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -5744,14 +5849,14 @@ func RegisterProjectsV1HandlerClient(ctx context.Context, mux *runtime.ServeMux,
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ProjectsV1_DeleteExperiment_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ProjectsV1_DeleteProject_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ProjectsV1_DeleteExperiment_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ProjectsV1_DeleteProject_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -5895,7 +6000,7 @@ var (
 
 	pattern_ProjectsV1_PatchProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projects", "project"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_ProjectsV1_DeleteExperiment_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projecs", "project"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ProjectsV1_DeleteProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "owner", "projecs", "project"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_ProjectsV1_ArchiveProject_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v1", "owner", "project", "archive"}, "", runtime.AssumeColonVerbOpt(true)))
 
@@ -5927,7 +6032,7 @@ var (
 
 	forward_ProjectsV1_PatchProject_0 = runtime.ForwardResponseMessage
 
-	forward_ProjectsV1_DeleteExperiment_0 = runtime.ForwardResponseMessage
+	forward_ProjectsV1_DeleteProject_0 = runtime.ForwardResponseMessage
 
 	forward_ProjectsV1_ArchiveProject_0 = runtime.ForwardResponseMessage
 

@@ -78,7 +78,7 @@ for the restart run operation typically these are written to a http.Request
 type RestartRunParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityUUIDRequest
+	Body *service_model.V1OwnedEntityRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +134,13 @@ func (o *RestartRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the restart run params
-func (o *RestartRunParams) WithBody(body *service_model.V1OwnedEntityUUIDRequest) *RestartRunParams {
+func (o *RestartRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *RestartRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the restart run params
-func (o *RestartRunParams) SetBody(body *service_model.V1OwnedEntityUUIDRequest) {
+func (o *RestartRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
 	o.Body = body
 }
 

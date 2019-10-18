@@ -69,21 +69,21 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 
 service RunsV1 {
     // List runs
-    rpc ListRuns(ProjectBodyRequest) returns (ListRunsResponse) {
+    rpc ListRuns(ProjectListBodyRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs"
         };
     }
 
     // List bookmarked runs for user
-    rpc ListBookmarkedRuns(UserBodyRequest) returns (ListRunsResponse) {
+    rpc ListBookmarkedRuns(UserListBodyRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
             get: "/api/v1/bookmarks/{user}/runs"
         };
     }
 
     // List archived runs for user
-    rpc ListArchivedRuns(UserBodyRequest) returns (ListRunsResponse) {
+    rpc ListArchivedRuns(UserListBodyRequest) returns (ListRunsResponse) {
         option (google.api.http) = {
             get: "/api/v1/archives/{user}/runs"
         };
@@ -98,7 +98,7 @@ service RunsV1 {
     }
 
     // Get run
-    rpc GetRun(OwnedEntityUUIdRequest) returns (Run) {
+    rpc GetRun(OwnedEntityRequest) returns (Run) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}"
         };
@@ -121,7 +121,7 @@ service RunsV1 {
     }
 
     // Delete run
-    rpc DeleteRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc DeleteRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/runs/{uuid}"
         };
@@ -136,7 +136,7 @@ service RunsV1 {
     }
 
     // Stop run
-    rpc StopRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc StopRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/stop"
             body: "*"
@@ -152,7 +152,7 @@ service RunsV1 {
     }
 
     // Stop run
-    rpc InvalidateRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc InvalidateRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/invalidate"
             body: "*"
@@ -168,7 +168,7 @@ service RunsV1 {
     }
 
      // Restart run with copy
-     rpc CopyRun(OwnedEntityUUIdRequest) returns (Run) {
+     rpc CopyRun(OwnedEntityRequest) returns (Run) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/copy"
             body: "*"
@@ -176,7 +176,7 @@ service RunsV1 {
     }
 
     // Restart run
-    rpc RestartRun(OwnedEntityUUIdRequest) returns (Run) {
+    rpc RestartRun(OwnedEntityRequest) returns (Run) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/restart"
             body: "*"
@@ -184,7 +184,7 @@ service RunsV1 {
     }
 
     // Resume run
-    rpc ResumeRun(OwnedEntityUUIdRequest) returns (Run) {
+    rpc ResumeRun(OwnedEntityRequest) returns (Run) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/resume"
             body: "*"
@@ -192,35 +192,35 @@ service RunsV1 {
     }
 
     // Archive run
-    rpc ArchiveRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc ArchiveRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/archive"
         };
     }
 
     // Restore run
-    rpc RestoreRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc RestoreRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/restore"
         };
     }
 
     // Bookmark run
-    rpc BookmarkRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc BookmarkRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/bookmark"
         };
     }
 
     // Unbookmark run
-    rpc UnbookmarkRun(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc UnbookmarkRun(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/runs/{uuid}/unbookmark"
         };
     }
 
     // Start run tensorboard
-    rpc StartRunTensorboard(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {  // TODO: should be a tensorboard object
+    rpc StartRunTensorboard(OwnedEntityRequest) returns (google.protobuf.Empty) {  // TODO: should be a tensorboard object
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start"
             body: "*"
@@ -228,14 +228,14 @@ service RunsV1 {
     }
 
     // Stop run tensorboard
-    rpc StopRunTensorboard(OwnedEntityUUIdRequest) returns (google.protobuf.Empty) {
+    rpc StopRunTensorboard(OwnedEntityRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop"
         };
     }
 
     // Get run status
-    rpc GetRunStatuses(OwnedEntityUUIdRequest) returns (Status) {
+    rpc GetRunStatuses(OwnedEntityRequest) returns (Status) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
         };
@@ -250,7 +250,7 @@ service RunsV1 {
     }
 
     // Get run code ref
-    rpc GetRunCodeRefs(OwnedEntityUUIdRequest) returns (ListCodeRefResponse) {
+    rpc GetRunCodeRefs(OwnedEntityRequest) returns (ListCodeRefResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/{project}/runs/{uuid}/coderef"
         };
@@ -265,7 +265,7 @@ service RunsV1 {
     }
 
     // Impersonate run token
-    rpc ImpersonateToken(OwnedEntityUUIdRequest) returns (Auth) {
+    rpc ImpersonateToken(OwnedEntityRequest) returns (Auth) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken"
         };
@@ -278,28 +278,28 @@ service RunsV1 {
 // Service to manage project
 service ProjectsV1 {
     // List projects
-    rpc ListProjects(OwnerBodyRequest) returns (ListProjectsResponse) {
+    rpc ListProjects(OwnerListBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/projects/list"
         };
     }
 
     // List project namess
-    rpc ListProjectNames(OwnerBodyRequest) returns (ListProjectsResponse) {
+    rpc ListProjectNames(OwnerListBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/{owner}/projects/names"
         };
     }
 
     // List bookmarked projects for user
-    rpc ListBookmarkedProjects(UserBodyRequest) returns (ListProjectsResponse) {
+    rpc ListBookmarkedProjects(UserListBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/bookmarks/{user}/projects"
         };
     }
 
     // List archived projects for user
-    rpc ListArchivedProjects(UserBodyRequest) returns (ListProjectsResponse) {
+    rpc ListArchivedProjects(UserListBodyRequest) returns (ListProjectsResponse) {
         option (google.api.http) = {
             get: "/api/v1/archives/{user}/projects"
         };
@@ -337,7 +337,7 @@ service ProjectsV1 {
     }
 
     // Delete project
-    rpc DeleteExperiment(ProjectBodyRequest) returns (google.protobuf.Empty) {
+    rpc DeleteProject(ProjectBodyRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/api/v1/{owner}/projecs/{project}"
         };

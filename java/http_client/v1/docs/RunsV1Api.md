@@ -174,7 +174,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+V1OwnedEntityRequest body = new V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 try {
     V1Run result = apiInstance.copyRun(owner, project, uuid, body);
     System.out.println(result);
@@ -191,7 +191,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  |
 
 ### Return type
 
@@ -750,7 +750,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+V1OwnedEntityRequest body = new V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 try {
     Object result = apiInstance.invalidateRun(owner, project, uuid, body);
     System.out.println(result);
@@ -767,7 +767,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  |
 
 ### Return type
 
@@ -841,7 +841,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
-> V1ListRunsResponse listArchivedRuns(user)
+> V1ListRunsResponse listArchivedRuns(user, page, limit, sort, query)
 
 List archived runs for user
 
@@ -863,9 +863,13 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 RunsV1Api apiInstance = new RunsV1Api();
-String user = "user_example"; // String | Owner of the namespace
+String user = "user_example"; // String | User
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunsResponse result = apiInstance.listArchivedRuns(user);
+    V1ListRunsResponse result = apiInstance.listArchivedRuns(user, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#listArchivedRuns");
@@ -877,7 +881,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace |
+ **user** | **String**| User |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -894,7 +902,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListRunsResponse listBookmarkedRuns(user)
+> V1ListRunsResponse listBookmarkedRuns(user, page, limit, sort, query)
 
 List bookmarked runs for user
 
@@ -916,9 +924,13 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 RunsV1Api apiInstance = new RunsV1Api();
-String user = "user_example"; // String | Owner of the namespace
+String user = "user_example"; // String | User
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user);
+    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#listBookmarkedRuns");
@@ -930,7 +942,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace |
+ **user** | **String**| User |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -947,7 +963,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, project)
+> V1ListRunsResponse listRuns(owner, project, page, limit, sort, query)
 
 List runs
 
@@ -971,8 +987,12 @@ ApiKey.setApiKey("YOUR API KEY");
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunsResponse result = apiInstance.listRuns(owner, project);
+    V1ListRunsResponse result = apiInstance.listRuns(owner, project, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#listRuns");
@@ -986,6 +1006,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -1086,7 +1110,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+V1OwnedEntityRequest body = new V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 try {
     V1Run result = apiInstance.restartRun(owner, project, uuid, body);
     System.out.println(result);
@@ -1103,7 +1127,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  |
 
 ### Return type
 
@@ -1202,7 +1226,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+V1OwnedEntityRequest body = new V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 try {
     V1Run result = apiInstance.resumeRun(owner, project, uuid, body);
     System.out.println(result);
@@ -1219,7 +1243,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  |
 
 ### Return type
 
@@ -1261,7 +1285,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+V1OwnedEntityRequest body = new V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 try {
     Object result = apiInstance.startRunTensorboard(owner, project, uuid, body);
     System.out.println(result);
@@ -1278,7 +1302,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  |
 
 ### Return type
 
@@ -1320,7 +1344,7 @@ RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project where the experiement will be assigned
 String uuid = "uuid_example"; // String | Unique integer identifier of the entity
-V1OwnedEntityUUIdRequest body = new V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+V1OwnedEntityRequest body = new V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 try {
     Object result = apiInstance.stopRun(owner, project, uuid, body);
     System.out.println(result);
@@ -1337,7 +1361,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project where the experiement will be assigned |
  **uuid** | **String**| Unique integer identifier of the entity |
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  |
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  |
 
 ### Return type
 

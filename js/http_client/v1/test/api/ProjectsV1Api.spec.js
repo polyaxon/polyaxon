@@ -95,10 +95,10 @@
         done();
       });
     });
-    describe('deleteExperiment', function() {
-      it('should call deleteExperiment successfully', function(done) {
-        //uncomment below and update the code to test deleteExperiment
-        //instance.deleteExperiment(function(error) {
+    describe('deleteProject', function() {
+      it('should call deleteProject successfully', function(done) {
+        //uncomment below and update the code to test deleteProject
+        //instance.deleteProject(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

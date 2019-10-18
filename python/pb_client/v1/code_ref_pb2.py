@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\rv1/base.proto\"t\n\rCodeReference\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x02 \x01(\t\x12\x12\n\nupdated_at\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x0f\n\x07git_url\x18\x05 \x01(\t\x12\x10\n\x08is_dirty\x18\x06 \x01(\x08\"j\n\x12\x43odeRefBodyRequest\x12*\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x1a.v1.OwnedEntityUUIdRequest\x12(\n\rCodeReference\x18\x02 \x01(\x0b\x32\x11.v1.CodeReference\"h\n\x13ListCodeRefResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\"\n\x07results\x18\x02 \x03(\x0b\x32\x11.v1.CodeReference\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\x11v1/code_ref.proto\x12\x02v1\x1a\rv1/base.proto\"t\n\rCodeReference\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06\x63ommit\x18\x02 \x01(\t\x12\x12\n\nupdated_at\x18\x03 \x01(\t\x12\x0e\n\x06status\x18\x04 \x01(\t\x12\x0f\n\x07git_url\x18\x05 \x01(\t\x12\x10\n\x08is_dirty\x18\x06 \x01(\x08\"f\n\x12\x43odeRefBodyRequest\x12&\n\x06\x65ntity\x18\x01 \x01(\x0b\x32\x16.v1.OwnedEntityRequest\x12(\n\rCodeReference\x18\x02 \x01(\x0b\x32\x11.v1.CodeReference\"h\n\x13ListCodeRefResponse\x12\r\n\x05\x63ount\x18\x01 \x01(\x05\x12\"\n\x07results\x18\x02 \x03(\x0b\x32\x11.v1.CodeReference\x12\x10\n\x08previous\x18\x03 \x01(\t\x12\x0c\n\x04next\x18\x04 \x01(\tb\x06proto3')
   ,
   dependencies=[v1_dot_base__pb2.DESCRIPTOR,])
 
@@ -144,7 +144,7 @@ _CODEREFBODYREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=158,
-  serialized_end=264,
+  serialized_end=260,
 )
 
 
@@ -195,11 +195,11 @@ _LISTCODEREFRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=266,
-  serialized_end=370,
+  serialized_start=262,
+  serialized_end=366,
 )
 
-_CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._OWNEDENTITYUUIDREQUEST
+_CODEREFBODYREQUEST.fields_by_name['entity'].message_type = v1_dot_base__pb2._OWNEDENTITYREQUEST
 _CODEREFBODYREQUEST.fields_by_name['CodeReference'].message_type = _CODEREFERENCE
 _LISTCODEREFRESPONSE.fields_by_name['results'].message_type = _CODEREFERENCE
 DESCRIPTOR.message_types_by_name['CodeReference'] = _CODEREFERENCE

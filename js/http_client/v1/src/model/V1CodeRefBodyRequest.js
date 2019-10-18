@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1CodeReference', 'model/V1OwnedEntityUUIdRequest'], factory);
+    define(['ApiClient', 'model/V1CodeReference', 'model/V1OwnedEntityRequest'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./V1CodeReference'), require('./V1OwnedEntityUUIdRequest'));
+    module.exports = factory(require('../ApiClient'), require('./V1CodeReference'), require('./V1OwnedEntityRequest'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1CodeRefBodyRequest = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1OwnedEntityUUIdRequest);
+    root.PolyaxonSdk.V1CodeRefBodyRequest = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1OwnedEntityRequest);
   }
-}(this, function(ApiClient, V1CodeReference, V1OwnedEntityUUIdRequest) {
+}(this, function(ApiClient, V1CodeReference, V1OwnedEntityRequest) {
   'use strict';
 
 
@@ -78,7 +78,7 @@
       obj = obj || new exports();
 
       if (data.hasOwnProperty('entity')) {
-        obj['entity'] = V1OwnedEntityUUIdRequest.constructFromObject(data['entity']);
+        obj['entity'] = V1OwnedEntityRequest.constructFromObject(data['entity']);
       }
       if (data.hasOwnProperty('CodeReference')) {
         obj['CodeReference'] = V1CodeReference.constructFromObject(data['CodeReference']);
@@ -88,7 +88,7 @@
   }
 
   /**
-   * @member {module:model/V1OwnedEntityUUIdRequest} entity
+   * @member {module:model/V1OwnedEntityRequest} entity
    */
   exports.prototype['entity'] = undefined;
   /**

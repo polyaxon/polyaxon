@@ -32,12 +32,12 @@ from __future__ import absolute_import
 import unittest
 
 import polyaxon_sdk
-from polyaxon_sdk.models.v1_owned_entity_uu_id_request import V1OwnedEntityUUIdRequest  # noqa: E501
+from polyaxon_sdk.models.v1_owned_entity_request import V1OwnedEntityRequest  # noqa: E501
 from polyaxon_sdk.rest import ApiException
 
 
-class TestV1OwnedEntityUUIdRequest(unittest.TestCase):
-    """V1OwnedEntityUUIdRequest unit test stubs"""
+class TestV1OwnedEntityRequest(unittest.TestCase):
+    """V1OwnedEntityRequest unit test stubs"""
 
     def setUp(self):
         pass
@@ -45,10 +45,10 @@ class TestV1OwnedEntityUUIdRequest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testV1OwnedEntityUUIdRequest(self):
-        """Test V1OwnedEntityUUIdRequest"""
+    def testV1OwnedEntityRequest(self):
+        """Test V1OwnedEntityRequest"""
         # FIXME: construct object with mandatory attributes with example values
-        # model = polyaxon_sdk.models.v1_owned_entity_uu_id_request.V1OwnedEntityUUIdRequest()  # noqa: E501
+        # model = polyaxon_sdk.models.v1_owned_entity_request.V1OwnedEntityRequest()  # noqa: E501
         pass
 
 

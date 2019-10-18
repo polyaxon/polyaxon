@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 [**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-[**deleteExperiment**](ProjectsV1Api.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
@@ -186,9 +186,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteExperiment"></a>
-# **deleteExperiment**
-> Object deleteExperiment(owner, project)
+<a name="deleteProject"></a>
+# **deleteProject**
+> Object deleteProject(owner, project)
 
 Delete runs
 
@@ -213,10 +213,10 @@ ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
 try {
-    Object result = apiInstance.deleteExperiment(owner, project);
+    Object result = apiInstance.deleteProject(owner, project);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectsV1Api#deleteExperiment");
+    System.err.println("Exception when calling ProjectsV1Api#deleteProject");
     e.printStackTrace();
 }
 ```
@@ -408,7 +408,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedProjects"></a>
 # **listArchivedProjects**
-> V1ListProjectsResponse listArchivedProjects(user)
+> V1ListProjectsResponse listArchivedProjects(user, page, limit, sort, query)
 
 Create new run
 
@@ -430,9 +430,13 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
-String user = "user_example"; // String | Owner of the namespace
+String user = "user_example"; // String | User
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listArchivedProjects(user);
+    V1ListProjectsResponse result = apiInstance.listArchivedProjects(user, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listArchivedProjects");
@@ -444,7 +448,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace |
+ **user** | **String**| User |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -461,7 +469,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
-> V1ListProjectsResponse listBookmarkedProjects(user)
+> V1ListProjectsResponse listBookmarkedProjects(user, page, limit, sort, query)
 
 List archived runs for user
 
@@ -483,9 +491,13 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
-String user = "user_example"; // String | Owner of the namespace
+String user = "user_example"; // String | User
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user);
+    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listBookmarkedProjects");
@@ -497,7 +509,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace |
+ **user** | **String**| User |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -514,7 +530,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectNames"></a>
 # **listProjectNames**
-> V1ListProjectsResponse listProjectNames(owner)
+> V1ListProjectsResponse listProjectNames(owner, page, limit, sort, query)
 
 List bookmarked runs for user
 
@@ -537,8 +553,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listProjectNames(owner);
+    V1ListProjectsResponse result = apiInstance.listProjectNames(owner, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listProjectNames");
@@ -551,6 +571,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 
@@ -567,7 +591,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjects"></a>
 # **listProjects**
-> V1ListProjectsResponse listProjects(owner)
+> V1ListProjectsResponse listProjects(owner, page, limit, sort, query)
 
 List runs
 
@@ -590,8 +614,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
+String page = "page_example"; // String | Pagination.
+String limit = "limit_example"; // String | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listProjects(owner);
+    V1ListProjectsResponse result = apiInstance.listProjects(owner, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listProjects");
@@ -604,6 +632,10 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
+ **page** | **String**| Pagination. | [optional]
+ **limit** | **String**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
 
 ### Return type
 

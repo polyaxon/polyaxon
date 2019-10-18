@@ -40,17 +40,17 @@ class RunsV1Stub(object):
     """
     self.ListRuns = channel.unary_unary(
         '/v1.RunsV1/ListRuns',
-        request_serializer=v1_dot_base__pb2.ProjectBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.ProjectListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.ListBookmarkedRuns = channel.unary_unary(
         '/v1.RunsV1/ListBookmarkedRuns',
-        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.ListArchivedRuns = channel.unary_unary(
         '/v1.RunsV1/ListArchivedRuns',
-        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.ListRunsResponse.FromString,
         )
     self.CreateRun = channel.unary_unary(
@@ -60,7 +60,7 @@ class RunsV1Stub(object):
         )
     self.GetRun = channel.unary_unary(
         '/v1.RunsV1/GetRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.Run.FromString,
         )
     self.UpdateRun = channel.unary_unary(
@@ -75,7 +75,7 @@ class RunsV1Stub(object):
         )
     self.DeleteRun = channel.unary_unary(
         '/v1.RunsV1/DeleteRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.DeleteRuns = channel.unary_unary(
@@ -85,7 +85,7 @@ class RunsV1Stub(object):
         )
     self.StopRun = channel.unary_unary(
         '/v1.RunsV1/StopRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.StopRuns = channel.unary_unary(
@@ -95,7 +95,7 @@ class RunsV1Stub(object):
         )
     self.InvalidateRun = channel.unary_unary(
         '/v1.RunsV1/InvalidateRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.InvalidateRuns = channel.unary_unary(
@@ -105,52 +105,52 @@ class RunsV1Stub(object):
         )
     self.CopyRun = channel.unary_unary(
         '/v1.RunsV1/CopyRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.Run.FromString,
         )
     self.RestartRun = channel.unary_unary(
         '/v1.RunsV1/RestartRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.Run.FromString,
         )
     self.ResumeRun = channel.unary_unary(
         '/v1.RunsV1/ResumeRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_run__pb2.Run.FromString,
         )
     self.ArchiveRun = channel.unary_unary(
         '/v1.RunsV1/ArchiveRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.RestoreRun = channel.unary_unary(
         '/v1.RunsV1/RestoreRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.BookmarkRun = channel.unary_unary(
         '/v1.RunsV1/BookmarkRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.UnbookmarkRun = channel.unary_unary(
         '/v1.RunsV1/UnbookmarkRun',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.StartRunTensorboard = channel.unary_unary(
         '/v1.RunsV1/StartRunTensorboard',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.StopRunTensorboard = channel.unary_unary(
         '/v1.RunsV1/StopRunTensorboard',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
     self.GetRunStatuses = channel.unary_unary(
         '/v1.RunsV1/GetRunStatuses',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_status__pb2.Status.FromString,
         )
     self.CreateRunStatus = channel.unary_unary(
@@ -160,7 +160,7 @@ class RunsV1Stub(object):
         )
     self.GetRunCodeRefs = channel.unary_unary(
         '/v1.RunsV1/GetRunCodeRefs',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_code__ref__pb2.ListCodeRefResponse.FromString,
         )
     self.CreateRunCodeRef = channel.unary_unary(
@@ -170,7 +170,7 @@ class RunsV1Stub(object):
         )
     self.ImpersonateToken = channel.unary_unary(
         '/v1.RunsV1/ImpersonateToken',
-        request_serializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnedEntityRequest.SerializeToString,
         response_deserializer=v1_dot_auth__pb2.Auth.FromString,
         )
 
@@ -374,17 +374,17 @@ def add_RunsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListRuns,
-          request_deserializer=v1_dot_base__pb2.ProjectBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.ProjectListBodyRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'ListBookmarkedRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListBookmarkedRuns,
-          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserListBodyRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'ListArchivedRuns': grpc.unary_unary_rpc_method_handler(
           servicer.ListArchivedRuns,
-          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserListBodyRequest.FromString,
           response_serializer=v1_dot_run__pb2.ListRunsResponse.SerializeToString,
       ),
       'CreateRun': grpc.unary_unary_rpc_method_handler(
@@ -394,7 +394,7 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'GetRun': grpc.unary_unary_rpc_method_handler(
           servicer.GetRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_run__pb2.Run.SerializeToString,
       ),
       'UpdateRun': grpc.unary_unary_rpc_method_handler(
@@ -409,7 +409,7 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'DeleteRun': grpc.unary_unary_rpc_method_handler(
           servicer.DeleteRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'DeleteRuns': grpc.unary_unary_rpc_method_handler(
@@ -419,7 +419,7 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'StopRun': grpc.unary_unary_rpc_method_handler(
           servicer.StopRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'StopRuns': grpc.unary_unary_rpc_method_handler(
@@ -429,7 +429,7 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'InvalidateRun': grpc.unary_unary_rpc_method_handler(
           servicer.InvalidateRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'InvalidateRuns': grpc.unary_unary_rpc_method_handler(
@@ -439,52 +439,52 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'CopyRun': grpc.unary_unary_rpc_method_handler(
           servicer.CopyRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_run__pb2.Run.SerializeToString,
       ),
       'RestartRun': grpc.unary_unary_rpc_method_handler(
           servicer.RestartRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_run__pb2.Run.SerializeToString,
       ),
       'ResumeRun': grpc.unary_unary_rpc_method_handler(
           servicer.ResumeRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_run__pb2.Run.SerializeToString,
       ),
       'ArchiveRun': grpc.unary_unary_rpc_method_handler(
           servicer.ArchiveRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'RestoreRun': grpc.unary_unary_rpc_method_handler(
           servicer.RestoreRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'BookmarkRun': grpc.unary_unary_rpc_method_handler(
           servicer.BookmarkRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'UnbookmarkRun': grpc.unary_unary_rpc_method_handler(
           servicer.UnbookmarkRun,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'StartRunTensorboard': grpc.unary_unary_rpc_method_handler(
           servicer.StartRunTensorboard,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'StopRunTensorboard': grpc.unary_unary_rpc_method_handler(
           servicer.StopRunTensorboard,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),
       'GetRunStatuses': grpc.unary_unary_rpc_method_handler(
           servicer.GetRunStatuses,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_status__pb2.Status.SerializeToString,
       ),
       'CreateRunStatus': grpc.unary_unary_rpc_method_handler(
@@ -494,7 +494,7 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'GetRunCodeRefs': grpc.unary_unary_rpc_method_handler(
           servicer.GetRunCodeRefs,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_code__ref__pb2.ListCodeRefResponse.SerializeToString,
       ),
       'CreateRunCodeRef': grpc.unary_unary_rpc_method_handler(
@@ -504,7 +504,7 @@ def add_RunsV1Servicer_to_server(servicer, server):
       ),
       'ImpersonateToken': grpc.unary_unary_rpc_method_handler(
           servicer.ImpersonateToken,
-          request_deserializer=v1_dot_base__pb2.OwnedEntityUUIdRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnedEntityRequest.FromString,
           response_serializer=v1_dot_auth__pb2.Auth.SerializeToString,
       ),
   }
@@ -525,22 +525,22 @@ class ProjectsV1Stub(object):
     """
     self.ListProjects = channel.unary_unary(
         '/v1.ProjectsV1/ListProjects',
-        request_serializer=v1_dot_base__pb2.OwnerBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.ListProjectNames = channel.unary_unary(
         '/v1.ProjectsV1/ListProjectNames',
-        request_serializer=v1_dot_base__pb2.OwnerBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.OwnerListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.ListBookmarkedProjects = channel.unary_unary(
         '/v1.ProjectsV1/ListBookmarkedProjects',
-        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.ListArchivedProjects = channel.unary_unary(
         '/v1.ProjectsV1/ListArchivedProjects',
-        request_serializer=v1_dot_base__pb2.UserBodyRequest.SerializeToString,
+        request_serializer=v1_dot_base__pb2.UserListBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.ListProjectsResponse.FromString,
         )
     self.CreateProject = channel.unary_unary(
@@ -563,8 +563,8 @@ class ProjectsV1Stub(object):
         request_serializer=v1_dot_base__pb2.ProjectBodyRequest.SerializeToString,
         response_deserializer=v1_dot_project__pb2.Project.FromString,
         )
-    self.DeleteExperiment = channel.unary_unary(
-        '/v1.ProjectsV1/DeleteExperiment',
+    self.DeleteProject = channel.unary_unary(
+        '/v1.ProjectsV1/DeleteProject',
         request_serializer=v1_dot_base__pb2.ProjectBodyRequest.SerializeToString,
         response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
         )
@@ -660,7 +660,7 @@ class ProjectsV1Servicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
-  def DeleteExperiment(self, request, context):
+  def DeleteProject(self, request, context):
     """Delete project
     """
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -714,22 +714,22 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
   rpc_method_handlers = {
       'ListProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListProjects,
-          request_deserializer=v1_dot_base__pb2.OwnerBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerListBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'ListProjectNames': grpc.unary_unary_rpc_method_handler(
           servicer.ListProjectNames,
-          request_deserializer=v1_dot_base__pb2.OwnerBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.OwnerListBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'ListBookmarkedProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListBookmarkedProjects,
-          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserListBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'ListArchivedProjects': grpc.unary_unary_rpc_method_handler(
           servicer.ListArchivedProjects,
-          request_deserializer=v1_dot_base__pb2.UserBodyRequest.FromString,
+          request_deserializer=v1_dot_base__pb2.UserListBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.ListProjectsResponse.SerializeToString,
       ),
       'CreateProject': grpc.unary_unary_rpc_method_handler(
@@ -752,8 +752,8 @@ def add_ProjectsV1Servicer_to_server(servicer, server):
           request_deserializer=v1_dot_base__pb2.ProjectBodyRequest.FromString,
           response_serializer=v1_dot_project__pb2.Project.SerializeToString,
       ),
-      'DeleteExperiment': grpc.unary_unary_rpc_method_handler(
-          servicer.DeleteExperiment,
+      'DeleteProject': grpc.unary_unary_rpc_method_handler(
+          servicer.DeleteProject,
           request_deserializer=v1_dot_base__pb2.ProjectBodyRequest.FromString,
           response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
       ),

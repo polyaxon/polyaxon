@@ -39,10 +39,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * V1OwnedEntityUUIdRequest
+ * V1OwnedEntityRequest
  */
 
-public class V1OwnedEntityUUIdRequest {
+public class V1OwnedEntityRequest {
   @SerializedName("owner")
   private String owner = null;
 
@@ -52,7 +52,7 @@ public class V1OwnedEntityUUIdRequest {
   @SerializedName("uuid")
   private String uuid = null;
 
-  public V1OwnedEntityUUIdRequest owner(String owner) {
+  public V1OwnedEntityRequest owner(String owner) {
     this.owner = owner;
     return this;
   }
@@ -70,7 +70,7 @@ public class V1OwnedEntityUUIdRequest {
     this.owner = owner;
   }
 
-  public V1OwnedEntityUUIdRequest project(String project) {
+  public V1OwnedEntityRequest project(String project) {
     this.project = project;
     return this;
   }
@@ -88,7 +88,7 @@ public class V1OwnedEntityUUIdRequest {
     this.project = project;
   }
 
-  public V1OwnedEntityUUIdRequest uuid(String uuid) {
+  public V1OwnedEntityRequest uuid(String uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -115,10 +115,10 @@ public class V1OwnedEntityUUIdRequest {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    V1OwnedEntityUUIdRequest v1OwnedEntityUUIdRequest = (V1OwnedEntityUUIdRequest) o;
-    return Objects.equals(this.owner, v1OwnedEntityUUIdRequest.owner) &&
-        Objects.equals(this.project, v1OwnedEntityUUIdRequest.project) &&
-        Objects.equals(this.uuid, v1OwnedEntityUUIdRequest.uuid);
+    V1OwnedEntityRequest v1OwnedEntityRequest = (V1OwnedEntityRequest) o;
+    return Objects.equals(this.owner, v1OwnedEntityRequest.owner) &&
+        Objects.equals(this.project, v1OwnedEntityRequest.project) &&
+        Objects.equals(this.uuid, v1OwnedEntityRequest.uuid);
   }
 
   @Override
@@ -130,7 +130,7 @@ public class V1OwnedEntityUUIdRequest {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class V1OwnedEntityUUIdRequest {\n");
+    sb.append("class V1OwnedEntityRequest {\n");
     
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
     sb.append("    project: ").append(toIndentedString(project)).append("\n");

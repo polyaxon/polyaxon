@@ -470,7 +470,7 @@ public class ProjectsV1Api {
         return call;
     }
     /**
-     * Build call for deleteExperiment
+     * Build call for deleteProject
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
      * @param progressListener Progress listener
@@ -478,7 +478,7 @@ public class ProjectsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call deleteExperimentCall(String owner, String project, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call deleteProjectCall(String owner, String project, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -522,20 +522,20 @@ public class ProjectsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteExperimentValidateBeforeCall(String owner, String project, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteProjectValidateBeforeCall(String owner, String project, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
-            throw new ApiException("Missing the required parameter 'owner' when calling deleteExperiment(Async)");
+            throw new ApiException("Missing the required parameter 'owner' when calling deleteProject(Async)");
         }
         
         // verify the required parameter 'project' is set
         if (project == null) {
-            throw new ApiException("Missing the required parameter 'project' when calling deleteExperiment(Async)");
+            throw new ApiException("Missing the required parameter 'project' when calling deleteProject(Async)");
         }
         
 
-        com.squareup.okhttp.Call call = deleteExperimentCall(owner, project, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteProjectCall(owner, project, progressListener, progressRequestListener);
         return call;
 
     }
@@ -548,8 +548,8 @@ public class ProjectsV1Api {
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Object deleteExperiment(String owner, String project) throws ApiException {
-        ApiResponse<Object> resp = deleteExperimentWithHttpInfo(owner, project);
+    public Object deleteProject(String owner, String project) throws ApiException {
+        ApiResponse<Object> resp = deleteProjectWithHttpInfo(owner, project);
         return resp.getData();
     }
 
@@ -561,8 +561,8 @@ public class ProjectsV1Api {
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Object> deleteExperimentWithHttpInfo(String owner, String project) throws ApiException {
-        com.squareup.okhttp.Call call = deleteExperimentValidateBeforeCall(owner, project, null, null);
+    public ApiResponse<Object> deleteProjectWithHttpInfo(String owner, String project) throws ApiException {
+        com.squareup.okhttp.Call call = deleteProjectValidateBeforeCall(owner, project, null, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -576,7 +576,7 @@ public class ProjectsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteExperimentAsync(String owner, String project, final ApiCallback<Object> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteProjectAsync(String owner, String project, final ApiCallback<Object> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -597,7 +597,7 @@ public class ProjectsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteExperimentValidateBeforeCall(owner, project, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteProjectValidateBeforeCall(owner, project, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1003,13 +1003,17 @@ public class ProjectsV1Api {
     }
     /**
      * Build call for listArchivedProjects
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listArchivedProjectsCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedProjectsCall(String user, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1018,6 +1022,14 @@ public class ProjectsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (page != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1052,7 +1064,7 @@ public class ProjectsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listArchivedProjectsValidateBeforeCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listArchivedProjectsValidateBeforeCall(String user, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
@@ -1060,7 +1072,7 @@ public class ProjectsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listArchivedProjectsCall(user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedProjectsCall(user, page, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1068,24 +1080,32 @@ public class ProjectsV1Api {
     /**
      * Create new run
      * 
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return V1ListProjectsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListProjectsResponse listArchivedProjects(String user) throws ApiException {
-        ApiResponse<V1ListProjectsResponse> resp = listArchivedProjectsWithHttpInfo(user);
+    public V1ListProjectsResponse listArchivedProjects(String user, String page, String limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListProjectsResponse> resp = listArchivedProjectsWithHttpInfo(user, page, limit, sort, query);
         return resp.getData();
     }
 
     /**
      * Create new run
      * 
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListProjectsResponse> listArchivedProjectsWithHttpInfo(String user) throws ApiException {
-        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(user, null, null);
+    public ApiResponse<V1ListProjectsResponse> listArchivedProjectsWithHttpInfo(String user, String page, String limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(user, page, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1093,12 +1113,16 @@ public class ProjectsV1Api {
     /**
      * Create new run (asynchronously)
      * 
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listArchivedProjectsAsync(String user, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedProjectsAsync(String user, String page, String limit, String sort, String query, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1119,20 +1143,24 @@ public class ProjectsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedProjectsValidateBeforeCall(user, page, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /**
      * Build call for listBookmarkedProjects
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedProjectsCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedProjectsCall(String user, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1141,6 +1169,14 @@ public class ProjectsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (page != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1175,7 +1211,7 @@ public class ProjectsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listBookmarkedProjectsValidateBeforeCall(String user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listBookmarkedProjectsValidateBeforeCall(String user, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
@@ -1183,7 +1219,7 @@ public class ProjectsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listBookmarkedProjectsCall(user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedProjectsCall(user, page, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1191,24 +1227,32 @@ public class ProjectsV1Api {
     /**
      * List archived runs for user
      * 
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return V1ListProjectsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListProjectsResponse listBookmarkedProjects(String user) throws ApiException {
-        ApiResponse<V1ListProjectsResponse> resp = listBookmarkedProjectsWithHttpInfo(user);
+    public V1ListProjectsResponse listBookmarkedProjects(String user, String page, String limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListProjectsResponse> resp = listBookmarkedProjectsWithHttpInfo(user, page, limit, sort, query);
         return resp.getData();
     }
 
     /**
      * List archived runs for user
      * 
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListProjectsResponse> listBookmarkedProjectsWithHttpInfo(String user) throws ApiException {
-        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(user, null, null);
+    public ApiResponse<V1ListProjectsResponse> listBookmarkedProjectsWithHttpInfo(String user, String page, String limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(user, page, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1216,12 +1260,16 @@ public class ProjectsV1Api {
     /**
      * List archived runs for user (asynchronously)
      * 
-     * @param user Owner of the namespace (required)
+     * @param user User (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedProjectsAsync(String user, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedProjectsAsync(String user, String page, String limit, String sort, String query, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1242,7 +1290,7 @@ public class ProjectsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedProjectsValidateBeforeCall(user, page, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1250,12 +1298,16 @@ public class ProjectsV1Api {
     /**
      * Build call for listProjectNames
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listProjectNamesCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listProjectNamesCall(String owner, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1264,6 +1316,14 @@ public class ProjectsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (page != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1298,7 +1358,7 @@ public class ProjectsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listProjectNamesValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listProjectNamesValidateBeforeCall(String owner, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1306,7 +1366,7 @@ public class ProjectsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listProjectNamesCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listProjectNamesCall(owner, page, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1315,11 +1375,15 @@ public class ProjectsV1Api {
      * List bookmarked runs for user
      * 
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return V1ListProjectsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListProjectsResponse listProjectNames(String owner) throws ApiException {
-        ApiResponse<V1ListProjectsResponse> resp = listProjectNamesWithHttpInfo(owner);
+    public V1ListProjectsResponse listProjectNames(String owner, String page, String limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListProjectsResponse> resp = listProjectNamesWithHttpInfo(owner, page, limit, sort, query);
         return resp.getData();
     }
 
@@ -1327,11 +1391,15 @@ public class ProjectsV1Api {
      * List bookmarked runs for user
      * 
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListProjectsResponse> listProjectNamesWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listProjectNamesValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListProjectsResponse> listProjectNamesWithHttpInfo(String owner, String page, String limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listProjectNamesValidateBeforeCall(owner, page, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1340,11 +1408,15 @@ public class ProjectsV1Api {
      * List bookmarked runs for user (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listProjectNamesAsync(String owner, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listProjectNamesAsync(String owner, String page, String limit, String sort, String query, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1365,7 +1437,7 @@ public class ProjectsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listProjectNamesValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listProjectNamesValidateBeforeCall(owner, page, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -1373,12 +1445,16 @@ public class ProjectsV1Api {
     /**
      * Build call for listProjects
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listProjectsCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listProjectsCall(String owner, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1387,6 +1463,14 @@ public class ProjectsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (page != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (limit != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
+        if (sort != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("sort", sort));
+        if (query != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("query", query));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -1421,7 +1505,7 @@ public class ProjectsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listProjectsValidateBeforeCall(String owner, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listProjectsValidateBeforeCall(String owner, String page, String limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -1429,7 +1513,7 @@ public class ProjectsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listProjectsCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listProjectsCall(owner, page, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -1438,11 +1522,15 @@ public class ProjectsV1Api {
      * List runs
      * 
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return V1ListProjectsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListProjectsResponse listProjects(String owner) throws ApiException {
-        ApiResponse<V1ListProjectsResponse> resp = listProjectsWithHttpInfo(owner);
+    public V1ListProjectsResponse listProjects(String owner, String page, String limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListProjectsResponse> resp = listProjectsWithHttpInfo(owner, page, limit, sort, query);
         return resp.getData();
     }
 
@@ -1450,11 +1538,15 @@ public class ProjectsV1Api {
      * List runs
      * 
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListProjectsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListProjectsResponse> listProjectsWithHttpInfo(String owner) throws ApiException {
-        com.squareup.okhttp.Call call = listProjectsValidateBeforeCall(owner, null, null);
+    public ApiResponse<V1ListProjectsResponse> listProjectsWithHttpInfo(String owner, String page, String limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listProjectsValidateBeforeCall(owner, page, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1463,11 +1555,15 @@ public class ProjectsV1Api {
      * List runs (asynchronously)
      * 
      * @param owner Owner of the namespace (required)
+     * @param page Pagination. (optional)
+     * @param limit Limit size. (optional)
+     * @param sort Sort to order the search. (optional)
+     * @param query Query filter the search search. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listProjectsAsync(String owner, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listProjectsAsync(String owner, String page, String limit, String sort, String query, final ApiCallback<V1ListProjectsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1488,7 +1584,7 @@ public class ProjectsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listProjectsValidateBeforeCall(owner, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listProjectsValidateBeforeCall(owner, page, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListProjectsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

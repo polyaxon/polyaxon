@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 [**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 [**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-[**deleteExperiment**](ProjectsV1Api.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 [**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
@@ -183,9 +183,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="deleteExperiment"></a>
-# **deleteExperiment**
-> Object deleteExperiment(owner, project)
+<a name="deleteProject"></a>
+# **deleteProject**
+> Object deleteProject(owner, project)
 
 Delete runs
 
@@ -214,7 +214,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.deleteExperiment(owner, project, callback);
+apiInstance.deleteProject(owner, project, callback);
 ```
 
 ### Parameters
@@ -401,7 +401,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedProjects"></a>
 # **listArchivedProjects**
-> V1ListProjectsResponse listArchivedProjects(user)
+> V1ListProjectsResponse listArchivedProjects(user, opts)
 
 Create new run
 
@@ -418,8 +418,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
-var user = "user_example"; // String | Owner of the namespace
+var user = "user_example"; // String | User
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -428,14 +434,18 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listArchivedProjects(user, callback);
+apiInstance.listArchivedProjects(user, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace | 
+ **user** | **String**| User | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -452,7 +462,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
-> V1ListProjectsResponse listBookmarkedProjects(user)
+> V1ListProjectsResponse listBookmarkedProjects(user, opts)
 
 List archived runs for user
 
@@ -469,8 +479,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
-var user = "user_example"; // String | Owner of the namespace
+var user = "user_example"; // String | User
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -479,14 +495,18 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listBookmarkedProjects(user, callback);
+apiInstance.listBookmarkedProjects(user, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace | 
+ **user** | **String**| User | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -503,7 +523,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectNames"></a>
 # **listProjectNames**
-> V1ListProjectsResponse listProjectNames(owner)
+> V1ListProjectsResponse listProjectNames(owner, opts)
 
 List bookmarked runs for user
 
@@ -522,6 +542,12 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -530,7 +556,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listProjectNames(owner, callback);
+apiInstance.listProjectNames(owner, opts, callback);
 ```
 
 ### Parameters
@@ -538,6 +564,10 @@ apiInstance.listProjectNames(owner, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -554,7 +584,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjects"></a>
 # **listProjects**
-> V1ListProjectsResponse listProjects(owner)
+> V1ListProjectsResponse listProjects(owner, opts)
 
 List runs
 
@@ -573,6 +603,12 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -581,7 +617,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listProjects(owner, callback);
+apiInstance.listProjects(owner, opts, callback);
 ```
 
 ### Parameters
@@ -589,6 +625,10 @@ apiInstance.listProjects(owner, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 

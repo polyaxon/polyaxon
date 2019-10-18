@@ -1,5 +1,5 @@
 
-# V1OwnedEntityUUIdRequest
+# V1OwnedEntityRequest
 
 ## Properties
 Name | Type | Description | Notes

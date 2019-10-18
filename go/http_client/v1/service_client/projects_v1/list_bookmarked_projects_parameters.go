@@ -75,8 +75,28 @@ for the list bookmarked projects operation typically these are written to a http
 */
 type ListBookmarkedProjectsParams struct {
 
+	/*Limit
+	  Limit size.
+
+	*/
+	Limit *string
+	/*Page
+	  Pagination.
+
+	*/
+	Page *string
+	/*Query
+	  Query filter the search search.
+
+	*/
+	Query *string
+	/*Sort
+	  Sort to order the search.
+
+	*/
+	Sort *string
 	/*User
-	  Owner of the namespace
+	  User
 
 	*/
 	User string
@@ -119,6 +139,50 @@ func (o *ListBookmarkedProjectsParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
+// WithLimit adds the limit to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) WithLimit(limit *string) *ListBookmarkedProjectsParams {
+	o.SetLimit(limit)
+	return o
+}
+
+// SetLimit adds the limit to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) SetLimit(limit *string) {
+	o.Limit = limit
+}
+
+// WithPage adds the page to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) WithPage(page *string) *ListBookmarkedProjectsParams {
+	o.SetPage(page)
+	return o
+}
+
+// SetPage adds the page to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) SetPage(page *string) {
+	o.Page = page
+}
+
+// WithQuery adds the query to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) WithQuery(query *string) *ListBookmarkedProjectsParams {
+	o.SetQuery(query)
+	return o
+}
+
+// SetQuery adds the query to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) SetQuery(query *string) {
+	o.Query = query
+}
+
+// WithSort adds the sort to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) WithSort(sort *string) *ListBookmarkedProjectsParams {
+	o.SetSort(sort)
+	return o
+}
+
+// SetSort adds the sort to the list bookmarked projects params
+func (o *ListBookmarkedProjectsParams) SetSort(sort *string) {
+	o.Sort = sort
+}
+
 // WithUser adds the user to the list bookmarked projects params
 func (o *ListBookmarkedProjectsParams) WithUser(user string) *ListBookmarkedProjectsParams {
 	o.SetUser(user)
@@ -137,6 +201,70 @@ func (o *ListBookmarkedProjectsParams) WriteToRequest(r runtime.ClientRequest, r
 		return err
 	}
 	var res []error
+
+	if o.Limit != nil {
+
+		// query param limit
+		var qrLimit string
+		if o.Limit != nil {
+			qrLimit = *o.Limit
+		}
+		qLimit := qrLimit
+		if qLimit != "" {
+			if err := r.SetQueryParam("limit", qLimit); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Page != nil {
+
+		// query param page
+		var qrPage string
+		if o.Page != nil {
+			qrPage = *o.Page
+		}
+		qPage := qrPage
+		if qPage != "" {
+			if err := r.SetQueryParam("page", qPage); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Query != nil {
+
+		// query param query
+		var qrQuery string
+		if o.Query != nil {
+			qrQuery = *o.Query
+		}
+		qQuery := qrQuery
+		if qQuery != "" {
+			if err := r.SetQueryParam("query", qQuery); err != nil {
+				return err
+			}
+		}
+
+	}
+
+	if o.Sort != nil {
+
+		// query param sort
+		var qrSort string
+		if o.Sort != nil {
+			qrSort = *o.Sort
+		}
+		qSort := qrSort
+		if qSort != "" {
+			if err := r.SetQueryParam("sort", qSort); err != nil {
+				return err
+			}
+		}
+
+	}
 
 	// path param user
 	if err := r.SetPathParam("user", o.User); err != nil {

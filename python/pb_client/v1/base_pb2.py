@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1f\n\x0fUserBodyRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"F\n\x16OwnedEntityUUIdRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\x62\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"\x1f\n\x0fUserBodyRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"!\n\x10OwnerBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"4\n\x12ProjectBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"B\n\x12OwnedEntityRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\"]\n\x13UserListBodyRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0c\n\x04page\x18\x02 \x01(\x03\x12\r\n\x05limit\x18\x03 \x01(\x03\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"_\n\x14OwnerListBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04page\x18\x02 \x01(\x03\x12\r\n\x05limit\x18\x03 \x01(\x03\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"r\n\x16ProjectListBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04page\x18\x03 \x01(\x03\x12\r\n\x05limit\x18\x04 \x01(\x03\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -182,29 +182,29 @@ _PROJECTBODYREQUEST = _descriptor.Descriptor(
 )
 
 
-_OWNEDENTITYUUIDREQUEST = _descriptor.Descriptor(
-  name='OwnedEntityUUIdRequest',
-  full_name='v1.OwnedEntityUUIdRequest',
+_OWNEDENTITYREQUEST = _descriptor.Descriptor(
+  name='OwnedEntityRequest',
+  full_name='v1.OwnedEntityRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='owner', full_name='v1.OwnedEntityUUIdRequest.owner', index=0,
+      name='owner', full_name='v1.OwnedEntityRequest.owner', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='project', full_name='v1.OwnedEntityUUIdRequest.project', index=1,
+      name='project', full_name='v1.OwnedEntityRequest.project', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='uuid', full_name='v1.OwnedEntityUUIdRequest.uuid', index=2,
+      name='uuid', full_name='v1.OwnedEntityRequest.uuid', index=2,
       number=3, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -223,7 +223,191 @@ _OWNEDENTITYUUIDREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=226,
-  serialized_end=296,
+  serialized_end=292,
+)
+
+
+_USERLISTBODYREQUEST = _descriptor.Descriptor(
+  name='UserListBodyRequest',
+  full_name='v1.UserListBodyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='user', full_name='v1.UserListBodyRequest.user', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page', full_name='v1.UserListBodyRequest.page', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='v1.UserListBodyRequest.limit', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sort', full_name='v1.UserListBodyRequest.sort', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='query', full_name='v1.UserListBodyRequest.query', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=294,
+  serialized_end=387,
+)
+
+
+_OWNERLISTBODYREQUEST = _descriptor.Descriptor(
+  name='OwnerListBodyRequest',
+  full_name='v1.OwnerListBodyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='owner', full_name='v1.OwnerListBodyRequest.owner', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page', full_name='v1.OwnerListBodyRequest.page', index=1,
+      number=2, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='v1.OwnerListBodyRequest.limit', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sort', full_name='v1.OwnerListBodyRequest.sort', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='query', full_name='v1.OwnerListBodyRequest.query', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=389,
+  serialized_end=484,
+)
+
+
+_PROJECTLISTBODYREQUEST = _descriptor.Descriptor(
+  name='ProjectListBodyRequest',
+  full_name='v1.ProjectListBodyRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='owner', full_name='v1.ProjectListBodyRequest.owner', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='project', full_name='v1.ProjectListBodyRequest.project', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='page', full_name='v1.ProjectListBodyRequest.page', index=2,
+      number=3, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='limit', full_name='v1.ProjectListBodyRequest.limit', index=3,
+      number=4, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='sort', full_name='v1.ProjectListBodyRequest.sort', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='query', full_name='v1.ProjectListBodyRequest.query', index=5,
+      number=6, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=486,
+  serialized_end=600,
 )
 
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY
@@ -231,7 +415,10 @@ DESCRIPTOR.message_types_by_name['KV'] = _KV
 DESCRIPTOR.message_types_by_name['UserBodyRequest'] = _USERBODYREQUEST
 DESCRIPTOR.message_types_by_name['OwnerBodyRequest'] = _OWNERBODYREQUEST
 DESCRIPTOR.message_types_by_name['ProjectBodyRequest'] = _PROJECTBODYREQUEST
-DESCRIPTOR.message_types_by_name['OwnedEntityUUIdRequest'] = _OWNEDENTITYUUIDREQUEST
+DESCRIPTOR.message_types_by_name['OwnedEntityRequest'] = _OWNEDENTITYREQUEST
+DESCRIPTOR.message_types_by_name['UserListBodyRequest'] = _USERLISTBODYREQUEST
+DESCRIPTOR.message_types_by_name['OwnerListBodyRequest'] = _OWNERLISTBODYREQUEST
+DESCRIPTOR.message_types_by_name['ProjectListBodyRequest'] = _PROJECTLISTBODYREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 KV = _reflection.GeneratedProtocolMessageType('KV', (_message.Message,), {
@@ -262,12 +449,33 @@ ProjectBodyRequest = _reflection.GeneratedProtocolMessageType('ProjectBodyReques
   })
 _sym_db.RegisterMessage(ProjectBodyRequest)
 
-OwnedEntityUUIdRequest = _reflection.GeneratedProtocolMessageType('OwnedEntityUUIdRequest', (_message.Message,), {
-  'DESCRIPTOR' : _OWNEDENTITYUUIDREQUEST,
+OwnedEntityRequest = _reflection.GeneratedProtocolMessageType('OwnedEntityRequest', (_message.Message,), {
+  'DESCRIPTOR' : _OWNEDENTITYREQUEST,
   '__module__' : 'v1.base_pb2'
-  # @@protoc_insertion_point(class_scope:v1.OwnedEntityUUIdRequest)
+  # @@protoc_insertion_point(class_scope:v1.OwnedEntityRequest)
   })
-_sym_db.RegisterMessage(OwnedEntityUUIdRequest)
+_sym_db.RegisterMessage(OwnedEntityRequest)
+
+UserListBodyRequest = _reflection.GeneratedProtocolMessageType('UserListBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _USERLISTBODYREQUEST,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.UserListBodyRequest)
+  })
+_sym_db.RegisterMessage(UserListBodyRequest)
+
+OwnerListBodyRequest = _reflection.GeneratedProtocolMessageType('OwnerListBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _OWNERLISTBODYREQUEST,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.OwnerListBodyRequest)
+  })
+_sym_db.RegisterMessage(OwnerListBodyRequest)
+
+ProjectListBodyRequest = _reflection.GeneratedProtocolMessageType('ProjectListBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _PROJECTLISTBODYREQUEST,
+  '__module__' : 'v1.base_pb2'
+  # @@protoc_insertion_point(class_scope:v1.ProjectListBodyRequest)
+  })
+_sym_db.RegisterMessage(ProjectListBodyRequest)
 
 
 # @@protoc_insertion_point(module_scope)

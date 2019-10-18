@@ -78,7 +78,7 @@ for the invalidate run operation typically these are written to a http.Request
 type InvalidateRunParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityUUIDRequest
+	Body *service_model.V1OwnedEntityRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +134,13 @@ func (o *InvalidateRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the invalidate run params
-func (o *InvalidateRunParams) WithBody(body *service_model.V1OwnedEntityUUIDRequest) *InvalidateRunParams {
+func (o *InvalidateRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *InvalidateRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the invalidate run params
-func (o *InvalidateRunParams) SetBody(body *service_model.V1OwnedEntityUUIDRequest) {
+func (o *InvalidateRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
 	o.Body = body
 }
 

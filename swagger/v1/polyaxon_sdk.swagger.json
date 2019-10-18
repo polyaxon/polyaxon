@@ -48,9 +48,39 @@
         "parameters": [
           {
             "name": "user",
-            "description": "Owner of the namespace",
+            "description": "User",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -85,9 +115,39 @@
         "parameters": [
           {
             "name": "user",
-            "description": "Owner of the namespace",
+            "description": "User",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -122,9 +182,39 @@
         "parameters": [
           {
             "name": "user",
-            "description": "Owner of the namespace",
+            "description": "User",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -159,9 +249,39 @@
         "parameters": [
           {
             "name": "user",
-            "description": "Owner of the namespace",
+            "description": "User",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -355,7 +475,7 @@
     "/api/v1/{owner}/projecs/{project}": {
       "delete": {
         "summary": "Delete runs",
-        "operationId": "DeleteExperiment",
+        "operationId": "DeleteProject",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -471,6 +591,36 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -507,6 +657,36 @@
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -913,6 +1093,36 @@
             "description": "Project under namesapce",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
             "type": "string"
           }
         ],
@@ -1552,7 +1762,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityRequest"
             }
           }
         ],
@@ -1664,7 +1874,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityRequest"
             }
           }
         ],
@@ -1724,7 +1934,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityRequest"
             }
           }
         ],
@@ -1836,7 +2046,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityRequest"
             }
           }
         ],
@@ -2006,7 +2216,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityRequest"
             }
           }
         ],
@@ -2066,7 +2276,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityUUIdRequest"
+              "$ref": "#/definitions/v1OwnedEntityRequest"
             }
           }
         ],
@@ -2239,7 +2449,7 @@
       "type": "object",
       "properties": {
         "entity": {
-          "$ref": "#/definitions/v1OwnedEntityUUIdRequest",
+          "$ref": "#/definitions/v1OwnedEntityRequest",
           "title": "Owner of the code ref"
         },
         "CodeReference": {
@@ -2410,7 +2620,7 @@
         }
       }
     },
-    "v1OwnedEntityUUIdRequest": {
+    "v1OwnedEntityRequest": {
       "type": "object",
       "properties": {
         "owner": {

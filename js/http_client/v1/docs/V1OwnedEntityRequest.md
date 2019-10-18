@@ -1,4 +1,4 @@
-# PolyaxonSdk.V1OwnedEntityUUIdRequest
+# PolyaxonSdk.V1OwnedEntityRequest
 
 ## Properties
 Name | Type | Description | Notes

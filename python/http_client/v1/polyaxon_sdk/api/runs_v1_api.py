@@ -287,7 +287,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -311,7 +311,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1441,7 +1441,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1465,7 +1465,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1672,7 +1672,11 @@ class RunsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1693,13 +1697,17 @@ class RunsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['user']  # noqa: E501
+        all_params = ['user', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1726,6 +1734,14 @@ class RunsV1Api(object):
             path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -1769,7 +1785,11 @@ class RunsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1790,13 +1810,17 @@ class RunsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['user']  # noqa: E501
+        all_params = ['user', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1823,6 +1847,14 @@ class RunsV1Api(object):
             path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -1868,6 +1900,10 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1890,12 +1926,16 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListRunsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project']  # noqa: E501
+        all_params = ['owner', 'project', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1928,6 +1968,14 @@ class RunsV1Api(object):
             path_params['project'] = params['project']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -2095,7 +2143,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2119,7 +2167,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2329,7 +2377,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2353,7 +2401,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2450,7 +2498,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2474,7 +2522,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2571,7 +2619,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2595,7 +2643,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityUUIdRequest body: (required)
+        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.

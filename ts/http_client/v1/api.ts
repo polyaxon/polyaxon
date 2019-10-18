@@ -114,10 +114,10 @@ export interface V1Auth {
 export interface V1CodeRefBodyRequest {
     /**
      * 
-     * @type {V1OwnedEntityUUIdRequest}
+     * @type {V1OwnedEntityRequest}
      * @memberof V1CodeRefBodyRequest
      */
-    entity?: V1OwnedEntityUUIdRequest;
+    entity?: V1OwnedEntityRequest;
     /**
      * 
      * @type {V1CodeReference}
@@ -347,25 +347,25 @@ export interface V1LogHandler {
 /**
  * 
  * @export
- * @interface V1OwnedEntityUUIdRequest
+ * @interface V1OwnedEntityRequest
  */
-export interface V1OwnedEntityUUIdRequest {
+export interface V1OwnedEntityRequest {
     /**
      * 
      * @type {string}
-     * @memberof V1OwnedEntityUUIdRequest
+     * @memberof V1OwnedEntityRequest
      */
     owner?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1OwnedEntityUUIdRequest
+     * @memberof V1OwnedEntityRequest
      */
     project?: string;
     /**
      * 
      * @type {string}
-     * @memberof V1OwnedEntityUUIdRequest
+     * @memberof V1OwnedEntityRequest
      */
     uuid?: string;
 }
@@ -1062,14 +1062,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExperiment(owner: string, project: string, options: any = {}): FetchArgs {
+        deleteProject(owner: string, project: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
-                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteExperiment.');
+                throw new RequiredError('owner','Required parameter owner was null or undefined when calling deleteProject.');
             }
             // verify required parameter 'project' is not null or undefined
             if (project === null || project === undefined) {
-                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteExperiment.');
+                throw new RequiredError('project','Required parameter project was null or undefined when calling deleteProject.');
             }
             const localVarPath = `/api/v1/{owner}/projecs/{project}`
                 .replace(`{${"owner"}}`, encodeURIComponent(String(owner)))
@@ -1229,11 +1229,15 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
         /**
          * 
          * @summary Create new run
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(user: string, options: any = {}): FetchArgs {
+        listArchivedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listArchivedProjects.');
@@ -1253,6 +1257,22 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -1266,11 +1286,15 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
         /**
          * 
          * @summary List archived runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(user: string, options: any = {}): FetchArgs {
+        listBookmarkedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listBookmarkedProjects.');
@@ -1290,6 +1314,22 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -1304,10 +1344,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * 
          * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjectNames(owner: string, options: any = {}): FetchArgs {
+        listProjectNames(owner: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjectNames.');
@@ -1327,6 +1371,22 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -1341,10 +1401,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * 
          * @summary List runs
          * @param {string} owner Owner of the namespace
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjects(owner: string, options: any = {}): FetchArgs {
+        listProjects(owner: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjects.');
@@ -1362,6 +1426,22 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
 					? configuration.apiKey("Authorization")
 					: configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -1641,8 +1721,8 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExperiment(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).deleteExperiment(owner, project, options);
+        deleteProject(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).deleteProject(owner, project, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1716,12 +1796,16 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create new run
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listArchivedProjects(user, options);
+        listArchivedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listArchivedProjects(user, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1735,12 +1819,16 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List archived runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listBookmarkedProjects(user, options);
+        listBookmarkedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listBookmarkedProjects(user, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1755,11 +1843,15 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjectNames(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjectNames(owner, options);
+        listProjectNames(owner: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjectNames(owner, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1774,11 +1866,15 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List runs
          * @param {string} owner Owner of the namespace
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjects(owner: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjects(owner, options);
+        listProjects(owner: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjects(owner, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1921,8 +2017,8 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteExperiment(owner: string, project: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).deleteExperiment(owner, project, options)(fetch, basePath);
+        deleteProject(owner: string, project: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).deleteProject(owner, project, options)(fetch, basePath);
         },
         /**
          * 
@@ -1960,42 +2056,58 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
         /**
          * 
          * @summary Create new run
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(user: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listArchivedProjects(user, options)(fetch, basePath);
+        listArchivedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listArchivedProjects(user, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List archived runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(user: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listBookmarkedProjects(user, options)(fetch, basePath);
+        listBookmarkedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listBookmarkedProjects(user, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjectNames(owner: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listProjectNames(owner, options)(fetch, basePath);
+        listProjectNames(owner: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listProjectNames(owner, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List runs
          * @param {string} owner Owner of the namespace
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjects(owner: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listProjects(owner, options)(fetch, basePath);
+        listProjects(owner: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listProjects(owner, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
@@ -2101,8 +2213,8 @@ export class ProjectsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public deleteExperiment(owner: string, project: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).deleteExperiment(owner, project, options)(this.fetch, this.basePath);
+    public deleteProject(owner: string, project: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).deleteProject(owner, project, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2147,49 +2259,65 @@ export class ProjectsV1Api extends BaseAPI {
     /**
      * 
      * @summary Create new run
-     * @param {string} user Owner of the namespace
+     * @param {string} user User
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listArchivedProjects(user: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listArchivedProjects(user, options)(this.fetch, this.basePath);
+    public listArchivedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listArchivedProjects(user, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List archived runs for user
-     * @param {string} user Owner of the namespace
+     * @param {string} user User
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listBookmarkedProjects(user: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listBookmarkedProjects(user, options)(this.fetch, this.basePath);
+    public listBookmarkedProjects(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listBookmarkedProjects(user, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List bookmarked runs for user
      * @param {string} owner Owner of the namespace
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listProjectNames(owner: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listProjectNames(owner, options)(this.fetch, this.basePath);
+    public listProjectNames(owner: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listProjectNames(owner, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List runs
      * @param {string} owner Owner of the namespace
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listProjects(owner: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listProjects(owner, options)(this.fetch, this.basePath);
+    public listProjects(owner: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listProjects(owner, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -2358,11 +2486,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling copyRun.');
@@ -2402,7 +2530,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnedEntityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -2881,11 +3009,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling invalidateRun.');
@@ -2925,7 +3053,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnedEntityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -2988,11 +3116,15 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary List archived runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(user: string, options: any = {}): FetchArgs {
+        listArchivedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listArchivedRuns.');
@@ -3012,6 +3144,22 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -3025,11 +3173,15 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary List bookmarked runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(user: string, options: any = {}): FetchArgs {
+        listBookmarkedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listBookmarkedRuns.');
@@ -3049,6 +3201,22 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -3064,10 +3232,14 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @summary List runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listRuns(owner: string, project: string, options: any = {}): FetchArgs {
+        listRuns(owner: string, project: string, page?: string, limit?: string, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listRuns.');
@@ -3090,6 +3262,22 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
 					? configuration.apiKey("Authorization")
 					: configuration.apiKey;
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            if (sort !== undefined) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
             }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
@@ -3166,11 +3354,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling restartRun.');
@@ -3210,7 +3398,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnedEntityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3273,11 +3461,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling resumeRun.');
@@ -3317,7 +3505,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnedEntityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3331,11 +3519,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling startRunTensorboard.');
@@ -3375,7 +3563,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnedEntityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3389,11 +3577,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options: any = {}): FetchArgs {
+        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling stopRun.');
@@ -3433,7 +3621,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1OwnedEntityUUIdRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1OwnedEntityRequest" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3706,11 +3894,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).copyRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -3919,11 +4107,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).invalidateRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -3959,12 +4147,16 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List archived runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listArchivedRuns(user, options);
+        listArchivedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listArchivedRuns(user, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3978,12 +4170,16 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary List bookmarked runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(user: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listBookmarkedRuns(user, options);
+        listBookmarkedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listBookmarkedRuns(user, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -3999,11 +4195,15 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @summary List runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listRuns(owner: string, project: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listRuns(owner, project, options);
+        listRuns(owner: string, project: string, page?: string, limit?: string, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listRuns(owner, project, page, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4042,11 +4242,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).restartRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4085,11 +4285,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
+        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Run> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).resumeRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4107,11 +4307,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).startRunTensorboard(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4129,11 +4329,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
+        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<any> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).stopRun(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4269,11 +4469,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
             return RunsV1ApiFp(configuration).copyRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4392,11 +4592,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
             return RunsV1ApiFp(configuration).invalidateRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4414,33 +4614,45 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
         /**
          * 
          * @summary List archived runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(user: string, options?: any) {
-            return RunsV1ApiFp(configuration).listArchivedRuns(user, options)(fetch, basePath);
+        listArchivedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return RunsV1ApiFp(configuration).listArchivedRuns(user, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List bookmarked runs for user
-         * @param {string} user Owner of the namespace
+         * @param {string} user User
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(user: string, options?: any) {
-            return RunsV1ApiFp(configuration).listBookmarkedRuns(user, options)(fetch, basePath);
+        listBookmarkedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return RunsV1ApiFp(configuration).listBookmarkedRuns(user, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
+         * @param {string} [page] Pagination.
+         * @param {string} [limit] Limit size.
+         * @param {string} [sort] Sort to order the search.
+         * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listRuns(owner: string, project: string, options?: any) {
-            return RunsV1ApiFp(configuration).listRuns(owner, project, options)(fetch, basePath);
+        listRuns(owner: string, project: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+            return RunsV1ApiFp(configuration).listRuns(owner, project, page, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
@@ -4461,11 +4673,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
             return RunsV1ApiFp(configuration).restartRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4486,11 +4698,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
             return RunsV1ApiFp(configuration).resumeRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4499,11 +4711,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
             return RunsV1ApiFp(configuration).startRunTensorboard(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4512,11 +4724,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1OwnedEntityUUIdRequest} body 
+         * @param {V1OwnedEntityRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+        stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
             return RunsV1ApiFp(configuration).stopRun(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4612,12 +4824,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {V1OwnedEntityRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+    public copyRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
         return RunsV1ApiFp(this.configuration).copyRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
@@ -4755,12 +4967,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {V1OwnedEntityRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+    public invalidateRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
         return RunsV1ApiFp(this.configuration).invalidateRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
@@ -4781,25 +4993,33 @@ export class RunsV1Api extends BaseAPI {
     /**
      * 
      * @summary List archived runs for user
-     * @param {string} user Owner of the namespace
+     * @param {string} user User
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public listArchivedRuns(user: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).listArchivedRuns(user, options)(this.fetch, this.basePath);
+    public listArchivedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).listArchivedRuns(user, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List bookmarked runs for user
-     * @param {string} user Owner of the namespace
+     * @param {string} user User
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public listBookmarkedRuns(user: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).listBookmarkedRuns(user, options)(this.fetch, this.basePath);
+    public listBookmarkedRuns(user: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).listBookmarkedRuns(user, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4807,12 +5027,16 @@ export class RunsV1Api extends BaseAPI {
      * @summary List runs
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
+     * @param {string} [page] Pagination.
+     * @param {string} [limit] Limit size.
+     * @param {string} [sort] Sort to order the search.
+     * @param {string} [query] Query filter the search search.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public listRuns(owner: string, project: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).listRuns(owner, project, options)(this.fetch, this.basePath);
+    public listRuns(owner: string, project: string, page?: string, limit?: string, sort?: string, query?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).listRuns(owner, project, page, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4836,12 +5060,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {V1OwnedEntityRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+    public restartRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
         return RunsV1ApiFp(this.configuration).restartRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
@@ -4865,12 +5089,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {V1OwnedEntityRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+    public resumeRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
         return RunsV1ApiFp(this.configuration).resumeRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
@@ -4880,12 +5104,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {V1OwnedEntityRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+    public startRunTensorboard(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
         return RunsV1ApiFp(this.configuration).startRunTensorboard(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 
@@ -4895,12 +5119,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1OwnedEntityUUIdRequest} body 
+     * @param {V1OwnedEntityRequest} body 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityUUIdRequest, options?: any) {
+    public stopRun(owner: string, project: string, uuid: string, body: V1OwnedEntityRequest, options?: any) {
         return RunsV1ApiFp(this.configuration).stopRun(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 

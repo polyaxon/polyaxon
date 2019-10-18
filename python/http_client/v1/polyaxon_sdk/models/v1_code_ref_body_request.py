@@ -33,7 +33,7 @@ import re  # noqa: F401
 import six
 
 from polyaxon_sdk.models.v1_code_reference import V1CodeReference  # noqa: F401,E501
-from polyaxon_sdk.models.v1_owned_entity_uu_id_request import V1OwnedEntityUUIdRequest  # noqa: F401,E501
+from polyaxon_sdk.models.v1_owned_entity_request import V1OwnedEntityRequest  # noqa: F401,E501
 
 
 class V1CodeRefBodyRequest(object):
@@ -50,7 +50,7 @@ class V1CodeRefBodyRequest(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'entity': 'V1OwnedEntityUUIdRequest',
+        'entity': 'V1OwnedEntityRequest',
         'code_reference': 'V1CodeReference'
     }
 
@@ -77,7 +77,7 @@ class V1CodeRefBodyRequest(object):
 
 
         :return: The entity of this V1CodeRefBodyRequest.  # noqa: E501
-        :rtype: V1OwnedEntityUUIdRequest
+        :rtype: V1OwnedEntityRequest
         """
         return self._entity
 
@@ -87,7 +87,7 @@ class V1CodeRefBodyRequest(object):
 
 
         :param entity: The entity of this V1CodeRefBodyRequest.  # noqa: E501
-        :type: V1OwnedEntityUUIdRequest
+        :type: V1OwnedEntityRequest
         """
 
         self._entity = entity

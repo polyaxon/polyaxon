@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityUUIdRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityUUIdRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1Status'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1Status'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityUUIdRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1Status);
+    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1Status);
   }
-}(this, function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityUUIdRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status) {
+}(this, function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status) {
   'use strict';
 
   /**
@@ -197,7 +197,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~copyRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
@@ -823,7 +823,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~invalidateRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -947,11 +947,17 @@
 
     /**
      * List archived runs for user
-     * @param {String} user Owner of the namespace
+     * @param {String} user User
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/RunsV1Api~listArchivedRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listArchivedRuns = function(user, callback) {
+    this.listArchivedRuns = function(user, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
@@ -964,6 +970,10 @@
         'user': user
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -994,11 +1004,17 @@
 
     /**
      * List bookmarked runs for user
-     * @param {String} user Owner of the namespace
+     * @param {String} user User
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/RunsV1Api~listBookmarkedRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listBookmarkedRuns = function(user, callback) {
+    this.listBookmarkedRuns = function(user, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
@@ -1011,6 +1027,10 @@
         'user': user
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -1043,10 +1063,16 @@
      * List runs
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/RunsV1Api~listRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListRunsResponse}
      */
-    this.listRuns = function(owner, project, callback) {
+    this.listRuns = function(owner, project, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -1065,6 +1091,10 @@
         'project': project
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -1165,7 +1195,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~restartRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
@@ -1293,7 +1323,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~resumeRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
@@ -1360,7 +1390,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~startRunTensorboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -1427,7 +1457,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityUUIdRequest} body 
+     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~stopRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */

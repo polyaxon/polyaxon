@@ -130,7 +130,7 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *PolyaxonSdk.ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *PolyaxonSdk.ProjectsV1Api* | [**createProject**](docs/ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-*PolyaxonSdk.ProjectsV1Api* | [**deleteExperiment**](docs/ProjectsV1Api.md#deleteExperiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+*PolyaxonSdk.ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
 *PolyaxonSdk.ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *PolyaxonSdk.ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *PolyaxonSdk.ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
@@ -185,7 +185,7 @@ Class | Method | HTTP request | Description
  - [PolyaxonSdk.V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [PolyaxonSdk.V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [PolyaxonSdk.V1LogHandler](docs/V1LogHandler.md)
- - [PolyaxonSdk.V1OwnedEntityUUIdRequest](docs/V1OwnedEntityUUIdRequest.md)
+ - [PolyaxonSdk.V1OwnedEntityRequest](docs/V1OwnedEntityRequest.md)
  - [PolyaxonSdk.V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [PolyaxonSdk.V1Project](docs/V1Project.md)
  - [PolyaxonSdk.V1ProjectBodyRequest](docs/V1ProjectBodyRequest.md)

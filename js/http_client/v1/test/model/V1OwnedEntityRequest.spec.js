@@ -45,7 +45,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new PolyaxonSdk.V1OwnedEntityUUIdRequest();
+    instance = new PolyaxonSdk.V1OwnedEntityRequest();
   });
 
   var getProperty = function(object, getter, property) {
@@ -64,28 +64,28 @@
       object[property] = value;
   }
 
-  describe('V1OwnedEntityUUIdRequest', function() {
-    it('should create an instance of V1OwnedEntityUUIdRequest', function() {
-      // uncomment below and update the code to test V1OwnedEntityUUIdRequest
-      //var instance = new PolyaxonSdk.V1OwnedEntityUUIdRequest();
-      //expect(instance).to.be.a(PolyaxonSdk.V1OwnedEntityUUIdRequest);
+  describe('V1OwnedEntityRequest', function() {
+    it('should create an instance of V1OwnedEntityRequest', function() {
+      // uncomment below and update the code to test V1OwnedEntityRequest
+      //var instance = new PolyaxonSdk.V1OwnedEntityRequest();
+      //expect(instance).to.be.a(PolyaxonSdk.V1OwnedEntityRequest);
     });
 
     it('should have the property owner (base name: "owner")', function() {
       // uncomment below and update the code to test the property owner
-      //var instance = new PolyaxonSdk.V1OwnedEntityUUIdRequest();
+      //var instance = new PolyaxonSdk.V1OwnedEntityRequest();
       //expect(instance).to.be();
     });
 
     it('should have the property project (base name: "project")', function() {
       // uncomment below and update the code to test the property project
-      //var instance = new PolyaxonSdk.V1OwnedEntityUUIdRequest();
+      //var instance = new PolyaxonSdk.V1OwnedEntityRequest();
       //expect(instance).to.be();
     });
 
     it('should have the property uuid (base name: "uuid")', function() {
       // uncomment below and update the code to test the property uuid
-      //var instance = new PolyaxonSdk.V1OwnedEntityUUIdRequest();
+      //var instance = new PolyaxonSdk.V1OwnedEntityRequest();
       //expect(instance).to.be();
     });
 

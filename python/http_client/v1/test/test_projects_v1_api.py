@@ -66,8 +66,8 @@ class TestProjectsV1Api(unittest.TestCase):
         """
         pass
 
-    def test_delete_experiment(self):
-        """Test case for delete_experiment
+    def test_delete_project(self):
+        """Test case for delete_project
 
         Delete runs  # noqa: E501
         """

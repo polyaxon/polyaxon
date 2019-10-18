@@ -146,23 +146,23 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 }
 
 /*
-DeleteExperiment deletes runs
+DeleteProject deletes runs
 */
-func (a *Client) DeleteExperiment(params *DeleteExperimentParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteExperimentOK, error) {
+func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteProjectOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeleteExperimentParams()
+		params = NewDeleteProjectParams()
 	}
 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "DeleteExperiment",
+		ID:                 "DeleteProject",
 		Method:             "DELETE",
 		PathPattern:        "/api/v1/{owner}/projecs/{project}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
 		Params:             params,
-		Reader:             &DeleteExperimentReader{formats: a.formats},
+		Reader:             &DeleteProjectReader{formats: a.formats},
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
@@ -170,13 +170,13 @@ func (a *Client) DeleteExperiment(params *DeleteExperimentParams, authInfo runti
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*DeleteExperimentOK)
+	success, ok := result.(*DeleteProjectOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for DeleteExperiment: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	msg := fmt.Sprintf("unexpected success response for DeleteProject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 

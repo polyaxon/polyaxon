@@ -40,7 +40,7 @@
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.V1OwnedEntityUUIdRequest = factory(root.PolyaxonSdk.ApiClient);
+    root.PolyaxonSdk.V1OwnedEntityRequest = factory(root.PolyaxonSdk.ApiClient);
   }
 }(this, function(ApiClient) {
   'use strict';
@@ -49,14 +49,14 @@
 
 
   /**
-   * The V1OwnedEntityUUIdRequest model module.
-   * @module model/V1OwnedEntityUUIdRequest
+   * The V1OwnedEntityRequest model module.
+   * @module model/V1OwnedEntityRequest
    * @version 1.14.4
    */
 
   /**
-   * Constructs a new <code>V1OwnedEntityUUIdRequest</code>.
-   * @alias module:model/V1OwnedEntityUUIdRequest
+   * Constructs a new <code>V1OwnedEntityRequest</code>.
+   * @alias module:model/V1OwnedEntityRequest
    * @class
    */
   var exports = function() {
@@ -68,11 +68,11 @@
   };
 
   /**
-   * Constructs a <code>V1OwnedEntityUUIdRequest</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>V1OwnedEntityRequest</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/V1OwnedEntityUUIdRequest} obj Optional instance to populate.
-   * @return {module:model/V1OwnedEntityUUIdRequest} The populated <code>V1OwnedEntityUUIdRequest</code> instance.
+   * @param {module:model/V1OwnedEntityRequest} obj Optional instance to populate.
+   * @return {module:model/V1OwnedEntityRequest} The populated <code>V1OwnedEntityRequest</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {

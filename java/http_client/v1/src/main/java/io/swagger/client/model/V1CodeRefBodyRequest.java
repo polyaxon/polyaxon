@@ -37,7 +37,7 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.client.model.V1CodeReference;
-import io.swagger.client.model.V1OwnedEntityUUIdRequest;
+import io.swagger.client.model.V1OwnedEntityRequest;
 import java.io.IOException;
 
 /**
@@ -46,12 +46,12 @@ import java.io.IOException;
 
 public class V1CodeRefBodyRequest {
   @SerializedName("entity")
-  private V1OwnedEntityUUIdRequest entity = null;
+  private V1OwnedEntityRequest entity = null;
 
   @SerializedName("CodeReference")
   private V1CodeReference codeReference = null;
 
-  public V1CodeRefBodyRequest entity(V1OwnedEntityUUIdRequest entity) {
+  public V1CodeRefBodyRequest entity(V1OwnedEntityRequest entity) {
     this.entity = entity;
     return this;
   }
@@ -61,11 +61,11 @@ public class V1CodeRefBodyRequest {
    * @return entity
   **/
   @ApiModelProperty(value = "")
-  public V1OwnedEntityUUIdRequest getEntity() {
+  public V1OwnedEntityRequest getEntity() {
     return entity;
   }
 
-  public void setEntity(V1OwnedEntityUUIdRequest entity) {
+  public void setEntity(V1OwnedEntityRequest entity) {
     this.entity = entity;
   }
 

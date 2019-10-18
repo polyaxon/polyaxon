@@ -169,7 +169,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityUUIdRequest() # V1OwnedEntityUUIdRequest | 
+body = polyaxon_sdk.V1OwnedEntityRequest() # V1OwnedEntityRequest | 
 
 try:
     # Restart run with copy
@@ -186,7 +186,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -735,7 +735,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityUUIdRequest() # V1OwnedEntityUUIdRequest | 
+body = polyaxon_sdk.V1OwnedEntityRequest() # V1OwnedEntityRequest | 
 
 try:
     # Stop run
@@ -752,7 +752,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -826,7 +826,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_archived_runs**
-> V1ListRunsResponse list_archived_runs(user)
+> V1ListRunsResponse list_archived_runs(user, page=page, limit=limit, sort=sort, query=query)
 
 List archived runs for user
 
@@ -846,11 +846,15 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-user = 'user_example' # str | Owner of the namespace
+user = 'user_example' # str | User
+page = 'page_example' # str | Pagination. (optional)
+limit = 'limit_example' # str | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List archived runs for user
-    api_response = api_instance.list_archived_runs(user)
+    api_response = api_instance.list_archived_runs(user, page=page, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->list_archived_runs: %s\n" % e)
@@ -860,7 +864,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **str**| Owner of the namespace | 
+ **user** | **str**| User | 
+ **page** | **str**| Pagination. | [optional] 
+ **limit** | **str**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -878,7 +886,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_runs**
-> V1ListRunsResponse list_bookmarked_runs(user)
+> V1ListRunsResponse list_bookmarked_runs(user, page=page, limit=limit, sort=sort, query=query)
 
 List bookmarked runs for user
 
@@ -898,11 +906,15 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
-user = 'user_example' # str | Owner of the namespace
+user = 'user_example' # str | User
+page = 'page_example' # str | Pagination. (optional)
+limit = 'limit_example' # str | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List bookmarked runs for user
-    api_response = api_instance.list_bookmarked_runs(user)
+    api_response = api_instance.list_bookmarked_runs(user, page=page, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->list_bookmarked_runs: %s\n" % e)
@@ -912,7 +924,11 @@ except ApiException as e:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **str**| Owner of the namespace | 
+ **user** | **str**| User | 
+ **page** | **str**| Pagination. | [optional] 
+ **limit** | **str**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -930,7 +946,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runs**
-> V1ListRunsResponse list_runs(owner, project)
+> V1ListRunsResponse list_runs(owner, project, page=page, limit=limit, sort=sort, query=query)
 
 List runs
 
@@ -952,10 +968,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
+page = 'page_example' # str | Pagination. (optional)
+limit = 'limit_example' # str | Limit size. (optional)
+sort = 'sort_example' # str | Sort to order the search. (optional)
+query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List runs
-    api_response = api_instance.list_runs(owner, project)
+    api_response = api_instance.list_runs(owner, project, page=page, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
@@ -967,6 +987,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
+ **page** | **str**| Pagination. | [optional] 
+ **limit** | **str**| Limit size. | [optional] 
+ **sort** | **str**| Sort to order the search. | [optional] 
+ **query** | **str**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -1065,7 +1089,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityUUIdRequest() # V1OwnedEntityUUIdRequest | 
+body = polyaxon_sdk.V1OwnedEntityRequest() # V1OwnedEntityRequest | 
 
 try:
     # Restart run
@@ -1082,7 +1106,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -1179,7 +1203,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityUUIdRequest() # V1OwnedEntityUUIdRequest | 
+body = polyaxon_sdk.V1OwnedEntityRequest() # V1OwnedEntityRequest | 
 
 try:
     # Resume run
@@ -1196,7 +1220,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -1237,7 +1261,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityUUIdRequest() # V1OwnedEntityUUIdRequest | 
+body = polyaxon_sdk.V1OwnedEntityRequest() # V1OwnedEntityRequest | 
 
 try:
     # Start run tensorboard
@@ -1254,7 +1278,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -1295,7 +1319,7 @@ api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project where the experiement will be assigned
 uuid = 'uuid_example' # str | Unique integer identifier of the entity
-body = polyaxon_sdk.V1OwnedEntityUUIdRequest() # V1OwnedEntityUUIdRequest | 
+body = polyaxon_sdk.V1OwnedEntityRequest() # V1OwnedEntityRequest | 
 
 try:
     # Stop run
@@ -1312,7 +1336,7 @@ Name | Type | Description  | Notes
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project where the experiement will be assigned | 
  **uuid** | **str**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 

@@ -78,7 +78,7 @@ for the copy run operation typically these are written to a http.Request
 type CopyRunParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityUUIDRequest
+	Body *service_model.V1OwnedEntityRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +134,13 @@ func (o *CopyRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the copy run params
-func (o *CopyRunParams) WithBody(body *service_model.V1OwnedEntityUUIDRequest) *CopyRunParams {
+func (o *CopyRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *CopyRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the copy run params
-func (o *CopyRunParams) SetBody(body *service_model.V1OwnedEntityUUIDRequest) {
+func (o *CopyRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
 	o.Body = body
 }
 

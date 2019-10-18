@@ -81,7 +81,7 @@ Class | Method | HTTP request | Description
 *ProjectsV1Api* | [**archive_project**](docs/ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Stop run
 *ProjectsV1Api* | [**bookmark_project**](docs/ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
 *ProjectsV1Api* | [**create_project**](docs/ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
-*ProjectsV1Api* | [**delete_experiment**](docs/ProjectsV1Api.md#delete_experiment) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+*ProjectsV1Api* | [**delete_project**](docs/ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
 *ProjectsV1Api* | [**disable_project_ci**](docs/ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectsV1Api* | [**enable_project_ci**](docs/ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
 *ProjectsV1Api* | [**get_project**](docs/ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
@@ -136,7 +136,7 @@ Class | Method | HTTP request | Description
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1LogHandler](docs/V1LogHandler.md)
- - [V1OwnedEntityUUIdRequest](docs/V1OwnedEntityUUIdRequest.md)
+ - [V1OwnedEntityRequest](docs/V1OwnedEntityRequest.md)
  - [V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [V1Project](docs/V1Project.md)
  - [V1ProjectBodyRequest](docs/V1ProjectBodyRequest.md)

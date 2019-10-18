@@ -34,7 +34,7 @@ type V1CodeRefBodyRequest struct {
 	CodeReference *V1CodeReference `json:"CodeReference,omitempty"`
 
 	// Owner of the code ref
-	Entity *V1OwnedEntityUUIDRequest `json:"entity,omitempty"`
+	Entity *V1OwnedEntityRequest `json:"entity,omitempty"`
 }
 
 // Validate validates this v1 code ref body request

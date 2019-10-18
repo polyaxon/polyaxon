@@ -224,8 +224,8 @@
     }
 
     /**
-     * Callback function to receive the result of the deleteExperiment operation.
-     * @callback module:api/ProjectsV1Api~deleteExperimentCallback
+     * Callback function to receive the result of the deleteProject operation.
+     * @callback module:api/ProjectsV1Api~deleteProjectCallback
      * @param {String} error Error message, if any.
      * @param {Object} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
@@ -235,20 +235,20 @@
      * Delete runs
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:api/ProjectsV1Api~deleteExperimentCallback} callback The callback function, accepting three arguments: error, data, response
+     * @param {module:api/ProjectsV1Api~deleteProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
-    this.deleteExperiment = function(owner, project, callback) {
+    this.deleteProject = function(owner, project, callback) {
       var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling deleteExperiment");
+        throw new Error("Missing the required parameter 'owner' when calling deleteProject");
       }
 
       // verify the required parameter 'project' is set
       if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling deleteExperiment");
+        throw new Error("Missing the required parameter 'project' when calling deleteProject");
       }
 
 
@@ -449,11 +449,17 @@
 
     /**
      * Create new run
-     * @param {String} user Owner of the namespace
+     * @param {String} user User
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listArchivedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listArchivedProjects = function(user, callback) {
+    this.listArchivedProjects = function(user, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
@@ -466,6 +472,10 @@
         'user': user
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -496,11 +506,17 @@
 
     /**
      * List archived runs for user
-     * @param {String} user Owner of the namespace
+     * @param {String} user User
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listBookmarkedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listBookmarkedProjects = function(user, callback) {
+    this.listBookmarkedProjects = function(user, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'user' is set
@@ -513,6 +529,10 @@
         'user': user
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -544,10 +564,16 @@
     /**
      * List bookmarked runs for user
      * @param {String} owner Owner of the namespace
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listProjectNamesCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listProjectNames = function(owner, callback) {
+    this.listProjectNames = function(owner, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -560,6 +586,10 @@
         'owner': owner
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };
@@ -591,10 +621,16 @@
     /**
      * List runs
      * @param {String} owner Owner of the namespace
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.page Pagination.
+     * @param {String} opts.limit Limit size.
+     * @param {String} opts.sort Sort to order the search.
+     * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listProjectsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1ListProjectsResponse}
      */
-    this.listProjects = function(owner, callback) {
+    this.listProjects = function(owner, opts, callback) {
+      opts = opts || {};
       var postBody = null;
 
       // verify the required parameter 'owner' is set
@@ -607,6 +643,10 @@
         'owner': owner
       };
       var queryParams = {
+        'page': opts['page'],
+        'limit': opts['limit'],
+        'sort': opts['sort'],
+        'query': opts['query'],
       };
       var collectionQueryParams = {
       };

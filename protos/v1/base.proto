@@ -9,9 +9,9 @@ message KV {
     google.protobuf.Any value = 2;
 }
 
-// Request data with owner namespace
+// Request data with user namespace
 message UserBodyRequest {
-    // Owner of the namespace
+    // User
     string user = 1;
 }
 
@@ -31,7 +31,7 @@ message ProjectBodyRequest {
 }
 
 // Request data to get/delete entity
-message OwnedEntityUUIdRequest {
+message OwnedEntityRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -40,4 +40,62 @@ message OwnedEntityUUIdRequest {
 
     // Unique integer identifier of the entity
     int64 uuid = 3;
+}
+
+
+// Request list data with user namespace
+message UserListBodyRequest {
+    // User
+    string user = 1;
+
+    // Pagination
+    int64 page = 2;
+
+    // Limit size
+    int64 limit = 3;
+
+    // Sort to order the search
+    string sort = 4;
+
+    // Query filter the search search
+    string query = 5;
+}
+
+// Request list data with owner namespace
+message OwnerListBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Pagination
+    int64 page = 2;
+
+    // Limit size
+    int64 limit = 3;
+
+    // Sort to order the search
+    string sort = 4;
+
+    // Query filter the search search
+    string query = 5;
+}
+
+// Request list data with owner/project namespace
+message ProjectListBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Pagination
+    int64 page = 3;
+
+    // Limit size
+    int64 limit = 4;
+
+     // Sort to order the search
+    string sort = 5;
+
+     // Query filter the search search
+    string query = 6;
 }

@@ -25,9 +25,9 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// V1OwnedEntityUUIDRequest Request data to get/delete entity
-// swagger:model v1OwnedEntityUUIdRequest
-type V1OwnedEntityUUIDRequest struct {
+// V1OwnedEntityRequest Request data to get/delete entity
+// swagger:model v1OwnedEntityRequest
+type V1OwnedEntityRequest struct {
 
 	// Owner of the namespace
 	Owner string `json:"owner,omitempty"`
@@ -39,13 +39,13 @@ type V1OwnedEntityUUIDRequest struct {
 	UUID string `json:"uuid,omitempty"`
 }
 
-// Validate validates this v1 owned entity u u Id request
-func (m *V1OwnedEntityUUIDRequest) Validate(formats strfmt.Registry) error {
+// Validate validates this v1 owned entity request
+func (m *V1OwnedEntityRequest) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *V1OwnedEntityUUIDRequest) MarshalBinary() ([]byte, error) {
+func (m *V1OwnedEntityRequest) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -53,8 +53,8 @@ func (m *V1OwnedEntityUUIDRequest) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *V1OwnedEntityUUIDRequest) UnmarshalBinary(b []byte) error {
-	var res V1OwnedEntityUUIDRequest
+func (m *V1OwnedEntityRequest) UnmarshalBinary(b []byte) error {
+	var res V1OwnedEntityRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

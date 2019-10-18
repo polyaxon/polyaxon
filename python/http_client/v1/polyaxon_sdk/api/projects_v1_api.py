@@ -364,12 +364,12 @@ class ProjectsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def delete_experiment(self, owner, project, **kwargs):  # noqa: E501
+    def delete_project(self, owner, project, **kwargs):  # noqa: E501
         """Delete runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_experiment(owner, project, async_req=True)
+        >>> thread = api.delete_project(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -381,17 +381,17 @@ class ProjectsV1Api(object):
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.delete_experiment_with_http_info(owner, project, **kwargs)  # noqa: E501
+            return self.delete_project_with_http_info(owner, project, **kwargs)  # noqa: E501
         else:
-            (data) = self.delete_experiment_with_http_info(owner, project, **kwargs)  # noqa: E501
+            (data) = self.delete_project_with_http_info(owner, project, **kwargs)  # noqa: E501
             return data
 
-    def delete_experiment_with_http_info(self, owner, project, **kwargs):  # noqa: E501
+    def delete_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
         """Delete runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.delete_experiment_with_http_info(owner, project, async_req=True)
+        >>> thread = api.delete_project_with_http_info(owner, project, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
@@ -413,18 +413,18 @@ class ProjectsV1Api(object):
             if key not in all_params:
                 raise TypeError(
                     "Got an unexpected keyword argument '%s'"
-                    " to method delete_experiment" % key
+                    " to method delete_project" % key
                 )
             params[key] = val
         del params['kwargs']
         # verify the required parameter 'owner' is set
         if ('owner' not in params or
                 params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `delete_experiment`")  # noqa: E501
+            raise ValueError("Missing the required parameter `owner` when calling `delete_project`")  # noqa: E501
         # verify the required parameter 'project' is set
         if ('project' not in params or
                 params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `delete_experiment`")  # noqa: E501
+            raise ValueError("Missing the required parameter `project` when calling `delete_project`")  # noqa: E501
 
         collection_formats = {}
 
@@ -793,7 +793,11 @@ class ProjectsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -814,13 +818,17 @@ class ProjectsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['user']  # noqa: E501
+        all_params = ['user', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -847,6 +855,14 @@ class ProjectsV1Api(object):
             path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -890,7 +906,11 @@ class ProjectsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -911,13 +931,17 @@ class ProjectsV1Api(object):
         >>> result = thread.get()
 
         :param async_req bool
-        :param str user: Owner of the namespace (required)
+        :param str user: User (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['user']  # noqa: E501
+        all_params = ['user', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -944,6 +968,14 @@ class ProjectsV1Api(object):
             path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -988,6 +1020,10 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1009,12 +1045,16 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner']  # noqa: E501
+        all_params = ['owner', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1041,6 +1081,14 @@ class ProjectsV1Api(object):
             path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 
@@ -1085,6 +1133,10 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1106,12 +1158,16 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
+        :param str page: Pagination.
+        :param str limit: Limit size.
+        :param str sort: Sort to order the search.
+        :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner']  # noqa: E501
+        all_params = ['owner', 'page', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1138,6 +1194,14 @@ class ProjectsV1Api(object):
             path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
+        if 'page' in params:
+            query_params.append(('page', params['page']))  # noqa: E501
+        if 'limit' in params:
+            query_params.append(('limit', params['limit']))  # noqa: E501
+        if 'sort' in params:
+            query_params.append(('sort', params['sort']))  # noqa: E501
+        if 'query' in params:
+            query_params.append(('query', params['query']))  # noqa: E501
 
         header_params = {}
 

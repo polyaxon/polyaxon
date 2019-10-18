@@ -109,10 +109,10 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
-    public void deleteExperimentTest() throws ApiException {
+    public void deleteProjectTest() throws ApiException {
         String owner = null;
         String project = null;
-        Object response = api.deleteExperiment(owner, project);
+        Object response = api.deleteProject(owner, project);
 
         // TODO: test validations
     }
@@ -179,7 +179,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listArchivedProjectsTest() throws ApiException {
         String user = null;
-        V1ListProjectsResponse response = api.listArchivedProjects(user);
+        String page = null;
+        String limit = null;
+        String sort = null;
+        String query = null;
+        V1ListProjectsResponse response = api.listArchivedProjects(user, page, limit, sort, query);
 
         // TODO: test validations
     }
@@ -195,7 +199,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listBookmarkedProjectsTest() throws ApiException {
         String user = null;
-        V1ListProjectsResponse response = api.listBookmarkedProjects(user);
+        String page = null;
+        String limit = null;
+        String sort = null;
+        String query = null;
+        V1ListProjectsResponse response = api.listBookmarkedProjects(user, page, limit, sort, query);
 
         // TODO: test validations
     }
@@ -211,7 +219,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listProjectNamesTest() throws ApiException {
         String owner = null;
-        V1ListProjectsResponse response = api.listProjectNames(owner);
+        String page = null;
+        String limit = null;
+        String sort = null;
+        String query = null;
+        V1ListProjectsResponse response = api.listProjectNames(owner, page, limit, sort, query);
 
         // TODO: test validations
     }
@@ -227,7 +239,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listProjectsTest() throws ApiException {
         String owner = null;
-        V1ListProjectsResponse response = api.listProjects(owner);
+        String page = null;
+        String limit = null;
+        String sort = null;
+        String query = null;
+        V1ListProjectsResponse response = api.listProjects(owner, page, limit, sort, query);
 
         // TODO: test validations
     }

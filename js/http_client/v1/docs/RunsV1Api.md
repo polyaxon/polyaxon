@@ -172,7 +172,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+var body = new PolyaxonSdk.V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 
 
 var callback = function(error, data, response) {
@@ -192,7 +192,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -751,7 +751,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+var body = new PolyaxonSdk.V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 
 
 var callback = function(error, data, response) {
@@ -771,7 +771,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -845,7 +845,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
-> V1ListRunsResponse listArchivedRuns(user)
+> V1ListRunsResponse listArchivedRuns(user, opts)
 
 List archived runs for user
 
@@ -862,8 +862,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.RunsV1Api();
 
-var user = "user_example"; // String | Owner of the namespace
+var user = "user_example"; // String | User
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -872,14 +878,18 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listArchivedRuns(user, callback);
+apiInstance.listArchivedRuns(user, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace | 
+ **user** | **String**| User | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -896,7 +906,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListRunsResponse listBookmarkedRuns(user)
+> V1ListRunsResponse listBookmarkedRuns(user, opts)
 
 List bookmarked runs for user
 
@@ -913,8 +923,14 @@ ApiKey.apiKey = 'YOUR API KEY';
 
 var apiInstance = new PolyaxonSdk.RunsV1Api();
 
-var user = "user_example"; // String | Owner of the namespace
+var user = "user_example"; // String | User
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -923,14 +939,18 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listBookmarkedRuns(user, callback);
+apiInstance.listBookmarkedRuns(user, opts, callback);
 ```
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| Owner of the namespace | 
+ **user** | **String**| User | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -947,7 +967,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, project)
+> V1ListRunsResponse listRuns(owner, project, opts)
 
 List runs
 
@@ -968,6 +988,12 @@ var owner = "owner_example"; // String | Owner of the namespace
 
 var project = "project_example"; // String | Project under namesapce
 
+var opts = { 
+  'page': "page_example", // String | Pagination.
+  'limit': "limit_example", // String | Limit size.
+  'sort': "sort_example", // String | Sort to order the search.
+  'query': "query_example" // String | Query filter the search search.
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -976,7 +1002,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.listRuns(owner, project, callback);
+apiInstance.listRuns(owner, project, opts, callback);
 ```
 
 ### Parameters
@@ -985,6 +1011,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
+ **page** | **String**| Pagination. | [optional] 
+ **limit** | **String**| Limit size. | [optional] 
+ **sort** | **String**| Sort to order the search. | [optional] 
+ **query** | **String**| Query filter the search search. | [optional] 
 
 ### Return type
 
@@ -1084,7 +1114,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+var body = new PolyaxonSdk.V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 
 
 var callback = function(error, data, response) {
@@ -1104,7 +1134,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -1201,7 +1231,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+var body = new PolyaxonSdk.V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 
 
 var callback = function(error, data, response) {
@@ -1221,7 +1251,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -1261,7 +1291,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+var body = new PolyaxonSdk.V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 
 
 var callback = function(error, data, response) {
@@ -1281,7 +1311,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
@@ -1321,7 +1351,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1OwnedEntityUUIdRequest(); // V1OwnedEntityUUIdRequest | 
+var body = new PolyaxonSdk.V1OwnedEntityRequest(); // V1OwnedEntityRequest | 
 
 
 var callback = function(error, data, response) {
@@ -1341,7 +1371,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1OwnedEntityUUIdRequest**](V1OwnedEntityUUIdRequest.md)|  | 
+ **body** | [**V1OwnedEntityRequest**](V1OwnedEntityRequest.md)|  | 
 
 ### Return type
 
