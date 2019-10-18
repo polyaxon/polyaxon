@@ -25,7 +25,7 @@ class PyTest(TestCommand):
 
 
 setup(
-    name="polyaxon-cli",
+    name="polyaxon",
     version="0.5.6",
     description="Command Line Interface (CLI) and client to interact with Polyaxon API.",
     long_description=read_readme(),
