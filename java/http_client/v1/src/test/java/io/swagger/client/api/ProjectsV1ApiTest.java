@@ -29,9 +29,7 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.V1ListProjectsResponse;
-import io.swagger.client.model.V1OwnerBodyRequest;
 import io.swagger.client.model.V1Project;
-import io.swagger.client.model.V1ProjectBodyRequest;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -67,7 +65,7 @@ public class ProjectsV1ApiTest {
     }
     
     /**
-     * Stop run
+     * Invalidate run
      *
      * 
      *
@@ -94,7 +92,7 @@ public class ProjectsV1ApiTest {
     @Test
     public void createProjectTest() throws ApiException {
         String owner = null;
-        V1OwnerBodyRequest body = null;
+        V1Project body = null;
         V1Project response = api.createProject(owner, body);
 
         // TODO: test validations
@@ -179,51 +177,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listArchivedProjectsTest() throws ApiException {
         String user = null;
-        String page = null;
-        String limit = null;
+        Integer page = null;
+        Integer limit = null;
         String sort = null;
         String query = null;
         V1ListProjectsResponse response = api.listArchivedProjects(user, page, limit, sort, query);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * List archived runs for user
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void listBookmarkedProjectsTest() throws ApiException {
-        String user = null;
-        String page = null;
-        String limit = null;
-        String sort = null;
-        String query = null;
-        V1ListProjectsResponse response = api.listBookmarkedProjects(user, page, limit, sort, query);
-
-        // TODO: test validations
-    }
-    
-    /**
-     * List bookmarked runs for user
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void listProjectNamesTest() throws ApiException {
-        String owner = null;
-        String page = null;
-        String limit = null;
-        String sort = null;
-        String query = null;
-        V1ListProjectsResponse response = api.listProjectNames(owner, page, limit, sort, query);
 
         // TODO: test validations
     }
@@ -237,10 +195,50 @@ public class ProjectsV1ApiTest {
      *          if the Api call fails
      */
     @Test
+    public void listBookmarkedProjectsTest() throws ApiException {
+        String user = null;
+        Integer page = null;
+        Integer limit = null;
+        String sort = null;
+        String query = null;
+        V1ListProjectsResponse response = api.listBookmarkedProjects(user, page, limit, sort, query);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List archived runs for user
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void listProjectNamesTest() throws ApiException {
+        String owner = null;
+        Integer page = null;
+        Integer limit = null;
+        String sort = null;
+        String query = null;
+        V1ListProjectsResponse response = api.listProjectNames(owner, page, limit, sort, query);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * List bookmarked runs for user
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
     public void listProjectsTest() throws ApiException {
         String owner = null;
-        String page = null;
-        String limit = null;
+        Integer page = null;
+        Integer limit = null;
         String sort = null;
         String query = null;
         V1ListProjectsResponse response = api.listProjects(owner, page, limit, sort, query);
@@ -259,9 +257,9 @@ public class ProjectsV1ApiTest {
     @Test
     public void patchProjectTest() throws ApiException {
         String owner = null;
-        String project = null;
-        V1ProjectBodyRequest body = null;
-        V1Project response = api.patchProject(owner, project, body);
+        String projectName = null;
+        V1Project body = null;
+        V1Project response = api.patchProject(owner, projectName, body);
 
         // TODO: test validations
     }
@@ -311,9 +309,9 @@ public class ProjectsV1ApiTest {
     @Test
     public void updateProjectTest() throws ApiException {
         String owner = null;
-        String project = null;
-        V1ProjectBodyRequest body = null;
-        V1Project response = api.updateProject(owner, project, body);
+        String projectName = null;
+        V1Project body = null;
+        V1Project response = api.updateProject(owner, projectName, body);
 
         // TODO: test validations
     }

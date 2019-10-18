@@ -76,7 +76,7 @@ type UpdateProjectOK struct {
 }
 
 func (o *UpdateProjectOK) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/projects/{project}][%d] updateProjectOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateProjectOK) GetPayload() *service_model.V1Project {
@@ -109,7 +109,7 @@ type UpdateProjectForbidden struct {
 }
 
 func (o *UpdateProjectForbidden) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/projects/{project}][%d] updateProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *UpdateProjectForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type UpdateProjectNotFound struct {
 }
 
 func (o *UpdateProjectNotFound) Error() string {
-	return fmt.Sprintf("[PUT /api/v1/{owner}/projects/{project}][%d] updateProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PUT /api/v1/{owner}/{project.name}][%d] updateProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *UpdateProjectNotFound) GetPayload() string {

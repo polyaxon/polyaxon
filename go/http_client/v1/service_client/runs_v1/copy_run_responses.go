@@ -76,7 +76,7 @@ type CopyRunOK struct {
 }
 
 func (o *CopyRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/copy][%d] copyRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunOK  %+v", 200, o.Payload)
 }
 
 func (o *CopyRunOK) GetPayload() *service_model.V1Run {
@@ -109,7 +109,7 @@ type CopyRunForbidden struct {
 }
 
 func (o *CopyRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/copy][%d] copyRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CopyRunForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type CopyRunNotFound struct {
 }
 
 func (o *CopyRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/copy][%d] copyRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy][%d] copyRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CopyRunNotFound) GetPayload() string {

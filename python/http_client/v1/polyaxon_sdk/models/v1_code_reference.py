@@ -49,7 +49,7 @@ class V1CodeReference(object):
     swagger_types = {
         'uuid': 'str',
         'commit': 'str',
-        'updated_at': 'str',
+        'updated_at': 'datetime',
         'status': 'str',
         'git_url': 'str',
         'is_dirty': 'bool'
@@ -136,7 +136,7 @@ class V1CodeReference(object):
 
 
         :return: The updated_at of this V1CodeReference.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._updated_at
 
@@ -146,7 +146,7 @@ class V1CodeReference(object):
 
 
         :param updated_at: The updated_at of this V1CodeReference.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._updated_at = updated_at

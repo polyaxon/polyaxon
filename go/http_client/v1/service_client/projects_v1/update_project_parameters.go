@@ -77,18 +77,21 @@ for the update project operation typically these are written to a http.Request
 */
 type UpdateProjectParams struct {
 
-	/*Body*/
-	Body *service_model.V1ProjectBodyRequest
+	/*Body
+	  Project body
+
+	*/
+	Body *service_model.V1Project
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Project
-	  Project under namesapce
+	/*ProjectName
+	  Required name
 
 	*/
-	Project string
+	ProjectName string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -129,13 +132,13 @@ func (o *UpdateProjectParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update project params
-func (o *UpdateProjectParams) WithBody(body *service_model.V1ProjectBodyRequest) *UpdateProjectParams {
+func (o *UpdateProjectParams) WithBody(body *service_model.V1Project) *UpdateProjectParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update project params
-func (o *UpdateProjectParams) SetBody(body *service_model.V1ProjectBodyRequest) {
+func (o *UpdateProjectParams) SetBody(body *service_model.V1Project) {
 	o.Body = body
 }
 
@@ -150,15 +153,15 @@ func (o *UpdateProjectParams) SetOwner(owner string) {
 	o.Owner = owner
 }
 
-// WithProject adds the project to the update project params
-func (o *UpdateProjectParams) WithProject(project string) *UpdateProjectParams {
-	o.SetProject(project)
+// WithProjectName adds the projectName to the update project params
+func (o *UpdateProjectParams) WithProjectName(projectName string) *UpdateProjectParams {
+	o.SetProjectName(projectName)
 	return o
 }
 
-// SetProject adds the project to the update project params
-func (o *UpdateProjectParams) SetProject(project string) {
-	o.Project = project
+// SetProjectName adds the projectName to the update project params
+func (o *UpdateProjectParams) SetProjectName(projectName string) {
+	o.ProjectName = projectName
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -180,8 +183,8 @@ func (o *UpdateProjectParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param project.name
+	if err := r.SetPathParam("project.name", o.ProjectName); err != nil {
 		return err
 	}
 

@@ -71,7 +71,7 @@
      */
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * @param {module:api/UsersV1Api~getUserCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1User}
      */

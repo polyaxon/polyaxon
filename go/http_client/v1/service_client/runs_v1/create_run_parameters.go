@@ -77,8 +77,11 @@ for the create run operation typically these are written to a http.Request
 */
 type CreateRunParams struct {
 
-	/*Body*/
-	Body *service_model.V1RunBodyRequest
+	/*Body
+	  Run object
+
+	*/
+	Body *service_model.V1Run
 	/*Owner
 	  Owner of the namespace
 
@@ -129,13 +132,13 @@ func (o *CreateRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create run params
-func (o *CreateRunParams) WithBody(body *service_model.V1RunBodyRequest) *CreateRunParams {
+func (o *CreateRunParams) WithBody(body *service_model.V1Run) *CreateRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create run params
-func (o *CreateRunParams) SetBody(body *service_model.V1RunBodyRequest) {
+func (o *CreateRunParams) SetBody(body *service_model.V1Run) {
 	o.Body = body
 }
 

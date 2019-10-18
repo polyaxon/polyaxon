@@ -77,8 +77,11 @@ for the create run status operation typically these are written to a http.Reques
 */
 type CreateRunStatusParams struct {
 
-	/*Body*/
-	Body *service_model.V1EntityStatusRequest
+	/*Body
+	  Status to set
+
+	*/
+	Body *service_model.V1Status
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +137,13 @@ func (o *CreateRunStatusParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create run status params
-func (o *CreateRunStatusParams) WithBody(body *service_model.V1EntityStatusRequest) *CreateRunStatusParams {
+func (o *CreateRunStatusParams) WithBody(body *service_model.V1Status) *CreateRunStatusParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create run status params
-func (o *CreateRunStatusParams) SetBody(body *service_model.V1EntityStatusRequest) {
+func (o *CreateRunStatusParams) SetBody(body *service_model.V1Status) {
 	o.Body = body
 }
 

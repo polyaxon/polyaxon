@@ -133,7 +133,7 @@ public class AuthV1Api {
     }
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * 
      * @param body  (required)
      * @return V1Auth
@@ -145,7 +145,7 @@ public class AuthV1Api {
     }
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * 
      * @param body  (required)
      * @return ApiResponse&lt;V1Auth&gt;
@@ -158,7 +158,7 @@ public class AuthV1Api {
     }
 
     /**
-     * List runs (asynchronously)
+     * List bookmarked runs for user (asynchronously)
      * 
      * @param body  (required)
      * @param callback The callback to be executed when the API call finishes

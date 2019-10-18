@@ -74,7 +74,7 @@ type DeleteProjectOK struct {
 }
 
 func (o *DeleteProjectOK) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/projecs/{project}][%d] deleteProjectOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *DeleteProjectOK) GetPayload() interface{} {
@@ -105,7 +105,7 @@ type DeleteProjectForbidden struct {
 }
 
 func (o *DeleteProjectForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/projecs/{project}][%d] deleteProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *DeleteProjectForbidden) GetPayload() interface{} {
@@ -136,7 +136,7 @@ type DeleteProjectNotFound struct {
 }
 
 func (o *DeleteProjectNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /api/v1/{owner}/projecs/{project}][%d] deleteProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[DELETE /api/v1/{owner}/{project}][%d] deleteProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *DeleteProjectNotFound) GetPayload() string {

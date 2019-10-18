@@ -48,7 +48,7 @@ class TestUsersV1Api(unittest.TestCase):
     def test_get_user(self):
         """Test case for get_user
 
-        List runs  # noqa: E501
+        List bookmarked runs for user  # noqa: E501
         """
         pass
 

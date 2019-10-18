@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **user** | **String** |  | [optional] 
 **name** | **String** |  | [optional] 
 **description** | **String** |  | [optional] 
-**created_at** | **String** |  | [optional] 
-**updated_at** | **String** |  | [optional] 
+**created_at** | **Date** |  | [optional] 
+**updated_at** | **Date** |  | [optional] 
 **is_public** | **String** |  | [optional] 
 **bookmarked** | **Boolean** |  | [optional] 
 

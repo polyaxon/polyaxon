@@ -22,7 +22,9 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // V1StatusCondition Status condition specification
@@ -30,10 +32,12 @@ import (
 type V1StatusCondition struct {
 
 	// last transition time
-	LastTransitionTime string `json:"last_transition_time,omitempty"`
+	// Format: date-time
+	LastTransitionTime strfmt.DateTime `json:"last_transition_time,omitempty"`
 
 	// last update time
-	LastUpdateTime string `json:"last_update_time,omitempty"`
+	// Format: date-time
+	LastUpdateTime strfmt.DateTime `json:"last_update_time,omitempty"`
 
 	// Status message
 	Message string `json:"message,omitempty"`
@@ -50,6 +54,45 @@ type V1StatusCondition struct {
 
 // Validate validates this v1 status condition
 func (m *V1StatusCondition) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateLastTransitionTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateLastUpdateTime(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1StatusCondition) validateLastTransitionTime(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.LastTransitionTime) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("last_transition_time", "body", "date-time", m.LastTransitionTime.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1StatusCondition) validateLastUpdateTime(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.LastUpdateTime) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("last_update_time", "body", "date-time", m.LastUpdateTime.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -83,7 +83,7 @@ func (m *KV) GetValue() *any.Any {
 }
 
 // Request data with user namespace
-type UserBodyRequest struct {
+type UserResourceRequest struct {
 	// User
 	User                 string   `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -91,32 +91,32 @@ type UserBodyRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UserBodyRequest) Reset()         { *m = UserBodyRequest{} }
-func (m *UserBodyRequest) String() string { return proto.CompactTextString(m) }
-func (*UserBodyRequest) ProtoMessage()    {}
-func (*UserBodyRequest) Descriptor() ([]byte, []int) {
+func (m *UserResourceRequest) Reset()         { *m = UserResourceRequest{} }
+func (m *UserResourceRequest) String() string { return proto.CompactTextString(m) }
+func (*UserResourceRequest) ProtoMessage()    {}
+func (*UserResourceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7cadb02d0b0a23f3, []int{1}
 }
 
-func (m *UserBodyRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UserBodyRequest.Unmarshal(m, b)
+func (m *UserResourceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserResourceRequest.Unmarshal(m, b)
 }
-func (m *UserBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UserBodyRequest.Marshal(b, m, deterministic)
+func (m *UserResourceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserResourceRequest.Marshal(b, m, deterministic)
 }
-func (m *UserBodyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UserBodyRequest.Merge(m, src)
+func (m *UserResourceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserResourceRequest.Merge(m, src)
 }
-func (m *UserBodyRequest) XXX_Size() int {
-	return xxx_messageInfo_UserBodyRequest.Size(m)
+func (m *UserResourceRequest) XXX_Size() int {
+	return xxx_messageInfo_UserResourceRequest.Size(m)
 }
-func (m *UserBodyRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UserBodyRequest.DiscardUnknown(m)
+func (m *UserResourceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserResourceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UserBodyRequest proto.InternalMessageInfo
+var xxx_messageInfo_UserResourceRequest proto.InternalMessageInfo
 
-func (m *UserBodyRequest) GetUser() string {
+func (m *UserResourceRequest) GetUser() string {
 	if m != nil {
 		return m.User
 	}
@@ -124,7 +124,7 @@ func (m *UserBodyRequest) GetUser() string {
 }
 
 // Request data with owner namespace
-type OwnerBodyRequest struct {
+type OwnerResourceRequest struct {
 	// Owner of the namespace
 	Owner                string   `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -132,32 +132,32 @@ type OwnerBodyRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *OwnerBodyRequest) Reset()         { *m = OwnerBodyRequest{} }
-func (m *OwnerBodyRequest) String() string { return proto.CompactTextString(m) }
-func (*OwnerBodyRequest) ProtoMessage()    {}
-func (*OwnerBodyRequest) Descriptor() ([]byte, []int) {
+func (m *OwnerResourceRequest) Reset()         { *m = OwnerResourceRequest{} }
+func (m *OwnerResourceRequest) String() string { return proto.CompactTextString(m) }
+func (*OwnerResourceRequest) ProtoMessage()    {}
+func (*OwnerResourceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7cadb02d0b0a23f3, []int{2}
 }
 
-func (m *OwnerBodyRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_OwnerBodyRequest.Unmarshal(m, b)
+func (m *OwnerResourceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OwnerResourceRequest.Unmarshal(m, b)
 }
-func (m *OwnerBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_OwnerBodyRequest.Marshal(b, m, deterministic)
+func (m *OwnerResourceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OwnerResourceRequest.Marshal(b, m, deterministic)
 }
-func (m *OwnerBodyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OwnerBodyRequest.Merge(m, src)
+func (m *OwnerResourceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OwnerResourceRequest.Merge(m, src)
 }
-func (m *OwnerBodyRequest) XXX_Size() int {
-	return xxx_messageInfo_OwnerBodyRequest.Size(m)
+func (m *OwnerResourceRequest) XXX_Size() int {
+	return xxx_messageInfo_OwnerResourceRequest.Size(m)
 }
-func (m *OwnerBodyRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_OwnerBodyRequest.DiscardUnknown(m)
+func (m *OwnerResourceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_OwnerResourceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_OwnerBodyRequest proto.InternalMessageInfo
+var xxx_messageInfo_OwnerResourceRequest proto.InternalMessageInfo
 
-func (m *OwnerBodyRequest) GetOwner() string {
+func (m *OwnerResourceRequest) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
@@ -165,7 +165,7 @@ func (m *OwnerBodyRequest) GetOwner() string {
 }
 
 // Request data with owner/project namespace
-type ProjectBodyRequest struct {
+type ProjectResourceRequest struct {
 	// Owner of the namespace
 	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	// Project under namesapce
@@ -175,112 +175,210 @@ type ProjectBodyRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ProjectBodyRequest) Reset()         { *m = ProjectBodyRequest{} }
-func (m *ProjectBodyRequest) String() string { return proto.CompactTextString(m) }
-func (*ProjectBodyRequest) ProtoMessage()    {}
-func (*ProjectBodyRequest) Descriptor() ([]byte, []int) {
+func (m *ProjectResourceRequest) Reset()         { *m = ProjectResourceRequest{} }
+func (m *ProjectResourceRequest) String() string { return proto.CompactTextString(m) }
+func (*ProjectResourceRequest) ProtoMessage()    {}
+func (*ProjectResourceRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7cadb02d0b0a23f3, []int{3}
 }
 
-func (m *ProjectBodyRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ProjectBodyRequest.Unmarshal(m, b)
+func (m *ProjectResourceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ProjectResourceRequest.Unmarshal(m, b)
 }
-func (m *ProjectBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ProjectBodyRequest.Marshal(b, m, deterministic)
+func (m *ProjectResourceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ProjectResourceRequest.Marshal(b, m, deterministic)
 }
-func (m *ProjectBodyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProjectBodyRequest.Merge(m, src)
+func (m *ProjectResourceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProjectResourceRequest.Merge(m, src)
 }
-func (m *ProjectBodyRequest) XXX_Size() int {
-	return xxx_messageInfo_ProjectBodyRequest.Size(m)
+func (m *ProjectResourceRequest) XXX_Size() int {
+	return xxx_messageInfo_ProjectResourceRequest.Size(m)
 }
-func (m *ProjectBodyRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ProjectBodyRequest.DiscardUnknown(m)
+func (m *ProjectResourceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ProjectResourceRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ProjectBodyRequest proto.InternalMessageInfo
+var xxx_messageInfo_ProjectResourceRequest proto.InternalMessageInfo
 
-func (m *ProjectBodyRequest) GetOwner() string {
+func (m *ProjectResourceRequest) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
 	return ""
 }
 
-func (m *ProjectBodyRequest) GetProject() string {
+func (m *ProjectResourceRequest) GetProject() string {
 	if m != nil {
 		return m.Project
 	}
 	return ""
 }
 
-// Request data to get/delete entity
-type OwnedEntityRequest struct {
-	// Owner of the namespace
-	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
-	// Project where the experiement will be assigned
-	Project string `protobuf:"bytes,2,opt,name=project,proto3" json:"project,omitempty"`
-	// Unique integer identifier of the entity
-	Uuid                 int64    `protobuf:"varint,3,opt,name=uuid,proto3" json:"uuid,omitempty"`
+type Uuids struct {
+	Uuids                []string `protobuf:"bytes,1,rep,name=uuids,proto3" json:"uuids,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *OwnedEntityRequest) Reset()         { *m = OwnedEntityRequest{} }
-func (m *OwnedEntityRequest) String() string { return proto.CompactTextString(m) }
-func (*OwnedEntityRequest) ProtoMessage()    {}
-func (*OwnedEntityRequest) Descriptor() ([]byte, []int) {
+func (m *Uuids) Reset()         { *m = Uuids{} }
+func (m *Uuids) String() string { return proto.CompactTextString(m) }
+func (*Uuids) ProtoMessage()    {}
+func (*Uuids) Descriptor() ([]byte, []int) {
 	return fileDescriptor_7cadb02d0b0a23f3, []int{4}
 }
 
-func (m *OwnedEntityRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_OwnedEntityRequest.Unmarshal(m, b)
+func (m *Uuids) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Uuids.Unmarshal(m, b)
 }
-func (m *OwnedEntityRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_OwnedEntityRequest.Marshal(b, m, deterministic)
+func (m *Uuids) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Uuids.Marshal(b, m, deterministic)
 }
-func (m *OwnedEntityRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OwnedEntityRequest.Merge(m, src)
+func (m *Uuids) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Uuids.Merge(m, src)
 }
-func (m *OwnedEntityRequest) XXX_Size() int {
-	return xxx_messageInfo_OwnedEntityRequest.Size(m)
+func (m *Uuids) XXX_Size() int {
+	return xxx_messageInfo_Uuids.Size(m)
 }
-func (m *OwnedEntityRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_OwnedEntityRequest.DiscardUnknown(m)
+func (m *Uuids) XXX_DiscardUnknown() {
+	xxx_messageInfo_Uuids.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_OwnedEntityRequest proto.InternalMessageInfo
+var xxx_messageInfo_Uuids proto.InternalMessageInfo
 
-func (m *OwnedEntityRequest) GetOwner() string {
+func (m *Uuids) GetUuids() []string {
+	if m != nil {
+		return m.Uuids
+	}
+	return nil
+}
+
+// Request to act on multiple entities under project
+type ProjectResourceUuidsBodyRequest struct {
+	// Owner of the namespace
+	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	// Project under namesapce
+	Project string `protobuf:"bytes,2,opt,name=project,proto3" json:"project,omitempty"`
+	// Uuids of the entities
+	Uuids                *Uuids   `protobuf:"bytes,3,opt,name=uuids,proto3" json:"uuids,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ProjectResourceUuidsBodyRequest) Reset()         { *m = ProjectResourceUuidsBodyRequest{} }
+func (m *ProjectResourceUuidsBodyRequest) String() string { return proto.CompactTextString(m) }
+func (*ProjectResourceUuidsBodyRequest) ProtoMessage()    {}
+func (*ProjectResourceUuidsBodyRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7cadb02d0b0a23f3, []int{5}
+}
+
+func (m *ProjectResourceUuidsBodyRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ProjectResourceUuidsBodyRequest.Unmarshal(m, b)
+}
+func (m *ProjectResourceUuidsBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ProjectResourceUuidsBodyRequest.Marshal(b, m, deterministic)
+}
+func (m *ProjectResourceUuidsBodyRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProjectResourceUuidsBodyRequest.Merge(m, src)
+}
+func (m *ProjectResourceUuidsBodyRequest) XXX_Size() int {
+	return xxx_messageInfo_ProjectResourceUuidsBodyRequest.Size(m)
+}
+func (m *ProjectResourceUuidsBodyRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ProjectResourceUuidsBodyRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ProjectResourceUuidsBodyRequest proto.InternalMessageInfo
+
+func (m *ProjectResourceUuidsBodyRequest) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
 	return ""
 }
 
-func (m *OwnedEntityRequest) GetProject() string {
+func (m *ProjectResourceUuidsBodyRequest) GetProject() string {
 	if m != nil {
 		return m.Project
 	}
 	return ""
 }
 
-func (m *OwnedEntityRequest) GetUuid() int64 {
+func (m *ProjectResourceUuidsBodyRequest) GetUuids() *Uuids {
+	if m != nil {
+		return m.Uuids
+	}
+	return nil
+}
+
+// Request data to get/delete entity
+type EntityResourceRequest struct {
+	// Owner of the namespace
+	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
+	// Project where the experiement will be assigned
+	Project string `protobuf:"bytes,2,opt,name=project,proto3" json:"project,omitempty"`
+	// Unique integer identifier of the entity
+	Uuid                 string   `protobuf:"bytes,3,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EntityResourceRequest) Reset()         { *m = EntityResourceRequest{} }
+func (m *EntityResourceRequest) String() string { return proto.CompactTextString(m) }
+func (*EntityResourceRequest) ProtoMessage()    {}
+func (*EntityResourceRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7cadb02d0b0a23f3, []int{6}
+}
+
+func (m *EntityResourceRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EntityResourceRequest.Unmarshal(m, b)
+}
+func (m *EntityResourceRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EntityResourceRequest.Marshal(b, m, deterministic)
+}
+func (m *EntityResourceRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EntityResourceRequest.Merge(m, src)
+}
+func (m *EntityResourceRequest) XXX_Size() int {
+	return xxx_messageInfo_EntityResourceRequest.Size(m)
+}
+func (m *EntityResourceRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_EntityResourceRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EntityResourceRequest proto.InternalMessageInfo
+
+func (m *EntityResourceRequest) GetOwner() string {
+	if m != nil {
+		return m.Owner
+	}
+	return ""
+}
+
+func (m *EntityResourceRequest) GetProject() string {
+	if m != nil {
+		return m.Project
+	}
+	return ""
+}
+
+func (m *EntityResourceRequest) GetUuid() string {
 	if m != nil {
 		return m.Uuid
 	}
-	return 0
+	return ""
 }
 
 // Request list data with user namespace
-type UserListBodyRequest struct {
+type UserResouceListRequest struct {
 	// User
 	User string `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	// Pagination
-	Page int64 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Page int32 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	// Limit size
-	Limit int64 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	Limit int32 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 	// Sort to order the search
 	Sort string `protobuf:"bytes,4,opt,name=sort,proto3" json:"sort,omitempty"`
 	// Query filter the search search
@@ -290,60 +388,60 @@ type UserListBodyRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *UserListBodyRequest) Reset()         { *m = UserListBodyRequest{} }
-func (m *UserListBodyRequest) String() string { return proto.CompactTextString(m) }
-func (*UserListBodyRequest) ProtoMessage()    {}
-func (*UserListBodyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7cadb02d0b0a23f3, []int{5}
+func (m *UserResouceListRequest) Reset()         { *m = UserResouceListRequest{} }
+func (m *UserResouceListRequest) String() string { return proto.CompactTextString(m) }
+func (*UserResouceListRequest) ProtoMessage()    {}
+func (*UserResouceListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7cadb02d0b0a23f3, []int{7}
 }
 
-func (m *UserListBodyRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_UserListBodyRequest.Unmarshal(m, b)
+func (m *UserResouceListRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UserResouceListRequest.Unmarshal(m, b)
 }
-func (m *UserListBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_UserListBodyRequest.Marshal(b, m, deterministic)
+func (m *UserResouceListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UserResouceListRequest.Marshal(b, m, deterministic)
 }
-func (m *UserListBodyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UserListBodyRequest.Merge(m, src)
+func (m *UserResouceListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UserResouceListRequest.Merge(m, src)
 }
-func (m *UserListBodyRequest) XXX_Size() int {
-	return xxx_messageInfo_UserListBodyRequest.Size(m)
+func (m *UserResouceListRequest) XXX_Size() int {
+	return xxx_messageInfo_UserResouceListRequest.Size(m)
 }
-func (m *UserListBodyRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_UserListBodyRequest.DiscardUnknown(m)
+func (m *UserResouceListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UserResouceListRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_UserListBodyRequest proto.InternalMessageInfo
+var xxx_messageInfo_UserResouceListRequest proto.InternalMessageInfo
 
-func (m *UserListBodyRequest) GetUser() string {
+func (m *UserResouceListRequest) GetUser() string {
 	if m != nil {
 		return m.User
 	}
 	return ""
 }
 
-func (m *UserListBodyRequest) GetPage() int64 {
+func (m *UserResouceListRequest) GetPage() int32 {
 	if m != nil {
 		return m.Page
 	}
 	return 0
 }
 
-func (m *UserListBodyRequest) GetLimit() int64 {
+func (m *UserResouceListRequest) GetLimit() int32 {
 	if m != nil {
 		return m.Limit
 	}
 	return 0
 }
 
-func (m *UserListBodyRequest) GetSort() string {
+func (m *UserResouceListRequest) GetSort() string {
 	if m != nil {
 		return m.Sort
 	}
 	return ""
 }
 
-func (m *UserListBodyRequest) GetQuery() string {
+func (m *UserResouceListRequest) GetQuery() string {
 	if m != nil {
 		return m.Query
 	}
@@ -351,13 +449,13 @@ func (m *UserListBodyRequest) GetQuery() string {
 }
 
 // Request list data with owner namespace
-type OwnerListBodyRequest struct {
+type OwnerResouceListRequest struct {
 	// Owner of the namespace
 	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	// Pagination
-	Page int64 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Page int32 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	// Limit size
-	Limit int64 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
+	Limit int32 `protobuf:"varint,3,opt,name=limit,proto3" json:"limit,omitempty"`
 	// Sort to order the search
 	Sort string `protobuf:"bytes,4,opt,name=sort,proto3" json:"sort,omitempty"`
 	// Query filter the search search
@@ -367,60 +465,60 @@ type OwnerListBodyRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *OwnerListBodyRequest) Reset()         { *m = OwnerListBodyRequest{} }
-func (m *OwnerListBodyRequest) String() string { return proto.CompactTextString(m) }
-func (*OwnerListBodyRequest) ProtoMessage()    {}
-func (*OwnerListBodyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7cadb02d0b0a23f3, []int{6}
+func (m *OwnerResouceListRequest) Reset()         { *m = OwnerResouceListRequest{} }
+func (m *OwnerResouceListRequest) String() string { return proto.CompactTextString(m) }
+func (*OwnerResouceListRequest) ProtoMessage()    {}
+func (*OwnerResouceListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7cadb02d0b0a23f3, []int{8}
 }
 
-func (m *OwnerListBodyRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_OwnerListBodyRequest.Unmarshal(m, b)
+func (m *OwnerResouceListRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_OwnerResouceListRequest.Unmarshal(m, b)
 }
-func (m *OwnerListBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_OwnerListBodyRequest.Marshal(b, m, deterministic)
+func (m *OwnerResouceListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_OwnerResouceListRequest.Marshal(b, m, deterministic)
 }
-func (m *OwnerListBodyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_OwnerListBodyRequest.Merge(m, src)
+func (m *OwnerResouceListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_OwnerResouceListRequest.Merge(m, src)
 }
-func (m *OwnerListBodyRequest) XXX_Size() int {
-	return xxx_messageInfo_OwnerListBodyRequest.Size(m)
+func (m *OwnerResouceListRequest) XXX_Size() int {
+	return xxx_messageInfo_OwnerResouceListRequest.Size(m)
 }
-func (m *OwnerListBodyRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_OwnerListBodyRequest.DiscardUnknown(m)
+func (m *OwnerResouceListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_OwnerResouceListRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_OwnerListBodyRequest proto.InternalMessageInfo
+var xxx_messageInfo_OwnerResouceListRequest proto.InternalMessageInfo
 
-func (m *OwnerListBodyRequest) GetOwner() string {
+func (m *OwnerResouceListRequest) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
 	return ""
 }
 
-func (m *OwnerListBodyRequest) GetPage() int64 {
+func (m *OwnerResouceListRequest) GetPage() int32 {
 	if m != nil {
 		return m.Page
 	}
 	return 0
 }
 
-func (m *OwnerListBodyRequest) GetLimit() int64 {
+func (m *OwnerResouceListRequest) GetLimit() int32 {
 	if m != nil {
 		return m.Limit
 	}
 	return 0
 }
 
-func (m *OwnerListBodyRequest) GetSort() string {
+func (m *OwnerResouceListRequest) GetSort() string {
 	if m != nil {
 		return m.Sort
 	}
 	return ""
 }
 
-func (m *OwnerListBodyRequest) GetQuery() string {
+func (m *OwnerResouceListRequest) GetQuery() string {
 	if m != nil {
 		return m.Query
 	}
@@ -428,15 +526,15 @@ func (m *OwnerListBodyRequest) GetQuery() string {
 }
 
 // Request list data with owner/project namespace
-type ProjectListBodyRequest struct {
+type ProjectResourceListRequest struct {
 	// Owner of the namespace
 	Owner string `protobuf:"bytes,1,opt,name=owner,proto3" json:"owner,omitempty"`
 	// Project under namesapce
 	Project string `protobuf:"bytes,2,opt,name=project,proto3" json:"project,omitempty"`
 	// Pagination
-	Page int64 `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Page int32 `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
 	// Limit size
-	Limit int64 `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
+	Limit int32 `protobuf:"varint,4,opt,name=limit,proto3" json:"limit,omitempty"`
 	// Sort to order the search
 	Sort string `protobuf:"bytes,5,opt,name=sort,proto3" json:"sort,omitempty"`
 	// Query filter the search search
@@ -446,67 +544,67 @@ type ProjectListBodyRequest struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ProjectListBodyRequest) Reset()         { *m = ProjectListBodyRequest{} }
-func (m *ProjectListBodyRequest) String() string { return proto.CompactTextString(m) }
-func (*ProjectListBodyRequest) ProtoMessage()    {}
-func (*ProjectListBodyRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7cadb02d0b0a23f3, []int{7}
+func (m *ProjectResourceListRequest) Reset()         { *m = ProjectResourceListRequest{} }
+func (m *ProjectResourceListRequest) String() string { return proto.CompactTextString(m) }
+func (*ProjectResourceListRequest) ProtoMessage()    {}
+func (*ProjectResourceListRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_7cadb02d0b0a23f3, []int{9}
 }
 
-func (m *ProjectListBodyRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ProjectListBodyRequest.Unmarshal(m, b)
+func (m *ProjectResourceListRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ProjectResourceListRequest.Unmarshal(m, b)
 }
-func (m *ProjectListBodyRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ProjectListBodyRequest.Marshal(b, m, deterministic)
+func (m *ProjectResourceListRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ProjectResourceListRequest.Marshal(b, m, deterministic)
 }
-func (m *ProjectListBodyRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ProjectListBodyRequest.Merge(m, src)
+func (m *ProjectResourceListRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProjectResourceListRequest.Merge(m, src)
 }
-func (m *ProjectListBodyRequest) XXX_Size() int {
-	return xxx_messageInfo_ProjectListBodyRequest.Size(m)
+func (m *ProjectResourceListRequest) XXX_Size() int {
+	return xxx_messageInfo_ProjectResourceListRequest.Size(m)
 }
-func (m *ProjectListBodyRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ProjectListBodyRequest.DiscardUnknown(m)
+func (m *ProjectResourceListRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ProjectResourceListRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ProjectListBodyRequest proto.InternalMessageInfo
+var xxx_messageInfo_ProjectResourceListRequest proto.InternalMessageInfo
 
-func (m *ProjectListBodyRequest) GetOwner() string {
+func (m *ProjectResourceListRequest) GetOwner() string {
 	if m != nil {
 		return m.Owner
 	}
 	return ""
 }
 
-func (m *ProjectListBodyRequest) GetProject() string {
+func (m *ProjectResourceListRequest) GetProject() string {
 	if m != nil {
 		return m.Project
 	}
 	return ""
 }
 
-func (m *ProjectListBodyRequest) GetPage() int64 {
+func (m *ProjectResourceListRequest) GetPage() int32 {
 	if m != nil {
 		return m.Page
 	}
 	return 0
 }
 
-func (m *ProjectListBodyRequest) GetLimit() int64 {
+func (m *ProjectResourceListRequest) GetLimit() int32 {
 	if m != nil {
 		return m.Limit
 	}
 	return 0
 }
 
-func (m *ProjectListBodyRequest) GetSort() string {
+func (m *ProjectResourceListRequest) GetSort() string {
 	if m != nil {
 		return m.Sort
 	}
 	return ""
 }
 
-func (m *ProjectListBodyRequest) GetQuery() string {
+func (m *ProjectResourceListRequest) GetQuery() string {
 	if m != nil {
 		return m.Query
 	}
@@ -515,37 +613,43 @@ func (m *ProjectListBodyRequest) GetQuery() string {
 
 func init() {
 	proto.RegisterType((*KV)(nil), "v1.KV")
-	proto.RegisterType((*UserBodyRequest)(nil), "v1.UserBodyRequest")
-	proto.RegisterType((*OwnerBodyRequest)(nil), "v1.OwnerBodyRequest")
-	proto.RegisterType((*ProjectBodyRequest)(nil), "v1.ProjectBodyRequest")
-	proto.RegisterType((*OwnedEntityRequest)(nil), "v1.OwnedEntityRequest")
-	proto.RegisterType((*UserListBodyRequest)(nil), "v1.UserListBodyRequest")
-	proto.RegisterType((*OwnerListBodyRequest)(nil), "v1.OwnerListBodyRequest")
-	proto.RegisterType((*ProjectListBodyRequest)(nil), "v1.ProjectListBodyRequest")
+	proto.RegisterType((*UserResourceRequest)(nil), "v1.UserResourceRequest")
+	proto.RegisterType((*OwnerResourceRequest)(nil), "v1.OwnerResourceRequest")
+	proto.RegisterType((*ProjectResourceRequest)(nil), "v1.ProjectResourceRequest")
+	proto.RegisterType((*Uuids)(nil), "v1.Uuids")
+	proto.RegisterType((*ProjectResourceUuidsBodyRequest)(nil), "v1.ProjectResourceUuidsBodyRequest")
+	proto.RegisterType((*EntityResourceRequest)(nil), "v1.EntityResourceRequest")
+	proto.RegisterType((*UserResouceListRequest)(nil), "v1.UserResouceListRequest")
+	proto.RegisterType((*OwnerResouceListRequest)(nil), "v1.OwnerResouceListRequest")
+	proto.RegisterType((*ProjectResourceListRequest)(nil), "v1.ProjectResourceListRequest")
 }
 
 func init() { proto.RegisterFile("v1/base.proto", fileDescriptor_7cadb02d0b0a23f3) }
 
 var fileDescriptor_7cadb02d0b0a23f3 = []byte{
-	// 320 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x92, 0x5f, 0x4b, 0xf3, 0x30,
-	0x14, 0xc6, 0xc9, 0xba, 0xee, 0x65, 0xe7, 0x45, 0x1c, 0x71, 0x48, 0xf4, 0x6a, 0x04, 0x84, 0xe2,
-	0x45, 0xc7, 0xf4, 0x13, 0x38, 0xf4, 0x4a, 0x41, 0x09, 0x28, 0xde, 0xb6, 0x36, 0x96, 0x6a, 0x6d,
-	0xba, 0xfc, 0xa9, 0xf4, 0x42, 0xf0, 0x83, 0xf8, 0x61, 0x25, 0x49, 0x07, 0x2a, 0xc5, 0x89, 0xe0,
-	0xdd, 0x73, 0x4e, 0x9f, 0x3e, 0xf9, 0x9d, 0x93, 0xc0, 0x56, 0xb3, 0x98, 0xa7, 0x89, 0xe2, 0x71,
-	0x2d, 0x85, 0x16, 0x78, 0xd0, 0x2c, 0xf6, 0xf7, 0x72, 0x21, 0xf2, 0x92, 0xcf, 0x5d, 0x27, 0x35,
-	0xf7, 0xf3, 0xa4, 0x6a, 0xfd, 0x67, 0xba, 0x84, 0xc1, 0xf9, 0x0d, 0x9e, 0x40, 0xf0, 0xc8, 0x5b,
-	0x82, 0x66, 0x28, 0x1a, 0x33, 0x2b, 0xf1, 0x21, 0x84, 0x4d, 0x52, 0x1a, 0x4e, 0x06, 0x33, 0x14,
-	0xfd, 0x3f, 0x9a, 0xc6, 0x3e, 0x22, 0x5e, 0x47, 0xc4, 0x27, 0x55, 0xcb, 0xbc, 0x85, 0x1e, 0xc0,
-	0xf6, 0xb5, 0xe2, 0x72, 0x29, 0xb2, 0x96, 0xf1, 0x95, 0xe1, 0x4a, 0x63, 0x0c, 0x43, 0xa3, 0xb8,
-	0xec, 0x12, 0x9d, 0xa6, 0x11, 0x4c, 0x2e, 0x9f, 0xab, 0xcf, 0xbe, 0x29, 0x84, 0xc2, 0xf6, 0x3a,
-	0xa3, 0x2f, 0xe8, 0x29, 0xe0, 0x2b, 0x29, 0x1e, 0xf8, 0x9d, 0xde, 0xe8, 0xc5, 0x04, 0xfe, 0xd5,
-	0xde, 0xeb, 0x50, 0xc7, 0x6c, 0x5d, 0xd2, 0x5b, 0xc0, 0xf6, 0xbc, 0xec, 0xac, 0xd2, 0x85, 0xfe,
-	0x6d, 0x8a, 0x9b, 0xc4, 0x14, 0x19, 0x09, 0x66, 0x28, 0x0a, 0x98, 0xd3, 0xf4, 0x05, 0x76, 0xec,
-	0xc0, 0x17, 0x85, 0xd2, 0x1b, 0x86, 0xb6, 0xbd, 0x3a, 0xc9, 0xfd, 0x1a, 0x03, 0xe6, 0xb4, 0x45,
-	0x28, 0x8b, 0xa7, 0x42, 0x77, 0x99, 0xbe, 0xb0, 0x4e, 0x25, 0xa4, 0x26, 0x43, 0xff, 0xb7, 0xd5,
-	0xd6, 0xb9, 0x32, 0x5c, 0xb6, 0x24, 0xf4, 0xb0, 0xae, 0xa0, 0xaf, 0x08, 0xa6, 0x6e, 0x93, 0x5f,
-	0x01, 0xfa, 0x67, 0xfb, 0x0b, 0x84, 0x37, 0x04, 0xbb, 0xdd, 0x15, 0xfd, 0x0c, 0xe2, 0xdb, 0x05,
-	0x3b, 0xbc, 0xa0, 0x0f, 0x6f, 0xd8, 0x87, 0x17, 0xf6, 0xe1, 0x8d, 0x3e, 0xe0, 0xa5, 0x23, 0xf7,
-	0x4c, 0x8f, 0xdf, 0x03, 0x00, 0x00, 0xff, 0xff, 0x70, 0x9f, 0x09, 0xc7, 0x0c, 0x03, 0x00, 0x00,
+	// 369 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x93, 0xcd, 0x4a, 0xc3, 0x40,
+	0x10, 0xc7, 0x49, 0xd3, 0x54, 0x3a, 0x22, 0x48, 0xac, 0x35, 0x16, 0xa4, 0x65, 0x4f, 0x55, 0x24,
+	0xa5, 0xfa, 0x04, 0x16, 0x04, 0x41, 0x41, 0x09, 0xd4, 0x8b, 0xa7, 0xb4, 0x59, 0xcb, 0x6a, 0xcd,
+	0xb6, 0xfb, 0x11, 0xc9, 0x4d, 0xf0, 0x45, 0x7c, 0x54, 0xd9, 0xd9, 0xc6, 0x8f, 0x1a, 0xaa, 0x28,
+	0xde, 0x66, 0x26, 0xff, 0x99, 0xf9, 0xed, 0xfc, 0x09, 0x6c, 0x64, 0xfd, 0xde, 0x28, 0x96, 0x34,
+	0x9c, 0x09, 0xae, 0xb8, 0x5f, 0xc9, 0xfa, 0xad, 0xdd, 0x09, 0xe7, 0x93, 0x29, 0xed, 0x61, 0x65,
+	0xa4, 0x6f, 0x7b, 0x71, 0x9a, 0xdb, 0xcf, 0x64, 0x00, 0x95, 0xf3, 0x6b, 0x7f, 0x13, 0xdc, 0x7b,
+	0x9a, 0x07, 0x4e, 0xc7, 0xe9, 0xd6, 0x23, 0x13, 0xfa, 0x07, 0xe0, 0x65, 0xf1, 0x54, 0xd3, 0xa0,
+	0xd2, 0x71, 0xba, 0xeb, 0x47, 0x8d, 0xd0, 0x8e, 0x08, 0x8b, 0x11, 0xe1, 0x49, 0x9a, 0x47, 0x56,
+	0x42, 0xf6, 0x61, 0x6b, 0x28, 0xa9, 0x88, 0xa8, 0xe4, 0x5a, 0x8c, 0x69, 0x44, 0xe7, 0x9a, 0x4a,
+	0xe5, 0xfb, 0x50, 0xd5, 0x92, 0x8a, 0xc5, 0x54, 0x8c, 0xc9, 0x21, 0x34, 0x2e, 0x1f, 0xd3, 0xaf,
+	0xda, 0x06, 0x78, 0xdc, 0xd4, 0x17, 0x62, 0x9b, 0x90, 0x33, 0x68, 0x5e, 0x09, 0x7e, 0x47, 0xc7,
+	0xea, 0x47, 0x7a, 0x3f, 0x80, 0xb5, 0x99, 0xd5, 0x23, 0x76, 0x3d, 0x2a, 0x52, 0xb2, 0x07, 0xde,
+	0x50, 0xb3, 0x44, 0x9a, 0x46, 0x6d, 0x82, 0xc0, 0xe9, 0xb8, 0xa6, 0x11, 0x13, 0x22, 0xa0, 0xbd,
+	0xb4, 0x08, 0xd5, 0x03, 0x9e, 0xe4, 0xbf, 0xdc, 0xe8, 0xb7, 0x8b, 0x45, 0x2e, 0x1e, 0xb0, 0x1e,
+	0x66, 0xfd, 0x10, 0x87, 0x16, 0x3b, 0x6f, 0x60, 0xfb, 0x34, 0x55, 0x4c, 0xe5, 0x7f, 0x7c, 0x1b,
+	0xde, 0x59, 0xb3, 0x04, 0x17, 0x99, 0x3b, 0x6b, 0x96, 0x90, 0x27, 0x07, 0x9a, 0x6f, 0x9e, 0x8c,
+	0xe9, 0x05, 0x93, 0x6a, 0x85, 0x2d, 0xa6, 0x36, 0x8b, 0x27, 0xd6, 0x6c, 0x2f, 0xc2, 0xd8, 0x60,
+	0x4c, 0xd9, 0x03, 0x53, 0x38, 0xd7, 0x8b, 0x6c, 0x62, 0x94, 0x92, 0x0b, 0x15, 0x54, 0x6d, 0xb7,
+	0x89, 0x8d, 0x72, 0xae, 0xa9, 0xc8, 0x03, 0xcf, 0x02, 0x63, 0x42, 0x9e, 0x1d, 0xd8, 0x79, 0xf7,
+	0xfa, 0x33, 0x43, 0xf9, 0x13, 0xff, 0x83, 0xe2, 0xc5, 0x81, 0xd6, 0x92, 0xb5, 0xdf, 0x83, 0xac,
+	0xbc, 0x35, 0x22, 0xba, 0x65, 0x88, 0xd5, 0x32, 0x44, 0xaf, 0x0c, 0xb1, 0xf6, 0x01, 0x71, 0x54,
+	0xc3, 0x7f, 0xea, 0xf8, 0x35, 0x00, 0x00, 0xff, 0xff, 0xbb, 0xe5, 0x71, 0x63, 0xb9, 0x03, 0x00,
+	0x00,
 }

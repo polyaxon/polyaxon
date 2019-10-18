@@ -29,16 +29,13 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.model.V1Auth;
-import io.swagger.client.model.V1CodeRefBodyRequest;
 import io.swagger.client.model.V1CodeReference;
-import io.swagger.client.model.V1EntityStatusRequest;
-import io.swagger.client.model.V1ListCodeRefResponse;
+import io.swagger.client.model.V1EntityResourceRequest;
+import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
-import io.swagger.client.model.V1OwnedEntityRequest;
-import io.swagger.client.model.V1ProjectBodyRequest;
 import io.swagger.client.model.V1Run;
-import io.swagger.client.model.V1RunBodyRequest;
 import io.swagger.client.model.V1Status;
+import io.swagger.client.model.V1Uuids;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -102,11 +99,11 @@ public class RunsV1ApiTest {
      */
     @Test
     public void copyRunTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String uuid = null;
-        V1OwnedEntityRequest body = null;
-        V1Run response = api.copyRun(owner, project, uuid, body);
+        String entityOwner = null;
+        String entityProject = null;
+        String entityUuid = null;
+        V1Run body = null;
+        V1Run response = api.copyRun(entityOwner, entityProject, entityUuid, body);
 
         // TODO: test validations
     }
@@ -123,7 +120,7 @@ public class RunsV1ApiTest {
     public void createRunTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1RunBodyRequest body = null;
+        V1Run body = null;
         V1Run response = api.createRun(owner, project, body);
 
         // TODO: test validations
@@ -142,7 +139,7 @@ public class RunsV1ApiTest {
         String entityOwner = null;
         String entityProject = null;
         String entityUuid = null;
-        V1CodeRefBodyRequest body = null;
+        V1CodeReference body = null;
         V1CodeReference response = api.createRunCodeRef(entityOwner, entityProject, entityUuid, body);
 
         // TODO: test validations
@@ -161,7 +158,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1EntityStatusRequest body = null;
+        V1Status body = null;
         V1Status response = api.createRunStatus(owner, project, uuid, body);
 
         // TODO: test validations
@@ -197,7 +194,7 @@ public class RunsV1ApiTest {
     public void deleteRunsTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1ProjectBodyRequest body = null;
+        V1Uuids body = null;
         Object response = api.deleteRuns(owner, project, body);
 
         // TODO: test validations
@@ -234,7 +231,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1ListCodeRefResponse response = api.getRunCodeRefs(owner, project, uuid);
+        V1ListCodeRefsResponse response = api.getRunCodeRefs(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -276,7 +273,7 @@ public class RunsV1ApiTest {
     }
     
     /**
-     * Stop run
+     * Invalidate run
      *
      * 
      *
@@ -288,7 +285,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1OwnedEntityRequest body = null;
+        V1EntityResourceRequest body = null;
         Object response = api.invalidateRun(owner, project, uuid, body);
 
         // TODO: test validations
@@ -306,7 +303,7 @@ public class RunsV1ApiTest {
     public void invalidateRunsTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1ProjectBodyRequest body = null;
+        V1Uuids body = null;
         Object response = api.invalidateRuns(owner, project, body);
 
         // TODO: test validations
@@ -323,8 +320,8 @@ public class RunsV1ApiTest {
     @Test
     public void listArchivedRunsTest() throws ApiException {
         String user = null;
-        String page = null;
-        String limit = null;
+        Integer page = null;
+        Integer limit = null;
         String sort = null;
         String query = null;
         V1ListRunsResponse response = api.listArchivedRuns(user, page, limit, sort, query);
@@ -343,8 +340,8 @@ public class RunsV1ApiTest {
     @Test
     public void listBookmarkedRunsTest() throws ApiException {
         String user = null;
-        String page = null;
-        String limit = null;
+        Integer page = null;
+        Integer limit = null;
         String sort = null;
         String query = null;
         V1ListRunsResponse response = api.listBookmarkedRuns(user, page, limit, sort, query);
@@ -364,8 +361,8 @@ public class RunsV1ApiTest {
     public void listRunsTest() throws ApiException {
         String owner = null;
         String project = null;
-        String page = null;
-        String limit = null;
+        Integer page = null;
+        Integer limit = null;
         String sort = null;
         String query = null;
         V1ListRunsResponse response = api.listRuns(owner, project, page, limit, sort, query);
@@ -386,7 +383,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String runUuid = null;
-        V1RunBodyRequest body = null;
+        V1Run body = null;
         V1Run response = api.patchRun(owner, project, runUuid, body);
 
         // TODO: test validations
@@ -402,11 +399,11 @@ public class RunsV1ApiTest {
      */
     @Test
     public void restartRunTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String uuid = null;
-        V1OwnedEntityRequest body = null;
-        V1Run response = api.restartRun(owner, project, uuid, body);
+        String entityOwner = null;
+        String entityProject = null;
+        String entityUuid = null;
+        V1Run body = null;
+        V1Run response = api.restartRun(entityOwner, entityProject, entityUuid, body);
 
         // TODO: test validations
     }
@@ -439,11 +436,11 @@ public class RunsV1ApiTest {
      */
     @Test
     public void resumeRunTest() throws ApiException {
-        String owner = null;
-        String project = null;
-        String uuid = null;
-        V1OwnedEntityRequest body = null;
-        V1Run response = api.resumeRun(owner, project, uuid, body);
+        String entityOwner = null;
+        String entityProject = null;
+        String entityUuid = null;
+        V1Run body = null;
+        V1Run response = api.resumeRun(entityOwner, entityProject, entityUuid, body);
 
         // TODO: test validations
     }
@@ -461,7 +458,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1OwnedEntityRequest body = null;
+        V1EntityResourceRequest body = null;
         Object response = api.startRunTensorboard(owner, project, uuid, body);
 
         // TODO: test validations
@@ -480,8 +477,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1OwnedEntityRequest body = null;
-        Object response = api.stopRun(owner, project, uuid, body);
+        Object response = api.stopRun(owner, project, uuid);
 
         // TODO: test validations
     }
@@ -516,7 +512,7 @@ public class RunsV1ApiTest {
     public void stopRunsTest() throws ApiException {
         String owner = null;
         String project = null;
-        V1ProjectBodyRequest body = null;
+        V1Uuids body = null;
         Object response = api.stopRuns(owner, project, body);
 
         // TODO: test validations
@@ -553,7 +549,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String runUuid = null;
-        V1RunBodyRequest body = null;
+        V1Run body = null;
         V1Run response = api.updateRun(owner, project, runUuid, body);
 
         // TODO: test validations

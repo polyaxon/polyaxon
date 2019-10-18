@@ -48,14 +48,14 @@ class TestVersionsV1Api(unittest.TestCase):
     def test_get_log_handler(self):
         """Test case for get_log_handler
 
-        List bookmarked runs for user  # noqa: E501
+        List archived runs for user  # noqa: E501
         """
         pass
 
     def test_get_versions(self):
         """Test case for get_versions
 
-        List runs  # noqa: E501
+        List bookmarked runs for user  # noqa: E501
         """
         pass
 

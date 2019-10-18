@@ -71,7 +71,7 @@
      */
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * @param {module:model/V1CredsBodyRequest} body 
      * @param {module:api/AuthV1Api~loginCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Auth}

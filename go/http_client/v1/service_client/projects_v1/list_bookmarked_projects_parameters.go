@@ -27,6 +27,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -79,12 +80,12 @@ type ListBookmarkedProjectsParams struct {
 	  Limit size.
 
 	*/
-	Limit *string
+	Limit *int32
 	/*Page
 	  Pagination.
 
 	*/
-	Page *string
+	Page *int32
 	/*Query
 	  Query filter the search search.
 
@@ -140,24 +141,24 @@ func (o *ListBookmarkedProjectsParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithLimit adds the limit to the list bookmarked projects params
-func (o *ListBookmarkedProjectsParams) WithLimit(limit *string) *ListBookmarkedProjectsParams {
+func (o *ListBookmarkedProjectsParams) WithLimit(limit *int32) *ListBookmarkedProjectsParams {
 	o.SetLimit(limit)
 	return o
 }
 
 // SetLimit adds the limit to the list bookmarked projects params
-func (o *ListBookmarkedProjectsParams) SetLimit(limit *string) {
+func (o *ListBookmarkedProjectsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
 // WithPage adds the page to the list bookmarked projects params
-func (o *ListBookmarkedProjectsParams) WithPage(page *string) *ListBookmarkedProjectsParams {
+func (o *ListBookmarkedProjectsParams) WithPage(page *int32) *ListBookmarkedProjectsParams {
 	o.SetPage(page)
 	return o
 }
 
 // SetPage adds the page to the list bookmarked projects params
-func (o *ListBookmarkedProjectsParams) SetPage(page *string) {
+func (o *ListBookmarkedProjectsParams) SetPage(page *int32) {
 	o.Page = page
 }
 
@@ -205,11 +206,11 @@ func (o *ListBookmarkedProjectsParams) WriteToRequest(r runtime.ClientRequest, r
 	if o.Limit != nil {
 
 		// query param limit
-		var qrLimit string
+		var qrLimit int32
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
-		qLimit := qrLimit
+		qLimit := swag.FormatInt32(qrLimit)
 		if qLimit != "" {
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
@@ -221,11 +222,11 @@ func (o *ListBookmarkedProjectsParams) WriteToRequest(r runtime.ClientRequest, r
 	if o.Page != nil {
 
 		// query param page
-		var qrPage string
+		var qrPage int32
 		if o.Page != nil {
 			qrPage = *o.Page
 		}
-		qPage := qrPage
+		qPage := swag.FormatInt32(qrPage)
 		if qPage != "" {
 			if err := r.SetQueryParam("page", qPage); err != nil {
 				return err

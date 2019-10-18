@@ -51,8 +51,8 @@ class V1Project(object):
         'user': 'str',
         'name': 'str',
         'description': 'str',
-        'created_at': 'str',
-        'updated_at': 'str',
+        'created_at': 'datetime',
+        'updated_at': 'datetime',
         'is_public': 'str',
         'bookmarked': 'bool'
     }
@@ -188,7 +188,7 @@ class V1Project(object):
 
 
         :return: The created_at of this V1Project.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._created_at
 
@@ -198,7 +198,7 @@ class V1Project(object):
 
 
         :param created_at: The created_at of this V1Project.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._created_at = created_at
@@ -209,7 +209,7 @@ class V1Project(object):
 
 
         :return: The updated_at of this V1Project.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._updated_at
 
@@ -219,7 +219,7 @@ class V1Project(object):
 
 
         :param updated_at: The updated_at of this V1Project.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._updated_at = updated_at

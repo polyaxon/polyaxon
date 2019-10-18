@@ -50,7 +50,7 @@ class AuthV1Api(object):
         self.api_client = api_client
 
     def login(self, body, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -71,7 +71,7 @@ class AuthV1Api(object):
             return data
 
     def login_with_http_info(self, body, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

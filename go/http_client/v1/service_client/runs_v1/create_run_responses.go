@@ -76,7 +76,7 @@ type CreateRunOK struct {
 }
 
 func (o *CreateRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs][%d] createRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/create][%d] createRunOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateRunOK) GetPayload() *service_model.V1Run {
@@ -109,7 +109,7 @@ type CreateRunForbidden struct {
 }
 
 func (o *CreateRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs][%d] createRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/create][%d] createRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *CreateRunForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type CreateRunNotFound struct {
 }
 
 func (o *CreateRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs][%d] createRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/create][%d] createRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *CreateRunNotFound) GetPayload() string {

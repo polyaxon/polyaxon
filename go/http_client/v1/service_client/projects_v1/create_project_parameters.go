@@ -77,8 +77,11 @@ for the create project operation typically these are written to a http.Request
 */
 type CreateProjectParams struct {
 
-	/*Body*/
-	Body *service_model.V1OwnerBodyRequest
+	/*Body
+	  Project body
+
+	*/
+	Body *service_model.V1Project
 	/*Owner
 	  Owner of the namespace
 
@@ -124,13 +127,13 @@ func (o *CreateProjectParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create project params
-func (o *CreateProjectParams) WithBody(body *service_model.V1OwnerBodyRequest) *CreateProjectParams {
+func (o *CreateProjectParams) WithBody(body *service_model.V1Project) *CreateProjectParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create project params
-func (o *CreateProjectParams) SetBody(body *service_model.V1OwnerBodyRequest) {
+func (o *CreateProjectParams) SetBody(body *service_model.V1Project) {
 	o.Body = body
 }
 

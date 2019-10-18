@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **uuid** | **str** |  | [optional] 
 **commit** | **str** |  | [optional] 
-**updated_at** | **str** |  | [optional] 
+**updated_at** | **datetime** |  | [optional] 
 **status** | **str** |  | [optional] 
 **git_url** | **str** |  | [optional] 
 **is_dirty** | **bool** |  | [optional] 

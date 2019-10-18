@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **user** | **String** |  |  [optional]
 **name** | **String** |  |  [optional]
 **description** | **String** |  |  [optional]
-**createdAt** | **String** |  |  [optional]
-**updatedAt** | **String** |  |  [optional]
+**createdAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**updatedAt** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 **isPublic** | **String** |  |  [optional]
 **bookmarked** | **Boolean** |  |  [optional]
 

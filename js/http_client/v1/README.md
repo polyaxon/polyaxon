@@ -126,26 +126,26 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*PolyaxonSdk.AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List runs
+*PolyaxonSdk.AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
 *PolyaxonSdk.ProjectsV1Api* | [**archiveProject**](docs/ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
-*PolyaxonSdk.ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
+*PolyaxonSdk.ProjectsV1Api* | [**bookmarkProject**](docs/ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
 *PolyaxonSdk.ProjectsV1Api* | [**createProject**](docs/ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-*PolyaxonSdk.ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+*PolyaxonSdk.ProjectsV1Api* | [**deleteProject**](docs/ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 *PolyaxonSdk.ProjectsV1Api* | [**disableProjectCI**](docs/ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *PolyaxonSdk.ProjectsV1Api* | [**enableProjectCI**](docs/ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
-*PolyaxonSdk.ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
+*PolyaxonSdk.ProjectsV1Api* | [**getProject**](docs/ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
 *PolyaxonSdk.ProjectsV1Api* | [**listArchivedProjects**](docs/ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
-*PolyaxonSdk.ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
-*PolyaxonSdk.ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
-*PolyaxonSdk.ProjectsV1Api* | [**listProjects**](docs/ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
-*PolyaxonSdk.ProjectsV1Api* | [**patchProject**](docs/ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
+*PolyaxonSdk.ProjectsV1Api* | [**listBookmarkedProjects**](docs/ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List runs
+*PolyaxonSdk.ProjectsV1Api* | [**listProjectNames**](docs/ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
+*PolyaxonSdk.ProjectsV1Api* | [**listProjects**](docs/ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
+*PolyaxonSdk.ProjectsV1Api* | [**patchProject**](docs/ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
 *PolyaxonSdk.ProjectsV1Api* | [**restoreExperiment**](docs/ProjectsV1Api.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 *PolyaxonSdk.ProjectsV1Api* | [**unbookmarkProject**](docs/ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
-*PolyaxonSdk.ProjectsV1Api* | [**updateProject**](docs/ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
+*PolyaxonSdk.ProjectsV1Api* | [**updateProject**](docs/ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 *PolyaxonSdk.RunsV1Api* | [**archiveRun**](docs/RunsV1Api.md#archiveRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *PolyaxonSdk.RunsV1Api* | [**bookmarkRun**](docs/RunsV1Api.md#bookmarkRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
-*PolyaxonSdk.RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/copy | Restart run with copy
-*PolyaxonSdk.RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs | Create new run
+*PolyaxonSdk.RunsV1Api* | [**copyRun**](docs/RunsV1Api.md#copyRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
+*PolyaxonSdk.RunsV1Api* | [**createRun**](docs/RunsV1Api.md#createRun) | **POST** /api/v1/{owner}/{project}/runs/create | Create new run
 *PolyaxonSdk.RunsV1Api* | [**createRunCodeRef**](docs/RunsV1Api.md#createRunCodeRef) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 *PolyaxonSdk.RunsV1Api* | [**createRunStatus**](docs/RunsV1Api.md#createRunStatus) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *PolyaxonSdk.RunsV1Api* | [**deleteRun**](docs/RunsV1Api.md#deleteRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
@@ -154,46 +154,42 @@ Class | Method | HTTP request | Description
 *PolyaxonSdk.RunsV1Api* | [**getRunCodeRefs**](docs/RunsV1Api.md#getRunCodeRefs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 *PolyaxonSdk.RunsV1Api* | [**getRunStatuses**](docs/RunsV1Api.md#getRunStatuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *PolyaxonSdk.RunsV1Api* | [**impersonateToken**](docs/RunsV1Api.md#impersonateToken) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken | Impersonate run token
-*PolyaxonSdk.RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
+*PolyaxonSdk.RunsV1Api* | [**invalidateRun**](docs/RunsV1Api.md#invalidateRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
 *PolyaxonSdk.RunsV1Api* | [**invalidateRuns**](docs/RunsV1Api.md#invalidateRuns) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 *PolyaxonSdk.RunsV1Api* | [**listArchivedRuns**](docs/RunsV1Api.md#listArchivedRuns) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *PolyaxonSdk.RunsV1Api* | [**listBookmarkedRuns**](docs/RunsV1Api.md#listBookmarkedRuns) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-*PolyaxonSdk.RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs | List runs
+*PolyaxonSdk.RunsV1Api* | [**listRuns**](docs/RunsV1Api.md#listRuns) | **GET** /api/v1/{owner}/{project}/runs/list | List runs
 *PolyaxonSdk.RunsV1Api* | [**patchRun**](docs/RunsV1Api.md#patchRun) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-*PolyaxonSdk.RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
+*PolyaxonSdk.RunsV1Api* | [**restartRun**](docs/RunsV1Api.md#restartRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 *PolyaxonSdk.RunsV1Api* | [**restoreRun**](docs/RunsV1Api.md#restoreRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
-*PolyaxonSdk.RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/resume | Resume run
+*PolyaxonSdk.RunsV1Api* | [**resumeRun**](docs/RunsV1Api.md#resumeRun) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
 *PolyaxonSdk.RunsV1Api* | [**startRunTensorboard**](docs/RunsV1Api.md#startRunTensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
 *PolyaxonSdk.RunsV1Api* | [**stopRun**](docs/RunsV1Api.md#stopRun) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
 *PolyaxonSdk.RunsV1Api* | [**stopRunTensorboard**](docs/RunsV1Api.md#stopRunTensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 *PolyaxonSdk.RunsV1Api* | [**stopRuns**](docs/RunsV1Api.md#stopRuns) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *PolyaxonSdk.RunsV1Api* | [**unbookmarkRun**](docs/RunsV1Api.md#unbookmarkRun) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 *PolyaxonSdk.RunsV1Api* | [**updateRun**](docs/RunsV1Api.md#updateRun) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
-*PolyaxonSdk.UsersV1Api* | [**getUser**](docs/UsersV1Api.md#getUser) | **GET** /api/v1/users | List runs
-*PolyaxonSdk.VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs for user
-*PolyaxonSdk.VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/versions | List runs
+*PolyaxonSdk.UsersV1Api* | [**getUser**](docs/UsersV1Api.md#getUser) | **GET** /api/v1/users | List bookmarked runs for user
+*PolyaxonSdk.VersionsV1Api* | [**getLogHandler**](docs/VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | List archived runs for user
+*PolyaxonSdk.VersionsV1Api* | [**getVersions**](docs/VersionsV1Api.md#getVersions) | **GET** /api/v1/versions | List bookmarked runs for user
 
 
 ## Documentation for Models
 
  - [PolyaxonSdk.V1Auth](docs/V1Auth.md)
- - [PolyaxonSdk.V1CodeRefBodyRequest](docs/V1CodeRefBodyRequest.md)
  - [PolyaxonSdk.V1CodeReference](docs/V1CodeReference.md)
  - [PolyaxonSdk.V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
- - [PolyaxonSdk.V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
- - [PolyaxonSdk.V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
+ - [PolyaxonSdk.V1EntityResourceRequest](docs/V1EntityResourceRequest.md)
+ - [PolyaxonSdk.V1ListCodeRefsResponse](docs/V1ListCodeRefsResponse.md)
  - [PolyaxonSdk.V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [PolyaxonSdk.V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [PolyaxonSdk.V1LogHandler](docs/V1LogHandler.md)
- - [PolyaxonSdk.V1OwnedEntityRequest](docs/V1OwnedEntityRequest.md)
- - [PolyaxonSdk.V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [PolyaxonSdk.V1Project](docs/V1Project.md)
- - [PolyaxonSdk.V1ProjectBodyRequest](docs/V1ProjectBodyRequest.md)
  - [PolyaxonSdk.V1Run](docs/V1Run.md)
- - [PolyaxonSdk.V1RunBodyRequest](docs/V1RunBodyRequest.md)
  - [PolyaxonSdk.V1Status](docs/V1Status.md)
  - [PolyaxonSdk.V1StatusCondition](docs/V1StatusCondition.md)
  - [PolyaxonSdk.V1User](docs/V1User.md)
+ - [PolyaxonSdk.V1Uuids](docs/V1Uuids.md)
  - [PolyaxonSdk.V1Version](docs/V1Version.md)
  - [PolyaxonSdk.V1Versions](docs/V1Versions.md)
 

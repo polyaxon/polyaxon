@@ -55,7 +55,7 @@ class TestProjectsV1Api(unittest.TestCase):
     def test_bookmark_project(self):
         """Test case for bookmark_project
 
-        Stop run  # noqa: E501
+        Invalidate run  # noqa: E501
         """
         pass
 
@@ -104,21 +104,21 @@ class TestProjectsV1Api(unittest.TestCase):
     def test_list_bookmarked_projects(self):
         """Test case for list_bookmarked_projects
 
-        List archived runs for user  # noqa: E501
+        List runs  # noqa: E501
         """
         pass
 
     def test_list_project_names(self):
         """Test case for list_project_names
 
-        List bookmarked runs for user  # noqa: E501
+        List archived runs for user  # noqa: E501
         """
         pass
 
     def test_list_projects(self):
         """Test case for list_projects
 
-        List runs  # noqa: E501
+        List bookmarked runs for user  # noqa: E501
         """
         pass
 

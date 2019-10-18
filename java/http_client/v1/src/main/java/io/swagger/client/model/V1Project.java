@@ -37,6 +37,7 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * V1Project
@@ -56,10 +57,10 @@ public class V1Project {
   private String description = null;
 
   @SerializedName("created_at")
-  private String createdAt = null;
+  private OffsetDateTime createdAt = null;
 
   @SerializedName("updated_at")
-  private String updatedAt = null;
+  private OffsetDateTime updatedAt = null;
 
   @SerializedName("is_public")
   private String isPublic = null;
@@ -139,7 +140,7 @@ public class V1Project {
     this.description = description;
   }
 
-  public V1Project createdAt(String createdAt) {
+  public V1Project createdAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -149,15 +150,15 @@ public class V1Project {
    * @return createdAt
   **/
   @ApiModelProperty(value = "")
-  public String getCreatedAt() {
+  public OffsetDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public V1Project updatedAt(String updatedAt) {
+  public V1Project updatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -167,11 +168,11 @@ public class V1Project {
    * @return updatedAt
   **/
   @ApiModelProperty(value = "")
-  public String getUpdatedAt() {
+  public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 

@@ -58,16 +58,16 @@
             "description": "Pagination.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
             "description": "Limit size.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "sort",
@@ -125,16 +125,16 @@
             "description": "Pagination.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
             "description": "Limit size.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "sort",
@@ -158,7 +158,7 @@
     },
     "/api/v1/bookmarks/{user}/projects": {
       "get": {
-        "summary": "List archived runs for user",
+        "summary": "List runs",
         "operationId": "ListBookmarkedProjects",
         "responses": {
           "200": {
@@ -192,16 +192,16 @@
             "description": "Pagination.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
             "description": "Limit size.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "sort",
@@ -259,16 +259,16 @@
             "description": "Pagination.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
             "description": "Limit size.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "sort",
@@ -292,7 +292,7 @@
     },
     "/api/v1/log_handler": {
       "get": {
-        "summary": "List bookmarked runs for user",
+        "summary": "List archived runs for user",
         "operationId": "GetLogHandler",
         "responses": {
           "200": {
@@ -320,7 +320,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "List runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "getUser",
         "responses": {
           "200": {
@@ -348,7 +348,7 @@
     },
     "/api/v1/users/token": {
       "post": {
-        "summary": "List runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "Login",
         "responses": {
           "200": {
@@ -386,7 +386,7 @@
     },
     "/api/v1/versions": {
       "get": {
-        "summary": "List runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "GetVersions",
         "responses": {
           "200": {
@@ -455,15 +455,15 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "body",
+            "description": "Code ref object",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CodeRefBodyRequest"
+              "$ref": "#/definitions/v1CodeReference"
             }
           }
         ],
@@ -472,15 +472,15 @@
         ]
       }
     },
-    "/api/v1/{owner}/projecs/{project}": {
-      "delete": {
-        "summary": "Delete runs",
-        "operationId": "DeleteProject",
+    "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy": {
+      "post": {
+        "summary": "Restart run with copy",
+        "operationId": "CopyRun",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/v1Run"
             }
           },
           "403": {
@@ -497,22 +497,158 @@
         },
         "parameters": [
           {
-            "name": "owner",
+            "name": "entity.owner",
             "description": "Owner of the namespace",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "project",
-            "description": "Project under namesapce",
+            "name": "entity.project",
+            "description": "Project where the experiement will be assigned",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "entity.uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
           }
         ],
         "tags": [
-          "ProjectsV1"
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart": {
+      "post": {
+        "summary": "Restart run",
+        "operationId": "RestartRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "entity.owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity.project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity.uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume": {
+      "post": {
+        "summary": "Resume run",
+        "operationId": "ResumeRun",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "entity.owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity.project",
+            "description": "Project where the experiement will be assigned",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "entity.uuid",
+            "description": "Unique integer identifier of the entity",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Run object",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Run"
+            }
+          }
+        ],
+        "tags": [
+          "RunsV1"
         ]
       }
     },
@@ -549,10 +685,11 @@
           },
           {
             "name": "body",
+            "description": "Project body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnerBodyRequest"
+              "$ref": "#/definitions/v1Project"
             }
           }
         ],
@@ -563,7 +700,7 @@
     },
     "/api/v1/{owner}/projects/list": {
       "get": {
-        "summary": "List runs",
+        "summary": "List bookmarked runs for user",
         "operationId": "ListProjects",
         "responses": {
           "200": {
@@ -597,16 +734,16 @@
             "description": "Pagination.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
             "description": "Limit size.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "sort",
@@ -630,7 +767,7 @@
     },
     "/api/v1/{owner}/projects/names": {
       "get": {
-        "summary": "List bookmarked runs for user",
+        "summary": "List archived runs for user",
         "operationId": "ListProjectNames",
         "responses": {
           "200": {
@@ -664,16 +801,16 @@
             "description": "Pagination.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "limit",
             "description": "Limit size.",
             "in": "query",
             "required": false,
-            "type": "string",
-            "format": "int64"
+            "type": "integer",
+            "format": "int32"
           },
           {
             "name": "sort",
@@ -695,7 +832,111 @@
         ]
       }
     },
-    "/api/v1/{owner}/projects/{project}": {
+    "/api/v1/{owner}/{project.name}": {
+      "put": {
+        "summary": "Patch run",
+        "operationId": "UpdateProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project.name",
+            "description": "Required name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      },
+      "patch": {
+        "summary": "Delete run",
+        "operationId": "PatchProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project.name",
+            "description": "Required name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "description": "Project body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1Project"
+            }
+          }
+        ],
+        "tags": [
+          "ProjectsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}": {
       "get": {
         "summary": "Update run",
         "operationId": "GetProject",
@@ -738,14 +979,14 @@
           "ProjectsV1"
         ]
       },
-      "put": {
-        "summary": "Patch run",
-        "operationId": "UpdateProject",
+      "delete": {
+        "summary": "Delete runs",
+        "operationId": "DeleteProject",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Project"
+              "properties": {}
             }
           },
           "403": {
@@ -774,64 +1015,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
-            }
-          }
-        ],
-        "tags": [
-          "ProjectsV1"
-        ]
-      },
-      "patch": {
-        "summary": "Delete run",
-        "operationId": "PatchProject",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Project"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
-            }
           }
         ],
         "tags": [
@@ -885,7 +1068,7 @@
     },
     "/api/v1/{owner}/{project}/bookmark": {
       "post": {
-        "summary": "Stop run",
+        "summary": "Invalidate run",
         "operationId": "BookmarkProject",
         "responses": {
           "200": {
@@ -1057,79 +1240,7 @@
         ]
       }
     },
-    "/api/v1/{owner}/{project}/runs": {
-      "get": {
-        "summary": "List runs",
-        "operationId": "ListRuns",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ListRunsResponse"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project under namesapce",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "page",
-            "description": "Pagination.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "limit",
-            "description": "Limit size.",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "sort",
-            "description": "Sort to order the search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "query",
-            "description": "Query filter the search search.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      },
+    "/api/v1/{owner}/{project}/runs/create": {
       "post": {
         "summary": "Create new run",
         "operationId": "CreateRun",
@@ -1169,10 +1280,11 @@
           },
           {
             "name": "body",
+            "description": "Run object",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1RunBodyRequest"
+              "$ref": "#/definitions/v1Run"
             }
           }
         ],
@@ -1221,10 +1333,11 @@
           },
           {
             "name": "body",
+            "description": "Uuids of the entities",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
+              "$ref": "#/definitions/v1Uuids"
             }
           }
         ],
@@ -1273,11 +1386,86 @@
           },
           {
             "name": "body",
+            "description": "Uuids of the entities",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
+              "$ref": "#/definitions/v1Uuids"
             }
+          }
+        ],
+        "tags": [
+          "RunsV1"
+        ]
+      }
+    },
+    "/api/v1/{owner}/{project}/runs/list": {
+      "get": {
+        "summary": "List runs",
+        "operationId": "ListRuns",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListRunsResponse"
+            }
+          },
+          "403": {
+            "description": "You don't have permission to access the resource.",
+            "schema": {}
+          },
+          "404": {
+            "description": "Resource does not exist.",
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "owner",
+            "description": "Owner of the namespace",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "description": "Project under namesapce",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "description": "Pagination.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "description": "Limit size.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "sort",
+            "description": "Sort to order the search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "query",
+            "description": "Query filter the search search.",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -1325,10 +1513,11 @@
           },
           {
             "name": "body",
+            "description": "Uuids of the entities",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1ProjectBodyRequest"
+              "$ref": "#/definitions/v1Uuids"
             }
           }
         ],
@@ -1384,10 +1573,11 @@
           },
           {
             "name": "body",
+            "description": "Run object",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1RunBodyRequest"
+              "$ref": "#/definitions/v1Run"
             }
           }
         ],
@@ -1441,10 +1631,11 @@
           },
           {
             "name": "body",
+            "description": "Run object",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1RunBodyRequest"
+              "$ref": "#/definitions/v1Run"
             }
           }
         ],
@@ -1496,8 +1687,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -1546,8 +1736,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -1598,8 +1787,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -1650,8 +1838,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -1667,7 +1854,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListCodeRefResponse"
+              "$ref": "#/definitions/v1ListCodeRefsResponse"
             }
           },
           "403": {
@@ -1702,68 +1889,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/runs/{uuid}/copy": {
-      "post": {
-        "summary": "Restart run with copy",
-        "operationId": "CopyRun",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
             "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityRequest"
-            }
           }
         ],
         "tags": [
@@ -1814,8 +1940,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -1825,7 +1950,7 @@
     },
     "/api/v1/{owner}/{project}/runs/{uuid}/invalidate": {
       "post": {
-        "summary": "Stop run",
+        "summary": "Invalidate run",
         "operationId": "InvalidateRun",
         "responses": {
           "200": {
@@ -1866,75 +1991,14 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityRequest"
-            }
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/runs/{uuid}/restart": {
-      "post": {
-        "summary": "Restart run",
-        "operationId": "RestartRun",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityRequest"
+              "$ref": "#/definitions/v1EntityResourceRequest"
             }
           }
         ],
@@ -1986,68 +2050,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "RunsV1"
-        ]
-      }
-    },
-    "/api/v1/{owner}/{project}/runs/{uuid}/resume": {
-      "post": {
-        "summary": "Resume run",
-        "operationId": "ResumeRun",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Run"
-            }
-          },
-          "403": {
-            "description": "You don't have permission to access the resource.",
-            "schema": {}
-          },
-          "404": {
-            "description": "Resource does not exist.",
-            "schema": {
-              "type": "string",
-              "format": "string"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "owner",
-            "description": "Owner of the namespace",
-            "in": "path",
-            "required": true,
             "type": "string"
-          },
-          {
-            "name": "project",
-            "description": "Project where the experiement will be assigned",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "uuid",
-            "description": "Unique integer identifier of the entity",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityRequest"
-            }
           }
         ],
         "tags": [
@@ -2098,8 +2101,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -2148,15 +2150,15 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "body",
+            "description": "Status to set",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1EntityStatusRequest"
+              "$ref": "#/definitions/v1Status"
             }
           }
         ],
@@ -2208,16 +2210,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1OwnedEntityRequest"
-            }
+            "type": "string"
           }
         ],
         "tags": [
@@ -2268,15 +2261,14 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           },
           {
             "name": "body",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1OwnedEntityRequest"
+              "$ref": "#/definitions/v1EntityResourceRequest"
             }
           }
         ],
@@ -2328,8 +2320,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -2380,8 +2371,7 @@
             "description": "Unique integer identifier of the entity",
             "in": "path",
             "required": true,
-            "type": "string",
-            "format": "int64"
+            "type": "string"
           }
         ],
         "tags": [
@@ -2445,20 +2435,6 @@
       },
       "title": "Auth specification"
     },
-    "v1CodeRefBodyRequest": {
-      "type": "object",
-      "properties": {
-        "entity": {
-          "$ref": "#/definitions/v1OwnedEntityRequest",
-          "title": "Owner of the code ref"
-        },
-        "CodeReference": {
-          "$ref": "#/definitions/v1CodeReference",
-          "title": "Code ref object"
-        }
-      },
-      "title": "Request data to create/update CodeReference"
-    },
     "v1CodeReference": {
       "type": "object",
       "properties": {
@@ -2472,6 +2448,7 @@
         },
         "updated_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional head of the code ref"
         },
         "status": {
@@ -2504,7 +2481,7 @@
       },
       "title": "Login"
     },
-    "v1EntityStatusRequest": {
+    "v1EntityResourceRequest": {
       "type": "object",
       "properties": {
         "owner": {
@@ -2517,21 +2494,12 @@
         },
         "uuid": {
           "type": "string",
-          "format": "int64",
           "title": "Unique integer identifier of the entity"
-        },
-        "status": {
-          "type": "string",
-          "title": "Status to set"
-        },
-        "status_condition": {
-          "$ref": "#/definitions/v1StatusCondition",
-          "title": "Status condition"
         }
       },
-      "title": "Request data to create/update entity status"
+      "title": "Request data to get/delete entity"
     },
-    "v1ListCodeRefResponse": {
+    "v1ListCodeRefsResponse": {
       "type": "object",
       "properties": {
         "count": {
@@ -2620,35 +2588,6 @@
         }
       }
     },
-    "v1OwnedEntityRequest": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
-        },
-        "project": {
-          "type": "string",
-          "title": "Project where the experiement will be assigned"
-        },
-        "uuid": {
-          "type": "string",
-          "format": "int64",
-          "title": "Unique integer identifier of the entity"
-        }
-      },
-      "title": "Request data to get/delete entity"
-    },
-    "v1OwnerBodyRequest": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
-        }
-      },
-      "title": "Request data with owner namespace"
-    },
     "v1Project": {
       "type": "object",
       "properties": {
@@ -2670,10 +2609,12 @@
         },
         "created_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional time when the entityt was created"
         },
         "updated_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional last time the entity was updated"
         },
         "is_public": {
@@ -2687,20 +2628,6 @@
         }
       },
       "title": "Project specification"
-    },
-    "v1ProjectBodyRequest": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
-        },
-        "project": {
-          "type": "string",
-          "title": "Project under namesapce"
-        }
-      },
-      "title": "Request data with owner/project namespace"
     },
     "v1Run": {
       "type": "object",
@@ -2743,18 +2670,22 @@
         },
         "created_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional time when the entityt was created"
         },
         "updated_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional last time the entity was updated"
         },
         "started_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional last time the entity was started"
         },
         "finished_at": {
           "type": "string",
+          "format": "date-time",
           "title": "Optional last time the entity was started"
         },
         "is_managed": {
@@ -2824,24 +2755,6 @@
       },
       "title": "Run specification"
     },
-    "v1RunBodyRequest": {
-      "type": "object",
-      "properties": {
-        "owner": {
-          "type": "string",
-          "title": "Owner of the namespace"
-        },
-        "project": {
-          "type": "string",
-          "title": "Project where the experiement will be assigned"
-        },
-        "run": {
-          "$ref": "#/definitions/v1Run",
-          "title": "Run object"
-        }
-      },
-      "title": "Request data to create/update run"
-    },
     "v1Status": {
       "type": "object",
       "properties": {
@@ -2885,10 +2798,12 @@
         },
         "last_update_time": {
           "type": "string",
+          "format": "date-time",
           "title": "last update time"
         },
         "last_transition_time": {
           "type": "string",
+          "format": "date-time",
           "title": "last transition time"
         }
       },
@@ -2911,6 +2826,17 @@
         }
       },
       "title": "Auth specification"
+    },
+    "v1Uuids": {
+      "type": "object",
+      "properties": {
+        "uuids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
     },
     "v1Version": {
       "type": "object",

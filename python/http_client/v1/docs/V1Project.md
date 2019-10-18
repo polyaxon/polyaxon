@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **user** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**created_at** | **str** |  | [optional] 
-**updated_at** | **str** |  | [optional] 
+**created_at** | **datetime** |  | [optional] 
+**updated_at** | **datetime** |  | [optional] 
 **is_public** | **str** |  | [optional] 
 **bookmarked** | **bool** |  | [optional] 
 

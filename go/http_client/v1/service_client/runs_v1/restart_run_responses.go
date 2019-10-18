@@ -76,7 +76,7 @@ type RestartRunOK struct {
 }
 
 func (o *RestartRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restart][%d] restartRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart][%d] restartRunOK  %+v", 200, o.Payload)
 }
 
 func (o *RestartRunOK) GetPayload() *service_model.V1Run {
@@ -109,7 +109,7 @@ type RestartRunForbidden struct {
 }
 
 func (o *RestartRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restart][%d] restartRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart][%d] restartRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *RestartRunForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type RestartRunNotFound struct {
 }
 
 func (o *RestartRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/restart][%d] restartRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart][%d] restartRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *RestartRunNotFound) GetPayload() string {

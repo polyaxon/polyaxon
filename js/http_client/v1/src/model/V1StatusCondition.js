@@ -94,10 +94,10 @@
         obj['message'] = ApiClient.convertToType(data['message'], 'String');
       }
       if (data.hasOwnProperty('last_update_time')) {
-        obj['last_update_time'] = ApiClient.convertToType(data['last_update_time'], 'String');
+        obj['last_update_time'] = ApiClient.convertToType(data['last_update_time'], 'Date');
       }
       if (data.hasOwnProperty('last_transition_time')) {
-        obj['last_transition_time'] = ApiClient.convertToType(data['last_transition_time'], 'String');
+        obj['last_transition_time'] = ApiClient.convertToType(data['last_transition_time'], 'Date');
       }
     }
     return obj;
@@ -120,11 +120,11 @@
    */
   exports.prototype['message'] = undefined;
   /**
-   * @member {String} last_update_time
+   * @member {Date} last_update_time
    */
   exports.prototype['last_update_time'] = undefined;
   /**
-   * @member {String} last_transition_time
+   * @member {Date} last_transition_time
    */
   exports.prototype['last_transition_time'] = undefined;
 

@@ -37,6 +37,7 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * V1StatusCondition
@@ -56,10 +57,10 @@ public class V1StatusCondition {
   private String message = null;
 
   @SerializedName("last_update_time")
-  private String lastUpdateTime = null;
+  private OffsetDateTime lastUpdateTime = null;
 
   @SerializedName("last_transition_time")
-  private String lastTransitionTime = null;
+  private OffsetDateTime lastTransitionTime = null;
 
   public V1StatusCondition type(String type) {
     this.type = type;
@@ -133,7 +134,7 @@ public class V1StatusCondition {
     this.message = message;
   }
 
-  public V1StatusCondition lastUpdateTime(String lastUpdateTime) {
+  public V1StatusCondition lastUpdateTime(OffsetDateTime lastUpdateTime) {
     this.lastUpdateTime = lastUpdateTime;
     return this;
   }
@@ -143,15 +144,15 @@ public class V1StatusCondition {
    * @return lastUpdateTime
   **/
   @ApiModelProperty(value = "")
-  public String getLastUpdateTime() {
+  public OffsetDateTime getLastUpdateTime() {
     return lastUpdateTime;
   }
 
-  public void setLastUpdateTime(String lastUpdateTime) {
+  public void setLastUpdateTime(OffsetDateTime lastUpdateTime) {
     this.lastUpdateTime = lastUpdateTime;
   }
 
-  public V1StatusCondition lastTransitionTime(String lastTransitionTime) {
+  public V1StatusCondition lastTransitionTime(OffsetDateTime lastTransitionTime) {
     this.lastTransitionTime = lastTransitionTime;
     return this;
   }
@@ -161,11 +162,11 @@ public class V1StatusCondition {
    * @return lastTransitionTime
   **/
   @ApiModelProperty(value = "")
-  public String getLastTransitionTime() {
+  public OffsetDateTime getLastTransitionTime() {
     return lastTransitionTime;
   }
 
-  public void setLastTransitionTime(String lastTransitionTime) {
+  public void setLastTransitionTime(OffsetDateTime lastTransitionTime) {
     this.lastTransitionTime = lastTransitionTime;
   }
 

@@ -41,7 +41,7 @@ type Client struct {
 }
 
 /*
-GetUser lists runs
+GetUser lists bookmarked runs for user
 */
 func (a *Client) GetUser(params *GetUserParams, authInfo runtime.ClientAuthInfoWriter) (*GetUserOK, error) {
 	// TODO: Validate the params before sending

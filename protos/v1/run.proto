@@ -4,7 +4,10 @@ package v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "protoc-gen-swagger/options/annotations.proto";
+
+import "v1/base.proto";
 
 // Run specification
 message Run {
@@ -33,16 +36,16 @@ message Run {
     string project = 8;
 
     // Optional time when the entityt was created
-    string created_at = 9;
+    google.protobuf.Timestamp created_at = 9;
 
     // Optional last time the entity was updated
-    string updated_at = 10;
+    google.protobuf.Timestamp updated_at = 10;
 
     // Optional last time the entity was started
-    string started_at = 11;
+    google.protobuf.Timestamp started_at = 11;
 
     // Optional last time the entity was started
-    string finished_at = 12;
+    google.protobuf.Timestamp finished_at = 12;
 
     // Optional flag to tell if this entity is managed by the platform
     string is_managed = 13;
@@ -82,7 +85,7 @@ message Run {
 }
 
 
-// Request data to create/update run
+// Request data to create run
 message RunBodyRequest{
     // Owner of the namespace
     string owner = 1;
@@ -92,6 +95,15 @@ message RunBodyRequest{
 
     // Run object
     Run run = 3;
+}
+
+// Request data to update run
+message EntityRunBodyRequest{
+    // Enitity Run
+    EntityResourceRequest entity = 1;
+
+    // Run object
+    Run run = 2;
 }
 
  // Contains list runs

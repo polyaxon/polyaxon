@@ -37,6 +37,7 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * V1CodeReference
@@ -50,7 +51,7 @@ public class V1CodeReference {
   private String commit = null;
 
   @SerializedName("updated_at")
-  private String updatedAt = null;
+  private OffsetDateTime updatedAt = null;
 
   @SerializedName("status")
   private String status = null;
@@ -97,7 +98,7 @@ public class V1CodeReference {
     this.commit = commit;
   }
 
-  public V1CodeReference updatedAt(String updatedAt) {
+  public V1CodeReference updatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -107,11 +108,11 @@ public class V1CodeReference {
    * @return updatedAt
   **/
   @ApiModelProperty(value = "")
-  public String getUpdatedAt() {
+  public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 

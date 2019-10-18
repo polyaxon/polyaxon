@@ -71,7 +71,7 @@
      */
 
     /**
-     * List bookmarked runs for user
+     * List archived runs for user
      * @param {module:api/VersionsV1Api~getLogHandlerCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1LogHandler}
      */
@@ -111,7 +111,7 @@
      */
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * @param {module:api/VersionsV1Api~getVersionsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Versions}
      */

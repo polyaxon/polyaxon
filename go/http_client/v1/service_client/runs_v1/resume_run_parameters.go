@@ -77,23 +77,26 @@ for the resume run operation typically these are written to a http.Request
 */
 type ResumeRunParams struct {
 
-	/*Body*/
-	Body *service_model.V1OwnedEntityRequest
-	/*Owner
+	/*Body
+	  Run object
+
+	*/
+	Body *service_model.V1Run
+	/*EntityOwner
 	  Owner of the namespace
 
 	*/
-	Owner string
-	/*Project
+	EntityOwner string
+	/*EntityProject
 	  Project where the experiement will be assigned
 
 	*/
-	Project string
-	/*UUID
+	EntityProject string
+	/*EntityUUID
 	  Unique integer identifier of the entity
 
 	*/
-	UUID string
+	EntityUUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -134,47 +137,47 @@ func (o *ResumeRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the resume run params
-func (o *ResumeRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *ResumeRunParams {
+func (o *ResumeRunParams) WithBody(body *service_model.V1Run) *ResumeRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the resume run params
-func (o *ResumeRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
+func (o *ResumeRunParams) SetBody(body *service_model.V1Run) {
 	o.Body = body
 }
 
-// WithOwner adds the owner to the resume run params
-func (o *ResumeRunParams) WithOwner(owner string) *ResumeRunParams {
-	o.SetOwner(owner)
+// WithEntityOwner adds the entityOwner to the resume run params
+func (o *ResumeRunParams) WithEntityOwner(entityOwner string) *ResumeRunParams {
+	o.SetEntityOwner(entityOwner)
 	return o
 }
 
-// SetOwner adds the owner to the resume run params
-func (o *ResumeRunParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetEntityOwner adds the entityOwner to the resume run params
+func (o *ResumeRunParams) SetEntityOwner(entityOwner string) {
+	o.EntityOwner = entityOwner
 }
 
-// WithProject adds the project to the resume run params
-func (o *ResumeRunParams) WithProject(project string) *ResumeRunParams {
-	o.SetProject(project)
+// WithEntityProject adds the entityProject to the resume run params
+func (o *ResumeRunParams) WithEntityProject(entityProject string) *ResumeRunParams {
+	o.SetEntityProject(entityProject)
 	return o
 }
 
-// SetProject adds the project to the resume run params
-func (o *ResumeRunParams) SetProject(project string) {
-	o.Project = project
+// SetEntityProject adds the entityProject to the resume run params
+func (o *ResumeRunParams) SetEntityProject(entityProject string) {
+	o.EntityProject = entityProject
 }
 
-// WithUUID adds the uuid to the resume run params
-func (o *ResumeRunParams) WithUUID(uuid string) *ResumeRunParams {
-	o.SetUUID(uuid)
+// WithEntityUUID adds the entityUUID to the resume run params
+func (o *ResumeRunParams) WithEntityUUID(entityUUID string) *ResumeRunParams {
+	o.SetEntityUUID(entityUUID)
 	return o
 }
 
-// SetUUID adds the uuid to the resume run params
-func (o *ResumeRunParams) SetUUID(uuid string) {
-	o.UUID = uuid
+// SetEntityUUID adds the entityUuid to the resume run params
+func (o *ResumeRunParams) SetEntityUUID(entityUUID string) {
+	o.EntityUUID = entityUUID
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -191,18 +194,18 @@ func (o *ResumeRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		}
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity.owner
+	if err := r.SetPathParam("entity.owner", o.EntityOwner); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param entity.project
+	if err := r.SetPathParam("entity.project", o.EntityProject); err != nil {
 		return err
 	}
 
-	// path param uuid
-	if err := r.SetPathParam("uuid", o.UUID); err != nil {
+	// path param entity.uuid
+	if err := r.SetPathParam("entity.uuid", o.EntityUUID); err != nil {
 		return err
 	}
 

@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List runs
+[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
 
 
 <a name="login"></a>
 # **login**
 > V1Auth login(body)
 
-List runs
+List bookmarked runs for user
 
 ### Example
 ```java

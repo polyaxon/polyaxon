@@ -4,15 +4,15 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | List bookmarked runs for user
-[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/versions | List runs
+[**getLogHandler**](VersionsV1Api.md#getLogHandler) | **GET** /api/v1/log_handler | List archived runs for user
+[**getVersions**](VersionsV1Api.md#getVersions) | **GET** /api/v1/versions | List bookmarked runs for user
 
 
 <a name="getLogHandler"></a>
 # **getLogHandler**
 > V1LogHandler getLogHandler()
 
-List bookmarked runs for user
+List archived runs for user
 
 ### Example
 ```java
@@ -61,7 +61,7 @@ This endpoint does not need any parameter.
 # **getVersions**
 > V1Versions getVersions()
 
-List runs
+List bookmarked runs for user
 
 ### Example
 ```java

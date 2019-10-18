@@ -55,10 +55,10 @@ class V1Run(object):
         'user': 'str',
         'owner': 'str',
         'project': 'str',
-        'created_at': 'str',
-        'updated_at': 'str',
-        'started_at': 'str',
-        'finished_at': 'str',
+        'created_at': 'datetime',
+        'updated_at': 'datetime',
+        'started_at': 'datetime',
+        'finished_at': 'datetime',
         'is_managed': 'str',
         'content': 'str',
         'status': 'str',
@@ -362,7 +362,7 @@ class V1Run(object):
 
 
         :return: The created_at of this V1Run.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._created_at
 
@@ -372,7 +372,7 @@ class V1Run(object):
 
 
         :param created_at: The created_at of this V1Run.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._created_at = created_at
@@ -383,7 +383,7 @@ class V1Run(object):
 
 
         :return: The updated_at of this V1Run.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._updated_at
 
@@ -393,7 +393,7 @@ class V1Run(object):
 
 
         :param updated_at: The updated_at of this V1Run.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._updated_at = updated_at
@@ -404,7 +404,7 @@ class V1Run(object):
 
 
         :return: The started_at of this V1Run.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._started_at
 
@@ -414,7 +414,7 @@ class V1Run(object):
 
 
         :param started_at: The started_at of this V1Run.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._started_at = started_at
@@ -425,7 +425,7 @@ class V1Run(object):
 
 
         :return: The finished_at of this V1Run.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._finished_at
 
@@ -435,7 +435,7 @@ class V1Run(object):
 
 
         :param finished_at: The finished_at of this V1Run.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._finished_at = finished_at

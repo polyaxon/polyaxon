@@ -77,23 +77,26 @@ for the restart run operation typically these are written to a http.Request
 */
 type RestartRunParams struct {
 
-	/*Body*/
-	Body *service_model.V1OwnedEntityRequest
-	/*Owner
+	/*Body
+	  Run object
+
+	*/
+	Body *service_model.V1Run
+	/*EntityOwner
 	  Owner of the namespace
 
 	*/
-	Owner string
-	/*Project
+	EntityOwner string
+	/*EntityProject
 	  Project where the experiement will be assigned
 
 	*/
-	Project string
-	/*UUID
+	EntityProject string
+	/*EntityUUID
 	  Unique integer identifier of the entity
 
 	*/
-	UUID string
+	EntityUUID string
 
 	timeout    time.Duration
 	Context    context.Context
@@ -134,47 +137,47 @@ func (o *RestartRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the restart run params
-func (o *RestartRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *RestartRunParams {
+func (o *RestartRunParams) WithBody(body *service_model.V1Run) *RestartRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the restart run params
-func (o *RestartRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
+func (o *RestartRunParams) SetBody(body *service_model.V1Run) {
 	o.Body = body
 }
 
-// WithOwner adds the owner to the restart run params
-func (o *RestartRunParams) WithOwner(owner string) *RestartRunParams {
-	o.SetOwner(owner)
+// WithEntityOwner adds the entityOwner to the restart run params
+func (o *RestartRunParams) WithEntityOwner(entityOwner string) *RestartRunParams {
+	o.SetEntityOwner(entityOwner)
 	return o
 }
 
-// SetOwner adds the owner to the restart run params
-func (o *RestartRunParams) SetOwner(owner string) {
-	o.Owner = owner
+// SetEntityOwner adds the entityOwner to the restart run params
+func (o *RestartRunParams) SetEntityOwner(entityOwner string) {
+	o.EntityOwner = entityOwner
 }
 
-// WithProject adds the project to the restart run params
-func (o *RestartRunParams) WithProject(project string) *RestartRunParams {
-	o.SetProject(project)
+// WithEntityProject adds the entityProject to the restart run params
+func (o *RestartRunParams) WithEntityProject(entityProject string) *RestartRunParams {
+	o.SetEntityProject(entityProject)
 	return o
 }
 
-// SetProject adds the project to the restart run params
-func (o *RestartRunParams) SetProject(project string) {
-	o.Project = project
+// SetEntityProject adds the entityProject to the restart run params
+func (o *RestartRunParams) SetEntityProject(entityProject string) {
+	o.EntityProject = entityProject
 }
 
-// WithUUID adds the uuid to the restart run params
-func (o *RestartRunParams) WithUUID(uuid string) *RestartRunParams {
-	o.SetUUID(uuid)
+// WithEntityUUID adds the entityUUID to the restart run params
+func (o *RestartRunParams) WithEntityUUID(entityUUID string) *RestartRunParams {
+	o.SetEntityUUID(entityUUID)
 	return o
 }
 
-// SetUUID adds the uuid to the restart run params
-func (o *RestartRunParams) SetUUID(uuid string) {
-	o.UUID = uuid
+// SetEntityUUID adds the entityUuid to the restart run params
+func (o *RestartRunParams) SetEntityUUID(entityUUID string) {
+	o.EntityUUID = entityUUID
 }
 
 // WriteToRequest writes these params to a swagger request
@@ -191,18 +194,18 @@ func (o *RestartRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Re
 		}
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
+	// path param entity.owner
+	if err := r.SetPathParam("entity.owner", o.EntityOwner); err != nil {
 		return err
 	}
 
-	// path param project
-	if err := r.SetPathParam("project", o.Project); err != nil {
+	// path param entity.project
+	if err := r.SetPathParam("entity.project", o.EntityProject); err != nil {
 		return err
 	}
 
-	// path param uuid
-	if err := r.SetPathParam("uuid", o.UUID); err != nil {
+	// path param entity.uuid
+	if err := r.SetPathParam("entity.uuid", o.EntityUUID); err != nil {
 		return err
 	}
 

@@ -22,7 +22,9 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // V1CodeReference Code Reference specification
@@ -42,7 +44,8 @@ type V1CodeReference struct {
 	Status string `json:"status,omitempty"`
 
 	// Optional head of the code ref
-	UpdatedAt string `json:"updated_at,omitempty"`
+	// Format: date-time
+	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
 
 	// UUID
 	UUID string `json:"uuid,omitempty"`
@@ -50,6 +53,28 @@ type V1CodeReference struct {
 
 // Validate validates this v1 code reference
 func (m *V1CodeReference) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1CodeReference) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

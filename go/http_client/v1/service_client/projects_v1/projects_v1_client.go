@@ -76,7 +76,7 @@ func (a *Client) ArchiveProject(params *ArchiveProjectParams, authInfo runtime.C
 }
 
 /*
-BookmarkProject stops run
+BookmarkProject invalidates run
 */
 func (a *Client) BookmarkProject(params *BookmarkProjectParams, authInfo runtime.ClientAuthInfoWriter) (*BookmarkProjectOK, error) {
 	// TODO: Validate the params before sending
@@ -157,7 +157,7 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "DeleteProject",
 		Method:             "DELETE",
-		PathPattern:        "/api/v1/{owner}/projecs/{project}",
+		PathPattern:        "/api/v1/{owner}/{project}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -262,7 +262,7 @@ func (a *Client) GetProject(params *GetProjectParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "GetProject",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/projects/{project}",
+		PathPattern:        "/api/v1/{owner}/{project}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -321,7 +321,7 @@ func (a *Client) ListArchivedProjects(params *ListArchivedProjectsParams, authIn
 }
 
 /*
-ListBookmarkedProjects lists archived runs for user
+ListBookmarkedProjects lists runs
 */
 func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListBookmarkedProjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -356,7 +356,7 @@ func (a *Client) ListBookmarkedProjects(params *ListBookmarkedProjectsParams, au
 }
 
 /*
-ListProjectNames lists bookmarked runs for user
+ListProjectNames lists archived runs for user
 */
 func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectNamesOK, error) {
 	// TODO: Validate the params before sending
@@ -391,7 +391,7 @@ func (a *Client) ListProjectNames(params *ListProjectNamesParams, authInfo runti
 }
 
 /*
-ListProjects lists runs
+ListProjects lists bookmarked runs for user
 */
 func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter) (*ListProjectsOK, error) {
 	// TODO: Validate the params before sending
@@ -437,7 +437,7 @@ func (a *Client) PatchProject(params *PatchProjectParams, authInfo runtime.Clien
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "PatchProject",
 		Method:             "PATCH",
-		PathPattern:        "/api/v1/{owner}/projects/{project}",
+		PathPattern:        "/api/v1/{owner}/{project.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -542,7 +542,7 @@ func (a *Client) UpdateProject(params *UpdateProjectParams, authInfo runtime.Cli
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "UpdateProject",
 		Method:             "PUT",
-		PathPattern:        "/api/v1/{owner}/projects/{project}",
+		PathPattern:        "/api/v1/{owner}/{project.name}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},

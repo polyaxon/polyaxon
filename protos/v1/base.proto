@@ -10,19 +10,19 @@ message KV {
 }
 
 // Request data with user namespace
-message UserBodyRequest {
+message UserResourceRequest {
     // User
     string user = 1;
 }
 
 // Request data with owner namespace
-message OwnerBodyRequest {
+message OwnerResourceRequest {
     // Owner of the namespace
     string owner = 1;
 }
 
 // Request data with owner/project namespace
-message ProjectBodyRequest {
+message ProjectResourceRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -30,8 +30,24 @@ message ProjectBodyRequest {
     string project = 2;
 }
 
+message Uuids {
+    repeated string uuids = 1;
+}
+
+// Request to act on multiple entities under project
+message ProjectResourceUuidsBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project under namesapce
+    string project = 2;
+
+    // Uuids of the entities
+    Uuids uuids = 3;
+}
+
 // Request data to get/delete entity
-message OwnedEntityRequest {
+message EntityResourceRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -39,20 +55,20 @@ message OwnedEntityRequest {
     string project = 2;
 
     // Unique integer identifier of the entity
-    int64 uuid = 3;
+    string uuid = 3;
 }
 
 
 // Request list data with user namespace
-message UserListBodyRequest {
+message UserResouceListRequest {
     // User
     string user = 1;
 
     // Pagination
-    int64 page = 2;
+    int32 page = 2;
 
     // Limit size
-    int64 limit = 3;
+    int32 limit = 3;
 
     // Sort to order the search
     string sort = 4;
@@ -62,15 +78,15 @@ message UserListBodyRequest {
 }
 
 // Request list data with owner namespace
-message OwnerListBodyRequest {
+message OwnerResouceListRequest {
     // Owner of the namespace
     string owner = 1;
 
     // Pagination
-    int64 page = 2;
+    int32 page = 2;
 
     // Limit size
-    int64 limit = 3;
+    int32 limit = 3;
 
     // Sort to order the search
     string sort = 4;
@@ -80,7 +96,7 @@ message OwnerListBodyRequest {
 }
 
 // Request list data with owner/project namespace
-message ProjectListBodyRequest {
+message ProjectResourceListRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -88,10 +104,10 @@ message ProjectListBodyRequest {
     string project = 2;
 
     // Pagination
-    int64 page = 3;
+    int32 page = 3;
 
     // Limit size
-    int64 limit = 4;
+    int32 limit = 4;
 
      // Sort to order the search
     string sort = 5;

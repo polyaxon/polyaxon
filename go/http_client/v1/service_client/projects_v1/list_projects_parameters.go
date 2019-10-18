@@ -27,6 +27,7 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
 )
@@ -79,7 +80,7 @@ type ListProjectsParams struct {
 	  Limit size.
 
 	*/
-	Limit *string
+	Limit *int32
 	/*Owner
 	  Owner of the namespace
 
@@ -89,7 +90,7 @@ type ListProjectsParams struct {
 	  Pagination.
 
 	*/
-	Page *string
+	Page *int32
 	/*Query
 	  Query filter the search search.
 
@@ -140,13 +141,13 @@ func (o *ListProjectsParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithLimit adds the limit to the list projects params
-func (o *ListProjectsParams) WithLimit(limit *string) *ListProjectsParams {
+func (o *ListProjectsParams) WithLimit(limit *int32) *ListProjectsParams {
 	o.SetLimit(limit)
 	return o
 }
 
 // SetLimit adds the limit to the list projects params
-func (o *ListProjectsParams) SetLimit(limit *string) {
+func (o *ListProjectsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
@@ -162,13 +163,13 @@ func (o *ListProjectsParams) SetOwner(owner string) {
 }
 
 // WithPage adds the page to the list projects params
-func (o *ListProjectsParams) WithPage(page *string) *ListProjectsParams {
+func (o *ListProjectsParams) WithPage(page *int32) *ListProjectsParams {
 	o.SetPage(page)
 	return o
 }
 
 // SetPage adds the page to the list projects params
-func (o *ListProjectsParams) SetPage(page *string) {
+func (o *ListProjectsParams) SetPage(page *int32) {
 	o.Page = page
 }
 
@@ -205,11 +206,11 @@ func (o *ListProjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	if o.Limit != nil {
 
 		// query param limit
-		var qrLimit string
+		var qrLimit int32
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
-		qLimit := qrLimit
+		qLimit := swag.FormatInt32(qrLimit)
 		if qLimit != "" {
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
@@ -226,11 +227,11 @@ func (o *ListProjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 	if o.Page != nil {
 
 		// query param page
-		var qrPage string
+		var qrPage int32
 		if o.Page != nil {
 			qrPage = *o.Page
 		}
-		qPage := qrPage
+		qPage := swag.FormatInt32(qrPage)
 		if qPage != "" {
 			if err := r.SetQueryParam("page", qPage); err != nil {
 				return err

@@ -63,7 +63,7 @@ api_instance = polyaxon_sdk.AuthV1Api(polyaxon_sdk.ApiClient(configuration))
 body = polyaxon_sdk.V1CredsBodyRequest() # V1CredsBodyRequest | 
 
 try:
-    # List runs
+    # List bookmarked runs for user
     api_response = api_instance.login(body)
     pprint(api_response)
 except ApiException as e:
@@ -77,26 +77,26 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List runs
+*AuthV1Api* | [**login**](docs/AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
 *ProjectsV1Api* | [**archive_project**](docs/ProjectsV1Api.md#archive_project) | **POST** /api/v1/{owner}/{project}/archive | Stop run
-*ProjectsV1Api* | [**bookmark_project**](docs/ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
+*ProjectsV1Api* | [**bookmark_project**](docs/ProjectsV1Api.md#bookmark_project) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
 *ProjectsV1Api* | [**create_project**](docs/ProjectsV1Api.md#create_project) | **POST** /api/v1/{owner}/projects/create | Get run
-*ProjectsV1Api* | [**delete_project**](docs/ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+*ProjectsV1Api* | [**delete_project**](docs/ProjectsV1Api.md#delete_project) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 *ProjectsV1Api* | [**disable_project_ci**](docs/ProjectsV1Api.md#disable_project_ci) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 *ProjectsV1Api* | [**enable_project_ci**](docs/ProjectsV1Api.md#enable_project_ci) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
-*ProjectsV1Api* | [**get_project**](docs/ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/projects/{project} | Update run
+*ProjectsV1Api* | [**get_project**](docs/ProjectsV1Api.md#get_project) | **GET** /api/v1/{owner}/{project} | Update run
 *ProjectsV1Api* | [**list_archived_projects**](docs/ProjectsV1Api.md#list_archived_projects) | **GET** /api/v1/archives/{user}/projects | Create new run
-*ProjectsV1Api* | [**list_bookmarked_projects**](docs/ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
-*ProjectsV1Api* | [**list_project_names**](docs/ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
-*ProjectsV1Api* | [**list_projects**](docs/ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List runs
-*ProjectsV1Api* | [**patch_project**](docs/ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
+*ProjectsV1Api* | [**list_bookmarked_projects**](docs/ProjectsV1Api.md#list_bookmarked_projects) | **GET** /api/v1/bookmarks/{user}/projects | List runs
+*ProjectsV1Api* | [**list_project_names**](docs/ProjectsV1Api.md#list_project_names) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
+*ProjectsV1Api* | [**list_projects**](docs/ProjectsV1Api.md#list_projects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
+*ProjectsV1Api* | [**patch_project**](docs/ProjectsV1Api.md#patch_project) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
 *ProjectsV1Api* | [**restore_experiment**](docs/ProjectsV1Api.md#restore_experiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 *ProjectsV1Api* | [**unbookmark_project**](docs/ProjectsV1Api.md#unbookmark_project) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
-*ProjectsV1Api* | [**update_project**](docs/ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
+*ProjectsV1Api* | [**update_project**](docs/ProjectsV1Api.md#update_project) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 *RunsV1Api* | [**archive_run**](docs/RunsV1Api.md#archive_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/archive | Archive run
 *RunsV1Api* | [**bookmark_run**](docs/RunsV1Api.md#bookmark_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/bookmark | Bookmark run
-*RunsV1Api* | [**copy_run**](docs/RunsV1Api.md#copy_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/copy | Restart run with copy
-*RunsV1Api* | [**create_run**](docs/RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs | Create new run
+*RunsV1Api* | [**copy_run**](docs/RunsV1Api.md#copy_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy | Restart run with copy
+*RunsV1Api* | [**create_run**](docs/RunsV1Api.md#create_run) | **POST** /api/v1/{owner}/{project}/runs/create | Create new run
 *RunsV1Api* | [**create_run_code_ref**](docs/RunsV1Api.md#create_run_code_ref) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/coderef | Get run code ref
 *RunsV1Api* | [**create_run_status**](docs/RunsV1Api.md#create_run_status) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Create new run status
 *RunsV1Api* | [**delete_run**](docs/RunsV1Api.md#delete_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid} | Delete run
@@ -105,46 +105,42 @@ Class | Method | HTTP request | Description
 *RunsV1Api* | [**get_run_code_refs**](docs/RunsV1Api.md#get_run_code_refs) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/coderef | Get run code ref
 *RunsV1Api* | [**get_run_statuses**](docs/RunsV1Api.md#get_run_statuses) | **GET** /api/v1/{owner}/{project}/runs/{uuid}/statuses | Get run status
 *RunsV1Api* | [**impersonate_token**](docs/RunsV1Api.md#impersonate_token) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/impersonatetoken | Impersonate run token
-*RunsV1Api* | [**invalidate_run**](docs/RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Stop run
+*RunsV1Api* | [**invalidate_run**](docs/RunsV1Api.md#invalidate_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/invalidate | Invalidate run
 *RunsV1Api* | [**invalidate_runs**](docs/RunsV1Api.md#invalidate_runs) | **POST** /api/v1/{owner}/{project}/runs/invalidate | Invalidate runs
 *RunsV1Api* | [**list_archived_runs**](docs/RunsV1Api.md#list_archived_runs) | **GET** /api/v1/archives/{user}/runs | List archived runs for user
 *RunsV1Api* | [**list_bookmarked_runs**](docs/RunsV1Api.md#list_bookmarked_runs) | **GET** /api/v1/bookmarks/{user}/runs | List bookmarked runs for user
-*RunsV1Api* | [**list_runs**](docs/RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs | List runs
+*RunsV1Api* | [**list_runs**](docs/RunsV1Api.md#list_runs) | **GET** /api/v1/{owner}/{project}/runs/list | List runs
 *RunsV1Api* | [**patch_run**](docs/RunsV1Api.md#patch_run) | **PATCH** /api/v1/{owner}/{project}/runs/{run.uuid} | Patch run
-*RunsV1Api* | [**restart_run**](docs/RunsV1Api.md#restart_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restart | Restart run
+*RunsV1Api* | [**restart_run**](docs/RunsV1Api.md#restart_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart | Restart run
 *RunsV1Api* | [**restore_run**](docs/RunsV1Api.md#restore_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/restore | Restore run
-*RunsV1Api* | [**resume_run**](docs/RunsV1Api.md#resume_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/resume | Resume run
+*RunsV1Api* | [**resume_run**](docs/RunsV1Api.md#resume_run) | **POST** /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume | Resume run
 *RunsV1Api* | [**start_run_tensorboard**](docs/RunsV1Api.md#start_run_tensorboard) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/start | Start run tensorboard
 *RunsV1Api* | [**stop_run**](docs/RunsV1Api.md#stop_run) | **POST** /api/v1/{owner}/{project}/runs/{uuid}/stop | Stop run
 *RunsV1Api* | [**stop_run_tensorboard**](docs/RunsV1Api.md#stop_run_tensorboard) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/tensorboard/stop | Stop run tensorboard
 *RunsV1Api* | [**stop_runs**](docs/RunsV1Api.md#stop_runs) | **POST** /api/v1/{owner}/{project}/runs/stop | Stop runs
 *RunsV1Api* | [**unbookmark_run**](docs/RunsV1Api.md#unbookmark_run) | **DELETE** /api/v1/{owner}/{project}/runs/{uuid}/unbookmark | Unbookmark run
 *RunsV1Api* | [**update_run**](docs/RunsV1Api.md#update_run) | **PUT** /api/v1/{owner}/{project}/runs/{run.uuid} | Update run
-*UsersV1Api* | [**get_user**](docs/UsersV1Api.md#get_user) | **GET** /api/v1/users | List runs
-*VersionsV1Api* | [**get_log_handler**](docs/VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List bookmarked runs for user
-*VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/versions | List runs
+*UsersV1Api* | [**get_user**](docs/UsersV1Api.md#get_user) | **GET** /api/v1/users | List bookmarked runs for user
+*VersionsV1Api* | [**get_log_handler**](docs/VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List archived runs for user
+*VersionsV1Api* | [**get_versions**](docs/VersionsV1Api.md#get_versions) | **GET** /api/v1/versions | List bookmarked runs for user
 
 
 ## Documentation For Models
 
  - [V1Auth](docs/V1Auth.md)
- - [V1CodeRefBodyRequest](docs/V1CodeRefBodyRequest.md)
  - [V1CodeReference](docs/V1CodeReference.md)
  - [V1CredsBodyRequest](docs/V1CredsBodyRequest.md)
- - [V1EntityStatusRequest](docs/V1EntityStatusRequest.md)
- - [V1ListCodeRefResponse](docs/V1ListCodeRefResponse.md)
+ - [V1EntityResourceRequest](docs/V1EntityResourceRequest.md)
+ - [V1ListCodeRefsResponse](docs/V1ListCodeRefsResponse.md)
  - [V1ListProjectsResponse](docs/V1ListProjectsResponse.md)
  - [V1ListRunsResponse](docs/V1ListRunsResponse.md)
  - [V1LogHandler](docs/V1LogHandler.md)
- - [V1OwnedEntityRequest](docs/V1OwnedEntityRequest.md)
- - [V1OwnerBodyRequest](docs/V1OwnerBodyRequest.md)
  - [V1Project](docs/V1Project.md)
- - [V1ProjectBodyRequest](docs/V1ProjectBodyRequest.md)
  - [V1Run](docs/V1Run.md)
- - [V1RunBodyRequest](docs/V1RunBodyRequest.md)
  - [V1Status](docs/V1Status.md)
  - [V1StatusCondition](docs/V1StatusCondition.md)
  - [V1User](docs/V1User.md)
+ - [V1Uuids](docs/V1Uuids.md)
  - [V1Version](docs/V1Version.md)
  - [V1Versions](docs/V1Versions.md)
 

@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * V1Run
@@ -72,16 +73,16 @@ public class V1Run {
   private String project = null;
 
   @SerializedName("created_at")
-  private String createdAt = null;
+  private OffsetDateTime createdAt = null;
 
   @SerializedName("updated_at")
-  private String updatedAt = null;
+  private OffsetDateTime updatedAt = null;
 
   @SerializedName("started_at")
-  private String startedAt = null;
+  private OffsetDateTime startedAt = null;
 
   @SerializedName("finished_at")
-  private String finishedAt = null;
+  private OffsetDateTime finishedAt = null;
 
   @SerializedName("is_managed")
   private String isManaged = null;
@@ -277,7 +278,7 @@ public class V1Run {
     this.project = project;
   }
 
-  public V1Run createdAt(String createdAt) {
+  public V1Run createdAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -287,15 +288,15 @@ public class V1Run {
    * @return createdAt
   **/
   @ApiModelProperty(value = "")
-  public String getCreatedAt() {
+  public OffsetDateTime getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
-  public V1Run updatedAt(String updatedAt) {
+  public V1Run updatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -305,15 +306,15 @@ public class V1Run {
    * @return updatedAt
   **/
   @ApiModelProperty(value = "")
-  public String getUpdatedAt() {
+  public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 
-  public V1Run startedAt(String startedAt) {
+  public V1Run startedAt(OffsetDateTime startedAt) {
     this.startedAt = startedAt;
     return this;
   }
@@ -323,15 +324,15 @@ public class V1Run {
    * @return startedAt
   **/
   @ApiModelProperty(value = "")
-  public String getStartedAt() {
+  public OffsetDateTime getStartedAt() {
     return startedAt;
   }
 
-  public void setStartedAt(String startedAt) {
+  public void setStartedAt(OffsetDateTime startedAt) {
     this.startedAt = startedAt;
   }
 
-  public V1Run finishedAt(String finishedAt) {
+  public V1Run finishedAt(OffsetDateTime finishedAt) {
     this.finishedAt = finishedAt;
     return this;
   }
@@ -341,11 +342,11 @@ public class V1Run {
    * @return finishedAt
   **/
   @ApiModelProperty(value = "")
-  public String getFinishedAt() {
+  public OffsetDateTime getFinishedAt() {
     return finishedAt;
   }
 
-  public void setFinishedAt(String finishedAt) {
+  public void setFinishedAt(OffsetDateTime finishedAt) {
     this.finishedAt = finishedAt;
   }
 

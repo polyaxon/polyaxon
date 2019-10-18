@@ -275,49 +275,49 @@ class RunsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def copy_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def copy_run(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run with copy  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.copy_run(owner, project, uuid, body, async_req=True)
+        >>> thread = api.copy_run(entity_owner, entity_project, entity_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_uuid: Unique integer identifier of the entity (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.copy_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            return self.copy_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.copy_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            (data) = self.copy_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def copy_run_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def copy_run_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run with copy  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.copy_run_with_http_info(owner, project, uuid, body, async_req=True)
+        >>> thread = api.copy_run_with_http_info(entity_owner, entity_project, entity_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_uuid: Unique integer identifier of the entity (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -332,18 +332,18 @@ class RunsV1Api(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `copy_run`")  # noqa: E501
-        # verify the required parameter 'project' is set
-        if ('project' not in params or
-                params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `copy_run`")  # noqa: E501
-        # verify the required parameter 'uuid' is set
-        if ('uuid' not in params or
-                params['uuid'] is None):
-            raise ValueError("Missing the required parameter `uuid` when calling `copy_run`")  # noqa: E501
+        # verify the required parameter 'entity_owner' is set
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `copy_run`")  # noqa: E501
+        # verify the required parameter 'entity_project' is set
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `copy_run`")  # noqa: E501
+        # verify the required parameter 'entity_uuid' is set
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `copy_run`")  # noqa: E501
         # verify the required parameter 'body' is set
         if ('body' not in params or
                 params['body'] is None):
@@ -352,12 +352,12 @@ class RunsV1Api(object):
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'project' in params:
-            path_params['project'] = params['project']  # noqa: E501
-        if 'uuid' in params:
-            path_params['uuid'] = params['uuid']  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -381,7 +381,7 @@ class RunsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/runs/{uuid}/copy', 'POST',
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy', 'POST',
             path_params,
             query_params,
             header_params,
@@ -407,7 +407,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
-        :param V1RunBodyRequest body: (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -430,7 +430,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
-        :param V1RunBodyRequest body: (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -494,7 +494,7 @@ class RunsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/runs', 'POST',
+            '/api/v1/{owner}/{project}/runs/create', 'POST',
             path_params,
             query_params,
             header_params,
@@ -521,7 +521,7 @@ class RunsV1Api(object):
         :param str entity_owner: Owner of the namespace (required)
         :param str entity_project: Project where the experiement will be assigned (required)
         :param str entity_uuid: Unique integer identifier of the entity (required)
-        :param V1CodeRefBodyRequest body: (required)
+        :param V1CodeReference body: Code ref object (required)
         :return: V1CodeReference
                  If the method is called asynchronously,
                  returns the request thread.
@@ -545,7 +545,7 @@ class RunsV1Api(object):
         :param str entity_owner: Owner of the namespace (required)
         :param str entity_project: Project where the experiement will be assigned (required)
         :param str entity_uuid: Unique integer identifier of the entity (required)
-        :param V1CodeRefBodyRequest body: (required)
+        :param V1CodeReference body: Code ref object (required)
         :return: V1CodeReference
                  If the method is called asynchronously,
                  returns the request thread.
@@ -642,7 +642,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1EntityStatusRequest body: (required)
+        :param V1Status body: Status to set (required)
         :return: V1Status
                  If the method is called asynchronously,
                  returns the request thread.
@@ -666,7 +666,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1EntityStatusRequest body: (required)
+        :param V1Status body: Status to set (required)
         :return: V1Status
                  If the method is called asynchronously,
                  returns the request thread.
@@ -875,7 +875,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param V1Uuids body: Uuids of the entities (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -898,7 +898,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param V1Uuids body: Uuids of the entities (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1102,7 +1102,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :return: V1ListCodeRefResponse
+        :return: V1ListCodeRefsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1125,7 +1125,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :return: V1ListCodeRefResponse
+        :return: V1ListCodeRefsResponse
                  If the method is called asynchronously,
                  returns the request thread.
         """
@@ -1195,7 +1195,7 @@ class RunsV1Api(object):
             body=body_params,
             post_params=form_params,
             files=local_var_files,
-            response_type='V1ListCodeRefResponse',  # noqa: E501
+            response_type='V1ListCodeRefsResponse',  # noqa: E501
             auth_settings=auth_settings,
             async_req=params.get('async_req'),
             _return_http_data_only=params.get('_return_http_data_only'),
@@ -1430,7 +1430,7 @@ class RunsV1Api(object):
             collection_formats=collection_formats)
 
     def invalidate_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
-        """Stop run  # noqa: E501
+        """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1441,7 +1441,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param V1EntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1454,7 +1454,7 @@ class RunsV1Api(object):
             return data
 
     def invalidate_run_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
-        """Stop run  # noqa: E501
+        """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1465,7 +1465,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param V1EntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1561,7 +1561,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param V1Uuids body: Uuids of the entities (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1584,7 +1584,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param V1Uuids body: Uuids of the entities (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -1673,8 +1673,8 @@ class RunsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListRunsResponse
@@ -1698,8 +1698,8 @@ class RunsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListRunsResponse
@@ -1786,8 +1786,8 @@ class RunsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListRunsResponse
@@ -1811,8 +1811,8 @@ class RunsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListRunsResponse
@@ -1900,8 +1900,8 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListRunsResponse
@@ -1926,8 +1926,8 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListRunsResponse
@@ -1995,7 +1995,7 @@ class RunsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/runs', 'GET',
+            '/api/v1/{owner}/{project}/runs/list', 'GET',
             path_params,
             query_params,
             header_params,
@@ -2022,7 +2022,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str run_uuid: UUID (required)
-        :param V1RunBodyRequest body: (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2046,7 +2046,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str run_uuid: UUID (required)
-        :param V1RunBodyRequest body: (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2131,49 +2131,49 @@ class RunsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def restart_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def restart_run(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.restart_run(owner, project, uuid, body, async_req=True)
+        >>> thread = api.restart_run(entity_owner, entity_project, entity_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_uuid: Unique integer identifier of the entity (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.restart_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            return self.restart_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.restart_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            (data) = self.restart_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def restart_run_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def restart_run_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Restart run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.restart_run_with_http_info(owner, project, uuid, body, async_req=True)
+        >>> thread = api.restart_run_with_http_info(entity_owner, entity_project, entity_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_uuid: Unique integer identifier of the entity (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -2188,18 +2188,18 @@ class RunsV1Api(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `restart_run`")  # noqa: E501
-        # verify the required parameter 'project' is set
-        if ('project' not in params or
-                params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `restart_run`")  # noqa: E501
-        # verify the required parameter 'uuid' is set
-        if ('uuid' not in params or
-                params['uuid'] is None):
-            raise ValueError("Missing the required parameter `uuid` when calling `restart_run`")  # noqa: E501
+        # verify the required parameter 'entity_owner' is set
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `restart_run`")  # noqa: E501
+        # verify the required parameter 'entity_project' is set
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `restart_run`")  # noqa: E501
+        # verify the required parameter 'entity_uuid' is set
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `restart_run`")  # noqa: E501
         # verify the required parameter 'body' is set
         if ('body' not in params or
                 params['body'] is None):
@@ -2208,12 +2208,12 @@ class RunsV1Api(object):
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'project' in params:
-            path_params['project'] = params['project']  # noqa: E501
-        if 'uuid' in params:
-            path_params['uuid'] = params['uuid']  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -2237,7 +2237,7 @@ class RunsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/runs/{uuid}/restart', 'POST',
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2365,49 +2365,49 @@ class RunsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def resume_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def resume_run(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Resume run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.resume_run(owner, project, uuid, body, async_req=True)
+        >>> thread = api.resume_run(entity_owner, entity_project, entity_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_uuid: Unique integer identifier of the entity (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.resume_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            return self.resume_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.resume_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            (data) = self.resume_run_with_http_info(entity_owner, entity_project, entity_uuid, body, **kwargs)  # noqa: E501
             return data
 
-    def resume_run_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def resume_run_with_http_info(self, entity_owner, entity_project, entity_uuid, body, **kwargs):  # noqa: E501
         """Resume run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.resume_run_with_http_info(owner, project, uuid, body, async_req=True)
+        >>> thread = api.resume_run_with_http_info(entity_owner, entity_project, entity_uuid, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
-        :param str owner: Owner of the namespace (required)
-        :param str project: Project where the experiement will be assigned (required)
-        :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param str entity_owner: Owner of the namespace (required)
+        :param str entity_project: Project where the experiement will be assigned (required)
+        :param str entity_uuid: Unique integer identifier of the entity (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params = ['entity_owner', 'entity_project', 'entity_uuid', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -2422,18 +2422,18 @@ class RunsV1Api(object):
                 )
             params[key] = val
         del params['kwargs']
-        # verify the required parameter 'owner' is set
-        if ('owner' not in params or
-                params['owner'] is None):
-            raise ValueError("Missing the required parameter `owner` when calling `resume_run`")  # noqa: E501
-        # verify the required parameter 'project' is set
-        if ('project' not in params or
-                params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `resume_run`")  # noqa: E501
-        # verify the required parameter 'uuid' is set
-        if ('uuid' not in params or
-                params['uuid'] is None):
-            raise ValueError("Missing the required parameter `uuid` when calling `resume_run`")  # noqa: E501
+        # verify the required parameter 'entity_owner' is set
+        if ('entity_owner' not in params or
+                params['entity_owner'] is None):
+            raise ValueError("Missing the required parameter `entity_owner` when calling `resume_run`")  # noqa: E501
+        # verify the required parameter 'entity_project' is set
+        if ('entity_project' not in params or
+                params['entity_project'] is None):
+            raise ValueError("Missing the required parameter `entity_project` when calling `resume_run`")  # noqa: E501
+        # verify the required parameter 'entity_uuid' is set
+        if ('entity_uuid' not in params or
+                params['entity_uuid'] is None):
+            raise ValueError("Missing the required parameter `entity_uuid` when calling `resume_run`")  # noqa: E501
         # verify the required parameter 'body' is set
         if ('body' not in params or
                 params['body'] is None):
@@ -2442,12 +2442,12 @@ class RunsV1Api(object):
         collection_formats = {}
 
         path_params = {}
-        if 'owner' in params:
-            path_params['owner'] = params['owner']  # noqa: E501
-        if 'project' in params:
-            path_params['project'] = params['project']  # noqa: E501
-        if 'uuid' in params:
-            path_params['uuid'] = params['uuid']  # noqa: E501
+        if 'entity_owner' in params:
+            path_params['entity.owner'] = params['entity_owner']  # noqa: E501
+        if 'entity_project' in params:
+            path_params['entity.project'] = params['entity_project']  # noqa: E501
+        if 'entity_uuid' in params:
+            path_params['entity.uuid'] = params['entity_uuid']  # noqa: E501
 
         query_params = []
 
@@ -2471,7 +2471,7 @@ class RunsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/{project}/runs/{uuid}/resume', 'POST',
+            '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume', 'POST',
             path_params,
             query_params,
             header_params,
@@ -2498,7 +2498,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param V1EntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2522,7 +2522,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
+        :param V1EntityResourceRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2607,49 +2607,47 @@ class RunsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def stop_run(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def stop_run(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Stop run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.stop_run(owner, project, uuid, body, async_req=True)
+        >>> thread = api.stop_run(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.stop_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            return self.stop_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
         else:
-            (data) = self.stop_run_with_http_info(owner, project, uuid, body, **kwargs)  # noqa: E501
+            (data) = self.stop_run_with_http_info(owner, project, uuid, **kwargs)  # noqa: E501
             return data
 
-    def stop_run_with_http_info(self, owner, project, uuid, body, **kwargs):  # noqa: E501
+    def stop_run_with_http_info(self, owner, project, uuid, **kwargs):  # noqa: E501
         """Stop run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.stop_run_with_http_info(owner, project, uuid, body, async_req=True)
+        >>> thread = api.stop_run_with_http_info(owner, project, uuid, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str uuid: Unique integer identifier of the entity (required)
-        :param V1OwnedEntityRequest body: (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'uuid', 'body']  # noqa: E501
+        all_params = ['owner', 'project', 'uuid']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -2676,10 +2674,6 @@ class RunsV1Api(object):
         if ('uuid' not in params or
                 params['uuid'] is None):
             raise ValueError("Missing the required parameter `uuid` when calling `stop_run`")  # noqa: E501
-        # verify the required parameter 'body' is set
-        if ('body' not in params or
-                params['body'] is None):
-            raise ValueError("Missing the required parameter `body` when calling `stop_run`")  # noqa: E501
 
         collection_formats = {}
 
@@ -2699,8 +2693,6 @@ class RunsV1Api(object):
         local_var_files = {}
 
         body_params = None
-        if 'body' in params:
-            body_params = params['body']
         # HTTP header `Accept`
         header_params['Accept'] = self.api_client.select_header_accept(
             ['application/json'])  # noqa: E501
@@ -2852,7 +2844,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param V1Uuids body: Uuids of the entities (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -2875,7 +2867,7 @@ class RunsV1Api(object):
         :param async_req bool
         :param str owner: Owner of the namespace (required)
         :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param V1Uuids body: Uuids of the entities (required)
         :return: object
                  If the method is called asynchronously,
                  returns the request thread.
@@ -3079,7 +3071,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str run_uuid: UUID (required)
-        :param V1RunBodyRequest body: (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.
@@ -3103,7 +3095,7 @@ class RunsV1Api(object):
         :param str owner: Owner of the namespace (required)
         :param str project: Project where the experiement will be assigned (required)
         :param str run_uuid: UUID (required)
-        :param V1RunBodyRequest body: (required)
+        :param V1Run body: Run object (required)
         :return: V1Run
                  If the method is called asynchronously,
                  returns the request thread.

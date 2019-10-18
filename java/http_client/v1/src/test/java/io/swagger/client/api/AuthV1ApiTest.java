@@ -48,7 +48,7 @@ public class AuthV1ApiTest {
 
     
     /**
-     * List runs
+     * List bookmarked runs for user
      *
      * 
      *

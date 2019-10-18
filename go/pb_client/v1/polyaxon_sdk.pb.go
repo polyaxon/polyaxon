@@ -44,102 +44,107 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 func init() { proto.RegisterFile("v1/polyaxon_sdk.proto", fileDescriptor_5f2d65d1ab5d9ce0) }
 
 var fileDescriptor_5f2d65d1ab5d9ce0 = []byte{
-	// 1517 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0x5b, 0x73, 0xdb, 0x44,
-	0x14, 0xc7, 0xb1, 0x5b, 0x72, 0x39, 0x8d, 0x73, 0xd9, 0xa6, 0x6d, 0xc6, 0xbd, 0xb9, 0xea, 0x35,
-	0x9e, 0x46, 0x8a, 0x9d, 0xf4, 0x42, 0x60, 0x18, 0x92, 0x34, 0x13, 0x3a, 0xb4, 0xb4, 0x38, 0x6d,
-	0x07, 0x98, 0xa1, 0x1d, 0x59, 0xda, 0xc8, 0x4a, 0xec, 0x5d, 0x55, 0xbb, 0x52, 0x13, 0x42, 0x5f,
-	0x18, 0x5e, 0x98, 0xe1, 0x09, 0xde, 0xf8, 0x06, 0x3c, 0xf0, 0xc0, 0x67, 0xe1, 0x8d, 0x57, 0xf8,
-	0x20, 0xcc, 0xae, 0x76, 0x15, 0x9b, 0x46, 0x8d, 0xec, 0x00, 0x4f, 0xc9, 0x1e, 0xaf, 0xfe, 0xbf,
-	0x73, 0x8e, 0xce, 0xee, 0x9e, 0x15, 0x9c, 0x8a, 0x6b, 0x56, 0x40, 0xdb, 0xbb, 0xf6, 0x0e, 0x25,
-	0x2f, 0x98, 0xbb, 0x6d, 0x06, 0x21, 0xe5, 0x14, 0x15, 0xe3, 0x5a, 0xf9, 0x9c, 0x47, 0xa9, 0xd7,
-	0xc6, 0x96, 0x1d, 0xf8, 0x96, 0x4d, 0x08, 0xe5, 0x36, 0xf7, 0x29, 0x61, 0xc9, 0x8c, 0xf2, 0x59,
-	0xf5, 0xab, 0x1c, 0x35, 0xa3, 0x4d, 0x0b, 0x77, 0x02, 0xbe, 0xab, 0x7e, 0xbc, 0x29, 0xff, 0x38,
-	0x73, 0x1e, 0x26, 0x73, 0xec, 0x95, 0xed, 0x79, 0x38, 0xb4, 0x68, 0x20, 0x1f, 0x3f, 0x40, 0xaa,
-	0x14, 0xd7, 0xac, 0xa6, 0xcd, 0xb0, 0x1a, 0x4e, 0xc5, 0x35, 0xcb, 0xa1, 0x2e, 0x7e, 0x11, 0xe2,
-	0x4d, 0x65, 0x1a, 0x8b, 0x6b, 0x56, 0x18, 0x11, 0x35, 0x9a, 0x14, 0x3e, 0x87, 0x74, 0x0b, 0x3b,
-	0xbc, 0xcb, 0x12, 0xe3, 0x90, 0xf9, 0x94, 0x74, 0x69, 0xda, 0x11, 0x6f, 0x75, 0x0d, 0x23, 0x86,
-	0x43, 0x35, 0x9c, 0x88, 0x6b, 0x16, 0xe3, 0x36, 0x8f, 0x94, 0x0b, 0xf5, 0x3f, 0xcf, 0xc0, 0x50,
-	0x23, 0x22, 0xec, 0x59, 0x0d, 0xb9, 0x30, 0xf2, 0xc0, 0x67, 0x5c, 0x8c, 0x50, 0xd9, 0x8c, 0x6b,
-	0xe6, 0xe3, 0x04, 0x25, 0x8c, 0x2b, 0xd4, 0xdd, 0x6d, 0xe0, 0x97, 0x11, 0x66, 0xbc, 0x3c, 0x2d,
-	0x7e, 0xd3, 0x33, 0x1b, 0x98, 0x05, 0x94, 0x30, 0x6c, 0x5c, 0xfb, 0xf6, 0xf7, 0xbf, 0x7e, 0x2a,
-	0x56, 0xd0, 0x05, 0x99, 0xb6, 0xb8, 0x66, 0xed, 0xd1, 0x57, 0x04, 0x87, 0xaf, 0xad, 0x3d, 0xe5,
-	0xf1, 0x6b, 0x11, 0x08, 0x43, 0x5b, 0x80, 0x12, 0x41, 0xba, 0xdd, 0xb1, 0xc3, 0x6d, 0xec, 0x4a,
-	0xde, 0x19, 0xa1, 0xf9, 0x94, 0xe1, 0x30, 0x1f, 0xec, 0xaa, 0x84, 0x5d, 0x44, 0xe7, 0x35, 0xac,
-	0xa9, 0xe4, 0x98, 0xb5, 0x27, 0xa2, 0x55, 0x2c, 0x0f, 0x26, 0xc5, 0xa3, 0xcb, 0xa1, 0xd3, 0xf2,
-	0xe3, 0xc1, 0x48, 0x57, 0x24, 0xe9, 0x02, 0x3a, 0xa7, 0x49, 0x76, 0x22, 0xd6, 0x0b, 0xda, 0x80,
-	0xd1, 0xd5, 0x10, 0xdb, 0x1c, 0x37, 0x22, 0x82, 0x90, 0x10, 0x6a, 0x44, 0xa4, 0x5b, 0x7c, 0x58,
-	0xd9, 0x8c, 0x59, 0xa9, 0x77, 0xd9, 0x38, 0x24, 0x4d, 0x4b, 0x85, 0x2a, 0xfa, 0x1c, 0x86, 0xd6,
-	0xb1, 0xf0, 0x06, 0x9d, 0x16, 0x4f, 0x3f, 0x7a, 0x45, 0xb0, 0xbb, 0x46, 0xb8, 0xcf, 0xdf, 0x54,
-	0x9d, 0x93, 0xaa, 0xd7, 0xd1, 0xd5, 0xb7, 0xab, 0x5a, 0x7b, 0x51, 0xe4, 0xbb, 0xaf, 0xd1, 0x73,
-	0x18, 0x7d, 0x1a, 0xb8, 0x79, 0xdc, 0x5d, 0x94, 0xc2, 0x66, 0x79, 0xf6, 0x30, 0x61, 0x51, 0xa4,
-	0x52, 0x5c, 0x78, 0xfe, 0x15, 0x8c, 0x3c, 0xb6, 0xb9, 0xd3, 0xca, 0x2b, 0x5f, 0xef, 0x4f, 0x7e,
-	0x0b, 0x46, 0xef, 0xe1, 0x36, 0x4e, 0xdc, 0xcf, 0xca, 0xcd, 0x69, 0x33, 0x59, 0xa7, 0xa6, 0x5e,
-	0xa7, 0xe6, 0x9a, 0x58, 0xa7, 0x3a, 0x55, 0xd5, 0x9c, 0xa9, 0x22, 0x00, 0x29, 0x8b, 0x25, 0x30,
-	0xb5, 0x2c, 0xba, 0x03, 0xca, 0x82, 0xcd, 0x4b, 0x58, 0xf5, 0x50, 0x98, 0x2b, 0x11, 0x22, 0xb6,
-	0x00, 0x86, 0x37, 0x38, 0x0d, 0x06, 0x89, 0xec, 0x96, 0x84, 0x59, 0x46, 0x35, 0x57, 0x64, 0x16,
-	0xe3, 0x34, 0x48, 0xb2, 0x39, 0xa2, 0x88, 0xfd, 0xc7, 0x67, 0x4a, 0xe4, 0x0d, 0xe3, 0xf2, 0x21,
-	0x48, 0xcd, 0xfa, 0x06, 0x4a, 0xf7, 0x49, 0x6c, 0xb7, 0x7d, 0x5d, 0x7c, 0xfd, 0xc6, 0xf8, 0xbe,
-	0x04, 0xde, 0x32, 0xe6, 0xf3, 0xc5, 0xe8, 0xa7, 0x30, 0x41, 0x8f, 0x61, 0xbc, 0x87, 0xde, 0x7f,
-	0xbc, 0xaa, 0x5e, 0x8d, 0xc3, 0xea, 0xb5, 0x97, 0x6b, 0xc3, 0xf0, 0x2a, 0x0d, 0x76, 0x73, 0xad,
-	0xe4, 0x3e, 0x5f, 0xa2, 0x43, 0x83, 0x5d, 0x81, 0xf0, 0x00, 0x1a, 0x98, 0x71, 0x3b, 0xcc, 0xb7,
-	0x5f, 0xdc, 0x95, 0x94, 0xba, 0x31, 0x97, 0x8f, 0x12, 0x26, 0xd2, 0x02, 0x84, 0x61, 0xb4, 0x81,
-	0x59, 0xd4, 0xc1, 0xb9, 0x38, 0x77, 0x24, 0xa7, 0x66, 0xdc, 0xcc, 0xcd, 0x89, 0x3a, 0x32, 0x65,
-	0x0c, 0x40, 0xed, 0xda, 0x47, 0x59, 0x09, 0x39, 0xc3, 0x53, 0x5b, 0xba, 0x80, 0x8a, 0x24, 0xd2,
-	0xf0, 0xff, 0x80, 0x86, 0x09, 0x09, 0x45, 0x70, 0x42, 0x9f, 0x85, 0x83, 0x50, 0x6f, 0x4b, 0xea,
-	0xbc, 0x61, 0xe6, 0xa3, 0xea, 0x73, 0x12, 0xed, 0x42, 0xe9, 0x29, 0x69, 0x1e, 0x01, 0xac, 0x4a,
-	0xa8, 0x9a, 0x73, 0x25, 0x46, 0x29, 0x0c, 0x7d, 0x5f, 0x80, 0x93, 0x1b, 0xaa, 0x54, 0x9f, 0x60,
-	0xc2, 0x68, 0xd8, 0xa4, 0x76, 0xe8, 0xf6, 0xed, 0xc1, 0x8a, 0xf4, 0xe0, 0x03, 0xe3, 0x4e, 0x3e,
-	0x0f, 0xf8, 0x3e, 0xca, 0x4a, 0xcb, 0xf9, 0xbb, 0x02, 0x20, 0xb5, 0xfb, 0x1d, 0xc5, 0x95, 0x0f,
-	0xa5, 0x2b, 0x77, 0xab, 0xb7, 0x07, 0x71, 0x85, 0x06, 0xa8, 0x0d, 0xe3, 0xc9, 0x51, 0xbf, 0x21,
-	0x7b, 0x33, 0xcc, 0x32, 0x3d, 0x00, 0x61, 0x4f, 0x66, 0xe9, 0x77, 0x8f, 0xcc, 0xbc, 0x1b, 0xbe,
-	0xd2, 0x7e, 0x09, 0x13, 0x69, 0xb7, 0x92, 0x48, 0x25, 0x5d, 0x51, 0x42, 0x4a, 0x2c, 0x07, 0xf1,
-	0xde, 0x93, 0xbc, 0x05, 0xa3, 0x4f, 0x9e, 0xc8, 0xf3, 0x8e, 0x0e, 0x70, 0x95, 0xba, 0xb8, 0x81,
-	0x37, 0xb3, 0x03, 0x3c, 0xa3, 0xdb, 0x30, 0x35, 0x33, 0xed, 0xc4, 0xd4, 0xfa, 0x42, 0x73, 0x79,
-	0x77, 0x46, 0x17, 0x87, 0x78, 0x13, 0xfd, 0x50, 0x80, 0xc9, 0x34, 0x5a, 0xa5, 0x99, 0xc0, 0xd5,
-	0xa0, 0x7b, 0xdf, 0x9f, 0xea, 0xb2, 0xe3, 0x10, 0x13, 0x07, 0x1b, 0x0f, 0x25, 0x76, 0xdd, 0x58,
-	0x49, 0xb1, 0x58, 0xfa, 0x6b, 0x6a, 0xba, 0x1a, 0xfe, 0xc3, 0x09, 0x65, 0xed, 0xf1, 0x45, 0x24,
-	0x82, 0xc3, 0xe4, 0xfd, 0x4e, 0x80, 0x43, 0x46, 0x89, 0xcd, 0xf1, 0x13, 0xba, 0x8d, 0xb3, 0x97,
-	0xde, 0x88, 0xb0, 0x2f, 0x47, 0xbc, 0xa5, 0xeb, 0xcb, 0xc8, 0x59, 0x5f, 0xfe, 0x3e, 0x81, 0x0b,
-	0x42, 0xfd, 0x8f, 0x31, 0x00, 0x75, 0xcc, 0x89, 0x4e, 0xdf, 0x87, 0x31, 0x91, 0x61, 0x6d, 0x41,
-	0x33, 0xda, 0x81, 0x37, 0x9a, 0xe2, 0x19, 0xfd, 0x36, 0xf4, 0xdc, 0xec, 0x16, 0x5c, 0xbb, 0xa4,
-	0x3c, 0x62, 0x56, 0xdb, 0x67, 0x1c, 0x91, 0xa4, 0x05, 0x57, 0x8f, 0x7f, 0x6a, 0x77, 0xf0, 0x60,
-	0xb8, 0xcc, 0xeb, 0x45, 0x8a, 0x23, 0x52, 0x3b, 0x86, 0xd3, 0xbd, 0xd7, 0x8b, 0x34, 0xc8, 0xcc,
-	0xc6, 0x3f, 0x1b, 0xaa, 0x9a, 0x75, 0x74, 0x29, 0xf3, 0x9a, 0xa1, 0xe9, 0x88, 0xc1, 0x74, 0xf7,
-	0x55, 0xe3, 0x28, 0xd4, 0x1b, 0x92, 0x6a, 0xa0, 0x4a, 0xd6, 0x95, 0x23, 0x85, 0x3e, 0x87, 0x52,
-	0x52, 0xda, 0x4a, 0x03, 0x4d, 0xa7, 0x99, 0xed, 0x46, 0x9d, 0xe8, 0xea, 0x72, 0x8c, 0xaa, 0x54,
-	0xbf, 0x62, 0x5c, 0xcc, 0x4c, 0xa4, 0x23, 0x25, 0x93, 0x3e, 0x1e, 0xd6, 0xb1, 0x76, 0x30, 0xb3,
-	0x59, 0x3a, 0x48, 0x1e, 0x19, 0x99, 0xf2, 0x69, 0xc9, 0x22, 0x07, 0x4a, 0xc9, 0x35, 0xa4, 0x2f,
-	0x82, 0x6a, 0xe0, 0xcb, 0x39, 0x08, 0x22, 0x86, 0x26, 0x8c, 0xc9, 0xbb, 0xc8, 0x20, 0x8c, 0x7a,
-	0x4e, 0xc6, 0x16, 0x94, 0x92, 0x4b, 0xc2, 0x61, 0x90, 0xac, 0xf3, 0x43, 0x15, 0x5a, 0xf5, 0xd2,
-	0xc1, 0xbc, 0xee, 0xa4, 0x6d, 0xc3, 0xb8, 0x2a, 0xb2, 0x23, 0xc2, 0x8c, 0x4b, 0xd9, 0x9b, 0x89,
-	0xee, 0x88, 0x08, 0x4c, 0xa9, 0x8e, 0x68, 0x6d, 0x27, 0xc0, 0xa1, 0xdf, 0xc1, 0xe4, 0x3f, 0xe1,
-	0xe9, 0x66, 0xa8, 0x03, 0x13, 0x7a, 0xe5, 0x0e, 0x1a, 0x9d, 0xae, 0x6f, 0x23, 0x9b, 0x96, 0x76,
-	0x22, 0x2f, 0x61, 0x6a, 0xbf, 0x09, 0x1a, 0x14, 0x78, 0x53, 0x02, 0xaf, 0x55, 0xaf, 0x64, 0x03,
-	0xbb, 0x9a, 0x1f, 0x0f, 0x26, 0xd6, 0x88, 0xdd, 0x6c, 0xeb, 0xb7, 0xb7, 0x7a, 0xbf, 0x6f, 0xa0,
-	0xfa, 0x24, 0x61, 0x9c, 0xcb, 0x06, 0x3a, 0x3e, 0x6a, 0xc1, 0xe4, 0x3d, 0x9f, 0xfd, 0x2b, 0xa4,
-	0xea, 0x5b, 0x49, 0xf5, 0xcf, 0x60, 0x48, 0x1c, 0x52, 0xcf, 0x6a, 0x68, 0x1d, 0xde, 0x7d, 0x40,
-	0x3d, 0x9f, 0x24, 0xfb, 0xd0, 0x6a, 0x88, 0x5d, 0xd6, 0x8d, 0xd9, 0x3f, 0xcf, 0x2e, 0x48, 0xe1,
-	0x19, 0xe3, 0xa4, 0x16, 0x16, 0x1b, 0x1b, 0xb3, 0xe4, 0x61, 0xb5, 0x54, 0xa8, 0xd6, 0x1f, 0xc2,
-	0xb0, 0xd8, 0x33, 0xc5, 0x59, 0xb5, 0x02, 0xc3, 0x1e, 0xe6, 0x62, 0x84, 0x32, 0xdc, 0x4c, 0x74,
-	0xc5, 0x0c, 0xe3, 0x94, 0xd4, 0x9d, 0x40, 0xa5, 0x1e, 0xdd, 0xfa, 0x6f, 0x05, 0x80, 0x67, 0xc9,
-	0x57, 0x32, 0x21, 0xf9, 0x10, 0x4e, 0xac, 0x63, 0xae, 0x0d, 0x99, 0xb2, 0x63, 0x42, 0x56, 0xcf,
-	0x32, 0x66, 0xa4, 0x34, 0x42, 0x93, 0x5a, 0x3a, 0xd6, 0xcf, 0x3f, 0x81, 0xd2, 0x3a, 0xe6, 0x0f,
-	0xa8, 0xf7, 0xb1, 0x4d, 0xdc, 0xf6, 0x5b, 0xfc, 0x1c, 0x97, 0x5b, 0x7e, 0x3a, 0xcf, 0x38, 0x2b,
-	0x25, 0x4f, 0xa1, 0x34, 0x0b, 0x6d, 0xea, 0xbd, 0x68, 0x25, 0x3f, 0xae, 0xfc, 0x5a, 0xfc, 0x71,
-	0xf9, 0x97, 0x22, 0xf2, 0x60, 0xec, 0xb1, 0xfa, 0x4a, 0x59, 0x61, 0xee, 0xb6, 0xf1, 0xa8, 0x77,
-	0x8c, 0x66, 0x5b, 0x9c, 0x07, 0x6c, 0xc9, 0xb2, 0x3c, 0x9f, 0xb7, 0xa2, 0xa6, 0xe9, 0xd0, 0x4e,
-	0xfa, 0x59, 0x33, 0xfd, 0x67, 0x8e, 0xb9, 0xdb, 0xac, 0x3c, 0xed, 0x50, 0xc2, 0x6d, 0x87, 0x7f,
-	0xa4, 0xcd, 0x62, 0x72, 0x7d, 0xa8, 0x66, 0xd6, 0x16, 0xcd, 0xc5, 0xea, 0xf1, 0x42, 0xf1, 0xd8,
-	0xf1, 0xfa, 0xa4, 0x1d, 0x04, 0x6d, 0xdf, 0x91, 0x5f, 0x29, 0xad, 0x2d, 0x46, 0xc9, 0xd2, 0x1b,
-	0x96, 0xc6, 0x12, 0x1c, 0x5b, 0x9c, 0x5f, 0x40, 0x0b, 0x50, 0xfb, 0x82, 0x46, 0x15, 0x97, 0x92,
-	0xeb, 0xbc, 0xd2, 0xb2, 0x63, 0x5c, 0x09, 0x70, 0xd8, 0xf1, 0x99, 0x48, 0x4a, 0x85, 0xd3, 0x8a,
-	0xed, 0x38, 0x98, 0xb1, 0x0a, 0x6f, 0xe1, 0x4a, 0x88, 0x19, 0x8d, 0x42, 0x07, 0x9b, 0x8d, 0x59,
-	0xf1, 0xec, 0x22, 0x32, 0x60, 0xa6, 0xa1, 0x6c, 0x15, 0x97, 0x62, 0x56, 0x21, 0x94, 0x57, 0xf0,
-	0x8e, 0xcf, 0xb8, 0x89, 0x86, 0xe0, 0xf8, 0xcf, 0xc5, 0xc2, 0xf0, 0x97, 0x17, 0xe1, 0x3c, 0x0c,
-	0x2d, 0x07, 0xfe, 0x27, 0x78, 0x17, 0x9d, 0x1c, 0x29, 0x96, 0x4b, 0xa2, 0x72, 0x68, 0xe8, 0x7f,
-	0x2d, 0x5d, 0xa9, 0x14, 0x9b, 0x63, 0x00, 0xe9, 0x84, 0x77, 0x9a, 0x43, 0x32, 0xd9, 0x0b, 0x7f,
-	0x07, 0x00, 0x00, 0xff, 0xff, 0xac, 0x92, 0x15, 0x05, 0xd8, 0x15, 0x00, 0x00,
+	// 1593 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0x4d, 0x77, 0xdb, 0x44,
+	0x17, 0xc7, 0x1f, 0xbb, 0xad, 0x93, 0xdc, 0xc6, 0x79, 0x99, 0xbe, 0x9c, 0xd4, 0x69, 0x53, 0x57,
+	0x7d, 0x7b, 0x62, 0x1a, 0x29, 0x76, 0xd3, 0xd2, 0x63, 0x38, 0x40, 0x92, 0x86, 0x34, 0x87, 0xf4,
+	0x05, 0x37, 0xe9, 0x81, 0xc2, 0x39, 0x41, 0x96, 0x26, 0xb6, 0x6a, 0x5b, 0xa3, 0x6a, 0x46, 0x6e,
+	0xdc, 0xb4, 0x14, 0xd8, 0xb0, 0x61, 0x05, 0x2b, 0xf8, 0x06, 0x2c, 0x58, 0xb0, 0xe5, 0x6b, 0xf0,
+	0x15, 0xf8, 0x20, 0x9c, 0x19, 0xcd, 0x28, 0x4e, 0x1b, 0x39, 0xaa, 0x0d, 0xac, 0x92, 0x19, 0x8d,
+	0xfe, 0xbf, 0x7b, 0xaf, 0xef, 0xcc, 0xdc, 0x2b, 0x38, 0xd5, 0x2e, 0x1a, 0x1e, 0x69, 0x76, 0xcc,
+	0x1d, 0xe2, 0x6e, 0x51, 0xbb, 0xa1, 0x7b, 0x3e, 0x61, 0x04, 0xa5, 0xdb, 0xc5, 0xdc, 0xd9, 0x1a,
+	0x21, 0xb5, 0x26, 0x36, 0x4c, 0xcf, 0x31, 0x4c, 0xd7, 0x25, 0xcc, 0x64, 0x0e, 0x71, 0x69, 0xb8,
+	0x22, 0x37, 0x2d, 0x9f, 0x8a, 0x51, 0x35, 0xd8, 0x36, 0x70, 0xcb, 0x63, 0x1d, 0xf9, 0xf0, 0x9a,
+	0xf8, 0x63, 0xcd, 0xd5, 0xb0, 0x3b, 0x47, 0x9f, 0x99, 0xb5, 0x1a, 0xf6, 0x0d, 0xe2, 0x89, 0xd7,
+	0x0f, 0x90, 0xca, 0xb6, 0x8b, 0x46, 0xd5, 0xa4, 0x58, 0x0e, 0x27, 0xdb, 0x45, 0xc3, 0x22, 0x36,
+	0xde, 0xf2, 0xf1, 0xb6, 0x9c, 0x1a, 0x6d, 0x17, 0x0d, 0x3f, 0x70, 0xe5, 0x68, 0x82, 0xdb, 0xec,
+	0x93, 0x27, 0xd8, 0x62, 0x5d, 0x33, 0x6d, 0xec, 0x53, 0x87, 0xb8, 0x5d, 0x9a, 0x66, 0xc0, 0xea,
+	0x5d, 0xc3, 0x80, 0x62, 0x5f, 0x0e, 0xc7, 0xdb, 0x45, 0x83, 0x32, 0x93, 0x05, 0xd2, 0x84, 0xd2,
+	0x1f, 0x67, 0x20, 0x53, 0x09, 0x5c, 0xfa, 0xa8, 0x88, 0x5a, 0x80, 0xd6, 0x1d, 0xca, 0x96, 0x08,
+	0x69, 0xb4, 0x4c, 0xbf, 0x81, 0x6d, 0x3e, 0x8f, 0x72, 0x7a, 0xbb, 0xa8, 0x6f, 0x52, 0xec, 0x57,
+	0x30, 0x25, 0x81, 0x85, 0xf9, 0x92, 0x0a, 0x7e, 0x1a, 0x60, 0xca, 0x72, 0x27, 0xf9, 0x33, 0x31,
+	0x11, 0xb8, 0xb4, 0x82, 0xa9, 0x47, 0x5c, 0x8a, 0xb5, 0xcb, 0xdf, 0xfd, 0xf9, 0xd7, 0x4f, 0xe9,
+	0xf3, 0xe8, 0x9c, 0x08, 0x20, 0x77, 0x51, 0x2a, 0x52, 0x63, 0x97, 0x9b, 0xf2, 0x92, 0x7b, 0x44,
+	0xd1, 0x13, 0x98, 0xe0, 0xaf, 0x2e, 0xfa, 0x56, 0xdd, 0x69, 0xf7, 0x0d, 0xbb, 0x24, 0x60, 0x33,
+	0xe8, 0xac, 0x82, 0x99, 0xa1, 0xde, 0x7e, 0x56, 0x0b, 0x86, 0xd5, 0x9b, 0x68, 0x86, 0xeb, 0x3c,
+	0x08, 0xa3, 0x28, 0x30, 0x7e, 0x12, 0xce, 0x3b, 0x82, 0x73, 0x19, 0x5d, 0x54, 0x9c, 0x5d, 0xf2,
+	0xcc, 0xe5, 0xfa, 0xbb, 0xf2, 0x07, 0x09, 0x49, 0x46, 0xd3, 0xa1, 0x0c, 0x7d, 0x09, 0x23, 0xcb,
+	0x3e, 0x36, 0x19, 0xae, 0x04, 0x2e, 0x42, 0x5c, 0xaf, 0x12, 0xb8, 0x4b, 0xc4, 0xee, 0x28, 0xc6,
+	0x90, 0x9c, 0xd3, 0x4a, 0x42, 0xf6, 0x9a, 0x76, 0xf9, 0x10, 0x59, 0x4b, 0xc8, 0x95, 0x8f, 0xf8,
+	0x81, 0x8b, 0xbe, 0x80, 0xcc, 0x2a, 0xe6, 0xd6, 0xa1, 0x33, 0x5c, 0x66, 0xc5, 0x65, 0x0e, 0xeb,
+	0x28, 0x4f, 0xde, 0x20, 0xcc, 0x09, 0xc2, 0x55, 0x74, 0x18, 0x61, 0x37, 0x08, 0x1c, 0xfb, 0x25,
+	0xfa, 0x0a, 0x46, 0x36, 0x3d, 0x3b, 0x89, 0xe9, 0x37, 0x85, 0xf0, 0x7c, 0x6e, 0xf6, 0x30, 0x61,
+	0x9e, 0xbf, 0x42, 0x3c, 0x34, 0x7f, 0x0b, 0x86, 0x1f, 0x98, 0xcc, 0xaa, 0x27, 0x05, 0x94, 0xde,
+	0x16, 0xd0, 0x82, 0x91, 0xdb, 0xb8, 0x89, 0x43, 0x17, 0x7a, 0x84, 0xe8, 0xb4, 0x1e, 0xee, 0x64,
+	0x5d, 0xed, 0x64, 0x7d, 0x85, 0xef, 0x64, 0x15, 0xb1, 0x42, 0xc2, 0x88, 0xbd, 0x02, 0x88, 0x70,
+	0x14, 0x5d, 0x3c, 0x20, 0xbb, 0x36, 0x03, 0xc7, 0xa6, 0xdd, 0x2e, 0xc6, 0x91, 0x17, 0x04, 0x59,
+	0x3f, 0x94, 0x6c, 0x0b, 0x5e, 0xf9, 0x18, 0x37, 0x80, 0x22, 0x0f, 0x86, 0x1e, 0x32, 0xe2, 0xf5,
+	0xe9, 0xad, 0xca, 0xc0, 0x42, 0x22, 0x6f, 0x0d, 0xca, 0x88, 0x87, 0x76, 0x61, 0x58, 0x12, 0x07,
+	0x74, 0x58, 0xc1, 0x0f, 0xdb, 0x55, 0x9c, 0xaa, 0xdc, 0x7d, 0x05, 0xd9, 0x35, 0xb7, 0x6d, 0x36,
+	0x1d, 0x95, 0xa5, 0x7d, 0x38, 0xfd, 0x9e, 0xe0, 0xde, 0xd0, 0xe6, 0x93, 0x39, 0xed, 0x44, 0xbc,
+	0x72, 0xaa, 0x80, 0xbe, 0x4f, 0xc1, 0xd8, 0x3e, 0x0b, 0x06, 0x0c, 0xc2, 0x2d, 0x61, 0x4c, 0x49,
+	0x3b, 0x2c, 0xcf, 0xbb, 0xac, 0x90, 0xa1, 0x78, 0x0e, 0x43, 0xcb, 0xc4, 0xeb, 0xf0, 0x20, 0x4c,
+	0x75, 0x05, 0x21, 0x66, 0x3f, 0xad, 0x0b, 0xce, 0xc7, 0xda, 0x87, 0x11, 0x07, 0x8b, 0xf5, 0xba,
+	0xc2, 0xc9, 0xe1, 0x6b, 0x21, 0x90, 0xb3, 0x61, 0x24, 0x2c, 0xe2, 0x75, 0xc2, 0x5d, 0xf6, 0x4d,
+	0x0a, 0xa0, 0x82, 0x29, 0x33, 0x7d, 0x96, 0x90, 0x7f, 0x5f, 0xf0, 0xd7, 0xb4, 0xa5, 0x01, 0xf8,
+	0x7e, 0x48, 0x0c, 0x4d, 0xf8, 0x1a, 0x46, 0x2a, 0x98, 0x06, 0x2d, 0x9c, 0xd0, 0x80, 0x7b, 0xc2,
+	0x80, 0x3b, 0xda, 0xe2, 0x60, 0x06, 0x04, 0x2d, 0x79, 0x10, 0xb7, 0x01, 0xe4, 0xed, 0xd5, 0x67,
+	0x1a, 0xde, 0x10, 0x06, 0x19, 0xda, 0x5c, 0xb2, 0x34, 0x94, 0x57, 0x1b, 0xe7, 0xf2, 0xc8, 0x13,
+	0xff, 0x3f, 0xe2, 0xfa, 0x21, 0x0c, 0xed, 0xc0, 0x71, 0x55, 0x1c, 0xf4, 0x09, 0x96, 0x47, 0xba,
+	0xa6, 0x27, 0x03, 0xab, 0xc2, 0x01, 0xbd, 0x80, 0xec, 0xa6, 0x5b, 0x1d, 0x8c, 0x2d, 0xb7, 0x59,
+	0x21, 0xe1, 0x9e, 0x0f, 0x22, 0x1e, 0xfa, 0x21, 0x05, 0x27, 0x1e, 0xca, 0x44, 0xdf, 0xc0, 0x2e,
+	0x25, 0x7e, 0x95, 0x98, 0xbe, 0xdd, 0x8f, 0x11, 0x4b, 0xc2, 0x88, 0xf7, 0xb5, 0x77, 0x93, 0x19,
+	0xc1, 0xf6, 0x68, 0x46, 0x98, 0xf8, 0xe1, 0xf9, 0x83, 0xe4, 0xf1, 0x3b, 0xa0, 0x35, 0x1f, 0x08,
+	0x6b, 0x6e, 0x15, 0x6e, 0xf6, 0x63, 0x0d, 0xf1, 0x10, 0x81, 0xb1, 0xb0, 0x12, 0x79, 0x28, 0x4a,
+	0x4a, 0x4c, 0x7b, 0x19, 0x01, 0xfc, 0x51, 0xb8, 0x50, 0xe5, 0x01, 0xd2, 0x93, 0x5e, 0x3a, 0x52,
+	0xfe, 0x39, 0x8c, 0x47, 0x85, 0x55, 0x28, 0x85, 0xa6, 0xf7, 0x88, 0xe1, 0x4c, 0xf7, 0xd6, 0xef,
+	0x66, 0x4a, 0x67, 0xb5, 0xb7, 0x64, 0x96, 0x33, 0xe1, 0x7f, 0xe8, 0x85, 0x72, 0x76, 0x99, 0xd8,
+	0xb8, 0x82, 0xb7, 0x7b, 0x3a, 0x3b, 0xa5, 0x8a, 0x48, 0xb5, 0x38, 0x2a, 0x24, 0xe5, 0xde, 0x43,
+	0x09, 0xf7, 0x1e, 0xef, 0x07, 0x7c, 0xbc, 0x8d, 0x7e, 0x4e, 0xc1, 0x44, 0xe4, 0xba, 0x14, 0x45,
+	0xa7, 0x39, 0x45, 0x0e, 0xba, 0xdd, 0x9e, 0xec, 0x9a, 0xc7, 0x3e, 0x76, 0x2d, 0xac, 0x3d, 0x16,
+	0xd8, 0x8d, 0x81, 0x0e, 0x5f, 0x69, 0x4b, 0x79, 0x4c, 0x35, 0x29, 0xa1, 0x36, 0x7a, 0x06, 0x13,
+	0x6b, 0x2d, 0x0f, 0xfb, 0x94, 0xb8, 0x26, 0xc3, 0x1b, 0xa4, 0x81, 0x7b, 0x6e, 0xd0, 0x61, 0xfe,
+	0x68, 0x31, 0x60, 0xf5, 0xe8, 0x27, 0x49, 0x98, 0x7f, 0xce, 0x1e, 0x84, 0x71, 0x48, 0xe9, 0xdb,
+	0x2c, 0x80, 0xbc, 0x75, 0x79, 0x03, 0xd3, 0x84, 0x51, 0x1e, 0x72, 0x35, 0x13, 0xa6, 0xc6, 0x7d,
+	0xae, 0x78, 0x40, 0x3b, 0x11, 0xfd, 0x42, 0x6a, 0x79, 0x7c, 0xff, 0xa2, 0xac, 0x92, 0x46, 0xc9,
+	0x22, 0xff, 0x69, 0xd8, 0xbf, 0xc8, 0xd7, 0xef, 0x99, 0x2d, 0xdc, 0x37, 0xf1, 0x8a, 0x20, 0xe6,
+	0xd1, 0x4c, 0x2c, 0xd1, 0x15, 0xf2, 0x1d, 0x38, 0xbd, 0xbf, 0x43, 0x8b, 0x5c, 0xed, 0xd5, 0x38,
+	0xc5, 0x73, 0x67, 0x05, 0xf7, 0x22, 0xba, 0x10, 0xdb, 0xa9, 0x29, 0x03, 0x50, 0x1b, 0x4e, 0x76,
+	0x77, 0x6b, 0x03, 0x82, 0xff, 0x2f, 0xc0, 0x1a, 0xca, 0xc7, 0x75, 0x6d, 0x11, 0x77, 0x1b, 0xb2,
+	0x61, 0xda, 0x4b, 0x8d, 0x30, 0xe7, 0xe5, 0xa0, 0x3b, 0xe7, 0x8f, 0x77, 0xcd, 0x6b, 0xf3, 0x42,
+	0xbf, 0xa0, 0x9d, 0x8f, 0x0d, 0xa8, 0x6c, 0xa8, 0x86, 0xe4, 0x04, 0xfa, 0x0c, 0x60, 0x15, 0x2b,
+	0x43, 0x43, 0xaf, 0x5e, 0xab, 0xe7, 0x0e, 0x04, 0x5d, 0x10, 0xa0, 0x69, 0x74, 0x26, 0x36, 0x83,
+	0x11, 0x86, 0x6c, 0xd8, 0x51, 0xbd, 0x95, 0x07, 0x86, 0x10, 0x9e, 0xcd, 0xcd, 0xc4, 0x09, 0xeb,
+	0x3c, 0x25, 0x5e, 0xee, 0x39, 0x60, 0xc3, 0xa8, 0x68, 0xab, 0xfa, 0xa1, 0x94, 0x12, 0x53, 0xb6,
+	0x21, 0x1b, 0x36, 0x3b, 0x49, 0x22, 0x15, 0x77, 0xed, 0xc8, 0xa0, 0x15, 0x7a, 0x04, 0x8d, 0xc0,
+	0x98, 0x4c, 0xb5, 0x41, 0x40, 0x32, 0xbf, 0xb5, 0x0b, 0xf1, 0xe7, 0x8b, 0xaa, 0xa9, 0x7c, 0x98,
+	0x94, 0x35, 0xd5, 0xca, 0x8e, 0x87, 0x7d, 0xa7, 0x85, 0xdd, 0x7f, 0x8d, 0xa9, 0xea, 0xa9, 0xa7,
+	0x30, 0xae, 0xb6, 0xf2, 0x20, 0x5e, 0x16, 0x04, 0xf1, 0x92, 0xa6, 0xc5, 0x13, 0xa3, 0x52, 0x26,
+	0x80, 0xc9, 0xbd, 0x42, 0x6a, 0x10, 0xe8, 0x35, 0x01, 0xbd, 0x52, 0xb8, 0x14, 0x0f, 0xed, 0xaa,
+	0xa0, 0x1a, 0x30, 0xbe, 0xe2, 0x9a, 0xd5, 0xa6, 0xfa, 0x35, 0x97, 0xd7, 0xfa, 0x82, 0xca, 0x8f,
+	0x3d, 0xda, 0xd9, 0x78, 0xa8, 0xe5, 0xa0, 0x26, 0x4c, 0xdc, 0x76, 0xe8, 0x3f, 0x46, 0x2b, 0xf4,
+	0xa4, 0x95, 0x3e, 0x85, 0x0c, 0xbf, 0xcb, 0x1e, 0x15, 0xd1, 0x2a, 0x1c, 0x5b, 0x27, 0x35, 0xc7,
+	0x45, 0xe2, 0x0b, 0xd2, 0xb2, 0x8f, 0xf7, 0xb7, 0x7f, 0x7b, 0xd7, 0xde, 0x8c, 0x10, 0x9e, 0xd2,
+	0x4e, 0x28, 0x61, 0x7e, 0xe6, 0x51, 0x43, 0xdc, 0x69, 0xe5, 0x54, 0xa1, 0x74, 0x17, 0x86, 0xf8,
+	0x89, 0xca, 0xaf, 0xb4, 0x25, 0x18, 0xaa, 0x61, 0xc6, 0x47, 0x28, 0xc6, 0xcc, 0x50, 0x97, 0xaf,
+	0xd0, 0x4e, 0x09, 0xdd, 0x71, 0x94, 0xdd, 0xa7, 0x5b, 0xfa, 0x3d, 0x05, 0xf0, 0x28, 0xfc, 0x46,
+	0xc8, 0x25, 0xef, 0xc2, 0xf1, 0x55, 0xcc, 0xd4, 0x44, 0xac, 0xec, 0x28, 0x97, 0x55, 0xab, 0xb4,
+	0x29, 0x21, 0x8d, 0xd0, 0x84, 0x92, 0x6e, 0xab, 0xf7, 0x37, 0x20, 0xbb, 0x8a, 0xd9, 0x3a, 0xa9,
+	0xdd, 0x31, 0x5d, 0xbb, 0xd9, 0xc3, 0xce, 0x31, 0x71, 0x1b, 0x44, 0xeb, 0xb4, 0x69, 0x21, 0x79,
+	0x0a, 0x45, 0x51, 0x68, 0x92, 0xda, 0x56, 0x3d, 0x7c, 0xb8, 0xf4, 0x5b, 0xfa, 0xc7, 0xc5, 0x5f,
+	0xd3, 0xa8, 0x06, 0xa3, 0x0f, 0xe4, 0x37, 0xda, 0x3c, 0xb5, 0x1b, 0xda, 0xfd, 0xfd, 0x63, 0x34,
+	0x5b, 0x67, 0xcc, 0xa3, 0x65, 0xc3, 0xa8, 0x39, 0xac, 0x1e, 0x54, 0x75, 0x8b, 0xb4, 0xa2, 0x8f,
+	0xba, 0xd1, 0x3f, 0x73, 0xd4, 0x6e, 0xd0, 0xdc, 0x49, 0x8b, 0xb8, 0xcc, 0xb4, 0xd8, 0x47, 0x6a,
+	0x9a, 0x2f, 0x2e, 0x65, 0x8a, 0x7a, 0x71, 0x41, 0x5f, 0x28, 0x1c, 0x4d, 0xa5, 0x8f, 0x1c, 0x2d,
+	0x4d, 0x98, 0x9e, 0xd7, 0x74, 0x2c, 0xf1, 0x8d, 0xd6, 0x78, 0x42, 0x89, 0x5b, 0x7e, 0x63, 0xa6,
+	0x52, 0x86, 0x23, 0x0b, 0xf3, 0xd7, 0xd1, 0x75, 0x28, 0x7e, 0x4e, 0x82, 0xbc, 0x4d, 0xdc, 0xab,
+	0x2c, 0x5f, 0x37, 0xdb, 0x38, 0xef, 0x61, 0xbf, 0xe5, 0x50, 0x1e, 0x94, 0x3c, 0x23, 0x79, 0xd3,
+	0xb2, 0x30, 0xa5, 0x79, 0x56, 0xc7, 0x79, 0x5f, 0xe6, 0x9b, 0x5e, 0x99, 0xe5, 0xef, 0x2e, 0x20,
+	0x0d, 0xa6, 0x54, 0x0e, 0xe6, 0x6d, 0x82, 0x69, 0xde, 0x25, 0x2c, 0x8f, 0x77, 0x1c, 0xca, 0x74,
+	0x94, 0x81, 0xa3, 0xbf, 0xa4, 0x53, 0x43, 0x8f, 0xcf, 0xc3, 0x39, 0xc8, 0x2c, 0x7a, 0xce, 0x27,
+	0xb8, 0x83, 0x4e, 0x0c, 0xa7, 0x73, 0x59, 0x9e, 0x39, 0xc4, 0x77, 0x9e, 0x0b, 0x53, 0xf2, 0xe9,
+	0xea, 0x28, 0x40, 0xb4, 0xe0, 0x7f, 0xd5, 0x8c, 0x08, 0xf6, 0xf5, 0xbf, 0x03, 0x00, 0x00, 0xff,
+	0xff, 0x49, 0x4d, 0xee, 0x27, 0xd6, 0x16, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -154,60 +159,60 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type RunsV1Client interface {
-	// List runs
-	ListRuns(ctx context.Context, in *ProjectListBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
 	// List bookmarked runs for user
-	ListBookmarkedRuns(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
+	ListBookmarkedRuns(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
 	// List archived runs for user
-	ListArchivedRuns(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
+	ListArchivedRuns(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
+	// List runs
+	ListRuns(ctx context.Context, in *ProjectResourceListRequest, opts ...grpc.CallOption) (*ListRunsResponse, error)
 	// Create new run
 	CreateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Get run
-	GetRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error)
+	GetRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Run, error)
 	// Update run
 	UpdateRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Patch run
 	PatchRun(ctx context.Context, in *RunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Delete run
-	DeleteRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Delete runs
-	DeleteRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop run
-	StopRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StopRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop runs
-	StopRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	// Stop run
-	InvalidateRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StopRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Invalidate run
+	InvalidateRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Invalidate runs
-	InvalidateRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	InvalidateRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Restart run with copy
-	CopyRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error)
+	CopyRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Restart run
-	RestartRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error)
+	RestartRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Resume run
-	ResumeRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error)
+	ResumeRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error)
 	// Archive run
-	ArchiveRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	ArchiveRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Restore run
-	RestoreRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	RestoreRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Bookmark run
-	BookmarkRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	BookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Unbookmark run
-	UnbookmarkRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UnbookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Start run tensorboard
-	StartRunTensorboard(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StartRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Stop run tensorboard
-	StopRunTensorboard(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	StopRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Get run status
-	GetRunStatuses(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Status, error)
+	GetRunStatuses(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Status, error)
 	// Create new run status
-	CreateRunStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*Status, error)
+	CreateRunStatus(ctx context.Context, in *EntityStatusBodyRequest, opts ...grpc.CallOption) (*Status, error)
 	// Get run code ref
-	GetRunCodeRefs(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*ListCodeRefResponse, error)
+	GetRunCodeRefs(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*ListCodeRefsResponse, error)
 	// Get run code ref
 	CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequest, opts ...grpc.CallOption) (*CodeReference, error)
 	// Impersonate run token
-	ImpersonateToken(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Auth, error)
+	ImpersonateToken(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Auth, error)
 }
 
 type runsV1Client struct {
@@ -218,16 +223,7 @@ func NewRunsV1Client(cc *grpc.ClientConn) RunsV1Client {
 	return &runsV1Client{cc}
 }
 
-func (c *runsV1Client) ListRuns(ctx context.Context, in *ProjectListBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
-	out := new(ListRunsResponse)
-	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListRuns", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *runsV1Client) ListBookmarkedRuns(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+func (c *runsV1Client) ListBookmarkedRuns(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
 	out := new(ListRunsResponse)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListBookmarkedRuns", in, out, opts...)
 	if err != nil {
@@ -236,9 +232,18 @@ func (c *runsV1Client) ListBookmarkedRuns(ctx context.Context, in *UserListBodyR
 	return out, nil
 }
 
-func (c *runsV1Client) ListArchivedRuns(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+func (c *runsV1Client) ListArchivedRuns(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
 	out := new(ListRunsResponse)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListArchivedRuns", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *runsV1Client) ListRuns(ctx context.Context, in *ProjectResourceListRequest, opts ...grpc.CallOption) (*ListRunsResponse, error) {
+	out := new(ListRunsResponse)
+	err := c.cc.Invoke(ctx, "/v1.RunsV1/ListRuns", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +259,7 @@ func (c *runsV1Client) CreateRun(ctx context.Context, in *RunBodyRequest, opts .
 	return out, nil
 }
 
-func (c *runsV1Client) GetRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) GetRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRun", in, out, opts...)
 	if err != nil {
@@ -281,7 +286,7 @@ func (c *runsV1Client) PatchRun(ctx context.Context, in *RunBodyRequest, opts ..
 	return out, nil
 }
 
-func (c *runsV1Client) DeleteRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) DeleteRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/DeleteRun", in, out, opts...)
 	if err != nil {
@@ -290,7 +295,7 @@ func (c *runsV1Client) DeleteRun(ctx context.Context, in *OwnedEntityRequest, op
 	return out, nil
 }
 
-func (c *runsV1Client) DeleteRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) DeleteRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/DeleteRuns", in, out, opts...)
 	if err != nil {
@@ -299,7 +304,7 @@ func (c *runsV1Client) DeleteRuns(ctx context.Context, in *ProjectBodyRequest, o
 	return out, nil
 }
 
-func (c *runsV1Client) StopRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRun", in, out, opts...)
 	if err != nil {
@@ -308,7 +313,7 @@ func (c *runsV1Client) StopRun(ctx context.Context, in *OwnedEntityRequest, opts
 	return out, nil
 }
 
-func (c *runsV1Client) StopRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRuns", in, out, opts...)
 	if err != nil {
@@ -317,7 +322,7 @@ func (c *runsV1Client) StopRuns(ctx context.Context, in *ProjectBodyRequest, opt
 	return out, nil
 }
 
-func (c *runsV1Client) InvalidateRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) InvalidateRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/InvalidateRun", in, out, opts...)
 	if err != nil {
@@ -326,7 +331,7 @@ func (c *runsV1Client) InvalidateRun(ctx context.Context, in *OwnedEntityRequest
 	return out, nil
 }
 
-func (c *runsV1Client) InvalidateRuns(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) InvalidateRuns(ctx context.Context, in *ProjectResourceUuidsBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/InvalidateRuns", in, out, opts...)
 	if err != nil {
@@ -335,7 +340,7 @@ func (c *runsV1Client) InvalidateRuns(ctx context.Context, in *ProjectBodyReques
 	return out, nil
 }
 
-func (c *runsV1Client) CopyRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) CopyRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/CopyRun", in, out, opts...)
 	if err != nil {
@@ -344,7 +349,7 @@ func (c *runsV1Client) CopyRun(ctx context.Context, in *OwnedEntityRequest, opts
 	return out, nil
 }
 
-func (c *runsV1Client) RestartRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) RestartRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/RestartRun", in, out, opts...)
 	if err != nil {
@@ -353,7 +358,7 @@ func (c *runsV1Client) RestartRun(ctx context.Context, in *OwnedEntityRequest, o
 	return out, nil
 }
 
-func (c *runsV1Client) ResumeRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Run, error) {
+func (c *runsV1Client) ResumeRun(ctx context.Context, in *EntityRunBodyRequest, opts ...grpc.CallOption) (*Run, error) {
 	out := new(Run)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ResumeRun", in, out, opts...)
 	if err != nil {
@@ -362,7 +367,7 @@ func (c *runsV1Client) ResumeRun(ctx context.Context, in *OwnedEntityRequest, op
 	return out, nil
 }
 
-func (c *runsV1Client) ArchiveRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) ArchiveRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ArchiveRun", in, out, opts...)
 	if err != nil {
@@ -371,7 +376,7 @@ func (c *runsV1Client) ArchiveRun(ctx context.Context, in *OwnedEntityRequest, o
 	return out, nil
 }
 
-func (c *runsV1Client) RestoreRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) RestoreRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/RestoreRun", in, out, opts...)
 	if err != nil {
@@ -380,7 +385,7 @@ func (c *runsV1Client) RestoreRun(ctx context.Context, in *OwnedEntityRequest, o
 	return out, nil
 }
 
-func (c *runsV1Client) BookmarkRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) BookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/BookmarkRun", in, out, opts...)
 	if err != nil {
@@ -389,7 +394,7 @@ func (c *runsV1Client) BookmarkRun(ctx context.Context, in *OwnedEntityRequest, 
 	return out, nil
 }
 
-func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/UnbookmarkRun", in, out, opts...)
 	if err != nil {
@@ -398,7 +403,7 @@ func (c *runsV1Client) UnbookmarkRun(ctx context.Context, in *OwnedEntityRequest
 	return out, nil
 }
 
-func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StartRunTensorboard", in, out, opts...)
 	if err != nil {
@@ -407,7 +412,7 @@ func (c *runsV1Client) StartRunTensorboard(ctx context.Context, in *OwnedEntityR
 	return out, nil
 }
 
-func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/StopRunTensorboard", in, out, opts...)
 	if err != nil {
@@ -416,7 +421,7 @@ func (c *runsV1Client) StopRunTensorboard(ctx context.Context, in *OwnedEntityRe
 	return out, nil
 }
 
-func (c *runsV1Client) GetRunStatuses(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Status, error) {
+func (c *runsV1Client) GetRunStatuses(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRunStatuses", in, out, opts...)
 	if err != nil {
@@ -425,7 +430,7 @@ func (c *runsV1Client) GetRunStatuses(ctx context.Context, in *OwnedEntityReques
 	return out, nil
 }
 
-func (c *runsV1Client) CreateRunStatus(ctx context.Context, in *EntityStatusRequest, opts ...grpc.CallOption) (*Status, error) {
+func (c *runsV1Client) CreateRunStatus(ctx context.Context, in *EntityStatusBodyRequest, opts ...grpc.CallOption) (*Status, error) {
 	out := new(Status)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/CreateRunStatus", in, out, opts...)
 	if err != nil {
@@ -434,8 +439,8 @@ func (c *runsV1Client) CreateRunStatus(ctx context.Context, in *EntityStatusRequ
 	return out, nil
 }
 
-func (c *runsV1Client) GetRunCodeRefs(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*ListCodeRefResponse, error) {
-	out := new(ListCodeRefResponse)
+func (c *runsV1Client) GetRunCodeRefs(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*ListCodeRefsResponse, error) {
+	out := new(ListCodeRefsResponse)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/GetRunCodeRefs", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -452,7 +457,7 @@ func (c *runsV1Client) CreateRunCodeRef(ctx context.Context, in *CodeRefBodyRequ
 	return out, nil
 }
 
-func (c *runsV1Client) ImpersonateToken(ctx context.Context, in *OwnedEntityRequest, opts ...grpc.CallOption) (*Auth, error) {
+func (c *runsV1Client) ImpersonateToken(ctx context.Context, in *EntityResourceRequest, opts ...grpc.CallOption) (*Auth, error) {
 	out := new(Auth)
 	err := c.cc.Invoke(ctx, "/v1.RunsV1/ImpersonateToken", in, out, opts...)
 	if err != nil {
@@ -463,79 +468,79 @@ func (c *runsV1Client) ImpersonateToken(ctx context.Context, in *OwnedEntityRequ
 
 // RunsV1Server is the server API for RunsV1 service.
 type RunsV1Server interface {
-	// List runs
-	ListRuns(context.Context, *ProjectListBodyRequest) (*ListRunsResponse, error)
 	// List bookmarked runs for user
-	ListBookmarkedRuns(context.Context, *UserListBodyRequest) (*ListRunsResponse, error)
+	ListBookmarkedRuns(context.Context, *UserResouceListRequest) (*ListRunsResponse, error)
 	// List archived runs for user
-	ListArchivedRuns(context.Context, *UserListBodyRequest) (*ListRunsResponse, error)
+	ListArchivedRuns(context.Context, *UserResouceListRequest) (*ListRunsResponse, error)
+	// List runs
+	ListRuns(context.Context, *ProjectResourceListRequest) (*ListRunsResponse, error)
 	// Create new run
 	CreateRun(context.Context, *RunBodyRequest) (*Run, error)
 	// Get run
-	GetRun(context.Context, *OwnedEntityRequest) (*Run, error)
+	GetRun(context.Context, *EntityResourceRequest) (*Run, error)
 	// Update run
 	UpdateRun(context.Context, *RunBodyRequest) (*Run, error)
 	// Patch run
 	PatchRun(context.Context, *RunBodyRequest) (*Run, error)
 	// Delete run
-	DeleteRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	DeleteRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Delete runs
-	DeleteRuns(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	DeleteRuns(context.Context, *ProjectResourceUuidsBodyRequest) (*empty.Empty, error)
 	// Stop run
-	StopRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	StopRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Stop runs
-	StopRuns(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
-	// Stop run
-	InvalidateRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	StopRuns(context.Context, *ProjectResourceUuidsBodyRequest) (*empty.Empty, error)
+	// Invalidate run
+	InvalidateRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Invalidate runs
-	InvalidateRuns(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	InvalidateRuns(context.Context, *ProjectResourceUuidsBodyRequest) (*empty.Empty, error)
 	// Restart run with copy
-	CopyRun(context.Context, *OwnedEntityRequest) (*Run, error)
+	CopyRun(context.Context, *EntityRunBodyRequest) (*Run, error)
 	// Restart run
-	RestartRun(context.Context, *OwnedEntityRequest) (*Run, error)
+	RestartRun(context.Context, *EntityRunBodyRequest) (*Run, error)
 	// Resume run
-	ResumeRun(context.Context, *OwnedEntityRequest) (*Run, error)
+	ResumeRun(context.Context, *EntityRunBodyRequest) (*Run, error)
 	// Archive run
-	ArchiveRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	ArchiveRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Restore run
-	RestoreRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	RestoreRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Bookmark run
-	BookmarkRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	BookmarkRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Unbookmark run
-	UnbookmarkRun(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	UnbookmarkRun(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Start run tensorboard
-	StartRunTensorboard(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	StartRunTensorboard(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Stop run tensorboard
-	StopRunTensorboard(context.Context, *OwnedEntityRequest) (*empty.Empty, error)
+	StopRunTensorboard(context.Context, *EntityResourceRequest) (*empty.Empty, error)
 	// Get run status
-	GetRunStatuses(context.Context, *OwnedEntityRequest) (*Status, error)
+	GetRunStatuses(context.Context, *EntityResourceRequest) (*Status, error)
 	// Create new run status
-	CreateRunStatus(context.Context, *EntityStatusRequest) (*Status, error)
+	CreateRunStatus(context.Context, *EntityStatusBodyRequest) (*Status, error)
 	// Get run code ref
-	GetRunCodeRefs(context.Context, *OwnedEntityRequest) (*ListCodeRefResponse, error)
+	GetRunCodeRefs(context.Context, *EntityResourceRequest) (*ListCodeRefsResponse, error)
 	// Get run code ref
 	CreateRunCodeRef(context.Context, *CodeRefBodyRequest) (*CodeReference, error)
 	// Impersonate run token
-	ImpersonateToken(context.Context, *OwnedEntityRequest) (*Auth, error)
+	ImpersonateToken(context.Context, *EntityResourceRequest) (*Auth, error)
 }
 
 // UnimplementedRunsV1Server can be embedded to have forward compatible implementations.
 type UnimplementedRunsV1Server struct {
 }
 
-func (*UnimplementedRunsV1Server) ListRuns(ctx context.Context, req *ProjectListBodyRequest) (*ListRunsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListRuns not implemented")
-}
-func (*UnimplementedRunsV1Server) ListBookmarkedRuns(ctx context.Context, req *UserListBodyRequest) (*ListRunsResponse, error) {
+func (*UnimplementedRunsV1Server) ListBookmarkedRuns(ctx context.Context, req *UserResouceListRequest) (*ListRunsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedRuns not implemented")
 }
-func (*UnimplementedRunsV1Server) ListArchivedRuns(ctx context.Context, req *UserListBodyRequest) (*ListRunsResponse, error) {
+func (*UnimplementedRunsV1Server) ListArchivedRuns(ctx context.Context, req *UserResouceListRequest) (*ListRunsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedRuns not implemented")
+}
+func (*UnimplementedRunsV1Server) ListRuns(ctx context.Context, req *ProjectResourceListRequest) (*ListRunsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRuns not implemented")
 }
 func (*UnimplementedRunsV1Server) CreateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRun not implemented")
 }
-func (*UnimplementedRunsV1Server) GetRun(ctx context.Context, req *OwnedEntityRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) GetRun(ctx context.Context, req *EntityResourceRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRun not implemented")
 }
 func (*UnimplementedRunsV1Server) UpdateRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
@@ -544,64 +549,64 @@ func (*UnimplementedRunsV1Server) UpdateRun(ctx context.Context, req *RunBodyReq
 func (*UnimplementedRunsV1Server) PatchRun(ctx context.Context, req *RunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PatchRun not implemented")
 }
-func (*UnimplementedRunsV1Server) DeleteRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) DeleteRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRun not implemented")
 }
-func (*UnimplementedRunsV1Server) DeleteRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) DeleteRuns(ctx context.Context, req *ProjectResourceUuidsBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteRuns not implemented")
 }
-func (*UnimplementedRunsV1Server) StopRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRun not implemented")
 }
-func (*UnimplementedRunsV1Server) StopRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRuns(ctx context.Context, req *ProjectResourceUuidsBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRuns not implemented")
 }
-func (*UnimplementedRunsV1Server) InvalidateRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) InvalidateRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRun not implemented")
 }
-func (*UnimplementedRunsV1Server) InvalidateRuns(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) InvalidateRuns(ctx context.Context, req *ProjectResourceUuidsBodyRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method InvalidateRuns not implemented")
 }
-func (*UnimplementedRunsV1Server) CopyRun(ctx context.Context, req *OwnedEntityRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) CopyRun(ctx context.Context, req *EntityRunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CopyRun not implemented")
 }
-func (*UnimplementedRunsV1Server) RestartRun(ctx context.Context, req *OwnedEntityRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) RestartRun(ctx context.Context, req *EntityRunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestartRun not implemented")
 }
-func (*UnimplementedRunsV1Server) ResumeRun(ctx context.Context, req *OwnedEntityRequest) (*Run, error) {
+func (*UnimplementedRunsV1Server) ResumeRun(ctx context.Context, req *EntityRunBodyRequest) (*Run, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResumeRun not implemented")
 }
-func (*UnimplementedRunsV1Server) ArchiveRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) ArchiveRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveRun not implemented")
 }
-func (*UnimplementedRunsV1Server) RestoreRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) RestoreRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreRun not implemented")
 }
-func (*UnimplementedRunsV1Server) BookmarkRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) BookmarkRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BookmarkRun not implemented")
 }
-func (*UnimplementedRunsV1Server) UnbookmarkRun(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) UnbookmarkRun(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnbookmarkRun not implemented")
 }
-func (*UnimplementedRunsV1Server) StartRunTensorboard(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StartRunTensorboard(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StartRunTensorboard not implemented")
 }
-func (*UnimplementedRunsV1Server) StopRunTensorboard(ctx context.Context, req *OwnedEntityRequest) (*empty.Empty, error) {
+func (*UnimplementedRunsV1Server) StopRunTensorboard(ctx context.Context, req *EntityResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method StopRunTensorboard not implemented")
 }
-func (*UnimplementedRunsV1Server) GetRunStatuses(ctx context.Context, req *OwnedEntityRequest) (*Status, error) {
+func (*UnimplementedRunsV1Server) GetRunStatuses(ctx context.Context, req *EntityResourceRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRunStatuses not implemented")
 }
-func (*UnimplementedRunsV1Server) CreateRunStatus(ctx context.Context, req *EntityStatusRequest) (*Status, error) {
+func (*UnimplementedRunsV1Server) CreateRunStatus(ctx context.Context, req *EntityStatusBodyRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRunStatus not implemented")
 }
-func (*UnimplementedRunsV1Server) GetRunCodeRefs(ctx context.Context, req *OwnedEntityRequest) (*ListCodeRefResponse, error) {
+func (*UnimplementedRunsV1Server) GetRunCodeRefs(ctx context.Context, req *EntityResourceRequest) (*ListCodeRefsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRunCodeRefs not implemented")
 }
 func (*UnimplementedRunsV1Server) CreateRunCodeRef(ctx context.Context, req *CodeRefBodyRequest) (*CodeReference, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRunCodeRef not implemented")
 }
-func (*UnimplementedRunsV1Server) ImpersonateToken(ctx context.Context, req *OwnedEntityRequest) (*Auth, error) {
+func (*UnimplementedRunsV1Server) ImpersonateToken(ctx context.Context, req *EntityResourceRequest) (*Auth, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ImpersonateToken not implemented")
 }
 
@@ -609,26 +614,8 @@ func RegisterRunsV1Server(s *grpc.Server, srv RunsV1Server) {
 	s.RegisterService(&_RunsV1_serviceDesc, srv)
 }
 
-func _RunsV1_ListRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectListBodyRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RunsV1Server).ListRuns(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/v1.RunsV1/ListRuns",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ListRuns(ctx, req.(*ProjectListBodyRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _RunsV1_ListBookmarkedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserListBodyRequest)
+	in := new(UserResouceListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -640,13 +627,13 @@ func _RunsV1_ListBookmarkedRuns_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/v1.RunsV1/ListBookmarkedRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ListBookmarkedRuns(ctx, req.(*UserListBodyRequest))
+		return srv.(RunsV1Server).ListBookmarkedRuns(ctx, req.(*UserResouceListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_ListArchivedRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserListBodyRequest)
+	in := new(UserResouceListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -658,7 +645,25 @@ func _RunsV1_ListArchivedRuns_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/v1.RunsV1/ListArchivedRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ListArchivedRuns(ctx, req.(*UserListBodyRequest))
+		return srv.(RunsV1Server).ListArchivedRuns(ctx, req.(*UserResouceListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RunsV1_ListRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProjectResourceListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RunsV1Server).ListRuns(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/v1.RunsV1/ListRuns",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RunsV1Server).ListRuns(ctx, req.(*ProjectResourceListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -682,7 +687,7 @@ func _RunsV1_CreateRun_Handler(srv interface{}, ctx context.Context, dec func(in
 }
 
 func _RunsV1_GetRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -694,7 +699,7 @@ func _RunsV1_GetRun_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: "/v1.RunsV1/GetRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).GetRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).GetRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -736,7 +741,7 @@ func _RunsV1_PatchRun_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _RunsV1_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -748,13 +753,13 @@ func _RunsV1_DeleteRun_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/v1.RunsV1/DeleteRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).DeleteRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).DeleteRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_DeleteRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceUuidsBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -766,13 +771,13 @@ func _RunsV1_DeleteRuns_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/v1.RunsV1/DeleteRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).DeleteRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).DeleteRuns(ctx, req.(*ProjectResourceUuidsBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_StopRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -784,13 +789,13 @@ func _RunsV1_StopRun_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/v1.RunsV1/StopRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StopRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).StopRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_StopRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceUuidsBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -802,13 +807,13 @@ func _RunsV1_StopRuns_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/v1.RunsV1/StopRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StopRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).StopRuns(ctx, req.(*ProjectResourceUuidsBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -820,13 +825,13 @@ func _RunsV1_InvalidateRun_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/v1.RunsV1/InvalidateRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).InvalidateRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).InvalidateRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_InvalidateRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceUuidsBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -838,13 +843,13 @@ func _RunsV1_InvalidateRuns_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/v1.RunsV1/InvalidateRuns",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).InvalidateRuns(ctx, req.(*ProjectBodyRequest))
+		return srv.(RunsV1Server).InvalidateRuns(ctx, req.(*ProjectResourceUuidsBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_CopyRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityRunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -856,13 +861,13 @@ func _RunsV1_CopyRun_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/v1.RunsV1/CopyRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).CopyRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).CopyRun(ctx, req.(*EntityRunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_RestartRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityRunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -874,13 +879,13 @@ func _RunsV1_RestartRun_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/v1.RunsV1/RestartRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).RestartRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).RestartRun(ctx, req.(*EntityRunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_ResumeRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityRunBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -892,13 +897,13 @@ func _RunsV1_ResumeRun_Handler(srv interface{}, ctx context.Context, dec func(in
 		FullMethod: "/v1.RunsV1/ResumeRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ResumeRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).ResumeRun(ctx, req.(*EntityRunBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -910,13 +915,13 @@ func _RunsV1_ArchiveRun_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/v1.RunsV1/ArchiveRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ArchiveRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).ArchiveRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -928,13 +933,13 @@ func _RunsV1_RestoreRun_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/v1.RunsV1/RestoreRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).RestoreRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).RestoreRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -946,13 +951,13 @@ func _RunsV1_BookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/v1.RunsV1/BookmarkRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).BookmarkRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).BookmarkRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_UnbookmarkRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -964,13 +969,13 @@ func _RunsV1_UnbookmarkRun_Handler(srv interface{}, ctx context.Context, dec fun
 		FullMethod: "/v1.RunsV1/UnbookmarkRun",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).UnbookmarkRun(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).UnbookmarkRun(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -982,13 +987,13 @@ func _RunsV1_StartRunTensorboard_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/v1.RunsV1/StartRunTensorboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StartRunTensorboard(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).StartRunTensorboard(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1000,13 +1005,13 @@ func _RunsV1_StopRunTensorboard_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/v1.RunsV1/StopRunTensorboard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).StopRunTensorboard(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).StopRunTensorboard(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1018,13 +1023,13 @@ func _RunsV1_GetRunStatuses_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/v1.RunsV1/GetRunStatuses",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).GetRunStatuses(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).GetRunStatuses(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_CreateRunStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EntityStatusRequest)
+	in := new(EntityStatusBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1036,13 +1041,13 @@ func _RunsV1_CreateRunStatus_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/v1.RunsV1/CreateRunStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).CreateRunStatus(ctx, req.(*EntityStatusRequest))
+		return srv.(RunsV1Server).CreateRunStatus(ctx, req.(*EntityStatusBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _RunsV1_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1054,7 +1059,7 @@ func _RunsV1_GetRunCodeRefs_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/v1.RunsV1/GetRunCodeRefs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).GetRunCodeRefs(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).GetRunCodeRefs(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1078,7 +1083,7 @@ func _RunsV1_CreateRunCodeRef_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _RunsV1_ImpersonateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnedEntityRequest)
+	in := new(EntityResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1090,7 +1095,7 @@ func _RunsV1_ImpersonateToken_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/v1.RunsV1/ImpersonateToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RunsV1Server).ImpersonateToken(ctx, req.(*OwnedEntityRequest))
+		return srv.(RunsV1Server).ImpersonateToken(ctx, req.(*EntityResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1100,16 +1105,16 @@ var _RunsV1_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*RunsV1Server)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListRuns",
-			Handler:    _RunsV1_ListRuns_Handler,
-		},
-		{
 			MethodName: "ListBookmarkedRuns",
 			Handler:    _RunsV1_ListBookmarkedRuns_Handler,
 		},
 		{
 			MethodName: "ListArchivedRuns",
 			Handler:    _RunsV1_ListArchivedRuns_Handler,
+		},
+		{
+			MethodName: "ListRuns",
+			Handler:    _RunsV1_ListRuns_Handler,
 		},
 		{
 			MethodName: "CreateRun",
@@ -1217,35 +1222,35 @@ var _RunsV1_serviceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ProjectsV1Client interface {
 	// List projects
-	ListProjects(ctx context.Context, in *OwnerListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	ListProjects(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
 	// List project namess
-	ListProjectNames(ctx context.Context, in *OwnerListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	ListProjectNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
 	// List bookmarked projects for user
-	ListBookmarkedProjects(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	ListBookmarkedProjects(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
 	// List archived projects for user
-	ListArchivedProjects(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
+	ListArchivedProjects(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error)
 	// Create new project
-	CreateProject(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*Project, error)
+	CreateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
 	// Get project
-	GetProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
+	GetProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*Project, error)
 	// Update project
 	UpdateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
 	// Patch project
 	PatchProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error)
 	// Delete project
-	DeleteProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DeleteProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Archive project
-	ArchiveProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	ArchiveProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Restore project
-	RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	RestoreExperiment(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Bookmark project
-	BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	BookmarkProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Unbookmark project
-	UnbookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	UnbookmarkProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Enable project CI
-	EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	EnableProjectCI(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Disbale project CI
-	DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	DisableProjectCI(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type projectsV1Client struct {
@@ -1256,7 +1261,7 @@ func NewProjectsV1Client(cc *grpc.ClientConn) ProjectsV1Client {
 	return &projectsV1Client{cc}
 }
 
-func (c *projectsV1Client) ListProjects(ctx context.Context, in *OwnerListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListProjects(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListProjects", in, out, opts...)
 	if err != nil {
@@ -1265,7 +1270,7 @@ func (c *projectsV1Client) ListProjects(ctx context.Context, in *OwnerListBodyRe
 	return out, nil
 }
 
-func (c *projectsV1Client) ListProjectNames(ctx context.Context, in *OwnerListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListProjectNames(ctx context.Context, in *OwnerResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListProjectNames", in, out, opts...)
 	if err != nil {
@@ -1274,7 +1279,7 @@ func (c *projectsV1Client) ListProjectNames(ctx context.Context, in *OwnerListBo
 	return out, nil
 }
 
-func (c *projectsV1Client) ListBookmarkedProjects(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListBookmarkedProjects(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListBookmarkedProjects", in, out, opts...)
 	if err != nil {
@@ -1283,7 +1288,7 @@ func (c *projectsV1Client) ListBookmarkedProjects(ctx context.Context, in *UserL
 	return out, nil
 }
 
-func (c *projectsV1Client) ListArchivedProjects(ctx context.Context, in *UserListBodyRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
+func (c *projectsV1Client) ListArchivedProjects(ctx context.Context, in *UserResouceListRequest, opts ...grpc.CallOption) (*ListProjectsResponse, error) {
 	out := new(ListProjectsResponse)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ListArchivedProjects", in, out, opts...)
 	if err != nil {
@@ -1292,7 +1297,7 @@ func (c *projectsV1Client) ListArchivedProjects(ctx context.Context, in *UserLis
 	return out, nil
 }
 
-func (c *projectsV1Client) CreateProject(ctx context.Context, in *OwnerBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+func (c *projectsV1Client) CreateProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
 	out := new(Project)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/CreateProject", in, out, opts...)
 	if err != nil {
@@ -1301,7 +1306,7 @@ func (c *projectsV1Client) CreateProject(ctx context.Context, in *OwnerBodyReque
 	return out, nil
 }
 
-func (c *projectsV1Client) GetProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*Project, error) {
+func (c *projectsV1Client) GetProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*Project, error) {
 	out := new(Project)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/GetProject", in, out, opts...)
 	if err != nil {
@@ -1328,7 +1333,7 @@ func (c *projectsV1Client) PatchProject(ctx context.Context, in *ProjectBodyRequ
 	return out, nil
 }
 
-func (c *projectsV1Client) DeleteProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) DeleteProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/DeleteProject", in, out, opts...)
 	if err != nil {
@@ -1337,7 +1342,7 @@ func (c *projectsV1Client) DeleteProject(ctx context.Context, in *ProjectBodyReq
 	return out, nil
 }
 
-func (c *projectsV1Client) ArchiveProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) ArchiveProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/ArchiveProject", in, out, opts...)
 	if err != nil {
@@ -1346,7 +1351,7 @@ func (c *projectsV1Client) ArchiveProject(ctx context.Context, in *ProjectBodyRe
 	return out, nil
 }
 
-func (c *projectsV1Client) RestoreExperiment(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) RestoreExperiment(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/RestoreExperiment", in, out, opts...)
 	if err != nil {
@@ -1355,7 +1360,7 @@ func (c *projectsV1Client) RestoreExperiment(ctx context.Context, in *ProjectBod
 	return out, nil
 }
 
-func (c *projectsV1Client) BookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) BookmarkProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/BookmarkProject", in, out, opts...)
 	if err != nil {
@@ -1364,7 +1369,7 @@ func (c *projectsV1Client) BookmarkProject(ctx context.Context, in *ProjectBodyR
 	return out, nil
 }
 
-func (c *projectsV1Client) UnbookmarkProject(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) UnbookmarkProject(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/UnbookmarkProject", in, out, opts...)
 	if err != nil {
@@ -1373,7 +1378,7 @@ func (c *projectsV1Client) UnbookmarkProject(ctx context.Context, in *ProjectBod
 	return out, nil
 }
 
-func (c *projectsV1Client) EnableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) EnableProjectCI(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/EnableProjectCI", in, out, opts...)
 	if err != nil {
@@ -1382,7 +1387,7 @@ func (c *projectsV1Client) EnableProjectCI(ctx context.Context, in *ProjectBodyR
 	return out, nil
 }
 
-func (c *projectsV1Client) DisableProjectCI(ctx context.Context, in *ProjectBodyRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *projectsV1Client) DisableProjectCI(ctx context.Context, in *ProjectResourceRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/v1.ProjectsV1/DisableProjectCI", in, out, opts...)
 	if err != nil {
@@ -1394,57 +1399,57 @@ func (c *projectsV1Client) DisableProjectCI(ctx context.Context, in *ProjectBody
 // ProjectsV1Server is the server API for ProjectsV1 service.
 type ProjectsV1Server interface {
 	// List projects
-	ListProjects(context.Context, *OwnerListBodyRequest) (*ListProjectsResponse, error)
+	ListProjects(context.Context, *OwnerResouceListRequest) (*ListProjectsResponse, error)
 	// List project namess
-	ListProjectNames(context.Context, *OwnerListBodyRequest) (*ListProjectsResponse, error)
+	ListProjectNames(context.Context, *OwnerResouceListRequest) (*ListProjectsResponse, error)
 	// List bookmarked projects for user
-	ListBookmarkedProjects(context.Context, *UserListBodyRequest) (*ListProjectsResponse, error)
+	ListBookmarkedProjects(context.Context, *UserResouceListRequest) (*ListProjectsResponse, error)
 	// List archived projects for user
-	ListArchivedProjects(context.Context, *UserListBodyRequest) (*ListProjectsResponse, error)
+	ListArchivedProjects(context.Context, *UserResouceListRequest) (*ListProjectsResponse, error)
 	// Create new project
-	CreateProject(context.Context, *OwnerBodyRequest) (*Project, error)
+	CreateProject(context.Context, *ProjectBodyRequest) (*Project, error)
 	// Get project
-	GetProject(context.Context, *ProjectBodyRequest) (*Project, error)
+	GetProject(context.Context, *ProjectResourceRequest) (*Project, error)
 	// Update project
 	UpdateProject(context.Context, *ProjectBodyRequest) (*Project, error)
 	// Patch project
 	PatchProject(context.Context, *ProjectBodyRequest) (*Project, error)
 	// Delete project
-	DeleteProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	DeleteProject(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 	// Archive project
-	ArchiveProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	ArchiveProject(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 	// Restore project
-	RestoreExperiment(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	RestoreExperiment(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 	// Bookmark project
-	BookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	BookmarkProject(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 	// Unbookmark project
-	UnbookmarkProject(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	UnbookmarkProject(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 	// Enable project CI
-	EnableProjectCI(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	EnableProjectCI(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 	// Disbale project CI
-	DisableProjectCI(context.Context, *ProjectBodyRequest) (*empty.Empty, error)
+	DisableProjectCI(context.Context, *ProjectResourceRequest) (*empty.Empty, error)
 }
 
 // UnimplementedProjectsV1Server can be embedded to have forward compatible implementations.
 type UnimplementedProjectsV1Server struct {
 }
 
-func (*UnimplementedProjectsV1Server) ListProjects(ctx context.Context, req *OwnerListBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListProjects(ctx context.Context, req *OwnerResouceListRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProjects not implemented")
 }
-func (*UnimplementedProjectsV1Server) ListProjectNames(ctx context.Context, req *OwnerListBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListProjectNames(ctx context.Context, req *OwnerResouceListRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProjectNames not implemented")
 }
-func (*UnimplementedProjectsV1Server) ListBookmarkedProjects(ctx context.Context, req *UserListBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListBookmarkedProjects(ctx context.Context, req *UserResouceListRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBookmarkedProjects not implemented")
 }
-func (*UnimplementedProjectsV1Server) ListArchivedProjects(ctx context.Context, req *UserListBodyRequest) (*ListProjectsResponse, error) {
+func (*UnimplementedProjectsV1Server) ListArchivedProjects(ctx context.Context, req *UserResouceListRequest) (*ListProjectsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListArchivedProjects not implemented")
 }
-func (*UnimplementedProjectsV1Server) CreateProject(ctx context.Context, req *OwnerBodyRequest) (*Project, error) {
+func (*UnimplementedProjectsV1Server) CreateProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateProject not implemented")
 }
-func (*UnimplementedProjectsV1Server) GetProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
+func (*UnimplementedProjectsV1Server) GetProject(ctx context.Context, req *ProjectResourceRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProject not implemented")
 }
 func (*UnimplementedProjectsV1Server) UpdateProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
@@ -1453,25 +1458,25 @@ func (*UnimplementedProjectsV1Server) UpdateProject(ctx context.Context, req *Pr
 func (*UnimplementedProjectsV1Server) PatchProject(ctx context.Context, req *ProjectBodyRequest) (*Project, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PatchProject not implemented")
 }
-func (*UnimplementedProjectsV1Server) DeleteProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) DeleteProject(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProject not implemented")
 }
-func (*UnimplementedProjectsV1Server) ArchiveProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) ArchiveProject(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ArchiveProject not implemented")
 }
-func (*UnimplementedProjectsV1Server) RestoreExperiment(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) RestoreExperiment(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RestoreExperiment not implemented")
 }
-func (*UnimplementedProjectsV1Server) BookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) BookmarkProject(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BookmarkProject not implemented")
 }
-func (*UnimplementedProjectsV1Server) UnbookmarkProject(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) UnbookmarkProject(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UnbookmarkProject not implemented")
 }
-func (*UnimplementedProjectsV1Server) EnableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) EnableProjectCI(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EnableProjectCI not implemented")
 }
-func (*UnimplementedProjectsV1Server) DisableProjectCI(ctx context.Context, req *ProjectBodyRequest) (*empty.Empty, error) {
+func (*UnimplementedProjectsV1Server) DisableProjectCI(ctx context.Context, req *ProjectResourceRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DisableProjectCI not implemented")
 }
 
@@ -1480,7 +1485,7 @@ func RegisterProjectsV1Server(s *grpc.Server, srv ProjectsV1Server) {
 }
 
 func _ProjectsV1_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnerListBodyRequest)
+	in := new(OwnerResouceListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1492,13 +1497,13 @@ func _ProjectsV1_ListProjects_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: "/v1.ProjectsV1/ListProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).ListProjects(ctx, req.(*OwnerListBodyRequest))
+		return srv.(ProjectsV1Server).ListProjects(ctx, req.(*OwnerResouceListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_ListProjectNames_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnerListBodyRequest)
+	in := new(OwnerResouceListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1510,13 +1515,13 @@ func _ProjectsV1_ListProjectNames_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/v1.ProjectsV1/ListProjectNames",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).ListProjectNames(ctx, req.(*OwnerListBodyRequest))
+		return srv.(ProjectsV1Server).ListProjectNames(ctx, req.(*OwnerResouceListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_ListBookmarkedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserListBodyRequest)
+	in := new(UserResouceListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1528,13 +1533,13 @@ func _ProjectsV1_ListBookmarkedProjects_Handler(srv interface{}, ctx context.Con
 		FullMethod: "/v1.ProjectsV1/ListBookmarkedProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).ListBookmarkedProjects(ctx, req.(*UserListBodyRequest))
+		return srv.(ProjectsV1Server).ListBookmarkedProjects(ctx, req.(*UserResouceListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_ListArchivedProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UserListBodyRequest)
+	in := new(UserResouceListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1546,13 +1551,13 @@ func _ProjectsV1_ListArchivedProjects_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/v1.ProjectsV1/ListArchivedProjects",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).ListArchivedProjects(ctx, req.(*UserListBodyRequest))
+		return srv.(ProjectsV1Server).ListArchivedProjects(ctx, req.(*UserResouceListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_CreateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(OwnerBodyRequest)
+	in := new(ProjectBodyRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1564,13 +1569,13 @@ func _ProjectsV1_CreateProject_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/v1.ProjectsV1/CreateProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).CreateProject(ctx, req.(*OwnerBodyRequest))
+		return srv.(ProjectsV1Server).CreateProject(ctx, req.(*ProjectBodyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_GetProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1582,7 +1587,7 @@ func _ProjectsV1_GetProject_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/v1.ProjectsV1/GetProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).GetProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).GetProject(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1624,7 +1629,7 @@ func _ProjectsV1_PatchProject_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _ProjectsV1_DeleteProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1636,13 +1641,13 @@ func _ProjectsV1_DeleteProject_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/v1.ProjectsV1/DeleteProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).DeleteProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).DeleteProject(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_ArchiveProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1654,13 +1659,13 @@ func _ProjectsV1_ArchiveProject_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: "/v1.ProjectsV1/ArchiveProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).ArchiveProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).ArchiveProject(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_RestoreExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1672,13 +1677,13 @@ func _ProjectsV1_RestoreExperiment_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/v1.ProjectsV1/RestoreExperiment",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).RestoreExperiment(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).RestoreExperiment(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_BookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1690,13 +1695,13 @@ func _ProjectsV1_BookmarkProject_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/v1.ProjectsV1/BookmarkProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).BookmarkProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).BookmarkProject(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_UnbookmarkProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1708,13 +1713,13 @@ func _ProjectsV1_UnbookmarkProject_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/v1.ProjectsV1/UnbookmarkProject",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).UnbookmarkProject(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).UnbookmarkProject(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_EnableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1726,13 +1731,13 @@ func _ProjectsV1_EnableProjectCI_Handler(srv interface{}, ctx context.Context, d
 		FullMethod: "/v1.ProjectsV1/EnableProjectCI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).EnableProjectCI(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).EnableProjectCI(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _ProjectsV1_DisableProjectCI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ProjectBodyRequest)
+	in := new(ProjectResourceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1744,7 +1749,7 @@ func _ProjectsV1_DisableProjectCI_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/v1.ProjectsV1/DisableProjectCI",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProjectsV1Server).DisableProjectCI(ctx, req.(*ProjectBodyRequest))
+		return srv.(ProjectsV1Server).DisableProjectCI(ctx, req.(*ProjectResourceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

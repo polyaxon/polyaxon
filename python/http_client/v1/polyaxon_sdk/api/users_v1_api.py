@@ -50,7 +50,7 @@ class UsersV1Api(object):
         self.api_client = api_client
 
     def get_user(self, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -70,7 +70,7 @@ class UsersV1Api(object):
             return data
 
     def get_user_with_http_info(self, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

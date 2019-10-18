@@ -77,8 +77,11 @@ for the update run operation typically these are written to a http.Request
 */
 type UpdateRunParams struct {
 
-	/*Body*/
-	Body *service_model.V1RunBodyRequest
+	/*Body
+	  Run object
+
+	*/
+	Body *service_model.V1Run
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +137,13 @@ func (o *UpdateRunParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update run params
-func (o *UpdateRunParams) WithBody(body *service_model.V1RunBodyRequest) *UpdateRunParams {
+func (o *UpdateRunParams) WithBody(body *service_model.V1Run) *UpdateRunParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update run params
-func (o *UpdateRunParams) SetBody(body *service_model.V1RunBodyRequest) {
+func (o *UpdateRunParams) SetBody(body *service_model.V1Run) {
 	o.Body = body
 }
 

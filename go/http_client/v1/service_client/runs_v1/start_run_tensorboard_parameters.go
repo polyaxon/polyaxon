@@ -78,7 +78,7 @@ for the start run tensorboard operation typically these are written to a http.Re
 type StartRunTensorboardParams struct {
 
 	/*Body*/
-	Body *service_model.V1OwnedEntityRequest
+	Body *service_model.V1EntityResourceRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -134,13 +134,13 @@ func (o *StartRunTensorboardParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the start run tensorboard params
-func (o *StartRunTensorboardParams) WithBody(body *service_model.V1OwnedEntityRequest) *StartRunTensorboardParams {
+func (o *StartRunTensorboardParams) WithBody(body *service_model.V1EntityResourceRequest) *StartRunTensorboardParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the start run tensorboard params
-func (o *StartRunTensorboardParams) SetBody(body *service_model.V1OwnedEntityRequest) {
+func (o *StartRunTensorboardParams) SetBody(body *service_model.V1EntityResourceRequest) {
 	o.Body = body
 }
 

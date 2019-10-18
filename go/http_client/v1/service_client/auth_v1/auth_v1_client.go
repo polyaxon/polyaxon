@@ -41,7 +41,7 @@ type Client struct {
 }
 
 /*
-Login lists runs
+Login lists bookmarked runs for user
 */
 func (a *Client) Login(params *LoginParams, authInfo runtime.ClientAuthInfoWriter) (*LoginOK, error) {
 	// TODO: Validate the params before sending

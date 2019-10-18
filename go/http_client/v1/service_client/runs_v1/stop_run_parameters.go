@@ -29,8 +29,6 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
-
-	service_model "github.com/polyaxon/polyaxon-sdks/go/http_client/v1/service_model"
 )
 
 // NewStopRunParams creates a new StopRunParams object
@@ -77,8 +75,6 @@ for the stop run operation typically these are written to a http.Request
 */
 type StopRunParams struct {
 
-	/*Body*/
-	Body *service_model.V1OwnedEntityRequest
 	/*Owner
 	  Owner of the namespace
 
@@ -133,17 +129,6 @@ func (o *StopRunParams) SetHTTPClient(client *http.Client) {
 	o.HTTPClient = client
 }
 
-// WithBody adds the body to the stop run params
-func (o *StopRunParams) WithBody(body *service_model.V1OwnedEntityRequest) *StopRunParams {
-	o.SetBody(body)
-	return o
-}
-
-// SetBody adds the body to the stop run params
-func (o *StopRunParams) SetBody(body *service_model.V1OwnedEntityRequest) {
-	o.Body = body
-}
-
 // WithOwner adds the owner to the stop run params
 func (o *StopRunParams) WithOwner(owner string) *StopRunParams {
 	o.SetOwner(owner)
@@ -184,12 +169,6 @@ func (o *StopRunParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regis
 		return err
 	}
 	var res []error
-
-	if o.Body != nil {
-		if err := r.SetBodyParam(o.Body); err != nil {
-			return err
-		}
-	}
 
 	// path param owner
 	if err := r.SetPathParam("owner", o.Owner); err != nil {

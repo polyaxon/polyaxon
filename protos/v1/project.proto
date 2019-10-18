@@ -4,6 +4,7 @@ package v1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
 // Project specification
@@ -21,10 +22,10 @@ message Project {
     string description = 4;
 
     // Optional time when the entityt was created
-    string created_at = 5;
+    google.protobuf.Timestamp created_at = 5;
 
     // Optional last time the entity was updated
-    string updated_at = 6;
+    google.protobuf.Timestamp updated_at = 6;
 
     // Optional flag to tell if this project is public
     string is_public = 7;
@@ -33,8 +34,17 @@ message Project {
     bool bookmarked = 8;
 }
 
+ // Request data to create/update project
+ message ProjectBodyRequest {
+    // Owner of the namespace
+    string owner = 1;
+
+    // Project body
+    Project project = 2;
+ }
+
  // Contains list projects
- message ListProjectsResponse{
+ message ListProjectsResponse {
     // Count of the entities
     int32 count = 1;
 

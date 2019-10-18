@@ -30,6 +30,7 @@ _sym_db = _symbol_database.Default()
 
 
 from google.protobuf import any_pb2 as google_dot_protobuf_dot_any__pb2
+from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -37,9 +38,9 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0fv1/status.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"\x88\x01\n\x0fStatusCondition\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x08\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x18\n\x10last_update_time\x18\x05 \x01(\t\x12\x1c\n\x14last_transition_time\x18\x06 \x01(\t\"V\n\x06Status\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12.\n\x11status_conditions\x18\x03 \x03(\x0b\x32\x13.v1.StatusCondition\"\x82\x01\n\x13\x45ntityStatusRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\x03\x12\x0e\n\x06status\x18\x04 \x01(\t\x12-\n\x10status_condition\x18\x05 \x01(\x0b\x32\x13.v1.StatusConditionb\x06proto3')
+  serialized_pb=_b('\n\x0fv1/status.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc0\x01\n\x0fStatusCondition\x12\x0c\n\x04type\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x08\x12\x0e\n\x06reason\x18\x03 \x01(\t\x12\x0f\n\x07message\x18\x04 \x01(\t\x12\x34\n\x10last_update_time\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x38\n\x14last_transition_time\x18\x06 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\"V\n\x06Status\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\t\x12.\n\x11status_conditions\x18\x03 \x03(\x0b\x32\x13.v1.StatusCondition\"c\n\x17\x45ntityStatusBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\x12\x1a\n\x06status\x18\x04 \x01(\x0b\x32\n.v1.Statusb\x06proto3')
   ,
-  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
+  dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
 
 
@@ -81,15 +82,15 @@ _STATUSCONDITION = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='last_update_time', full_name='v1.StatusCondition.last_update_time', index=4,
-      number=5, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      number=5, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='last_transition_time', full_name='v1.StatusCondition.last_transition_time', index=5,
-      number=6, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
+      number=6, type=11, cpp_type=10, label=1,
+      has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -105,8 +106,8 @@ _STATUSCONDITION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=51,
-  serialized_end=187,
+  serialized_start=84,
+  serialized_end=276,
 )
 
 
@@ -150,49 +151,42 @@ _STATUS = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=189,
-  serialized_end=275,
+  serialized_start=278,
+  serialized_end=364,
 )
 
 
-_ENTITYSTATUSREQUEST = _descriptor.Descriptor(
-  name='EntityStatusRequest',
-  full_name='v1.EntityStatusRequest',
+_ENTITYSTATUSBODYREQUEST = _descriptor.Descriptor(
+  name='EntityStatusBodyRequest',
+  full_name='v1.EntityStatusBodyRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='owner', full_name='v1.EntityStatusRequest.owner', index=0,
+      name='owner', full_name='v1.EntityStatusBodyRequest.owner', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='project', full_name='v1.EntityStatusRequest.project', index=1,
+      name='project', full_name='v1.EntityStatusBodyRequest.project', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='uuid', full_name='v1.EntityStatusRequest.uuid', index=2,
-      number=3, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='status', full_name='v1.EntityStatusRequest.status', index=3,
-      number=4, type=9, cpp_type=9, label=1,
+      name='uuid', full_name='v1.EntityStatusBodyRequest.uuid', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='status_condition', full_name='v1.EntityStatusRequest.status_condition', index=4,
-      number=5, type=11, cpp_type=10, label=1,
+      name='status', full_name='v1.EntityStatusBodyRequest.status', index=3,
+      number=4, type=11, cpp_type=10, label=1,
       has_default_value=False, default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -209,15 +203,17 @@ _ENTITYSTATUSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=278,
-  serialized_end=408,
+  serialized_start=366,
+  serialized_end=465,
 )
 
+_STATUSCONDITION.fields_by_name['last_update_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
+_STATUSCONDITION.fields_by_name['last_transition_time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
 _STATUS.fields_by_name['status_conditions'].message_type = _STATUSCONDITION
-_ENTITYSTATUSREQUEST.fields_by_name['status_condition'].message_type = _STATUSCONDITION
+_ENTITYSTATUSBODYREQUEST.fields_by_name['status'].message_type = _STATUS
 DESCRIPTOR.message_types_by_name['StatusCondition'] = _STATUSCONDITION
 DESCRIPTOR.message_types_by_name['Status'] = _STATUS
-DESCRIPTOR.message_types_by_name['EntityStatusRequest'] = _ENTITYSTATUSREQUEST
+DESCRIPTOR.message_types_by_name['EntityStatusBodyRequest'] = _ENTITYSTATUSBODYREQUEST
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 StatusCondition = _reflection.GeneratedProtocolMessageType('StatusCondition', (_message.Message,), {
@@ -234,12 +230,12 @@ Status = _reflection.GeneratedProtocolMessageType('Status', (_message.Message,),
   })
 _sym_db.RegisterMessage(Status)
 
-EntityStatusRequest = _reflection.GeneratedProtocolMessageType('EntityStatusRequest', (_message.Message,), {
-  'DESCRIPTOR' : _ENTITYSTATUSREQUEST,
+EntityStatusBodyRequest = _reflection.GeneratedProtocolMessageType('EntityStatusBodyRequest', (_message.Message,), {
+  'DESCRIPTOR' : _ENTITYSTATUSBODYREQUEST,
   '__module__' : 'v1.status_pb2'
-  # @@protoc_insertion_point(class_scope:v1.EntityStatusRequest)
+  # @@protoc_insertion_point(class_scope:v1.EntityStatusBodyRequest)
   })
-_sym_db.RegisterMessage(EntityStatusRequest)
+_sym_db.RegisterMessage(EntityStatusBodyRequest)
 
 
 # @@protoc_insertion_point(module_scope)

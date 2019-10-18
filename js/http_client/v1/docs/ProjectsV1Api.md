@@ -5,20 +5,20 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
-[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
+[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
 [**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
-[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
+[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
 [**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
-[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
-[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
-[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
-[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
+[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List runs
+[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
+[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
+[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
 [**restoreExperiment**](ProjectsV1Api.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
-[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
+[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 
 
 <a name="archiveProject"></a>
@@ -79,7 +79,7 @@ Name | Type | Description  | Notes
 # **bookmarkProject**
 > Object bookmarkProject(owner, project)
 
-Stop run
+Invalidate run
 
 ### Example
 ```javascript
@@ -150,7 +150,7 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var body = new PolyaxonSdk.V1OwnerBodyRequest(); // V1OwnerBodyRequest | 
+var body = new PolyaxonSdk.V1Project(); // V1Project | Project body
 
 
 var callback = function(error, data, response) {
@@ -168,7 +168,7 @@ apiInstance.createProject(owner, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **body** | [**V1OwnerBodyRequest**](V1OwnerBodyRequest.md)|  | 
+ **body** | [**V1Project**](V1Project.md)| Project body | 
 
 ### Return type
 
@@ -421,8 +421,8 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 var user = "user_example"; // String | User
 
 var opts = { 
-  'page': "page_example", // String | Pagination.
-  'limit': "limit_example", // String | Limit size.
+  'page': 56, // Number | Pagination.
+  'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
@@ -442,8 +442,8 @@ apiInstance.listArchivedProjects(user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User | 
- **page** | **String**| Pagination. | [optional] 
- **limit** | **String**| Limit size. | [optional] 
+ **page** | **Number**| Pagination. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
 
@@ -464,7 +464,7 @@ Name | Type | Description  | Notes
 # **listBookmarkedProjects**
 > V1ListProjectsResponse listBookmarkedProjects(user, opts)
 
-List archived runs for user
+List runs
 
 ### Example
 ```javascript
@@ -482,8 +482,8 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 var user = "user_example"; // String | User
 
 var opts = { 
-  'page': "page_example", // String | Pagination.
-  'limit': "limit_example", // String | Limit size.
+  'page': 56, // Number | Pagination.
+  'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
@@ -503,8 +503,8 @@ apiInstance.listBookmarkedProjects(user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User | 
- **page** | **String**| Pagination. | [optional] 
- **limit** | **String**| Limit size. | [optional] 
+ **page** | **Number**| Pagination. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
 
@@ -525,7 +525,7 @@ Name | Type | Description  | Notes
 # **listProjectNames**
 > V1ListProjectsResponse listProjectNames(owner, opts)
 
-List bookmarked runs for user
+List archived runs for user
 
 ### Example
 ```javascript
@@ -543,8 +543,8 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 var owner = "owner_example"; // String | Owner of the namespace
 
 var opts = { 
-  'page': "page_example", // String | Pagination.
-  'limit': "limit_example", // String | Limit size.
+  'page': 56, // Number | Pagination.
+  'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
@@ -564,8 +564,8 @@ apiInstance.listProjectNames(owner, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **page** | **String**| Pagination. | [optional] 
- **limit** | **String**| Limit size. | [optional] 
+ **page** | **Number**| Pagination. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
 
@@ -586,7 +586,7 @@ Name | Type | Description  | Notes
 # **listProjects**
 > V1ListProjectsResponse listProjects(owner, opts)
 
-List runs
+List bookmarked runs for user
 
 ### Example
 ```javascript
@@ -604,8 +604,8 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 var owner = "owner_example"; // String | Owner of the namespace
 
 var opts = { 
-  'page': "page_example", // String | Pagination.
-  'limit': "limit_example", // String | Limit size.
+  'page': 56, // Number | Pagination.
+  'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
 };
@@ -625,8 +625,8 @@ apiInstance.listProjects(owner, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **page** | **String**| Pagination. | [optional] 
- **limit** | **String**| Limit size. | [optional] 
+ **page** | **Number**| Pagination. | [optional] 
+ **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
 
@@ -645,7 +645,7 @@ Name | Type | Description  | Notes
 
 <a name="patchProject"></a>
 # **patchProject**
-> V1Project patchProject(owner, project, body)
+> V1Project patchProject(owner, project_name, body)
 
 Delete run
 
@@ -664,9 +664,9 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project under namesapce
+var project_name = "project_name_example"; // String | Required name
 
-var body = new PolyaxonSdk.V1ProjectBodyRequest(); // V1ProjectBodyRequest | 
+var body = new PolyaxonSdk.V1Project(); // V1Project | Project body
 
 
 var callback = function(error, data, response) {
@@ -676,7 +676,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.patchProject(owner, project, body, callback);
+apiInstance.patchProject(owner, project_name, body, callback);
 ```
 
 ### Parameters
@@ -684,8 +684,8 @@ apiInstance.patchProject(owner, project, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
- **body** | [**V1ProjectBodyRequest**](V1ProjectBodyRequest.md)|  | 
+ **project_name** | **String**| Required name | 
+ **body** | [**V1Project**](V1Project.md)| Project body | 
 
 ### Return type
 
@@ -810,7 +810,7 @@ Name | Type | Description  | Notes
 
 <a name="updateProject"></a>
 # **updateProject**
-> V1Project updateProject(owner, project, body)
+> V1Project updateProject(owner, project_name, body)
 
 Patch run
 
@@ -829,9 +829,9 @@ var apiInstance = new PolyaxonSdk.ProjectsV1Api();
 
 var owner = "owner_example"; // String | Owner of the namespace
 
-var project = "project_example"; // String | Project under namesapce
+var project_name = "project_name_example"; // String | Required name
 
-var body = new PolyaxonSdk.V1ProjectBodyRequest(); // V1ProjectBodyRequest | 
+var body = new PolyaxonSdk.V1Project(); // V1Project | Project body
 
 
 var callback = function(error, data, response) {
@@ -841,7 +841,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-apiInstance.updateProject(owner, project, body, callback);
+apiInstance.updateProject(owner, project_name, body, callback);
 ```
 
 ### Parameters
@@ -849,8 +849,8 @@ apiInstance.updateProject(owner, project, body, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
- **project** | **String**| Project under namesapce | 
- **body** | [**V1ProjectBodyRequest**](V1ProjectBodyRequest.md)|  | 
+ **project_name** | **String**| Required name | 
+ **body** | [**V1Project**](V1Project.md)| Project body | 
 
 ### Return type
 

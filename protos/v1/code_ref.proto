@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package v1;
 
+import "google/protobuf/timestamp.proto";
+
 import "v1/base.proto";
 
 
@@ -14,7 +16,7 @@ message CodeReference {
     string commit = 2;
 
     // Optional head of the code ref
-    string updated_at = 3;
+    google.protobuf.Timestamp updated_at = 3;
 
     // Optional branch of the code ref
     string status = 4;
@@ -29,14 +31,14 @@ message CodeReference {
 // Request data to create/update CodeReference
 message CodeRefBodyRequest {
     // Owner of the code ref
-    OwnedEntityRequest entity = 1;
+    EntityResourceRequest entity = 1;
 
     // Code ref object
-    CodeReference CodeReference = 2;
+    CodeReference code_reference = 2;
 }
 
  // Contains list runs
- message ListCodeRefResponse{
+ message ListCodeRefsResponse {
     // Count of the entities
     int32 count = 1;
 

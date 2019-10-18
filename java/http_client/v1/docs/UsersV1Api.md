@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | List runs
+[**getUser**](UsersV1Api.md#getUser) | **GET** /api/v1/users | List bookmarked runs for user
 
 
 <a name="getUser"></a>
 # **getUser**
 > V1User getUser()
 
-List runs
+List bookmarked runs for user
 
 ### Example
 ```java

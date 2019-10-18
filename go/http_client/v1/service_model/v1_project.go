@@ -22,7 +22,9 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // V1Project Project specification
@@ -33,7 +35,8 @@ type V1Project struct {
 	Bookmarked bool `json:"bookmarked,omitempty"`
 
 	// Optional time when the entityt was created
-	CreatedAt string `json:"created_at,omitempty"`
+	// Format: date-time
+	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Optional description
 	Description string `json:"description,omitempty"`
@@ -45,7 +48,8 @@ type V1Project struct {
 	Name string `json:"name,omitempty"`
 
 	// Optional last time the entity was updated
-	UpdatedAt string `json:"updated_at,omitempty"`
+	// Format: date-time
+	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
 
 	// Required name of user who created this entity
 	User string `json:"user,omitempty"`
@@ -56,6 +60,45 @@ type V1Project struct {
 
 // Validate validates this v1 project
 func (m *V1Project) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Project) validateCreatedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.CreatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Project) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

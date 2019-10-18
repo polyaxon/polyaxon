@@ -3,6 +3,7 @@ syntax = "proto3";
 package v1;
 
 import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
 
 
 // Status condition specification
@@ -20,10 +21,10 @@ message StatusCondition {
     string message = 4;
 
     // last update time
-    string last_update_time = 5;
+    google.protobuf.Timestamp last_update_time = 5;
 
     // last transition time
-    string last_transition_time = 6;
+    google.protobuf.Timestamp last_transition_time = 6;
 
 }
 
@@ -40,7 +41,7 @@ message Status {
 }
 
 // Request data to create/update entity status
-message EntityStatusRequest {
+message EntityStatusBodyRequest {
     // Owner of the namespace
     string owner = 1;
 
@@ -48,11 +49,8 @@ message EntityStatusRequest {
     string project = 2;
 
     // Unique integer identifier of the entity
-    int64 uuid = 3;
+    string uuid = 3;
 
     // Status to set
-    string status = 4;
-
-    // Status condition
-    StatusCondition status_condition = 5;
+    Status status = 4;
 }

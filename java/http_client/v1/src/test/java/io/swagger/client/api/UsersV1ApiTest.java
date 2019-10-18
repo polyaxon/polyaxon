@@ -47,7 +47,7 @@ public class UsersV1ApiTest {
 
     
     /**
-     * List runs
+     * List bookmarked runs for user
      *
      * 
      *

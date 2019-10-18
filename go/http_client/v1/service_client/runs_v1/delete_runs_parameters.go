@@ -77,8 +77,11 @@ for the delete runs operation typically these are written to a http.Request
 */
 type DeleteRunsParams struct {
 
-	/*Body*/
-	Body *service_model.V1ProjectBodyRequest
+	/*Body
+	  Uuids of the entities
+
+	*/
+	Body *service_model.V1Uuids
 	/*Owner
 	  Owner of the namespace
 
@@ -129,13 +132,13 @@ func (o *DeleteRunsParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the delete runs params
-func (o *DeleteRunsParams) WithBody(body *service_model.V1ProjectBodyRequest) *DeleteRunsParams {
+func (o *DeleteRunsParams) WithBody(body *service_model.V1Uuids) *DeleteRunsParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the delete runs params
-func (o *DeleteRunsParams) SetBody(body *service_model.V1ProjectBodyRequest) {
+func (o *DeleteRunsParams) SetBody(body *service_model.V1Uuids) {
 	o.Body = body
 }
 

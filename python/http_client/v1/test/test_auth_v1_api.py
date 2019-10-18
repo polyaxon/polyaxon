@@ -48,7 +48,7 @@ class TestAuthV1Api(unittest.TestCase):
     def test_login(self):
         """Test case for login
 
-        List runs  # noqa: E501
+        List bookmarked runs for user  # noqa: E501
         """
         pass
 

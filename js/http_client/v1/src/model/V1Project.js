@@ -96,10 +96,10 @@
         obj['description'] = ApiClient.convertToType(data['description'], 'String');
       }
       if (data.hasOwnProperty('created_at')) {
-        obj['created_at'] = ApiClient.convertToType(data['created_at'], 'String');
+        obj['created_at'] = ApiClient.convertToType(data['created_at'], 'Date');
       }
       if (data.hasOwnProperty('updated_at')) {
-        obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'String');
+        obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'Date');
       }
       if (data.hasOwnProperty('is_public')) {
         obj['is_public'] = ApiClient.convertToType(data['is_public'], 'String');
@@ -128,11 +128,11 @@
    */
   exports.prototype['description'] = undefined;
   /**
-   * @member {String} created_at
+   * @member {Date} created_at
    */
   exports.prototype['created_at'] = undefined;
   /**
-   * @member {String} updated_at
+   * @member {Date} updated_at
    */
   exports.prototype['updated_at'] = undefined;
   /**

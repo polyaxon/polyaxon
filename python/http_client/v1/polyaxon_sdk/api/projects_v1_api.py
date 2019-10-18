@@ -155,7 +155,7 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats)
 
     def bookmark_project(self, owner, project, **kwargs):  # noqa: E501
-        """Stop run  # noqa: E501
+        """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -177,7 +177,7 @@ class ProjectsV1Api(object):
             return data
 
     def bookmark_project_with_http_info(self, owner, project, **kwargs):  # noqa: E501
-        """Stop run  # noqa: E501
+        """Invalidate run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -269,7 +269,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param V1OwnerBodyRequest body: (required)
+        :param V1Project body: Project body (required)
         :return: V1Project
                  If the method is called asynchronously,
                  returns the request thread.
@@ -291,7 +291,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param V1OwnerBodyRequest body: (required)
+        :param V1Project body: Project body (required)
         :return: V1Project
                  If the method is called asynchronously,
                  returns the request thread.
@@ -454,7 +454,7 @@ class ProjectsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/projecs/{project}', 'DELETE',
+            '/api/v1/{owner}/{project}', 'DELETE',
             path_params,
             query_params,
             header_params,
@@ -769,7 +769,7 @@ class ProjectsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/projects/{project}', 'GET',
+            '/api/v1/{owner}/{project}', 'GET',
             path_params,
             query_params,
             header_params,
@@ -794,8 +794,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -819,8 +819,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -898,7 +898,7 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats)
 
     def list_bookmarked_projects(self, user, **kwargs):  # noqa: E501
-        """List archived runs for user  # noqa: E501
+        """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -907,8 +907,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -923,7 +923,7 @@ class ProjectsV1Api(object):
             return data
 
     def list_bookmarked_projects_with_http_info(self, user, **kwargs):  # noqa: E501
-        """List archived runs for user  # noqa: E501
+        """List runs  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -932,8 +932,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -1011,7 +1011,7 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats)
 
     def list_project_names(self, owner, **kwargs):  # noqa: E501
-        """List bookmarked runs for user  # noqa: E501
+        """List archived runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1020,8 +1020,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -1036,7 +1036,7 @@ class ProjectsV1Api(object):
             return data
 
     def list_project_names_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List bookmarked runs for user  # noqa: E501
+        """List archived runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1045,8 +1045,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -1124,7 +1124,7 @@ class ProjectsV1Api(object):
             collection_formats=collection_formats)
 
     def list_projects(self, owner, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1133,8 +1133,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -1149,7 +1149,7 @@ class ProjectsV1Api(object):
             return data
 
     def list_projects_with_http_info(self, owner, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -1158,8 +1158,8 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str page: Pagination.
-        :param str limit: Limit size.
+        :param int page: Pagination.
+        :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
         :return: V1ListProjectsResponse
@@ -1236,47 +1236,47 @@ class ProjectsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def patch_project(self, owner, project, body, **kwargs):  # noqa: E501
+    def patch_project(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Delete run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project(owner, project, body, async_req=True)
+        >>> thread = api.patch_project(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param str project_name: Required name (required)
+        :param V1Project body: Project body (required)
         :return: V1Project
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.patch_project_with_http_info(owner, project, body, **kwargs)  # noqa: E501
+            return self.patch_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.patch_project_with_http_info(owner, project, body, **kwargs)  # noqa: E501
+            (data) = self.patch_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
             return data
 
-    def patch_project_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
+    def patch_project_with_http_info(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Delete run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.patch_project_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.patch_project_with_http_info(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param str project_name: Required name (required)
+        :param V1Project body: Project body (required)
         :return: V1Project
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'body']  # noqa: E501
+        all_params = ['owner', 'project_name', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1295,10 +1295,10 @@ class ProjectsV1Api(object):
         if ('owner' not in params or
                 params['owner'] is None):
             raise ValueError("Missing the required parameter `owner` when calling `patch_project`")  # noqa: E501
-        # verify the required parameter 'project' is set
-        if ('project' not in params or
-                params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `patch_project`")  # noqa: E501
+        # verify the required parameter 'project_name' is set
+        if ('project_name' not in params or
+                params['project_name'] is None):
+            raise ValueError("Missing the required parameter `project_name` when calling `patch_project`")  # noqa: E501
         # verify the required parameter 'body' is set
         if ('body' not in params or
                 params['body'] is None):
@@ -1309,8 +1309,8 @@ class ProjectsV1Api(object):
         path_params = {}
         if 'owner' in params:
             path_params['owner'] = params['owner']  # noqa: E501
-        if 'project' in params:
-            path_params['project'] = params['project']  # noqa: E501
+        if 'project_name' in params:
+            path_params['project.name'] = params['project_name']  # noqa: E501
 
         query_params = []
 
@@ -1334,7 +1334,7 @@ class ProjectsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/projects/{project}', 'PATCH',
+            '/api/v1/{owner}/{project.name}', 'PATCH',
             path_params,
             query_params,
             header_params,
@@ -1559,47 +1559,47 @@ class ProjectsV1Api(object):
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
 
-    def update_project(self, owner, project, body, **kwargs):  # noqa: E501
+    def update_project(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project(owner, project, body, async_req=True)
+        >>> thread = api.update_project(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param str project_name: Required name (required)
+        :param V1Project body: Project body (required)
         :return: V1Project
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.update_project_with_http_info(owner, project, body, **kwargs)  # noqa: E501
+            return self.update_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
         else:
-            (data) = self.update_project_with_http_info(owner, project, body, **kwargs)  # noqa: E501
+            (data) = self.update_project_with_http_info(owner, project_name, body, **kwargs)  # noqa: E501
             return data
 
-    def update_project_with_http_info(self, owner, project, body, **kwargs):  # noqa: E501
+    def update_project_with_http_info(self, owner, project_name, body, **kwargs):  # noqa: E501
         """Patch run  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
-        >>> thread = api.update_project_with_http_info(owner, project, body, async_req=True)
+        >>> thread = api.update_project_with_http_info(owner, project_name, body, async_req=True)
         >>> result = thread.get()
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param str project: Project under namesapce (required)
-        :param V1ProjectBodyRequest body: (required)
+        :param str project_name: Required name (required)
+        :param V1Project body: Project body (required)
         :return: V1Project
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = ['owner', 'project', 'body']  # noqa: E501
+        all_params = ['owner', 'project_name', 'body']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1618,10 +1618,10 @@ class ProjectsV1Api(object):
         if ('owner' not in params or
                 params['owner'] is None):
             raise ValueError("Missing the required parameter `owner` when calling `update_project`")  # noqa: E501
-        # verify the required parameter 'project' is set
-        if ('project' not in params or
-                params['project'] is None):
-            raise ValueError("Missing the required parameter `project` when calling `update_project`")  # noqa: E501
+        # verify the required parameter 'project_name' is set
+        if ('project_name' not in params or
+                params['project_name'] is None):
+            raise ValueError("Missing the required parameter `project_name` when calling `update_project`")  # noqa: E501
         # verify the required parameter 'body' is set
         if ('body' not in params or
                 params['body'] is None):
@@ -1632,8 +1632,8 @@ class ProjectsV1Api(object):
         path_params = {}
         if 'owner' in params:
             path_params['owner'] = params['owner']  # noqa: E501
-        if 'project' in params:
-            path_params['project'] = params['project']  # noqa: E501
+        if 'project_name' in params:
+            path_params['project.name'] = params['project_name']  # noqa: E501
 
         query_params = []
 
@@ -1657,7 +1657,7 @@ class ProjectsV1Api(object):
         auth_settings = ['ApiKey']  # noqa: E501
 
         return self.api_client.call_api(
-            '/api/v1/{owner}/projects/{project}', 'PUT',
+            '/api/v1/{owner}/{project.name}', 'PUT',
             path_params,
             query_params,
             header_params,

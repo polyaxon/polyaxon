@@ -50,7 +50,7 @@ class VersionsV1Api(object):
         self.api_client = api_client
 
     def get_log_handler(self, **kwargs):  # noqa: E501
-        """List bookmarked runs for user  # noqa: E501
+        """List archived runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -70,7 +70,7 @@ class VersionsV1Api(object):
             return data
 
     def get_log_handler_with_http_info(self, **kwargs):  # noqa: E501
-        """List bookmarked runs for user  # noqa: E501
+        """List archived runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -139,7 +139,7 @@ class VersionsV1Api(object):
             collection_formats=collection_formats)
 
     def get_versions(self, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
@@ -159,7 +159,7 @@ class VersionsV1Api(object):
             return data
 
     def get_versions_with_http_info(self, **kwargs):  # noqa: E501
-        """List runs  # noqa: E501
+        """List bookmarked runs for user  # noqa: E501
 
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True

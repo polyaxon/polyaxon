@@ -76,7 +76,7 @@ type ResumeRunOK struct {
 }
 
 func (o *ResumeRunOK) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/resume][%d] resumeRunOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume][%d] resumeRunOK  %+v", 200, o.Payload)
 }
 
 func (o *ResumeRunOK) GetPayload() *service_model.V1Run {
@@ -109,7 +109,7 @@ type ResumeRunForbidden struct {
 }
 
 func (o *ResumeRunForbidden) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/resume][%d] resumeRunForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume][%d] resumeRunForbidden  %+v", 403, o.Payload)
 }
 
 func (o *ResumeRunForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type ResumeRunNotFound struct {
 }
 
 func (o *ResumeRunNotFound) Error() string {
-	return fmt.Sprintf("[POST /api/v1/{owner}/{project}/runs/{uuid}/resume][%d] resumeRunNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[POST /api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume][%d] resumeRunNotFound  %+v", 404, o.Payload)
 }
 
 func (o *ResumeRunNotFound) GetPayload() string {

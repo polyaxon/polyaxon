@@ -88,7 +88,7 @@
         obj['commit'] = ApiClient.convertToType(data['commit'], 'String');
       }
       if (data.hasOwnProperty('updated_at')) {
-        obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'String');
+        obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'Date');
       }
       if (data.hasOwnProperty('status')) {
         obj['status'] = ApiClient.convertToType(data['status'], 'String');
@@ -112,7 +112,7 @@
    */
   exports.prototype['commit'] = undefined;
   /**
-   * @member {String} updated_at
+   * @member {Date} updated_at
    */
   exports.prototype['updated_at'] = undefined;
   /**

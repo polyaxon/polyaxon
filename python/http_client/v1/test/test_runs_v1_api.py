@@ -132,7 +132,7 @@ class TestRunsV1Api(unittest.TestCase):
     def test_invalidate_run(self):
         """Test case for invalidate_run
 
-        Stop run  # noqa: E501
+        Invalidate run  # noqa: E501
         """
         pass
 

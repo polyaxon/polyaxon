@@ -51,8 +51,8 @@ class V1StatusCondition(object):
         'status': 'bool',
         'reason': 'str',
         'message': 'str',
-        'last_update_time': 'str',
-        'last_transition_time': 'str'
+        'last_update_time': 'datetime',
+        'last_transition_time': 'datetime'
     }
 
     attribute_map = {
@@ -178,7 +178,7 @@ class V1StatusCondition(object):
 
 
         :return: The last_update_time of this V1StatusCondition.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._last_update_time
 
@@ -188,7 +188,7 @@ class V1StatusCondition(object):
 
 
         :param last_update_time: The last_update_time of this V1StatusCondition.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._last_update_time = last_update_time
@@ -199,7 +199,7 @@ class V1StatusCondition(object):
 
 
         :return: The last_transition_time of this V1StatusCondition.  # noqa: E501
-        :rtype: str
+        :rtype: datetime
         """
         return self._last_transition_time
 
@@ -209,7 +209,7 @@ class V1StatusCondition(object):
 
 
         :param last_transition_time: The last_transition_time of this V1StatusCondition.  # noqa: E501
-        :type: str
+        :type: datetime
         """
 
         self._last_transition_time = last_transition_time

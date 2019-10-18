@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1ListProjectsResponse', 'model/V1OwnerBodyRequest', 'model/V1Project', 'model/V1ProjectBodyRequest'], factory);
+    define(['ApiClient', 'model/V1ListProjectsResponse', 'model/V1Project'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1ListProjectsResponse'), require('../model/V1OwnerBodyRequest'), require('../model/V1Project'), require('../model/V1ProjectBodyRequest'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1ListProjectsResponse'), require('../model/V1Project'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.ProjectsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ListProjectsResponse, root.PolyaxonSdk.V1OwnerBodyRequest, root.PolyaxonSdk.V1Project, root.PolyaxonSdk.V1ProjectBodyRequest);
+    root.PolyaxonSdk.ProjectsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1ListProjectsResponse, root.PolyaxonSdk.V1Project);
   }
-}(this, function(ApiClient, V1ListProjectsResponse, V1OwnerBodyRequest, V1Project, V1ProjectBodyRequest) {
+}(this, function(ApiClient, V1ListProjectsResponse, V1Project) {
   'use strict';
 
   /**
@@ -125,7 +125,7 @@
      */
 
     /**
-     * Stop run
+     * Invalidate run
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {module:api/ProjectsV1Api~bookmarkProjectCallback} callback The callback function, accepting three arguments: error, data, response
@@ -181,7 +181,7 @@
     /**
      * Get run
      * @param {String} owner Owner of the namespace
-     * @param {module:model/V1OwnerBodyRequest} body 
+     * @param {module:model/V1Project} body Project body
      * @param {module:api/ProjectsV1Api~createProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
@@ -271,7 +271,7 @@
       var returnType = Object;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/projecs/{project}', 'DELETE',
+        '/api/v1/{owner}/{project}', 'DELETE',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -433,7 +433,7 @@
       var returnType = V1Project;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/projects/{project}', 'GET',
+        '/api/v1/{owner}/{project}', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -451,8 +451,8 @@
      * Create new run
      * @param {String} user User
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listArchivedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -505,11 +505,11 @@
      */
 
     /**
-     * List archived runs for user
+     * List runs
      * @param {String} user User
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listBookmarkedProjectsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -562,11 +562,11 @@
      */
 
     /**
-     * List bookmarked runs for user
+     * List archived runs for user
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listProjectNamesCallback} callback The callback function, accepting three arguments: error, data, response
@@ -619,11 +619,11 @@
      */
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * @param {String} owner Owner of the namespace
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/ProjectsV1Api~listProjectsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -678,12 +678,12 @@
     /**
      * Delete run
      * @param {String} owner Owner of the namespace
-     * @param {String} project Project under namesapce
-     * @param {module:model/V1ProjectBodyRequest} body 
+     * @param {String} project_name Required name
+     * @param {module:model/V1Project} body Project body
      * @param {module:api/ProjectsV1Api~patchProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
-    this.patchProject = function(owner, project, body, callback) {
+    this.patchProject = function(owner, project_name, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
@@ -691,9 +691,9 @@
         throw new Error("Missing the required parameter 'owner' when calling patchProject");
       }
 
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling patchProject");
+      // verify the required parameter 'project_name' is set
+      if (project_name === undefined || project_name === null) {
+        throw new Error("Missing the required parameter 'project_name' when calling patchProject");
       }
 
       // verify the required parameter 'body' is set
@@ -704,7 +704,7 @@
 
       var pathParams = {
         'owner': owner,
-        'project': project
+        'project.name': project_name
       };
       var queryParams = {
       };
@@ -721,7 +721,7 @@
       var returnType = V1Project;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/projects/{project}', 'PATCH',
+        '/api/v1/{owner}/{project.name}', 'PATCH',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -846,12 +846,12 @@
     /**
      * Patch run
      * @param {String} owner Owner of the namespace
-     * @param {String} project Project under namesapce
-     * @param {module:model/V1ProjectBodyRequest} body 
+     * @param {String} project_name Required name
+     * @param {module:model/V1Project} body Project body
      * @param {module:api/ProjectsV1Api~updateProjectCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Project}
      */
-    this.updateProject = function(owner, project, body, callback) {
+    this.updateProject = function(owner, project_name, body, callback) {
       var postBody = body;
 
       // verify the required parameter 'owner' is set
@@ -859,9 +859,9 @@
         throw new Error("Missing the required parameter 'owner' when calling updateProject");
       }
 
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling updateProject");
+      // verify the required parameter 'project_name' is set
+      if (project_name === undefined || project_name === null) {
+        throw new Error("Missing the required parameter 'project_name' when calling updateProject");
       }
 
       // verify the required parameter 'body' is set
@@ -872,7 +872,7 @@
 
       var pathParams = {
         'owner': owner,
-        'project': project
+        'project.name': project_name
       };
       var queryParams = {
       };
@@ -889,7 +889,7 @@
       var returnType = V1Project;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/projects/{project}', 'PUT',
+        '/api/v1/{owner}/{project.name}', 'PUT',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );

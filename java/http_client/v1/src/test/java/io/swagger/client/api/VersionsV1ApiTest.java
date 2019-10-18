@@ -48,7 +48,7 @@ public class VersionsV1ApiTest {
 
     
     /**
-     * List bookmarked runs for user
+     * List archived runs for user
      *
      * 
      *
@@ -63,7 +63,7 @@ public class VersionsV1ApiTest {
     }
     
     /**
-     * List runs
+     * List bookmarked runs for user
      *
      * 
      *

@@ -31,12 +31,12 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1CredsBodyRequest', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1LogHandler', 'model/V1OwnedEntityRequest', 'model/V1OwnerBodyRequest', 'model/V1Project', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Version', 'model/V1Versions', 'api/AuthV1Api', 'api/ProjectsV1Api', 'api/RunsV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CodeReference', 'model/V1CredsBodyRequest', 'model/V1EntityResourceRequest', 'model/V1ListCodeRefsResponse', 'model/V1ListProjectsResponse', 'model/V1ListRunsResponse', 'model/V1LogHandler', 'model/V1Project', 'model/V1Run', 'model/V1Status', 'model/V1StatusCondition', 'model/V1User', 'model/V1Uuids', 'model/V1Version', 'model/V1Versions', 'api/AuthV1Api', 'api/ProjectsV1Api', 'api/RunsV1Api', 'api/UsersV1Api', 'api/VersionsV1Api'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('./ApiClient'), require('./model/V1Auth'), require('./model/V1CodeRefBodyRequest'), require('./model/V1CodeReference'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityStatusRequest'), require('./model/V1ListCodeRefResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1LogHandler'), require('./model/V1OwnedEntityRequest'), require('./model/V1OwnerBodyRequest'), require('./model/V1Project'), require('./model/V1ProjectBodyRequest'), require('./model/V1Run'), require('./model/V1RunBodyRequest'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/AuthV1Api'), require('./api/ProjectsV1Api'), require('./api/RunsV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
+    module.exports = factory(require('./ApiClient'), require('./model/V1Auth'), require('./model/V1CodeReference'), require('./model/V1CredsBodyRequest'), require('./model/V1EntityResourceRequest'), require('./model/V1ListCodeRefsResponse'), require('./model/V1ListProjectsResponse'), require('./model/V1ListRunsResponse'), require('./model/V1LogHandler'), require('./model/V1Project'), require('./model/V1Run'), require('./model/V1Status'), require('./model/V1StatusCondition'), require('./model/V1User'), require('./model/V1Uuids'), require('./model/V1Version'), require('./model/V1Versions'), require('./api/AuthV1Api'), require('./api/ProjectsV1Api'), require('./api/RunsV1Api'), require('./api/UsersV1Api'), require('./api/VersionsV1Api'));
   }
-}(function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1CredsBodyRequest, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListProjectsResponse, V1ListRunsResponse, V1LogHandler, V1OwnedEntityRequest, V1OwnerBodyRequest, V1Project, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status, V1StatusCondition, V1User, V1Version, V1Versions, AuthV1Api, ProjectsV1Api, RunsV1Api, UsersV1Api, VersionsV1Api) {
+}(function(ApiClient, V1Auth, V1CodeReference, V1CredsBodyRequest, V1EntityResourceRequest, V1ListCodeRefsResponse, V1ListProjectsResponse, V1ListRunsResponse, V1LogHandler, V1Project, V1Run, V1Status, V1StatusCondition, V1User, V1Uuids, V1Version, V1Versions, AuthV1Api, ProjectsV1Api, RunsV1Api, UsersV1Api, VersionsV1Api) {
   'use strict';
 
   /**
@@ -82,11 +82,6 @@
      */
     V1Auth: V1Auth,
     /**
-     * The V1CodeRefBodyRequest model constructor.
-     * @property {module:model/V1CodeRefBodyRequest}
-     */
-    V1CodeRefBodyRequest: V1CodeRefBodyRequest,
-    /**
      * The V1CodeReference model constructor.
      * @property {module:model/V1CodeReference}
      */
@@ -97,15 +92,15 @@
      */
     V1CredsBodyRequest: V1CredsBodyRequest,
     /**
-     * The V1EntityStatusRequest model constructor.
-     * @property {module:model/V1EntityStatusRequest}
+     * The V1EntityResourceRequest model constructor.
+     * @property {module:model/V1EntityResourceRequest}
      */
-    V1EntityStatusRequest: V1EntityStatusRequest,
+    V1EntityResourceRequest: V1EntityResourceRequest,
     /**
-     * The V1ListCodeRefResponse model constructor.
-     * @property {module:model/V1ListCodeRefResponse}
+     * The V1ListCodeRefsResponse model constructor.
+     * @property {module:model/V1ListCodeRefsResponse}
      */
-    V1ListCodeRefResponse: V1ListCodeRefResponse,
+    V1ListCodeRefsResponse: V1ListCodeRefsResponse,
     /**
      * The V1ListProjectsResponse model constructor.
      * @property {module:model/V1ListProjectsResponse}
@@ -122,35 +117,15 @@
      */
     V1LogHandler: V1LogHandler,
     /**
-     * The V1OwnedEntityRequest model constructor.
-     * @property {module:model/V1OwnedEntityRequest}
-     */
-    V1OwnedEntityRequest: V1OwnedEntityRequest,
-    /**
-     * The V1OwnerBodyRequest model constructor.
-     * @property {module:model/V1OwnerBodyRequest}
-     */
-    V1OwnerBodyRequest: V1OwnerBodyRequest,
-    /**
      * The V1Project model constructor.
      * @property {module:model/V1Project}
      */
     V1Project: V1Project,
     /**
-     * The V1ProjectBodyRequest model constructor.
-     * @property {module:model/V1ProjectBodyRequest}
-     */
-    V1ProjectBodyRequest: V1ProjectBodyRequest,
-    /**
      * The V1Run model constructor.
      * @property {module:model/V1Run}
      */
     V1Run: V1Run,
-    /**
-     * The V1RunBodyRequest model constructor.
-     * @property {module:model/V1RunBodyRequest}
-     */
-    V1RunBodyRequest: V1RunBodyRequest,
     /**
      * The V1Status model constructor.
      * @property {module:model/V1Status}
@@ -166,6 +141,11 @@
      * @property {module:model/V1User}
      */
     V1User: V1User,
+    /**
+     * The V1Uuids model constructor.
+     * @property {module:model/V1Uuids}
+     */
+    V1Uuids: V1Uuids,
     /**
      * The V1Version model constructor.
      * @property {module:model/V1Version}

@@ -5,20 +5,20 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**archiveProject**](ProjectsV1Api.md#archiveProject) | **POST** /api/v1/{owner}/{project}/archive | Stop run
-[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Stop run
+[**bookmarkProject**](ProjectsV1Api.md#bookmarkProject) | **POST** /api/v1/{owner}/{project}/bookmark | Invalidate run
 [**createProject**](ProjectsV1Api.md#createProject) | **POST** /api/v1/{owner}/projects/create | Get run
-[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/projecs/{project} | Delete runs
+[**deleteProject**](ProjectsV1Api.md#deleteProject) | **DELETE** /api/v1/{owner}/{project} | Delete runs
 [**disableProjectCI**](ProjectsV1Api.md#disableProjectCI) | **DELETE** /api/v1/{owner}/{project}/ci | Restart run
 [**enableProjectCI**](ProjectsV1Api.md#enableProjectCI) | **POST** /api/v1/{owner}/{project}/ci | Restart run with copy
-[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/projects/{project} | Update run
+[**getProject**](ProjectsV1Api.md#getProject) | **GET** /api/v1/{owner}/{project} | Update run
 [**listArchivedProjects**](ProjectsV1Api.md#listArchivedProjects) | **GET** /api/v1/archives/{user}/projects | Create new run
-[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List archived runs for user
-[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List bookmarked runs for user
-[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List runs
-[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/projects/{project} | Delete run
+[**listBookmarkedProjects**](ProjectsV1Api.md#listBookmarkedProjects) | **GET** /api/v1/bookmarks/{user}/projects | List runs
+[**listProjectNames**](ProjectsV1Api.md#listProjectNames) | **GET** /api/v1/{owner}/projects/names | List archived runs for user
+[**listProjects**](ProjectsV1Api.md#listProjects) | **GET** /api/v1/{owner}/projects/list | List bookmarked runs for user
+[**patchProject**](ProjectsV1Api.md#patchProject) | **PATCH** /api/v1/{owner}/{project.name} | Delete run
 [**restoreExperiment**](ProjectsV1Api.md#restoreExperiment) | **POST** /api/v1/{owner}/{project}/restore | Stop runs
 [**unbookmarkProject**](ProjectsV1Api.md#unbookmarkProject) | **DELETE** /api/v1/{owner}/{project}/unbookmark | Invalidate runs
-[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/projects/{project} | Patch run
+[**updateProject**](ProjectsV1Api.md#updateProject) | **PUT** /api/v1/{owner}/{project.name} | Patch run
 
 
 <a name="archiveProject"></a>
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 # **bookmarkProject**
 > Object bookmarkProject(owner, project)
 
-Stop run
+Invalidate run
 
 ### Example
 ```java
@@ -156,7 +156,7 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-V1OwnerBodyRequest body = new V1OwnerBodyRequest(); // V1OwnerBodyRequest | 
+V1Project body = new V1Project(); // V1Project | Project body
 try {
     V1Project result = apiInstance.createProject(owner, body);
     System.out.println(result);
@@ -171,7 +171,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **body** | [**V1OwnerBodyRequest**](V1OwnerBodyRequest.md)|  |
+ **body** | [**V1Project**](V1Project.md)| Project body |
 
 ### Return type
 
@@ -431,8 +431,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String user = "user_example"; // String | User
-String page = "page_example"; // String | Pagination.
-String limit = "limit_example"; // String | Limit size.
+Integer page = 56; // Integer | Pagination.
+Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
@@ -449,8 +449,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User |
- **page** | **String**| Pagination. | [optional]
- **limit** | **String**| Limit size. | [optional]
+ **page** | **Integer**| Pagination. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
 
@@ -470,6 +470,67 @@ Name | Type | Description  | Notes
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
 > V1ListProjectsResponse listBookmarkedProjects(user, page, limit, sort, query)
+
+List runs
+
+### Example
+```java
+// Import classes:
+//import io.swagger.client.ApiClient;
+//import io.swagger.client.ApiException;
+//import io.swagger.client.Configuration;
+//import io.swagger.client.auth.*;
+//import io.swagger.client.api.ProjectsV1Api;
+
+ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+// Configure API key authorization: ApiKey
+ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
+ApiKey.setApiKey("YOUR API KEY");
+// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+//ApiKey.setApiKeyPrefix("Token");
+
+ProjectsV1Api apiInstance = new ProjectsV1Api();
+String user = "user_example"; // String | User
+Integer page = 56; // Integer | Pagination.
+Integer limit = 56; // Integer | Limit size.
+String sort = "sort_example"; // String | Sort to order the search.
+String query = "query_example"; // String | Query filter the search search.
+try {
+    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user, page, limit, sort, query);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling ProjectsV1Api#listBookmarkedProjects");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user** | **String**| User |
+ **page** | **Integer**| Pagination. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
+ **sort** | **String**| Sort to order the search. | [optional]
+ **query** | **String**| Query filter the search search. | [optional]
+
+### Return type
+
+[**V1ListProjectsResponse**](V1ListProjectsResponse.md)
+
+### Authorization
+
+[ApiKey](../README.md#ApiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="listProjectNames"></a>
+# **listProjectNames**
+> V1ListProjectsResponse listProjectNames(owner, page, limit, sort, query)
 
 List archived runs for user
 
@@ -491,16 +552,16 @@ ApiKey.setApiKey("YOUR API KEY");
 //ApiKey.setApiKeyPrefix("Token");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
-String user = "user_example"; // String | User
-String page = "page_example"; // String | Pagination.
-String limit = "limit_example"; // String | Limit size.
+String owner = "owner_example"; // String | Owner of the namespace
+Integer page = 56; // Integer | Pagination.
+Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user, page, limit, sort, query);
+    V1ListProjectsResponse result = apiInstance.listProjectNames(owner, page, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling ProjectsV1Api#listBookmarkedProjects");
+    System.err.println("Exception when calling ProjectsV1Api#listProjectNames");
     e.printStackTrace();
 }
 ```
@@ -509,9 +570,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **user** | **String**| User |
- **page** | **String**| Pagination. | [optional]
- **limit** | **String**| Limit size. | [optional]
+ **owner** | **String**| Owner of the namespace |
+ **page** | **Integer**| Pagination. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
 
@@ -528,9 +589,9 @@ Name | Type | Description  | Notes
  - **Content-Type**: application/json
  - **Accept**: application/json
 
-<a name="listProjectNames"></a>
-# **listProjectNames**
-> V1ListProjectsResponse listProjectNames(owner, page, limit, sort, query)
+<a name="listProjects"></a>
+# **listProjects**
+> V1ListProjectsResponse listProjects(owner, page, limit, sort, query)
 
 List bookmarked runs for user
 
@@ -553,69 +614,8 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String page = "page_example"; // String | Pagination.
-String limit = "limit_example"; // String | Limit size.
-String sort = "sort_example"; // String | Sort to order the search.
-String query = "query_example"; // String | Query filter the search search.
-try {
-    V1ListProjectsResponse result = apiInstance.listProjectNames(owner, page, limit, sort, query);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling ProjectsV1Api#listProjectNames");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **String**| Owner of the namespace |
- **page** | **String**| Pagination. | [optional]
- **limit** | **String**| Limit size. | [optional]
- **sort** | **String**| Sort to order the search. | [optional]
- **query** | **String**| Query filter the search search. | [optional]
-
-### Return type
-
-[**V1ListProjectsResponse**](V1ListProjectsResponse.md)
-
-### Authorization
-
-[ApiKey](../README.md#ApiKey)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-<a name="listProjects"></a>
-# **listProjects**
-> V1ListProjectsResponse listProjects(owner, page, limit, sort, query)
-
-List runs
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiClient;
-//import io.swagger.client.ApiException;
-//import io.swagger.client.Configuration;
-//import io.swagger.client.auth.*;
-//import io.swagger.client.api.ProjectsV1Api;
-
-ApiClient defaultClient = Configuration.getDefaultApiClient();
-
-// Configure API key authorization: ApiKey
-ApiKeyAuth ApiKey = (ApiKeyAuth) defaultClient.getAuthentication("ApiKey");
-ApiKey.setApiKey("YOUR API KEY");
-// Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-//ApiKey.setApiKeyPrefix("Token");
-
-ProjectsV1Api apiInstance = new ProjectsV1Api();
-String owner = "owner_example"; // String | Owner of the namespace
-String page = "page_example"; // String | Pagination.
-String limit = "limit_example"; // String | Limit size.
+Integer page = 56; // Integer | Pagination.
+Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
@@ -632,8 +632,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **page** | **String**| Pagination. | [optional]
- **limit** | **String**| Limit size. | [optional]
+ **page** | **Integer**| Pagination. | [optional]
+ **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
 
@@ -652,7 +652,7 @@ Name | Type | Description  | Notes
 
 <a name="patchProject"></a>
 # **patchProject**
-> V1Project patchProject(owner, project, body)
+> V1Project patchProject(owner, projectName, body)
 
 Delete run
 
@@ -675,10 +675,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1ProjectBodyRequest body = new V1ProjectBodyRequest(); // V1ProjectBodyRequest | 
+String projectName = "projectName_example"; // String | Required name
+V1Project body = new V1Project(); // V1Project | Project body
 try {
-    V1Project result = apiInstance.patchProject(owner, project, body);
+    V1Project result = apiInstance.patchProject(owner, projectName, body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#patchProject");
@@ -691,8 +691,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
- **body** | [**V1ProjectBodyRequest**](V1ProjectBodyRequest.md)|  |
+ **projectName** | **String**| Required name |
+ **body** | [**V1Project**](V1Project.md)| Project body |
 
 ### Return type
 
@@ -819,7 +819,7 @@ Name | Type | Description  | Notes
 
 <a name="updateProject"></a>
 # **updateProject**
-> V1Project updateProject(owner, project, body)
+> V1Project updateProject(owner, projectName, body)
 
 Patch run
 
@@ -842,10 +842,10 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-String project = "project_example"; // String | Project under namesapce
-V1ProjectBodyRequest body = new V1ProjectBodyRequest(); // V1ProjectBodyRequest | 
+String projectName = "projectName_example"; // String | Required name
+V1Project body = new V1Project(); // V1Project | Project body
 try {
-    V1Project result = apiInstance.updateProject(owner, project, body);
+    V1Project result = apiInstance.updateProject(owner, projectName, body);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#updateProject");
@@ -858,8 +858,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **project** | **String**| Project under namesapce |
- **body** | [**V1ProjectBodyRequest**](V1ProjectBodyRequest.md)|  |
+ **projectName** | **String**| Required name |
+ **body** | [**V1Project**](V1Project.md)| Project body |
 
 ### Return type
 

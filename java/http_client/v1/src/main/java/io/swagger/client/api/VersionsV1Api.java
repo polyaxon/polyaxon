@@ -127,7 +127,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * List bookmarked runs for user
+     * List archived runs for user
      * 
      * @return V1LogHandler
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -138,7 +138,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * List bookmarked runs for user
+     * List archived runs for user
      * 
      * @return ApiResponse&lt;V1LogHandler&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -150,7 +150,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * List bookmarked runs for user (asynchronously)
+     * List archived runs for user (asynchronously)
      * 
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
@@ -240,7 +240,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * 
      * @return V1Versions
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -251,7 +251,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * List runs
+     * List bookmarked runs for user
      * 
      * @return ApiResponse&lt;V1Versions&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -263,7 +263,7 @@ public class VersionsV1Api {
     }
 
     /**
-     * List runs (asynchronously)
+     * List bookmarked runs for user (asynchronously)
      * 
      * @param callback The callback to be executed when the API call finishes
      * @return The request call

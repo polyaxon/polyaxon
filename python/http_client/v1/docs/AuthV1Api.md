@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List runs
+[**login**](AuthV1Api.md#login) | **POST** /api/v1/users/token | List bookmarked runs for user
 
 
 # **login**
 > V1Auth login(body)
 
-List runs
+List bookmarked runs for user
 
 ### Example
 ```python
@@ -31,7 +31,7 @@ api_instance = polyaxon_sdk.AuthV1Api(polyaxon_sdk.ApiClient(configuration))
 body = polyaxon_sdk.V1CredsBodyRequest() # V1CredsBodyRequest | 
 
 try:
-    # List runs
+    # List bookmarked runs for user
     api_response = api_instance.login(body)
     pprint(api_response)
 except ApiException as e:

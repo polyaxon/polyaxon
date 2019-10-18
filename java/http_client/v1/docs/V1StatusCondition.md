@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **status** | **Boolean** |  |  [optional]
 **reason** | **String** |  |  [optional]
 **message** | **String** |  |  [optional]
-**lastUpdateTime** | **String** |  |  [optional]
-**lastTransitionTime** | **String** |  |  [optional]
+**lastUpdateTime** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
+**lastTransitionTime** | [**OffsetDateTime**](OffsetDateTime.md) |  |  [optional]
 
 
 

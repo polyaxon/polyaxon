@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **status** | **Boolean** |  | [optional] 
 **reason** | **String** |  | [optional] 
 **message** | **String** |  | [optional] 
-**last_update_time** | **String** |  | [optional] 
-**last_transition_time** | **String** |  | [optional] 
+**last_update_time** | **Date** |  | [optional] 
+**last_transition_time** | **Date** |  | [optional] 
 
 

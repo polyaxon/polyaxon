@@ -22,7 +22,9 @@ package service_model
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // V1Run Run specification
@@ -39,7 +41,8 @@ type V1Run struct {
 	Content string `json:"content,omitempty"`
 
 	// Optional time when the entityt was created
-	CreatedAt string `json:"created_at,omitempty"`
+	// Format: date-time
+	CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
 
 	// Optional if the entity has been deleted
 	Deleted bool `json:"deleted,omitempty"`
@@ -48,7 +51,8 @@ type V1Run struct {
 	Description string `json:"description,omitempty"`
 
 	// Optional last time the entity was started
-	FinishedAt string `json:"finished_at,omitempty"`
+	// Format: date-time
+	FinishedAt strfmt.DateTime `json:"finished_at,omitempty"`
 
 	// Optional inputs of this entity
 	Inputs map[string]string `json:"inputs,omitempty"`
@@ -90,7 +94,8 @@ type V1Run struct {
 	RunEnv map[string]string `json:"run_env,omitempty"`
 
 	// Optional last time the entity was started
-	StartedAt string `json:"started_at,omitempty"`
+	// Format: date-time
+	StartedAt strfmt.DateTime `json:"started_at,omitempty"`
 
 	// Optional latest status of this entity
 	Status string `json:"status,omitempty"`
@@ -99,7 +104,8 @@ type V1Run struct {
 	Tags []string `json:"tags"`
 
 	// Optional last time the entity was updated
-	UpdatedAt string `json:"updated_at,omitempty"`
+	// Format: date-time
+	UpdatedAt strfmt.DateTime `json:"updated_at,omitempty"`
 
 	// Required name of user started this entity
 	User string `json:"user,omitempty"`
@@ -110,6 +116,79 @@ type V1Run struct {
 
 // Validate validates this v1 run
 func (m *V1Run) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateCreatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateFinishedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateStartedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateUpdatedAt(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *V1Run) validateCreatedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.CreatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("created_at", "body", "date-time", m.CreatedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateFinishedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.FinishedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("finished_at", "body", "date-time", m.FinishedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateStartedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.StartedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("started_at", "body", "date-time", m.StartedAt.String(), formats); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *V1Run) validateUpdatedAt(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UpdatedAt) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("updated_at", "body", "date-time", m.UpdatedAt.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

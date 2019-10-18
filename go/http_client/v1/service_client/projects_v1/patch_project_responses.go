@@ -76,7 +76,7 @@ type PatchProjectOK struct {
 }
 
 func (o *PatchProjectOK) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/projects/{project}][%d] patchProjectOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *PatchProjectOK) GetPayload() *service_model.V1Project {
@@ -109,7 +109,7 @@ type PatchProjectForbidden struct {
 }
 
 func (o *PatchProjectForbidden) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/projects/{project}][%d] patchProjectForbidden  %+v", 403, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectForbidden  %+v", 403, o.Payload)
 }
 
 func (o *PatchProjectForbidden) GetPayload() interface{} {
@@ -140,7 +140,7 @@ type PatchProjectNotFound struct {
 }
 
 func (o *PatchProjectNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /api/v1/{owner}/projects/{project}][%d] patchProjectNotFound  %+v", 404, o.Payload)
+	return fmt.Sprintf("[PATCH /api/v1/{owner}/{project.name}][%d] patchProjectNotFound  %+v", 404, o.Payload)
 }
 
 func (o *PatchProjectNotFound) GetPayload() string {

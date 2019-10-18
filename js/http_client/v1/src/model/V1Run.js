@@ -126,16 +126,16 @@
         obj['project'] = ApiClient.convertToType(data['project'], 'String');
       }
       if (data.hasOwnProperty('created_at')) {
-        obj['created_at'] = ApiClient.convertToType(data['created_at'], 'String');
+        obj['created_at'] = ApiClient.convertToType(data['created_at'], 'Date');
       }
       if (data.hasOwnProperty('updated_at')) {
-        obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'String');
+        obj['updated_at'] = ApiClient.convertToType(data['updated_at'], 'Date');
       }
       if (data.hasOwnProperty('started_at')) {
-        obj['started_at'] = ApiClient.convertToType(data['started_at'], 'String');
+        obj['started_at'] = ApiClient.convertToType(data['started_at'], 'Date');
       }
       if (data.hasOwnProperty('finished_at')) {
-        obj['finished_at'] = ApiClient.convertToType(data['finished_at'], 'String');
+        obj['finished_at'] = ApiClient.convertToType(data['finished_at'], 'Date');
       }
       if (data.hasOwnProperty('is_managed')) {
         obj['is_managed'] = ApiClient.convertToType(data['is_managed'], 'String');
@@ -216,19 +216,19 @@
    */
   exports.prototype['project'] = undefined;
   /**
-   * @member {String} created_at
+   * @member {Date} created_at
    */
   exports.prototype['created_at'] = undefined;
   /**
-   * @member {String} updated_at
+   * @member {Date} updated_at
    */
   exports.prototype['updated_at'] = undefined;
   /**
-   * @member {String} started_at
+   * @member {Date} started_at
    */
   exports.prototype['started_at'] = undefined;
   /**
-   * @member {String} finished_at
+   * @member {Date} finished_at
    */
   exports.prototype['finished_at'] = undefined;
   /**

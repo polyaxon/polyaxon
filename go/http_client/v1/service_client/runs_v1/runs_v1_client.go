@@ -122,7 +122,7 @@ func (a *Client) CopyRun(params *CopyRunParams, authInfo runtime.ClientAuthInfoW
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CopyRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/copy",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -157,7 +157,7 @@ func (a *Client) CreateRun(params *CreateRunParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "CreateRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/create",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -461,7 +461,7 @@ func (a *Client) ImpersonateToken(params *ImpersonateTokenParams, authInfo runti
 }
 
 /*
-InvalidateRun stops run
+InvalidateRun invalidates run
 */
 func (a *Client) InvalidateRun(params *InvalidateRunParams, authInfo runtime.ClientAuthInfoWriter) (*InvalidateRunOK, error) {
 	// TODO: Validate the params before sending
@@ -612,7 +612,7 @@ func (a *Client) ListRuns(params *ListRunsParams, authInfo runtime.ClientAuthInf
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ListRuns",
 		Method:             "GET",
-		PathPattern:        "/api/v1/{owner}/{project}/runs",
+		PathPattern:        "/api/v1/{owner}/{project}/runs/list",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -682,7 +682,7 @@ func (a *Client) RestartRun(params *RestartRunParams, authInfo runtime.ClientAut
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "RestartRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/restart",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},
@@ -752,7 +752,7 @@ func (a *Client) ResumeRun(params *ResumeRunParams, authInfo runtime.ClientAuthI
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "ResumeRun",
 		Method:             "POST",
-		PathPattern:        "/api/v1/{owner}/{project}/runs/{uuid}/resume",
+		PathPattern:        "/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https", "ws", "wss"},

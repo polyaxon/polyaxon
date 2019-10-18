@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List bookmarked runs for user
-[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/versions | List runs
+[**get_log_handler**](VersionsV1Api.md#get_log_handler) | **GET** /api/v1/log_handler | List archived runs for user
+[**get_versions**](VersionsV1Api.md#get_versions) | **GET** /api/v1/versions | List bookmarked runs for user
 
 
 # **get_log_handler**
 > V1LogHandler get_log_handler()
 
-List bookmarked runs for user
+List archived runs for user
 
 ### Example
 ```python
@@ -31,7 +31,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.VersionsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # List bookmarked runs for user
+    # List archived runs for user
     api_response = api_instance.get_log_handler()
     pprint(api_response)
 except ApiException as e:
@@ -59,7 +59,7 @@ This endpoint does not need any parameter.
 # **get_versions**
 > V1Versions get_versions()
 
-List runs
+List bookmarked runs for user
 
 ### Example
 ```python
@@ -79,7 +79,7 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.VersionsV1Api(polyaxon_sdk.ApiClient(configuration))
 
 try:
-    # List runs
+    # List bookmarked runs for user
     api_response = api_instance.get_versions()
     pprint(api_response)
 except ApiException as e:

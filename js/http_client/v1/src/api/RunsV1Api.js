@@ -31,18 +31,18 @@
 (function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/V1Auth', 'model/V1CodeRefBodyRequest', 'model/V1CodeReference', 'model/V1EntityStatusRequest', 'model/V1ListCodeRefResponse', 'model/V1ListRunsResponse', 'model/V1OwnedEntityRequest', 'model/V1ProjectBodyRequest', 'model/V1Run', 'model/V1RunBodyRequest', 'model/V1Status'], factory);
+    define(['ApiClient', 'model/V1Auth', 'model/V1CodeReference', 'model/V1EntityResourceRequest', 'model/V1ListCodeRefsResponse', 'model/V1ListRunsResponse', 'model/V1Run', 'model/V1Status', 'model/V1Uuids'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'), require('../model/V1CodeRefBodyRequest'), require('../model/V1CodeReference'), require('../model/V1EntityStatusRequest'), require('../model/V1ListCodeRefResponse'), require('../model/V1ListRunsResponse'), require('../model/V1OwnedEntityRequest'), require('../model/V1ProjectBodyRequest'), require('../model/V1Run'), require('../model/V1RunBodyRequest'), require('../model/V1Status'));
+    module.exports = factory(require('../ApiClient'), require('../model/V1Auth'), require('../model/V1CodeReference'), require('../model/V1EntityResourceRequest'), require('../model/V1ListCodeRefsResponse'), require('../model/V1ListRunsResponse'), require('../model/V1Run'), require('../model/V1Status'), require('../model/V1Uuids'));
   } else {
     // Browser globals (root is window)
     if (!root.PolyaxonSdk) {
       root.PolyaxonSdk = {};
     }
-    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeRefBodyRequest, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityStatusRequest, root.PolyaxonSdk.V1ListCodeRefResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1OwnedEntityRequest, root.PolyaxonSdk.V1ProjectBodyRequest, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1RunBodyRequest, root.PolyaxonSdk.V1Status);
+    root.PolyaxonSdk.RunsV1Api = factory(root.PolyaxonSdk.ApiClient, root.PolyaxonSdk.V1Auth, root.PolyaxonSdk.V1CodeReference, root.PolyaxonSdk.V1EntityResourceRequest, root.PolyaxonSdk.V1ListCodeRefsResponse, root.PolyaxonSdk.V1ListRunsResponse, root.PolyaxonSdk.V1Run, root.PolyaxonSdk.V1Status, root.PolyaxonSdk.V1Uuids);
   }
-}(this, function(ApiClient, V1Auth, V1CodeRefBodyRequest, V1CodeReference, V1EntityStatusRequest, V1ListCodeRefResponse, V1ListRunsResponse, V1OwnedEntityRequest, V1ProjectBodyRequest, V1Run, V1RunBodyRequest, V1Status) {
+}(this, function(ApiClient, V1Auth, V1CodeReference, V1EntityResourceRequest, V1ListCodeRefsResponse, V1ListRunsResponse, V1Run, V1Status, V1Uuids) {
   'use strict';
 
   /**
@@ -194,29 +194,29 @@
 
     /**
      * Restart run with copy
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the experiement will be assigned
-     * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityRequest} body 
+     * @param {String} entity_owner Owner of the namespace
+     * @param {String} entity_project Project where the experiement will be assigned
+     * @param {String} entity_uuid Unique integer identifier of the entity
+     * @param {module:model/V1Run} body Run object
      * @param {module:api/RunsV1Api~copyRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.copyRun = function(owner, project, uuid, body, callback) {
+    this.copyRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
       var postBody = body;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling copyRun");
+      // verify the required parameter 'entity_owner' is set
+      if (entity_owner === undefined || entity_owner === null) {
+        throw new Error("Missing the required parameter 'entity_owner' when calling copyRun");
       }
 
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling copyRun");
+      // verify the required parameter 'entity_project' is set
+      if (entity_project === undefined || entity_project === null) {
+        throw new Error("Missing the required parameter 'entity_project' when calling copyRun");
       }
 
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling copyRun");
+      // verify the required parameter 'entity_uuid' is set
+      if (entity_uuid === undefined || entity_uuid === null) {
+        throw new Error("Missing the required parameter 'entity_uuid' when calling copyRun");
       }
 
       // verify the required parameter 'body' is set
@@ -226,9 +226,9 @@
 
 
       var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
+        'entity.owner': entity_owner,
+        'entity.project': entity_project,
+        'entity.uuid': entity_uuid
       };
       var queryParams = {
       };
@@ -245,7 +245,7 @@
       var returnType = V1Run;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/copy', 'POST',
+        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/copy', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -263,7 +263,7 @@
      * Create new run
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
-     * @param {module:model/V1RunBodyRequest} body 
+     * @param {module:model/V1Run} body Run object
      * @param {module:api/RunsV1Api~createRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
@@ -305,7 +305,7 @@
       var returnType = V1Run;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs', 'POST',
+        '/api/v1/{owner}/{project}/runs/create', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -324,7 +324,7 @@
      * @param {String} entity_owner Owner of the namespace
      * @param {String} entity_project Project where the experiement will be assigned
      * @param {String} entity_uuid Unique integer identifier of the entity
-     * @param {module:model/V1CodeRefBodyRequest} body 
+     * @param {module:model/V1CodeReference} body Code ref object
      * @param {module:api/RunsV1Api~createRunCodeRefCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1CodeReference}
      */
@@ -391,7 +391,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1EntityStatusRequest} body 
+     * @param {module:model/V1Status} body Status to set
      * @param {module:api/RunsV1Api~createRunStatusCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Status}
      */
@@ -518,7 +518,7 @@
      * Delete runs
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:model/V1ProjectBodyRequest} body 
+     * @param {module:model/V1Uuids} body Uuids of the entities
      * @param {module:api/RunsV1Api~deleteRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -631,7 +631,7 @@
      * Callback function to receive the result of the getRunCodeRefs operation.
      * @callback module:api/RunsV1Api~getRunCodeRefsCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/V1ListCodeRefResponse} data The data returned by the service call.
+     * @param {module:model/V1ListCodeRefsResponse} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -641,7 +641,7 @@
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
      * @param {module:api/RunsV1Api~getRunCodeRefsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/V1ListCodeRefResponse}
+     * data is of type: {@link module:model/V1ListCodeRefsResponse}
      */
     this.getRunCodeRefs = function(owner, project, uuid, callback) {
       var postBody = null;
@@ -679,7 +679,7 @@
       var authNames = ['ApiKey'];
       var contentTypes = ['application/json'];
       var accepts = ['application/json'];
-      var returnType = V1ListCodeRefResponse;
+      var returnType = V1ListCodeRefsResponse;
 
       return this.apiClient.callApi(
         '/api/v1/{owner}/{project}/runs/{uuid}/coderef', 'GET',
@@ -819,11 +819,11 @@
      */
 
     /**
-     * Stop run
+     * Invalidate run
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityRequest} body 
+     * @param {module:model/V1EntityResourceRequest} body 
      * @param {module:api/RunsV1Api~invalidateRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -889,7 +889,7 @@
      * Invalidate runs
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:model/V1ProjectBodyRequest} body 
+     * @param {module:model/V1Uuids} body Uuids of the entities
      * @param {module:api/RunsV1Api~invalidateRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -949,8 +949,8 @@
      * List archived runs for user
      * @param {String} user User
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/RunsV1Api~listArchivedRunsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -1006,8 +1006,8 @@
      * List bookmarked runs for user
      * @param {String} user User
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/RunsV1Api~listBookmarkedRunsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -1064,8 +1064,8 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {Object} opts Optional parameters
-     * @param {String} opts.page Pagination.
-     * @param {String} opts.limit Limit size.
+     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
      * @param {module:api/RunsV1Api~listRunsCallback} callback The callback function, accepting three arguments: error, data, response
@@ -1109,7 +1109,7 @@
       var returnType = V1ListRunsResponse;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs', 'GET',
+        '/api/v1/{owner}/{project}/runs/list', 'GET',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1128,7 +1128,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} run_uuid UUID
-     * @param {module:model/V1RunBodyRequest} body 
+     * @param {module:model/V1Run} body Run object
      * @param {module:api/RunsV1Api~patchRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
@@ -1192,29 +1192,29 @@
 
     /**
      * Restart run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the experiement will be assigned
-     * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityRequest} body 
+     * @param {String} entity_owner Owner of the namespace
+     * @param {String} entity_project Project where the experiement will be assigned
+     * @param {String} entity_uuid Unique integer identifier of the entity
+     * @param {module:model/V1Run} body Run object
      * @param {module:api/RunsV1Api~restartRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.restartRun = function(owner, project, uuid, body, callback) {
+    this.restartRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
       var postBody = body;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling restartRun");
+      // verify the required parameter 'entity_owner' is set
+      if (entity_owner === undefined || entity_owner === null) {
+        throw new Error("Missing the required parameter 'entity_owner' when calling restartRun");
       }
 
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling restartRun");
+      // verify the required parameter 'entity_project' is set
+      if (entity_project === undefined || entity_project === null) {
+        throw new Error("Missing the required parameter 'entity_project' when calling restartRun");
       }
 
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling restartRun");
+      // verify the required parameter 'entity_uuid' is set
+      if (entity_uuid === undefined || entity_uuid === null) {
+        throw new Error("Missing the required parameter 'entity_uuid' when calling restartRun");
       }
 
       // verify the required parameter 'body' is set
@@ -1224,9 +1224,9 @@
 
 
       var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
+        'entity.owner': entity_owner,
+        'entity.project': entity_project,
+        'entity.uuid': entity_uuid
       };
       var queryParams = {
       };
@@ -1243,7 +1243,7 @@
       var returnType = V1Run;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/restart', 'POST',
+        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/restart', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1320,29 +1320,29 @@
 
     /**
      * Resume run
-     * @param {String} owner Owner of the namespace
-     * @param {String} project Project where the experiement will be assigned
-     * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityRequest} body 
+     * @param {String} entity_owner Owner of the namespace
+     * @param {String} entity_project Project where the experiement will be assigned
+     * @param {String} entity_uuid Unique integer identifier of the entity
+     * @param {module:model/V1Run} body Run object
      * @param {module:api/RunsV1Api~resumeRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */
-    this.resumeRun = function(owner, project, uuid, body, callback) {
+    this.resumeRun = function(entity_owner, entity_project, entity_uuid, body, callback) {
       var postBody = body;
 
-      // verify the required parameter 'owner' is set
-      if (owner === undefined || owner === null) {
-        throw new Error("Missing the required parameter 'owner' when calling resumeRun");
+      // verify the required parameter 'entity_owner' is set
+      if (entity_owner === undefined || entity_owner === null) {
+        throw new Error("Missing the required parameter 'entity_owner' when calling resumeRun");
       }
 
-      // verify the required parameter 'project' is set
-      if (project === undefined || project === null) {
-        throw new Error("Missing the required parameter 'project' when calling resumeRun");
+      // verify the required parameter 'entity_project' is set
+      if (entity_project === undefined || entity_project === null) {
+        throw new Error("Missing the required parameter 'entity_project' when calling resumeRun");
       }
 
-      // verify the required parameter 'uuid' is set
-      if (uuid === undefined || uuid === null) {
-        throw new Error("Missing the required parameter 'uuid' when calling resumeRun");
+      // verify the required parameter 'entity_uuid' is set
+      if (entity_uuid === undefined || entity_uuid === null) {
+        throw new Error("Missing the required parameter 'entity_uuid' when calling resumeRun");
       }
 
       // verify the required parameter 'body' is set
@@ -1352,9 +1352,9 @@
 
 
       var pathParams = {
-        'owner': owner,
-        'project': project,
-        'uuid': uuid
+        'entity.owner': entity_owner,
+        'entity.project': entity_project,
+        'entity.uuid': entity_uuid
       };
       var queryParams = {
       };
@@ -1371,7 +1371,7 @@
       var returnType = V1Run;
 
       return this.apiClient.callApi(
-        '/api/v1/{owner}/{project}/runs/{uuid}/resume', 'POST',
+        '/api/v1/{entity.owner}/{entity.project}/runs/{entity.uuid}/resume', 'POST',
         pathParams, queryParams, collectionQueryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, callback
       );
@@ -1390,7 +1390,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityRequest} body 
+     * @param {module:model/V1EntityResourceRequest} body 
      * @param {module:api/RunsV1Api~startRunTensorboardCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -1457,12 +1457,11 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} uuid Unique integer identifier of the entity
-     * @param {module:model/V1OwnedEntityRequest} body 
      * @param {module:api/RunsV1Api~stopRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
-    this.stopRun = function(owner, project, uuid, body, callback) {
-      var postBody = body;
+    this.stopRun = function(owner, project, uuid, callback) {
+      var postBody = null;
 
       // verify the required parameter 'owner' is set
       if (owner === undefined || owner === null) {
@@ -1477,11 +1476,6 @@
       // verify the required parameter 'uuid' is set
       if (uuid === undefined || uuid === null) {
         throw new Error("Missing the required parameter 'uuid' when calling stopRun");
-      }
-
-      // verify the required parameter 'body' is set
-      if (body === undefined || body === null) {
-        throw new Error("Missing the required parameter 'body' when calling stopRun");
       }
 
 
@@ -1584,7 +1578,7 @@
      * Stop runs
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
-     * @param {module:model/V1ProjectBodyRequest} body 
+     * @param {module:model/V1Uuids} body Uuids of the entities
      * @param {module:api/RunsV1Api~stopRunsCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link Object}
      */
@@ -1706,7 +1700,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project where the experiement will be assigned
      * @param {String} run_uuid UUID
-     * @param {module:model/V1RunBodyRequest} body 
+     * @param {module:model/V1Run} body Run object
      * @param {module:api/RunsV1Api~updateRunCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/V1Run}
      */

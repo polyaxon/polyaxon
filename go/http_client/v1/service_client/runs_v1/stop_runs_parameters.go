@@ -77,8 +77,11 @@ for the stop runs operation typically these are written to a http.Request
 */
 type StopRunsParams struct {
 
-	/*Body*/
-	Body *service_model.V1ProjectBodyRequest
+	/*Body
+	  Uuids of the entities
+
+	*/
+	Body *service_model.V1Uuids
 	/*Owner
 	  Owner of the namespace
 
@@ -129,13 +132,13 @@ func (o *StopRunsParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the stop runs params
-func (o *StopRunsParams) WithBody(body *service_model.V1ProjectBodyRequest) *StopRunsParams {
+func (o *StopRunsParams) WithBody(body *service_model.V1Uuids) *StopRunsParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the stop runs params
-func (o *StopRunsParams) SetBody(body *service_model.V1ProjectBodyRequest) {
+func (o *StopRunsParams) SetBody(body *service_model.V1Uuids) {
 	o.Body = body
 }
 
