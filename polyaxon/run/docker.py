@@ -9,11 +9,11 @@ import tempfile
 import time
 
 from hestia.env_var_keys import POLYAXON_KEYS_NO_OP
-from hestia.user_path import polyaxon_user_path
 from polyaxon_dockerizer import build as dockerizer_build
 from polyaxon_dockerizer import constants as dockerizer_constants
 from polyaxon_dockerizer import generate as dockerizer_generate
 
+from polyaxon import settings
 from polyaxon.deploy.operators.docker import DockerOperator
 from polyaxon.exceptions import (
     PolyaxonClientException,
@@ -21,7 +21,6 @@ from polyaxon.exceptions import (
     PolyaxonHTTPError,
     PolyaxonShouldExitError,
 )
-from polyaxon.settings import TMP_POLYAXON_PATH
 from polyaxon.tracking import Run
 from polyaxon.tracking.utils.hashing import hash_value
 from polyaxon.utils.formatting import Printer
@@ -62,7 +61,10 @@ def _get_env_vars(project, experiment_id, params, data_paths=None):
 
 
 def _get_config_volume():
-    return ["-v", "{}:{}".format(polyaxon_user_path(), TMP_POLYAXON_PATH)]
+    return [
+        "-v",
+        "{}:{}".format(settings.USER_POLYAXON_PATH, settings.TMP_POLYAXON_PATH),
+    ]
 
 
 def _get_data_bind_mounts(mount_refs=None):

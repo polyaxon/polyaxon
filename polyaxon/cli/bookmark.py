@@ -74,7 +74,7 @@ def projects(ctx, page):
 
     objects = [
         Printer.add_status_color(o.to_light_dict(humanize_values=True))
-        for o in response["results"]
+        for o in response.results
     ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
@@ -130,7 +130,7 @@ def runs(ctx, page):
 
     objects = [
         Printer.add_status_color(o.to_light_dict(humanize_values=True))
-        for o in response["results"]
+        for o in response.results
     ]
     objects = list_dicts_to_tabulate(objects)
     if objects:

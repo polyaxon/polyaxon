@@ -154,7 +154,7 @@ def list(ctx, io, query, sort, page):
     else:
         objects = [
             Printer.add_status_color(o.to_light_dict(humanize_values=True))
-            for o in response["results"]
+            for o in response.results
         ]
     objects = list_dicts_to_tabulate(objects)
     if objects:
@@ -535,7 +535,7 @@ def statuses(ctx, page):
                 Printer.add_status_color(
                     o.to_light_dict(humanize_values=True), status_key="status"
                 )
-                for o in response["results"]
+                for o in response.results
             ]
         )
         if objects:

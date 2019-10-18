@@ -19,7 +19,7 @@ class RunManager(BaseConfigManager):
 
     @classmethod
     def get_config_or_raise(cls):
-        run = cls.get_model()
+        run = cls.get_config()
         if not run:
             Printer.print_error("No run was provided.")
             sys.exit(1)

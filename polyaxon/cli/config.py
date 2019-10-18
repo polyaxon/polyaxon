@@ -62,10 +62,8 @@ def get(keys):
 
 
 @config.command()
-@click.option("--verbose", type=bool, help="To set the verbosity of the client.")
+@click.option("--debug", type=bool, help="To set the verbosity of the client.")
 @click.option("--host", type=str, help="To set the server endpoint.")
-@click.option("--port", type=int, help="To set the http port.")
-@click.option("--use_https", type=bool, help="To set whether or not to use https.")
 @click.option(
     "--verify_ssl",
     type=bool,

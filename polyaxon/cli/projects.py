@@ -81,6 +81,13 @@ def create(ctx, name, owner, description, private, init):
     """
     owner = owner or AuthConfigManager.get_value("username")
 
+    if not owner:
+        Printer.print_error(
+            "Please login first or provide a valid owner --owner. "
+            "`polyaxon login --help`"
+        )
+        sys.exit(1)
+
     try:
         polyaxon_client = PolyaxonClient()
         project_config = V1Project(
@@ -117,7 +124,11 @@ def list(owner, page):  # pylint:disable=redefined-builtin
     """
     owner = owner or AuthConfigManager.get_value("username")
     if not owner:
-        Printer.print_error("Please login first. `polyaxon login --help`")
+        Printer.print_error(
+            "Please login first or provide a valid owner --owner. "
+            "`polyaxon login --help`"
+        )
+        sys.exit(1)
 
     page = page or 1
     try:
@@ -137,7 +148,7 @@ def list(owner, page):  # pylint:disable=redefined-builtin
         Printer.print_header("No projects found for current user")
 
     objects = list_dicts_to_tabulate(
-        [o.to_dict() for o in response["results"]],
+        [o.to_dict() for o in response.results],
         humanize_values=True,
         exclude_attrs=["uuid", "description"],
     )
@@ -328,7 +339,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
             )
 
         try:
-            PolyaxonClient().project.set_repo(user, project_name, url, not private)
+            PolyaxonClient().projects_v1.set_repo(user, project_name, url, not private)
         except ApiException as e:
             Printer.print_error(
                 "Could not set git repo on project `{}`.".format(project_name)
@@ -342,7 +353,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
 
     def git_sync_repo():
         try:
-            response = PolyaxonClient().project.sync_repo(user, project_name)
+            response = PolyaxonClient().projects_v1.sync_repo(user, project_name)
         except ApiException as e:
             Printer.print_error(
                 "Could not sync git repo on project `{}`.".format(project_name)

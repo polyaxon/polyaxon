@@ -18,7 +18,7 @@ from polyaxon.logger import clean_outputs, logger
 from polyaxon.managers.auth import AuthConfigManager
 from polyaxon.managers.cli import CliConfigManager
 from polyaxon.schemas.api.authentication import AccessTokenConfig
-from polyaxon.utils.formatting import Printer
+from polyaxon.utils.formatting import Printer, dict_tabulate, dict_to_tabulate
 
 
 @click.command()
@@ -96,12 +96,13 @@ def login(token, username, password):
         sys.exit(1)
     access_token = AccessTokenConfig(username=user.username, token=access_auth.token)
     AuthConfigManager.set_config(access_token)
+    polyaxon_client.config.token = access_auth.token
     Printer.print_success("Login successful")
 
     # Reset current cli
     server_versions = get_server_versions(polyaxon_client=polyaxon_client)
     current_version = get_current_version()
-    log_handler = get_log_handler()
+    log_handler = get_log_handler(polyaxon_client=polyaxon_client)
     CliConfigManager.reset(
         check_count=0,
         current_version=current_version,
@@ -130,4 +131,8 @@ def whoami():
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
-    click.echo("\nUsername: {username}, Email: {email}\n".format(**user.to_dict()))
+
+    response = dict_to_tabulate(user.to_dict(), exclude_attrs=["role"])
+
+    Printer.print_header("User info:")
+    dict_tabulate(response)

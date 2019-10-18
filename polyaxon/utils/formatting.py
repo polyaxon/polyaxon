@@ -9,6 +9,7 @@ from collections import OrderedDict
 
 import click
 
+from hestia.humanize import humanize_timesince
 from hestia.list_utils import to_list
 from hestia.units import to_percentage, to_unit_memory
 from tabulate import tabulate
@@ -18,13 +19,30 @@ from polyaxon.schemas.api.resources import ContainerResourcesConfig
 
 def get_meta_response(response):
     results = {}
-    if response.get("next"):
-        results["next"] = "--page={}".format(response["next"])
-    if response.get("previous"):
-        results["previous"] = "--page={}".format(response["previous"])
-    if response.get("count"):
-        results["count"] = response["count"]
+    if response.next:
+        results["next"] = "--page={}".format(response.next)
+    if response.previous:
+        results["previous"] = "--page={}".format(response.previous)
+    if response.count:
+        results["count"] = response.count
     return results
+
+
+def humanize_attrs(key, value, rounding=2):
+    if key in [
+        "created_at",
+        "updated_at",
+        "started_at",
+        "finished_at",
+        "last_update_time",
+        "last_transition_time",
+    ]:
+        return humanize_timesince(value)
+    if key in ["cpu_percentage"]:
+        return to_percentage(value, rounding)
+    if key in ["memory_free", "memory_used", "memory_total"]:
+        return to_unit_memory(value)
+    return value
 
 
 def list_dicts_to_tabulate(list_dicts, exclude_attrs=False, humanize_values=True):
@@ -34,6 +52,10 @@ def list_dicts_to_tabulate(list_dicts, exclude_attrs=False, humanize_values=True
             if k in exclude_attrs:
                 continue
 
+            if humanize_values:
+                v = humanize_attrs(k, v)
+
+            k = k.upper()
             if k in results:
                 results[k].append(v)
             else:
@@ -48,10 +70,10 @@ def dict_to_tabulate(d_value, exclude_attrs=False, humanize_values=True):
         if k in exclude_attrs:
             continue
 
-        if k in results:
-            results[k].append(v)
-        else:
-            results[k] = [v]
+        if humanize_values:
+            v = humanize_attrs(k, v)
+
+        results[k.upper()] = v
 
     return results
 
@@ -203,7 +225,7 @@ def get_runs_with_keys(response, params_key, extra_attrs=None):
     extra_attrs.append(params_key)
     objects = [
         o.to_light_dict(include_attrs=["id", "unique_name"] + extra_attrs)
-        for o in response["results"]
+        for o in response.results
     ]
     # Extend experiment with metrics
     params_keys = set([])

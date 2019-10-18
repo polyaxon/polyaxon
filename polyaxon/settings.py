@@ -18,12 +18,13 @@ from polyaxon.schemas.api.authentication import AccessTokenConfig
 from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 TMP_POLYAXON_PATH = "/tmp/.polyaxon/"
+USER_POLYAXON_PATH = polyaxon_user_path()
 
 TMP_AUTH_PATH = os.path.join(TMP_POLYAXON_PATH, ".polyaxonauth")
 TMP_CLIENT_CONFIG_PATH = os.path.join(TMP_POLYAXON_PATH, ".polyaxonclient")
 
-USER_AUTH_PATH = os.path.join(polyaxon_user_path(), ".polyaxonauth")
-USER_CLIENT_CONFIG_PATH = os.path.join(polyaxon_user_path(), ".polyaxonclient")
+USER_AUTH_PATH = os.path.join(USER_POLYAXON_PATH, ".polyaxonauth")
+USER_CLIENT_CONFIG_PATH = os.path.join(USER_POLYAXON_PATH, ".polyaxonclient")
 
 auth_config = rhea.Rhea.read_configs(
     [
@@ -45,9 +46,8 @@ config = rhea.Rhea.read_configs(
     ]
 )
 
-AUTH_CONFIG = AccessTokenConfig.from_dict(config.data)
+AUTH_CONFIG = AccessTokenConfig.from_dict(auth_config.data)
 CLIENT_CONFIG = ClientConfig.from_dict(config.data)
-CLIENT_CONFIG.token = (AUTH_CONFIG.token,)
 
 HASH_LENGTH = config.get_int(POLYAXON_KEYS_HASH_LENGTH, is_optional=True, default=12)
 HEALTH_CHECK_URL = config.get_string(POLYAXON_KEYS_HEALTH_CHECK_URL, is_optional=True)
@@ -63,7 +63,6 @@ LONG_REQUEST_TIMEOUT = config.get_int(
 HEALTH_CHECK_INTERVAL = config.get_int(
     "HEALTH_CHECK_INTERVAL", is_optional=True, default=60
 )
-QUEUE_CALL = config.get_int("POLYAXON_INTERVAL", is_optional=True, default=200)
 RECEPTION_UNKNOWN_BEHAVIOUR = config.get_string(
     "POLYAXON_RECEPTION_UNKNOWN_BEHAVIOUR", is_optional=True, default=EXCLUDE
 )
@@ -76,3 +75,6 @@ WARN_UPLOAD_SIZE = config.get_int(
 MAX_UPLOAD_SIZE = config.get_int(
     "POLYAXON_MAX_UPLOAD_SIZE", is_optional=True, default=1024 * 1024 * 150
 )
+
+del auth_config
+del config

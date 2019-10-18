@@ -18,8 +18,7 @@ class PolyaxonClient(object):
         self._config = config or ClientConfig.from_dict(
             settings.CLIENT_CONFIG.to_dict()
         )
-        if token:
-            self._config.token = token
+        self._config.token = token or settings.AUTH_CONFIG.token
 
         self._transport = None
         self.api_client = polyaxon_sdk.ApiClient(self.config.sdk_config)

@@ -140,7 +140,7 @@ def version():
         sys.exit(1)
     cli_version = get_current_version()
     Printer.print_header("Current cli version: {}.".format(cli_version))
-    Printer.print_header("Supported cli versions:")
+    Printer.print_header("Supported versions:")
     dict_tabulate(server_versions.to_dict())
 
 

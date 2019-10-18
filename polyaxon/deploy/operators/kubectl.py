@@ -3,8 +3,7 @@ from __future__ import absolute_import, division, print_function
 
 import os
 
-from hestia.user_path import polyaxon_user_path
-
+from polyaxon import settings
 from polyaxon.deploy.operators.cmd_operator import CmdOperator
 
 
@@ -34,7 +33,7 @@ class KubectlOperator(CmdOperator):
         env.update(
             dict(
                 KUBECONFIG=env.get("KUBECONFIG", ""),
-                PATH="{}:{}".format(polyaxon_user_path(), env.get("PATH", "")),
+                PATH="{}:{}".format(settings.USER_POLYAXON_PATH, env.get("PATH", "")),
             )
         )
         return env

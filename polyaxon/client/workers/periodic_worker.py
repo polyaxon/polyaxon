@@ -103,7 +103,7 @@ class PeriodicWorker(QueueWorker):
                     self._queue.task_done()
 
                 for url in six.iterkeys(messages):
-                    if messages[url] >= settings.QUEUE_CALL:
+                    if messages[url] >= settings.CLIENT_CONFIG.interval:
                         self._call(url, queue_kwargs[url])
                         messages[url] = 0
                         queue_kwargs[url] = {}

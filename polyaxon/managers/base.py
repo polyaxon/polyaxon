@@ -4,9 +4,12 @@ from __future__ import absolute_import, division, print_function
 import json
 import os
 
+from collections import Mapping
+
 from hestia.user_path import polyaxon_user_path
 
 from polyaxon.logger import logger
+from polyaxon.schemas.base import BaseConfig
 
 
 class BaseConfigManager(object):
@@ -70,6 +73,8 @@ class BaseConfigManager(object):
                     "Setting %s in the file %s", config.to_dict(), cls.CONFIG_FILE_NAME
                 )
                 config_file.write(json.dumps(config.to_dict()))
+            elif isinstance(config, Mapping):
+                config_file.write(json.dumps(config))
             else:
                 logger.debug("Setting %s in the file %s", config, cls.CONFIG_FILE_NAME)
                 config_file.write(config)
@@ -82,16 +87,8 @@ class BaseConfigManager(object):
         config_file_path = cls.get_config_file_path()
         with open(config_file_path, "r") as config_file:
             config_str = config_file.read()
-        return cls.CONFIG.from_dict(json.loads(config_str))
-
-    @classmethod
-    def get_model(cls):
-        if not cls.is_initialized():
-            return None
-
-        config_file_path = cls.get_config_file_path()
-        with open(config_file_path, "r") as config_file:
-            config_str = config_file.read()
+        if issubclass(cls.CONFIG, BaseConfig):
+            return cls.CONFIG.from_dict(json.loads(config_str))
         return cls.CONFIG(**json.loads(config_str))
 
     @classmethod

@@ -89,7 +89,8 @@ def init(project, polyaxonfile):
 
     if init_project:
         ProjectManager.purge()
-        ProjectManager.set_config(project_config, init=True)
+        config = polyaxon_client.api_client.sanitize_for_serialization(project_config)
+        ProjectManager.set_config(config, init=True)
         Printer.print_success("Project was initialized")
     else:
         Printer.print_header("Project config was not changed.")
