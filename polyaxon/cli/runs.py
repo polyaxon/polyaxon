@@ -431,7 +431,7 @@ def restart(ctx, copy, file, u):  # pylint:disable=redefined-builtin
             response = polyaxon_client.runs_v1.restart_run(
                 owner, project_name, run_uuid, body
             )
-            Printer.print_success("Run was restarted with id {}".format(response.uuid))
+            Printer.print_success("Run was restarted with uid {}".format(response.uuid))
     except (ApiException, HTTPError) as e:
         Printer.print_error("Could not restart run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
@@ -464,24 +464,23 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
     ```
     """
     content = None
-    update_code = None
     if file:
         content = "{}".format(rhea.read(file))
 
     # Check if we need to upload
     if u:
         ctx.invoke(upload, sync=False)
-        update_code = True
 
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid")
     )
     try:
         polyaxon_client = PolyaxonClient()
+        body = V1Run(content=content)
         response = polyaxon_client.runs_v1.resume_run(
-            owner, project_name, run_uuid, content=content, update_code=update_code
+            owner, project_name, run_uuid, body
         )
-        Printer.print_success("Run was resumed with id {}".format(response.uuid))
+        Printer.print_success("Run was resumed with uid {}".format(response.uuid))
     except (ApiException, HTTPError) as e:
         Printer.print_error("Could not resume run `{}`.".format(run_uuid))
         Printer.print_error("Error message `{}`.".format(e))
