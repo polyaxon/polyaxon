@@ -87,11 +87,12 @@ def runs(ctx, project, uid):
     "--query", "-q", type=str, help="To filter the runs based on this query spec."
 )
 @click.option("--sort", "-s", type=str, help="To change order by of the runs.")
-@click.option("--page", type=int, help="To paginate through the list of runs.")
+@click.option("--limit", type=int, help="To limit the list of runs.")
+@click.option("--offset", type=int, help="To offset the list of runs.")
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def list(ctx, io, query, sort, page):
+def list(ctx, io, query, sort, limit, offset):
     """List runs for this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -125,7 +126,6 @@ def list(ctx, io, query, sort, page):
     """
     owner, project_name = get_project_or_local(ctx.obj.get("project"))
 
-    page = page or 1
     try:
         polyaxon_client = PolyaxonClient()
         params = {}
@@ -133,8 +133,10 @@ def list(ctx, io, query, sort, page):
             params["query"] = query
         if sort:
             params["sort"] = sort
-        if page > 1:
-            params["page"] = page
+        if limit:
+            params["limit"] = limit
+        if offset:
+            params["offset"] = offset
         response = polyaxon_client.runs_v1.list_runs(
             owner=owner, project=project_name, **params
         )
@@ -257,7 +259,7 @@ def delete(ctx):
 
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.runs_v1.delete_run(owner, project_name, run_uuid)
+        polyaxon_client.runs_v1.delete_run(owner, project_name, run_uuid)
         # Purge caching
         RunManager.purge()
     except (ApiException, HTTPError) as e:

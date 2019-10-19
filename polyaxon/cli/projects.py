@@ -116,9 +116,10 @@ def create(ctx, name, owner, description, private, init):
     help="Name of the owner/namespace, "
     "if not provided it will default to the namespace of the current user.",
 )
-@click.option("--page", type=int, help="To paginate through the list of projects.")
+@click.option("--limit", type=int, help="To limit the list of projects.")
+@click.option("--offset", type=int, help="To offset the list of projects.")
 @clean_outputs
-def list(owner, page):  # pylint:disable=redefined-builtin
+def list(owner, limit, offset):  # pylint:disable=redefined-builtin
     """List projects.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -131,10 +132,14 @@ def list(owner, page):  # pylint:disable=redefined-builtin
         )
         sys.exit(1)
 
-    page = page or 1
     try:
+        params = {}
+        if limit:
+            params["limit"] = limit
+        if offset:
+            params["offset"] = offset
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.projects_v1.list_projects(owner, page=page)
+        response = polyaxon_client.projects_v1.list_projects(owner, **params)
     except (ApiException, HTTPError) as e:
         Printer.print_error("Could not get list of projects.")
         Printer.print_error("Error message `{}`.".format(e))

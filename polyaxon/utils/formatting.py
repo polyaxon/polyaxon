@@ -20,9 +20,9 @@ from polyaxon.schemas.api.resources import ContainerResourcesConfig
 def get_meta_response(response):
     results = {}
     if response.next:
-        results["next"] = "--page={}".format(response.next)
+        results["next"] = response.next
     if response.previous:
-        results["previous"] = "--page={}".format(response.previous)
+        results["previous"] = response.previous
     if response.count:
         results["count"] = response.count
     return results
