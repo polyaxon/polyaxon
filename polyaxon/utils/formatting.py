@@ -45,7 +45,8 @@ def humanize_attrs(key, value, rounding=2):
     return value
 
 
-def list_dicts_to_tabulate(list_dicts, exclude_attrs=False, humanize_values=True):
+def list_dicts_to_tabulate(list_dicts, exclude_attrs=None, humanize_values=True):
+    exclude_attrs = exclude_attrs or {}
     results = OrderedDict()
     for d_value in list_dicts:
         for k, v in six.iteritems(d_value):
@@ -64,7 +65,8 @@ def list_dicts_to_tabulate(list_dicts, exclude_attrs=False, humanize_values=True
     return results
 
 
-def dict_to_tabulate(d_value, exclude_attrs=False, humanize_values=True):
+def dict_to_tabulate(d_value, exclude_attrs=None, humanize_values=True):
+    exclude_attrs = exclude_attrs or {}
     results = OrderedDict()
     for k, v in six.iteritems(d_value):
         if k in exclude_attrs:

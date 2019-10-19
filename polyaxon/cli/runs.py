@@ -490,10 +490,9 @@ def resume(ctx, file, u):  # pylint:disable=redefined-builtin
 
 
 @runs.command()
-@click.option("--page", type=int, help="To paginate through the list of statuses.")
 @click.pass_context
 @clean_outputs
-def statuses(ctx, page):
+def statuses(ctx):
     """Get run or run job statuses.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -516,46 +515,36 @@ def statuses(ctx, page):
     ```bash
     $ polyaxon run statuses -j 3
     ```
-
-    \b
-    ```bash
-    $ polyaxon run -xp 1 statuses --job 1
-    ```
     """
 
     def get_run_statuses():
         try:
             polyaxon_client = PolyaxonClient()
             response = polyaxon_client.runs_v1.get_run_statuses(
-                owner, project_name, run_uuid, page=page
+                owner, project_name, run_uuid
             )
         except (ApiException, HTTPError) as e:
             Printer.print_error("Could get status for run `{}`.".format(run_uuid))
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
 
-        meta = get_meta_response(response)
-        if meta:
-            Printer.print_header("Statuses for run `{}`.".format(run_uuid))
-            Printer.print_header("Navigation:")
-            dict_tabulate(meta)
-        else:
-            Printer.print_header("No statuses found for run `{}`.".format(run_uuid))
+        Printer.print_header("Latest status:")
+        latest_status = Printer.add_status_color(
+            {"status": response.status}, status_key="status"
+        )
+        click.echo("{}\n".format(latest_status["status"]))
 
         objects = list_dicts_to_tabulate(
             [
                 Printer.add_status_color(
-                    o.to_light_dict(humanize_values=True), status_key="status"
+                    o.to_dict(), status_key="type"
                 )
-                for o in response.results
+                for o in response.status_conditions
             ]
         )
         if objects:
-            Printer.print_header("Statuses:")
-            objects.pop("uuid", None)
+            Printer.print_header("Conditions:")
             dict_tabulate(objects, is_list_dict=True)
-
-    page = page or 1
 
     owner, project_name, run_uuid = get_project_run_or_local(
         ctx.obj.get("project"), ctx.obj.get("run_uuid")
