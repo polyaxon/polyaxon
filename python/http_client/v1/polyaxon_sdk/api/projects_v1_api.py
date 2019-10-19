@@ -794,7 +794,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -819,7 +819,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -828,7 +828,7 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['user', 'page', 'limit', 'sort', 'query']  # noqa: E501
+        all_params = ['user', 'offset', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -855,8 +855,8 @@ class ProjectsV1Api(object):
             path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
-        if 'page' in params:
-            query_params.append(('page', params['page']))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
         if 'limit' in params:
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'sort' in params:
@@ -907,7 +907,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -932,7 +932,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str user: User (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -941,7 +941,7 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['user', 'page', 'limit', 'sort', 'query']  # noqa: E501
+        all_params = ['user', 'offset', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -968,8 +968,8 @@ class ProjectsV1Api(object):
             path_params['user'] = params['user']  # noqa: E501
 
         query_params = []
-        if 'page' in params:
-            query_params.append(('page', params['page']))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
         if 'limit' in params:
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'sort' in params:
@@ -1020,7 +1020,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -1045,7 +1045,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -1054,7 +1054,7 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'page', 'limit', 'sort', 'query']  # noqa: E501
+        all_params = ['owner', 'offset', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1081,8 +1081,8 @@ class ProjectsV1Api(object):
             path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
-        if 'page' in params:
-            query_params.append(('page', params['page']))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
         if 'limit' in params:
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'sort' in params:
@@ -1133,7 +1133,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -1158,7 +1158,7 @@ class ProjectsV1Api(object):
 
         :param async_req bool
         :param str owner: Owner of the namespace (required)
-        :param int page: Pagination.
+        :param int offset: Pagination offset.
         :param int limit: Limit size.
         :param str sort: Sort to order the search.
         :param str query: Query filter the search search.
@@ -1167,7 +1167,7 @@ class ProjectsV1Api(object):
                  returns the request thread.
         """
 
-        all_params = ['owner', 'page', 'limit', 'sort', 'query']  # noqa: E501
+        all_params = ['owner', 'offset', 'limit', 'sort', 'query']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -1194,8 +1194,8 @@ class ProjectsV1Api(object):
             path_params['owner'] = params['owner']  # noqa: E501
 
         query_params = []
-        if 'page' in params:
-            query_params.append(('page', params['page']))  # noqa: E501
+        if 'offset' in params:
+            query_params.append(('offset', params['offset']))  # noqa: E501
         if 'limit' in params:
             query_params.append(('limit', params['limit']))  # noqa: E501
         if 'sort' in params:

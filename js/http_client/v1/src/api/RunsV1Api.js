@@ -949,7 +949,7 @@
      * List archived runs for user
      * @param {String} user User
      * @param {Object} opts Optional parameters
-     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.offset Pagination offset.
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
@@ -970,7 +970,7 @@
         'user': user
       };
       var queryParams = {
-        'page': opts['page'],
+        'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
@@ -1006,7 +1006,7 @@
      * List bookmarked runs for user
      * @param {String} user User
      * @param {Object} opts Optional parameters
-     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.offset Pagination offset.
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
@@ -1027,7 +1027,7 @@
         'user': user
       };
       var queryParams = {
-        'page': opts['page'],
+        'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],
@@ -1064,7 +1064,7 @@
      * @param {String} owner Owner of the namespace
      * @param {String} project Project under namesapce
      * @param {Object} opts Optional parameters
-     * @param {Number} opts.page Pagination.
+     * @param {Number} opts.offset Pagination offset.
      * @param {Number} opts.limit Limit size.
      * @param {String} opts.sort Sort to order the search.
      * @param {String} opts.query Query filter the search search.
@@ -1091,7 +1091,7 @@
         'project': project
       };
       var queryParams = {
-        'page': opts['page'],
+        'offset': opts['offset'],
         'limit': opts['limit'],
         'sort': opts['sort'],
         'query': opts['query'],

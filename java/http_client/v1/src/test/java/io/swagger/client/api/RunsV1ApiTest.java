@@ -320,11 +320,11 @@ public class RunsV1ApiTest {
     @Test
     public void listArchivedRunsTest() throws ApiException {
         String user = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunsResponse response = api.listArchivedRuns(user, page, limit, sort, query);
+        V1ListRunsResponse response = api.listArchivedRuns(user, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -340,11 +340,11 @@ public class RunsV1ApiTest {
     @Test
     public void listBookmarkedRunsTest() throws ApiException {
         String user = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunsResponse response = api.listBookmarkedRuns(user, page, limit, sort, query);
+        V1ListRunsResponse response = api.listBookmarkedRuns(user, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -361,11 +361,11 @@ public class RunsV1ApiTest {
     public void listRunsTest() throws ApiException {
         String owner = null;
         String project = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListRunsResponse response = api.listRuns(owner, project, page, limit, sort, query);
+        V1ListRunsResponse response = api.listRuns(owner, project, offset, limit, sort, query);
 
         // TODO: test validations
     }

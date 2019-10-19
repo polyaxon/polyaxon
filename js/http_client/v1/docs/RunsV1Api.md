@@ -865,7 +865,7 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 var user = "user_example"; // String | User
 
 var opts = { 
-  'page': 56, // Number | Pagination.
+  'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
@@ -886,7 +886,7 @@ apiInstance.listArchivedRuns(user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User | 
- **page** | **Number**| Pagination. | [optional] 
+ **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
@@ -926,7 +926,7 @@ var apiInstance = new PolyaxonSdk.RunsV1Api();
 var user = "user_example"; // String | User
 
 var opts = { 
-  'page': 56, // Number | Pagination.
+  'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
@@ -947,7 +947,7 @@ apiInstance.listBookmarkedRuns(user, opts, callback);
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User | 
- **page** | **Number**| Pagination. | [optional] 
+ **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 
@@ -989,7 +989,7 @@ var owner = "owner_example"; // String | Owner of the namespace
 var project = "project_example"; // String | Project under namesapce
 
 var opts = { 
-  'page': 56, // Number | Pagination.
+  'offset': 56, // Number | Pagination offset.
   'limit': 56, // Number | Limit size.
   'sort': "sort_example", // String | Sort to order the search.
   'query': "query_example" // String | Query filter the search search.
@@ -1011,7 +1011,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project under namesapce | 
- **page** | **Number**| Pagination. | [optional] 
+ **offset** | **Number**| Pagination offset. | [optional] 
  **limit** | **Number**| Limit size. | [optional] 
  **sort** | **String**| Sort to order the search. | [optional] 
  **query** | **String**| Query filter the search search. | [optional] 

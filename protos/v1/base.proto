@@ -64,8 +64,8 @@ message UserResouceListRequest {
     // User
     string user = 1;
 
-    // Pagination
-    int32 page = 2;
+    // Pagination offset
+    int32 offset = 2;
 
     // Limit size
     int32 limit = 3;
@@ -82,8 +82,8 @@ message OwnerResouceListRequest {
     // Owner of the namespace
     string owner = 1;
 
-    // Pagination
-    int32 page = 2;
+    // Pagination offset
+    int32 offset = 2;
 
     // Limit size
     int32 limit = 3;
@@ -103,8 +103,8 @@ message ProjectResourceListRequest {
     // Project under namesapce
     string project = 2;
 
-    // Pagination
-    int32 page = 3;
+    // Pagination offset
+    int32 offset = 3;
 
     // Limit size
     int32 limit = 4;

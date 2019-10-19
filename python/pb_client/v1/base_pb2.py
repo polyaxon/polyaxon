@@ -37,7 +37,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='v1',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"#\n\x13UserResourceRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"%\n\x14OwnerResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"8\n\x16ProjectResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"\x16\n\x05Uuids\x12\r\n\x05uuids\x18\x01 \x03(\t\"[\n\x1fProjectResourceUuidsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05uuids\x18\x03 \x01(\x0b\x32\t.v1.Uuids\"E\n\x15\x45ntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\"`\n\x16UserResouceListRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"b\n\x17OwnerResouceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"v\n\x1aProjectResourceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04page\x18\x03 \x01(\x05\x12\r\n\x05limit\x18\x04 \x01(\x05\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\tb\x06proto3')
+  serialized_pb=_b('\n\rv1/base.proto\x12\x02v1\x1a\x19google/protobuf/any.proto\"6\n\x02KV\x12\x0b\n\x03key\x18\x01 \x01(\t\x12#\n\x05value\x18\x02 \x01(\x0b\x32\x14.google.protobuf.Any\"#\n\x13UserResourceRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\"%\n\x14OwnerResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\"8\n\x16ProjectResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\"\x16\n\x05Uuids\x12\r\n\x05uuids\x18\x01 \x03(\t\"[\n\x1fProjectResourceUuidsBodyRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x18\n\x05uuids\x18\x03 \x01(\x0b\x32\t.v1.Uuids\"E\n\x15\x45ntityResourceRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0c\n\x04uuid\x18\x03 \x01(\t\"b\n\x16UserResouceListRequest\x12\x0c\n\x04user\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"d\n\x17OwnerResouceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0e\n\x06offset\x18\x02 \x01(\x05\x12\r\n\x05limit\x18\x03 \x01(\x05\x12\x0c\n\x04sort\x18\x04 \x01(\t\x12\r\n\x05query\x18\x05 \x01(\t\"x\n\x1aProjectResourceListRequest\x12\r\n\x05owner\x18\x01 \x01(\t\x12\x0f\n\x07project\x18\x02 \x01(\t\x12\x0e\n\x06offset\x18\x03 \x01(\x05\x12\r\n\x05limit\x18\x04 \x01(\x05\x12\x0c\n\x04sort\x18\x05 \x01(\t\x12\r\n\x05query\x18\x06 \x01(\tb\x06proto3')
   ,
   dependencies=[google_dot_protobuf_dot_any__pb2.DESCRIPTOR,])
 
@@ -318,7 +318,7 @@ _USERRESOUCELISTREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='page', full_name='v1.UserResouceListRequest.page', index=1,
+      name='offset', full_name='v1.UserResouceListRequest.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -358,7 +358,7 @@ _USERRESOUCELISTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=426,
-  serialized_end=522,
+  serialized_end=524,
 )
 
 
@@ -377,7 +377,7 @@ _OWNERRESOUCELISTREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='page', full_name='v1.OwnerResouceListRequest.page', index=1,
+      name='offset', full_name='v1.OwnerResouceListRequest.offset', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -416,8 +416,8 @@ _OWNERRESOUCELISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=524,
-  serialized_end=622,
+  serialized_start=526,
+  serialized_end=626,
 )
 
 
@@ -443,7 +443,7 @@ _PROJECTRESOURCELISTREQUEST = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='page', full_name='v1.ProjectResourceListRequest.page', index=2,
+      name='offset', full_name='v1.ProjectResourceListRequest.offset', index=2,
       number=3, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -482,8 +482,8 @@ _PROJECTRESOURCELISTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=624,
-  serialized_end=742,
+  serialized_start=628,
+  serialized_end=748,
 )
 
 _KV.fields_by_name['value'].message_type = google_dot_protobuf_dot_any__pb2._ANY

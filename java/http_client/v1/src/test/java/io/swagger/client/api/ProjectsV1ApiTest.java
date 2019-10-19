@@ -177,11 +177,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listArchivedProjectsTest() throws ApiException {
         String user = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listArchivedProjects(user, page, limit, sort, query);
+        V1ListProjectsResponse response = api.listArchivedProjects(user, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -197,11 +197,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listBookmarkedProjectsTest() throws ApiException {
         String user = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listBookmarkedProjects(user, page, limit, sort, query);
+        V1ListProjectsResponse response = api.listBookmarkedProjects(user, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -217,11 +217,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listProjectNamesTest() throws ApiException {
         String owner = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listProjectNames(owner, page, limit, sort, query);
+        V1ListProjectsResponse response = api.listProjectNames(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }
@@ -237,11 +237,11 @@ public class ProjectsV1ApiTest {
     @Test
     public void listProjectsTest() throws ApiException {
         String owner = null;
-        Integer page = null;
+        Integer offset = null;
         Integer limit = null;
         String sort = null;
         String query = null;
-        V1ListProjectsResponse response = api.listProjects(owner, page, limit, sort, query);
+        V1ListProjectsResponse response = api.listProjects(owner, offset, limit, sort, query);
 
         // TODO: test validations
     }

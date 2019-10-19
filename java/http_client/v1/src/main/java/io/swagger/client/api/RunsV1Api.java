@@ -2113,7 +2113,7 @@ public class RunsV1Api {
     /**
      * Build call for listArchivedRuns
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
@@ -2122,7 +2122,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listArchivedRunsCall(String user, Integer page, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2131,8 +2131,8 @@ public class RunsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (page != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
         if (limit != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
         if (sort != null)
@@ -2173,7 +2173,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listArchivedRunsValidateBeforeCall(String user, Integer page, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listArchivedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
@@ -2181,7 +2181,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listArchivedRunsCall(user, page, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedRunsCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2190,15 +2190,15 @@ public class RunsV1Api {
      * List archived runs for user
      * 
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listArchivedRuns(String user, Integer page, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listArchivedRunsWithHttpInfo(user, page, limit, sort, query);
+    public V1ListRunsResponse listArchivedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = listArchivedRunsWithHttpInfo(user, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -2206,15 +2206,15 @@ public class RunsV1Api {
      * List archived runs for user
      * 
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String user, Integer page, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, page, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> listArchivedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2223,7 +2223,7 @@ public class RunsV1Api {
      * List archived runs for user (asynchronously)
      * 
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
@@ -2231,7 +2231,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listArchivedRunsAsync(String user, Integer page, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listArchivedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2252,7 +2252,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, page, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listArchivedRunsValidateBeforeCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -2260,7 +2260,7 @@ public class RunsV1Api {
     /**
      * Build call for listBookmarkedRuns
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
@@ -2269,7 +2269,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedRunsCall(String user, Integer page, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedRunsCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2278,8 +2278,8 @@ public class RunsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (page != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
         if (limit != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
         if (sort != null)
@@ -2320,7 +2320,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listBookmarkedRunsValidateBeforeCall(String user, Integer page, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listBookmarkedRunsValidateBeforeCall(String user, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'user' is set
         if (user == null) {
@@ -2328,7 +2328,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listBookmarkedRunsCall(user, page, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedRunsCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2337,15 +2337,15 @@ public class RunsV1Api {
      * List bookmarked runs for user
      * 
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listBookmarkedRuns(String user, Integer page, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listBookmarkedRunsWithHttpInfo(user, page, limit, sort, query);
+    public V1ListRunsResponse listBookmarkedRuns(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = listBookmarkedRunsWithHttpInfo(user, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -2353,15 +2353,15 @@ public class RunsV1Api {
      * List bookmarked runs for user
      * 
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listBookmarkedRunsWithHttpInfo(String user, Integer page, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, page, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> listBookmarkedRunsWithHttpInfo(String user, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2370,7 +2370,7 @@ public class RunsV1Api {
      * List bookmarked runs for user (asynchronously)
      * 
      * @param user User (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
@@ -2378,7 +2378,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listBookmarkedRunsAsync(String user, Integer page, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listBookmarkedRunsAsync(String user, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2399,7 +2399,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, page, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listBookmarkedRunsValidateBeforeCall(user, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
@@ -2408,7 +2408,7 @@ public class RunsV1Api {
      * Build call for listRuns
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
@@ -2417,7 +2417,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call listRunsCall(String owner, String project, Integer page, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call listRunsCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -2427,8 +2427,8 @@ public class RunsV1Api {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (page != null)
-        localVarQueryParams.addAll(apiClient.parameterToPair("page", page));
+        if (offset != null)
+        localVarQueryParams.addAll(apiClient.parameterToPair("offset", offset));
         if (limit != null)
         localVarQueryParams.addAll(apiClient.parameterToPair("limit", limit));
         if (sort != null)
@@ -2469,7 +2469,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call listRunsValidateBeforeCall(String owner, String project, Integer page, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call listRunsValidateBeforeCall(String owner, String project, Integer offset, Integer limit, String sort, String query, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -2482,7 +2482,7 @@ public class RunsV1Api {
         }
         
 
-        com.squareup.okhttp.Call call = listRunsCall(owner, project, page, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listRunsCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         return call;
 
     }
@@ -2492,15 +2492,15 @@ public class RunsV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
      * @return V1ListRunsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1ListRunsResponse listRuns(String owner, String project, Integer page, Integer limit, String sort, String query) throws ApiException {
-        ApiResponse<V1ListRunsResponse> resp = listRunsWithHttpInfo(owner, project, page, limit, sort, query);
+    public V1ListRunsResponse listRuns(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        ApiResponse<V1ListRunsResponse> resp = listRunsWithHttpInfo(owner, project, offset, limit, sort, query);
         return resp.getData();
     }
 
@@ -2509,15 +2509,15 @@ public class RunsV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
      * @return ApiResponse&lt;V1ListRunsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String project, Integer page, Integer limit, String sort, String query) throws ApiException {
-        com.squareup.okhttp.Call call = listRunsValidateBeforeCall(owner, project, page, limit, sort, query, null, null);
+    public ApiResponse<V1ListRunsResponse> listRunsWithHttpInfo(String owner, String project, Integer offset, Integer limit, String sort, String query) throws ApiException {
+        com.squareup.okhttp.Call call = listRunsValidateBeforeCall(owner, project, offset, limit, sort, query, null, null);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -2527,7 +2527,7 @@ public class RunsV1Api {
      * 
      * @param owner Owner of the namespace (required)
      * @param project Project under namesapce (required)
-     * @param page Pagination. (optional)
+     * @param offset Pagination offset. (optional)
      * @param limit Limit size. (optional)
      * @param sort Sort to order the search. (optional)
      * @param query Query filter the search search. (optional)
@@ -2535,7 +2535,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call listRunsAsync(String owner, String project, Integer page, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call listRunsAsync(String owner, String project, Integer offset, Integer limit, String sort, String query, final ApiCallback<V1ListRunsResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2556,7 +2556,7 @@ public class RunsV1Api {
             };
         }
 
-        com.squareup.okhttp.Call call = listRunsValidateBeforeCall(owner, project, page, limit, sort, query, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = listRunsValidateBeforeCall(owner, project, offset, limit, sort, query, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<V1ListRunsResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

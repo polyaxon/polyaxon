@@ -54,8 +54,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -121,8 +121,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -188,8 +188,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -255,8 +255,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -730,8 +730,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -797,8 +797,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -1438,8 +1438,8 @@
             "type": "string"
           },
           {
-            "name": "page",
-            "description": "Pagination.",
+            "name": "offset",
+            "description": "Pagination offset.",
             "in": "query",
             "required": false,
             "type": "integer",

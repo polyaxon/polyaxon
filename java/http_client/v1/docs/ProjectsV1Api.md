@@ -408,7 +408,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedProjects"></a>
 # **listArchivedProjects**
-> V1ListProjectsResponse listArchivedProjects(user, page, limit, sort, query)
+> V1ListProjectsResponse listArchivedProjects(user, offset, limit, sort, query)
 
 Create new run
 
@@ -431,12 +431,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String user = "user_example"; // String | User
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listArchivedProjects(user, page, limit, sort, query);
+    V1ListProjectsResponse result = apiInstance.listArchivedProjects(user, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listArchivedProjects");
@@ -449,7 +449,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedProjects"></a>
 # **listBookmarkedProjects**
-> V1ListProjectsResponse listBookmarkedProjects(user, page, limit, sort, query)
+> V1ListProjectsResponse listBookmarkedProjects(user, offset, limit, sort, query)
 
 List runs
 
@@ -492,12 +492,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String user = "user_example"; // String | User
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user, page, limit, sort, query);
+    V1ListProjectsResponse result = apiInstance.listBookmarkedProjects(user, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listBookmarkedProjects");
@@ -510,7 +510,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -530,7 +530,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjectNames"></a>
 # **listProjectNames**
-> V1ListProjectsResponse listProjectNames(owner, page, limit, sort, query)
+> V1ListProjectsResponse listProjectNames(owner, offset, limit, sort, query)
 
 List archived runs for user
 
@@ -553,12 +553,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listProjectNames(owner, page, limit, sort, query);
+    V1ListProjectsResponse result = apiInstance.listProjectNames(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listProjectNames");
@@ -571,7 +571,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -591,7 +591,7 @@ Name | Type | Description  | Notes
 
 <a name="listProjects"></a>
 # **listProjects**
-> V1ListProjectsResponse listProjects(owner, page, limit, sort, query)
+> V1ListProjectsResponse listProjects(owner, offset, limit, sort, query)
 
 List bookmarked runs for user
 
@@ -614,12 +614,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 ProjectsV1Api apiInstance = new ProjectsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListProjectsResponse result = apiInstance.listProjects(owner, page, limit, sort, query);
+    V1ListProjectsResponse result = apiInstance.listProjects(owner, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling ProjectsV1Api#listProjects");
@@ -632,7 +632,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]

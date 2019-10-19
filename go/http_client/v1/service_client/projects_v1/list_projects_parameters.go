@@ -81,16 +81,16 @@ type ListProjectsParams struct {
 
 	*/
 	Limit *int32
+	/*Offset
+	  Pagination offset.
+
+	*/
+	Offset *int32
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Page
-	  Pagination.
-
-	*/
-	Page *int32
 	/*Query
 	  Query filter the search search.
 
@@ -151,6 +151,17 @@ func (o *ListProjectsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithOffset adds the offset to the list projects params
+func (o *ListProjectsParams) WithOffset(offset *int32) *ListProjectsParams {
+	o.SetOffset(offset)
+	return o
+}
+
+// SetOffset adds the offset to the list projects params
+func (o *ListProjectsParams) SetOffset(offset *int32) {
+	o.Offset = offset
+}
+
 // WithOwner adds the owner to the list projects params
 func (o *ListProjectsParams) WithOwner(owner string) *ListProjectsParams {
 	o.SetOwner(owner)
@@ -160,17 +171,6 @@ func (o *ListProjectsParams) WithOwner(owner string) *ListProjectsParams {
 // SetOwner adds the owner to the list projects params
 func (o *ListProjectsParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithPage adds the page to the list projects params
-func (o *ListProjectsParams) WithPage(page *int32) *ListProjectsParams {
-	o.SetPage(page)
-	return o
-}
-
-// SetPage adds the page to the list projects params
-func (o *ListProjectsParams) SetPage(page *int32) {
-	o.Page = page
 }
 
 // WithQuery adds the query to the list projects params
@@ -219,25 +219,25 @@ func (o *ListProjectsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
+	if o.Offset != nil {
 
-	if o.Page != nil {
-
-		// query param page
-		var qrPage int32
-		if o.Page != nil {
-			qrPage = *o.Page
+		// query param offset
+		var qrOffset int32
+		if o.Offset != nil {
+			qrOffset = *o.Offset
 		}
-		qPage := swag.FormatInt32(qrPage)
-		if qPage != "" {
-			if err := r.SetQueryParam("page", qPage); err != nil {
+		qOffset := swag.FormatInt32(qrOffset)
+		if qOffset != "" {
+			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
 
+	}
+
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
+		return err
 	}
 
 	if o.Query != nil {

@@ -826,7 +826,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_archived_runs**
-> V1ListRunsResponse list_archived_runs(user, page=page, limit=limit, sort=sort, query=query)
+> V1ListRunsResponse list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List archived runs for user
 
@@ -847,14 +847,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 user = 'user_example' # str | User
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List archived runs for user
-    api_response = api_instance.list_archived_runs(user, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_archived_runs(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->list_archived_runs: %s\n" % e)
@@ -865,7 +865,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **str**| User | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -886,7 +886,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_runs**
-> V1ListRunsResponse list_bookmarked_runs(user, page=page, limit=limit, sort=sort, query=query)
+> V1ListRunsResponse list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List bookmarked runs for user
 
@@ -907,14 +907,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 user = 'user_example' # str | User
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List bookmarked runs for user
-    api_response = api_instance.list_bookmarked_runs(user, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_bookmarked_runs(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->list_bookmarked_runs: %s\n" % e)
@@ -925,7 +925,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **str**| User | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -946,7 +946,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_runs**
-> V1ListRunsResponse list_runs(owner, project, page=page, limit=limit, sort=sort, query=query)
+> V1ListRunsResponse list_runs(owner, project, offset=offset, limit=limit, sort=sort, query=query)
 
 List runs
 
@@ -968,14 +968,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 api_instance = polyaxon_sdk.RunsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
 project = 'project_example' # str | Project under namesapce
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List runs
-    api_response = api_instance.list_runs(owner, project, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_runs(owner, project, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling RunsV1Api->list_runs: %s\n" % e)
@@ -987,7 +987,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
  **project** | **str**| Project under namesapce | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 

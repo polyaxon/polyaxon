@@ -81,16 +81,16 @@ type ListRunsParams struct {
 
 	*/
 	Limit *int32
+	/*Offset
+	  Pagination offset.
+
+	*/
+	Offset *int32
 	/*Owner
 	  Owner of the namespace
 
 	*/
 	Owner string
-	/*Page
-	  Pagination.
-
-	*/
-	Page *int32
 	/*Project
 	  Project under namesapce
 
@@ -156,6 +156,17 @@ func (o *ListRunsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
+// WithOffset adds the offset to the list runs params
+func (o *ListRunsParams) WithOffset(offset *int32) *ListRunsParams {
+	o.SetOffset(offset)
+	return o
+}
+
+// SetOffset adds the offset to the list runs params
+func (o *ListRunsParams) SetOffset(offset *int32) {
+	o.Offset = offset
+}
+
 // WithOwner adds the owner to the list runs params
 func (o *ListRunsParams) WithOwner(owner string) *ListRunsParams {
 	o.SetOwner(owner)
@@ -165,17 +176,6 @@ func (o *ListRunsParams) WithOwner(owner string) *ListRunsParams {
 // SetOwner adds the owner to the list runs params
 func (o *ListRunsParams) SetOwner(owner string) {
 	o.Owner = owner
-}
-
-// WithPage adds the page to the list runs params
-func (o *ListRunsParams) WithPage(page *int32) *ListRunsParams {
-	o.SetPage(page)
-	return o
-}
-
-// SetPage adds the page to the list runs params
-func (o *ListRunsParams) SetPage(page *int32) {
-	o.Page = page
 }
 
 // WithProject adds the project to the list runs params
@@ -235,25 +235,25 @@ func (o *ListRunsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Regi
 
 	}
 
-	// path param owner
-	if err := r.SetPathParam("owner", o.Owner); err != nil {
-		return err
-	}
+	if o.Offset != nil {
 
-	if o.Page != nil {
-
-		// query param page
-		var qrPage int32
-		if o.Page != nil {
-			qrPage = *o.Page
+		// query param offset
+		var qrOffset int32
+		if o.Offset != nil {
+			qrOffset = *o.Offset
 		}
-		qPage := swag.FormatInt32(qrPage)
-		if qPage != "" {
-			if err := r.SetQueryParam("page", qPage); err != nil {
+		qOffset := swag.FormatInt32(qrOffset)
+		if qOffset != "" {
+			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}
 
+	}
+
+	// path param owner
+	if err := r.SetPathParam("owner", o.Owner); err != nil {
+		return err
 	}
 
 	// path param project

@@ -1126,14 +1126,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * 
          * @summary Create new run
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listArchivedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listArchivedProjects.');
@@ -1153,8 +1153,8 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -1183,14 +1183,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * 
          * @summary List runs
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listBookmarkedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listBookmarkedProjects.');
@@ -1210,8 +1210,8 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -1240,14 +1240,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * 
          * @summary List archived runs for user
          * @param {string} owner Owner of the namespace
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjectNames(owner: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listProjectNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjectNames.');
@@ -1267,8 +1267,8 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -1297,14 +1297,14 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
          * 
          * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjects(owner: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listProjects(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listProjects.');
@@ -1324,8 +1324,8 @@ export const ProjectsV1ApiFetchParamCreator = function (configuration?: Configur
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -1693,15 +1693,15 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary Create new run
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listArchivedProjects(user, page, limit, sort, query, options);
+        listArchivedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listArchivedProjects(user, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1716,15 +1716,15 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List runs
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listBookmarkedProjects(user, page, limit, sort, query, options);
+        listBookmarkedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listBookmarkedProjects(user, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1739,15 +1739,15 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List archived runs for user
          * @param {string} owner Owner of the namespace
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjectNames(owner: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjectNames(owner, page, limit, sort, query, options);
+        listProjectNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjectNames(owner, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1762,15 +1762,15 @@ export const ProjectsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjects(owner: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
-            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjects(owner, page, limit, sort, query, options);
+        listProjects(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListProjectsResponse> {
+            const localVarFetchArgs = ProjectsV1ApiFetchParamCreator(configuration).listProjects(owner, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -1953,57 +1953,57 @@ export const ProjectsV1ApiFactory = function (configuration?: Configuration, fet
          * 
          * @summary Create new run
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listArchivedProjects(user, page, limit, sort, query, options)(fetch, basePath);
+        listArchivedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listArchivedProjects(user, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List runs
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listBookmarkedProjects(user, page, limit, sort, query, options)(fetch, basePath);
+        listBookmarkedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listBookmarkedProjects(user, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List archived runs for user
          * @param {string} owner Owner of the namespace
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjectNames(owner: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listProjectNames(owner, page, limit, sort, query, options)(fetch, basePath);
+        listProjectNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listProjectNames(owner, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List bookmarked runs for user
          * @param {string} owner Owner of the namespace
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listProjects(owner: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return ProjectsV1ApiFp(configuration).listProjects(owner, page, limit, sort, query, options)(fetch, basePath);
+        listProjects(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return ProjectsV1ApiFp(configuration).listProjects(owner, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
@@ -2156,7 +2156,7 @@ export class ProjectsV1Api extends BaseAPI {
      * 
      * @summary Create new run
      * @param {string} user User
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -2164,15 +2164,15 @@ export class ProjectsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listArchivedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listArchivedProjects(user, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listArchivedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listArchivedProjects(user, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List runs
      * @param {string} user User
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -2180,15 +2180,15 @@ export class ProjectsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listBookmarkedProjects(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listBookmarkedProjects(user, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listBookmarkedProjects(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listBookmarkedProjects(user, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List archived runs for user
      * @param {string} owner Owner of the namespace
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -2196,15 +2196,15 @@ export class ProjectsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listProjectNames(owner: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listProjectNames(owner, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listProjectNames(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listProjectNames(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List bookmarked runs for user
      * @param {string} owner Owner of the namespace
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -2212,8 +2212,8 @@ export class ProjectsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof ProjectsV1Api
      */
-    public listProjects(owner: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return ProjectsV1ApiFp(this.configuration).listProjects(owner, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listProjects(owner: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return ProjectsV1ApiFp(this.configuration).listProjects(owner, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -3013,14 +3013,14 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * 
          * @summary List archived runs for user
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listArchivedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listArchivedRuns.');
@@ -3040,8 +3040,8 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -3070,14 +3070,14 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * 
          * @summary List bookmarked runs for user
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listBookmarkedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'user' is not null or undefined
             if (user === null || user === undefined) {
                 throw new RequiredError('user','Required parameter user was null or undefined when calling listBookmarkedRuns.');
@@ -3097,8 +3097,8 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -3128,14 +3128,14 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @summary List runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listRuns(owner: string, project: string, page?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
+        listRuns(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling listRuns.');
@@ -3160,8 +3160,8 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (offset !== undefined) {
+                localVarQueryParameter['offset'] = offset;
             }
 
             if (limit !== undefined) {
@@ -4035,15 +4035,15 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List archived runs for user
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listArchivedRuns(user, page, limit, sort, query, options);
+        listArchivedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listArchivedRuns(user, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4058,15 +4058,15 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * 
          * @summary List bookmarked runs for user
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listBookmarkedRuns(user, page, limit, sort, query, options);
+        listBookmarkedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listBookmarkedRuns(user, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4082,15 +4082,15 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @summary List runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listRuns(owner: string, project: string, page?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
-            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listRuns(owner, project, page, limit, sort, query, options);
+        listRuns(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1ListRunsResponse> {
+            const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).listRuns(owner, project, offset, limit, sort, query, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
                     if (response.status >= 200 && response.status < 300) {
@@ -4501,44 +4501,44 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * 
          * @summary List archived runs for user
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listArchivedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return RunsV1ApiFp(configuration).listArchivedRuns(user, page, limit, sort, query, options)(fetch, basePath);
+        listArchivedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return RunsV1ApiFp(configuration).listArchivedRuns(user, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List bookmarked runs for user
          * @param {string} user User
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBookmarkedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return RunsV1ApiFp(configuration).listBookmarkedRuns(user, page, limit, sort, query, options)(fetch, basePath);
+        listBookmarkedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return RunsV1ApiFp(configuration).listBookmarkedRuns(user, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
          * @summary List runs
          * @param {string} owner Owner of the namespace
          * @param {string} project Project under namesapce
-         * @param {number} [page] Pagination.
+         * @param {number} [offset] Pagination offset.
          * @param {number} [limit] Limit size.
          * @param {string} [sort] Sort to order the search.
          * @param {string} [query] Query filter the search search.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listRuns(owner: string, project: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-            return RunsV1ApiFp(configuration).listRuns(owner, project, page, limit, sort, query, options)(fetch, basePath);
+        listRuns(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+            return RunsV1ApiFp(configuration).listRuns(owner, project, offset, limit, sort, query, options)(fetch, basePath);
         },
         /**
          * 
@@ -4879,7 +4879,7 @@ export class RunsV1Api extends BaseAPI {
      * 
      * @summary List archived runs for user
      * @param {string} user User
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -4887,15 +4887,15 @@ export class RunsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public listArchivedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).listArchivedRuns(user, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listArchivedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).listArchivedRuns(user, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
      * 
      * @summary List bookmarked runs for user
      * @param {string} user User
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -4903,8 +4903,8 @@ export class RunsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public listBookmarkedRuns(user: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).listBookmarkedRuns(user, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listBookmarkedRuns(user: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).listBookmarkedRuns(user, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**
@@ -4912,7 +4912,7 @@ export class RunsV1Api extends BaseAPI {
      * @summary List runs
      * @param {string} owner Owner of the namespace
      * @param {string} project Project under namesapce
-     * @param {number} [page] Pagination.
+     * @param {number} [offset] Pagination offset.
      * @param {number} [limit] Limit size.
      * @param {string} [sort] Sort to order the search.
      * @param {string} [query] Query filter the search search.
@@ -4920,8 +4920,8 @@ export class RunsV1Api extends BaseAPI {
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public listRuns(owner: string, project: string, page?: number, limit?: number, sort?: string, query?: string, options?: any) {
-        return RunsV1ApiFp(this.configuration).listRuns(owner, project, page, limit, sort, query, options)(this.fetch, this.basePath);
+    public listRuns(owner: string, project: string, offset?: number, limit?: number, sort?: string, query?: string, options?: any) {
+        return RunsV1ApiFp(this.configuration).listRuns(owner, project, offset, limit, sort, query, options)(this.fetch, this.basePath);
     }
 
     /**

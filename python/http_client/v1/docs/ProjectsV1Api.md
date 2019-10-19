@@ -400,7 +400,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_archived_projects**
-> V1ListProjectsResponse list_archived_projects(user, page=page, limit=limit, sort=sort, query=query)
+> V1ListProjectsResponse list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
 Create new run
 
@@ -421,14 +421,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
 user = 'user_example' # str | User
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # Create new run
-    api_response = api_instance.list_archived_projects(user, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_archived_projects(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->list_archived_projects: %s\n" % e)
@@ -439,7 +439,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **str**| User | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -460,7 +460,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_bookmarked_projects**
-> V1ListProjectsResponse list_bookmarked_projects(user, page=page, limit=limit, sort=sort, query=query)
+> V1ListProjectsResponse list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
 
 List runs
 
@@ -481,14 +481,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
 user = 'user_example' # str | User
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List runs
-    api_response = api_instance.list_bookmarked_projects(user, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_bookmarked_projects(user, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->list_bookmarked_projects: %s\n" % e)
@@ -499,7 +499,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **str**| User | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -520,7 +520,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_project_names**
-> V1ListProjectsResponse list_project_names(owner, page=page, limit=limit, sort=sort, query=query)
+> V1ListProjectsResponse list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List archived runs for user
 
@@ -541,14 +541,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List archived runs for user
-    api_response = api_instance.list_project_names(owner, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_project_names(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->list_project_names: %s\n" % e)
@@ -559,7 +559,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 
@@ -580,7 +580,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_projects**
-> V1ListProjectsResponse list_projects(owner, page=page, limit=limit, sort=sort, query=query)
+> V1ListProjectsResponse list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
 
 List bookmarked runs for user
 
@@ -601,14 +601,14 @@ configuration.api_key['Authorization'] = 'YOUR_API_KEY'
 # create an instance of the API class
 api_instance = polyaxon_sdk.ProjectsV1Api(polyaxon_sdk.ApiClient(configuration))
 owner = 'owner_example' # str | Owner of the namespace
-page = 56 # int | Pagination. (optional)
+offset = 56 # int | Pagination offset. (optional)
 limit = 56 # int | Limit size. (optional)
 sort = 'sort_example' # str | Sort to order the search. (optional)
 query = 'query_example' # str | Query filter the search search. (optional)
 
 try:
     # List bookmarked runs for user
-    api_response = api_instance.list_projects(owner, page=page, limit=limit, sort=sort, query=query)
+    api_response = api_instance.list_projects(owner, offset=offset, limit=limit, sort=sort, query=query)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling ProjectsV1Api->list_projects: %s\n" % e)
@@ -619,7 +619,7 @@ except ApiException as e:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **str**| Owner of the namespace | 
- **page** | **int**| Pagination. | [optional] 
+ **offset** | **int**| Pagination offset. | [optional] 
  **limit** | **int**| Limit size. | [optional] 
  **sort** | **str**| Sort to order the search. | [optional] 
  **query** | **str**| Query filter the search search. | [optional] 

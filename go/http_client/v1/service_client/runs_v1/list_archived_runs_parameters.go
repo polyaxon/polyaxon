@@ -81,11 +81,11 @@ type ListArchivedRunsParams struct {
 
 	*/
 	Limit *int32
-	/*Page
-	  Pagination.
+	/*Offset
+	  Pagination offset.
 
 	*/
-	Page *int32
+	Offset *int32
 	/*Query
 	  Query filter the search search.
 
@@ -151,15 +151,15 @@ func (o *ListArchivedRunsParams) SetLimit(limit *int32) {
 	o.Limit = limit
 }
 
-// WithPage adds the page to the list archived runs params
-func (o *ListArchivedRunsParams) WithPage(page *int32) *ListArchivedRunsParams {
-	o.SetPage(page)
+// WithOffset adds the offset to the list archived runs params
+func (o *ListArchivedRunsParams) WithOffset(offset *int32) *ListArchivedRunsParams {
+	o.SetOffset(offset)
 	return o
 }
 
-// SetPage adds the page to the list archived runs params
-func (o *ListArchivedRunsParams) SetPage(page *int32) {
-	o.Page = page
+// SetOffset adds the offset to the list archived runs params
+func (o *ListArchivedRunsParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithQuery adds the query to the list archived runs params
@@ -219,16 +219,16 @@ func (o *ListArchivedRunsParams) WriteToRequest(r runtime.ClientRequest, reg str
 
 	}
 
-	if o.Page != nil {
+	if o.Offset != nil {
 
-		// query param page
-		var qrPage int32
-		if o.Page != nil {
-			qrPage = *o.Page
+		// query param offset
+		var qrOffset int32
+		if o.Offset != nil {
+			qrOffset = *o.Offset
 		}
-		qPage := swag.FormatInt32(qrPage)
-		if qPage != "" {
-			if err := r.SetQueryParam("page", qPage); err != nil {
+		qOffset := swag.FormatInt32(qrOffset)
+		if qOffset != "" {
+			if err := r.SetQueryParam("offset", qOffset); err != nil {
 				return err
 			}
 		}

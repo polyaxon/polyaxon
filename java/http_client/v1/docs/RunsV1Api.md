@@ -841,7 +841,7 @@ Name | Type | Description  | Notes
 
 <a name="listArchivedRuns"></a>
 # **listArchivedRuns**
-> V1ListRunsResponse listArchivedRuns(user, page, limit, sort, query)
+> V1ListRunsResponse listArchivedRuns(user, offset, limit, sort, query)
 
 List archived runs for user
 
@@ -864,12 +864,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String user = "user_example"; // String | User
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunsResponse result = apiInstance.listArchivedRuns(user, page, limit, sort, query);
+    V1ListRunsResponse result = apiInstance.listArchivedRuns(user, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#listArchivedRuns");
@@ -882,7 +882,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -902,7 +902,7 @@ Name | Type | Description  | Notes
 
 <a name="listBookmarkedRuns"></a>
 # **listBookmarkedRuns**
-> V1ListRunsResponse listBookmarkedRuns(user, page, limit, sort, query)
+> V1ListRunsResponse listBookmarkedRuns(user, offset, limit, sort, query)
 
 List bookmarked runs for user
 
@@ -925,12 +925,12 @@ ApiKey.setApiKey("YOUR API KEY");
 
 RunsV1Api apiInstance = new RunsV1Api();
 String user = "user_example"; // String | User
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user, page, limit, sort, query);
+    V1ListRunsResponse result = apiInstance.listBookmarkedRuns(user, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#listBookmarkedRuns");
@@ -943,7 +943,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **user** | **String**| User |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
@@ -963,7 +963,7 @@ Name | Type | Description  | Notes
 
 <a name="listRuns"></a>
 # **listRuns**
-> V1ListRunsResponse listRuns(owner, project, page, limit, sort, query)
+> V1ListRunsResponse listRuns(owner, project, offset, limit, sort, query)
 
 List runs
 
@@ -987,12 +987,12 @@ ApiKey.setApiKey("YOUR API KEY");
 RunsV1Api apiInstance = new RunsV1Api();
 String owner = "owner_example"; // String | Owner of the namespace
 String project = "project_example"; // String | Project under namesapce
-Integer page = 56; // Integer | Pagination.
+Integer offset = 56; // Integer | Pagination offset.
 Integer limit = 56; // Integer | Limit size.
 String sort = "sort_example"; // String | Sort to order the search.
 String query = "query_example"; // String | Query filter the search search.
 try {
-    V1ListRunsResponse result = apiInstance.listRuns(owner, project, page, limit, sort, query);
+    V1ListRunsResponse result = apiInstance.listRuns(owner, project, offset, limit, sort, query);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RunsV1Api#listRuns");
@@ -1006,7 +1006,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **String**| Owner of the namespace |
  **project** | **String**| Project under namesapce |
- **page** | **Integer**| Pagination. | [optional]
+ **offset** | **Integer**| Pagination offset. | [optional]
  **limit** | **Integer**| Limit size. | [optional]
  **sort** | **String**| Sort to order the search. | [optional]
  **query** | **String**| Query filter the search search. | [optional]
