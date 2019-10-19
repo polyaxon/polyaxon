@@ -46,7 +46,7 @@ helm install polyaxon/tfjob --name=plxtf --namespace=polyaxon
 ### PytorchJob
 
 ```bash
-helm install polyaxon/pytrochjob --name=plxpytorch --namespace=polyaxon
+helm install polyaxon/pytorchjob --name=plxpytorch --namespace=polyaxon
 ```
 
 ### MpiJob 
