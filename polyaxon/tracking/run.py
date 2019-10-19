@@ -136,7 +136,7 @@ class Run(BaseTracker):
                 raise PolyaxonClientException("Could not create experiment.")
         if not settings.CLIENT_CONFIG.is_managed and self.track_logs:
             setup_logging(send_logs=self.send_logs)
-        self.experiment_id = self._get_entity_id(experiment)
+        self.experiment_id = self._get_entity_uid(experiment)
         self.experiment = experiment
         self.last_status = "created"
 

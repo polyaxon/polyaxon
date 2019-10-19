@@ -71,9 +71,9 @@ class BaseTracker(object):
         ):
             self.set_outputs_store(outputs_path=get_outputs_path(), set_env_vars=True)
 
-    def _get_entity_id(self, entity):
+    def _get_entity_uid(self, entity):
         if self.client:
-            return entity.id if self.client.config.schema_response else entity.get("id")
+            return entity.uuid
         return int(time.time())
 
     @check_no_op

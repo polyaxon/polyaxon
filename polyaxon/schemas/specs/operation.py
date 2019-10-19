@@ -53,6 +53,18 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
             "This method is not allowed on this specification."
         )
 
+    @property
+    def is_template_job(self):
+        return self.check_kind_job(self.config._template.kind)
+
+    @property
+    def is_template_service(self):
+        return self.check_kind_service(self.config._template.kind)
+
+    @property
+    def is_template_pipeline(self):
+        return self.check_kind_pipeline(self.config._template.kind)
+
     def generate_run_data(self, override=None):
         values = [self.config._template.to_light_dict()]
         op_override = {}

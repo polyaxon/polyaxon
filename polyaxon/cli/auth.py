@@ -7,6 +7,7 @@ import click
 import polyaxon_sdk
 
 from polyaxon_sdk.rest import ApiException
+from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.version import (
     get_current_version,
@@ -48,7 +49,7 @@ def login(token, username, password):
                 username=username, password=password
             )
             access_auth = polyaxon_client.auth_v1.login(body=body)
-        except ApiException as e:
+        except (ApiException, HTTPError) as e:
             Printer.print_error("Could not login.")
             Printer.print_error("Error Message `{}`.".format(e))
             sys.exit(1)
@@ -90,7 +91,7 @@ def login(token, username, password):
         AuthConfigManager.purge()
         polyaxon_client = PolyaxonClient(token=access_auth.token)
         user = polyaxon_client.users_v1.get_user()
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -127,7 +128,7 @@ def whoami():
     try:
         polyaxon_client = PolyaxonClient()
         user = polyaxon_client.users_v1.get_user()
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error("Could not load user info.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)

@@ -30,7 +30,7 @@ class TestCliRuns(BaseCommandTestCase):
         assert is_initialized.call_count == 1
         assert get_run_details.call_count == 1
 
-    @patch("polyaxon_sdk.RunsV1Api.update_run")
+    @patch("polyaxon_sdk.RunsV1Api.patch_run")
     def test_update_run(self, update_run):
         self.runner.invoke(runs, ["update"])
         assert update_run.call_count == 0

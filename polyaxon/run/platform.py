@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+from polyaxon_sdk import V1Run
 
 from polyaxon.cli.runs import logs as run_logs
 from polyaxon.cli.upload import upload as upload_cmd
@@ -14,6 +15,7 @@ from polyaxon.exceptions import (
     PolyaxonShouldExitError,
 )
 from polyaxon.managers.run import RunManager
+from polyaxon.schemas.ops.termination import TerminationConfig
 from polyaxon.schemas.polyflow.ops import OpConfig
 from polyaxon.utils import cache
 from polyaxon.utils.formatting import Printer
@@ -22,7 +24,7 @@ from polyaxon.utils.formatting import Printer
 def run(
     ctx,
     name,
-    user,
+    owner,
     project_name,
     description,
     tags,
@@ -33,27 +35,30 @@ def run(
     can_upload,
 ):
     def run_experiment():
-        click.echo("Creating an independent experiment.")
-        experiment = OpConfig(
+        click.echo("Creating a run.")
+        termination = TerminationConfig(ttl=ttl)
+        op = OpConfig(
             name=name,
             description=description,
             tags=tags,
-            content=specification.raw_data,
-            ttl=ttl,
-            is_managed=True,
+            _template=specification.config,
+            termination=termination,
+            nocache=True
         )
+        run = V1Run(content=specification.config_dump)
         try:
-            response = PolyaxonClient().project.create_experiment(
-                user, project_name, experiment
+            polyaxon_client = PolyaxonClient()
+            response = polyaxon_client.runs_v1.create_run(
+                owner, project_name, run
             )
             cache.cache(config_manager=RunManager, response=response)
-            Printer.print_success("Experiment `{}` was created".format(response.id))
+            Printer.print_success("A new run `{}` was created".format(response.uuid))
         except (
             PolyaxonHTTPError,
             PolyaxonShouldExitError,
             PolyaxonClientException,
         ) as e:
-            Printer.print_error("Could not create experiment.")
+            Printer.print_error("Could not create op.")
             Printer.print_error("Error message `{}`.".format(e))
             sys.exit(1)
 

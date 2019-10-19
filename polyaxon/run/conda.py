@@ -25,7 +25,7 @@ def _get_conda_env_name(conda_env):
 
 
 def _run(
-    ctx, name, user, project_name, description, tags, specification, log, conda_env
+    ctx, name, owner, project_name, description, tags, specification, log, conda_env
 ):
     conda = CondaOperator()
     # cmd = CmdOperator()
@@ -47,13 +47,13 @@ def _run(
 
 
 def run(
-    ctx, name, user, project_name, description, tags, specification, log, conda_env
+    ctx, name, owner, project_name, description, tags, specification, log, conda_env
 ):
     try:
         _run(
             ctx,
             name,
-            user,
+            owner,
             project_name,
             description,
             tags,

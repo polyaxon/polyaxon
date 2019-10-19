@@ -26,46 +26,48 @@ DEFAULT_POLYAXON_FILE_EXTENSION = ["yaml", "yml", "json"]
 class PolyaxonFile(object):
     """Parses Polyaxonfiles, and validate that it respects the current file specification"""
 
-    def __init__(self, filepaths, params=None, debug_ttl=False):
+    def __init__(self, filepaths, params=None, debug_ttl=False, profile=None):
         filepaths = to_list(filepaths)
         for filepath in filepaths:
             if not os.path.isfile(filepath):
                 raise PolyaxonfileError("`{}` must be a valid file".format(filepath))
         self._filenames = [os.path.basename(filepath) for filepath in filepaths]
+
+        op_data = {"version": 0.6, "kind": "op"}
         if params:  # TODO: If params are provided we need to generate an op with params
             if not isinstance(params, Mapping):
                 raise PolyaxonfileError(
                     "Params: `{}` must be a valid mapping".format(params)
                 )
-            filepaths.append({"params": params})
+            op_data["params"] = params
+        if profile:
+            op_data["profile"] = profile
         if debug_ttl:
             if not isinstance(debug_ttl, int):
                 raise PolyaxonfileError(
                     "Debug TTL `{}` must be a valid integer".format(debug_ttl)
                 )
-            filepaths.append(
-                {
-                    "container": {
-                        "command": ["/bin/bash", "-c"],
-                        "args": "sleep {}".format(debug_ttl),
-                    }
-                }
-            )
+            op_data["termination"] = {"ttl": debug_ttl}
+
         specification = get_specification(data=rhea.read(filepaths))
 
         debug_cond = debug_ttl and not (
-            specification.is_job or specification.is_service
+            specification.is_job or
+            specification.is_service or
+            (specification.is_operation and not (
+                specification.is_template_job or specification.is_template_job
+            ))
         )
         if debug_cond:
             raise PolyaxonfileError(
                 "You can only trigger debug mode on a job/service specification, "
                 "received instead a `{}` specification.".format(specification.kind)
             )
-        if debug_ttl and specification.parallel:
-            raise PolyaxonfileError(
-                "You can only trigger debug mode on a job/service specification "
-                "without a parallel section."
-            )
+        if specification.is_operation:
+            specification = get_specification(data=[specification.config.to_dict(), op_data])
+        else:
+            op_data["_template"] = specification.config.to_dict()
+            specification = get_specification(data=[op_data])
         self.specification = specification
 
     @property

@@ -7,6 +7,7 @@ import click
 
 from polyaxon_sdk import V1Project
 from polyaxon_sdk.rest import ApiException
+from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.cli.init import init as init_project
@@ -94,7 +95,7 @@ def create(ctx, name, owner, description, private, init):
             name=name, description=description, is_public=not private
         )
         _project = polyaxon_client.projects_v1.create_project(owner, project_config)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error("Could not create project `{}`.".format(name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -134,7 +135,7 @@ def list(owner, page):  # pylint:disable=redefined-builtin
     try:
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.projects_v1.list_projects(owner, page=page)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error("Could not get list of projects.")
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -186,7 +187,7 @@ def get(ctx):
     try:
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.projects_v1.get_project(owner, project_name)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error("Could not get project `{}`.".format(project_name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -220,7 +221,7 @@ def delete(ctx):
         ):
             # Purge caching
             ProjectManager.purge()
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not delete project `{}/{}`.".format(owner, project_name)
         )
@@ -283,10 +284,10 @@ def update(ctx, name, description, private):
 
     try:
         polyaxon_client = PolyaxonClient()
-        response = polyaxon_client.projects_v1.update_project(
+        response = polyaxon_client.projects_v1.patch_project(
             owner, project_name, update_dict
         )
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error("Could not update project `{}`.".format(project_name))
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
@@ -340,7 +341,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
 
         try:
             PolyaxonClient().projects_v1.set_repo(user, project_name, url, not private)
-        except ApiException as e:
+        except (ApiException, HTTPError) as e:
             Printer.print_error(
                 "Could not set git repo on project `{}`.".format(project_name)
             )
@@ -354,7 +355,7 @@ def git(ctx, url, private, sync):  # pylint:disable=assign-to-new-keyword
     def git_sync_repo():
         try:
             response = PolyaxonClient().projects_v1.sync_repo(user, project_name)
-        except ApiException as e:
+        except (ApiException, HTTPError) as e:
             Printer.print_error(
                 "Could not sync git repo on project `{}`.".format(project_name)
             )
@@ -399,7 +400,7 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
     def enable_ci():
         try:
             polyaxon_client.projects_v1.enable_ci(owner, project_name)
-        except ApiException as e:
+        except (ApiException, HTTPError) as e:
             Printer.print_error(
                 "Could not enable CI on project `{}`.".format(project_name)
             )
@@ -415,7 +416,7 @@ def ci(ctx, enable, disable):  # pylint:disable=assign-to-new-keyword
     def disable_ci():
         try:
             polyaxon_client.projects_v1.disable_ci(owner, project_name)
-        except ApiException as e:
+        except (ApiException, HTTPError) as e:
             Printer.print_error(
                 "Could not disable CI on project `{}`.".format(project_name)
             )
@@ -444,7 +445,7 @@ def download(ctx, commit):
     try:
         polyaxon_client = PolyaxonClient()
         polyaxon_client.projects_v1.download_repo(user, project_name, commit=commit)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not download code for project `{}`.".format(project_name)
         )
@@ -466,7 +467,7 @@ def bookmark(ctx):
     try:
         polyaxon_client = PolyaxonClient()
         polyaxon_client.projects_v1.bookmark_project(owner, project_name)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not bookmark project `{}/{}`.".format(owner, project_name)
         )
@@ -489,7 +490,7 @@ def unbookmark(ctx):
     try:
         polyaxon_client = PolyaxonClient()
         polyaxon_client.projects_v1.unbookmark_project(owner, project_name)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not unbookmark project `{}/{}`.".format(owner, project_name)
         )
@@ -521,7 +522,7 @@ def invalidate_runs(ctx):
     try:
         polyaxon_client = PolyaxonClient()
         polyaxon_client.projects_v1.invalidate_builds(owner, project_name)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Could not invalidate build jobs for project `{}`.".format(project_name)
         )

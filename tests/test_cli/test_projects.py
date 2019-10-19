@@ -28,7 +28,7 @@ class TestCliProject(BaseCommandTestCase):
         self.runner.invoke(projects, ["-p admin/foo", "get"])
         assert get_project.call_count == 1
 
-    @patch("polyaxon_sdk.ProjectsV1Api.update_project")
+    @patch("polyaxon_sdk.ProjectsV1Api.patch_project")
     def test_update_project(self, update_project):
         self.runner.invoke(projects, ["update"])
         assert update_project.call_count == 0

@@ -128,7 +128,7 @@ class Printer(object):
         return cls.add_color(status, color="yellow")
 
     @classmethod
-    def add_status_color(cls, obj_dict, status_key="last_status"):
+    def add_status_color(cls, obj_dict, status_key="status"):
         if obj_dict.get(status_key) is None:
             return obj_dict
 
@@ -219,37 +219,21 @@ class Printer(object):
         sys.stdout.flush()
 
 
-def get_runs_with_keys(response, params_key, extra_attrs=None):
-    if not extra_attrs:
-        extra_attrs = [params_key]
-    extra_attrs.append(params_key)
-    objects = [
-        o.to_light_dict(include_attrs=["id", "unique_name"] + extra_attrs)
-        for o in response.results
-    ]
-    # Extend experiment with metrics
-    params_keys = set([])
-    for obj in objects:
-        params = obj.pop(params_key, {}) or {}
-        params_keys |= set(six.iterkeys(params))
-        obj.update(params)
+def get_runs_with_keys(objects, params_keys):
+    # Extend run with params_keys
+    keys = set([])
+    for params_key in params_keys:
+        for obj in objects:
+            params = obj.pop(params_key, {}) or {}
+            keys |= set(six.iterkeys(params))
+            obj.update(params)
 
     # Check that all obj have all metrics
     # TODO: optimize this process
     for obj in objects:
         obj_keys = set(six.iterkeys(obj))
-        for param in params_keys:
+        for param in keys:
             if param not in obj_keys:
                 obj[param] = None
 
     return objects
-
-
-def get_runs_with_outputs(response):
-    return get_runs_with_keys(
-        response=response, params_key="outputs", extra_attrs=["total_run"]
-    )
-
-
-def get_runs_with_inputs(response):
-    return get_runs_with_keys(response=response, params_key="outputs")

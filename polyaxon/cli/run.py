@@ -61,6 +61,8 @@ from polyaxon.utils.validation import validate_tags
     default=False,
     help="To start the run locally, with `docker` environment as default.",
 )
+@click.option('--conda_env', type=str,
+              help='To start a local run with `conda`.')
 @click.option(
     "--params",
     "-P",
@@ -83,6 +85,7 @@ def run(
     upload,
     log,
     local,
+    conda_env,
     params,
     profile,
 ):
@@ -144,29 +147,10 @@ def run(
         ttl = None
 
     specification = check_polyaxonfile(
-        file, params=params, debug_ttl=debug_ttl, log=False
+        file, params=params, debug_ttl=debug_ttl, log=False, profile=profile
     ).specification
 
-    spec_cond = (
-        specification.is_experiment
-        or specification.is_group
-        or specification.is_job
-        or specification.is_build
-    )
-    if not spec_cond:
-        Printer.print_error(
-            "This command expects an experiment, a group, a job, or a build specification,"
-            "received instead a `{}` specification".format(specification.kind)
-        )
-        if specification.is_notebook:
-            click.echo('Please check "polyaxon notebook --help" to start a notebook.')
-        elif specification.is_tensorboard:
-            click.echo(
-                'Please check: "polyaxon tensorboard --help" to start a tensorboard.'
-            )
-        sys.exit(1)
-
-    user, project_name = get_project_or_local(project)
+    owner, project_name = get_project_or_local(project)
     tags = validate_tags(tags)
 
     if local:
@@ -181,7 +165,7 @@ def run(
             conda_run(
                 ctx=ctx,
                 name=name,
-                user=user,
+                owner=owner,
                 project_name=project_name,
                 description=description,
                 tags=tags,
@@ -193,7 +177,7 @@ def run(
             docker_run(
                 ctx=ctx,
                 name=name,
-                user=user,
+                owner=owner,
                 project_name=project_name,
                 description=description,
                 tags=tags,
@@ -204,7 +188,7 @@ def run(
         platform_run(
             ctx=ctx,
             name=name,
-            user=user,
+            owner=owner,
             project_name=project_name,
             description=description,
             tags=tags,

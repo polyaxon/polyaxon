@@ -491,6 +491,10 @@ class BaseSpecification(
     def check_kind_pipeline(kind):
         return kind == kinds.PIPELINE
 
+    @staticmethod
+    def check_kind_operation(kind):
+        return kind == kinds.OPERATION
+
     @classmethod
     def read(cls, values):
         if isinstance(values, cls):
@@ -503,11 +507,15 @@ class BaseSpecification(
 
     @property
     def is_service(self):
-        return self.check_kind_notebook(self.kind)
+        return self.check_kind_service(self.kind)
 
     @property
     def is_pipeline(self):
         return self.check_kind_pipeline(self.kind)
+
+    @property
+    def is_operation(self):
+        return self.check_kind_operation(self.kind)
 
     @property
     def values(self):

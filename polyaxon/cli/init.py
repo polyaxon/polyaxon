@@ -7,6 +7,7 @@ import sys
 import click
 
 from polyaxon_sdk.rest import ApiException
+from urllib3.exceptions import HTTPError
 
 from polyaxon.cli.getters.project import get_project_or_local
 from polyaxon.client import PolyaxonClient
@@ -52,14 +53,21 @@ def create_polyaxonfile():
     show_default=False,
     help="Init a polyaxon file in this project.",
 )
+@click.option(
+    "--purge",
+    is_flag=True,
+    default=False,
+    show_default=False,
+    help="Purge previous configs before calling init.",
+)
 @clean_outputs
-def init(project, polyaxonfile):
+def init(project, polyaxonfile, purge):
     """Initialize a new polyaxonfile specification."""
     owner, project_name = get_project_or_local(project)
     try:
         polyaxon_client = PolyaxonClient()
         project_config = polyaxon_client.projects_v1.get_project(owner, project_name)
-    except ApiException as e:
+    except (ApiException, HTTPError) as e:
         Printer.print_error(
             "Make sure you have a project with this name `{}`".format(project)
         )
@@ -71,6 +79,9 @@ def init(project, polyaxonfile):
         Printer.print_error("Error message `{}`.".format(e))
         sys.exit(1)
 
+    if purge:
+        ProjectManager.purge()
+        IgnoreManager.purge()
     init_project = False
     if ProjectManager.is_initialized():
         local_project = ProjectManager.get_config()
