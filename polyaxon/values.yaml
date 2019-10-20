@@ -340,7 +340,7 @@ eventMonitors:
     sleepInterval: 1
 
 resourcesDaemon:
-  enabled: true
+  enabled: false
   image: polyaxon/polyaxon-monitor-resources
   imageTag: 0.5.6
   imagePullPolicy: Always
