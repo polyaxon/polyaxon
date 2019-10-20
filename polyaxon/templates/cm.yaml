@@ -176,7 +176,7 @@ data:
   POLYAXON_ROLE_LABELS_DASHBOARD: {{ .Values.roles.dashboard | quote }}
   POLYAXON_TYPE_LABELS_CORE: {{ .Values.types.core | quote }}
   POLYAXON_TYPE_LABELS_RUNNER: {{ .Values.types.runner | quote }}
-  POLYAXON_TRACKER_BACKEND: {{ default "publisher" .Values.trackerBackend | quote }}
+  POLYAXON_TRACKER_BACKEND: {{ default "noop" .Values.trackerBackend | quote }}
   POLYAXON_PLUGINS: {{ toJson .Values.plugins | quote }}
   POLYAXON_DNS_USE_RESOLVER: "true"
   POLYAXON_WS_PORT: {{ .Values.streams.service.internalPort | quote }}
