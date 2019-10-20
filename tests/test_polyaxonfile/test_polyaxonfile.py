@@ -25,11 +25,11 @@ from polyaxon.schemas.ops.parallel.matrix import (
 )
 from polyaxon.schemas.ops.termination import TerminationConfig
 from polyaxon.schemas.polyaxonfile import PolyaxonFile
-from polyaxon.schemas.specs import JobSpecification
+from polyaxon.schemas.specs import JobSpecification, get_specification
 
 
 @pytest.mark.polyaxonfile_mark
-class TestPolyaxonfile(TestCase):
+class TestPolyaxonfiles(TestCase):
     def test_missing_version_raises(self):
         with self.assertRaises(PolyaxonfileError):
             PolyaxonFile(os.path.abspath("tests/fixtures/plain/missing_version.yml"))
@@ -61,14 +61,16 @@ class TestPolyaxonfile(TestCase):
         }
         assert spec.is_job
 
-    def test_passing_params_to_no_io_overrides_polyaxonfiles_raises(self):
+    def test_passing_params_to_no_io_overrides_polyaxonfiles_raises_sdf(self):
+        polyaxonfile = PolyaxonFile(
+            os.path.abspath("tests/fixtures/plain/simple_job.yml")
+        )
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/simple_job.yml"),
-                params={"flag": True, "loss": "some-loss"},
+            polyaxonfile.get_op_specification(
+                params={"flag": True, "loss": "some-loss"}
             )
 
-    def test_passing_params_overrides_polyaxonfiles(self):
+    def test_passing_params_overrides_polyaxonfilesasdf(self):
         plxfile = PolyaxonFile(
             os.path.abspath("tests/fixtures/typing/required_inputs.yml")
         )
@@ -92,21 +94,24 @@ class TestPolyaxonfile(TestCase):
 
     def test_passing_wrong_params_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/simple_job.yml"), params="foo"
+            polyaxonfile = PolyaxonFile(
+                os.path.abspath("tests/fixtures/plain/simple_job.yml")
             )
+            polyaxonfile.get_op_specification(params="foo")
 
     def test_passing_debug_ttl_overrides_polyaxonfiles(self):
-        plxfile = PolyaxonFile(
-            os.path.abspath("tests/fixtures/plain/simple_job.yml"), debug_ttl=100
+        polyaxonfile = PolyaxonFile(
+            os.path.abspath("tests/fixtures/plain/simple_job.yml")
         )
-        spec = plxfile.specification
+        spec = polyaxonfile.get_op_specification(debug_ttl=100)
+        spec = get_specification(spec.generate_run_data())
         spec = spec.apply_context()
         assert spec.version == 0.6
         assert spec.tags is None
+        assert spec.termination.ttl == 100
         assert spec.container.image == "python-with-boto3"
-        assert spec.container.command == ["/bin/bash", "-c"]
-        assert spec.container.args == "sleep 100"
+        assert spec.container.command == "python download-s3-bucket"
+        assert spec.container.args is None
         assert spec.environment is not None
         assert spec.resources.to_dict() == {
             "requests": {"nvidia.com/gpu": 1},
@@ -116,29 +121,28 @@ class TestPolyaxonfile(TestCase):
 
     def test_passing_wrong_debug_ttl_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/simple_job.yml"), debug_ttl="foo"
+            polyaxonfile = PolyaxonFile(
+                os.path.abspath("tests/fixtures/plain/simple_job.yml")
             )
+            polyaxonfile.get_op_specification(debug_ttl="foo")
 
     def test_passing_wrong_kind_with_debug_ttl_raises(self):
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/matrix_file.yml"), debug_ttl=120
+            polyaxonfile = PolyaxonFile(
+                os.path.abspath("tests/fixtures/plain/matrix_file.yml")
             )
+            polyaxonfile.get_op_specification(debug_ttl=120)
 
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
+            polyaxonfile = PolyaxonFile(
                 os.path.abspath(
                     "tests/fixtures/plain/tensorboard_with_custom_environment.yml"
-                ),
-                debug_ttl=120,
+                )
             )
+            polyaxonfile.get_op_specification(debug_ttl=120)
 
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/plain/non_existing_file.yml"),
-                debug_ttl=120,
-            )
+            PolyaxonFile(os.path.abspath("tests/fixtures/plain/non_existing_file.yml"))
 
     def test_job_file_with_init_passes(self):
         plxfile = PolyaxonFile(

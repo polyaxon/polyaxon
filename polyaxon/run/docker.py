@@ -163,13 +163,13 @@ def _run(ctx, name, owner, project_name, description, tags, specification, log):
     specification.apply_context()
     build_config = specification.config
     build_job.create(
-        name=name, description=description, tags=tags, content=specification.raw_data
+        name=name, description=description, tags=tags, content=specification.data
     )
     image = _create_docker_build(build_job, build_config, project)
 
     experiment = Run(project=project, track_logs=False)
     experiment.create(
-        name=name, tags=tags, description=description, content=specification.raw_data
+        name=name, tags=tags, description=description, content=specification.data
     )
 
     cmd_args = ["run", "--rm"]

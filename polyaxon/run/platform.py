@@ -4,6 +4,7 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 import click
+
 from polyaxon_sdk import V1Run
 
 from polyaxon.cli.runs import logs as run_logs
@@ -43,14 +44,12 @@ def run(
             tags=tags,
             _template=specification.config,
             termination=termination,
-            nocache=True
+            nocache=True,
         )
         run = V1Run(content=specification.config_dump)
         try:
             polyaxon_client = PolyaxonClient()
-            response = polyaxon_client.runs_v1.create_run(
-                owner, project_name, run
-            )
+            response = polyaxon_client.runs_v1.create_run(owner, project_name, run)
             cache.cache(config_manager=RunManager, response=response)
             Printer.print_success("A new run `{}` was created".format(response.uuid))
         except (

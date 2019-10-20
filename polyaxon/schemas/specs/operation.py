@@ -81,7 +81,9 @@ class OperationSpecification(BaseSpecification, OperationSpecificationMixin):
             self.NOCACHE,
         ]:
             override_field = getattr(self.config, field)
-            if override_field:
+            if hasattr(override_field, "to_dict"):
+                op_override[field] = override_field.to_dict()
+            elif override_field:
                 op_override[field] = override_field
         if op_override:
             values.append(op_override)

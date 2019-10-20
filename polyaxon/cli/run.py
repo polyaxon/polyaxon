@@ -13,6 +13,7 @@ from polyaxon.run.conda import run as conda_run
 from polyaxon.run.docker import run as docker_run
 from polyaxon.run.platform import run as platform_run
 from polyaxon.schemas.polyaxonfile import PolyaxonFile
+from polyaxon.schemas.specs import get_specification
 from polyaxon.utils.formatting import Printer
 from polyaxon.utils.validation import validate_tags
 
@@ -61,8 +62,7 @@ from polyaxon.utils.validation import validate_tags
     default=False,
     help="To start the run locally, with `docker` environment as default.",
 )
-@click.option('--conda_env', type=str,
-              help='To start a local run with `conda`.')
+@click.option("--conda_env", type=str, help="To start a local run with `conda`.")
 @click.option(
     "--params",
     "-P",
@@ -148,19 +148,21 @@ def run(
 
     specification = check_polyaxonfile(
         file, params=params, debug_ttl=debug_ttl, log=False, profile=profile
-    ).specification
+    )
 
     owner, project_name = get_project_or_local(project)
     tags = validate_tags(tags)
 
     if local:
         try:
-            specification.apply_context()
+            run_spec = get_specification(specification.generate_run_data())
+            run_spec.apply_context()
         except PolyaxonSchemaError:
             Printer.print_error(
                 "Could not run this polyaxonfile locally, "
                 "a context is required to resolve it dependencies."
             )
+            sys.exit(1)
         if conda_env:
             conda_run(
                 ctx=ctx,
@@ -169,7 +171,7 @@ def run(
                 project_name=project_name,
                 description=description,
                 tags=tags,
-                specification=specification,
+                specification=run_spec,
                 log=log,
                 conda_env=conda_env,
             )
@@ -181,7 +183,7 @@ def run(
                 project_name=project_name,
                 description=description,
                 tags=tags,
-                specification=specification,
+                specification=run_spec,
                 log=log,
             )
     else:

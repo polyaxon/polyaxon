@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon import settings
 from polyaxon.client.transport.retry_transport import RetryTransportMixin
 from polyaxon.client.workers.queue_worker import QueueWorker
 from polyaxon.logger import logger
@@ -38,7 +39,7 @@ class ThreadedTransportMixin(RetryTransportMixin):
     @property
     def worker(self):
         if not hasattr(self, "_worker") or not self._worker.is_alive():
-            self._worker = QueueWorker(timeout=self.config.timeout)
+            self._worker = QueueWorker(timeout=settings.CLIENT_CONFIG.timeout)
             self._worker.start()
         return self._worker
 

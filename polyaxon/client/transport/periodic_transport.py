@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, print_function
 
+from polyaxon import settings
 from polyaxon.client.transport.retry_transport import RetryTransportMixin
 from polyaxon.client.workers.periodic_worker import PeriodicWorker
 from polyaxon.exceptions import PolyaxonClientException
@@ -51,8 +52,8 @@ class PeriodicHttpTransportMixin(RetryTransportMixin):
                 )
             self._periodic_http_worker = PeriodicWorker(
                 callback=self.queue_periodic_request,
-                worker_interval=self.config.interval,
-                worker_timeout=self.config.timeout,
+                worker_interval=settings.CLIENT_CONFIG.interval,
+                worker_timeout=settings.CLIENT_CONFIG.timeout,
                 kwargs=kwargs,
             )
             self._periodic_http_worker.start()
@@ -130,8 +131,8 @@ class PeriodicWSTransportMixin(RetryTransportMixin):
             kwargs["request"] = self.socket(url, message_handler=None, **kwargs)
             worker = PeriodicWorker(
                 callback=self.queue_ws_request,
-                worker_interval=self.config.interval,
-                worker_timeout=self.config.timeout,
+                worker_interval=settings.CLIENT_CONFIG.interval,
+                worker_timeout=settings.CLIENT_CONFIG.timeout,
                 kwargs=kwargs,
             )
             worker.start()

@@ -78,10 +78,10 @@ class TestPolyaxonfileWithTypes(TestCase):
         with self.assertRaises(PolyaxonfileError):
             spec.validate_params(params={"loss": "bar", "flag": True, "value": 1.1})
         with self.assertRaises(PolyaxonfileError):
-            PolyaxonFile(
-                os.path.abspath("tests/fixtures/typing/required_inputs.yml"),
-                params={"loss": "bar", "value": 1.1},
+            polyaxonfile = PolyaxonFile(
+                os.path.abspath("tests/fixtures/typing/required_inputs.yml")
             )
+            polyaxonfile.get_op_specification(params={"loss": "bar", "value": 1.1})
 
         # Adding non valid params raises
         with self.assertRaises(PolyaxonfileError):

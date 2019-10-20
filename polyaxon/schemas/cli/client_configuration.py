@@ -24,7 +24,7 @@ from hestia.env_var_keys import (
     POLYAXON_KEYS_SSL_CA_CERT,
     POLYAXON_KEYS_TIMEOUT,
     POLYAXON_KEYS_VERIFY_SSL,
-)
+    POLYAXON_KEYS_IS_OFFLINE)
 from marshmallow import EXCLUDE, fields
 
 from polyaxon.exceptions import PolyaxonClientException
@@ -43,6 +43,7 @@ class ClientSchema(BaseSchema):
     is_managed = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_MANAGED)
     in_cluster = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IN_CLUSTER)
     is_local = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_LOCAL)
+    is_offline = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_IS_OFFLINE)
     no_op = fields.Bool(allow_none=True, data_key=POLYAXON_KEYS_NO_OP)
     timeout = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_TIMEOUT)
     interval = fields.Float(allow_none=True, data_key=POLYAXON_KEYS_INTERVAL)
@@ -84,6 +85,7 @@ class ClientConfig(BaseConfig):
         authentication_type=None,
         is_managed=None,
         is_local=None,
+        is_offline=None,
         in_cluster=None,
         no_op=None,
         timeout=None,
@@ -106,6 +108,7 @@ class ClientConfig(BaseConfig):
         self.version = version or "v1"
         self.is_managed = self._get_bool(is_managed, False)
         self.is_local = self._get_bool(is_local, False)
+        self.is_offline = self._get_bool(is_offline, False)
         self.in_cluster = self._get_bool(in_cluster, False)
         self.no_op = self._get_bool(no_op, False)
         self.verify_ssl = self._get_bool(verify_ssl, None)

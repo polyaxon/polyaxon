@@ -4,12 +4,11 @@ from __future__ import absolute_import, division, print_function
 import requests
 import time
 
-from flaky import flaky
 from tests.test_transports.utils import BaseTestCaseTransport
 
+from polyaxon import settings
 from polyaxon.client.transport.threaded_transport import ThreadedTransportMixin
 from polyaxon.client.workers.queue_worker import QueueWorker
-from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 
 class DummyTransport(ThreadedTransportMixin):
@@ -17,7 +16,6 @@ class DummyTransport(ThreadedTransportMixin):
     def __init__(self, delay=0):
         self.queue = []
         self.delay = delay
-        self.config = ClientConfig(is_managed=True, timeout=0.01)
         self._threaded_exceptions = 0
         self._threaded_done = 0
 
@@ -46,7 +44,6 @@ class ExceptionTransport(ThreadedTransportMixin):
     # pylint:disable=protected-access
     def __init__(self, delay=0):
         self.delay = delay
-        self.config = ClientConfig(is_managed=True, timeout=0.01)
         self._threaded_exceptions = 0
         self._threaded_done = 0
 
@@ -77,6 +74,7 @@ class TestThreadedTransport(BaseTestCaseTransport):
         super(TestThreadedTransport, self).setUp()
         self.transport = DummyTransport()
         self.exception_transport = ExceptionTransport()
+        settings.CLIENT_CONFIG.timeout = 0.01
 
     def test_retry_session(self):
         assert hasattr(self.transport, "_retry_session") is False
@@ -137,7 +135,6 @@ class TestThreadedTransport(BaseTestCaseTransport):
         assert self.transport.threaded_exceptions == 0
         assert self.transport.worker.is_alive() is True
 
-    @flaky(max_runs=3)
     def test_async_exceptions(self):
         self.exception_transport.async_post(url="url_post")
         time.sleep(0.03)
@@ -166,7 +163,7 @@ class TestThreadedTransport(BaseTestCaseTransport):
 
     def test_worker_atexit_handle_queue_before_stopping(self):
         # Transport
-        self.transport.config.timeout = 0.5
+        settings.CLIENT_CONFIG.timeout = 0.5
         self.transport.delay = 0.5
         assert self.transport.queue == []
         self.transport.async_post(url="url_post")
@@ -180,7 +177,6 @@ class TestThreadedTransport(BaseTestCaseTransport):
         assert self.transport._worker.is_alive() is False
 
         # Exception transport
-        self.exception_transport.config.timeout = 0.5
         self.exception_transport.delay = 0.5
         self.exception_transport.async_post(url="url_post")
         assert self.exception_transport.threaded_done == 0

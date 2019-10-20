@@ -5,8 +5,8 @@ import sys
 
 import click
 import rhea
-from polyaxon_sdk import V1Run
 
+from polyaxon_sdk import V1Run
 from polyaxon_sdk.rest import ApiException
 from urllib3.exceptions import HTTPError
 
@@ -157,20 +157,37 @@ def list(ctx, io, query, sort, limit, offset):
             "No runs found for project `{}/{}`.".format(owner, project_name)
         )
 
-    objects = [
-        Printer.add_status_color(o.to_dict())
-        for o in response.results
-    ]
+    objects = [Printer.add_status_color(o.to_dict()) for o in response.results]
 
     if io:
         objects = get_runs_with_keys(objects=objects, params_keys=["inputs", "outputs"])
-        objects = list_dicts_to_tabulate(objects, exclude_attrs=[
-            "owner", "project", "description", "content", "deleted", "readme", "run_env"
-        ])
+        objects = list_dicts_to_tabulate(
+            objects,
+            exclude_attrs=[
+                "owner",
+                "project",
+                "description",
+                "content",
+                "deleted",
+                "readme",
+                "run_env",
+            ],
+        )
     else:
-        objects = list_dicts_to_tabulate(objects, exclude_attrs=[
-            "owner", "project", "description", "content", "deleted", "readme", "run_env", "inputs", "outputs",
-        ])
+        objects = list_dicts_to_tabulate(
+            objects,
+            exclude_attrs=[
+                "owner",
+                "project",
+                "description",
+                "content",
+                "deleted",
+                "readme",
+                "run_env",
+                "inputs",
+                "outputs",
+            ],
+        )
     if objects:
         Printer.print_header("Runs:")
         objects.pop("project_name", None)
@@ -536,9 +553,7 @@ def statuses(ctx):
 
         objects = list_dicts_to_tabulate(
             [
-                Printer.add_status_color(
-                    o.to_dict(), status_key="type"
-                )
+                Printer.add_status_color(o.to_dict(), status_key="type")
                 for o in response.status_conditions
             ]
         )

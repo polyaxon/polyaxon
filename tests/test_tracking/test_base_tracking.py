@@ -62,7 +62,3 @@ class TestTracker(TestEnvVarsCase):
     def test_empty_log_level(self):
         settings.CLIENT_CONFIG.is_managed = True
         self.check_empty_value(POLYAXON_KEYS_LOG_LEVEL, paths.get_log_level)
-
-    def test_valid_log_level(self):
-        settings.CLIENT_CONFIG.is_managed = True
-        self.check_valid_value(POLYAXON_KEYS_LOG_LEVEL, paths.get_log_level, "info")

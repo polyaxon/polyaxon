@@ -34,7 +34,7 @@ class TestPolyaxonClient(TestCase):
         assert isinstance(client.users_v1, polyaxon_sdk.UsersV1Api)
 
     def test_from_config(self):
-        settings.config.host = "localhost"
+        settings.CLIENT_CONFIG.host = "localhost"
         client = PolyaxonClient(config=ClientConfig())
         assert client.config.is_managed is False
         assert client.config.host == "https://cloud.polyaxon.com"

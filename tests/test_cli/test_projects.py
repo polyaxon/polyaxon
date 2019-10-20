@@ -12,7 +12,7 @@ from polyaxon.cli.projects import projects
 @pytest.mark.cli_mark
 class TestCliProject(BaseCommandTestCase):
     @patch("polyaxon_sdk.ProjectsV1Api.create_project")
-    def test_create_project_Sdf(self, create_project):
+    def test_create_project(self, create_project):
         self.runner.invoke(projects, ["create"])
         assert create_project.call_count == 0
         self.runner.invoke(projects, ["create", "--name=foo"])

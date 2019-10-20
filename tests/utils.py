@@ -8,6 +8,8 @@ import six
 from collections import Mapping
 from unittest import TestCase
 
+from polyaxon import settings
+
 
 def assert_equal_dict(dict1, dict2):
     for k, v in six.iteritems(dict1):
