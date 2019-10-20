@@ -22,6 +22,7 @@ from polyaxon.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.query_params import get_query_params
 
 
 def get_project_details(project):
@@ -133,11 +134,7 @@ def list(owner, limit, offset):  # pylint:disable=redefined-builtin
         sys.exit(1)
 
     try:
-        params = {}
-        if limit:
-            params["limit"] = limit
-        if offset:
-            params["offset"] = offset
+        params = get_query_params(limit=limit, offset=offset)
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.projects_v1.list_projects(owner, **params)
     except (ApiException, HTTPError) as e:

@@ -28,6 +28,8 @@ class ComposeOperator(CmdOperator):
 
     @staticmethod
     def _generate_worker_env(config):
+        # pylint:disable=too-many-branches
+        # pylint:disable=too-many-branches
         template = "{}={}"
         env = []
         if not config.worker:

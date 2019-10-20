@@ -26,6 +26,8 @@ from polyaxon.utils.formatting import (
     list_dicts_to_tabulate,
 )
 from polyaxon.utils.log_handler import get_logs_handler
+
+from polyaxon.utils.query_params import get_query_params
 from polyaxon.utils.validation import validate_tags
 
 
@@ -92,7 +94,7 @@ def runs(ctx, project, uid):
 @click.pass_context
 @clean_outputs
 @clean_outputs
-def list(ctx, io, query, sort, limit, offset):
+def list(ctx, io, query, sort, limit, offset):  # pylint:disable=redefined-builtin
     """List runs for this project.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -128,15 +130,7 @@ def list(ctx, io, query, sort, limit, offset):
 
     try:
         polyaxon_client = PolyaxonClient()
-        params = {}
-        if query:
-            params["query"] = query
-        if sort:
-            params["sort"] = sort
-        if limit:
-            params["limit"] = limit
-        if offset:
-            params["offset"] = offset
+        params = get_query_params(limit=limit, offset=offset, query=query, sort=sort)
         response = polyaxon_client.runs_v1.list_runs(
             owner=owner, project=project_name, **params
         )

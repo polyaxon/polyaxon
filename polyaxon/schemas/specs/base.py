@@ -94,6 +94,14 @@ class EnvironmentSpecificationMixin(object):
     def logs(self):
         return self.environment.logs if self.environment else None
 
+    @property
+    def init_container(self):
+        return self.environment.init_container if self.environment else None
+
+    @property
+    def sidecar_container(self):
+        return self.environment.sidecar_container if self.environment else None
+
 
 class InitSpecificationMixin(object):
     @property

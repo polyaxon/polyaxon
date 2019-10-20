@@ -198,6 +198,7 @@ class HttpTransportMixin(object):
         """
         Download the file from the given url at the current path
         """
+        # pylint:disable=too-many-branches
         logger.debug("Downloading files from url: %s", url)
 
         request_headers = self._get_headers(headers=headers)

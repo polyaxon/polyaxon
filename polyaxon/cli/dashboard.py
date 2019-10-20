@@ -7,7 +7,6 @@ import click
 
 from polyaxon import settings
 from polyaxon.logger import clean_outputs
-from polyaxon.schemas.cli.client_configuration import ClientConfig
 
 
 @click.command()

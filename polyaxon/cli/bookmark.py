@@ -17,6 +17,7 @@ from polyaxon.utils.formatting import (
     get_meta_response,
     list_dicts_to_tabulate,
 )
+from polyaxon.utils.query_params import get_query_params
 
 
 @click.group()
@@ -30,10 +31,11 @@ def bookmark(ctx, username):  # pylint:disable=redefined-outer-name
 
 
 @bookmark.command()
-@click.option("--page", type=int, help="To paginate through the list of projects.")
+@click.option("--limit", type=int, help="To limit the list of projects.")
+@click.option("--offset", type=int, help="To offset the list of projects.")
 @click.pass_context
 @clean_outputs
-def projects(ctx, page):
+def projects(ctx, limit, offset):
     """List bookmarked projects for user.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -52,11 +54,11 @@ def projects(ctx, page):
     """
     user = get_username_or_local(ctx.obj.get("username"))
 
-    page = page or 1
     try:
+        params = get_query_params(limit=limit, offset=offset)
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.projects_v1.list_bookmarked_projects(
-            username=user, page=page
+            user, **params
         )
     except (ApiException, HTTPError) as e:
         Printer.print_error(
@@ -84,10 +86,11 @@ def projects(ctx, page):
 
 
 @bookmark.command()
-@click.option("--page", type=int, help="To paginate through the list of runs.")
+@click.option("--limit", type=int, help="To limit the list of runs.")
+@click.option("--offset", type=int, help="To offset the list of runs.")
 @click.pass_context
 @clean_outputs
-def runs(ctx, page):
+def runs(ctx, limit, offset):
     """List bookmarked runs for user.
 
     Uses [Caching](/references/polyaxon-cli/#caching)
@@ -106,11 +109,11 @@ def runs(ctx, page):
     """
     user = get_username_or_local(ctx.obj.get("username"))
 
-    page = page or 1
     try:
+        params = get_query_params(limit=limit, offset=offset)
         polyaxon_client = PolyaxonClient()
         response = polyaxon_client.runs_v1.list_bookmarked_runs(
-            username=user, page=page
+            user, **params
         )
     except (ApiException, HTTPError) as e:
         Printer.print_error(

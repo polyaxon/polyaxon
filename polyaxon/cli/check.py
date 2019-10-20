@@ -18,11 +18,11 @@ from polyaxon.utils.formatting import Printer, dict_tabulate
 
 
 def check_polyaxonfile(
-    file,
+    file,  # pylint:disable=redefined-builtin
     params=None,
     debug_ttl=None,
     log=True,
-    profile=None,  # pylint:disable=redefined-builtin
+    profile=None,
 ):
     file = to_list(file)
     exists = [os.path.isfile(f) for f in file]

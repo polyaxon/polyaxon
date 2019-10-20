@@ -7,6 +7,7 @@ from polyaxon.schemas.base import BaseConfig, BaseSchema
 from polyaxon.schemas.ops.environments.container_resources import (
     ContainerResourcesSchema,
 )
+from polyaxon.schemas.ops.environments.containers import ContainerSchema
 
 
 class EnvironmentSchema(BaseSchema):
@@ -27,9 +28,8 @@ class EnvironmentSchema(BaseSchema):
     outputs = fields.Bool(allow_none=True)
     logs = fields.Bool(allow_none=True)
     registry = fields.Str(allow_none=True)
-    init_image = fields.Str(allow_none=True)
-    sidecar_image = fields.Str(allow_none=True)
-    sidecar_sync_interval = fields.Str(allow_none=True)
+    init_container = fields.Nested(ContainerSchema, allow_none=True)
+    sidecar_container = fields.Nested(ContainerSchema, allow_none=True)
 
     @staticmethod
     def schema_config():
@@ -61,9 +61,8 @@ class EnvironmentConfig(BaseConfig):
         "outputs",
         "logs",
         "registry",
-        "init_image",
-        "sidecar_image",
-        "sidecar_sync_interval",
+        "init_container",
+        "sidecar_container",
     ]
 
     def __init__(
@@ -85,9 +84,8 @@ class EnvironmentConfig(BaseConfig):
         outputs=None,
         logs=None,
         registry=None,
-        init_image=None,
-        sidecar_image=None,
-        sidecar_sync_interval=None,
+        init_container=None,
+        sidecar_container=None,
     ):
         self.resources = resources
         self.labels = labels
@@ -106,6 +104,5 @@ class EnvironmentConfig(BaseConfig):
         self.outputs = outputs
         self.logs = logs
         self.registry = registry
-        self.init_image = init_image
-        self.sidecar_image = sidecar_image
-        self.sidecar_sync_interval = sidecar_sync_interval
+        self.init_container = init_container
+        self.sidecar_container = sidecar_container
