@@ -25,11 +25,11 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/polyaxon/sdks/go/http_client/v1/service_client/auth_v1"
-	"github.com/polyaxon/sdks/go/http_client/v1/service_client/projects_v1"
-	"github.com/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
-	"github.com/polyaxon/sdks/go/http_client/v1/service_client/users_v1"
-	"github.com/polyaxon/sdks/go/http_client/v1/service_client/versions_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/auth_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/projects_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/runs_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/users_v1"
+	"github.com/polyaxon/polyaxon/sdks/go/http_client/v1/service_client/versions_v1"
 )
 
 // Default polyaxon sdk HTTP client.
