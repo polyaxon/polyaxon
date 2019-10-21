@@ -52,5 +52,5 @@ message EntityStatusBodyRequest {
     string uuid = 3;
 
     // Status to set
-    Status status = 4;
+    StatusCondition status_condition = 4;
 }

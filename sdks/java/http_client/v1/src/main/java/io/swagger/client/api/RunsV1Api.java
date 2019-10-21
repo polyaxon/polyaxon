@@ -48,6 +48,7 @@ import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
 import io.swagger.client.model.V1Run;
 import io.swagger.client.model.V1Status;
+import io.swagger.client.model.V1StatusCondition;
 import io.swagger.client.model.V1Uuids;
 
 import java.lang.reflect.Type;
@@ -818,7 +819,7 @@ public class RunsV1Api {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call createRunStatusCall(String owner, String project, String uuid, V1Status body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call createRunStatusCall(String owner, String project, String uuid, V1StatusCondition body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -863,7 +864,7 @@ public class RunsV1Api {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call createRunStatusValidateBeforeCall(String owner, String project, String uuid, V1Status body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call createRunStatusValidateBeforeCall(String owner, String project, String uuid, V1StatusCondition body, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'owner' is set
         if (owner == null) {
@@ -901,7 +902,7 @@ public class RunsV1Api {
      * @return V1Status
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public V1Status createRunStatus(String owner, String project, String uuid, V1Status body) throws ApiException {
+    public V1Status createRunStatus(String owner, String project, String uuid, V1StatusCondition body) throws ApiException {
         ApiResponse<V1Status> resp = createRunStatusWithHttpInfo(owner, project, uuid, body);
         return resp.getData();
     }
@@ -916,7 +917,7 @@ public class RunsV1Api {
      * @return ApiResponse&lt;V1Status&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<V1Status> createRunStatusWithHttpInfo(String owner, String project, String uuid, V1Status body) throws ApiException {
+    public ApiResponse<V1Status> createRunStatusWithHttpInfo(String owner, String project, String uuid, V1StatusCondition body) throws ApiException {
         com.squareup.okhttp.Call call = createRunStatusValidateBeforeCall(owner, project, uuid, body, null, null);
         Type localVarReturnType = new TypeToken<V1Status>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -933,7 +934,7 @@ public class RunsV1Api {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call createRunStatusAsync(String owner, String project, String uuid, V1Status body, final ApiCallback<V1Status> callback) throws ApiException {
+    public com.squareup.okhttp.Call createRunStatusAsync(String owner, String project, String uuid, V1StatusCondition body, final ApiCallback<V1Status> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

@@ -81,7 +81,7 @@ type CreateRunStatusParams struct {
 	  Status to set
 
 	*/
-	Body *service_model.V1Status
+	Body *service_model.V1StatusCondition
 	/*Owner
 	  Owner of the namespace
 
@@ -137,13 +137,13 @@ func (o *CreateRunStatusParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create run status params
-func (o *CreateRunStatusParams) WithBody(body *service_model.V1Status) *CreateRunStatusParams {
+func (o *CreateRunStatusParams) WithBody(body *service_model.V1StatusCondition) *CreateRunStatusParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create run status params
-func (o *CreateRunStatusParams) SetBody(body *service_model.V1Status) {
+func (o *CreateRunStatusParams) SetBody(body *service_model.V1StatusCondition) {
 	o.Body = body
 }
 

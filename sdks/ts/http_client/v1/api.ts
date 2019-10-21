@@ -2550,11 +2550,11 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1Status} body Status to set
+         * @param {V1StatusCondition} body Status to set
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunStatus(owner: string, project: string, uuid: string, body: V1Status, options: any = {}): FetchArgs {
+        createRunStatus(owner: string, project: string, uuid: string, body: V1StatusCondition, options: any = {}): FetchArgs {
             // verify required parameter 'owner' is not null or undefined
             if (owner === null || owner === undefined) {
                 throw new RequiredError('owner','Required parameter owner was null or undefined when calling createRunStatus.');
@@ -2594,7 +2594,7 @@ export const RunsV1ApiFetchParamCreator = function (configuration?: Configuratio
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"V1Status" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+            const needsSerialization = (<any>"V1StatusCondition" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
             localVarRequestOptions.body =  needsSerialization ? JSON.stringify(body || {}) : (body || "");
 
             return {
@@ -3846,11 +3846,11 @@ export const RunsV1ApiFp = function(configuration?: Configuration) {
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1Status} body Status to set
+         * @param {V1StatusCondition} body Status to set
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunStatus(owner: string, project: string, uuid: string, body: V1Status, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Status> {
+        createRunStatus(owner: string, project: string, uuid: string, body: V1StatusCondition, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<V1Status> {
             const localVarFetchArgs = RunsV1ApiFetchParamCreator(configuration).createRunStatus(owner, project, uuid, body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -4393,11 +4393,11 @@ export const RunsV1ApiFactory = function (configuration?: Configuration, fetch?:
          * @param {string} owner Owner of the namespace
          * @param {string} project Project where the experiement will be assigned
          * @param {string} uuid Unique integer identifier of the entity
-         * @param {V1Status} body Status to set
+         * @param {V1StatusCondition} body Status to set
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createRunStatus(owner: string, project: string, uuid: string, body: V1Status, options?: any) {
+        createRunStatus(owner: string, project: string, uuid: string, body: V1StatusCondition, options?: any) {
             return RunsV1ApiFp(configuration).createRunStatus(owner, project, uuid, body, options)(fetch, basePath);
         },
         /**
@@ -4753,12 +4753,12 @@ export class RunsV1Api extends BaseAPI {
      * @param {string} owner Owner of the namespace
      * @param {string} project Project where the experiement will be assigned
      * @param {string} uuid Unique integer identifier of the entity
-     * @param {V1Status} body Status to set
+     * @param {V1StatusCondition} body Status to set
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RunsV1Api
      */
-    public createRunStatus(owner: string, project: string, uuid: string, body: V1Status, options?: any) {
+    public createRunStatus(owner: string, project: string, uuid: string, body: V1StatusCondition, options?: any) {
         return RunsV1ApiFp(this.configuration).createRunStatus(owner, project, uuid, body, options)(this.fetch, this.basePath);
     }
 

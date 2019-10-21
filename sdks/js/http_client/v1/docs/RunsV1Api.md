@@ -349,7 +349,7 @@ var project = "project_example"; // String | Project where the experiement will 
 
 var uuid = "uuid_example"; // String | Unique integer identifier of the entity
 
-var body = new PolyaxonSdk.V1Status(); // V1Status | Status to set
+var body = new PolyaxonSdk.V1StatusCondition(); // V1StatusCondition | Status to set
 
 
 var callback = function(error, data, response) {
@@ -369,7 +369,7 @@ Name | Type | Description  | Notes
  **owner** | **String**| Owner of the namespace | 
  **project** | **String**| Project where the experiement will be assigned | 
  **uuid** | **String**| Unique integer identifier of the entity | 
- **body** | [**V1Status**](V1Status.md)| Status to set | 
+ **body** | [**V1StatusCondition**](V1StatusCondition.md)| Status to set | 
 
 ### Return type
 

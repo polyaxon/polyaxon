@@ -244,7 +244,7 @@ service RunsV1 {
     rpc CreateRunStatus(EntityStatusBodyRequest) returns (Status) {
         option (google.api.http) = {
             post: "/api/v1/{owner}/{project}/runs/{uuid}/statuses"
-            body: "status"
+            body: "status_condition"
         };
     }
 

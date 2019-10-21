@@ -35,6 +35,7 @@ import io.swagger.client.model.V1ListCodeRefsResponse;
 import io.swagger.client.model.V1ListRunsResponse;
 import io.swagger.client.model.V1Run;
 import io.swagger.client.model.V1Status;
+import io.swagger.client.model.V1StatusCondition;
 import io.swagger.client.model.V1Uuids;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -158,7 +159,7 @@ public class RunsV1ApiTest {
         String owner = null;
         String project = null;
         String uuid = null;
-        V1Status body = null;
+        V1StatusCondition body = null;
         V1Status response = api.createRunStatus(owner, project, uuid, body);
 
         // TODO: test validations
